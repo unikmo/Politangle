@@ -63,7 +63,10 @@ export default function ResultsClient() {
       </article>
 
       <div className="engine-result-actions">
-        <Link className="engine-primary-link" href="/quiz">Retake Quick</Link>
+        <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+          <Link className="engine-primary-link" href="/deep">Continue to Deep</Link>
+          <Link className="engine-primary-link" href="/quiz">Retake Quick</Link>
+        </div>
         <span>Questionnaire {result.questionnaireVersion} · scoring {result.scoringVersion}</span>
       </div>
 
