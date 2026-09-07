@@ -14,43 +14,48 @@ export default function PrismaticTriangle({ className = '', compact = false, poi
       <svg viewBox="0 0 520 450" role="img" aria-label="Politangle prismatic triangle">
         <defs>
           <linearGradient id="prismTop" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stopColor="#75a7ff" />
-            <stop offset="0.56" stopColor="#f6f1ec" />
-            <stop offset="1" stopColor="#ff7f8d" />
+            <stop offset="0" stopColor="#8db7e3" />
+            <stop offset="0.5" stopColor="#fff8ec" />
+            <stop offset="1" stopColor="#ef7a5c" />
           </linearGradient>
           <linearGradient id="prismLeft" x1="0" y1="0" x2="0.85" y2="1">
-            <stop offset="0" stopColor="#6ba5ff" />
-            <stop offset="0.55" stopColor="#f5f3ef" />
-            <stop offset="1" stopColor="#5dcf7a" />
+            <stop offset="0" stopColor="#8db7e3" />
+            <stop offset="0.53" stopColor="#f8fbff" />
+            <stop offset="1" stopColor="#79c5b4" />
           </linearGradient>
           <linearGradient id="prismRight" x1="1" y1="0" x2="0.2" y2="1">
-            <stop offset="0" stopColor="#ff7b84" />
-            <stop offset="0.55" stopColor="#f8eee8" />
-            <stop offset="1" stopColor="#5dcf7a" />
+            <stop offset="0" stopColor="#ef7a5c" />
+            <stop offset="0.52" stopColor="#fff7ea" />
+            <stop offset="1" stopColor="#79c5b4" />
           </linearGradient>
-          <radialGradient id="softLight" cx="50%" cy="42%" r="62%">
-            <stop offset="0" stopColor="#ffffff" stopOpacity="0.9" />
-            <stop offset="0.7" stopColor="#ffffff" stopOpacity="0.15" />
+          <radialGradient id="softLight" cx="50%" cy="40%" r="65%">
+            <stop offset="0" stopColor="#ffffff" stopOpacity="0.98" />
+            <stop offset="0.55" stopColor="#fff8ea" stopOpacity="0.22" />
             <stop offset="1" stopColor="#ffffff" stopOpacity="0" />
           </radialGradient>
+          <linearGradient id="edgeGlow" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stopColor="#d6ad57" stopOpacity="0.65" />
+            <stop offset="0.45" stopColor="#ffffff" stopOpacity="0.8" />
+            <stop offset="1" stopColor="#8db7e3" stopOpacity="0.55" />
+          </linearGradient>
           <filter id="prismShadow" x="-20%" y="-20%" width="140%" height="150%">
-            <feDropShadow dx="0" dy="16" stdDeviation="18" floodColor="#17324f" floodOpacity="0.16" />
+            <feDropShadow dx="0" dy="16" stdDeviation="18" floodColor="#0b2341" floodOpacity="0.13" />
           </filter>
         </defs>
 
         <g filter="url(#prismShadow)">
-          <path d="M60 54 L460 54 L260 405 Z" fill="#f4f4f1" stroke="#ffffff" strokeWidth="4" />
+          <path d="M60 54 L460 54 L260 405 Z" fill="#fffdf8" stroke="#ffffff" strokeWidth="5" />
           <path d="M60 54 L460 54 L260 211 Z" fill="url(#prismTop)" />
           <path d="M60 54 L260 405 L260 211 Z" fill="url(#prismLeft)" />
           <path d="M460 54 L260 405 L260 211 Z" fill="url(#prismRight)" />
           <path d="M60 54 L460 54 L260 405 Z" fill="url(#softLight)" />
-          <path d="M60 54 L460 54 L260 405 Z" fill="none" stroke="rgba(8,27,49,.08)" strokeWidth="2" />
+          <path d="M60 54 L460 54 L260 405 Z" fill="none" stroke="url(#edgeGlow)" strokeWidth="2.5" />
         </g>
 
         {!compact && (
           <>
-            <circle cx={(x / 100) * 400 + 60} cy={(y / 100) * 300 + 70} r="12" fill="#071a31" stroke="#ffffff" strokeWidth="5" />
-            <circle cx={(x / 100) * 400 + 60} cy={(y / 100) * 300 + 70} r="22" fill="none" stroke="#071a31" strokeOpacity="0.14" strokeWidth="2" />
+            <circle cx={(x / 100) * 400 + 60} cy={(y / 100) * 300 + 70} r="12" fill="#0b2341" stroke="#ffffff" strokeWidth="5" />
+            <circle cx={(x / 100) * 400 + 60} cy={(y / 100) * 300 + 70} r="22" fill="none" stroke="#d6ad57" strokeOpacity="0.34" strokeWidth="2" />
           </>
         )}
       </svg>
