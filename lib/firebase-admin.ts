@@ -7,10 +7,18 @@ function requiredEnv(name: 'FIREBASE_PROJECT_ID' | 'FIREBASE_CLIENT_EMAIL' | 'FI
   return value;
 }
 
+function normalizePrivateKey(value: string) {
+  let key = value.trim();
+  if ((key.startsWith('"') && key.endsWith('"')) || (key.startsWith("'") && key.endsWith("'"))) {
+    key = key.slice(1, -1);
+  }
+  return key.replace(/\\n/g, '\n').trim();
+}
+
 export function getAdminDb() {
-  const projectId = requiredEnv('FIREBASE_PROJECT_ID');
-  const clientEmail = requiredEnv('FIREBASE_CLIENT_EMAIL');
-  const privateKey = requiredEnv('FIREBASE_PRIVATE_KEY').replace(/\\n/g, '\n');
+  const projectId = requiredEnv('FIREBASE_PROJECT_ID').trim();
+  const clientEmail = requiredEnv('FIREBASE_CLIENT_EMAIL').trim();
+  const privateKey = normalizePrivateKey(requiredEnv('FIREBASE_PRIVATE_KEY'));
 
   const app =
     getApps()[0] ??
