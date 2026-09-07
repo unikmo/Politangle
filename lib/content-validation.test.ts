@@ -103,3 +103,11 @@ test('public literacy training does not require democratic socialism as a headli
     .toLowerCase();
   assert.equal(visibleText.includes('democratic socialism'), false);
 });
+
+test('narrow socialist concepts stay out of headline literacy while remaining eligible for conditional nuance', () => {
+  const classifyTargets = deepLiteracyQuestions
+    .filter((question) => question.section === 'classify')
+    .flatMap((question) => question.acceptedAnswerSets.flat());
+  assert.equal(classifyTargets.includes('democratic-socialism'), false);
+  assert.ok(classifyTargets.includes('socialism'));
+});
