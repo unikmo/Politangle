@@ -21,13 +21,22 @@ test('canonical BELIEVE v2 preserves the 42-item / 14x3 lock', () => {
   assert.equal(lockedBeliefItemsV2.filter((item) => item.mode === 'act').length, 14);
 });
 
-test('nationhood THINK item is not double-barrelled with birthright citizenship', () => {
-  const item = lockedBeliefItemsV2.find((candidate) => candidate.id === 'T10')!;
-  assert.equal(item.construct, 'nationhood-membership');
-  assert.doesNotMatch(item.negative.toLowerCase(), /birthplace|citizenship at birth/);
-  assert.doesNotMatch(item.positive.toLowerCase(), /birthplace|citizenship at birth/);
-  const act = lockedBeliefItemsV2.find((candidate) => candidate.id === 'A10')!;
-  assert.match(act.negative.toLowerCase(), /birth in the country/);
+test('citizenship-at-birth THINK FEEL ACT items stay on the same construct', () => {
+  const triplet = lockedBeliefItemsV2.filter((item) => item.construct === 'nationhood-membership');
+  assert.equal(triplet.length, 3);
+  for (const item of triplet) {
+    assert.match(`${item.negative} ${item.positive}`.toLowerCase(), /citizenship/);
+    assert.match(`${item.negative} ${item.positive}`.toLowerCase(), /birth|birthplace/);
+    assert.match(`${item.negative} ${item.positive}`.toLowerCase(), /parent/);
+  }
+});
+
+test('populism ACT item does not collapse into anti-pluralism or institutional weakening', () => {
+  const item = lockedBeliefItemsV2.find((candidate) => candidate.id === 'A11')!;
+  const text = `${item.negative} ${item.positive}`.toLowerCase();
+  assert.match(text, /elite/);
+  assert.match(text, /ordinary people/);
+  assert.doesNotMatch(text, /court|institution|media|opposition/);
 });
 
 test('subsidiarity THINK FEEL ACT poles point in the same direction', () => {
@@ -132,4 +141,17 @@ test('Christian democracy requires more than religion alone', () => {
   for (const item of lockedBeliefItemsV2.filter((candidate) => candidate.construct === 'ownership')) answers[item.id] = 1;
   for (const item of lockedBeliefItemsV2.filter((candidate) => candidate.construct === 'redistribution')) answers[item.id] = -1;
   assert.equal(assessConservativeSubtypeV2(answers)?.id, 'christian-democracy');
+});
+
+test('conservative subtype stays unknown when decisive triplets contain insufficient data', () => {
+  const answers: BeliefAnswersV2 = {};
+  const conservative = canonicalFamilyProfilesV2.find((profile) => profile.id === 'conservatism')!;
+  for (const loading of conservative.loadings) {
+    for (const item of lockedBeliefItemsV2.filter((candidate) => candidate.construct === loading.construct)) answers[item.id] = loading.direction === 1 ? 2 : -2;
+  }
+  const religion = lockedBeliefItemsV2.filter((candidate) => candidate.construct === 'religion-public-role');
+  answers[religion.find((item) => item.mode === 'think')!.id] = 2;
+  answers[religion.find((item) => item.mode === 'feel')!.id] = 'unsure';
+  answers[religion.find((item) => item.mode === 'act')!.id] = 2;
+  assert.equal(assessConservativeSubtypeV2(answers), null);
 });
