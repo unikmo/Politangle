@@ -105,100 +105,21 @@ export function collectAxisSignals(input: CompatibilityInput): Partial<Record<Ax
 
 const N = ['strong-negative', 'negative'] as const;
 const NM = ['strong-negative', 'negative', 'mixed'] as const;
-const M = ['mixed'] as const;
 const MP = ['mixed', 'positive', 'strong-positive'] as const;
 const P = ['positive', 'strong-positive'] as const;
-const SP = ['strong-positive'] as const;
 const SN = ['strong-negative'] as const;
 
+/**
+ * Context/pattern registry only.
+ *
+ * The main user-facing political-family model lives in `primary-families.ts`
+ * and deliberately contains only Liberalism, Conservatism, Social democracy,
+ * Socialism and Green politics. Narrow variants are not separately scored here
+ * merely because they exist in political theory. This registry is limited to
+ * cross-cutting tendencies and historically important safeguarded patterns that
+ * require separate interpretation.
+ */
 export const traditionProfiles: readonly TraditionProfile[] = [
-  {
-    id: 'classical-liberalism', name: 'Classical liberalism', kind: 'democratic-tradition',
-    summary: 'A liberal tradition emphasizing individual liberty, constrained government, private property and market coordination.',
-    evidenceIds: ['SEP-LIBERALISM', 'SEP-LIBERTARIANISM'],
-    criteria: [
-      { axis: 'power', importance: 'core', supportBuckets: N, contradictionBuckets: P, rationale: 'Strong limits on coercive state power are central to the classical-liberal family.', evidenceIds: ['SEP-LIBERALISM', 'SEP-LIBERTARIANISM'] },
-      { axis: 'economy', importance: 'core', supportBuckets: P, contradictionBuckets: N, rationale: 'Classical liberalism typically favors private property and market coordination.', evidenceIds: ['SEP-LIBERALISM', 'SEP-LIBERTARIANISM'] },
-      { axis: 'pluralism', importance: 'typical', supportBuckets: N, contradictionBuckets: SP, rationale: 'Liberal traditions generally support rights and institutional limits on concentrated political power.', evidenceIds: ['SEP-LIBERALISM', 'VDEM-LIBERAL-DEMOCRACY'] },
-      { axis: 'ownership', importance: 'typical', supportBuckets: P, contradictionBuckets: SN, rationale: 'Private ownership is normally favored over generalized social ownership.', evidenceIds: ['SEP-LIBERTARIANISM'] },
-    ],
-  },
-  {
-    id: 'social-liberalism', name: 'Social liberalism', kind: 'democratic-tradition',
-    summary: 'A liberal tradition combining civil and personal liberty with a larger public role in enabling opportunity and social protection.',
-    evidenceIds: ['SEP-LIBERALISM'],
-    criteria: [
-      { axis: 'power', importance: 'core', supportBuckets: N, contradictionBuckets: P, rationale: 'Civil liberty and constraints on coercive power remain core liberal commitments.', evidenceIds: ['SEP-LIBERALISM', 'VDEM-LIBERAL-DEMOCRACY'] },
-      { axis: 'pluralism', importance: 'core', supportBuckets: N, contradictionBuckets: P, rationale: 'Rights, pluralism and institutional constraints fit liberal-democratic commitments.', evidenceIds: ['SEP-LIBERALISM', 'VDEM-LIBERAL-DEMOCRACY'] },
-      { axis: 'economy', importance: 'typical', supportBuckets: NM, contradictionBuckets: SP, rationale: 'Social liberalism can accept markets while supporting public provision and positive-liberty measures.', evidenceIds: ['SEP-LIBERALISM'] },
-      { axis: 'society', importance: 'typical', supportBuckets: N, contradictionBuckets: SP, rationale: 'Modern social liberalism commonly gives substantial weight to personal freedom and changing social norms.', evidenceIds: ['SEP-LIBERALISM', 'CHES-ECON-GALTAN'] },
-    ],
-  },
-  {
-    id: 'libertarianism', name: 'Libertarianism', kind: 'democratic-tradition',
-    summary: 'A liberty-centered tradition strongly limiting coercion and generally protecting private property and voluntary exchange.',
-    evidenceIds: ['SEP-LIBERTARIANISM'],
-    criteria: [
-      { axis: 'power', importance: 'core', supportBuckets: ['strong-negative', 'negative'], contradictionBuckets: ['positive', 'strong-positive'], rationale: 'Limits on coercive state authority are central.', evidenceIds: ['SEP-LIBERTARIANISM'] },
-      { axis: 'economy', importance: 'core', supportBuckets: P, contradictionBuckets: N, rationale: 'Libertarianism normally gives strong protection to voluntary market exchange.', evidenceIds: ['SEP-LIBERTARIANISM'] },
-      { axis: 'ownership', importance: 'core', supportBuckets: P, contradictionBuckets: N, rationale: 'Private-property rights normally conflict with generalized social ownership.', evidenceIds: ['SEP-LIBERTARIANISM'] },
-      { axis: 'society', importance: 'typical', supportBuckets: NM, contradictionBuckets: SP, rationale: 'Individual lifestyle autonomy is broadly compatible with libertarian commitments.', evidenceIds: ['SEP-LIBERTARIANISM'] },
-    ],
-  },
-  {
-    id: 'conservatism', name: 'Conservatism', kind: 'democratic-tradition',
-    summary: 'A broad tradition emphasizing continuity, inherited institutions and caution toward rapid or abstractly designed change.',
-    evidenceIds: ['SEP-CONSERVATISM'],
-    criteria: [
-      { axis: 'society', importance: 'core', supportBuckets: P, contradictionBuckets: SN, rationale: 'Continuity and tradition are central to a major conservative strand.', evidenceIds: ['SEP-CONSERVATISM', 'CHES-ECON-GALTAN'] },
-      { axis: 'pluralism', importance: 'core', supportBuckets: NM, contradictionBuckets: SP, rationale: 'This profile represents democratic conservatism, not anti-pluralist or anti-democratic variants.', evidenceIds: ['SEP-CONSERVATISM', 'VDEM-LIBERAL-DEMOCRACY'] },
-      { axis: 'economy', importance: 'typical', supportBuckets: MP, contradictionBuckets: SN, rationale: 'Many contemporary conservative traditions are market-friendly, but economics is not the defining core of conservatism.', evidenceIds: ['SEP-CONSERVATISM'] },
-    ],
-  },
-  {
-    id: 'christian-democracy', name: 'Christian democracy', kind: 'democratic-tradition',
-    summary: 'A social-market tradition combining private property and markets with social obligations, welfare institutions and distributive justice.',
-    evidenceIds: ['CAMBRIDGE-CHRISTIAN-DEMOCRACY'],
-    criteria: [
-      { axis: 'economy', importance: 'core', supportBuckets: M, contradictionBuckets: ['strong-negative', 'strong-positive'], rationale: 'Christian-democratic social capitalism sits between laissez-faire and wholesale social ownership.', evidenceIds: ['CAMBRIDGE-CHRISTIAN-DEMOCRACY'] },
-      { axis: 'ownership', importance: 'core', supportBuckets: MP, contradictionBuckets: SN, rationale: 'Private property remains important within the social-market model.', evidenceIds: ['CAMBRIDGE-CHRISTIAN-DEMOCRACY'] },
-      { axis: 'society', importance: 'typical', supportBuckets: MP, contradictionBuckets: SN, rationale: 'Christian-democratic traditions often give greater weight to inherited social institutions and moral traditions.', evidenceIds: ['CAMBRIDGE-CHRISTIAN-DEMOCRACY'] },
-      { axis: 'pluralism', importance: 'typical', supportBuckets: NM, contradictionBuckets: SP, rationale: 'The profile here is the democratic post-war tradition rather than an anti-pluralist religious politics.', evidenceIds: ['CAMBRIDGE-CHRISTIAN-DEMOCRACY', 'VDEM-LIBERAL-DEMOCRACY'] },
-    ],
-  },
-  {
-    id: 'social-democracy', name: 'Social democracy', kind: 'democratic-tradition',
-    summary: 'A democratic tradition that generally retains a predominantly capitalist economy while using regulation, welfare and redistribution to pursue social justice.',
-    evidenceIds: ['ROUTLEDGE-SOCIAL-DEMOCRACY', 'SEP-SOCIALISM'],
-    criteria: [
-      { axis: 'economy', importance: 'core', supportBuckets: N, contradictionBuckets: SP, rationale: 'Redistribution, welfare and a larger public role are central to modern social democracy.', evidenceIds: ['ROUTLEDGE-SOCIAL-DEMOCRACY', 'SEP-SOCIALISM'] },
-      { axis: 'pluralism', importance: 'core', supportBuckets: N, contradictionBuckets: P, rationale: 'Modern social democracy is committed to competitive democratic institutions and pluralism.', evidenceIds: ['SEP-SOCIALISM', 'VDEM-LIBERAL-DEMOCRACY'] },
-      { axis: 'ownership', importance: 'typical', supportBuckets: MP, contradictionBuckets: SN, rationale: 'Unlike democratic socialism, modern social democracy generally operates with predominantly private ownership.', evidenceIds: ['ROUTLEDGE-SOCIAL-DEMOCRACY', 'SEP-SOCIALISM'] },
-      { axis: 'society', importance: 'typical', supportBuckets: NM, contradictionBuckets: SP, rationale: 'Contemporary social democracy is commonly compatible with social liberalization, though this is not its sole defining feature.', evidenceIds: ['CHES-ECON-GALTAN'] },
-    ],
-  },
-  {
-    id: 'democratic-socialism', name: 'Democratic socialism', kind: 'democratic-tradition',
-    summary: 'A democratic socialist tradition combining political democracy with substantially greater social, public, cooperative or worker control of production.',
-    evidenceIds: ['SEP-SOCIALISM'],
-    criteria: [
-      { axis: 'economy', importance: 'core', supportBuckets: N, contradictionBuckets: P, rationale: 'A strong collective economic orientation is expected.', evidenceIds: ['SEP-SOCIALISM'] },
-      { axis: 'ownership', importance: 'core', supportBuckets: N, contradictionBuckets: P, rationale: 'Greater social or worker ownership is the central discriminator from modern social democracy.', evidenceIds: ['SEP-SOCIALISM'] },
-      { axis: 'pluralism', importance: 'core', supportBuckets: N, contradictionBuckets: P, rationale: 'The democratic-socialist profile explicitly requires democratic pluralism rather than authoritarian socialism.', evidenceIds: ['SEP-SOCIALISM', 'VDEM-LIBERAL-DEMOCRACY'] },
-      { axis: 'democracyRejection', importance: 'core', supportBuckets: N, contradictionBuckets: P, rationale: 'Openness to non-democratic rule conflicts with the democratic qualifier.', evidenceIds: ['SEP-SOCIALISM', 'VDEM-LIBERAL-DEMOCRACY'] },
-    ],
-  },
-  {
-    id: 'green-politics', name: 'Green politics', kind: 'democratic-tradition',
-    summary: 'A political tradition centering ecological limits and sustainability, often linked to decentralization, grassroots democracy and social justice.',
-    evidenceIds: ['CAMBRIDGE-GREEN-POLITICS'],
-    criteria: [
-      { axis: 'ecology', importance: 'core', supportBuckets: N, contradictionBuckets: P, rationale: 'Ecological limits and structural sustainability are defining green commitments.', evidenceIds: ['CAMBRIDGE-GREEN-POLITICS'] },
-      { axis: 'pluralism', importance: 'core', supportBuckets: N, contradictionBuckets: SP, rationale: 'Grassroots and decentralized democratic commitments conflict with concentrated anti-pluralist power.', evidenceIds: ['CAMBRIDGE-GREEN-POLITICS'] },
-      { axis: 'society', importance: 'typical', supportBuckets: NM, contradictionBuckets: SP, rationale: 'Green politics often aligns with postmaterial and socially progressive positions.', evidenceIds: ['CAMBRIDGE-GREEN-POLITICS', 'CHES-ECON-GALTAN'] },
-      { axis: 'economy', importance: 'typical', supportBuckets: NM, contradictionBuckets: SP, rationale: 'Green traditions frequently support stronger public intervention for ecological and social goals.', evidenceIds: ['CAMBRIDGE-GREEN-POLITICS'] },
-    ],
-  },
   {
     id: 'nationalism', name: 'Nationalism', kind: 'cross-cutting',
     summary: 'A cross-cutting family that gives special political value to the nation and national self-determination; it does not by itself determine left-right economics or social policy.',
@@ -220,14 +141,14 @@ export const traditionProfiles: readonly TraditionProfile[] = [
   },
   {
     id: 'communism', name: 'Communism', kind: 'historical-family',
-    summary: 'A broad historical family whose Marxian ideal is classless and stateless and rejects private ownership of the means of production.',
+    summary: 'A historically important political family whose Marxian ideal is classless and stateless and rejects private ownership of the means of production.',
     evidenceIds: ['OXFORD-COMMUNISM', 'SEP-SOCIALISM'],
     requiredExplicitSignals: ['communist-end-state'],
     criteria: [
-      { axis: 'economy', importance: 'core', supportBuckets: ['strong-negative', 'negative'], contradictionBuckets: P, rationale: 'A strongly collective economic orientation is necessary but not sufficient.', evidenceIds: ['OXFORD-COMMUNISM', 'SEP-SOCIALISM'] },
+      { axis: 'economy', importance: 'core', supportBuckets: N, contradictionBuckets: P, rationale: 'A strongly collective economic orientation is necessary but not sufficient.', evidenceIds: ['OXFORD-COMMUNISM', 'SEP-SOCIALISM'] },
       { axis: 'ownership', importance: 'core', supportBuckets: ['strong-negative'], contradictionBuckets: MP, rationale: 'Rejection of private ownership of the major means of production is a central discriminator.', evidenceIds: ['OXFORD-COMMUNISM'] },
     ],
-    caution: 'Politangle does not infer communism from welfare-state or redistribution preferences alone; a dedicated end-state discriminator is required.',
+    caution: 'This is retained for historical and literacy context. Politangle does not infer communism from welfare-state, redistribution or ordinary social-ownership preferences alone.',
   },
   {
     id: 'populist-radical-right-pattern', name: 'Populist radical-right pattern', kind: 'anti-pluralist-pattern',
@@ -240,11 +161,11 @@ export const traditionProfiles: readonly TraditionProfile[] = [
       { axis: 'pluralism', importance: 'typical', supportBuckets: MP, contradictionBuckets: SN, rationale: 'The pattern commonly stands in tension with liberal-democratic pluralism, even while procedural elections may be accepted.', evidenceIds: ['MUDDE-RADICAL-RIGHT'] },
       { axis: 'world', importance: 'typical', supportBuckets: MP, contradictionBuckets: SN, rationale: 'National-sovereignty preferences are often compatible but are not by themselves diagnostic.', evidenceIds: ['SEP-NATIONALISM', 'MUDDE-RADICAL-RIGHT'] },
     ],
-    caution: 'This is a pattern-level compatibility output, not a claim that a respondent belongs to a party or extremist movement.',
+    caution: 'This is a safeguarded pattern-level signal, not a headline ideology assignment or a claim that a respondent belongs to a party or extremist movement.',
   },
   {
     id: 'fascist-extreme-right-pattern', name: 'Fascist / extreme-right pattern', kind: 'anti-pluralist-pattern',
-    summary: 'A safeguarded pattern requiring explicit anti-democratic rejection plus ultranationalist evidence; ordinary conservatism, sovereignty preference or nationalism cannot trigger it.',
+    summary: 'A safeguarded historical/pattern concept requiring explicit anti-democratic rejection plus ultranationalist evidence; ordinary conservatism, sovereignty preference or nationalism cannot trigger it.',
     evidenceIds: ['USHMM-FASCISM', 'PIRRO-FAR-RIGHT'],
     requiredExplicitSignals: ['ultranationalist-state-project'],
     criteria: [
