@@ -2,7 +2,7 @@ import { DEEP_QUESTIONNAIRE_VERSION, allDeepBeliefQuestions, deepLiteracyQuestio
 import type { DeepBeliefAnswers, LiteracyAnswers } from './deep-engine';
 import type { AnswerValue } from './questions';
 
-export const DEEP_SESSION_SCHEMA_VERSION = 1 as const;
+export const DEEP_SESSION_SCHEMA_VERSION = 2 as const;
 
 export type DeepPhase = 'believe' | 'classify' | 'understand';
 
