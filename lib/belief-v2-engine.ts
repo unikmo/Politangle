@@ -18,8 +18,29 @@ function correctedItems(): readonly BeliefItem[] {
     if (item.id === 'T10') {
       return {
         ...item,
-        negative: 'Citizens should be regarded as equally belonging to the nation regardless of ancestry, religion or family origin.',
-        positive: 'Historic cultural or ancestral continuity should carry additional weight in deciding who is fully part of the nation.',
+        negative: 'Birth in a country should carry substantial independent weight in acquiring citizenship, even when neither parent is already a citizen.',
+        positive: 'Citizenship at birth should depend mainly on a parent’s citizenship or qualifying legal status rather than on birthplace itself.',
+      };
+    }
+    if (item.id === 'F10') {
+      return {
+        ...item,
+        negative: 'It feels fairer for birth in the country to carry substantial weight in a child’s citizenship at birth, even when neither parent is already a citizen.',
+        positive: 'It feels fairer for citizenship at birth to depend mainly on a parent’s citizenship or qualifying legal status rather than birthplace itself.',
+      };
+    }
+    if (item.id === 'A10') {
+      return {
+        ...item,
+        negative: 'If I voted directly on citizenship-at-birth rules, I would give birth in the country substantial independent weight even when neither parent is already a citizen.',
+        positive: 'If I voted directly on citizenship-at-birth rules, I would make citizenship depend mainly on a parent’s citizenship or qualifying legal status rather than birthplace itself.',
+      };
+    }
+    if (item.id === 'A11') {
+      return {
+        ...item,
+        negative: 'When choosing between otherwise similar candidates, I would prefer one who openly recognizes competing legitimate interests and emphasizes political compromise.',
+        positive: 'When choosing between otherwise similar candidates, I would prefer one who promises to take power back from a self-serving elite and implement the common will of ordinary people.',
       };
     }
     if (item.id === 'A14') {
@@ -40,9 +61,9 @@ function loading(construct: BeliefConstruct, relevance: 1 | 2, direction: -1 | 1
 }
 
 /**
- * Deliberately conservative family priors.
- * Absence means relevance 0: the construct should not move that family score.
- * These are evidence-informed priors for validation, not final psychometric weights.
+ * Deliberately sparse evidence-informed priors.
+ * Omitted constructs have relevance 0 and must not move that family score.
+ * The 1/2 values are validation priors, not final psychometric coefficients.
  */
 export const canonicalFamilyProfilesV2: readonly FamilyProfile[] = [
   {
@@ -150,7 +171,6 @@ function scoreFamilyMode(answers: BeliefAnswersV2, profile: FamilyProfile, mode:
   let weighted = 0;
   let knownWeight = 0;
   let totalWeight = 0;
-
   for (const familyLoading of profile.loadings) {
     const candidates = lockedBeliefItemsV2.filter((candidate) => candidate.construct === familyLoading.construct && (mode === 'overall' || candidate.mode === mode));
     for (const item of candidates) {
@@ -161,7 +181,6 @@ function scoreFamilyMode(answers: BeliefAnswersV2, profile: FamilyProfile, mode:
       weighted += familyAlignment(value, familyLoading.direction) * familyLoading.relevance;
     }
   }
-
   return {
     score: knownWeight ? Math.round(weighted / knownWeight) : null,
     coverage: totalWeight ? Math.round((knownWeight / totalWeight) * 100) : 0,
@@ -189,12 +208,12 @@ export function assessFamiliesV2Canonical(answers: BeliefAnswersV2): FamilyCompa
 }
 
 export function calculatePolygonV2Canonical(answers: BeliefAnswersV2, mode: AttitudeMode | 'overall' = 'overall'): PolygonPointV2[] {
-  const constructResults = calculateConstructModesV2(answers);
+  const results = calculateConstructModesV2(answers);
   return polygonAxesV2.map((axis) => {
     const values: number[] = [];
     let expected = 0;
     for (const construct of axis.constructs) {
-      const result = constructResults.find((candidate) => candidate.construct === construct)!;
+      const result = results.find((candidate) => candidate.construct === construct)!;
       if (mode === 'overall') {
         expected += 3;
         for (const value of [result.think, result.feel, result.act]) if (value !== null) values.push(value);
@@ -230,15 +249,11 @@ export function statementFamilyRelevanceV2(itemId: string) {
 }
 
 export type TendencyIdV2 = 'nationalism' | 'populism' | 'authority-democratic-constraints';
-export type TendencyResultV2 = {
-  id: TendencyIdV2;
-  score: number | null;
-  coverage: number;
-};
+export type TendencyResultV2 = { id: TendencyIdV2; score: number | null; coverage: number };
 
-function constructAverage(constructResults: readonly ConstructModeResultV2[], constructsToUse: readonly BeliefConstruct[]) {
+function constructAverage(results: readonly ConstructModeResultV2[], constructsToUse: readonly BeliefConstruct[]) {
   const values = constructsToUse
-    .map((construct) => constructResults.find((candidate) => candidate.construct === construct)?.overall ?? null)
+    .map((construct) => results.find((candidate) => candidate.construct === construct)?.overall ?? null)
     .filter((value): value is number => value !== null);
   return {
     score: values.length ? Math.round(values.reduce((sum, value) => sum + value, 0) / values.length) : null,
@@ -269,15 +284,20 @@ export function assessConservativeSubtypeV2(answers: BeliefAnswersV2): Conservat
   const conservative = assessFamiliesV2Canonical(answers).find((family) => family.id === 'conservatism');
   if (!conservative || conservative.overall === null || conservative.overall < 60) return null;
 
-  const constructsResult = calculateConstructModesV2(answers);
-  const religion = constructsResult.find((item) => item.construct === 'religion-public-role')?.overall ?? null;
-  const subsidiarity = constructsResult.find((item) => item.construct === 'subsidiarity')?.overall ?? null;
-  const ownership = constructsResult.find((item) => item.construct === 'ownership')?.overall ?? null;
-  const redistribution = constructsResult.find((item) => item.construct === 'redistribution')?.overall ?? null;
-  const pluralism = constructsResult.find((item) => item.construct === 'pluralism')?.overall ?? null;
+  const results = calculateConstructModesV2(answers);
+  const get = (construct: BeliefConstruct) => results.find((item) => item.construct === construct);
+  const religion = get('religion-public-role');
+  const subsidiarity = get('subsidiarity');
+  const ownership = get('ownership');
+  const redistribution = get('redistribution');
+  const pluralism = get('pluralism');
+  const completeTriplet = (result: ConstructModeResultV2 | undefined) => Boolean(result && result.think !== null && result.feel !== null && result.act !== null);
 
-  if (religion === null) return null;
-  if (religion <= 40) {
+  if (!completeTriplet(religion) || !completeTriplet(subsidiarity)) return null;
+  const religionScore = religion!.overall!;
+  const subsidiarityScore = subsidiarity!.overall!;
+
+  if (religionScore <= 40) {
     return {
       id: 'traditional-secular-conservatism',
       name: 'Traditional / secular conservatism',
@@ -285,10 +305,12 @@ export function assessConservativeSubtypeV2(answers: BeliefAnswersV2): Conservat
     };
   }
 
-  if (religion >= 60) {
-    const socialMarketCompatible = ownership !== null && redistribution !== null && ownership >= 40 && redistribution <= 75;
-    const democraticCompatible = pluralism !== null && pluralism <= 60;
-    if (subsidiarity !== null && subsidiarity >= 60 && socialMarketCompatible && democraticCompatible) {
+  if (religionScore >= 60) {
+    const socialMarketKnown = completeTriplet(ownership) && completeTriplet(redistribution);
+    const democraticKnown = completeTriplet(pluralism);
+    const socialMarketCompatible = Boolean(socialMarketKnown && ownership!.overall! >= 40 && redistribution!.overall! <= 75);
+    const democraticCompatible = Boolean(democraticKnown && pluralism!.overall! <= 60);
+    if (subsidiarityScore >= 60 && socialMarketCompatible && democraticCompatible) {
       return {
         id: 'christian-democracy',
         name: 'Christian democracy',
@@ -301,7 +323,6 @@ export function assessConservativeSubtypeV2(answers: BeliefAnswersV2): Conservat
       explanation: 'Religious moral tradition is important, but the additional subsidiarity and social-market combination is not strong enough for the Christian-democratic subtype.',
     };
   }
-
   return null;
 }
 
@@ -321,8 +342,12 @@ export function validateCanonicalBeliefV2() {
       if (triplet.filter((item) => item.mode === mode).length !== 1) errors.push(`${construct} must have one ${mode} item`);
     }
   }
-  const a14 = lockedBeliefItemsV2.find((item) => item.id === 'A14');
-  if (!a14 || !a14.negative.includes('higher level of government') || !a14.positive.includes('leave responsibility there')) errors.push('Subsidiarity ACT poles are not aligned with THINK/FEEL orientation');
+  const nationhood = lockedBeliefItemsV2.filter((item) => item.construct === 'nationhood-membership');
+  if (nationhood.some((item) => !`${item.negative} ${item.positive}`.toLowerCase().includes('citizenship'))) errors.push('Nationhood THINK / FEEL / ACT items must remain aligned on citizenship-at-birth');
+  const populistAct = lockedBeliefItemsV2.find((item) => item.id === 'A11');
+  if (!populistAct || /court|institution|media|opposition/.test(`${populistAct.negative} ${populistAct.positive}`.toLowerCase())) errors.push('Populism ACT item must not collapse into anti-pluralism');
+  const subsidiarityAct = lockedBeliefItemsV2.find((item) => item.id === 'A14');
+  if (!subsidiarityAct || !subsidiarityAct.negative.includes('higher level of government') || !subsidiarityAct.positive.includes('leave responsibility there')) errors.push('Subsidiarity ACT poles are not aligned with THINK/FEEL orientation');
   return { valid: errors.length === 0, errors };
 }
 
