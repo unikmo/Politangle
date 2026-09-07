@@ -8,7 +8,9 @@ export type DeepBeliefAxis =
   | 'populism'
   | 'ecology'
   | 'nationhood'
-  | 'democracyRejection';
+  | 'democracyRejection'
+  | 'religionPublicRole'
+  | 'subsidiarity';
 
 export type DeepBeliefQuestion = {
   id: string;
@@ -54,7 +56,7 @@ export type DeepBeliefAxisResult = {
 };
 
 export type DeepBeliefResult = {
-  version: 'deep-belief-score-1.1.0';
+  version: 'deep-belief-score-1.2.0';
   createdAt: string;
   complete: boolean;
   answeredCount: number;
@@ -94,6 +96,8 @@ export const deepBeliefAxisMeta: Record<DeepBeliefAxis, { negative: string; posi
   ecology: { negative: 'Ecological limits / structural change', positive: 'Growth / incremental adaptation' },
   nationhood: { negative: 'Shared / post-national authority', positive: 'Nation-centered self-determination' },
   democracyRejection: { negative: 'Competitive democracy as necessary', positive: 'Openness to non-democratic rule' },
+  religionPublicRole: { negative: 'Institutionally secular public policy', positive: 'Religiously inspired public policy' },
+  subsidiarity: { negative: 'More direct central responsibility', positive: 'Subsidiarity / distributed responsibility' },
 };
 
 const deepBeliefAxes = Object.keys(deepBeliefAxisMeta) as DeepBeliefAxis[];
@@ -184,7 +188,7 @@ export function calculateDeepBeliefResult(
   }
 
   return {
-    version: 'deep-belief-score-1.1.0',
+    version: 'deep-belief-score-1.2.0',
     createdAt,
     complete: answeredCount === questions.length,
     answeredCount,
