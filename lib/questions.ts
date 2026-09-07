@@ -11,7 +11,7 @@ export type Question = {
   evidenceIds: readonly string[];
 };
 
-export const QUICK_QUESTIONNAIRE_VERSION = 'quick-2026.09-v2.1' as const;
+export const QUICK_QUESTIONNAIRE_VERSION = 'quick-2026.09-v2.2' as const;
 
 export const quickQuestions: readonly Question[] = [
   {
@@ -114,10 +114,10 @@ export const quickQuestions: readonly Question[] = [
   {
     id: 13,
     dimension: 'society',
-    construct: 'religion and tradition in public policy',
-    negative: 'Government should avoid giving religious or cultural traditions a special role in public policy.',
-    positive: 'Long-established religious or cultural traditions may deserve a special role in public policy.',
-    evidenceIds: ['SEP-LIBERALISM', 'SEP-CONSERVATISM', 'CAMBRIDGE-CHRISTIAN-DEMOCRACY'],
+    construct: 'abortion and legal autonomy',
+    negative: 'Abortion should generally remain legally available because the pregnant person should have primary decision-making authority.',
+    positive: 'Abortion should generally face stronger legal limits because the state has a responsibility to protect prenatal life.',
+    evidenceIds: ['PEW-ABORTION-GLOBAL', 'CHES-ECON-GALTAN'],
   },
 
   {
