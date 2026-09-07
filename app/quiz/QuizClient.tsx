@@ -1,8 +1,8 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { answerOptions, quickQuestions } from '../../lib/questions';
+import { answerOptions, quickQuestions, type Question } from '../../lib/questions';
 import { calculateQuickResult, type Answers } from '../../lib/scoring';
 
 function shuffledQuestions() {
@@ -14,9 +14,14 @@ function shuffledQuestions() {
 
 export default function QuizClient() {
   const router = useRouter();
-  const questions = useMemo(() => shuffledQuestions(), []);
+  const [questions, setQuestions] = useState<Question[]>(quickQuestions);
   const [index, setIndex] = useState(0);
   const [answers, setAnswers] = useState<Answers>({});
+
+  useEffect(() => {
+    setQuestions(shuffledQuestions());
+  }, []);
+
   const current = questions[index];
   const selected = answers[current.id];
   const answeredCount = Object.keys(answers).length;
