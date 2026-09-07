@@ -96,6 +96,10 @@ export function createQuickSession(seed: number | string, startedAt = new Date()
   };
 }
 
+export function getQuestion(questionId: number) {
+  return questionById.get(questionId) ?? null;
+}
+
 export function isAnswerValue(value: unknown): value is AnswerValue {
   return typeof value === 'number' && validAnswers.has(value as AnswerValue);
 }
@@ -238,6 +242,32 @@ export function parseStoredSession(raw: string | null): QuickSession | null {
     if (typeof candidate.startedAt !== 'string') return null;
 
     return candidate as QuickSession;
+  } catch {
+    return null;
+  }
+}
+
+export function parseStoredResult(raw: string | null): QuickResult | null {
+  if (!raw) return null;
+
+  try {
+    const candidate = JSON.parse(raw) as Partial<QuickResult>;
+    if (candidate.questionnaireVersion !== QUICK_QUESTIONNAIRE_VERSION) return null;
+    if (candidate.scoringVersion !== QUICK_SCORING_VERSION) return null;
+    if (typeof candidate.createdAt !== 'string') return null;
+    if (typeof candidate.complete !== 'boolean') return null;
+    if (typeof candidate.answeredCount !== 'number' || typeof candidate.unsureCount !== 'number') return null;
+    if (!candidate.scores || typeof candidate.scores !== 'object') return null;
+
+    for (const dimension of dimensions) {
+      const score = candidate.scores[dimension];
+      if (!score) return null;
+      if (score.score !== null && (typeof score.score !== 'number' || score.score < 0 || score.score > 100)) return null;
+      if (typeof score.coverage !== 'number' || score.coverage < 0 || score.coverage > 100) return null;
+      if (typeof score.label !== 'string') return null;
+    }
+
+    return candidate as QuickResult;
   } catch {
     return null;
   }
