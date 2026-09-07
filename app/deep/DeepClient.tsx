@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
 import {
-  assessConservativeSubtypeV2,
   assessFamiliesV2Canonical,
   assessTendenciesV2,
   calculatePolygonV2Canonical,
@@ -32,6 +31,7 @@ import {
   revealLiteracyAnswer,
   type LiteracySession,
 } from '../../lib/literacy-session';
+import { assessNuancesV2 } from '../../lib/nuance-model';
 import { pairedAnswerOptions, type AnswerValue } from '../../lib/questions';
 
 const BELIEF_SESSION_KEY = 'politangle.believe.v2.session';
@@ -50,7 +50,7 @@ type DeepOutput = {
   polygon: ReturnType<typeof calculatePolygonV2Canonical>;
   families: ReturnType<typeof assessFamiliesV2Canonical>;
   tendencies: ReturnType<typeof assessTendenciesV2>;
-  subtype: ReturnType<typeof assessConservativeSubtypeV2>;
+  nuances: ReturnType<typeof assessNuancesV2>;
   literacy: DeepLiteracyResult;
 };
 
@@ -88,7 +88,7 @@ function buildOutput(belief: BeliefV2Session, literacy: LiteracySession): DeepOu
     polygon: calculatePolygonV2Canonical(belief.answers),
     families: assessFamiliesV2Canonical(belief.answers),
     tendencies: assessTendenciesV2(belief.answers),
-    subtype: assessConservativeSubtypeV2(belief.answers),
+    nuances: assessNuancesV2(belief.answers),
     literacy: calculateDeepLiteracyResult(deepLiteracyQuestions, literacy.answers),
   };
 }
@@ -245,15 +245,27 @@ export default function DeepClient() {
               </tbody>
             </table>
           </div>
-          <p className="engine-help">A large Think/Feel/Act spread is reported as a tension to explore, not as hypocrisy or a failed consistency test.</p>
+          <p className="engine-help">The five headline families remain Liberalism, Conservatism, Social democracy, Socialism and Green politics. A large Think/Feel/Act spread is reported as a tension to explore, not as hypocrisy or a failed consistency test.</p>
         </article>
 
         <article className="engine-card" style={{ marginTop: 18 }}>
-          <p className="engine-kicker">3 · Cross-cutting tendencies and subtype</p>
+          <p className="engine-kicker">3 · Cross-cutting tendencies and conditional nuances</p>
           {output.tendencies.map((item) => (
             <div className="deep-literacy-line" key={item.id}><span>{item.id.replaceAll('-', ' ')}</span><strong>{item.score === null ? '—' : `${item.score} / 100`}</strong></div>
           ))}
-          {output.subtype && <p className="engine-help"><strong>{output.subtype.name}:</strong> {output.subtype.explanation}</p>}
+          {output.nuances.length > 0 && (
+            <div style={{ marginTop: 16 }}>
+              {output.nuances.map((nuance) => (
+                <div className="engine-help" key={nuance.id} style={{ marginTop: 12 }}>
+                  <strong>{nuance.name}</strong> · {nuance.anchorFamily.replaceAll('-', ' ')} side · {nuance.strength === 'clear' ? 'clear signal' : 'emerging signal'}
+                  <br />
+                  {nuance.explanation}
+                  {nuance.caution && <><br /><span>{nuance.caution}</span></>}
+                </div>
+              ))}
+            </div>
+          )}
+          <p className="engine-help">Nuanced labels are shown only when the dedicated answer pattern supports them. They do not add sectors to the five-family headline model.</p>
         </article>
 
         <article className="engine-card" style={{ marginTop: 18 }}>
@@ -268,7 +280,7 @@ export default function DeepClient() {
           <button className="engine-primary-link" type="button" onClick={restartDeep}>Restart Deep + training</button>
           <span>Raw political answers remain in this browser session and are not written to Firestore.</span>
         </div>
-        <p className="engine-disclaimer">Content-validation build. Family loadings and numeric bands remain evidence-informed priors pending respondent calibration, reliability testing and cross-national validation.</p>
+        <p className="engine-disclaimer">Content-validation build. Family loadings, nuance thresholds and numeric bands remain evidence-informed priors pending respondent calibration, reliability testing and cross-national validation.</p>
       </section>
     );
   }
