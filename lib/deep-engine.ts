@@ -1,7 +1,14 @@
 import type { AnswerValue } from './questions';
 
 export type DeepSection = 'classify' | 'understand';
-export type DeepBeliefAxis = 'pluralism' | 'ownership' | 'nativism' | 'populism' | 'ecology';
+export type DeepBeliefAxis =
+  | 'pluralism'
+  | 'ownership'
+  | 'nativism'
+  | 'populism'
+  | 'ecology'
+  | 'nationhood'
+  | 'democracyRejection';
 
 export type DeepBeliefQuestion = {
   id: string;
@@ -47,7 +54,7 @@ export type DeepBeliefAxisResult = {
 };
 
 export type DeepBeliefResult = {
-  version: 'deep-belief-score-1.0.0';
+  version: 'deep-belief-score-1.1.0';
   createdAt: string;
   complete: boolean;
   answeredCount: number;
@@ -85,6 +92,8 @@ export const deepBeliefAxisMeta: Record<DeepBeliefAxis, { negative: string; posi
   nativism: { negative: 'Civic / inclusive membership', positive: 'Inherited / native priority' },
   populism: { negative: 'Plural interests / compromise', positive: 'People-versus-elite general will' },
   ecology: { negative: 'Ecological limits / structural change', positive: 'Growth / incremental adaptation' },
+  nationhood: { negative: 'Shared / post-national authority', positive: 'Nation-centered self-determination' },
+  democracyRejection: { negative: 'Competitive democracy as necessary', positive: 'Openness to non-democratic rule' },
 };
 
 const deepBeliefAxes = Object.keys(deepBeliefAxisMeta) as DeepBeliefAxis[];
@@ -156,7 +165,7 @@ export function calculateDeepBeliefResult(
     const max = answered * 2;
     const score = answered === 0 ? null : Math.round(((raw + max) / (max * 2)) * 100);
     const minimumScoredResponses = subset.length <= 2 ? subset.length : Math.ceil(subset.length * 0.67);
-    const interpretable = answered >= minimumScoredResponses;
+    const interpretable = subset.length > 0 && answered >= minimumScoredResponses;
     const meta = deepBeliefAxisMeta[axis];
 
     axes[axis] = {
@@ -175,7 +184,7 @@ export function calculateDeepBeliefResult(
   }
 
   return {
-    version: 'deep-belief-score-1.0.0',
+    version: 'deep-belief-score-1.1.0',
     createdAt,
     complete: answeredCount === questions.length,
     answeredCount,
