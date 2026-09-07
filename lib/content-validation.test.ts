@@ -75,7 +75,7 @@ test('Deep literacy bank contains nine classify and six understand items', () =>
 test('canonical literacy answer keys distinguish key traditions', () => {
   const expected: Record<string, string> = {
     C1: 'social-democracy',
-    C2: 'democratic-socialism',
+    C2: 'socialism',
     C3: 'libertarianism',
     C4: 'conservatism',
     C5: 'christian-democracy',
@@ -94,4 +94,12 @@ test('canonical literacy answer keys distinguish key traditions', () => {
   for (const question of deepLiteracyQuestions) {
     assert.deepEqual(question.acceptedAnswerSets, [[expected[question.id]]], `Unexpected key for ${question.id}`);
   }
+});
+
+test('public literacy training does not require democratic socialism as a headline concept', () => {
+  const visibleText = deepLiteracyQuestions
+    .flatMap((question) => [question.prompt, question.explanation, ...question.options.map((option) => option.label)])
+    .join(' ')
+    .toLowerCase();
+  assert.equal(visibleText.includes('democratic socialism'), false);
 });
