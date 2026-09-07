@@ -8,7 +8,7 @@ Politangle separates three layers instead of forcing unlike concepts into one ra
 
 ### A. Main political families
 
-The default result contains five broad families:
+The default result contains exactly five broad families:
 
 1. Liberalism
 2. Conservatism
@@ -16,33 +16,42 @@ The default result contains five broad families:
 4. Socialism
 5. Green politics
 
-The public table stays deliberately short. A political-theory label does **not** earn a separate score merely because scholars distinguish it. Separate labels must materially improve an ordinary user's understanding and have dedicated evidence sufficient to distinguish them reliably.
+These five remain the headline arc/polygon. A political-theory label does **not** earn a sixth headline score merely because scholars distinguish it.
+
+The headline layer is intentionally broad and stable. Several families can be compatible with one respondent at the same time.
 
 ### B. Cross-cutting political tendencies
 
-These are reported separately because they can combine with several main families:
+These remain separate because they can combine with several main families:
 
 - Nationalism
 - Populism
 - Authority / democratic constraints
 
-Nationalism and populism therefore do not compete with conservatism, liberalism or social democracy for one headline ideology label.
+Nationalism and populism therefore do not compete with Liberalism, Conservatism, Social democracy, Socialism or Green politics for one headline identity label.
 
-### C. Selective subtypes and contextual asides
+### C. Conditional nuance layer
 
-Subtypes surface only when the distinction is both useful and supported by dedicated discriminators. The first implemented subtype logic is inside Conservatism:
+Narrower concepts can still be useful, but only as **conditional nuances**. They do not expand the main five-family arc and they are never shown merely because the concept exists in political theory.
 
-- Traditional / secular conservatism
-- Christian democracy
-- Religious-conservative orientation
+A nuance is eligible only when:
 
-Christian democracy is not inferred from social conservatism or welfare support alone. A Christian-democratic subtype requires a combination of religious inspiration in politics, subsidiarity, social-market-compatible economics and compatibility with competitive democratic constraints.
+- the respondent's measured pattern contains dedicated supporting evidence;
+- the narrower label materially improves interpretation;
+- the result can be stated without pretending that the nuance is a new headline ideology probability.
 
-Narrower variants that do not clear the same usefulness/evidence bar remain **contextual asides**, not scored outputs or required literacy targets. In particular, Democratic socialism is not retained as a separate compatibility profile or CLASSIFY target; the public model teaches the broader Socialism family instead. Historical or academic references to narrower socialist variants may appear only when they clarify the broad family's range.
+Current implemented examples:
 
-Historical importance is a separate criterion from current result taxonomy. Communism and Fascism can therefore appear in civic/history literacy without being routine user-identity categories.
+- **Democratic-socialist tendency** — anchored to the Socialist side. It requires a meaningful Socialism family match plus substantially greater social/public/cooperative/worker ownership **and** separately measured support for pluralist democratic constraints and limits on concentrated state power. Collective ownership by itself is not enough.
+- **Christian democracy** — anchored to the Conservative side. It requires the existing conservative-family signal plus religious inspiration, subsidiarity, social-market-compatible economics and democratic compatibility. Religion or welfare support alone is not enough.
+- **Traditional/secular conservatism** and **religious-conservative orientation** — shown only when the conservative subtype discriminators support them.
+- **Far-right tendency (radical-right pattern)** — positioned on the Conservative side for orientation but explicitly not treated as ordinary Conservatism. It requires the combined pattern of strongly nation-centered membership, authoritarian-order preference and people-versus-elite populism. The current nationhood-membership construct is a screening proxy rather than a fully validated nativism scale, so this output remains a guarded pattern signal rather than an identity or extremist classification.
 
-Evidence bindings for the conservative subtype: `SEP-CONSERVATISM`, `CAMBRIDGE-CHRISTIAN-DEMOCRACY`, `CAMBRIDGE-CD-SUBSIDIARITY`, `CAMBRIDGE-CD-RELIGIOUS-INSPIRATION`, `VDEM-LIBERAL-DEMOCRACY`.
+The nuance layer is deliberately asymmetric. Politangle does not invent a matching left or right subtype simply to make the diagram look balanced. A nuance appears only when the questionnaire contains enough evidence to support it.
+
+Historical importance is a separate criterion from respondent classification. Communism and Fascism can therefore appear in civic/history literacy without becoming routine user-identity categories. Fascism/extreme-right classification remains more demanding than the radical-right screening pattern and must not be inferred from ordinary conservative, nationalist or sovereignty preferences.
+
+Evidence bindings include `SEP-SOCIALISM`, `VDEM-LIBERAL-DEMOCRACY`, `SEP-CONSERVATISM`, `CAMBRIDGE-CHRISTIAN-DEMOCRACY`, `CAMBRIDGE-CD-SUBSIDIARITY`, `CAMBRIDGE-CD-RELIGIOUS-INSPIRATION`, `MUDDE-RADICAL-RIGHT`, `MUDDE-POPULISM`, and `PIRRO-FAR-RIGHT`.
 
 ## Compatibility index
 
@@ -64,22 +73,22 @@ Tendency scores are directional rather than identity probabilities.
 
 - Nationalism measures nation-centered self-determination versus shared/post-national authority.
 - Populism measures people-versus-elite general-will framing versus plural interests and compromise.
-- Authority / democratic constraints combines the existing power axis with pluralism and explicit democracy-rejection evidence.
+- Authority / democratic constraints combines authority/order and pluralism evidence.
 
-A strong authority or democracy-rejection result can produce an authoritarian-risk signal. That signal remains separate from left/right family labels.
+A strong authority or anti-pluralist pattern remains separate from the five family scores.
 
 ## Populism and state power
 
 Politangle does **not** code populism itself as automatically authoritarian.
 
-The public wording follows research from the V-Dem Institute and International IDEA:
+The public wording follows research from V-Dem, International IDEA and comparative populism scholarship:
 
 - Populism is commonly defined through people-centrism, anti-elitism and a claim to the general will.
 - Populism can attach to different host ideologies.
 - Populist governments can erode checks and balances and contribute to democratic backsliding.
-- The stronger discriminator for authoritarian/autocratizing risk is anti-pluralism or rejection of democratic constraints, rather than the populist label alone.
+- The stronger discriminator for authoritarian/autocratizing risk is anti-pluralism or rejection of democratic constraints rather than the populist label alone.
 
-For this reason, the populism tendency uses the dedicated populism axis. Politangle separately reports whether the respondent’s answers support or reject competitive democracy and institutional constraints.
+For this reason, the populism tendency uses the dedicated populism construct while democratic-constraint evidence is reported separately.
 
 Evidence bindings: `VDEM-POPULISM-AUTOCRATIZATION`, `IDEA-POPULISM-DEMOCRACY`, `MUDDE-POPULISM`.
 
@@ -99,24 +108,19 @@ Abortion is **not** treated as a universal defining condition for any broad ideo
 
 Evidence binding: `PEW-ABORTION-GLOBAL`.
 
-## Christian democracy subtype discriminators
+## Fresh Red Team pass — nuance without taxonomy inflation
 
-Dedicated religion/public-role and subsidiarity constructs are used together with existing economic and democratic-constraint evidence. They do not independently create a Christian-democratic label.
+The revised architecture was challenged against seven likely failure modes:
 
-The purpose is to distinguish a Christian-democratic pattern from generic or secular conservatism without turning the assessment into a specialist political-theory exam.
+1. **Turning every scholarly subtype into a result category.** Rejected. The five headline families remain fixed.
+2. **Removing useful nuance entirely.** Rejected. Narrow labels may surface when the respondent actually shows the relevant pattern.
+3. **Democratic socialism = any strong left economic preference.** Rejected. The nuance additionally requires pluralist-democratic and constrained-power signals.
+4. **Far right = ordinary conservatism or nationalism.** Rejected. The guarded radical-right pattern requires the combined nationhood/nativism-proxy, authoritarian-order and populism pattern.
+5. **Far-right pattern = fascism/extreme right.** Rejected. Those concepts require stronger, dedicated anti-democratic/ultranationalist evidence and remain historically and analytically distinct.
+6. **Christian democracy = religious conservatism.** Rejected. Christian democracy requires the specific religion + subsidiarity + social-market + democratic combination.
+7. **Artificial left/right symmetry.** Rejected. Nuances are not added merely to create visual balance.
 
-## Fresh Red Team pass — taxonomy restraint
-
-The simplified architecture was challenged against six likely failure modes:
-
-1. **Treating nationalism and populism as equivalent to full ideological families.** Rejected. Both remain cross-cutting tendencies.
-2. **Populism = authoritarianism shortcut.** Rejected. Populism and democratic-constraint risk remain separately measured.
-3. **Christian democracy = socially conservative + welfare.** Rejected. The subtype requires dedicated religion/subsidiarity evidence plus social-market and democratic compatibility.
-4. **Christian democracy = generic religious conservatism.** Rejected. Religious conservatism remains a broader fallback when the specifically Christian-democratic combination is incomplete.
-5. **Taxonomy inflation.** Rejected. The headline result is limited to five families; a narrower concept is not separately scored unless it materially improves interpretation.
-6. **Popularity-only pruning.** Rejected. Politangle does not use an unsupported global follower-percentage threshold. Historical/civic importance and explanatory usefulness can justify mentioning a concept as context without promoting it to a scored identity.
-
-Decision: **TEST WITH CONDITIONS**. Removing low-value subtype scoring reduces label noise without changing the underlying ownership, democracy, religion, authority or other measured dimensions. The broad-family thresholds, cross-national invariance and wording effects remain empirical questions.
+Decision: **TEST WITH CONDITIONS**. The layer is suitable for respondent testing as a conditional explanatory system, but the nuance thresholds, the nationhood-to-nativism proxy, family calibration, cross-national invariance and wording effects remain empirical questions.
 
 ## Source-selection rule
 
@@ -128,4 +132,4 @@ For politically sensitive claims, Politangle prioritizes:
 - nonpartisan/nonadvocacy research organizations;
 - intergovernmental research institutions.
 
-Descriptions should not be changed merely to make a left-, right-, liberal-, conservative-, nationalist- or socialist-facing result appear more favorable. Where evidence does not support a universal characterization, the public table must say `varies` or state the narrower conditions under which the characterization applies.
+Descriptions should not be changed merely to make a left-, right-, liberal-, conservative-, nationalist- or socialist-facing result appear more favorable. Where evidence does not support a universal characterization, the public result must say so or state the narrower conditions under which the characterization applies.
