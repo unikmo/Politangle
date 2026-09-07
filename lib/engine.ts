@@ -5,10 +5,11 @@ import {
   type AnswerValue,
   type Dimension,
   type Question,
+  type ScoredAnswerValue,
 } from './questions';
 
-export const QUICK_SCORING_VERSION = 'quick-score-1.0.1' as const;
-export const QUICK_SESSION_SCHEMA_VERSION = 1 as const;
+export const QUICK_SCORING_VERSION = 'quick-score-1.1.0' as const;
+export const QUICK_SESSION_SCHEMA_VERSION = 2 as const;
 
 export type Answers = Partial<Record<number, AnswerValue>>;
 
@@ -49,7 +50,7 @@ export type QuickSession = {
 };
 
 const dimensions = Object.keys(dimensionMeta) as Dimension[];
-const validAnswers = new Set<AnswerValue>([-2, -1, 0, 1, 2]);
+const validAnswers = new Set<AnswerValue>([-2, -1, 0, 1, 2, 'unsure']);
 const questionById = new Map(quickQuestions.map((question) => [question.id, question]));
 
 function hashSeed(input: string) {
@@ -103,7 +104,34 @@ export function getQuestion(questionId: number) {
 }
 
 export function isAnswerValue(value: unknown): value is AnswerValue {
-  return typeof value === 'number' && validAnswers.has(value as AnswerValue);
+  return validAnswers.has(value as AnswerValue);
+}
+
+export function isScoredAnswer(value: AnswerValue | undefined): value is ScoredAnswerValue {
+  return typeof value === 'number' && value >= -2 && value <= 2;
+}
+
+export function isQuestionFlipped(seed: number, questionId: number) {
+  return (hashSeed(`${seed}:${questionId}:poles`) & 1) === 1;
+}
+
+export function getDisplayedQuestion(session: QuickSession, question: Question) {
+  const flipped = isQuestionFlipped(session.seed, question.id);
+  return {
+    flipped,
+    first: flipped ? question.positive : question.negative,
+    second: flipped ? question.negative : question.positive,
+  };
+}
+
+export function displayedToStoredAnswer(value: AnswerValue, flipped: boolean): AnswerValue {
+  if (value === 'unsure' || value === 0 || !flipped) return value;
+  return (-value) as ScoredAnswerValue;
+}
+
+export function storedToDisplayedAnswer(value: AnswerValue | undefined, flipped: boolean): AnswerValue | undefined {
+  if (value === undefined || value === 'unsure' || value === 0 || !flipped) return value;
+  return (-value) as ScoredAnswerValue;
 }
 
 export function validateQuestionBank(questions: readonly Question[] = quickQuestions) {
@@ -114,18 +142,17 @@ export function validateQuestionBank(questions: readonly Question[] = quickQuest
     if (ids.has(question.id)) errors.push(`Duplicate question id: ${question.id}`);
     ids.add(question.id);
     if (!dimensionMeta[question.dimension]) errors.push(`Unknown dimension on question ${question.id}`);
-    if (question.direction !== -1 && question.direction !== 1) errors.push(`Invalid direction on question ${question.id}`);
-    if (!question.text.trim()) errors.push(`Empty text on question ${question.id}`);
+    if (!question.construct.trim()) errors.push(`Question ${question.id} has no construct label`);
+    if (!question.negative.trim() || !question.positive.trim()) errors.push(`Question ${question.id} needs two non-empty poles`);
+    if (question.negative.trim() === question.positive.trim()) errors.push(`Question ${question.id} has identical poles`);
+    if (question.evidenceIds.length === 0) errors.push(`Question ${question.id} has no evidence binding`);
   }
 
   if (questions.length !== 26) errors.push(`Quick must contain 26 questions; found ${questions.length}`);
 
   for (const dimension of dimensions) {
     const subset = questions.filter((question) => question.dimension === dimension);
-    if (subset.length < 5) errors.push(`${dimension} needs at least 5 questions`);
-    if (!subset.some((question) => question.direction === -1) || !subset.some((question) => question.direction === 1)) {
-      errors.push(`${dimension} needs both keyed directions`);
-    }
+    if (subset.length < 6) errors.push(`${dimension} needs at least 6 questions`);
   }
 
   return { valid: errors.length === 0, errors };
@@ -145,7 +172,7 @@ export function validateAnswers(answers: Answers) {
 
 export function answerQuestion(session: QuickSession, questionId: number, value: AnswerValue): QuickSession {
   if (!questionById.has(questionId)) throw new Error(`Unknown question id: ${questionId}`);
-  if (!isAnswerValue(value)) throw new Error(`Invalid answer value: ${value}`);
+  if (!isAnswerValue(value)) throw new Error(`Invalid answer value: ${String(value)}`);
 
   return {
     ...session,
@@ -155,7 +182,7 @@ export function answerQuestion(session: QuickSession, questionId: number, value:
 
 export function getProgress(answers: Answers) {
   const answeredCount = quickQuestions.filter((question) => isAnswerValue(answers[question.id])).length;
-  const unsureCount = quickQuestions.filter((question) => answers[question.id] === 0).length;
+  const unsureCount = quickQuestions.filter((question) => answers[question.id] === 'unsure').length;
   return {
     answeredCount,
     unsureCount,
@@ -191,11 +218,11 @@ export function calculateQuickResult(answers: Answers, createdAt = new Date().to
     for (const question of questions) {
       const answer = answers[question.id];
       if (answer === undefined) continue;
-      if (answer === 0) {
+      if (answer === 'unsure') {
         unsure += 1;
         continue;
       }
-      raw += answer * question.direction;
+      raw += answer;
       answered += 1;
     }
 
