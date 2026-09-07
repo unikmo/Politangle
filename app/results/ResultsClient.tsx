@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { parseStoredResult, type QuickResult } from '../../lib/engine';
 
-const RESULT_KEY = 'politangle.quick.result.v1';
+const RESULT_KEY = 'politangle.quick.result.v2';
 const dimensionOrder = ['economy', 'society', 'power', 'world'] as const;
 
 export default function ResultsClient() {
@@ -36,7 +36,7 @@ export default function ResultsClient() {
       <article className="engine-card">
         <p className="engine-kicker">Your Political Angle</p>
         <h1>Four dimensions, scored independently.</h1>
-        <p className="engine-help">A score near 50 means your scored answers on that dimension are mixed. “Not sure” responses are excluded from the score and shown through coverage instead.</p>
+        <p className="engine-help">A score near 50 means your scored choices are genuinely mixed or balanced on that dimension. “Not sure / I do not understand” is excluded from the score and shown through coverage instead.</p>
 
         <div className="engine-results">
           {dimensionOrder.map((dimension) => {
@@ -67,7 +67,7 @@ export default function ResultsClient() {
         <span>Questionnaire {result.questionnaireVersion} · scoring {result.scoringVersion}</span>
       </div>
 
-      <p className="engine-disclaimer">Validation engine only. These results are descriptive outputs from the current question model, not a psychometrically validated diagnosis and not a party or ideology assignment.</p>
+      <p className="engine-disclaimer">Content-validation engine only. These results are descriptive outputs from the current question model, not a psychometrically validated diagnosis and not a party or ideology assignment.</p>
     </section>
   );
 }
