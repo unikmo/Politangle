@@ -11,15 +11,15 @@ export type Question = {
   evidenceIds: readonly string[];
 };
 
-export const QUICK_QUESTIONNAIRE_VERSION = 'quick-2026.09-v2' as const;
+export const QUICK_QUESTIONNAIRE_VERSION = 'quick-2026.09-v2.1' as const;
 
 export const quickQuestions: readonly Question[] = [
   {
     id: 1,
     dimension: 'economy',
     construct: 'public versus private provision',
-    negative: 'Essential services such as water, electricity and public transport should rely more on public or community provision.',
-    positive: 'Essential services should rely more on private providers, with government mainly setting and enforcing the rules.',
+    negative: 'When an essential service has little realistic competition, provision should lean more toward public or community ownership.',
+    positive: 'When an essential service has little realistic competition, provision should lean more toward private ownership under public regulation.',
     evidenceIds: ['CHES-ECON-GALTAN'],
   },
   {
@@ -50,16 +50,16 @@ export const quickQuestions: readonly Question[] = [
     id: 5,
     dimension: 'economy',
     construct: 'ownership of strategic industries',
-    negative: 'Public ownership can be appropriate for some strategic industries or natural monopolies.',
-    positive: 'Strategic industries and natural monopolies should normally remain privately owned under regulation.',
+    negative: 'Public ownership can be appropriate for industries considered strategically essential to the country.',
+    positive: 'Industries considered strategically essential should normally remain privately owned under public regulation.',
     evidenceIds: ['CHES-ECON-GALTAN', 'SEP-SOCIALISM'],
   },
   {
     id: 6,
     dimension: 'economy',
     construct: 'economic regulation',
-    negative: 'When regulation involves a trade-off, policy should lean more toward protecting workers and consumers even if business costs rise.',
-    positive: 'When regulation involves a trade-off, policy should lean more toward business flexibility and competition even if protections are lighter.',
+    negative: 'When economic regulation clearly raises business costs, policy should usually keep stronger public protections.',
+    positive: 'When economic regulation clearly raises business costs, policy should usually reduce regulation to preserve business flexibility.',
     evidenceIds: ['CHES-ECON-GALTAN'],
   },
   {
@@ -98,9 +98,9 @@ export const quickQuestions: readonly Question[] = [
   {
     id: 11,
     dimension: 'society',
-    construct: 'civic education and social change',
-    negative: 'Schools should expose students to a broad range of changing social identities and viewpoints.',
-    positive: 'Schools should place more emphasis on established social norms and shared traditions.',
+    construct: 'recognition of changing social identities',
+    negative: 'Public institutions should be relatively open to formally recognizing newer social identities as society changes.',
+    positive: 'Public institutions should be cautious about formally recognizing newer social identities until they are broadly established.',
     evidenceIds: ['CHES-ECON-GALTAN'],
   },
   {
@@ -157,7 +157,7 @@ export const quickQuestions: readonly Question[] = [
     dimension: 'power',
     construct: 'political speech',
     negative: 'Peaceful political speech should remain legal even when it is deeply offensive.',
-    positive: 'The state may restrict some deeply offensive political speech in order to protect public order or vulnerable groups.',
+    positive: 'The state may restrict some deeply offensive political speech when it believes public order would otherwise be seriously threatened.',
     evidenceIds: ['VDEM-LIBERAL-DEMOCRACY', 'SEP-LIBERALISM'],
   },
   {
@@ -197,8 +197,8 @@ export const quickQuestions: readonly Question[] = [
     id: 23,
     dimension: 'world',
     construct: 'immigration and national control',
-    negative: 'Immigration rules should give substantial weight to cross-border mobility and opportunities for newcomers.',
-    positive: 'Immigration rules should give greater weight to national control and limiting the pace of entry.',
+    negative: 'Immigration rules should lean more toward allowing cross-border mobility, even when that reduces national control over the pace of entry.',
+    positive: 'Immigration rules should lean more toward national control over the pace of entry, even when that reduces cross-border mobility.',
     evidenceIds: ['CHES-2024', 'SEP-NATIONALISM'],
   },
   {
@@ -221,17 +221,17 @@ export const quickQuestions: readonly Question[] = [
     id: 26,
     dimension: 'world',
     construct: 'national interest versus global responsibility',
-    negative: 'Governments should sometimes accept domestic costs when that is necessary to meet shared global responsibilities.',
-    positive: 'Governments should prioritize their own citizens\' immediate interests even when that weakens shared global action.',
+    negative: 'Governments should sometimes accept domestic costs when that is necessary to meet shared international obligations.',
+    positive: 'Governments should prioritize their own citizens\' immediate interests even when that weakens shared international action.',
     evidenceIds: ['CHES-2024', 'SEP-NATIONALISM'],
   },
 ] as const;
 
 export const dimensionMeta = {
-  economy: { name: 'Economy', negative: 'Collective / public provision', positive: 'Market / private provision' },
-  society: { name: 'Society', negative: 'Social change / progressive', positive: 'Tradition / continuity' },
-  power: { name: 'Power', negative: 'Individual autonomy / constraints on power', positive: 'State authority / order' },
-  world: { name: 'World', negative: 'International cooperation', positive: 'National sovereignty' },
+  economy: { name: 'Economy', negative: 'Public provision / redistribution', positive: 'Market allocation / private responsibility' },
+  society: { name: 'Society', negative: 'Social change / personal autonomy', positive: 'Tradition / continuity' },
+  power: { name: 'Power', negative: 'Institutional constraints / individual liberty', positive: 'State authority / order' },
+  world: { name: 'World', negative: 'International integration / cooperation', positive: 'National sovereignty / autonomy' },
 } as const;
 
 export const pairedAnswerOptions: readonly { label: string; value: AnswerValue; scored: boolean }[] = [
