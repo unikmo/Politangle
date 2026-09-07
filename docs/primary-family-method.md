@@ -16,7 +16,7 @@ The default result contains five broad families:
 4. Socialism
 5. Green politics
 
-The public table stays deliberately short. Narrower variants remain available only when they materially explain a result.
+The public table stays deliberately short. A political-theory label does **not** earn a separate score merely because scholars distinguish it. Separate labels must materially improve an ordinary user's understanding and have dedicated evidence sufficient to distinguish them reliably.
 
 ### B. Cross-cutting political tendencies
 
@@ -28,9 +28,9 @@ These are reported separately because they can combine with several main familie
 
 Nationalism and populism therefore do not compete with conservatism, liberalism or social democracy for one headline ideology label.
 
-### C. Relevant subtypes
+### C. Selective subtypes and contextual asides
 
-Subtype labels surface only when dedicated discriminators provide enough evidence. The first implemented subtype logic is inside Conservatism:
+Subtypes surface only when the distinction is both useful and supported by dedicated discriminators. The first implemented subtype logic is inside Conservatism:
 
 - Traditional / secular conservatism
 - Christian democracy
@@ -38,7 +38,11 @@ Subtype labels surface only when dedicated discriminators provide enough evidenc
 
 Christian democracy is not inferred from social conservatism or welfare support alone. A Christian-democratic subtype requires a combination of religious inspiration in politics, subsidiarity, social-market-compatible economics and compatibility with competitive democratic constraints.
 
-Evidence bindings: `SEP-CONSERVATISM`, `CAMBRIDGE-CHRISTIAN-DEMOCRACY`, `CAMBRIDGE-CD-SUBSIDIARITY`, `CAMBRIDGE-CD-RELIGIOUS-INSPIRATION`, `VDEM-LIBERAL-DEMOCRACY`.
+Narrower variants that do not clear the same usefulness/evidence bar remain **contextual asides**, not scored outputs or required literacy targets. In particular, Democratic socialism is not retained as a separate compatibility profile or CLASSIFY target; the public model teaches the broader Socialism family instead. Historical or academic references to narrower socialist variants may appear only when they clarify the broad family's range.
+
+Historical importance is a separate criterion from current result taxonomy. Communism and Fascism can therefore appear in civic/history literacy without being routine user-identity categories.
+
+Evidence bindings for the conservative subtype: `SEP-CONSERVATISM`, `CAMBRIDGE-CHRISTIAN-DEMOCRACY`, `CAMBRIDGE-CD-SUBSIDIARITY`, `CAMBRIDGE-CD-RELIGIOUS-INSPIRATION`, `VDEM-LIBERAL-DEMOCRACY`.
 
 ## Compatibility index
 
@@ -81,7 +85,7 @@ Evidence bindings: `VDEM-POPULISM-AUTOCRATIZATION`, `IDEA-POPULISM-DEMOCRACY`, `
 
 ## Citizenship at birth
 
-The Deep BELIEVE bank explicitly includes citizenship at birth. The question contrasts giving birthplace substantial independent weight with giving greater weight to parent citizenship or qualifying legal status.
+The BELIEVE model explicitly includes citizenship at birth. The construct contrasts giving birthplace substantial independent weight with giving greater weight to parent citizenship or qualifying legal status.
 
 GLOBALCIT data are used because citizenship-at-birth law is more complex than a simple civic-versus-ethnic binary. The public ideology table therefore avoids claiming that all members of an ideology support one universal birthright rule.
 
@@ -97,26 +101,22 @@ Evidence binding: `PEW-ABORTION-GLOBAL`.
 
 ## Christian democracy subtype discriminators
 
-Two additional Deep questions are intentionally sufficient for the first validation build:
+Dedicated religion/public-role and subsidiarity constructs are used together with existing economic and democratic-constraint evidence. They do not independently create a Christian-democratic label.
 
-1. **Religious inspiration in public policy** — institutionally secular neutrality versus an explicit role for long-established religious moral traditions.
-2. **Subsidiarity** — more direct central responsibility versus distributing responsibility to families, local communities and voluntary associations where they can act effectively.
+The purpose is to distinguish a Christian-democratic pattern from generic or secular conservatism without turning the assessment into a specialist political-theory exam.
 
-These questions do not independently create a Christian-democratic label. The subtype classifier also checks the existing economy, ownership and democratic-constraints results.
+## Fresh Red Team pass — taxonomy restraint
 
-The purpose is to distinguish a Christian-democratic pattern from generic or secular conservatism without turning Deep into a specialist political-theory exam.
-
-## Fresh Red Team pass
-
-The revised architecture was challenged against five likely failure modes:
+The simplified architecture was challenged against six likely failure modes:
 
 1. **Treating nationalism and populism as equivalent to full ideological families.** Rejected. Both remain cross-cutting tendencies.
 2. **Populism = authoritarianism shortcut.** Rejected. Populism and democratic-constraint risk remain separately measured.
 3. **Christian democracy = socially conservative + welfare.** Rejected. The subtype requires dedicated religion/subsidiarity evidence plus social-market and democratic compatibility.
 4. **Christian democracy = generic religious conservatism.** Rejected. Religious conservatism remains a broader fallback when the specifically Christian-democratic combination is incomplete.
-5. **Taxonomy inflation.** Rejected. The headline result is limited to five families; subtypes surface only when useful.
+5. **Taxonomy inflation.** Rejected. The headline result is limited to five families; a narrower concept is not separately scored unless it materially improves interpretation.
+6. **Popularity-only pruning.** Rejected. Politangle does not use an unsupported global follower-percentage threshold. Historical/civic importance and explanatory usefulness can justify mentioning a concept as context without promoting it to a scored identity.
 
-Red Team verdict: **TEST WITH CONDITIONS**. The architecture is suitable for respondent testing, but subtype thresholds, family-match calibration, cross-national invariance and wording effects remain empirical questions.
+Decision: **TEST WITH CONDITIONS**. Removing low-value subtype scoring reduces label noise without changing the underlying ownership, democracy, religion, authority or other measured dimensions. The broad-family thresholds, cross-national invariance and wording effects remain empirical questions.
 
 ## Source-selection rule
 
