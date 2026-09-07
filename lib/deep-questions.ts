@@ -71,7 +71,7 @@ export const deepLiteracyQuestions: readonly LiteracyQuestion[] = [
     prompt: 'A movement accepts a predominantly capitalist economy but supports strong social insurance, public services, market regulation and redistribution to reduce inequality. Which tradition is the best fit?',
     options: [
       { id: 'social-democracy', label: 'Social democracy' },
-      { id: 'democratic-socialism', label: 'Democratic socialism' },
+      { id: 'socialism', label: 'Socialism' },
       { id: 'libertarianism', label: 'Libertarianism' },
       { id: 'communism', label: 'Communism' },
     ],
@@ -81,16 +81,16 @@ export const deepLiteracyQuestions: readonly LiteracyQuestion[] = [
   },
   {
     id: 'C2', section: 'classify',
-    prompt: 'A movement insists on competitive political democracy but wants substantially more public, cooperative or worker-controlled ownership of productive assets. Which tradition is the best fit?',
+    prompt: 'A movement wants a substantial share of productive assets to be socially, publicly, cooperatively or worker controlled rather than mainly privately owned. Which broad political family best fits?',
     options: [
-      { id: 'democratic-socialism', label: 'Democratic socialism' },
+      { id: 'socialism', label: 'Socialism' },
       { id: 'social-democracy', label: 'Social democracy' },
       { id: 'conservatism', label: 'Conservatism' },
-      { id: 'fascism', label: 'Fascism' },
+      { id: 'libertarianism', label: 'Libertarianism' },
     ],
-    acceptedAnswerSets: [['democratic-socialism']],
-    explanation: 'Democratic socialism combines democratic political institutions with a stronger shift toward social, public, cooperative or worker control of production than modern social democracy normally seeks.',
-    evidenceIds: ['SEP-SOCIALISM', 'ROUTLEDGE-SOCIAL-DEMOCRACY'],
+    acceptedAnswerSets: [['socialism']],
+    explanation: 'Socialism is a broad political family defined in large part by social rather than predominantly private control of productive assets. Its institutional forms vary, so the broad family is the useful concept here.',
+    evidenceIds: ['SEP-SOCIALISM'],
   },
   {
     id: 'C3', section: 'classify',
@@ -259,7 +259,7 @@ export const deepLiteracyQuestions: readonly LiteracyQuestion[] = [
       { id: 'private-only', label: 'Socialism requires all productive assets to remain privately owned.' },
     ],
     acceptedAnswerSets: [['broad-family']],
-    explanation: 'Socialism is a broad family with multiple institutional designs; democratic socialism is one strand, while modern social democracy generally stops short of replacing predominantly private ownership.',
+    explanation: 'Socialism is a broad family with multiple institutional designs and forms of social ownership. Modern social democracy generally retains predominantly private ownership rather than replacing it.',
     evidenceIds: ['SEP-SOCIALISM', 'ROUTLEDGE-SOCIAL-DEMOCRACY'],
   },
 ] as const;
