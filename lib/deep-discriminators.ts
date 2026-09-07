@@ -8,10 +8,10 @@ export const deepDiscriminatorQuestions: readonly DeepBeliefQuestion[] = [
     evidenceIds: ['SEP-NATIONALISM'],
   },
   {
-    id: 'B12', section: 'believe', axis: 'nationhood', construct: 'political value of national self-determination',
-    negative: 'National self-determination is one political value among several and can reasonably be limited by broader institutions and obligations.',
-    positive: 'National self-determination has special political importance and should normally take priority when it conflicts with broader institutions.',
-    evidenceIds: ['SEP-NATIONALISM'],
+    id: 'B12', section: 'believe', axis: 'nationhood', construct: 'citizenship at birth: birthplace versus parentage',
+    negative: 'Birth in a country should carry substantial independent weight in acquiring citizenship, even when neither parent is already a citizen.',
+    positive: 'Citizenship at birth should depend mainly on a parent\'s citizenship or qualifying legal status rather than on birthplace itself.',
+    evidenceIds: ['GLOBALCIT-BIRTHRIGHT', 'SEP-NATIONALISM'],
   },
   {
     id: 'B13', section: 'believe', axis: 'democracyRejection', construct: 'competitive elections as necessary',
