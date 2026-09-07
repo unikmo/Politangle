@@ -7,15 +7,18 @@ import {
   calculateQuickResult,
   completeSession,
   createQuickSession,
+  displayedToStoredAnswer,
+  getDisplayedQuestion,
   getProgress,
   getQuestion,
   parseStoredSession,
+  storedToDisplayedAnswer,
   type QuickSession,
 } from '../../lib/engine';
-import { answerOptions, type AnswerValue } from '../../lib/questions';
+import { pairedAnswerOptions, type AnswerValue } from '../../lib/questions';
 
-const SESSION_KEY = 'politangle.quick.session.v1';
-const RESULT_KEY = 'politangle.quick.result.v1';
+const SESSION_KEY = 'politangle.quick.session.v2';
+const RESULT_KEY = 'politangle.quick.result.v2';
 
 function newSeed() {
   if (typeof crypto !== 'undefined' && 'getRandomValues' in crypto) {
@@ -53,11 +56,13 @@ export default function QuizClient() {
   }
 
   const progress = getProgress(session.answers);
-  const selected = session.answers[current.id];
+  const display = getDisplayedQuestion(session, current);
+  const selected = storedToDisplayedAnswer(session.answers[current.id], display.flipped);
 
-  function choose(value: AnswerValue) {
+  function choose(displayedValue: AnswerValue) {
     if (!session) return;
-    const next = answerQuestion(session, current.id, value);
+    const storedValue = displayedToStoredAnswer(displayedValue, display.flipped);
+    const next = answerQuestion(session, current.id, storedValue);
     sessionStorage.setItem(SESSION_KEY, JSON.stringify(next));
     setSession(next);
 
@@ -92,18 +97,22 @@ export default function QuizClient() {
       </div>
 
       <article className="engine-card">
-        <p className="engine-kicker">Statement {index + 1}</p>
-        <h1>{current.text}</h1>
-        <p className="engine-help">Answer your own view. “Not sure” is allowed and is excluded from the score rather than treated as a neutral political position.</p>
+        <p className="engine-kicker">Choice {index + 1} · {current.construct}</p>
+        <h1>Which comes closer to your own view?</h1>
+        <div className="engine-pair" aria-label="Two political views">
+          <div><span>First view</span><p>{display.first}</p></div>
+          <div><span>Second view</span><p>{display.second}</p></div>
+        </div>
+        <p className="engine-help">Choose the closer view, or the middle if your position is genuinely balanced or depends on the case. “Not sure / I do not understand” is separate and is excluded from scoring.</p>
 
-        <div className="engine-answer-grid" role="radiogroup" aria-label="Response">
-          {answerOptions.map((option) => (
+        <div className="engine-answer-grid paired" role="radiogroup" aria-label="Response">
+          {pairedAnswerOptions.map((option) => (
             <button
               type="button"
               role="radio"
               aria-checked={selected === option.value}
               className={selected === option.value ? 'engine-answer selected' : 'engine-answer'}
-              key={option.value}
+              key={String(option.value)}
               onClick={() => choose(option.value)}
             >
               {option.label}
@@ -114,7 +123,7 @@ export default function QuizClient() {
 
       <div className="engine-nav">
         <button type="button" onClick={() => setIndex((value) => Math.max(0, value - 1))} disabled={index === 0}>Previous</button>
-        <span>{progress.unsureCount ? `${progress.unsureCount} marked not sure` : 'All scored answers so far'}</span>
+        <span>{progress.unsureCount ? `${progress.unsureCount} marked not sure` : 'No unsure responses so far'}</span>
         {index === session.order.length - 1 ? (
           <button type="button" onClick={finish} disabled={!progress.complete}>See result</button>
         ) : (
