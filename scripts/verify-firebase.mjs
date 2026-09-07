@@ -1,3 +1,4 @@
+import { createPrivateKey } from 'node:crypto';
 import { cert, initializeApp, getApps } from 'firebase-admin/app';
 import { getFirestore } from 'firebase-admin/firestore';
 
@@ -9,14 +10,29 @@ for (const name of required) {
   }
 }
 
+function normalizePrivateKey(value) {
+  let key = value.trim();
+  if ((key.startsWith('"') && key.endsWith('"')) || (key.startsWith("'") && key.endsWith("'"))) {
+    key = key.slice(1, -1);
+  }
+  return key.replace(/\\n/g, '\n').trim();
+}
+
 try {
+  const projectId = process.env.FIREBASE_PROJECT_ID.trim();
+  const clientEmail = process.env.FIREBASE_CLIENT_EMAIL.trim();
+  const privateKey = normalizePrivateKey(process.env.FIREBASE_PRIVATE_KEY);
+
+  try {
+    createPrivateKey(privateKey);
+  } catch {
+    console.error('Firebase verification failed: FIREBASE_PRIVATE_KEY is not a valid PEM private key after normalization.');
+    process.exit(1);
+  }
+
   const app = getApps()[0] ?? initializeApp({
-    credential: cert({
-      projectId: process.env.FIREBASE_PROJECT_ID,
-      clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-      privateKey: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n'),
-    }),
-    projectId: process.env.FIREBASE_PROJECT_ID,
+    credential: cert({ projectId, clientEmail, privateKey }),
+    projectId,
   });
 
   const db = getFirestore(app);
