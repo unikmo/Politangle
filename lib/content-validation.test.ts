@@ -29,12 +29,13 @@ test('Quick explicitly measures abortion as a balanced social-values item', () =
   assertEvidence(abortion.evidenceIds, 'Quick abortion');
 });
 
-test('Deep belief bank has exactly two items per validation axis', () => {
+test('Deep belief bank validates every axis and keeps subtype additions deliberately short', () => {
   const axes = Object.keys(deepBeliefAxisMeta) as (keyof typeof deepBeliefAxisMeta)[];
-  assert.equal(allDeepBeliefQuestions.length, axes.length * 2);
+  assert.equal(allDeepBeliefQuestions.length, 16);
   for (const axis of axes) {
     const items = allDeepBeliefQuestions.filter((question) => question.axis === axis);
-    assert.equal(items.length, 2, `${axis} should have exactly two content-validation items`);
+    const expected = axis === 'religionPublicRole' || axis === 'subsidiarity' ? 1 : 2;
+    assert.equal(items.length, expected, `${axis} should have ${expected} content-validation item(s)`);
     for (const question of items) {
       assert.deepEqual(validateDeepBeliefQuestion(question), { valid: true, errors: [] });
       assertEvidence(question.evidenceIds, `Deep belief ${question.id}`);
@@ -49,6 +50,15 @@ test('Deep explicitly measures citizenship at birth without collapsing it into i
   assert.ok(citizenship.negative.toLowerCase().includes('birth in a country'));
   assert.ok(citizenship.positive.toLowerCase().includes('parent'));
   assertEvidence(citizenship.evidenceIds, 'Deep birthright citizenship');
+});
+
+test('Deep adds exactly two conservative-subtype discriminator questions', () => {
+  const religion = allDeepBeliefQuestions.find((question) => question.axis === 'religionPublicRole');
+  const subsidiarity = allDeepBeliefQuestions.find((question) => question.axis === 'subsidiarity');
+  assert.ok(religion);
+  assert.ok(subsidiarity);
+  assertEvidence(religion.evidenceIds, 'Deep religion/public-role discriminator');
+  assertEvidence(subsidiarity.evidenceIds, 'Deep subsidiarity discriminator');
 });
 
 test('Deep literacy bank contains nine classify and six understand items', () => {
