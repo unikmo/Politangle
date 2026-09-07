@@ -6,10 +6,10 @@ export type PrimaryFamilyId =
   | 'conservatism'
   | 'social-democracy'
   | 'socialism'
-  | 'green-politics'
-  | 'nationalism'
-  | 'populism';
+  | 'green-politics';
 
+export type PoliticalTendencyId = 'nationalism' | 'populism' | 'authority-democratic-constraints';
+export type ConservativeSubtypeId = 'traditional-secular-conservatism' | 'christian-democracy' | 'religious-conservatism';
 export type MatchBand = 'strong-match' | 'broad-match' | 'mixed' | 'limited-match' | 'strong-tension' | 'insufficient';
 
 type FamilyCriterion = {
@@ -23,6 +23,7 @@ export type PrimaryFamily = {
   id: PrimaryFamilyId;
   name: string;
   coreIdea: string;
+  importantSubtypes: string;
   economy: string;
   society: string;
   statePower: string;
@@ -43,6 +44,28 @@ export type PrimaryFamilyMatch = {
   coreIdea: string;
 };
 
+export type PoliticalTendency = {
+  id: PoliticalTendencyId;
+  name: string;
+  lowPole: string;
+  highPole: string;
+  meaning: string;
+  evidenceIds: readonly string[];
+};
+
+export type PoliticalTendencyAssessment = PoliticalTendency & {
+  score: number | null;
+  label: string;
+  coverage: number;
+};
+
+export type ConservativeSubtypeAssessment = {
+  id: ConservativeSubtypeId;
+  name: string;
+  explanation: string;
+  evidenceIds: readonly string[];
+} | null;
+
 const N = ['strong-negative', 'negative'] as const;
 const NM = ['strong-negative', 'negative', 'mixed'] as const;
 const MP = ['mixed', 'positive', 'strong-positive'] as const;
@@ -55,6 +78,7 @@ export const primaryFamilies: readonly PrimaryFamily[] = [
     id: 'liberalism',
     name: 'Liberalism',
     coreIdea: 'Individual liberty, equal legal rights and limits on concentrated political power.',
+    importantSubtypes: 'Classical liberalism and social liberalism are useful major variants.',
     economy: 'Broad family: ranges from market-oriented classical liberalism to social liberalism with a larger welfare and regulatory role.',
     society: 'Generally gives substantial weight to personal autonomy and equal legal treatment.',
     statePower: 'Government power should be constrained by rights, rule of law and institutional checks.',
@@ -73,13 +97,14 @@ export const primaryFamilies: readonly PrimaryFamily[] = [
     id: 'conservatism',
     name: 'Conservatism',
     coreIdea: 'Continuity, inherited institutions and caution toward rapid or abstractly designed change.',
-    economy: 'Often market-friendly in contemporary politics, but economic policy is not the defining core of conservatism.',
+    importantSubtypes: 'Traditional/secular conservatism; Christian democracy; other religious-conservative variants where relevant.',
+    economy: 'Often market-friendly in contemporary politics, but economic policy is not the defining core. Christian democracy adds a distinctive social-market and welfare tradition.',
     society: 'Usually places greater weight on continuity, established institutions and inherited social norms.',
     statePower: 'Often gives substantial weight to order and established authority, while democratic conservatism remains within constitutional constraints.',
     citizenshipAtBirth: 'No single conservative rule. Some traditions emphasize civic legal continuity; others place more weight on descent, integration or established national membership.',
     abortion: 'Contemporary conservative constituencies are often more supportive of legal restrictions, but views vary substantially by country and religion.',
     world: 'Often sovereignty-conscious, but conservative traditions range from internationalist to strongly nation-centered.',
-    evidenceIds: ['SEP-CONSERVATISM', 'VDEM-LIBERAL-DEMOCRACY', 'PEW-ABORTION-GLOBAL'],
+    evidenceIds: ['SEP-CONSERVATISM', 'CAMBRIDGE-CHRISTIAN-DEMOCRACY', 'CAMBRIDGE-CD-SUBSIDIARITY', 'CAMBRIDGE-CD-RELIGIOUS-INSPIRATION', 'VDEM-LIBERAL-DEMOCRACY', 'PEW-ABORTION-GLOBAL'],
     criteria: [
       { axis: 'society', importance: 'core', support: P, tension: SN },
       { axis: 'democracyRejection', importance: 'core', support: NM, tension: SP },
@@ -91,6 +116,7 @@ export const primaryFamilies: readonly PrimaryFamily[] = [
     id: 'social-democracy',
     name: 'Social democracy',
     coreIdea: 'A predominantly capitalist economy combined with regulation, welfare, public services and redistribution.',
+    importantSubtypes: 'Kept as one broad family in the default result to avoid unnecessary taxonomy.',
     economy: 'Regulated capitalism with a strong social floor, public services, social insurance and redistribution.',
     society: 'Frequently socially liberal in contemporary parties, although social policy is not the sole defining feature.',
     statePower: 'Strong public institutions operating within competitive democracy, rights and pluralist constraints.',
@@ -109,6 +135,7 @@ export const primaryFamilies: readonly PrimaryFamily[] = [
     id: 'socialism',
     name: 'Socialism',
     coreIdea: 'Economic power and productive assets should be subject to substantially more social, public, cooperative or worker control.',
+    importantSubtypes: 'Democratic socialism is a useful subtype. Communist or revolutionary variants surface only with additional explicit evidence.',
     economy: 'More collective control of productive assets than social democracy; the family contains several institutional models.',
     society: 'Varies across socialist traditions and countries.',
     statePower: 'Varies widely: democratic-socialist traditions emphasize competitive democracy, while historical authoritarian socialist traditions concentrated state power.',
@@ -125,6 +152,7 @@ export const primaryFamilies: readonly PrimaryFamily[] = [
     id: 'green-politics',
     name: 'Green politics',
     coreIdea: 'Ecological limits and a sustainable society are central political priorities.',
+    importantSubtypes: 'No subtype is shown by default unless later evidence demonstrates that it materially improves the user result.',
     economy: 'Usually accepts substantial intervention or structural change where needed for ecological sustainability and social goals.',
     society: 'Often associated with socially progressive and post-material positions.',
     statePower: 'Green political thought commonly stresses participation, decentralization and democratic accountability rather than concentrated authority.',
@@ -139,36 +167,32 @@ export const primaryFamilies: readonly PrimaryFamily[] = [
       { axis: 'world', importance: 'typical', support: NM, tension: SP },
     ],
   },
+] as const;
+
+export const politicalTendencies: readonly PoliticalTendency[] = [
   {
     id: 'nationalism',
     name: 'Nationalism',
-    coreIdea: 'The nation has special political value and a strong claim to collective self-determination.',
-    economy: 'Can combine with market, welfare, socialist or other economic programs; nationalism alone does not determine left-right economics.',
-    society: 'Can be civic and inclusive or ethnic/nativist and tradition-focused; those are important distinctions within nationalism.',
-    statePower: 'Nationalism alone does not imply authoritarianism; democratic and authoritarian nationalist traditions both exist.',
-    citizenshipAtBirth: 'Central to the civic-versus-descent question. Nationalist traditions can range from inclusive territorial membership to ancestry- or status-based membership.',
-    abortion: 'Not a defining feature of nationalism; positions depend on the nationalism’s social, religious and host ideology.',
-    world: 'Usually gives greater weight to national self-determination and sovereignty, though the degree of international cooperation varies.',
+    lowPole: 'Shared / post-national authority',
+    highPole: 'Nation-centered self-determination',
+    meaning: 'Gives special political value to the nation and national self-determination. It can combine with liberal, conservative, socialist or other families and does not by itself imply authoritarianism.',
     evidenceIds: ['SEP-NATIONALISM', 'GLOBALCIT-BIRTHRIGHT'],
-    criteria: [
-      { axis: 'nationhood', importance: 'core', support: P, tension: N },
-      { axis: 'world', importance: 'typical', support: MP, tension: SN },
-    ],
   },
   {
     id: 'populism',
     name: 'Populism',
-    coreIdea: 'Politics is framed as a conflict between ordinary or “real” people and a self-serving elite, with emphasis on the people’s general will.',
-    economy: 'Can be economically left, right or mixed depending on the host ideology.',
-    society: 'Varies with the host ideology; populism is not a complete social-policy program by itself.',
-    statePower: 'Often majoritarian. Populism is not inherently authoritarian, but anti-pluralist populist governments can weaken checks and balances; authoritarian risk rises when democratic constraints are rejected.',
-    citizenshipAtBirth: 'Not inherent to populism. Nativist populism is often more restrictive, while other populisms need not be.',
-    abortion: 'Not inherent to populism; the stance generally follows the movement’s host ideology, religion and social-policy orientation.',
-    world: 'Varies with the host ideology; some populists are sovereignty-focused while others are not.',
+    lowPole: 'Plural interests / compromise',
+    highPole: 'People-versus-elite general will',
+    meaning: 'Frames politics around ordinary or “real” people versus a self-serving elite. It can attach to different host ideologies; democratic and authoritarian-risk signals are measured separately.',
     evidenceIds: ['MUDDE-POPULISM', 'VDEM-POPULISM-AUTOCRATIZATION', 'IDEA-POPULISM-DEMOCRACY'],
-    criteria: [
-      { axis: 'populism', importance: 'core', support: P, tension: N },
-    ],
+  },
+  {
+    id: 'authority-democratic-constraints',
+    name: 'Authority / democratic constraints',
+    lowPole: 'Pluralism, rights and institutional constraints',
+    highPole: 'Concentrated authority / weaker constraints',
+    meaning: 'Measures willingness to concentrate political authority or weaken institutional constraints. Strong anti-pluralist or democracy-rejection signals are reported separately from ideology labels.',
+    evidenceIds: ['VDEM-LIBERAL-DEMOCRACY', 'VDEM-POPULISM-AUTOCRATIZATION'],
   },
 ] as const;
 
@@ -181,43 +205,47 @@ function bandForScore(score: number | null): { band: MatchBand; label: string } 
   return { band: 'strong-tension', label: 'Strong tension' };
 }
 
-export function assessPrimaryFamilies(input: CompatibilityInput): PrimaryFamilyMatch[] {
+function scoreCriteria(input: CompatibilityInput, criteria: readonly FamilyCriterion[]) {
   const signals = collectAxisSignals(input);
+  let knownWeight = 0;
+  let totalWeight = 0;
+  let weightedPoints = 0;
+  let knownCore = 0;
 
+  for (const criterion of criteria) {
+    const weight = criterion.importance === 'core' ? 2 : 1;
+    totalWeight += weight;
+    const signal = signals[criterion.axis];
+    if (!signal?.interpretable || !signal.bucket) continue;
+
+    knownWeight += weight;
+    if (criterion.importance === 'core') knownCore += 1;
+    const points = criterion.support.includes(signal.bucket)
+      ? 100
+      : criterion.tension.includes(signal.bucket)
+        ? 0
+        : 50;
+    weightedPoints += points * weight;
+  }
+
+  return {
+    coverage: totalWeight === 0 ? 0 : Math.round((knownWeight / totalWeight) * 100),
+    score: knownCore === 0 || knownWeight === 0 ? null : Math.round(weightedPoints / knownWeight),
+  };
+}
+
+export function assessPrimaryFamilies(input: CompatibilityInput): PrimaryFamilyMatch[] {
   return primaryFamilies.map((family) => {
-    let knownWeight = 0;
-    let totalWeight = 0;
-    let weightedPoints = 0;
-    let knownCore = 0;
-
-    for (const criterion of family.criteria) {
-      const weight = criterion.importance === 'core' ? 2 : 1;
-      totalWeight += weight;
-      const signal = signals[criterion.axis];
-      if (!signal?.interpretable || !signal.bucket) continue;
-
-      knownWeight += weight;
-      if (criterion.importance === 'core') knownCore += 1;
-
-      const points = criterion.support.includes(signal.bucket)
-        ? 100
-        : criterion.tension.includes(signal.bucket)
-          ? 0
-          : 50;
-      weightedPoints += points * weight;
-    }
-
-    const coverage = totalWeight === 0 ? 0 : Math.round((knownWeight / totalWeight) * 100);
-    const score = knownCore === 0 || coverage < 50 ? null : Math.round(weightedPoints / knownWeight);
+    const scored = scoreCriteria(input, family.criteria);
+    const score = scored.coverage < 50 ? null : scored.score;
     const band = bandForScore(score);
-
     return {
       id: family.id,
       name: family.name,
       score,
       band: band.band,
       bandLabel: band.label,
-      coverage,
+      coverage: scored.coverage,
       coreIdea: family.coreIdea,
     };
   }).sort((a, b) => {
@@ -226,6 +254,128 @@ export function assessPrimaryFamilies(input: CompatibilityInput): PrimaryFamilyM
     if (b.score === null) return -1;
     return b.score - a.score || a.name.localeCompare(b.name);
   });
+}
+
+function directionalLabel(score: number | null, low: string, high: string) {
+  if (score === null) return 'Not enough information';
+  if (score <= 24) return `Strongly toward ${low.toLowerCase()}`;
+  if (score <= 39) return `Leans toward ${low.toLowerCase()}`;
+  if (score <= 59) return 'Mixed / balanced';
+  if (score <= 74) return `Leans toward ${high.toLowerCase()}`;
+  return `Strongly toward ${high.toLowerCase()}`;
+}
+
+export function assessPoliticalTendencies(input: CompatibilityInput): PoliticalTendencyAssessment[] {
+  const signals = collectAxisSignals(input);
+  const nationalismCriteria: readonly FamilyCriterion[] = [
+    { axis: 'nationhood', importance: 'core', support: P, tension: N },
+    { axis: 'world', importance: 'typical', support: MP, tension: SN },
+  ];
+  const nationalismScored = scoreCriteria(input, nationalismCriteria);
+  const nationalismScore = nationalismScored.coverage < 50 ? null : nationalismScored.score;
+
+  const populismSignal = signals.populism;
+  const populismScore = populismSignal?.interpretable && populismSignal.score !== null ? populismSignal.score : null;
+  const populismCoverage = populismSignal?.interpretable ? 100 : 0;
+
+  const authorityParts = [
+    { signal: signals.power, weight: 1 },
+    { signal: signals.pluralism, weight: 2 },
+    { signal: signals.democracyRejection, weight: 2 },
+  ];
+  let authorityKnownWeight = 0;
+  let authorityWeighted = 0;
+  for (const part of authorityParts) {
+    if (!part.signal?.interpretable || part.signal.score === null) continue;
+    authorityKnownWeight += part.weight;
+    authorityWeighted += part.signal.score * part.weight;
+  }
+  const authorityCoverage = Math.round((authorityKnownWeight / 5) * 100);
+  const authorityScore = authorityKnownWeight === 0 || authorityCoverage < 40 ? null : Math.round(authorityWeighted / authorityKnownWeight);
+  const democracy = signals.democracyRejection;
+  const pluralism = signals.pluralism;
+  const authorityRisk = Boolean(
+    authorityScore !== null
+    && authorityScore >= 75
+    && ((democracy?.interpretable && (democracy.score ?? 0) >= 60) || (pluralism?.interpretable && (pluralism.score ?? 0) >= 80)),
+  );
+
+  return politicalTendencies.map((tendency) => {
+    if (tendency.id === 'nationalism') {
+      return {
+        ...tendency,
+        score: nationalismScore,
+        coverage: nationalismScored.coverage,
+        label: directionalLabel(nationalismScore, tendency.lowPole, tendency.highPole),
+      };
+    }
+    if (tendency.id === 'populism') {
+      return {
+        ...tendency,
+        score: populismScore,
+        coverage: populismCoverage,
+        label: directionalLabel(populismScore, tendency.lowPole, tendency.highPole),
+      };
+    }
+    return {
+      ...tendency,
+      score: authorityScore,
+      coverage: authorityCoverage,
+      label: authorityRisk
+        ? 'Strong authority / authoritarian-risk signal'
+        : directionalLabel(authorityScore, tendency.lowPole, tendency.highPole),
+    };
+  });
+}
+
+export function assessConservativeSubtype(input: CompatibilityInput): ConservativeSubtypeAssessment {
+  const conservative = assessPrimaryFamilies(input).find((item) => item.id === 'conservatism');
+  if (!conservative || conservative.score === null || conservative.score < 60 || !input.deep) return null;
+
+  const religion = input.deep.axes.religionPublicRole;
+  const subsidiarity = input.deep.axes.subsidiarity;
+  if (!religion.interpretable || religion.score === null) return null;
+
+  if (religion.score <= 40) {
+    return {
+      id: 'traditional-secular-conservatism',
+      name: 'Traditional / secular conservatism',
+      explanation: 'Your conservative-leaning answers emphasize continuity and established institutions without giving religiously inspired public policy a central role.',
+      evidenceIds: ['SEP-CONSERVATISM', 'CAMBRIDGE-CD-RELIGIOUS-INSPIRATION'],
+    };
+  }
+
+  if (religion.score >= 60) {
+    const economy = input.quick?.scores.economy;
+    const ownership = input.deep.axes.ownership;
+    const democracy = input.deep.axes.democracyRejection;
+    const socialMarketKnown = Boolean(economy?.interpretable && economy.score !== null && ownership.interpretable && ownership.score !== null);
+    const socialMarketCompatible = Boolean(
+      socialMarketKnown
+      && (economy!.score as number) >= 25
+      && (economy!.score as number) <= 75
+      && (ownership.score as number) >= 40,
+    );
+    const democraticCompatible = democracy.interpretable && democracy.score !== null && democracy.score <= 60;
+
+    if (subsidiarity.interpretable && subsidiarity.score !== null && subsidiarity.score >= 60 && socialMarketCompatible && democraticCompatible) {
+      return {
+        id: 'christian-democracy',
+        name: 'Christian democracy',
+        explanation: 'Your answers combine conservative social continuity with religious inspiration, subsidiarity and a social-market-compatible economic position — the combination that most clearly distinguishes Christian democracy from generic conservatism.',
+        evidenceIds: ['CAMBRIDGE-CHRISTIAN-DEMOCRACY', 'CAMBRIDGE-CD-SUBSIDIARITY', 'CAMBRIDGE-CD-RELIGIOUS-INSPIRATION', 'VDEM-LIBERAL-DEMOCRACY'],
+      };
+    }
+
+    return {
+      id: 'religious-conservatism',
+      name: 'Religious-conservative orientation',
+      explanation: 'Religious or moral tradition plays an important role in your conservative-leaning answers, but the additional subsidiarity and social-market signals are not strong enough to label the subtype Christian democratic.',
+      evidenceIds: ['SEP-CONSERVATISM', 'CAMBRIDGE-CD-RELIGIOUS-INSPIRATION'],
+    };
+  }
+
+  return null;
 }
 
 export function populismGovernanceQualifier(deep: DeepBeliefResult | null | undefined): string {
