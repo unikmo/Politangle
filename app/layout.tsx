@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import './engine.css';
 
 export const metadata: Metadata = {
   title: 'Politangle — Politics from every angle',
