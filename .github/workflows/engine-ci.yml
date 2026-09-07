@@ -1,0 +1,32 @@
+name: Politangle Engine CI
+
+on:
+  push:
+    branches:
+      - engine/v1
+  pull_request:
+    branches:
+      - staging
+
+jobs:
+  verify-engine:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Run engine tests
+        run: npm run verify:engine
+
+      - name: Compile Next.js without environment-dependent prebuild
+        run: npx next build
