@@ -25,4 +25,16 @@ export const deepDiscriminatorQuestions: readonly DeepBeliefQuestion[] = [
     positive: 'A government may legitimately prevent peaceful political opponents from competing for power when it believes national unity or stability requires it.',
     evidenceIds: ['VDEM-LIBERAL-DEMOCRACY', 'PIRRO-FAR-RIGHT', 'USHMM-FASCISM'],
   },
+  {
+    id: 'B15', section: 'believe', axis: 'religionPublicRole', construct: 'religious inspiration in public policy',
+    negative: 'Government should remain institutionally neutral between religious and non-religious moral traditions when making public policy.',
+    positive: 'Long-established religious moral traditions may legitimately provide an explicit source of guidance for public policy.',
+    evidenceIds: ['CAMBRIDGE-CD-RELIGIOUS-INSPIRATION'],
+  },
+  {
+    id: 'B16', section: 'believe', axis: 'subsidiarity', construct: 'subsidiarity and distributed responsibility',
+    negative: 'When an important social need requires collective action, national government should usually take direct responsibility for providing a common solution.',
+    positive: 'Public authority should normally leave responsibilities with families, local communities and voluntary associations when they can handle them effectively, with higher levels stepping in when necessary.',
+    evidenceIds: ['CAMBRIDGE-CD-SUBSIDIARITY'],
+  },
 ] as const;
