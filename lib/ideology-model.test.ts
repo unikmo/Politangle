@@ -24,6 +24,22 @@ function deepResult(values: Partial<Record<string, AnswerValue>>) {
   return calculateDeepBeliefResult(allDeepBeliefQuestions, answers, '2026-09-07T00:00:00.000Z');
 }
 
+test('context registry excludes headline-family and niche subtype duplication', () => {
+  const ids = traditionProfiles.map((item) => item.id);
+  for (const id of [
+    'classical-liberalism',
+    'social-liberalism',
+    'libertarianism',
+    'conservatism',
+    'christian-democracy',
+    'social-democracy',
+    'democratic-socialism',
+    'green-politics',
+  ]) {
+    assert.equal(ids.includes(id), false, `${id} should not be an active contextual compatibility profile`);
+  }
+});
+
 test('nationalism and populism are modeled as cross-cutting, not left-right endpoints', () => {
   assert.equal(profile('nationalism').kind, 'cross-cutting');
   assert.equal(profile('populism').kind, 'cross-cutting');
@@ -42,22 +58,6 @@ test('ordinary right/conservative Quick answers cannot trigger fascist or extrem
   const assessment = assessTradition(profile('fascist-extreme-right-pattern'), { quick });
   assert.equal(assessment.status, 'insufficient');
   assert.ok(assessment.missingExplicitSignals.includes('ultranationalist-state-project'));
-});
-
-test('social democracy and democratic socialism remain distinguishable through ownership', () => {
-  const quick = quickResult({ economy: -2, society: -1, power: -1, world: 0 });
-  const socialDemocraticDeep = deepResult({ pluralism: -2, ownership: 2, democracyRejection: -2 });
-  const democraticSocialistDeep = deepResult({ pluralism: -2, ownership: -2, democracyRejection: -2 });
-
-  const sdFromSd = assessTradition(profile('social-democracy'), { quick, deep: socialDemocraticDeep });
-  const dsFromSd = assessTradition(profile('democratic-socialism'), { quick, deep: socialDemocraticDeep });
-  assert.equal(sdFromSd.status, 'consistent');
-  assert.equal(dsFromSd.status, 'tension');
-
-  const dsFromDs = assessTradition(profile('democratic-socialism'), { quick, deep: democraticSocialistDeep });
-  const sdFromDs = assessTradition(profile('social-democracy'), { quick, deep: democraticSocialistDeep });
-  assert.equal(dsFromDs.status, 'consistent');
-  assert.ok(sdFromDs.tensions.some((item) => item.axis === 'ownership'));
 });
 
 test('communism is never inferred from welfare-state or social-ownership answers alone', () => {
