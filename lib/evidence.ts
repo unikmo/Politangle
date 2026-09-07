@@ -213,6 +213,55 @@ export const evidenceSources: readonly EvidenceSource[] = [
     ],
     accessed: '2026-09-07',
   },
+  {
+    id: 'VDEM-POPULISM-AUTOCRATIZATION',
+    title: 'Populism and Democracy: The Road to Autocracy?',
+    publisher: 'V-Dem Institute, University of Gothenburg',
+    url: 'https://v-dem.net/media/publications/working_paper_116_final.pdf',
+    authority: 'academic-research',
+    supports: [
+      'Populism is not necessarily anti-democratic by itself.',
+      'Anti-pluralism and lack of commitment to democratic norms are stronger predictors of autocratization than the populist label alone.',
+      'Populist parties can attach to progressive, conservative, socialist, authoritarian or other host ideologies.',
+    ],
+    accessed: '2026-09-07',
+  },
+  {
+    id: 'IDEA-POPULISM-DEMOCRACY',
+    title: 'Populist government and democracy: An impact assessment using the Global State of Democracy Indices',
+    publisher: 'International IDEA',
+    url: 'https://www.idea.int/publications/catalogue/populist-government-and-democracy-impact-assessment',
+    authority: 'institutional-reference',
+    supports: [
+      'Populist governments should be assessed for their effects on checks and balances and democratic accountability rather than assuming all populism has the same institutional effect.',
+      'Populism can contribute to democratic backsliding when governing actors erode accountability institutions.',
+    ],
+    accessed: '2026-09-07',
+  },
+  {
+    id: 'GLOBALCIT-BIRTHRIGHT',
+    title: 'How Citizenship Laws Differ: A Global Comparison',
+    publisher: 'GLOBALCIT, European University Institute',
+    url: 'https://globalcit.eu/wp-content/uploads/2018/11/Policy_Brief_Delmi_GLOBALCIT.pdf',
+    authority: 'academic-research',
+    supports: [
+      'Citizenship-at-birth rules vary globally between territorial-birth and descent-based principles and frequently combine conditions from both.',
+      'The simple civic-versus-ethnic contrast does not capture the full diversity of citizenship laws.',
+    ],
+    accessed: '2026-09-07',
+  },
+  {
+    id: 'PEW-ABORTION-GLOBAL',
+    title: 'Support for legal abortion is widespread in many places, especially in Europe',
+    publisher: 'Pew Research Center',
+    url: 'https://www.pewresearch.org/short-reads/2024/05/15/support-for-legal-abortion-is-widespread-in-many-countries-especially-in-europe/',
+    authority: 'academic-research',
+    supports: [
+      'Abortion attitudes vary substantially across countries, religions and political groups.',
+      'Across many surveyed countries, people on the ideological left were more likely than those on the right to support legal abortion, but the relationship is not uniform enough to define an ideology by abortion alone.',
+    ],
+    accessed: '2026-09-07',
+  },
 ] as const;
 
 export const evidenceById = new Map(evidenceSources.map((source) => [source.id, source]));
