@@ -20,6 +20,15 @@ test('Quick v2 has 26 paired items with auditable evidence', () => {
   }
 });
 
+test('Quick explicitly measures abortion as a balanced social-values item', () => {
+  const abortion = quickQuestions.find((question) => question.construct === 'abortion and legal autonomy');
+  assert.ok(abortion);
+  assert.equal(abortion.dimension, 'society');
+  assert.ok(abortion.negative.toLowerCase().includes('legally available'));
+  assert.ok(abortion.positive.toLowerCase().includes('legal limits'));
+  assertEvidence(abortion.evidenceIds, 'Quick abortion');
+});
+
 test('Deep belief bank has exactly two items per validation axis', () => {
   const axes = Object.keys(deepBeliefAxisMeta) as (keyof typeof deepBeliefAxisMeta)[];
   assert.equal(allDeepBeliefQuestions.length, axes.length * 2);
@@ -31,6 +40,15 @@ test('Deep belief bank has exactly two items per validation axis', () => {
       assertEvidence(question.evidenceIds, `Deep belief ${question.id}`);
     }
   }
+});
+
+test('Deep explicitly measures citizenship at birth without collapsing it into immigration', () => {
+  const citizenship = allDeepBeliefQuestions.find((question) => question.construct === 'citizenship at birth: birthplace versus parentage');
+  assert.ok(citizenship);
+  assert.equal(citizenship.axis, 'nationhood');
+  assert.ok(citizenship.negative.toLowerCase().includes('birth in a country'));
+  assert.ok(citizenship.positive.toLowerCase().includes('parent'));
+  assertEvidence(citizenship.evidenceIds, 'Deep birthright citizenship');
 });
 
 test('Deep literacy bank contains nine classify and six understand items', () => {
