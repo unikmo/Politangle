@@ -40,6 +40,8 @@ test('negative-pole answers score 0 and positive-pole answers score 100', () => 
     assert.equal(positive.scores[dimension].score, 100);
     assert.equal(negative.scores[dimension].coverage, 100);
     assert.equal(positive.scores[dimension].coverage, 100);
+    assert.equal(negative.scores[dimension].interpretable, true);
+    assert.equal(positive.scores[dimension].interpretable, true);
   }
 });
 
@@ -55,6 +57,8 @@ test('not-sure answers do not pull a score toward the midpoint', () => {
   assert.equal(result.scores.economy.answered, 1);
   assert.equal(result.scores.economy.unsure, 6);
   assert.equal(result.scores.economy.coverage, 14);
+  assert.equal(result.scores.economy.interpretable, false);
+  assert.equal(result.scores.economy.label, 'Low coverage — insufficient signal');
 });
 
 test('all not-sure answers return insufficient signal rather than a fake 50 score', () => {
@@ -66,6 +70,7 @@ test('all not-sure answers return insufficient signal rather than a fake 50 scor
     assert.equal(result.scores[dimension].score, null);
     assert.equal(result.scores[dimension].label, 'Insufficient signal');
     assert.equal(result.scores[dimension].coverage, 0);
+    assert.equal(result.scores[dimension].interpretable, false);
   }
 });
 
