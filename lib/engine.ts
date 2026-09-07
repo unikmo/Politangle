@@ -7,7 +7,7 @@ import {
   type Question,
 } from './questions';
 
-export const QUICK_SCORING_VERSION = 'quick-score-1.0.0' as const;
+export const QUICK_SCORING_VERSION = 'quick-score-1.0.1' as const;
 export const QUICK_SESSION_SCHEMA_VERSION = 1 as const;
 
 export type Answers = Partial<Record<number, AnswerValue>>;
@@ -19,6 +19,8 @@ export type DimensionScore = {
   score: number | null;
   label: string;
   coverage: number;
+  interpretable: boolean;
+  minimumScoredResponses: number;
   answered: number;
   unsure: number;
   total: number;
@@ -163,8 +165,9 @@ export function getProgress(answers: Answers) {
   };
 }
 
-function scoreLabel(score: number | null, negative: string, positive: string) {
+function scoreLabel(score: number | null, negative: string, positive: string, interpretable: boolean) {
   if (score === null) return 'Insufficient signal';
+  if (!interpretable) return 'Low coverage — insufficient signal';
   if (score <= 20) return `Leans strongly toward ${negative.toLowerCase()}`;
   if (score < 40) return `Leans toward ${negative.toLowerCase()}`;
   if (score <= 60) return 'Mixed / cross-pressured';
@@ -198,6 +201,8 @@ export function calculateQuickResult(answers: Answers, createdAt = new Date().to
 
     const max = answered * 2;
     const score = answered === 0 ? null : Math.round(((raw + max) / (max * 2)) * 100);
+    const minimumScoredResponses = Math.ceil(questions.length / 2);
+    const interpretable = answered >= minimumScoredResponses;
     const meta = dimensionMeta[dimension];
 
     scores[dimension] = {
@@ -205,8 +210,10 @@ export function calculateQuickResult(answers: Answers, createdAt = new Date().to
       name: meta.name,
       negative: meta.negative,
       positive: meta.positive,
-      label: scoreLabel(score, meta.negative, meta.positive),
+      label: scoreLabel(score, meta.negative, meta.positive, interpretable),
       coverage: Math.round((answered / questions.length) * 100),
+      interpretable,
+      minimumScoredResponses,
       answered,
       unsure,
       total: questions.length,
@@ -264,6 +271,8 @@ export function parseStoredResult(raw: string | null): QuickResult | null {
       if (!score) return null;
       if (score.score !== null && (typeof score.score !== 'number' || score.score < 0 || score.score > 100)) return null;
       if (typeof score.coverage !== 'number' || score.coverage < 0 || score.coverage > 100) return null;
+      if (typeof score.interpretable !== 'boolean') return null;
+      if (typeof score.minimumScoredResponses !== 'number') return null;
       if (typeof score.label !== 'string') return null;
     }
 
