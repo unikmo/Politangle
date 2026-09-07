@@ -136,6 +136,28 @@ export const evidenceSources: readonly EvidenceSource[] = [
     accessed: '2026-09-07',
   },
   {
+    id: 'CAMBRIDGE-CD-SUBSIDIARITY',
+    title: 'Subsidiarity, in What is Christian Democracy?',
+    publisher: 'Cambridge University Press',
+    url: 'https://www.cambridge.org/core/books/abs/what-is-christian-democracy/subsidiarity/A45D69108C43C58BC7AE0601172F3D49',
+    authority: 'academic-reference',
+    supports: [
+      'Subsidiarity is a central Christian-democratic principle for distributing public authority across local, regional, national and international levels rather than concentrating every responsibility at one level.',
+    ],
+    accessed: '2026-09-07',
+  },
+  {
+    id: 'CAMBRIDGE-CD-RELIGIOUS-INSPIRATION',
+    title: 'Christian Inspiration, in What is Christian Democracy?',
+    publisher: 'Cambridge University Press',
+    url: 'https://www.cambridge.org/core/books/abs/what-is-christian-democracy/christian-inspiration/0AA068C7C39F9A86817D476589DDB2F3',
+    authority: 'academic-reference',
+    supports: [
+      'Christian democracy historically gives a distinctive role to Christian religious inspiration in politics while also addressing secularism, religious freedom and toleration.',
+    ],
+    accessed: '2026-09-07',
+  },
+  {
     id: 'CAMBRIDGE-GREEN-POLITICS',
     title: 'Green political thought',
     publisher: 'Cambridge University Press',
