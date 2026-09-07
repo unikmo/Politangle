@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
+import PrimaryFamiliesTable from './PrimaryFamiliesTable';
 import { allDeepBeliefQuestions, deepLiteracyQuestions } from '../../lib/deep-bank';
 import { calculateDeepBeliefResult, calculateDeepLiteracyResult, type DeepBeliefResult, type DeepLiteracyResult } from '../../lib/deep-engine';
 import {
@@ -118,13 +119,12 @@ export default function DeepClient() {
   }
 
   if (output) {
-    const ordinary = output.compatibility.filter((item) => item.kind !== 'anti-pluralist-pattern' && item.status !== 'insufficient');
     const patterns = output.compatibility.filter((item) => item.kind === 'anti-pluralist-pattern' && item.status !== 'insufficient');
 
     return (
       <section className="engine-shell">
         <article className="engine-card">
-          <p className="engine-kicker">Deep validation result</p>
+          <p className="engine-kicker">1 · Your deeper political angle</p>
           <h1>Beliefs and literacy are reported separately.</h1>
           <p className="engine-help">Belief axes have no correct answer. CLASSIFY and UNDERSTAND are literacy questions and can be scored against an evidence-backed answer key.</p>
 
@@ -140,28 +140,21 @@ export default function DeepClient() {
           </div>
         </article>
 
+        <PrimaryFamiliesTable quick={quick} deep={output.belief} />
+
         <div className="deep-summary-grid">
           <article className="engine-card">
-            <p className="engine-kicker">Political literacy</p>
+            <p className="engine-kicker">3 · Political literacy</p>
             <h2>{output.literacy.overall.percent}% overall</h2>
             <div className="deep-literacy-line"><span>CLASSIFY</span><strong>{output.literacy.sections.classify.percent}%</strong></div>
             <div className="deep-literacy-line"><span>UNDERSTAND</span><strong>{output.literacy.sections.understand.percent}%</strong></div>
             <p className="engine-help">Coverage: {output.literacy.overall.coverage}%</p>
           </article>
-
-          <article className="engine-card">
-            <p className="engine-kicker">Tradition compatibility</p>
-            <h2>Qualitative, not percentages</h2>
-            {ordinary.length === 0 && <p className="engine-help">No tradition has enough modeled support to surface yet.</p>}
-            {ordinary.map((item) => (
-              <div className="deep-literacy-line" key={item.profileId}><span>{item.name}</span><strong>{item.status}</strong></div>
-            ))}
-          </article>
         </div>
 
         {patterns.length > 0 && (
           <article className="engine-card" style={{ marginTop: 18 }}>
-            <p className="engine-kicker">Pattern-level signals</p>
+            <p className="engine-kicker">Additional pattern-level signals</p>
             <p className="engine-help">These are combinations of attitudes defined in the cited scholarship. They are not party membership, identity or extremism diagnoses.</p>
             {patterns.map((item) => <div className="deep-literacy-line" key={item.profileId}><span>{item.name}</span><strong>{item.status}</strong></div>)}
           </article>
@@ -171,7 +164,7 @@ export default function DeepClient() {
           <button className="engine-primary-link" type="button" onClick={() => restart()}>Restart Deep</button>
           <span>Raw political answers remain in this browser session and are not written to Firestore.</span>
         </div>
-        <p className="engine-disclaimer">Content-validation build. The question model and tradition mappings are evidence-backed but not yet psychometrically validated. “Consistent with” does not mean “you are.”</p>
+        <p className="engine-disclaimer">Content-validation build. The question model and family mappings are evidence-backed but not yet psychometrically validated. The 0–100 family match is a compatibility index, not a probability or identity assignment.</p>
       </section>
     );
   }
