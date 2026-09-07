@@ -3,22 +3,20 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import {
-  answerQuestion,
-  calculateQuickResult,
-  completeSession,
-  createQuickSession,
-  displayedToStoredAnswer,
-  getDisplayedQuestion,
-  getProgress,
-  getQuestion,
-  parseStoredSession,
-  storedToDisplayedAnswer,
-  type QuickSession,
-} from '../../lib/engine';
+  answerBeliefV2,
+  beliefV2StageProgress,
+  createBeliefV2Session,
+  displayedToStoredBeliefV2Answer,
+  getBeliefV2Item,
+  isBeliefV2PoleFlipped,
+  parseBeliefV2Session,
+  storedToDisplayedBeliefV2Answer,
+  type BeliefV2Session,
+} from '../../lib/belief-v2-session';
 import { pairedAnswerOptions, type AnswerValue } from '../../lib/questions';
 
-const SESSION_KEY = 'politangle.quick.session.v2';
-const RESULT_KEY = 'politangle.quick.result.v2';
+export const BELIEF_SESSION_KEY = 'politangle.believe.v2.session';
+const LITERACY_SESSION_KEY = 'politangle.literacy.v2.session';
 
 function newSeed() {
   if (typeof crypto !== 'undefined' && 'getRandomValues' in crypto) {
@@ -31,79 +29,75 @@ function newSeed() {
 
 export default function QuizClient() {
   const router = useRouter();
-  const [session, setSession] = useState<QuickSession | null>(null);
+  const [session, setSession] = useState<BeliefV2Session | null>(null);
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
-    const restored = parseStoredSession(sessionStorage.getItem(SESSION_KEY));
-    const initial = restored ?? createQuickSession(newSeed());
-    sessionStorage.setItem(SESSION_KEY, JSON.stringify(initial));
+    const restored = parseBeliefV2Session(sessionStorage.getItem(BELIEF_SESSION_KEY));
+    const initial = restored ?? createBeliefV2Session(newSeed());
+    sessionStorage.setItem(BELIEF_SESSION_KEY, JSON.stringify(initial));
     setSession(initial);
 
-    if (restored) {
-      const firstUnanswered = restored.order.findIndex((id) => restored.answers[id] === undefined);
-      setIndex(firstUnanswered === -1 ? restored.order.length - 1 : firstUnanswered);
-    }
+    const firstUnanswered = initial.quickOrder.findIndex((id) => initial.answers[id] === undefined);
+    setIndex(firstUnanswered === -1 ? initial.quickOrder.length - 1 : firstUnanswered);
   }, []);
 
   const current = useMemo(() => {
     if (!session) return null;
-    return getQuestion(session.order[index]);
+    return getBeliefV2Item(session.quickOrder[index]);
   }, [session, index]);
 
   if (!session || !current) {
     return <section className="engine-card"><p>Loading assessment…</p></section>;
   }
 
-  const progress = getProgress(session.answers);
-  const display = getDisplayedQuestion(session, current);
-  const selected = storedToDisplayedAnswer(session.answers[current.id], display.flipped);
+  const progress = beliefV2StageProgress(session, 'quick');
+  const flipped = isBeliefV2PoleFlipped(session.seed, current.id);
+  const first = flipped ? current.positive : current.negative;
+  const second = flipped ? current.negative : current.positive;
+  const selected = storedToDisplayedBeliefV2Answer(session.answers[current.id], flipped);
+
+  function save(next: BeliefV2Session) {
+    sessionStorage.setItem(BELIEF_SESSION_KEY, JSON.stringify(next));
+    setSession(next);
+  }
 
   function choose(displayedValue: AnswerValue) {
-    if (!session) return;
-    const storedValue = displayedToStoredAnswer(displayedValue, display.flipped);
-    const next = answerQuestion(session, current.id, storedValue);
-    sessionStorage.setItem(SESSION_KEY, JSON.stringify(next));
-    setSession(next);
-
-    if (index < next.order.length - 1) {
-      window.setTimeout(() => setIndex((value) => value + 1), 90);
-    }
+    const storedValue = displayedToStoredBeliefV2Answer(displayedValue, flipped);
+    const next = answerBeliefV2(session, current.id, storedValue);
+    save(next);
+    if (index < next.quickOrder.length - 1) window.setTimeout(() => setIndex((value) => value + 1), 90);
   }
 
   function restart() {
-    const next = createQuickSession(newSeed());
-    sessionStorage.setItem(SESSION_KEY, JSON.stringify(next));
-    sessionStorage.removeItem(RESULT_KEY);
+    const next = createBeliefV2Session(newSeed());
+    sessionStorage.setItem(BELIEF_SESSION_KEY, JSON.stringify(next));
+    sessionStorage.removeItem(LITERACY_SESSION_KEY);
     setSession(next);
     setIndex(0);
   }
 
   function finish() {
-    if (!session || !progress.complete) return;
-    const completed = completeSession(session);
-    const result = calculateQuickResult(completed.answers);
-    sessionStorage.setItem(SESSION_KEY, JSON.stringify(completed));
-    sessionStorage.setItem(RESULT_KEY, JSON.stringify(result));
+    if (!progress.complete) return;
     router.push('/results');
   }
 
   return (
     <section className="engine-shell">
       <div className="engine-progress-row">
-        <span>{progress.answeredCount} / {progress.total}</span>
+        <span>{progress.answered} / {progress.total}</span>
         <div className="engine-progress" aria-label={`${progress.percent}% complete`}><span style={{ width: `${progress.percent}%` }} /></div>
         <button type="button" className="engine-link-button" onClick={restart}>Restart</button>
       </div>
 
       <article className="engine-card">
-        <p className="engine-kicker">Choice {index + 1} · {current.construct}</p>
+        <p className="engine-kicker">Quick · {current.mode.toUpperCase()} · {current.construct.replaceAll('-', ' ')}</p>
         <h1>Which comes closer to your own view?</h1>
         <div className="engine-pair" aria-label="Two political views">
-          <div><span>First view</span><p>{display.first}</p></div>
-          <div><span>Second view</span><p>{display.second}</p></div>
+          <div><span>First view</span><p>{first}</p></div>
+          <div><span>Second view</span><p>{second}</p></div>
         </div>
-        <p className="engine-help">Choose the closer view, or the middle if your position is genuinely balanced or depends on the case. “Not sure / I do not understand” is separate and is excluded from scoring.</p>
+        <p className="engine-help">Choose the closer view, use the middle when you are genuinely balanced or it depends, or choose “Not sure” when you cannot answer. Not-sure responses are excluded from scoring.</p>
 
         <div className="engine-answer-grid paired" role="radiogroup" aria-label="Response">
           {pairedAnswerOptions.map((option) => (
@@ -123,11 +117,11 @@ export default function QuizClient() {
 
       <div className="engine-nav">
         <button type="button" onClick={() => setIndex((value) => Math.max(0, value - 1))} disabled={index === 0}>Previous</button>
-        <span>{progress.unsureCount ? `${progress.unsureCount} marked not sure` : 'No unsure responses so far'}</span>
-        {index === session.order.length - 1 ? (
-          <button type="button" onClick={finish} disabled={!progress.complete}>See result</button>
+        <span>{progress.unsure ? `${progress.unsure} marked not sure` : 'No unsure responses so far'}</span>
+        {index === session.quickOrder.length - 1 ? (
+          <button type="button" onClick={finish} disabled={!progress.complete}>See Quick result</button>
         ) : (
-          <button type="button" onClick={() => setIndex((value) => Math.min(session.order.length - 1, value + 1))}>Next</button>
+          <button type="button" onClick={() => setIndex((value) => Math.min(session.quickOrder.length - 1, value + 1))}>Next</button>
         )}
       </div>
     </section>
