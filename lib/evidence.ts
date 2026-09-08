@@ -237,16 +237,16 @@ export const evidenceSources: readonly EvidenceSource[] = [
   },
   {
     id: 'VDEM-POPULISM-AUTOCRATIZATION',
-    title: 'Populism and Democracy: The Road to Autocracy?',
+    title: 'Walking the Talk: How to Identify Anti-Pluralist Parties',
     publisher: 'V-Dem Institute, University of Gothenburg',
     url: 'https://v-dem.net/media/publications/working_paper_116_final.pdf',
     authority: 'academic-research',
     supports: [
-      'Populism is not necessarily anti-democratic by itself.',
-      'Anti-pluralism and lack of commitment to democratic norms are stronger predictors of autocratization than the populist label alone.',
+      'Populism as such is not necessarily anti-democratic, and not all populists seek to repress liberal rights and freedoms.',
+      'Anti-pluralism and weak commitment to democratic norms are stronger predictors of autocratization than the populist label alone.',
       'Populist parties can attach to progressive, conservative, socialist, authoritarian or other host ideologies.',
     ],
-    accessed: '2026-09-07',
+    accessed: '2026-09-08',
   },
   {
     id: 'IDEA-POPULISM-DEMOCRACY',
@@ -255,10 +255,11 @@ export const evidenceSources: readonly EvidenceSource[] = [
     url: 'https://www.idea.int/publications/catalogue/populist-government-and-democracy-impact-assessment',
     authority: 'institutional-reference',
     supports: [
-      'Populist governments should be assessed for their effects on checks and balances and democratic accountability rather than assuming all populism has the same institutional effect.',
-      'Populism can contribute to democratic backsliding when governing actors erode accountability institutions.',
+      'In the report’s comparative analysis, 22 of 28 measured aspects of democracy declined under populist governments.',
+      'Statistically significant declines included Elected Government, Civil Liberties, Freedom of Expression, Freedom of Association and Assembly, and Freedom of Movement.',
+      'The report concludes that populist-led governments can weaken democratic checks, accountability and civil liberties; this is an empirical governance finding, not a definition that every populist is authoritarian.',
     ],
-    accessed: '2026-09-07',
+    accessed: '2026-09-08',
   },
   {
     id: 'GLOBALCIT-BIRTHRIGHT',
