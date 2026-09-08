@@ -1,288 +1,214 @@
 'use client';
 
-import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
-import { scoreLiteracyItem, type LiteracyQuestion } from '../../../lib/deep-engine';
-import { schoolLearningCards } from '../../../lib/school-literacy';
-import {
-  answerSchoolQuestion,
-  createSchoolSession,
-  markSchoolSubmitted,
-  parseSchoolSession,
-  revealSchoolPractice,
-  schoolAggregatePayload,
-  schoolOrder,
-  schoolPhaseProgress,
-  schoolQuestion,
-  schoolResult,
-  setSchoolPhase,
-  type SchoolPhase,
-  type SchoolSession,
-} from '../../../lib/school-session';
 
-const STORAGE_KEY = 'politangle.school.student.v1';
+type ClassroomQuestion = {
+  id: string;
+  kind: 'believe' | 'literacy';
+  title: string;
+  construct?: string;
+  mode?: string;
+  section?: string;
+  negative?: string;
+  positive?: string;
+  prompt?: string;
+  multiSelect?: boolean;
+  options: readonly { id: string; label: string }[];
+  explanation?: string;
+  acceptedAnswerSets?: readonly (readonly string[])[];
+};
 
-type JoinState = 'idle' | 'checking' | 'ready' | 'error';
+type Distribution = {
+  id: string;
+  kind: string;
+  title: string;
+  responses: number;
+  distribution: { id: string; label: string; count: number; percent: number }[];
+  correct: number | null;
+  correctPercent: number | null;
+};
 
-function firstOpenIndex(session: SchoolSession, phase: 'baseline' | 'practice' | 'post') {
-  const order = schoolOrder(session, phase);
-  if (phase === 'practice') {
-    const found = order.findIndex((id) => !session.practiceRevealed.includes(id));
-    return found === -1 ? Math.max(0, order.length - 1) : found;
-  }
-  const answers = phase === 'baseline' ? session.baselineAnswers : session.postAnswers;
-  const found = order.findIndex((id) => (answers[id]?.length ?? 0) === 0);
-  return found === -1 ? Math.max(0, order.length - 1) : found;
-}
+type PublicRoom = {
+  code: string;
+  status: 'active' | 'closed';
+  active: boolean;
+  roomLabel: string;
+  joinedCount: number;
+  activity: { type: string; title: string; questionIds: string[]; pacing: 'teacher' | 'student'; projectorMode: 'live' | 'reveal' };
+  currentIndex: number;
+  currentQuestionId: string | null;
+  questionOpen: boolean;
+  revealed: boolean;
+  currentQuestion: ClassroomQuestion | null;
+  activityQuestions: ClassroomQuestion[];
+  projectorDistribution: Distribution | null;
+};
 
-function phaseNumber(phase: SchoolPhase) {
-  return ['baseline', 'learn', 'practice', 'post', 'result'].indexOf(phase) + 1;
+const CODE_KEY = 'politangle.school.classroom.code';
+function tokenKey(code: string) { return `politangle.school.classroom.token.${code}`; }
+function answerKey(code: string) { return `politangle.school.classroom.local.${code}`; }
+
+function DistributionChart({ data }: { data: Distribution }) {
+  return (
+    <div className="school-distribution" aria-label={`Aggregate distribution for ${data.title}`}>
+      {data.distribution.map((row) => (
+        <div className="school-bar-row" key={row.id}>
+          <div className="school-bar-label"><span>{row.label}</span><strong>{row.percent}% · {row.count}</strong></div>
+          <div className="school-bar-track"><span style={{ width: `${row.percent}%` }} /></div>
+        </div>
+      ))}
+    </div>
+  );
 }
 
 export default function StudentSchoolClient({ initialCode }: { initialCode: string }) {
-  const [session, setSession] = useState<SchoolSession | null | undefined>(undefined);
   const [entryCode, setEntryCode] = useState(initialCode.toUpperCase());
-  const [joinState, setJoinState] = useState<JoinState>('idle');
-  const [joinMessage, setJoinMessage] = useState('');
-  const [index, setIndex] = useState(0);
-  const [submitMessage, setSubmitMessage] = useState('');
+  const [code, setCode] = useState('');
+  const [token, setToken] = useState('');
+  const [room, setRoom] = useState<PublicRoom | null>(null);
+  const [message, setMessage] = useState('');
+  const [busy, setBusy] = useState(false);
+  const [studentIndex, setStudentIndex] = useState(0);
+  const [localAnswers, setLocalAnswers] = useState<Record<string, string | string[]>>({});
+  const [submittedIds, setSubmittedIds] = useState<string[]>([]);
 
   useEffect(() => {
-    const restored = parseSchoolSession(sessionStorage.getItem(STORAGE_KEY));
-    if (!restored) {
-      setSession(null);
-      return;
+    const stored = sessionStorage.getItem(CODE_KEY) ?? '';
+    if (!initialCode && stored) setEntryCode(stored);
+  }, [initialCode]);
+
+  useEffect(() => {
+    if (!code || !token) return;
+    let cancelled = false;
+    const refresh = async () => {
+      const response = await fetch(`/api/school/classes/${encodeURIComponent(code)}`, { cache: 'no-store' }).catch(() => null);
+      if (!cancelled && response?.ok) setRoom(await response.json() as PublicRoom);
+    };
+    void refresh();
+    const id = window.setInterval(refresh, 1200);
+    return () => { cancelled = true; window.clearInterval(id); };
+  }, [code, token]);
+
+  async function join() {
+    const normalized = entryCode.trim().toUpperCase();
+    if (normalized.length !== 6) { setMessage('Enter the six-character classroom code.'); return; }
+    setBusy(true);
+    setMessage('Joining anonymously…');
+    const status = await fetch(`/api/school/classes/${encodeURIComponent(normalized)}`, { cache: 'no-store' }).catch(() => null);
+    if (!status?.ok) { setBusy(false); setMessage('Classroom not found or unavailable.'); return; }
+    const preview = await status.json() as PublicRoom;
+    if (!preview.active) { setBusy(false); setMessage('This classroom is closed.'); return; }
+    let nextToken = sessionStorage.getItem(tokenKey(normalized)) ?? '';
+    if (!nextToken) {
+      nextToken = crypto.randomUUID();
+      sessionStorage.setItem(tokenKey(normalized), nextToken);
     }
-    setSession(restored);
-    if (restored.phase === 'baseline' || restored.phase === 'practice' || restored.phase === 'post') setIndex(firstOpenIndex(restored, restored.phase));
-  }, []);
-
-  function save(next: SchoolSession) {
-    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(next));
-    setSession(next);
+    const response = await fetch(`/api/school/classes/${encodeURIComponent(normalized)}/join`, {
+      method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ participantToken: nextToken }),
+    }).catch(() => null);
+    if (!response?.ok) { setBusy(false); setMessage('Could not join this classroom.'); return; }
+    const saved = JSON.parse(sessionStorage.getItem(answerKey(normalized)) ?? '{}') as { answers?: Record<string, string | string[]>; submitted?: string[] };
+    setLocalAnswers(saved.answers ?? {});
+    setSubmittedIds(saved.submitted ?? []);
+    sessionStorage.setItem(CODE_KEY, normalized);
+    setCode(normalized);
+    setToken(nextToken);
+    setRoom(preview);
+    setMessage('You joined anonymously. Your teacher sees class totals and distributions, not which answer is yours.');
+    setBusy(false);
   }
 
-  async function start(codeValue: string) {
-    const code = codeValue.trim().toUpperCase();
-    setJoinMessage('');
-    if (code) {
-      setJoinState('checking');
-      const response = await fetch(`/api/school/classes/${encodeURIComponent(code)}`).catch(() => null);
-      if (!response?.ok) {
-        setJoinState('error');
-        setJoinMessage('Class code not found or unavailable.');
-        return;
-      }
-      const data = await response.json() as { active?: boolean };
-      if (!data.active) {
-        setJoinState('error');
-        setJoinMessage('This class is closed.');
-        return;
-      }
-    }
-    const next = createSchoolSession(Date.now(), crypto.randomUUID(), code || undefined);
-    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(next));
-    setSession(next);
-    setIndex(0);
-    setJoinState('ready');
+  function saveLocal(nextAnswers: Record<string, string | string[]>, nextSubmitted = submittedIds) {
+    setLocalAnswers(nextAnswers);
+    setSubmittedIds(nextSubmitted);
+    if (code) sessionStorage.setItem(answerKey(code), JSON.stringify({ answers: nextAnswers, submitted: nextSubmitted }));
   }
 
-  function restart() {
-    sessionStorage.removeItem(STORAGE_KEY);
-    setSession(null);
-    setIndex(0);
-    setSubmitMessage('');
+  const question = useMemo(() => {
+    if (!room) return null;
+    if (room.activity.pacing === 'teacher') return room.currentQuestion;
+    return room.activityQuestions[studentIndex] ?? null;
+  }, [room, studentIndex]);
+
+  const selected = question ? localAnswers[question.id] : undefined;
+  const alreadySubmitted = question ? submittedIds.includes(question.id) : false;
+
+  function choose(optionId: string) {
+    if (!question || alreadySubmitted) return;
+    let answer: string | string[];
+    if (question.kind === 'believe') answer = optionId;
+    else if (question.multiSelect) {
+      const existing = Array.isArray(selected) ? selected : [];
+      answer = existing.includes(optionId) ? existing.filter((id) => id !== optionId) : [...existing, optionId];
+    } else answer = [optionId];
+    if (Array.isArray(answer) && !answer.length) return;
+    saveLocal({ ...localAnswers, [question.id]: answer });
   }
 
-  async function submit(next: SchoolSession, phase: 'baseline' | 'practice' | 'post') {
-    if (!next.classCode) return markSchoolSubmitted(next, phase);
-    setSubmitMessage('Submitting anonymous class aggregate…');
-    const response = await fetch(`/api/school/classes/${encodeURIComponent(next.classCode)}/submit`, {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify(schoolAggregatePayload(next, phase)),
+  async function submit() {
+    if (!room || !question || selected === undefined || alreadySubmitted) return;
+    setBusy(true);
+    const response = await fetch(`/api/school/classes/${encodeURIComponent(room.code)}/submit`, {
+      method: 'POST', headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ participantToken: token, questionId: question.id, answer: selected }),
     }).catch(() => null);
     if (!response?.ok) {
-      setSubmitMessage('Class aggregate could not be submitted. Try again before continuing.');
-      return null;
+      const error = response ? await response.json().catch(() => null) as { error?: string } | null : null;
+      setMessage(error?.error ?? 'Response could not be submitted.');
+      setBusy(false);
+      return;
     }
-    setSubmitMessage('Anonymous class aggregate submitted.');
-    return markSchoolSubmitted(next, phase);
+    const nextSubmitted = [...new Set([...submittedIds, question.id])];
+    saveLocal(localAnswers, nextSubmitted);
+    setMessage('Response received. Your answer was added to the class total without storing a student-to-answer record.');
+    setBusy(false);
   }
 
-  const activeQuestion = useMemo(() => {
-    if (!session || !['baseline', 'practice', 'post'].includes(session.phase)) return null;
-    return schoolQuestion(session, session.phase as 'baseline' | 'practice' | 'post', index);
-  }, [session, index]);
-
-  if (session === undefined) return <section className="engine-shell"><article className="engine-card"><p>Loading School mode…</p></article></section>;
-
-  if (!session) {
+  if (!code || !token) {
     return (
-      <section className="engine-shell">
-        <article className="engine-card">
-          <p className="engine-kicker">Start student mode</p>
-          <h1>Learn the political landscape without giving your teacher your politics.</h1>
-          <p className="engine-help">Enter a class code if your teacher gave you one. You can also continue independently. No name or email is requested.</p>
-          <label style={{ display: 'block', marginTop: 18 }}>
-            <span>Class code (optional)</span>
-            <input value={entryCode} onChange={(event) => setEntryCode(event.target.value.toUpperCase())} maxLength={6} placeholder="ABC234" style={{ display: 'block', marginTop: 8, padding: 12, width: '100%', maxWidth: 280 }} />
-          </label>
-          {joinMessage && <p className="engine-help">{joinMessage}</p>}
-          <div className="engine-result-actions">
-            <button className="engine-primary-link" type="button" disabled={joinState === 'checking'} onClick={() => start(entryCode)}>{joinState === 'checking' ? 'Checking…' : entryCode.trim() ? 'Join class' : 'Continue independently'}</button>
-          </div>
-          <p className="engine-disclaimer">School BELIEVE/political-opinion answers are not sent to the class aggregation service. Classroom deployment with minors still REQUIRES QUALIFIED LEGAL REVIEW.</p>
+      <section className="engine-shell school-shell">
+        <article className="engine-card school-join-card">
+          <p className="engine-kicker">Join classroom</p>
+          <h1>Enter the room code.</h1>
+          <p className="engine-help">No name, email, username or student ID is required. Your teacher sees how the room answers, not which answer came from you.</p>
+          <input className="school-code-input" value={entryCode} maxLength={6} onChange={(event) => setEntryCode(event.target.value.toUpperCase().replace(/[^A-Z0-9]/g, ''))} placeholder="ABC234" aria-label="Classroom code" />
+          <div className="engine-result-actions"><button className="engine-primary-link" type="button" disabled={busy} onClick={join}>{busy ? 'Joining…' : 'Join anonymously'}</button></div>
+          {message && <p className="engine-help">{message}</p>}
+          <p className="engine-disclaimer">Classroom answers contribute to aggregate room statistics. The classroom backend is designed not to retain a participant-to-answer mapping. Real school/minor deployment requires qualified legal/privacy review.</p>
         </article>
       </section>
     );
   }
 
-  const progress = session.phase === 'baseline' || session.phase === 'practice' || session.phase === 'post' ? schoolPhaseProgress(session, session.phase) : null;
-  const answers = session.phase === 'baseline' ? session.baselineAnswers : session.phase === 'practice' ? session.practiceAnswers : session.postAnswers;
-  const selected = activeQuestion ? answers[activeQuestion.id] ?? [] : [];
-  const practiceChecked = Boolean(activeQuestion && session.phase === 'practice' && session.practiceRevealed.includes(activeQuestion.id));
-  const practiceResult = activeQuestion && practiceChecked ? scoreLiteracyItem(activeQuestion, selected) : null;
+  if (!room) return <section className="engine-shell school-shell"><article className="engine-card"><p>Loading classroom…</p></article></section>;
 
-  function choose(question: LiteracyQuestion, optionId: string) {
-    if (!session || !['baseline', 'practice', 'post'].includes(session.phase)) return;
-    if (session.phase === 'practice' && session.practiceRevealed.includes(question.id)) return;
-    const currentAnswers = session.phase === 'baseline' ? session.baselineAnswers : session.phase === 'practice' ? session.practiceAnswers : session.postAnswers;
-    const existing = currentAnswers[question.id] ?? [];
-    const nextSelection = question.multiSelect
-      ? existing.includes(optionId) ? existing.filter((id) => id !== optionId) : [...existing, optionId]
-      : [optionId];
-    if (nextSelection.length === 0) return;
-    save(answerSchoolQuestion(session, session.phase as 'baseline' | 'practice' | 'post', question.id, nextSelection));
-  }
-
-  async function finishBaseline() {
-    if (!schoolPhaseProgress(session, 'baseline').complete) return;
-    const submitted = await submit(session, 'baseline');
-    if (!submitted) return;
-    save(setSchoolPhase(submitted, 'learn'));
-    setIndex(0);
-  }
-
-  async function finishPractice() {
-    if (!schoolPhaseProgress(session, 'practice').complete) return;
-    const submitted = await submit(session, 'practice');
-    if (!submitted) return;
-    save(setSchoolPhase(submitted, 'post'));
-    setIndex(0);
-  }
-
-  async function finishPost() {
-    if (!schoolPhaseProgress(session, 'post').complete) return;
-    const submitted = await submit(session, 'post');
-    if (!submitted) return;
-    save(setSchoolPhase(submitted, 'result'));
-    setIndex(0);
-  }
-
-  function nextQuestion() {
-    if (!activeQuestion || selected.length === 0 || !progress) return;
-    const order = schoolOrder(session, session.phase as 'baseline' | 'practice' | 'post');
-    if (index < order.length - 1) setIndex((value) => value + 1);
-  }
-
-  function checkPractice() {
-    if (!activeQuestion || selected.length === 0) return;
-    save(revealSchoolPractice(session, activeQuestion.id));
-  }
-
-  const phaseLabels: SchoolPhase[] = ['baseline', 'learn', 'practice', 'post', 'result'];
+  const studentPacedComplete = room.activity.pacing === 'student' && room.activity.questionIds.every((id) => submittedIds.includes(id));
+  const revealForCurrent = room.activity.pacing === 'teacher' && room.revealed && room.currentQuestionId === question?.id;
 
   return (
-    <section className="engine-shell">
-      <div className="deep-phase-tabs">
-        {phaseLabels.map((item) => <span className={item === session.phase ? 'active' : ''} key={item}>{item.toUpperCase()}</span>)}
-      </div>
-      <div className="engine-progress-row">
-        <span>Step {phaseNumber(session.phase)} of 5 {session.classCode ? `· Class ${session.classCode}` : '· Independent'}</span>
-        <button type="button" className="engine-link-button" onClick={restart}>Restart</button>
-      </div>
+    <section className="engine-shell school-shell">
+      <div className="school-room-strip"><strong>{room.roomLabel || `Class ${room.code}`}</strong><span>{room.activity.title}</span><span>{room.joinedCount} joined</span></div>
+      {message && <p className="school-status-message">{message}</p>}
+      {room.status === 'closed' ? (
+        <article className="engine-card"><p className="engine-kicker">Session ended</p><h1>This classroom is closed.</h1><p>Your personal Politangle activities remain available in Private Student Mode.</p></article>
+      ) : studentPacedComplete ? (
+        <article className="engine-card"><p className="engine-kicker">Activity complete</p><h1>All {room.activity.questionIds.length} responses submitted.</h1><p>Your teacher receives the class distribution, not an individual report about you.</p></article>
+      ) : question ? (
+        <article className="engine-card school-question-card">
+          <p className="engine-kicker">{room.activity.pacing === 'teacher' ? `Live question ${room.currentIndex + 1}` : `Question ${studentIndex + 1} of ${room.activity.questionIds.length}`} · {question.title}</p>
+          {question.kind === 'believe' ? (
+            <><h1>Which position is closer to your view?</h1><div className="engine-pair"><div><span>First position</span><p>{question.negative}</p></div><div><span>Second position</span><p>{question.positive}</p></div></div></>
+          ) : <><h1>{question.prompt}</h1><p className="engine-help">This is a political-literacy question. A correct answer can be revealed after the class responds.</p></>}
 
-      {(session.phase === 'baseline' || session.phase === 'post') && activeQuestion && progress && (
-        <article className="engine-card">
-          <p className="engine-kicker">{session.phase === 'baseline' ? 'Baseline' : 'Post-test'} · {index + 1} of {progress.total}</p>
-          <h1>{activeQuestion.prompt}</h1>
-          <p className="engine-help">Choose the best answer. Feedback is withheld during the test so the score reflects what you know before seeing the explanation.</p>
-          <div className="deep-options">
-            {activeQuestion.options.map((option) => <button type="button" className={selected.includes(option.id) ? 'deep-option selected' : 'deep-option'} key={option.id} onClick={() => choose(activeQuestion, option.id)}>{option.label}</button>)}
-          </div>
-          <div className="engine-nav">
-            <button type="button" disabled={index === 0} onClick={() => setIndex((value) => Math.max(0, value - 1))}>Previous</button>
-            <span>{progress.answered}/{progress.total} answered</span>
-            {index === progress.total - 1
-              ? <button type="button" disabled={!progress.complete} onClick={session.phase === 'baseline' ? finishBaseline : finishPost}>{session.phase === 'baseline' ? 'Finish baseline' : 'Finish post-test'}</button>
-              : <button type="button" disabled={selected.length === 0} onClick={nextQuestion}>Next</button>}
-          </div>
-          {submitMessage && <p className="engine-help">{submitMessage}</p>}
+          {!alreadySubmitted && (room.activity.pacing === 'student' || room.questionOpen) ? (
+            <><div className={question.kind === 'believe' ? 'school-believe-options' : 'deep-options'}>{question.options.map((option) => { const active = Array.isArray(selected) ? selected.includes(option.id) : selected === option.id; return <button key={option.id} type="button" className={active ? 'deep-option selected' : 'deep-option'} onClick={() => choose(option.id)}>{option.label}</button>; })}</div><div className="engine-result-actions"><button className="engine-primary-link" type="button" disabled={busy || selected === undefined || (Array.isArray(selected) && !selected.length)} onClick={submit}>{busy ? 'Submitting…' : 'Submit anonymously'}</button></div></>
+          ) : alreadySubmitted ? <div className="school-submitted"><strong>Response received.</strong><span>Waiting for the class / teacher.</span></div> : <p className="engine-callout">Waiting for your teacher to open this question.</p>}
+
+          {revealForCurrent && room.projectorDistribution && <div className="school-reveal-panel"><p className="engine-kicker">How the room answered · {room.projectorDistribution.responses} responses</p><DistributionChart data={room.projectorDistribution} />{question.kind === 'literacy' && question.explanation && <div className="deep-explanation"><strong>Explanation</strong><br />{question.explanation}</div>}</div>}
+
+          {room.activity.pacing === 'student' && alreadySubmitted && <div className="engine-nav"><button type="button" disabled={studentIndex === 0} onClick={() => setStudentIndex((value) => Math.max(0, value - 1))}>Previous</button><span>{submittedIds.filter((id) => room.activity.questionIds.includes(id)).length}/{room.activity.questionIds.length} submitted</span><button type="button" disabled={studentIndex >= room.activity.questionIds.length - 1} onClick={() => setStudentIndex((value) => Math.min(room.activity.questionIds.length - 1, value + 1))}>Next</button></div>}
         </article>
-      )}
-
-      {session.phase === 'learn' && (
-        <article className="engine-card">
-          <p className="engine-kicker">Learn · card {session.learnIndex + 1} of {schoolLearningCards.length}</p>
-          <h1>{schoolLearningCards[session.learnIndex].title}</h1>
-          <p>{schoolLearningCards[session.learnIndex].summary}</p>
-          <p className="engine-help"><strong>Common misconception:</strong> {schoolLearningCards[session.learnIndex].misconception}</p>
-          <div className="engine-nav">
-            <button type="button" disabled={session.learnIndex === 0} onClick={() => save({ ...session, learnIndex: Math.max(0, session.learnIndex - 1) })}>Previous</button>
-            <span>{session.learnIndex + 1}/{schoolLearningCards.length}</span>
-            {session.learnIndex === schoolLearningCards.length - 1
-              ? <button type="button" onClick={() => { save(setSchoolPhase({ ...session, learnIndex: 0 }, 'practice')); setIndex(0); }}>Start practice</button>
-              : <button type="button" onClick={() => save({ ...session, learnIndex: session.learnIndex + 1 })}>Next</button>}
-          </div>
-        </article>
-      )}
-
-      {session.phase === 'practice' && activeQuestion && progress && (
-        <article className="engine-card">
-          <p className="engine-kicker">Practice · {index + 1} of {progress.total}</p>
-          <h1>{activeQuestion.prompt}</h1>
-          <p className="engine-help">Practice gives immediate feedback. Your teacher receives completion only, not your individual practice answers.</p>
-          <div className="deep-options">
-            {activeQuestion.options.map((option) => <button type="button" disabled={practiceChecked} className={selected.includes(option.id) ? 'deep-option selected' : 'deep-option'} key={option.id} onClick={() => choose(activeQuestion, option.id)}>{option.label}</button>)}
-          </div>
-          {practiceChecked && practiceResult && <div className="engine-card" style={{ marginTop: 16 }}><p className="engine-kicker">{practiceResult.correct ? 'Correct' : 'Not quite'}</p><p>{activeQuestion.explanation}</p></div>}
-          <div className="engine-nav">
-            <button type="button" disabled={index === 0} onClick={() => setIndex((value) => Math.max(0, value - 1))}>Previous</button>
-            <span>{progress.checked}/{progress.total} checked</span>
-            {!practiceChecked
-              ? <button type="button" disabled={selected.length === 0} onClick={checkPractice}>Check answer</button>
-              : index === progress.total - 1
-                ? <button type="button" disabled={!progress.complete} onClick={finishPractice}>Continue to post-test</button>
-                : <button type="button" onClick={() => setIndex((value) => value + 1)}>Next</button>}
-          </div>
-          {submitMessage && <p className="engine-help">{submitMessage}</p>}
-        </article>
-      )}
-
-      {session.phase === 'result' && (() => {
-        const result = schoolResult(session);
-        return (
-          <>
-            <article className="engine-card">
-              <p className="engine-kicker">Your political-literacy result</p>
-              <h1>{result.post.overall.percent}% after training</h1>
-              <div className="deep-literacy-line"><span>Baseline</span><strong>{result.baseline.overall.percent}%</strong></div>
-              <div className="deep-literacy-line"><span>Post-test</span><strong>{result.post.overall.percent}%</strong></div>
-              <div className="deep-literacy-line"><span>Change</span><strong>{result.change >= 0 ? '+' : ''}{result.change} points</strong></div>
-              <div className="deep-literacy-line"><span>CLASSIFY change</span><strong>{result.classifyChange >= 0 ? '+' : ''}{result.classifyChange}</strong></div>
-              <div className="deep-literacy-line"><span>UNDERSTAND change</span><strong>{result.understandChange >= 0 ? '+' : ''}{result.understandChange}</strong></div>
-              <p className="engine-help">The baseline and post-test are content-matched forms. They are not yet empirically equated, so the change is a pilot learning indicator rather than a standardized educational measure.</p>
-            </article>
-            <article className="engine-card" style={{ marginTop: 18 }}>
-              <p className="engine-kicker">Optional private self-map</p>
-              <h2>Your beliefs are a separate activity.</h2>
-              <p className="engine-help">Politangle BELIEVE has no correct political answers. If you explore your political shape, those answers stay in your browser session and are not sent to the school class aggregation service.</p>
-              <Link className="engine-primary-link" href="/quiz">Open private Politangle Quick</Link>
-            </article>
-          </>
-        );
-      })()}
+      ) : <article className="engine-card"><p className="engine-kicker">Anonymous lobby</p><h1>You’re in.</h1><p>Waiting for your teacher to launch the next question.</p></article>}
     </section>
   );
 }
