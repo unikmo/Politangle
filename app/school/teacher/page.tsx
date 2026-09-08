@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import TeacherSchoolClient from './TeacherSchoolClient';
+import TeacherLicenseGate from './TeacherLicenseGate';
 
 export default function SchoolTeacherPage() {
   return (
@@ -8,7 +8,7 @@ export default function SchoolTeacherPage() {
         <Link href="/school" className="engine-brand">Politangle School</Link>
         <span>Teacher</span>
       </header>
-      <TeacherSchoolClient />
+      <TeacherLicenseGate />
     </main>
   );
 }

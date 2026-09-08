@@ -25,13 +25,13 @@ export default function SchoolPage() {
           <article className="engine-card school-entry-card">
             <p className="engine-kicker">Students · classroom</p>
             <h2>Join an anonymous classroom</h2>
-            <p>Enter the six-character room code from your teacher. No name, email, username or student ID is required.</p>
+            <p>Enter the six-character session code from your teacher. No name, email, username or student ID is required.</p>
             <Link className="engine-primary-link" href="/school/student">Join classroom</Link>
           </article>
           <article className="engine-card school-entry-card">
             <p className="engine-kicker">Teachers</p>
             <h2>Run a live lesson</h2>
-            <p>Choose Quick 26, Full 42, a literacy quiz, a guided lesson, a custom subset or one live question. Watch aggregate distributions as answers arrive.</p>
+            <p>School pack: <strong>$300 for 10 teacher licenses.</strong> A licensed teacher can generate temporary session codes and run Quick 26, Full 42, literacy, guided or custom activities.</p>
             <Link className="engine-primary-link" href="/school/teacher">Teacher classroom</Link>
           </article>
         </div>
