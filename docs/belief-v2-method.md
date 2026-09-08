@@ -62,6 +62,8 @@ This structure is deliberate: tensions are only compared **within the same const
 
 The Phase-1 forensic item review is documented in `docs/believe-v2-phase1-item-validation.md`.
 
+The Phase-2 adversarial synthetic-profile review is documented in `docs/believe-v2-phase2-synthetic-stress.md`.
+
 ## THINK / FEEL / ACT
 
 The design is informed by the tripartite model of attitudes. The APA Dictionary of Psychology describes cognitive, affective and behavioral bases of attitudes as beliefs/evaluations, feelings/emotions, and responses including past behavior or future intentions.
@@ -99,6 +101,8 @@ The polygon is a profile, not an ideology box. A respondent can therefore occupy
 
 Populism and the religion/subsidiarity subtype variables remain available as additional tendencies rather than being forced into the eight-sided core polygon.
 
+**Phase-2 correction:** Politangle does not currently average Nationhood/membership and World/sovereignty into a single numeric Nationalism score. Synthetic testing showed that a civic sovereigntist and a birth-weighted internationalist could collapse toward the same artificial midpoint. The two measured axes therefore remain separate; Nationalism remains an educational/context concept until a dedicated validated scale exists.
+
 ## Statement → ideology relevance
 
 Every locked statement is linked to a construct. Every main political family has an explicit construct-loading matrix. The engine can therefore answer, for any statement:
@@ -118,7 +122,7 @@ Main headline families remain:
 - Socialism
 - Green politics
 
-Nationalism, Populism and Authority / democratic constraints remain cross-cutting tendencies, not competing headline families.
+Populism and Authority / democratic constraints remain scored cross-cutting tendencies, not competing headline families. Nationalism remains a cross-cutting educational/context concept but is **not assigned one numeric pilot score** from the current 42 items.
 
 ## Compatibility and the Think / Feel / Act triangle
 
@@ -149,10 +153,12 @@ Politangle may describe this as a **tension** between stated beliefs, affective 
 6. **Do not use famous people as scoring authorities.** Historical or public figures may later be shown as educational reference anchors only after independent sourcing of their documented positions. They should not determine the respondent's score.
 7. **Cross-national validation is mandatory.** Political terms and issue alignments vary by country. The locked count does not imply that every loading is culturally invariant.
 8. **Citizenship-at-birth law is no longer the global-core nationhood proxy.** Phase 1 moved the construct to naturalized-versus-citizen-from-birth national membership. Birthright-citizenship policy can be country/context material later.
+9. **Do not collapse national membership and sovereignty into a Nationalism number.** Phase 2 found that doing so destroys politically meaningful combinations. A scored nationalism output needs dedicated measurement work.
+10. **Radical-right output is screening-only.** The current Nationhood/membership construct is not a validated nativism scale. The conditional output is therefore named `Populist radical-right screening pattern` and must not be used as a personal extremist or far-right identity label.
 
 ## Implementation state
 
-Canonical scoring and source wording are in `lib/belief-v2-engine.ts`; the locked browser session is in `lib/belief-v2-session.ts`; regression coverage is in `lib/belief-v2-engine.test.ts` and `lib/belief-v2-session.test.ts`.
+Canonical scoring and source wording are in `lib/belief-v2-engine.ts`; the locked browser session is in `lib/belief-v2-session.ts`; regression coverage is in `lib/belief-v2-engine.test.ts`, `lib/belief-v2-session.test.ts` and `lib/phase2-synthetic-stress.test.ts`.
 
 The public engine routes now use BELIEVE v2.1:
 
