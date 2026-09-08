@@ -27,6 +27,15 @@ test('every headline row is bound to registered evidence', () => {
   }
 });
 
+test('nationalism remains a contextual cross-cutting concept rather than a fake one-number score', () => {
+  const nationalism = resultTraditions.find((item) => item.id === 'nationalism')!;
+  const populism = resultTraditions.find((item) => item.id === 'populism')!;
+  assert.equal(nationalism.kind, 'cross-cutting-tendency');
+  assert.equal(nationalism.scored, false);
+  assert.equal(populism.scored, true);
+  assert.match(nationalism.world, /not identical/i);
+});
+
 test('social democracy and socialism retain the ownership discriminator without adding democratic socialism as a headline row', () => {
   const socialDemocracy = resultTraditions.find((item) => item.id === 'social-democracy')!;
   const socialism = resultTraditions.find((item) => item.id === 'socialism')!;
