@@ -432,7 +432,20 @@ export function statementFamilyRelevanceV2(itemId: string) {
   };
 }
 
-export type TendencyIdV2 = 'nationalism' | 'populism' | 'authority-democratic-constraints';
+/**
+ * Cross-cutting tendency outputs that can be defended by dedicated BELIEVE
+ * constructs in the current 42-item pilot.
+ *
+ * Nationalism is intentionally not emitted as one numeric tendency. The
+ * nationhood-membership construct measures inclusive versus birth-weighted
+ * national membership, while world-sovereignty measures international rules
+ * versus final national discretion. Nationalism can be civic or culturally
+ * restrictive and national self-determination is not identical to state
+ * sovereignty, so averaging those two axes would create a false single score.
+ * The two dimensions remain visible separately in the political polygon and
+ * nationalism remains available as an educational/context concept.
+ */
+export type TendencyIdV2 = 'populism' | 'authority-democratic-constraints';
 export type TendencyResultV2 = { id: TendencyIdV2; score: number | null; coverage: number };
 
 function constructAverage(results: readonly ConstructModeResultV2[], constructsToUse: readonly BeliefConstruct[]) {
@@ -447,11 +460,9 @@ function constructAverage(results: readonly ConstructModeResultV2[], constructsT
 
 export function assessTendenciesV2(answers: BeliefAnswersV2): TendencyResultV2[] {
   const results = calculateConstructModesV2(answers);
-  const nationalism = constructAverage(results, ['nationhood-membership', 'world-sovereignty']);
   const populism = constructAverage(results, ['populism']);
   const authority = constructAverage(results, ['authority-order', 'pluralism']);
   return [
-    { id: 'nationalism', ...nationalism },
     { id: 'populism', ...populism },
     { id: 'authority-democratic-constraints', ...authority },
   ];
