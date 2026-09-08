@@ -27,16 +27,16 @@ The 26-word guardrail is **not** a validated reading-level threshold. School-age
 
 ## Method anchors
 
-- Pew Research Center, *Writing Survey Questions*: https://www.pewresearch.org/writing-survey-questions/
-- AAPOR, *Best Practices for Survey Research*: https://aapor.org/standards-and-ethics/best-practices/
-- World Values Survey Wave 7 documentation/questionnaire: https://www.worldvaluessurvey.org/WVSContents.jsp?CMSID=Documentation
-- Chapel Hill Expert Survey: https://www.chesdata.eu/
-- V-Dem methodology: https://www.v-dem.net/about/faq/
-- International Social Survey Programme 2023 National Identity and Citizenship source questionnaire: https://issp.org/wp-content/uploads/2022/09/ISSP2023_NatIdCit_source-questionnaire.pdf
-- CSES Module 5 pretest report: https://cses.org/wp-content/uploads/2019/03/CSES5_SurveyPretests_FinalReport.pdf
-- European Social Survey cross-national translation / TRAPD method: https://www.europeansocialsurvey.org/sites/default/files/2024-04/ESS012_projection_specification_v2.pdf
+These sources are also registered in `lib/evidence.ts` where applicable:
+
+- `PEW-SURVEY-WORDING` — Pew Research Center, *Writing Survey Questions*: https://www.pewresearch.org/writing-survey-questions/
+- `AAPOR-BEST-PRACTICES` — AAPOR, *Best Practices for Survey Research*: https://aapor.org/standards-and-ethics/best-practices/
+- `WVS-W7-DOCUMENTATION` — World Values Survey Wave 7 documentation/questionnaire: https://www.worldvaluessurvey.org/WVSContents.jsp?CMSID=Documentation
+- `ISSP-2023-NATIONAL-IDENTITY` — ISSP 2023 National Identity and Citizenship source questionnaire: https://issp.org/wp-content/uploads/2022/09/ISSP2023_NatIdCit_source-questionnaire.pdf
+- `CSES5-PRETEST` — CSES Module 5 pretest report: https://cses.org/wp-content/uploads/2019/03/CSES5_SurveyPretests_FinalReport.pdf
+- `ESS-TRAPD` — European Social Survey cross-national translation / TRAPD method: https://www.europeansocialsurvey.org/sites/default/files/2024-04/ESS012_projection_specification_v2.pdf
 - APA Dictionary, *bases of an attitude*: https://dictionary.apa.org/bases-of-an-attitude
-- Breckler (1984), *Empirical validation of affect, behavior, and cognition as distinct components of attitude*: https://pubmed.ncbi.nlm.nih.gov/6527214/
+- `BRECKLER-TRIPARTITE` — Breckler (1984), *Empirical validation of affect, behavior, and cognition as distinct components of attitude*: https://pubmed.ncbi.nlm.nih.gov/6527214/
 
 The WVS is especially useful for the economic constructs because it has long used bipolar measures of income equality, private versus government ownership, and government versus individual responsibility. Politangle does not copy those items; it uses them as evidence that these are established, separable political attitude objects.
 
@@ -193,7 +193,7 @@ Politangle uses a tripartite attitude architecture:
 - **FEEL** = stated affective concern/intuitive reaction
 - **ACT** = stated behavioral choice or intention
 
-APA's attitude terminology includes future intentions within the behavioral basis of an attitude. Breckler's classic validation supports a cognitive/affective/behavioral distinction but also shows that components correlate more strongly when all are measured only through verbal self-report.
+Breckler's classic validation supports a cognitive/affective/behavioral distinction but also shows that components correlate more strongly when all are measured only through verbal self-report.
 
 Therefore Politangle must continue to say **stated ACT / intended choice**, not “what you actually do.” The present questionnaire does not observe voting, donations, protest, media use, or other real behavior.
 
@@ -203,7 +203,6 @@ After Phase 1:
 
 - all 42 items remain paired alternatives;
 - every individual pole is **26 words or fewer**;
-- the longest current source-language alternative is below that hard guardrail;
 - jargon such as `GAL-TAN`, `nativism`, `jus soli`, `majoritarianism`, `subsidiarity` and `democratic socialism` does not appear in respondent-facing BELIEVE wording.
 
 This is a mechanical clarity safeguard only. It does not establish a validated reading age.
