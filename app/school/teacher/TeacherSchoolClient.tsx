@@ -1,12 +1,13 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { schoolParallelPairs } from '../../../lib/school-literacy';
 
 type PhaseSummary = {
   submissions: number;
-  overall: number;
-  classify: number;
-  understand: number;
+  overall: number | null;
+  classify: number | null;
+  understand: number | null;
   detailedAvailable: boolean;
   questions: Record<string, { answered: number; percent: number }> | null;
 };
@@ -29,6 +30,16 @@ type TeacherSummary = {
 
 const CODE_KEY = 'politangle.school.teacher.code';
 const SECRET_KEY = 'politangle.school.teacher.key';
+
+function scoreLabel(value: number | null, submissions: number, threshold: number) {
+  if (value !== null) return `${value}%`;
+  if (submissions === 0) return '—';
+  return `Hidden until n≥${threshold}`;
+}
+
+function topicLabel(topic: string) {
+  return topic.replaceAll('-', ' ').replace(/^./, (letter) => letter.toUpperCase());
+}
 
 export default function TeacherSchoolClient() {
   const [code, setCode] = useState('');
@@ -157,34 +168,32 @@ export default function TeacherSchoolClient() {
 
           <article className="engine-card" style={{ marginTop: 18 }}>
             <p className="engine-kicker">Learning outcomes</p>
-            <h2>{summary.change === null ? 'Waiting for baseline and post-test data' : `${summary.change >= 0 ? '+' : ''}${summary.change} class-average points`}</h2>
+            <h2>{summary.change === null ? `Class-average change unlocks at n≥${summary.minAggregateSize} in both tests` : `${summary.change >= 0 ? '+' : ''}${summary.change} class-average points`}</h2>
             <div className="deep-literacy-line"><span>Baseline submissions</span><strong>{summary.baseline.submissions}</strong></div>
-            <div className="deep-literacy-line"><span>Baseline overall</span><strong>{summary.baseline.submissions ? `${summary.baseline.overall}%` : '—'}</strong></div>
-            <div className="deep-literacy-line"><span>Baseline CLASSIFY</span><strong>{summary.baseline.submissions ? `${summary.baseline.classify}%` : '—'}</strong></div>
-            <div className="deep-literacy-line"><span>Baseline UNDERSTAND</span><strong>{summary.baseline.submissions ? `${summary.baseline.understand}%` : '—'}</strong></div>
+            <div className="deep-literacy-line"><span>Baseline overall</span><strong>{scoreLabel(summary.baseline.overall, summary.baseline.submissions, summary.minAggregateSize)}</strong></div>
+            <div className="deep-literacy-line"><span>Baseline CLASSIFY</span><strong>{scoreLabel(summary.baseline.classify, summary.baseline.submissions, summary.minAggregateSize)}</strong></div>
+            <div className="deep-literacy-line"><span>Baseline UNDERSTAND</span><strong>{scoreLabel(summary.baseline.understand, summary.baseline.submissions, summary.minAggregateSize)}</strong></div>
             <div className="deep-literacy-line"><span>Practice completions</span><strong>{summary.practiceCompletions}</strong></div>
             <div className="deep-literacy-line"><span>Post-test submissions</span><strong>{summary.post.submissions}</strong></div>
-            <div className="deep-literacy-line"><span>Post-test overall</span><strong>{summary.post.submissions ? `${summary.post.overall}%` : '—'}</strong></div>
-            <div className="deep-literacy-line"><span>Post-test CLASSIFY</span><strong>{summary.post.submissions ? `${summary.post.classify}%` : '—'}</strong></div>
-            <div className="deep-literacy-line"><span>Post-test UNDERSTAND</span><strong>{summary.post.submissions ? `${summary.post.understand}%` : '—'}</strong></div>
-            <p className="engine-help">Per-question aggregates remain hidden until at least {summary.minAggregateSize} submissions exist for that phase.</p>
+            <div className="deep-literacy-line"><span>Post-test overall</span><strong>{scoreLabel(summary.post.overall, summary.post.submissions, summary.minAggregateSize)}</strong></div>
+            <div className="deep-literacy-line"><span>Post-test CLASSIFY</span><strong>{scoreLabel(summary.post.classify, summary.post.submissions, summary.minAggregateSize)}</strong></div>
+            <div className="deep-literacy-line"><span>Post-test UNDERSTAND</span><strong>{scoreLabel(summary.post.understand, summary.post.submissions, summary.minAggregateSize)}</strong></div>
+            <p className="engine-help">Only completion counts are visible below {summary.minAggregateSize} submissions. Class-average scores and per-question aggregates unlock only after the threshold is reached for that phase.</p>
           </article>
 
           {(summary.baseline.detailedAvailable || summary.post.detailedAvailable) && (
             <article className="engine-card" style={{ marginTop: 18 }}>
               <p className="engine-kicker">Question-level class patterns</p>
+              <p className="engine-help">Rows pair the same learning target across the baseline and the separately worded post-test form.</p>
               <div className="engine-table-wrap">
                 <table className="engine-table">
-                  <thead><tr><th>Question</th><th>Baseline correct</th><th>Post-test correct</th></tr></thead>
+                  <thead><tr><th>Learning target</th><th>Baseline correct</th><th>Post-test correct</th></tr></thead>
                   <tbody>
-                    {Array.from(new Set([
-                      ...Object.keys(summary.baseline.questions ?? {}),
-                      ...Object.keys(summary.post.questions ?? {}),
-                    ])).sort().map((id) => (
-                      <tr key={id}>
-                        <td>{id}</td>
-                        <td>{summary.baseline.questions?.[id] ? `${summary.baseline.questions[id].percent}% (${summary.baseline.questions[id].answered})` : 'Hidden / n.a.'}</td>
-                        <td>{summary.post.questions?.[id] ? `${summary.post.questions[id].percent}% (${summary.post.questions[id].answered})` : 'Hidden / n.a.'}</td>
+                    {schoolParallelPairs.map((pair) => (
+                      <tr key={pair.topic}>
+                        <td><strong>{topicLabel(pair.topic)}</strong><br /><span>{pair.baselineId} → {pair.postId}</span></td>
+                        <td>{summary.baseline.questions?.[pair.baselineId] ? `${summary.baseline.questions[pair.baselineId].percent}% (${summary.baseline.questions[pair.baselineId].answered})` : 'Hidden / n.a.'}</td>
+                        <td>{summary.post.questions?.[pair.postId] ? `${summary.post.questions[pair.postId].percent}% (${summary.post.questions[pair.postId].answered})` : 'Hidden / n.a.'}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -196,7 +205,7 @@ export default function TeacherSchoolClient() {
           <article className="engine-card" style={{ marginTop: 18 }}>
             <p className="engine-kicker">Privacy boundary</p>
             <div className="deep-literacy-line"><span>Individual student profiles visible</span><strong>No</strong></div>
-            <div className="deep-literacy-line"><span>Raw literacy answer choices stored</span><strong>No</strong></div>
+            <div className="deep-literacy-line"><span>Raw literacy answer choices stored by class backend</span><strong>No</strong></div>
             <div className="deep-literacy-line"><span>Political BELIEVE answers accepted by class API</span><strong>No</strong></div>
             <p className="engine-help">The backend stores anonymous aggregate correctness counts and one-way submission receipts used to avoid duplicate phase submissions. No student names or email addresses are requested.</p>
             <p><strong>REQUIRES QUALIFIED LEGAL REVIEW</strong> before real classroom/minor deployment.</p>
