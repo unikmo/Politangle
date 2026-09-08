@@ -32,22 +32,24 @@ Teacher can:
 - create an anonymous class code;
 - receive a separate private teacher key;
 - share only the short class code with students;
-- see baseline submission count and class-average literacy results;
+- always see baseline and post-test submission counts;
 - see practice completion count;
-- see post-test submission count and class-average literacy results;
-- see class-average baseline-to-post change;
+- see class-average baseline/post literacy results only after the minimum aggregation threshold is reached for that phase;
+- see class-average baseline-to-post change only after both phases reach the threshold;
 - see question-level aggregate correctness only after the minimum aggregation threshold is reached;
+- see baseline and post-test questions paired by the same learning target rather than treated as unrelated IDs;
 - close or reopen the class.
 
 Teacher cannot see:
 
 - student names;
 - a student list;
+- individual literacy scores;
 - individual political-family compatibility;
 - individual BELIEVE answers;
 - individual polygons;
 - individual abortion/religion/nationhood responses;
-- raw literacy option selections.
+- raw literacy option selections stored by the class backend.
 
 ## Data-minimization architecture
 
@@ -61,7 +63,9 @@ It does **not** accept raw selected options or BELIEVE answers.
 
 The backend stores class-level aggregate counts plus one-way hashed phase receipts used to prevent the same browser token from submitting the same phase twice. The teacher key is stored only as a SHA-256 hash.
 
-Question-level aggregates are hidden below the fixed pilot threshold of **10 submissions**. The threshold is a product privacy safeguard, not a legal safe-harbor claim.
+The fixed pilot threshold is **10 submissions**. Below that threshold, the teacher receives only the submission/completion count for the phase: overall percentage, CLASSIFY percentage, UNDERSTAND percentage and question-level percentages are all suppressed. Baseline-to-post change remains suppressed until both phases reach the threshold.
+
+The threshold is a product privacy safeguard, not a legal safe-harbor claim.
 
 ## Routes
 
@@ -108,9 +112,10 @@ Key failure modes addressed in v1:
 
 1. Teacher political profiling — prevented by not sending BELIEVE answers to the school backend.
 2. Raw literacy surveillance — prevented by submitting correctness booleans rather than selected options.
-3. Tiny-class inference — question-level details hidden below 10 submissions.
+3. Tiny-class inference — completion counts remain visible, but all class-average and question-level score data are hidden below 10 submissions.
 4. Post-test memorization — post-test uses separate wording/scenarios rather than repeating baseline prompts.
 5. False learning precision — documentation explicitly states forms are not yet empirically equated.
 6. Teacher-key leakage — teacher access uses a separate secret; only its hash is stored server-side.
+7. False baseline/post comparison by ID — teacher analytics pair baseline and post-test items by their shared learning target.
 
 Residual risks remain and are not silently treated as solved. School mode is therefore **TEST WITH CONDITIONS**, not production-ready.
