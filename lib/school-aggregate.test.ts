@@ -117,8 +117,8 @@ test('literacy aggregates expose option distribution and correctness, not indivi
 test('class summary retains split distributions and produces aggregate political views', () => {
   let current = configureSchoolClass(record(), { type: 'full42' });
   for (const id of current.activity.questionIds) {
-    current = applySchoolResponse(current, belief(id, '-2', `a-${id}`));
-    current = applySchoolResponse(current, belief(id, '2', `b-${id}`));
+    current = applySchoolResponse(current, belief(id, '-2', `participant-a-${id}`));
+    current = applySchoolResponse(current, belief(id, '2', `participant-b-${id}`));
   }
   const summary = schoolClassSummary(current);
   assert.equal(summary.answeredQuestions, 42);
