@@ -27,7 +27,7 @@ The 26-word guardrail is **not** a validated reading-level threshold. School-age
 
 ## Method anchors
 
-These sources are also registered in `lib/evidence.ts` where applicable:
+The Phase-1 methodology sources are registered in `lib/evidence.ts` where applicable:
 
 - `PEW-SURVEY-WORDING` — Pew Research Center, *Writing Survey Questions*: https://www.pewresearch.org/writing-survey-questions/
 - `AAPOR-BEST-PRACTICES` — AAPOR, *Best Practices for Survey Research*: https://aapor.org/standards-and-ethics/best-practices/
@@ -35,7 +35,6 @@ These sources are also registered in `lib/evidence.ts` where applicable:
 - `ISSP-2023-NATIONAL-IDENTITY` — ISSP 2023 National Identity and Citizenship source questionnaire: https://issp.org/wp-content/uploads/2022/09/ISSP2023_NatIdCit_source-questionnaire.pdf
 - `CSES5-PRETEST` — CSES Module 5 pretest report: https://cses.org/wp-content/uploads/2019/03/CSES5_SurveyPretests_FinalReport.pdf
 - `ESS-TRAPD` — European Social Survey cross-national translation / TRAPD method: https://www.europeansocialsurvey.org/sites/default/files/2024-04/ESS012_projection_specification_v2.pdf
-- APA Dictionary, *bases of an attitude*: https://dictionary.apa.org/bases-of-an-attitude
 - `BRECKLER-TRIPARTITE` — Breckler (1984), *Empirical validation of affect, behavior, and cognition as distinct components of attitude*: https://pubmed.ncbi.nlm.nih.gov/6527214/
 
 The WVS is especially useful for the economic constructs because it has long used bipolar measures of income equality, private versus government ownership, and government versus individual responsibility. Politangle does not copy those items; it uses them as evidence that these are established, separable political attitude objects.
