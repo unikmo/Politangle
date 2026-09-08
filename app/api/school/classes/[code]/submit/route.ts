@@ -1,36 +1,41 @@
 import { NextResponse } from 'next/server';
 import { getAdminDb } from '../../../../../../lib/firebase-admin';
-import { applySchoolAggregate, hashSchoolSecret, type SchoolClassRecord, validateSchoolAggregatePayload } from '../../../../../../lib/school-aggregate';
+import { validateClassroomResponse } from '../../../../../../lib/school-classroom';
+import { applySchoolResponse, hashSchoolSecret, type SchoolClassRecord } from '../../../../../../lib/school-aggregate';
 
 async function codeFrom(context: { params: Promise<{ code: string }> }) {
   const { code } = await context.params;
   return code.trim().toUpperCase();
 }
 
+function validRecord(value: unknown): value is SchoolClassRecord {
+  return Boolean(value && typeof value === 'object' && (value as { schemaVersion?: unknown }).schemaVersion === 2);
+}
+
 export async function POST(request: Request, context: { params: Promise<{ code: string }> }) {
   const code = await codeFrom(context);
   const raw = await request.json().catch(() => null);
-  const payload = validateSchoolAggregatePayload(raw);
-  if (!payload) return NextResponse.json({ error: 'Invalid school submission.' }, { status: 400 });
+  const payload = validateClassroomResponse(raw);
+  if (!payload) return NextResponse.json({ error: 'Invalid classroom response.' }, { status: 400 });
 
   const db = getAdminDb();
   const classRef = db.collection('schoolClasses').doc(code);
-  const receiptId = hashSchoolSecret(`${payload.participantToken}:${payload.phase}`);
-  const receiptRef = classRef.collection('receipts').doc(receiptId);
+  const receiptId = hashSchoolSecret(`${payload.participantToken}:${payload.questionId}`);
+  const receiptRef = classRef.collection('responseReceipts').doc(receiptId);
 
   const result = await db.runTransaction(async (transaction) => {
-    const [classSnapshot, receiptSnapshot] = await Promise.all([
-      transaction.get(classRef),
-      transaction.get(receiptRef),
-    ]);
+    const [classSnapshot, receiptSnapshot] = await Promise.all([transaction.get(classRef), transaction.get(receiptRef)]);
     if (!classSnapshot.exists) return { status: 404 as const, body: { error: 'Class not found.' } };
-    const record = classSnapshot.data() as SchoolClassRecord;
-    if (record.status !== 'active') return { status: 409 as const, body: { error: 'Class is closed.' } };
+    const data = classSnapshot.data();
+    if (!validRecord(data)) return { status: 409 as const, body: { error: 'Older School pilot room. Create a new classroom.' } };
+    if (data.status !== 'active') return { status: 409 as const, body: { error: 'Class is closed.' } };
+    if (!data.activity.questionIds.includes(payload.questionId)) return { status: 409 as const, body: { error: 'Question is not active in this classroom.' } };
+    if (data.activity.pacing === 'teacher' && (!data.questionOpen || data.currentQuestionId !== payload.questionId)) return { status: 409 as const, body: { error: 'This question is not open.' } };
     if (receiptSnapshot.exists) return { status: 200 as const, body: { accepted: true, duplicate: true } };
 
-    const next = applySchoolAggregate(record, payload);
+    const next = applySchoolResponse(data, payload);
     transaction.set(classRef, next);
-    transaction.set(receiptRef, { phase: payload.phase, createdAt: new Date().toISOString() });
+    transaction.set(receiptRef, { questionId: payload.questionId, createdAt: new Date().toISOString() });
     return { status: 200 as const, body: { accepted: true, duplicate: false } };
   });
 
