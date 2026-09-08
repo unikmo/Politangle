@@ -260,3 +260,13 @@ Before collecting the real validation dataset, Politangle should next complete:
 2. synthetic respondent stress testing across mixed and edge-case political profiles;
 3. final source-language cognitive pretest candidate freeze;
 4. respondent pilot and empirical item analysis.
+
+## Verification
+
+Latest Phase-1 engine gate after the complete wording, result-table and evidence-registry changes:
+
+- **103 / 103 tests passed**
+- Next.js optimized build: **PASS**
+- TypeScript / lint validity checks: **PASS**
+- static page generation: **PASS**
+- `/quiz`, `/results` and `/deep`: **PASS**
