@@ -130,14 +130,14 @@ function percent(correct: number, answered: number) {
 }
 
 function phaseSummary(phase: SchoolPhaseAggregate, minAggregateSize: number) {
-  const detailedAvailable = phase.submissions >= minAggregateSize;
+  const scoreAvailable = phase.submissions >= minAggregateSize;
   return {
     submissions: phase.submissions,
-    overall: percent(phase.correct, phase.answered),
-    classify: percent(phase.classifyCorrect, phase.classifyAnswered),
-    understand: percent(phase.understandCorrect, phase.understandAnswered),
-    detailedAvailable,
-    questions: detailedAvailable
+    overall: scoreAvailable ? percent(phase.correct, phase.answered) : null,
+    classify: scoreAvailable ? percent(phase.classifyCorrect, phase.classifyAnswered) : null,
+    understand: scoreAvailable ? percent(phase.understandCorrect, phase.understandAnswered) : null,
+    detailedAvailable: scoreAvailable,
+    questions: scoreAvailable
       ? Object.fromEntries(Object.entries(phase.questions).map(([id, stat]) => [id, { answered: stat.answered, percent: percent(stat.correct, stat.answered) }]))
       : null,
   };
@@ -163,7 +163,7 @@ export function teacherSchoolClassSummary(record: SchoolClassRecord) {
     baseline,
     practiceCompletions: record.practiceCompletions,
     post,
-    change: baseline.submissions > 0 && post.submissions > 0 ? post.overall - baseline.overall : null,
+    change: baseline.overall !== null && post.overall !== null ? post.overall - baseline.overall : null,
     privacy: {
       individualStudentsVisible: false,
       rawLiteracyAnswersStored: false,
