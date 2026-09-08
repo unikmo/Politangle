@@ -252,7 +252,7 @@ export default function DeepClient() {
                   <th>Economy</th>
                   <th>Society</th>
                   <th>State power</th>
-                  <th>Citizenship at birth</th>
+                  <th>Nationhood / membership</th>
                   <th>Abortion</th>
                   <th>World</th>
                 </tr>
@@ -274,7 +274,7 @@ export default function DeepClient() {
                       <td>{tradition.economy}</td>
                       <td>{tradition.society}</td>
                       <td>{tradition.statePower}</td>
-                      <td>{tradition.citizenshipAtBirth}</td>
+                      <td>{tradition.nationalMembership}</td>
                       <td>{tradition.abortion}</td>
                       <td>{tradition.world}</td>
                     </tr>
