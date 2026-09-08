@@ -34,6 +34,63 @@ export const evidenceSources: readonly EvidenceSource[] = [
     accessed: '2026-09-07',
   },
   {
+    id: 'WVS-W7-DOCUMENTATION',
+    title: 'World Values Survey Wave 7 documentation and source questionnaire',
+    publisher: 'World Values Survey Association',
+    url: 'https://www.worldvaluessurvey.org/WVSContents.jsp?CMSID=Documentation',
+    authority: 'academic-research',
+    supports: [
+      'Income equality, private versus government ownership, and government versus individual responsibility are established separable bipolar political-attitude objects.',
+    ],
+    accessed: '2026-09-08',
+  },
+  {
+    id: 'ISSP-2023-NATIONAL-IDENTITY',
+    title: 'ISSP 2023 National Identity and Citizenship source questionnaire',
+    publisher: 'International Social Survey Programme',
+    url: 'https://issp.org/wp-content/uploads/2022/09/ISSP2023_NatIdCit_source-questionnaire.pdf',
+    authority: 'academic-research',
+    supports: [
+      'National-identity measurement can directly distinguish acquired national membership from the view that one must be born into the national group.',
+    ],
+    accessed: '2026-09-08',
+  },
+  {
+    id: 'CSES5-PRETEST',
+    title: 'CSES Module 5 Survey Pretests Final Report',
+    publisher: 'Comparative Study of Electoral Systems',
+    url: 'https://cses.org/wp-content/uploads/2019/03/CSES5_SurveyPretests_FinalReport.pdf',
+    authority: 'academic-research',
+    supports: [
+      'People-versus-elite populist attitudes should be distinguished from adjacent constructs such as compromise and strong-leader rule.',
+      'Pretesting is needed to establish whether candidate political-attitude items behave as intended.',
+    ],
+    accessed: '2026-09-08',
+  },
+  {
+    id: 'ESS-TRAPD',
+    title: 'European Social Survey translation and questionnaire specification',
+    publisher: 'European Social Survey',
+    url: 'https://www.europeansocialsurvey.org/sites/default/files/2024-04/ESS012_projection_specification_v2.pdf',
+    authority: 'primary-method',
+    supports: [
+      'Cross-national questionnaires should prioritize functional equivalence and use translation, review, adjudication, pretesting and documentation rather than relying on literal translation alone.',
+    ],
+    accessed: '2026-09-08',
+  },
+  {
+    id: 'BRECKLER-TRIPARTITE',
+    title: 'Empirical validation of affect, behavior, and cognition as distinct components of attitude',
+    publisher: 'Journal of Personality and Social Psychology / PubMed',
+    url: 'https://pubmed.ncbi.nlm.nih.gov/6527214/',
+    authority: 'academic-research',
+    supports: [
+      'Cognitive, affective and behavioral attitude components can be distinguished empirically.',
+      'When all components are measured through verbal self-report they can correlate strongly, so stated behavioral intention must not be misrepresented as observed behavior.',
+    ],
+    accessed: '2026-09-08',
+  },
+  {
     id: 'CHES-2024',
     title: 'Chapel Hill Expert Survey',
     publisher: 'CHES',
