@@ -1,313 +1,435 @@
-# Politangle School — Classroom Onboarding v2
+# Politangle School — Classroom Onboarding v3
 
-Status: **design specification; supersedes the self-paced-first classroom entry in School v1. Do not treat the current School UI as final until this flow is implemented and reviewed.**
+Status: **approved-direction design specification; supersedes the self-paced-first School v1 UI and the earlier v2 classroom draft. The current School implementation must be refactored to this model before it is treated as the School product.**
 
-## Core privacy rule
+## Product principle
 
-Politangle School is **anonymous by default in the classroom**.
+Politangle School has two different privacy contexts.
 
-The teacher may see only:
-- number of students joined;
-- number of responses received;
-- aggregate answer distribution once the privacy threshold is met;
-- for literacy questions, aggregate correct/incorrect performance after reveal;
-- class-level trends over multiple questions or activities.
+### PRIVATE STUDENT MODE
 
-The teacher must never see:
-- student names;
-- a student roster;
-- a stable student identifier;
-- which student selected which answer;
-- an individual student's literacy score;
-- an individual student's BELIEVE answer;
-- an individual student's ideology/family compatibility;
-- an individual student's polygon or THINK/FEEL/ACT result.
+A young person explores Politangle independently.
 
-Core promise:
+- Quick 26, Full 42 and literacy quizzes may be taken privately.
+- The student owns the result.
+- No teacher or classroom receives the student's individual answers, political-family compatibility, polygon, THINK / FEEL / ACT result or literacy score.
+- Private mode is the default outside a teacher-led classroom session.
 
-> **We measure the room, not the child.**
+### CLASSROOM MODE
 
-Secondary promise retained:
+A teacher creates an anonymous room and uses Politangle as a live teaching tool.
 
-> **We measure learning for teachers. We protect beliefs for students.**
-
-## Product hierarchy
-
-School mode has three distinct activity types inside the same anonymous classroom room:
-
-### 1. LIVE LITERACY
-Teacher-led CLASSIFY / UNDERSTAND questions.
-
-- A correct answer exists.
+- Students join anonymously by QR code or room code.
+- The teacher chooses what to run and how to progress.
+- The teacher may run any of the canonical **Quick 26**, **Full 42**, literacy **CLASSIFY / UNDERSTAND quizzes**, a curated lesson pack, or selected individual questions.
 - Students answer anonymously.
-- Teacher sees aggregate option distribution after the question is closed/revealed.
-- Correct answer and explanation can then be shown to the room.
-- Individual correctness is never exposed to the teacher.
+- The teacher sees **live aggregate totals and aggregate answer distributions** so they can understand where the room is and what students think.
+- The teacher never sees which student gave which answer.
+- The teacher receives a polished class/session summary after the activity and may export an aggregate-only PDF.
 
-### 2. LIVE PERSPECTIVE
-Teacher-led BELIEVE / opinion questions.
+The privacy promise is therefore not "the teacher sees nothing political." It is:
 
-- No correct answer exists.
-- Students answer anonymously.
-- Teacher sees only the aggregate distribution after the question is closed/revealed and only when the minimum privacy threshold is met.
-- The result is presented as the room's distribution, not as a class ideology label.
-- No individual BELIEVE result is sent to the teacher.
+> **The teacher sees the room, never the individual student.**
 
-### 3. PRIVATE EXPLORE
-Student-owned Politangle profile.
+## School audience
 
-- Student may complete Quick/Deep privately on their own device.
-- Results remain private to the student.
-- Classroom code does not convert private BELIEVE answers into teacher-visible data.
-- School backend must not accept individual political profiles.
+School mode is designed primarily for **young people in secondary education**, with the first product target being approximately ages **14–18**. This is a product targeting decision, not a claim that the current wording has already been cognitively validated for every age in that range.
 
-## Teacher onboarding
+The School experience should be:
 
-### Screen T1 — School entry
+- mobile-first;
+- plain-language;
+- visually clear and fast to scan;
+- respectful rather than childish;
+- explicit when a political term needs explanation;
+- based on situations young people can understand without requiring professional or adult-life experience;
+- neutral in tone and free of party campaigning;
+- designed to make disagreement discussable rather than embarrassing.
+
+Any age-specific rewrite of a canonical BELIEVE item creates a new measurement form and must be revalidated rather than silently substituted.
+
+## Educational guardrails
+
+Politangle School should follow three core political-education principles:
+
+1. **No indoctrination / no overpowering the learner.** Students must be able to form their own judgement.
+2. **Controversial issues remain controversial.** Politangle should not hide legitimate competing positions merely because one answer is less popular in the room.
+3. **Learner orientation.** Questions and discussion should help young people understand their own interests, values and reasoning.
+
+Germany reference: Bundeszentrale für politische Bildung, Beutelsbacher Konsens: https://www.bpb.de/die-bpb/ueber-uns/auftrag/51310/beutelsbacher-konsens/
+
+European reference: Council of Europe, Reference Framework of Competences for Democratic Culture: https://www.coe.int/en/web/reference-framework-of-competences-for-democratic-culture
+
+## Classroom onboarding
+
+### T1 — Start a classroom
+
+Teacher chooses **Start classroom**.
+
+No student roster is required.
+No student names or student email addresses are required.
+
+Teacher may optionally give the room a teacher-facing label such as:
+- Politics Year 10
+- Social Studies 11B
+- Democracy Workshop
+
+The label is session metadata, not a student roster.
+
+### T2 — Choose lesson / activity
+
+The teacher is not forced into one Politangle sequence.
 
 Primary choices:
-- **Start a classroom**
-- **Join a classroom**
 
-Teacher chooses **Start a classroom**.
+1. **Quick 26** — all 26 Quick BELIEVE questions.
+2. **Full 42** — all 42 BELIEVE questions.
+3. **Political Literacy Quiz** — CLASSIFY + UNDERSTAND.
+4. **Guided Lesson** — a ready-made teacher lesson with goals, timing and selected questions.
+5. **Build my own** — teacher selects individual questions/topics from the approved bank.
+6. **Single live question** — teacher can launch one question, e.g. "Question 5", discuss it, then decide what comes next.
 
-### Screen T2 — Create anonymous room
+The teacher can change direction during a session. The system should not force a pre-declared path once the room is live.
 
-No class roster upload. No student names. No email addresses required for students.
+### T3 — Classroom setup
 
-Teacher creates a room and receives:
-- 6-character classroom code;
-- QR code / join URL;
-- separate private teacher control key;
-- privacy statement explaining exactly what the teacher can and cannot see.
+Teacher receives:
+- short room code;
+- QR code;
+- student join URL;
+- private teacher control key/session;
+- optional lesson guide for the selected activity;
+- optional estimated duration.
 
-Optional teacher-side settings may include:
-- age band / reading level for content selection;
-- activity set;
-- whether the room will use literacy questions, perspective questions, or both.
+Teacher chooses:
+- teacher-paced or student-paced activity;
+- whether the shared projector displays the live distribution while voting is open;
+- whether results are revealed automatically or manually;
+- whether students privately see their own Quick/Deep result at the end.
 
-These settings must not create student identity records.
+**Important:** the teacher control screen always receives the live aggregate distribution once the display privacy rule is satisfied. Hiding a developing distribution from the class projector must not hide it from the teacher.
 
-### Screen T3 — Lobby / projector screen
+### T4 — Student join
 
-Large classroom code + QR.
+Student scans QR or enters code.
+
+No:
+- name;
+- email;
+- username;
+- avatar;
+- student ID.
+
+Student sees a short youth-facing notice:
+
+> **You are joining anonymously. Your teacher can see how the class answers, but not which answer came from you.**
+
+If Private Explore is later opened:
+
+> **Your personal Politangle result stays on your device unless you choose to use it elsewhere. It is not shown to your teacher.**
+
+### T5 — Lobby
 
 Teacher sees:
-- `18 joined`
-- room status: waiting / live / ended
-
-Teacher does **not** see 18 names, avatars or device labels.
-
-The room waits until the teacher starts.
-
-### Screen T4 — Classroom console
-
-Teacher can:
-- choose an activity set;
-- select a question by number or topic;
-- launch the question;
-- see `responses received / joined`;
-- close responses;
-- reveal aggregate distribution;
-- reveal correct answer + explanation for literacy items;
-- move to next question;
-- end session.
+- joined count;
+- activity selected;
+- estimated lesson time;
+- Start button.
 
 Example:
 
-> **Question 5 — Which political tradition best matches this description?**
+> **24 joined · Quick 26 ready**
 
-Before reveal, the teacher projector view should default to **response count only**, not the answer distribution. This reduces the risk that students who have not yet answered are influenced by an emerging majority.
+No roster appears.
 
-After the teacher closes the question, the aggregate distribution appears as a bar graph.
+## Teacher-led live question loop
 
-## Student onboarding
+The teacher can say:
 
-### Screen S1 — Join
+> **Respond to Question 5.**
 
-Student scans QR or enters room code.
+The system sends that question to every joined student device.
 
-No name field.
-No email field.
-No username field.
-No avatar required.
+### Teacher view while answers arrive
 
-### Screen S2 — Privacy confirmation
+Teacher sees continuously updating aggregate information:
 
-Short plain-language notice:
+- `18 / 24 responded`;
+- answer counts;
+- percentages;
+- live bar / stacked-bar distribution;
+- remaining non-response count.
 
-> **You are answering anonymously. Your teacher will see only the class total and class distribution — never which answer was yours.**
+For a 5-point BELIEVE item, the preferred teacher graph is the full five-position distribution rather than collapsing the room to a single mean.
 
-For BELIEVE questions:
+For a four-option literacy question, show one bar per answer option.
 
-> **There is no correct answer. Your individual political profile is not shared with your teacher.**
+The teacher may keep this graph private on their own device or project it live to the class. The default projector setting may hide the distribution until reveal to reduce peer influence, but **teacher live visibility is not restricted**.
 
-For literacy questions:
-
-> **Your teacher will see how the class answered, not your individual score.**
-
-### Screen S3 — Anonymous lobby
-
-Student device receives a random browser-local participant token.
-
-The classroom backend should receive only the minimum token material required for duplicate-response prevention. The product must not ask the student to identify themselves.
+### Student view while answering
 
 Student sees:
+- question;
+- answer choices;
+- optional simple definition/help for unfamiliar terms;
+- Submit.
 
-> `You're in. Waiting for the next question.`
+After submitting:
 
-### Screen S4 — Live question
+> **Response received. Waiting for the class.**
 
-Teacher launches question 5.
+No other student's identity is ever shown.
 
-Every joined student sees the same question.
+### Teacher reveal / discussion
 
-Student chooses one response and submits.
+For BELIEVE:
+- no correct answer;
+- show the aggregate room distribution;
+- offer neutral discussion prompts;
+- optionally show how the question maps to a construct such as ownership, authority, pluralism or ecology;
+- do not tell the class that one political position is the correct one.
 
-Default behavior:
-- student can change selection before pressing Submit;
-- after Submit, the answer is locked for that question;
-- screen becomes `Response submitted — waiting for the class`.
+For CLASSIFY / UNDERSTAND:
+- show aggregate option distribution;
+- reveal correct answer;
+- show evidence-backed explanation;
+- teacher can immediately re-teach a concept when many students missed it.
 
-### Screen S5 — Reveal
+Then the teacher may:
+- Next recommended question;
+- Pick another question;
+- Open discussion prompt;
+- Launch a quiz;
+- Switch from Quick to Full;
+- End session.
 
-After teacher closes/reveals:
+## Classroom use of Quick 26 and Full 42
 
-For LITERACY:
-- student sees the aggregate graph;
-- correct answer;
-- explanation;
-- privately sees whether their own answer was correct on their own device if we retain that locally.
+All canonical BELIEVE items are available in Classroom Mode.
 
-Teacher still receives no per-student correctness.
+### Quick 26
 
-For PERSPECTIVE:
-- student sees aggregate distribution;
-- no answer is marked correct;
-- optional neutral discussion prompt can follow.
+Teacher options:
+- run all 26 teacher-paced;
+- run all 26 student-paced;
+- use a subset as a live discussion lesson;
+- pause after any question and discuss the distribution;
+- continue later in the same room/session if supported by retention policy.
 
-## Anonymous response data model
+### Full 42
 
-### Strong default
+Teacher options:
+- continue from Quick 26 into the additional 16;
+- start directly with Full 42;
+- use THINK / FEEL / ACT as lesson sections;
+- compare aggregate THINK / FEEL / ACT patterns in the room.
 
-For each live question, the backend stores:
-- room ID;
+The 42 canonical questions remain unchanged unless a separately validated youth form is later introduced.
+
+## Classroom quizzes
+
+CLASSIFY and UNDERSTAND questions are first-class classroom activities, not an add-on after BELIEVE.
+
+Teacher may:
+- start with a literacy quiz before any BELIEVE questions;
+- quiz after a teaching section;
+- interleave quiz questions with BELIEVE questions;
+- finish with a post-lesson quiz;
+- run only a quiz lesson.
+
+Teacher sees:
+- live aggregate option distribution;
+- aggregate correct / incorrect after reveal;
+- concept-level class performance;
+- no individual score.
+
+## Data model — anonymous but useful to the teacher
+
+The system needs enough aggregate data to teach from the room while refusing student-level drill-down.
+
+### Per live question
+
+Persist:
+- room/session ID;
 - question ID;
-- aggregate answer counts;
+- aggregate counts for each answer option / response position;
 - total responses;
-- a one-way receipt keyed to `room + question + random participant token` to prevent duplicate submissions.
+- one-way duplicate-prevention receipt separated from answer value.
 
-The receipt must **not contain the selected option**.
+Do not persist a row equivalent to:
 
-Therefore the persisted data can answer:
+`student/device X -> question 5 -> answer B`
 
-> `Question 5: A=4, B=11, C=7, D=2`
+The persisted teaching record should instead be equivalent to:
 
-but cannot answer:
+`Question 5 -> A:4, B:7, C:3, D:6, E:4; n=24`
 
-> `Participant X chose B.`
+### Aggregate political summary
 
-Student choice should be reduced to an aggregate counter at submission time.
+When a room completes enough BELIEVE questions, Politangle may calculate and persist aggregate classroom sufficient statistics that support a useful teacher summary without creating student profiles.
 
-### Response editing
+Examples:
+- aggregate mean and response distribution for each of the 8 polygon axes;
+- aggregate family-compatibility totals/means where methodologically justified;
+- coarse anonymous compatibility bands, e.g. 0–24 / 25–49 / 50–74 / 75–100, only as aggregate bucket counts;
+- aggregate THINK / FEEL / ACT patterns when enough relevant items are complete.
 
-Because the privacy-first persistence model deliberately does not retain `participant -> option`, a submitted answer is locked. Allowing post-submit changes would require retaining the previous option per participant at least temporarily, which weakens the privacy model. The v2 default is therefore **edit before Submit, not after Submit**.
+No teacher-facing summary may permit drilling from a class bar, polygon point or family band to an individual participant.
 
-## Aggregate threshold
+Do **not** call an aggregate room pattern a fixed class identity such as "this is a Conservative class." Prefer language such as:
 
-The current pilot safeguard remains:
+- "The room leaned toward... on this construct"
+- "Responses were split"
+- "The class aggregate showed stronger compatibility with..."
+- "There was substantial variation across responses"
 
-- teacher sees joined/responded count at any class size;
-- answer distributions, percentages and class performance are withheld below **n=10**;
-- at n>=10, aggregate graphs unlock.
+## Privacy display threshold
 
-This is a product privacy rule, not a legal safe-harbor claim.
+System anonymity does not eliminate inference risk in very small groups.
 
-For a room below threshold, the teacher can still run the activity and discuss the correct answer, but Politangle should not expose a potentially identifying distribution.
+The exact minimum response count for displaying sensitive classroom distributions must be treated as a policy setting to be finalized through privacy/legal review and pilot testing.
 
-## Teacher graph
+For the current non-production pilot, the existing safeguard may remain **n>=10**. Product design must not hard-code this as a universal legal threshold.
 
-Default result visualization after reveal:
+Below the active display threshold:
+- teacher still sees joined/responded counts;
+- distribution remains suppressed until the threshold is reached.
 
-- horizontal or vertical bar chart;
-- option label;
-- count;
-- percentage;
-- total n;
-- correct option highlighted for literacy only;
-- no student drill-down;
-- no click-through from a bar to a person;
-- no export containing participant identifiers.
+Once the threshold is reached:
+- the teacher's live graph updates continuously as additional responses arrive.
 
-For BELIEVE/perspective items, use a neutral distribution graph with no 'winning' or 'correct' language.
+## Teacher Session Summary
 
-## Classroom learning loop
+At any time, especially at the end of a lesson, the teacher can open **Class Summary**.
 
-A live lesson can now be:
+This should be one of the strongest School product screens, not a raw admin table.
 
-1. Teacher opens room.
-2. Students join anonymously.
-3. Teacher launches Question 1.
-4. Students answer.
-5. Teacher closes question.
-6. Aggregate graph appears.
-7. Teacher discusses result.
-8. For literacy: reveal answer + evidence-backed explanation.
-9. Teacher launches Question 2.
-10. Repeat.
-11. End session.
+### Executive classroom snapshot
 
-This live loop can coexist with the previously designed self-paced sequence:
+Top section:
+- room / lesson name;
+- date and duration;
+- participants joined;
+- questions launched;
+- response completion rate;
+- activity type: Quick 26 / Full 42 / Quiz / Guided / Custom.
 
-- Baseline
-- Learn
-- Practice
-- Post-test
+### What the room thinks
 
-But **classroom onboarding comes first**. The self-paced sequence becomes one activity the teacher can launch inside a room, not the definition of School Mode itself.
+For BELIEVE activities:
+- visually polished 8-axis aggregate classroom map where enough data exists;
+- strongest aggregate issue leans;
+- most divided questions;
+- most consensual questions;
+- five-family aggregate compatibility view where methodologically supported;
+- THINK / FEEL / ACT aggregate comparison for Full 42;
+- topic-level summaries such as economy, values, authority, pluralism, nationhood, world/sovereignty and ecology.
 
-## Teacher dashboard after class
+The teacher should see both **totals and distributions**. Averages alone can hide a split room.
 
-Teacher may see only aggregate room-level history, for example:
-- 26 joined;
-- 24 responded to Q5;
-- Q5 distribution;
-- class literacy average where n>=10;
-- most-missed literacy concepts at aggregate level;
-- baseline/post change where both phases reach threshold.
+### What the room understands
 
-Never show:
-- 'Student 14: 53%';
-- student rankings;
-- strongest/weakest students;
-- per-student response history;
-- an individual political profile.
+For literacy activities:
+- overall aggregate accuracy;
+- CLASSIFY aggregate accuracy;
+- UNDERSTAND aggregate accuracy;
+- concepts most often understood;
+- concepts most often confused;
+- per-question distribution and correct-answer rate;
+- baseline / post-lesson change if both forms were used.
+
+### Discussion opportunities
+
+Politangle should automatically surface neutral teaching prompts such as:
+- "The room was divided almost evenly here. What values may explain the difference?"
+- "Most students chose Social democracy. What feature distinguishes it from Socialism?"
+- "The room's THINK and FEEL responses differ on this issue. Why might that happen?"
+
+These are prompts for inquiry, not normative instructions.
+
+## PDF export
+
+Teacher may export **Classroom Summary PDF**.
+
+The PDF contains aggregate-only information:
+- lesson title/date;
+- learning goals;
+- participation totals;
+- charts for selected questions;
+- aggregate classroom map;
+- aggregate family / construct summaries where supported;
+- literacy quiz results;
+- discussion prompts;
+- optional teacher notes;
+- methodology/privacy note.
+
+The PDF must not contain:
+- student names;
+- student IDs;
+- device identifiers;
+- individual political profiles;
+- individual literacy scores;
+- per-student response histories.
+
+The report should be suitable for:
+- teacher reflection;
+- lesson documentation;
+- school leadership/curriculum evidence;
+- planning the next lesson.
+
+PDF output is an optional teacher action, not automatic transmission of political data.
+
+## Guided lesson system
+
+Politangle School includes ready-to-run lesson guides. Each guide must specify:
+
+- age / school level target;
+- learning goals;
+- prerequisites;
+- estimated duration;
+- questions to launch;
+- when to pause and discuss;
+- neutral teacher prompts;
+- concepts to explain;
+- expected misconceptions;
+- optional extension activity;
+- recommended follow-up;
+- which aggregate charts to review at the end.
+
+The teacher remains in control and can depart from the guide at any time.
+
+See `docs/school-lesson-guide-v1.md`.
 
 ## Red Team decisions
 
-1. **No roster by default.** A roster defeats the product's anonymity promise and is unnecessary for classroom discussion.
-2. **Do not reveal live distributions while responses are still open on the shared screen.** Visible emerging majorities can influence later answers.
-3. **Do not retain participant-to-option mappings merely to make charts easier.** Aggregate at write time.
-4. **Do not rank students.** School analytics are about concepts and class learning, not political or literacy profiling of children.
-5. **Keep BELIEVE and LITERACY semantically different.** Belief distributions have no correct answer; literacy distributions can reveal a correct answer after voting closes.
-6. **Do not infer class ideology.** A set of aggregate responses should not become a label such as 'this is a conservative class'.
-7. **Small rooms remain a re-identification risk.** Keep the aggregation threshold until qualified legal/privacy review says otherwise.
-8. **Private student Politangle remains private even when launched from a classroom.** Classroom membership must not become consent to political-profile sharing.
-
-## Evidence note
-
-Classroom response-system research has found that anonymity can increase willingness to participate and can support teachers in diagnosing class understanding. The design therefore treats anonymity as a core participation feature, not merely a privacy disclaimer. The current Politangle implementation still requires cognitive testing with the intended school age group and qualified legal review before use with real minors.
+1. **Individual privacy is not the same as teacher blindness.** Teacher must see useful aggregate political and literacy information.
+2. **Teacher sees live aggregate distribution.** Only the shared class/projector display may optionally delay reveal.
+3. **All 26 / 42 BELIEVE questions belong in School Classroom Mode.** They are not restricted to private mode.
+4. **Literacy quizzes can start, interrupt or finish a lesson.** The teacher controls sequence.
+5. **Do not reduce a polarized room to one average.** Always retain distribution views alongside aggregate summaries.
+6. **No roster / no individual drill-down.** A bar or polygon point must never lead to a student.
+7. **Do not create a class ideology label.** Teach from patterns and distributions.
+8. **Young people are the primary School audience.** Explanations, help text, lesson timing and UX must be designed for them.
+9. **Canonical question wording remains versioned.** Youth rewrites require validation.
+10. **PDF is aggregate-only.** Export must not become a backdoor student political dossier.
 
 ## Implementation gate
 
-Before refactoring the School UI to this design:
+The existing School v1 implementation does not yet satisfy this design.
 
-1. approve this onboarding architecture;
-2. replace the current self-paced-first `/school` entry with the room/lobby model;
-3. implement teacher-paced question state;
-4. replace correctness-only classroom submissions with aggregate option buckets for live questions while preserving no participant-to-option storage;
-5. add teacher graph rendering;
-6. retain self-paced Baseline/Learn/Practice/Post-test as an activity inside the room;
-7. run independent privacy Red Team and CI;
-8. live-test the non-production Firebase classroom flow;
-9. **REQUIRES QUALIFIED LEGAL REVIEW** before real school/minor deployment.
+Next implementation sequence:
+
+1. refactor `/school` around **Private Student** vs **Classroom** entry;
+2. build teacher classroom creation + activity picker;
+3. build anonymous QR/code student join;
+4. implement teacher-paced and student-paced room state;
+5. expose all Quick 26 / Full 42 / CLASSIFY / UNDERSTAND question banks to Classroom Mode;
+6. implement live aggregate option/scale distributions for the teacher;
+7. add optional shared-projector reveal control;
+8. build polished Class Summary;
+9. build aggregate-only Classroom Summary PDF;
+10. integrate ready-to-run lesson guides;
+11. independent privacy/education Red Team;
+12. non-production Firebase end-to-end verification;
+13. cognitive interviews/accessibility testing with intended young users;
+14. **REQUIRES QUALIFIED LEGAL REVIEW** before real school/minor deployment.
