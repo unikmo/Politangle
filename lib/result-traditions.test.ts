@@ -11,9 +11,9 @@ test('headline result table stays deliberately limited to seven major rows', () 
   );
 });
 
-test('every headline row explains citizenship at birth and abortion', () => {
+test('every headline row explains nationhood membership and abortion', () => {
   for (const item of resultTraditions) {
-    assert.ok(item.citizenshipAtBirth.trim().length > 0, `${item.id} lacks citizenship-at-birth explanation`);
+    assert.ok(item.nationalMembership.trim().length > 0, `${item.id} lacks national-membership explanation`);
     assert.ok(item.abortion.trim().length > 0, `${item.id} lacks abortion explanation`);
   }
 });
