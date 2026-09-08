@@ -13,6 +13,7 @@ export type ResultTradition = {
   id: ResultTraditionId;
   name: string;
   kind: ResultTraditionKind;
+  scored: boolean;
   coreIdea: string;
   economy: string;
   society: string;
@@ -30,12 +31,17 @@ export type ResultTradition = {
  * product, not an exhaustive taxonomy of political philosophy. Narrower
  * traditions can appear as conditional nuances, but they do not become rows
  * here unless they materially improve understanding for a broad audience.
+ *
+ * `scored: false` means the concept remains educational/contextual but the
+ * present BELIEVE bank does not justify collapsing its relevant dimensions
+ * into a single numeric compatibility or tendency score.
  */
 export const resultTraditions: readonly ResultTradition[] = [
   {
     id: 'liberalism',
     name: 'Liberalism',
     kind: 'political-family',
+    scored: true,
     coreIdea: 'Individual liberty, equal legal rights and limits on concentrated political power.',
     economy: 'A broad family ranging from strongly market-oriented variants to liberal traditions with a larger welfare and regulatory role.',
     society: 'Generally gives substantial weight to personal autonomy and equal legal treatment.',
@@ -49,6 +55,7 @@ export const resultTraditions: readonly ResultTradition[] = [
     id: 'conservatism',
     name: 'Conservatism',
     kind: 'political-family',
+    scored: true,
     coreIdea: 'Continuity, inherited institutions and caution toward rapid or abstractly designed change.',
     economy: 'Often market-friendly in contemporary politics, but economics is not the defining core; Christian-democratic conservatism includes a strong social-market tradition.',
     society: 'Usually places greater weight on continuity, established institutions and inherited social norms.',
@@ -62,6 +69,7 @@ export const resultTraditions: readonly ResultTradition[] = [
     id: 'social-democracy',
     name: 'Social democracy',
     kind: 'political-family',
+    scored: true,
     coreIdea: 'A predominantly capitalist economy combined with regulation, welfare, public services and redistribution.',
     economy: 'Retains predominantly private ownership while using regulation, social insurance, public services and redistribution to pursue social justice.',
     society: 'Frequently socially liberal in contemporary politics, though social policy is not the tradition’s sole defining feature.',
@@ -75,6 +83,7 @@ export const resultTraditions: readonly ResultTradition[] = [
     id: 'socialism',
     name: 'Socialism',
     kind: 'political-family',
+    scored: true,
     coreIdea: 'Economic power and productive assets should be subject to substantially more social, public, cooperative or worker control.',
     economy: 'Places substantially more weight than social democracy on social, public, cooperative or worker ownership and control of productive assets.',
     society: 'Varies across socialist traditions and countries.',
@@ -88,6 +97,7 @@ export const resultTraditions: readonly ResultTradition[] = [
     id: 'green-politics',
     name: 'Green politics',
     kind: 'political-family',
+    scored: true,
     coreIdea: 'Ecological limits and a sustainable society are central political priorities.',
     economy: 'Usually accepts substantial intervention or structural change when needed for ecological sustainability and related social goals.',
     society: 'Often associated with socially progressive and post-material positions.',
@@ -101,19 +111,21 @@ export const resultTraditions: readonly ResultTradition[] = [
     id: 'nationalism',
     name: 'Nationalism',
     kind: 'cross-cutting-tendency',
+    scored: false,
     coreIdea: 'Gives special political value to the nation and national self-determination.',
     economy: 'No fixed economic programme; nationalist politics can combine with market, welfare, socialist or other economic approaches.',
     society: 'Varies from civic and inclusive forms to more culturally, birth-status or ancestrally restrictive forms.',
     statePower: 'Nationalism is not inherently authoritarian. Its relationship to political authority depends on the host ideology and commitment to democratic constraints.',
     nationalMembership: 'This is a central variation within nationalism: some forms accept acquired civic membership fully, while others give greater weight to birth, ancestry or inherited culture.',
     abortion: 'Not a defining nationalist doctrine.',
-    world: 'Places greater weight on national self-determination and sovereignty, while the degree of international cooperation varies.',
+    world: 'National self-determination matters to nationalism, but it is not identical to a simple preference for maximum state sovereignty or rejection of international cooperation.',
     evidenceIds: ['SEP-NATIONALISM', 'VDEM-LIBERAL-DEMOCRACY'],
   },
   {
     id: 'populism',
     name: 'Populism',
     kind: 'cross-cutting-tendency',
+    scored: true,
     coreIdea: 'Frames politics around ordinary or “real” people versus a self-serving elite and gives special weight to the people’s common will.',
     economy: 'No fixed economic programme; populism can attach to left-, right- or otherwise oriented host ideologies.',
     society: 'No fixed social programme; positions depend heavily on the host ideology.',
