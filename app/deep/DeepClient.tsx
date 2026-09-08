@@ -241,7 +241,7 @@ export default function DeepClient() {
         <article className="engine-card" style={{ marginTop: 18 }}>
           <p className="engine-kicker">2 · Your result against the main political traditions</p>
           <h2>What the major traditions generally stand for — and where your answers sit.</h2>
-          <p className="engine-help">Scores of 75–100 are anchored as a strong match for the five broad political families. Nationalism and populism are shown as cross-cutting tendencies, so their numbers indicate direction rather than membership in a complete ideology. These categories can overlap.</p>
+          <p className="engine-help">Scores of 75–100 are anchored as a strong match for the five broad political families. Populism is shown as a scored cross-cutting tendency. Nationalism remains contextual in this pilot because national membership and national self-determination cannot be reduced defensibly to one number from the current two axes.</p>
           <div className="engine-table-wrap">
             <table className="engine-table">
               <thead>
@@ -259,15 +259,20 @@ export default function DeepClient() {
               </thead>
               <tbody>
                 {resultTraditions.map((tradition) => {
-                  const family = tradition.kind === 'political-family' ? familyById.get(tradition.id as 'liberalism' | 'conservatism' | 'social-democracy' | 'socialism' | 'green-politics') : undefined;
-                  const tendency = tradition.kind === 'cross-cutting-tendency' ? tendencyById.get(tradition.id as 'nationalism' | 'populism') : undefined;
+                  const family = tradition.kind === 'political-family'
+                    ? familyById.get(tradition.id as 'liberalism' | 'conservatism' | 'social-democracy' | 'socialism' | 'green-politics')
+                    : undefined;
+                  const tendency = tradition.id === 'populism' ? tendencyById.get('populism') : undefined;
                   const score = family?.overall ?? tendency?.score ?? null;
                   const scoreLabel = tradition.kind === 'political-family' ? familyBand(score) : tendencyBand(score);
+                  const scoreText = tradition.scored
+                    ? score === null ? '—' : `${score} · ${scoreLabel}`
+                    : 'Context only · see Nationhood and World axes';
                   return (
                     <tr key={tradition.id}>
-                      <td><strong>{tradition.name}</strong><br /><span>{tradition.kind === 'political-family' ? 'Broad political family' : 'Cross-cutting tendency'}</span></td>
+                      <td><strong>{tradition.name}</strong><br /><span>{tradition.kind === 'political-family' ? 'Broad political family' : tradition.scored ? 'Cross-cutting tendency' : 'Cross-cutting context'}</span></td>
                       <td>
-                        {score === null ? '—' : `${score} · ${scoreLabel}`}
+                        {scoreText}
                         {family && <><br /><span>THINK {family.think ?? '—'} · FEEL {family.feel ?? '—'} · ACT {family.act ?? '—'}</span></>}
                       </td>
                       <td>{tradition.coreIdea}</td>
@@ -284,6 +289,7 @@ export default function DeepClient() {
             </table>
           </div>
           <p className="engine-help">The model deliberately separates Social democracy from Socialism through ownership: Social democracy retains a predominantly capitalist ownership structure, while Socialism places substantially more weight on social, public, cooperative or worker ownership. Narrower labels such as democratic socialism are kept as explanatory nuance rather than a separate headline row.</p>
+          <p className="engine-help">Nationalism is not assigned a single pilot score. The Nationhood / membership axis and World / sovereignty axis remain separate because inclusive civic nationalism and more restrictive national membership can combine with different views of international cooperation and state sovereignty.</p>
           <p className="engine-help">Populism is not automatically coded as authoritarian. International IDEA finds that populist governments are empirically associated with weakened democratic checks and civil liberties, while V-Dem finds anti-pluralism is a stronger predictor of autocratization than the populist label alone. Politangle therefore measures populism and authority / democratic constraints separately.</p>
         </article>
 
@@ -304,7 +310,7 @@ export default function DeepClient() {
               ))}
             </div>
           )}
-          <p className="engine-help">Nuanced labels are shown only when the dedicated answer pattern supports them. They do not add sectors to the five-family headline model.</p>
+          <p className="engine-help">Nuanced labels are shown only when the dedicated answer pattern supports them. They do not add sectors to the five-family headline model. National membership and sovereignty remain visible as separate polygon axes rather than being averaged into a nationalism score.</p>
         </article>
 
         <article className="engine-card" style={{ marginTop: 18 }}>
