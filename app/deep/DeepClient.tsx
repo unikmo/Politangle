@@ -33,6 +33,7 @@ import {
 } from '../../lib/literacy-session';
 import { assessNuancesV2 } from '../../lib/nuance-model';
 import { pairedAnswerOptions, type AnswerValue } from '../../lib/questions';
+import { resultTraditions } from '../../lib/result-traditions';
 
 const BELIEF_SESSION_KEY = 'politangle.believe.v2.session';
 const LITERACY_SESSION_KEY = 'politangle.literacy.v2.session';
@@ -61,6 +62,15 @@ function familyBand(score: number | null) {
   if (score >= 40) return 'Mixed / overlapping';
   if (score >= 25) return 'Limited match';
   return 'Strong tension';
+}
+
+function tendencyBand(score: number | null) {
+  if (score === null) return 'Not enough information';
+  if (score >= 75) return 'Strong tendency';
+  if (score >= 60) return 'Leans toward this tendency';
+  if (score >= 40) return 'Mixed / balanced';
+  if (score >= 25) return 'Leans away from this tendency';
+  return 'Strongly away from this tendency';
 }
 
 function directionLabel(score: number | null, low: string, high: string) {
@@ -207,6 +217,9 @@ export default function DeepClient() {
   }
 
   if (output) {
+    const familyById = new Map(output.families.map((family) => [family.id, family]));
+    const tendencyById = new Map(output.tendencies.map((tendency) => [tendency.id, tendency]));
+
     return (
       <section className="engine-shell">
         <article className="engine-card">
@@ -226,26 +239,52 @@ export default function DeepClient() {
         </article>
 
         <article className="engine-card" style={{ marginTop: 18 }}>
-          <p className="engine-kicker">2 · Political-family compatibility</p>
-          <h2>Compatibility can overlap across families.</h2>
+          <p className="engine-kicker">2 · Your result against the main political traditions</p>
+          <h2>What the major traditions generally stand for — and where your answers sit.</h2>
+          <p className="engine-help">Scores of 75–100 are anchored as a strong match for the five broad political families. Nationalism and populism are shown as cross-cutting tendencies, so their numbers indicate direction rather than membership in a complete ideology. These categories can overlap.</p>
           <div className="engine-table-wrap">
             <table className="engine-table">
-              <thead><tr><th>Family</th><th>Overall</th><th>THINK</th><th>FEEL</th><th>ACT</th><th>Think/Feel/Act tension</th></tr></thead>
+              <thead>
+                <tr>
+                  <th>Tradition / tendency</th>
+                  <th>Your score</th>
+                  <th>Core idea</th>
+                  <th>Economy</th>
+                  <th>Society</th>
+                  <th>State power</th>
+                  <th>Citizenship at birth</th>
+                  <th>Abortion</th>
+                  <th>World</th>
+                </tr>
+              </thead>
               <tbody>
-                {output.families.map((family) => (
-                  <tr key={family.id}>
-                    <td><strong>{family.name}</strong></td>
-                    <td>{family.overall === null ? '—' : `${family.overall} · ${familyBand(family.overall)}`}</td>
-                    <td>{family.think ?? '—'}</td>
-                    <td>{family.feel ?? '—'}</td>
-                    <td>{family.act ?? '—'}</td>
-                    <td>{family.modeTension === null ? '—' : family.modeTension}</td>
-                  </tr>
-                ))}
+                {resultTraditions.map((tradition) => {
+                  const family = tradition.kind === 'political-family' ? familyById.get(tradition.id as 'liberalism' | 'conservatism' | 'social-democracy' | 'socialism' | 'green-politics') : undefined;
+                  const tendency = tradition.kind === 'cross-cutting-tendency' ? tendencyById.get(tradition.id as 'nationalism' | 'populism') : undefined;
+                  const score = family?.overall ?? tendency?.score ?? null;
+                  const scoreLabel = tradition.kind === 'political-family' ? familyBand(score) : tendencyBand(score);
+                  return (
+                    <tr key={tradition.id}>
+                      <td><strong>{tradition.name}</strong><br /><span>{tradition.kind === 'political-family' ? 'Broad political family' : 'Cross-cutting tendency'}</span></td>
+                      <td>
+                        {score === null ? '—' : `${score} · ${scoreLabel}`}
+                        {family && <><br /><span>THINK {family.think ?? '—'} · FEEL {family.feel ?? '—'} · ACT {family.act ?? '—'}</span></>}
+                      </td>
+                      <td>{tradition.coreIdea}</td>
+                      <td>{tradition.economy}</td>
+                      <td>{tradition.society}</td>
+                      <td>{tradition.statePower}</td>
+                      <td>{tradition.citizenshipAtBirth}</td>
+                      <td>{tradition.abortion}</td>
+                      <td>{tradition.world}</td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>
-          <p className="engine-help">The five headline families remain Liberalism, Conservatism, Social democracy, Socialism and Green politics. A large Think/Feel/Act spread is reported as a tension to explore, not as hypocrisy or a failed consistency test.</p>
+          <p className="engine-help">The model deliberately separates Social democracy from Socialism through ownership: Social democracy retains a predominantly capitalist ownership structure, while Socialism places substantially more weight on social, public, cooperative or worker ownership. Narrower labels such as democratic socialism are kept as explanatory nuance rather than a separate headline row.</p>
+          <p className="engine-help">Populism is not automatically coded as authoritarian. International IDEA finds that populist governments are empirically associated with weakened democratic checks and civil liberties, while V-Dem finds anti-pluralism is a stronger predictor of autocratization than the populist label alone. Politangle therefore measures populism and authority / democratic constraints separately.</p>
         </article>
 
         <article className="engine-card" style={{ marginTop: 18 }}>
