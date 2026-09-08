@@ -43,7 +43,7 @@ The Manifesto handbook is useful for broad party-family profiles, but the recent
 | Authority / order | **2 −** | **1 +** | 0 | 0 | **1 −** |
 | Pluralism / checks | **2 −** | 0 | **2 −** | 0 | **1 −** |
 | World / sovereignty | 0 | 0 | 0 | 0 | **1 −** |
-| Nationhood / citizenship-at-birth | 0 | 0 | 0 | 0 | 0 |
+| Nationhood / membership | 0 | 0 | 0 | 0 | 0 |
 | Populism | 0 | 0 | 0 | 0 | 0 |
 | Ecology / growth | 0 | 0 | 0 | 0 | **2 −** |
 | Religion in public policy | 0 | 0 | 0 | 0 | 0 |
@@ -114,9 +114,9 @@ Ownership remains `0` because Green politics contains market-oriented, social-de
 
 ## Constructs intentionally kept out of all five headline scores
 
-### Nationhood / citizenship-at-birth
+### Nationhood / membership
 
-Citizenship rules and national belonging vary across countries and ideological hosts. Politangle therefore uses the construct primarily in the Nationalism tendency rather than forcing it into Liberalism or Conservatism.
+National belonging and citizenship policies vary across countries and ideological hosts. The Phase-1 item review supersedes the earlier citizenship-at-birth proxy: the global-core triplet now measures whether a naturalized citizen can belong to the nation as fully as a citizen from birth. Citizenship-at-birth law can be retained later as country-specific context but does not carry the headline-family score. The core construct primarily informs the separate nationhood/nationalism tendency.
 
 ### Populism
 
