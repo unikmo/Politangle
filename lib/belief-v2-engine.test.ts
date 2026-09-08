@@ -56,6 +56,32 @@ test('main family priors are deliberately sparse rather than forcing every issue
   assert.equal(conservative.loadings.some((loading) => loading.construct === 'abortion'), false);
 });
 
+test('academic loading pass gives private ownership modest relevance to broad liberalism', () => {
+  const liberal = canonicalFamilyProfilesV2.find((profile) => profile.id === 'liberalism')!;
+  const ownership = liberal.loadings.find((loading) => loading.construct === 'ownership');
+  assert.ok(ownership);
+  assert.equal(ownership.relevance, 1);
+  assert.equal(ownership.direction, 1);
+  assert.ok(ownership.evidenceIds.includes('SEP-LIBERALISM'));
+});
+
+test('pluralism stays cross-cutting rather than defining broad conservatism', () => {
+  const item = lockedBeliefItemsV2.find((candidate) => candidate.construct === 'pluralism' && candidate.mode === 'think')!;
+  const relevance = statementFamilyRelevanceV2(item.id)!;
+  const conservative = relevance.families.find((family) => family.familyId === 'conservatism')!;
+  assert.equal(conservative.relevance, 0);
+  assert.equal(conservative.direction, 0);
+});
+
+test('green politics gives modest relevance to subsidiarity and decentralization', () => {
+  const green = canonicalFamilyProfilesV2.find((profile) => profile.id === 'green-politics')!;
+  const subsidiarity = green.loadings.find((loading) => loading.construct === 'subsidiarity');
+  assert.ok(subsidiarity);
+  assert.equal(subsidiarity.relevance, 1);
+  assert.equal(subsidiarity.direction, 1);
+  assert.ok(subsidiarity.evidenceIds.includes('CAMBRIDGE-GREEN-POLITICS'));
+});
+
 test('universal-service and redistribution preferences do not disqualify a conservative pattern', () => {
   const answers: BeliefAnswersV2 = {};
   const conservative = canonicalFamilyProfilesV2.find((profile) => profile.id === 'conservatism')!;
