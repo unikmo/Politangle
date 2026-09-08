@@ -1,121 +1,76 @@
 # Politangle School Mode v1
 
-Status: **non-production classroom pilot implementation**.
+Status: **SUPERSEDED IMPLEMENTATION / NON-PRODUCTION ONLY.**
 
-## Purpose
+The code described by this document was the first School prototype. It remains useful as implementation scaffolding for literacy sessions, anonymous class creation and aggregate storage, but it is **not the canonical School product architecture anymore**.
 
-School mode turns Politangle's political-literacy content into a classroom learning loop while keeping political beliefs separate from teacher analytics.
+Canonical School design now lives in:
 
-Core promise:
+- `docs/school-classroom-onboarding-v2.md` — despite the historical filename, the document title is **Classroom Onboarding v3** and is the governing classroom architecture.
+- `docs/school-lesson-guide-v1.md` — governing lesson-guide and youth-teaching framework.
 
-> **We measure learning for teachers. We protect beliefs for students.**
+## Why v1 was superseded
 
-## Student flow
+The original v1 made the self-paced sequence:
 
-1. **Baseline** — 9 CLASSIFY + 6 UNDERSTAND questions, with no answer feedback during the test.
-2. **Learn** — evidence-bound teaching cards covering the major political families and important contextual concepts.
-3. **Practice** — the baseline bank is revisited with immediate answer feedback and explanations.
-4. **Post-test** — a separately worded 9 CLASSIFY + 6 UNDERSTAND content-matched form.
-5. **Result** — student sees baseline, post-test and change by overall / CLASSIFY / UNDERSTAND.
-6. **Optional private BELIEVE** — student may open Politangle Quick separately; political-belief answers remain browser/session-local and are not accepted by the school class API.
+**Baseline → Learn → Practice → Post-test**
 
-## Parallel-form limitation
+the center of School Mode and deliberately prevented BELIEVE/political-opinion answers from entering classroom aggregation.
 
-The post-test is a **content-matched parallel-form candidate**, not an empirically equated form. The two forms cover the same 15 learning targets with separate wording/scenarios, but equivalent difficulty has not yet been established with student data.
+That no longer matches the intended product.
 
-Do not describe the score change as a standardized educational effect until empirical equating/validation exists.
+The canonical model is now:
 
-## Teacher flow
+### Private Student Mode
 
-Teacher can:
+Young person may use Quick 26 / Full 42 / literacy privately. Individual results remain private to that student.
 
-- create an anonymous class code;
-- receive a separate private teacher key;
-- share only the short class code with students;
-- always see baseline and post-test submission counts;
-- see practice completion count;
-- see class-average baseline/post literacy results only after the minimum aggregation threshold is reached for that phase;
-- see class-average baseline-to-post change only after both phases reach the threshold;
-- see question-level aggregate correctness only after the minimum aggregation threshold is reached;
-- see baseline and post-test questions paired by the same learning target rather than treated as unrelated IDs;
-- close or reopen the class.
+### Classroom Mode
 
-Teacher cannot see:
+Teacher creates an anonymous room and may run:
 
-- student names;
-- a student list;
-- individual literacy scores;
-- individual political-family compatibility;
-- individual BELIEVE answers;
-- individual polygons;
-- individual abortion/religion/nationhood responses;
-- raw literacy option selections stored by the class backend.
+- any of the Quick 26 BELIEVE questions;
+- the Full 42 BELIEVE set;
+- CLASSIFY / UNDERSTAND quizzes;
+- a guided lesson;
+- a custom subset;
+- a single question at a time.
 
-## Data-minimization architecture
+Students remain anonymous. The teacher sees **aggregate live totals and answer distributions**, but never which student gave which answer or an individual political/literacy profile.
 
-The school aggregation API accepts only:
+Teacher receives a polished aggregate class/session summary and may export an aggregate-only PDF.
 
-- a random browser-generated participant token;
-- phase (`baseline`, `practice`, `post`);
-- for scored phases, question ID + section + `correct: boolean`.
+The original Baseline / Learn / Practice / Post-test sequence remains available as one possible classroom activity, not the definition of School Mode.
 
-It does **not** accept raw selected options or BELIEVE answers.
+## Retained v1 implementation assets
 
-The backend stores class-level aggregate counts plus one-way hashed phase receipts used to prevent the same browser token from submitting the same phase twice. The teacher key is stored only as a SHA-256 hash.
+The following concepts remain useful and should be reused where they fit the new model:
 
-The fixed pilot threshold is **10 submissions**. Below that threshold, the teacher receives only the submission/completion count for the phase: overall percentage, CLASSIFY percentage, UNDERSTAND percentage and question-level percentages are all suppressed. Baseline-to-post change remains suppressed until both phases reach the threshold.
+- anonymous room code;
+- private teacher control secret;
+- no student roster requirement;
+- one-way duplicate-prevention receipts;
+- no teacher-visible student identity;
+- content-matched baseline/post literacy candidate forms;
+- Firebase-backed aggregate class record concept;
+- qualified legal/privacy review gate before real minor deployment.
 
-The threshold is a product privacy safeguard, not a legal safe-harbor claim.
+## Migration requirement
 
-## Routes
+Do not extend the existing self-paced-first UI as though it were final.
 
-- `/school` — school-mode entry
-- `/school/student` — student learning flow
-- `/school/teacher` — teacher class/dashboard flow
-- `POST /api/school/classes` — create anonymous class
-- `GET /api/school/classes/:code` — student-safe class status; with teacher Bearer key returns aggregate dashboard data
-- `PATCH /api/school/classes/:code` — teacher-only open/close control
-- `POST /api/school/classes/:code/submit` — anonymous literacy aggregate submission
+Refactor School implementation in this order:
 
-## Evidence/content boundary
+1. Private Student vs Classroom entry;
+2. teacher room creation + activity picker;
+3. anonymous QR/code join;
+4. teacher-paced/student-paced live room state;
+5. all Quick 26 / Full 42 / literacy questions available to Classroom Mode;
+6. live aggregate distribution charts visible to teacher;
+7. projector reveal controls;
+8. polished Class Summary;
+9. aggregate-only PDF export;
+10. guided lesson library focused on young people;
+11. privacy/education Red Team and non-production E2E verification.
 
-School mode reuses the academically grounded political-literacy evidence registry already used by Politangle. The main public families remain:
-
-- Liberalism
-- Conservatism
-- Social democracy
-- Socialism
-- Green politics
-
-Nationalism and Populism are taught as cross-cutting/contextual concepts. Narrower concepts such as Christian democracy, Libertarianism, Communism, Fascism and radical/extreme-right distinctions appear because they materially improve political literacy; they do not expand the five-family BELIEVE headline model.
-
-## Privacy / legal boundary
-
-**REQUIRES QUALIFIED LEGAL REVIEW** before use with real minors, schools or identifiable classroom cohorts.
-
-This implementation is a technical privacy-first pilot, not a legal determination of compliance with GDPR, German school law, child-data rules or any other jurisdiction-specific requirements.
-
-Before real classroom deployment, require at minimum:
-
-- qualified privacy/legal review;
-- school/minor consent-law review for each target jurisdiction;
-- retention/deletion policy and operational deletion process;
-- security review of teacher-key handling and class-code abuse cases;
-- cognitive interviews with the intended student age group;
-- accessibility testing;
-- empirical evaluation of baseline/post-test form comparability;
-- independent QA and live post-release verification.
-
-## Red Team
-
-Key failure modes addressed in v1:
-
-1. Teacher political profiling — prevented by not sending BELIEVE answers to the school backend.
-2. Raw literacy surveillance — prevented by submitting correctness booleans rather than selected options.
-3. Tiny-class inference — completion counts remain visible, but all class-average and question-level score data are hidden below 10 submissions.
-4. Post-test memorization — post-test uses separate wording/scenarios rather than repeating baseline prompts.
-5. False learning precision — documentation explicitly states forms are not yet empirically equated.
-6. Teacher-key leakage — teacher access uses a separate secret; only its hash is stored server-side.
-7. False baseline/post comparison by ID — teacher analytics pair baseline and post-test items by their shared learning target.
-
-Residual risks remain and are not silently treated as solved. School mode is therefore **TEST WITH CONDITIONS**, not production-ready.
+**REQUIRES QUALIFIED LEGAL REVIEW** before real classroom/minor deployment.
