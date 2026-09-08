@@ -21,29 +21,65 @@ test('canonical BELIEVE v2 preserves the 42-item / 14x3 lock', () => {
   assert.equal(lockedBeliefItemsV2.filter((item) => item.mode === 'act').length, 14);
 });
 
-test('citizenship-at-birth THINK FEEL ACT items stay on the same construct', () => {
-  const triplet = lockedBeliefItemsV2.filter((item) => item.construct === 'nationhood-membership');
-  assert.equal(triplet.length, 3);
-  for (const item of triplet) {
-    assert.match(`${item.negative} ${item.positive}`.toLowerCase(), /citizenship/);
-    assert.match(`${item.negative} ${item.positive}`.toLowerCase(), /birth|birthplace/);
-    assert.match(`${item.negative} ${item.positive}`.toLowerCase(), /parent/);
+test('phase-1 source wording keeps every alternative within the burden guardrail', () => {
+  const wordCount = (text: string) => text.trim().split(/\s+/).filter(Boolean).length;
+  for (const item of lockedBeliefItemsV2) {
+    assert.ok(wordCount(item.negative) <= 26, `${item.id} negative pole is too long`);
+    assert.ok(wordCount(item.positive) <= 26, `${item.id} positive pole is too long`);
   }
 });
 
-test('populism ACT item does not collapse into anti-pluralism or institutional weakening', () => {
+test('public provision is separated from productive ownership', () => {
+  const triplet = lockedBeliefItemsV2.filter((item) => item.construct === 'public-provision');
+  assert.equal(triplet.length, 3);
+  for (const item of triplet) {
+    assert.doesNotMatch(`${item.negative} ${item.positive}`, /ownership|shareholder|worker-owned/i);
+    assert.match(`${item.negative} ${item.positive}`, /essential services/i);
+  }
+});
+
+test('redistribution ACT item measures redistribution rather than bundling public services', () => {
+  const item = lockedBeliefItemsV2.find((candidate) => candidate.id === 'A02')!;
+  const text = `${item.negative} ${item.positive}`;
+  assert.match(text, /income gaps/i);
+  assert.match(text, /tax/i);
+  assert.doesNotMatch(text, /public service/i);
+});
+
+test('nationhood THINK FEEL ACT items measure national membership rather than citizenship-at-birth law', () => {
+  const triplet = lockedBeliefItemsV2.filter((item) => item.construct === 'nationhood-membership');
+  assert.equal(triplet.length, 3);
+  for (const item of triplet) {
+    const text = `${item.negative} ${item.positive}`;
+    assert.match(text, /naturalized/i);
+    assert.match(text, /citizen from birth/i);
+    assert.doesNotMatch(text, /parent|birthplace|citizenship-at-birth/i);
+  }
+});
+
+test('populism ACT item does not collapse into anti-pluralism, institutions or leader authoritarianism', () => {
   const item = lockedBeliefItemsV2.find((candidate) => candidate.id === 'A11')!;
   const text = `${item.negative} ${item.positive}`.toLowerCase();
   assert.match(text, /elite/);
   assert.match(text, /ordinary people/);
-  assert.doesNotMatch(text, /court|institution|media|opposition/);
+  assert.doesNotMatch(text, /court|institution|media|opposition|leader/);
+});
+
+test('religion public-role triplet measures legitimacy of religious moral reasons rather than theocracy', () => {
+  const triplet = lockedBeliefItemsV2.filter((item) => item.construct === 'religion-public-role');
+  assert.equal(triplet.length, 3);
+  for (const item of triplet) {
+    const text = `${item.negative} ${item.positive}`;
+    assert.match(text, /religious moral principles/i);
+    assert.doesNotMatch(text, /theocracy|state religion/i);
+  }
 });
 
 test('subsidiarity THINK FEEL ACT poles point in the same direction', () => {
   const triplet = lockedBeliefItemsV2.filter((item) => item.construct === 'subsidiarity');
   const act = triplet.find((item) => item.mode === 'act')!;
-  assert.match(act.negative, /higher level of government/i);
-  assert.match(act.positive, /leave responsibility there/i);
+  assert.match(act.negative, /higher-level government/i);
+  assert.match(act.positive, /lowest capable/i);
 });
 
 test('main family priors are deliberately sparse rather than forcing every issue into every ideology', () => {
