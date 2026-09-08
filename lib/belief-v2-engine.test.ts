@@ -177,14 +177,16 @@ test('polygon remains an eight-axis political shape rather than an ideology labe
   assert.ok(polygon.every((axis) => axis.score === 50 && axis.coverage === 100));
 });
 
-test('nationalism populism and authority remain separate tendencies', () => {
+test('populism and authority remain scored tendencies while nationalism stays decomposed into polygon axes', () => {
   const answers: BeliefAnswersV2 = {};
   for (const item of lockedBeliefItemsV2) answers[item.id] = 0;
   assert.deepEqual(assessTendenciesV2(answers).map((item) => item.id), [
-    'nationalism',
     'populism',
     'authority-democratic-constraints',
   ]);
+  const polygonIds = calculatePolygonV2Canonical(answers).map((axis) => axis.id);
+  assert.ok(polygonIds.includes('world'));
+  assert.ok(polygonIds.includes('nationhood'));
 });
 
 test('Christian democracy requires more than religion alone', () => {
