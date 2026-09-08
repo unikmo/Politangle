@@ -82,6 +82,7 @@ export const canonicalFamilyProfilesV2: readonly FamilyProfile[] = [
     loadings: [
       loading('social-change', 2, 1, ['SEP-CONSERVATISM', 'CHES-ECON-GALTAN']),
       loading('personal-autonomy', 1, 1, ['SEP-CONSERVATISM', 'CHES-ECON-GALTAN']),
+      loading('ownership', 1, 1, ['SEP-CONSERVATISM', 'CAMBRIDGE-CHRISTIAN-DEMOCRACY', 'CHES-ECON-GALTAN']),
       loading('authority-order', 1, 1, ['SEP-CONSERVATISM', 'CHES-ECON-GALTAN']),
       loading('pluralism', 1, -1, ['SEP-CONSERVATISM', 'VDEM-LIBERAL-DEMOCRACY']),
     ],
