@@ -11,11 +11,12 @@ import {
 export const maxDuration = 60;
 
 function forwardedHeaders(request: Request, extra: Record<string, string> = {}) {
-  const headers = new Headers(extra);
+  const headers = new Headers();
   for (const name of ['cookie', 'x-vercel-protection-bypass', 'x-vercel-set-bypass-cookie']) {
     const value = request.headers.get(name);
     if (value) headers.set(name, value);
   }
+  for (const [name, value] of Object.entries(extra)) headers.set(name, value);
   return headers;
 }
 
@@ -79,8 +80,8 @@ export async function GET(request: Request) {
       body: JSON.stringify({ roomLabel: 'E2E verification', activity: { type: 'quick26', pacing: 'teacher', projectorMode: 'reveal' } }),
       cache: 'no-store',
     });
-    const classroomBody = await body<{ code?: string; teacherKey?: string; license?: { seatNumber?: number } }>(classroom);
-    if (!classroom.ok || !classroomBody?.code || !classroomBody.teacherKey) throw new Error(`Licensed classroom creation failed (${classroom.status}).`);
+    const classroomBody = await body<{ code?: string; teacherKey?: string; license?: { seatNumber?: number }; error?: string }>(classroom);
+    if (!classroom.ok || !classroomBody?.code || !classroomBody.teacherKey) throw new Error(`Licensed classroom creation failed (${classroom.status}): ${classroomBody?.error ?? 'unknown error'}`);
     classCode = classroomBody.code;
     const teacherKey = classroomBody.teacherKey;
     const classRef = db.collection('schoolClasses').doc(classCode);
