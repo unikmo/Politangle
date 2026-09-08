@@ -138,12 +138,11 @@ export function assessNuancesV2(answers: BeliefAnswersV2): NuanceResultV2[] {
   const nationhood = constructResult(constructModes, 'nationhood-membership');
   const populism = constructResult(constructModes, 'populism');
 
-  // A far-right signal is intentionally guarded and separate from ordinary
-  // conservatism. The comparative radical-right pattern requires the combined
-  // presence of nation-centered/exclusionary membership, authoritarian order
-  // and populism. The present nationhood-membership construct is a screening
-  // proxy rather than a fully validated nativism scale, so the output is framed
-  // as a pattern signal and not as an identity or extremist classification.
+  // Comparative radical-right research commonly emphasizes the joint presence
+  // of nativism, authoritarianism and populism. Politangle does not yet contain
+  // a dedicated validated nativism scale. Nationhood-membership is therefore
+  // used only as a screening proxy, and the output must not be phrased as a
+  // personal far-right identity or diagnostic classification.
   if (
     allAtOrAbove(nationhood, 65)
     && allAtOrAbove(authority, 65)
@@ -157,13 +156,13 @@ export function assessNuancesV2(answers: BeliefAnswersV2): NuanceResultV2[] {
 
     nuances.push({
       id: 'far-right-radical-right-pattern',
-      name: 'Far-right tendency (radical-right pattern)',
+      name: 'Populist radical-right screening pattern',
       anchorFamily: 'conservatism',
       kind: 'edge-pattern',
       strength: clear ? 'clear' : 'emerging',
-      explanation: 'Your answers combine a strongly nation-centered membership orientation, stronger authoritarian-order preferences and a people-versus-elite populist orientation. Comparative research treats that combination as characteristic of the populist radical right.',
+      explanation: 'Your answers combine more birth-weighted national membership, stronger authoritarian-order preferences and a people-versus-elite populist orientation. Comparative research treats nativism, authoritarianism and populism as characteristic of the populist radical right, but Politangle does not yet directly measure nativism.',
       evidenceIds: ['MUDDE-RADICAL-RIGHT', 'MUDDE-POPULISM', 'PIRRO-FAR-RIGHT'],
-      caution: 'Positioned on the conservative side for orientation only. It is not ordinary conservatism, is not equivalent to fascism or the extreme right, and should not be used as a party, extremist or personal-identity label.',
+      caution: 'This is a screening pattern only. It is positioned on the conservative side for orientation, is not ordinary conservatism, is not equivalent to fascism or the extreme right, and must not be used as a personal extremist or far-right identity label.',
     });
   }
 
