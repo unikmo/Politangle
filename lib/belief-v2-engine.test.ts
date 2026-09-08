@@ -166,6 +166,7 @@ test('Christian democracy requires more than religion alone', () => {
   for (const item of lockedBeliefItemsV2.filter((candidate) => candidate.construct === 'subsidiarity')) answers[item.id] = 2;
   for (const item of lockedBeliefItemsV2.filter((candidate) => candidate.construct === 'ownership')) answers[item.id] = 1;
   for (const item of lockedBeliefItemsV2.filter((candidate) => candidate.construct === 'redistribution')) answers[item.id] = -1;
+  for (const item of lockedBeliefItemsV2.filter((candidate) => candidate.construct === 'pluralism')) answers[item.id] = -2;
   assert.equal(assessConservativeSubtypeV2(answers)?.id, 'christian-democracy');
 });
 
