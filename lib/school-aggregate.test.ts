@@ -1,103 +1,132 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { schoolBaselineQuestions, schoolPostQuestions } from './school-literacy';
 import {
-  applySchoolAggregate,
+  applySchoolJoin,
+  applySchoolResponse,
+  closeSchoolQuestion,
+  configureSchoolClass,
   createSchoolClassRecord,
   hashSchoolSecret,
+  launchSchoolQuestion,
+  nextSchoolQuestion,
   publicSchoolClassSummary,
+  revealSchoolQuestion,
+  schoolClassSummary,
   teacherSchoolClassSummary,
-  validateSchoolAggregatePayload,
   verifyTeacherKey,
 } from './school-aggregate';
+import { buildClassroomActivity, validateClassroomResponse } from './school-classroom';
 
-function scoredPayload(phase: 'baseline' | 'post', participantToken = 'participant-123456') {
-  const questions = phase === 'baseline' ? schoolBaselineQuestions : schoolPostQuestions;
-  return validateSchoolAggregatePayload({
-    participantToken,
-    phase,
-    results: questions.map((question) => ({ questionId: question.id, section: question.section, correct: true })),
-  })!;
+function record() {
+  return createSchoolClassRecord('ABC234', hashSchoolSecret('teacher-key'), buildClassroomActivity({ type: 'quick26' })!, 'Year 10');
 }
 
-test('school class record hashes teacher access and never exposes it in summaries', () => {
-  const key = 'teacher-secret-123';
-  const record = createSchoolClassRecord('ABC234', hashSchoolSecret(key), '2026-09-08T00:00:00.000Z');
-  assert.equal(verifyTeacherKey(record, key), true);
-  assert.equal(verifyTeacherKey(record, 'wrong'), false);
-  assert.equal('teacherKeyHash' in publicSchoolClassSummary(record), false);
-  assert.equal('teacherKeyHash' in teacherSchoolClassSummary(record), false);
-});
+function belief(questionId: string, answer: string, participant = 'anonymous-participant-123') {
+  return validateClassroomResponse({ participantToken: participant, questionId, answer })!;
+}
 
-test('school aggregate accepts complete correctness-only literacy submissions', () => {
-  const payload = scoredPayload('baseline');
-  assert.equal(payload.results?.length, 15);
+function literacy(questionId: string, answer: string, participant = 'anonymous-participant-123') {
+  return validateClassroomResponse({ participantToken: participant, questionId, answer: [answer] })!;
+}
 
-  const record = createSchoolClassRecord('ABC234', hashSchoolSecret('teacher'));
-  const next = applySchoolAggregate(record, payload);
-  assert.equal(next.baseline.submissions, 1);
-  assert.equal(next.baseline.correct, 15);
-  assert.equal(next.baseline.answered, 15);
-});
-
-test('school aggregate rejects partial or malformed submissions', () => {
-  assert.equal(validateSchoolAggregatePayload({ participantToken: 'participant-123456', phase: 'baseline', results: [] }), null);
-  assert.equal(validateSchoolAggregatePayload({ participantToken: 'short', phase: 'practice' }), null);
-  assert.equal(validateSchoolAggregatePayload({ participantToken: 'participant-123456', phase: 'belief', results: [] }), null);
-});
-
-test('teacher sees completion count but no scores or question details below the privacy threshold', () => {
-  let record = createSchoolClassRecord('ABC234', hashSchoolSecret('teacher'));
-  record = applySchoolAggregate(record, scoredPayload('baseline'));
-  const summary = teacherSchoolClassSummary(record);
-  assert.equal(summary.baseline.submissions, 1);
-  assert.equal(summary.baseline.overall, null);
-  assert.equal(summary.baseline.classify, null);
-  assert.equal(summary.baseline.understand, null);
-  assert.equal(summary.baseline.detailedAvailable, false);
-  assert.equal(summary.baseline.questions, null);
-  assert.equal(summary.change, null);
-  assert.deepEqual(summary.privacy, {
+test('class room has no roster and teacher key is never returned', () => {
+  const created = record();
+  assert.equal(verifyTeacherKey(created, 'teacher-key'), true);
+  assert.equal(verifyTeacherKey(created, 'wrong'), false);
+  const pub = publicSchoolClassSummary(created);
+  const teacher = teacherSchoolClassSummary(created);
+  assert.equal('teacherKeyHash' in pub, false);
+  assert.equal('teacherKeyHash' in teacher, false);
+  assert.equal('students' in teacher, false);
+  assert.deepEqual(teacher.privacy, {
     individualStudentsVisible: false,
-    rawLiteracyAnswersStored: false,
-    politicalBeliefAnswersAccepted: false,
+    participantAnswerMappingsStored: false,
+    politicalAnswersAggregated: true,
+    rawParticipantPoliticalProfilesStored: false,
   });
 });
 
-test('class-average and question-level analytics unlock only at the minimum aggregation threshold', () => {
-  let record = createSchoolClassRecord('ABC234', hashSchoolSecret('teacher'));
-  for (let i = 0; i < record.minAggregateSize; i += 1) {
-    record = applySchoolAggregate(record, scoredPayload('baseline', `participant-baseline-${i}`));
-  }
-  const summary = teacherSchoolClassSummary(record);
-  assert.equal(summary.baseline.submissions, record.minAggregateSize);
-  assert.equal(summary.baseline.overall, 100);
-  assert.equal(summary.baseline.classify, 100);
-  assert.equal(summary.baseline.understand, 100);
-  assert.equal(summary.baseline.detailedAvailable, true);
-  assert.ok(summary.baseline.questions);
-  assert.equal(summary.baseline.questions?.C1.percent, 100);
+test('anonymous joins increase only the room total', () => {
+  const joined = applySchoolJoin(applySchoolJoin(record()));
+  assert.equal(joined.joinedCount, 2);
+  assert.equal('participants' in joined, false);
 });
 
-test('baseline-to-post class change stays hidden until both phases reach threshold', () => {
-  let record = createSchoolClassRecord('ABC234', hashSchoolSecret('teacher'));
-  for (let i = 0; i < record.minAggregateSize; i += 1) {
-    record = applySchoolAggregate(record, scoredPayload('baseline', `participant-baseline-${i}`));
-  }
-  record = applySchoolAggregate(record, scoredPayload('post', 'participant-post-one'));
-  assert.equal(teacherSchoolClassSummary(record).change, null);
-
-  for (let i = 1; i < record.minAggregateSize; i += 1) {
-    record = applySchoolAggregate(record, scoredPayload('post', `participant-post-${i}`));
-  }
-  assert.equal(teacherSchoolClassSummary(record).change, 0);
+test('teacher can configure and launch Quick, Full, literacy or custom activities', () => {
+  let current = record();
+  current = configureSchoolClass(current, { type: 'full42', pacing: 'student', projectorMode: 'live' });
+  assert.equal(current.activity.questionIds.length, 42);
+  assert.equal(current.activity.pacing, 'student');
+  current = configureSchoolClass(current, { type: 'custom', questionIds: ['T01', 'C1'] });
+  current = launchSchoolQuestion(current, 'T01');
+  assert.equal(current.currentQuestionId, 'T01');
+  assert.equal(current.questionOpen, true);
+  current = closeSchoolQuestion(current);
+  assert.equal(current.questionOpen, false);
+  current = revealSchoolQuestion(current, true);
+  assert.equal(current.revealed, true);
+  current = nextSchoolQuestion(current);
+  assert.equal(current.currentQuestionId, 'C1');
 });
 
-test('practice aggregation stores completion count only', () => {
-  const record = createSchoolClassRecord('ABC234', hashSchoolSecret('teacher'));
-  const payload = validateSchoolAggregatePayload({ participantToken: 'participant-123456', phase: 'practice' })!;
-  const next = applySchoolAggregate(record, payload);
-  assert.equal(next.practiceCompletions, 1);
-  assert.equal(next.baseline.submissions, 0);
-  assert.equal(next.post.submissions, 0);
+test('BELIEVE answers are stored only as aggregate option buckets', () => {
+  let current = record();
+  current = applySchoolResponse(current, belief('T01', '-2', 'browser-a'));
+  current = applySchoolResponse(current, belief('T01', '2', 'browser-b'));
+  assert.equal(current.questions.T01.responses, 2);
+  assert.equal(current.questions.T01.optionCounts['-2'], 1);
+  assert.equal(current.questions.T01.optionCounts['2'], 1);
+  assert.equal('participantToken' in current.questions.T01, false);
+  assert.equal('answers' in current, false);
+});
+
+test('teacher sees developing aggregate distribution without an n threshold', () => {
+  let current = launchSchoolQuestion(record(), 'T01');
+  current = applySchoolResponse(current, belief('T01', '-1'));
+  const teacher = teacherSchoolClassSummary(current);
+  assert.equal(teacher.currentDistribution?.responses, 1);
+  assert.equal(teacher.currentDistribution?.distribution.find((item) => item.id === '-1')?.count, 1);
+});
+
+test('projector reveal mode hides distribution until reveal while teacher still sees it', () => {
+  let current = launchSchoolQuestion(record(), 'T01');
+  current = applySchoolResponse(current, belief('T01', '1'));
+  assert.equal(publicSchoolClassSummary(current).projectorDistribution, null);
+  assert.equal(teacherSchoolClassSummary(current).currentDistribution?.responses, 1);
+  current = revealSchoolQuestion(current, true);
+  assert.equal(publicSchoolClassSummary(current).projectorDistribution?.responses, 1);
+});
+
+test('live projector mode can show aggregate while voting remains open', () => {
+  let current = configureSchoolClass(record(), { type: 'quick26', projectorMode: 'live' });
+  current = launchSchoolQuestion(current, 'T01');
+  current = applySchoolResponse(current, belief('T01', '0'));
+  assert.equal(publicSchoolClassSummary(current).projectorDistribution?.responses, 1);
+});
+
+test('literacy aggregates expose option distribution and correctness, not individual scores', () => {
+  let current = configureSchoolClass(record(), { type: 'literacy' });
+  const currentQuestion = teacherSchoolClassSummary(launchSchoolQuestion(current, 'C1')).currentQuestion!;
+  const correct = currentQuestion.acceptedAnswerSets![0][0];
+  current = applySchoolResponse(current, literacy('C1', correct, 'browser-a'));
+  const summary = schoolClassSummary(current);
+  assert.equal(summary.literacy.percent, 100);
+  assert.equal(summary.questions[0].correctPercent, 100);
+});
+
+test('class summary retains split distributions and produces aggregate political views', () => {
+  let current = configureSchoolClass(record(), { type: 'full42' });
+  for (const id of current.activity.questionIds) {
+    current = applySchoolResponse(current, belief(id, '-2', `a-${id}`));
+    current = applySchoolResponse(current, belief(id, '2', `b-${id}`));
+  }
+  const summary = schoolClassSummary(current);
+  assert.equal(summary.answeredQuestions, 42);
+  assert.equal(summary.polygon.length, 8);
+  assert.equal(summary.families.length, 5);
+  assert.ok(summary.families.every((family) => family.overall !== null));
+  assert.ok(summary.constructModes.every((row) => row.think !== null && row.feel !== null && row.act !== null));
+  const first = summary.questions.find((q) => q.id === 'T01')!;
+  assert.equal(first.distribution.find((item) => item.id === '-2')?.percent, 50);
+  assert.equal(first.distribution.find((item) => item.id === '2')?.percent, 50);
 });
