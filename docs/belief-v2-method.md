@@ -1,6 +1,8 @@
-# Politangle BELIEVE v2 — locked 42-item measurement architecture
+# Politangle BELIEVE v2.1 — locked 42-item measurement architecture
 
 Status: **content-validation implementation**. This architecture is implemented and testable, but it is **not yet a psychometrically validated political diagnostic**.
+
+Canonical questionnaire version: `belief-2026.09-v2.1-phase1`.
 
 ## Locked count
 
@@ -41,29 +43,31 @@ This is a relevance model, not a claim that Question X is universally twice as i
 
 Each construct has exactly one THINK item, one FEEL item and one ACT item:
 
-1. Public provision ↔ private provision
+1. Public responsibility for essential-service access ↔ more limited government / private arrangements
 2. Redistribution ↔ lower compulsory redistribution
-3. Social / worker ownership ↔ private / shareholder ownership
-4. Social change ↔ continuity / tradition
+3. Social / worker / cooperative ownership ↔ private / shareholder ownership
+4. Earlier adaptation to social change ↔ continuity / durable acceptance before change
 5. Personal autonomy ↔ shared moral regulation
 6. Abortion: legal autonomy ↔ stronger prenatal-life protection
 7. Liberty / safeguards ↔ preventive authority / order
-8. Pluralism / institutional checks ↔ majoritarian concentration
+8. Pluralism / independent checks ↔ wider elected-government latitude
 9. International cooperation ↔ national discretion / sovereignty
-10. Civic / inclusive national membership ↔ inherited / status-based continuity
-11. Plural interests / compromise ↔ people-versus-elite general will
-12. Ecological limits ↔ growth / incremental adaptation
-13. Secular public institutions ↔ legitimate religious inspiration in public policy
-14. Direct higher-government responsibility ↔ subsidiarity / local-community responsibility
+10. Equal national membership for naturalized citizens ↔ additional weight for citizen-from-birth status
+11. Plural/trade-off view of political disagreement ↔ people-versus-elite common-will view
+12. Ecological limits ↔ growth priority
+13. Excluding religious moral principles as public reasons ↔ accepting them as legitimate public reasons
+14. Higher-government responsibility ↔ lowest-capable-level / subsidiarity responsibility
 
 This structure is deliberate: tensions are only compared **within the same construct**. Politangle does not call a person contradictory merely because, for example, their economic answers and national-sovereignty answers differ.
 
+The Phase-1 forensic item review is documented in `docs/believe-v2-phase1-item-validation.md`.
+
 ## THINK / FEEL / ACT
 
-The design is informed by the tripartite model of attitudes. The APA Dictionary of Psychology defines attitude structure in terms of cognitive, affective and behavioral components: beliefs/evaluations, feelings/emotions, and past behavior or future behavioral intentions.
+The design is informed by the tripartite model of attitudes. The APA Dictionary of Psychology describes cognitive, affective and behavioral bases of attitudes as beliefs/evaluations, feelings/emotions, and responses including past behavior or future intentions.
 
 Primary reference:
-- APA Dictionary of Psychology, *tripartite model of attitudes*: https://dictionary.apa.org/tripartite-model-of-attitudes
+- APA Dictionary of Psychology, *bases of an attitude*: https://dictionary.apa.org/bases-of-an-attitude
 
 Supporting empirical reference:
 - Breckler, S. J. (1984), *Empirical validation of affect, behavior, and cognition as distinct components of attitude*, Journal of Personality and Social Psychology. PubMed: https://pubmed.ncbi.nlm.nih.gov/6527214/
@@ -144,9 +148,16 @@ Politangle may describe this as a **tension** between stated beliefs, affective 
 5. **Do not assume the expert relevance matrix is final truth.** The 0/1/2 loadings are evidence-informed priors and must be calibrated against respondent data. Item discrimination, reliability, factor structure and measurement invariance remain empirical questions.
 6. **Do not use famous people as scoring authorities.** Historical or public figures may later be shown as educational reference anchors only after independent sourcing of their documented positions. They should not determine the respondent's score.
 7. **Cross-national validation is mandatory.** Political terms and issue alignments vary by country. The locked count does not imply that every loading is culturally invariant.
+8. **Citizenship-at-birth law is no longer the global-core nationhood proxy.** Phase 1 moved the construct to naturalized-versus-citizen-from-birth national membership. Birthright-citizenship policy can be country/context material later.
 
 ## Implementation state
 
-Implemented in `lib/belief-v2.ts` with regression tests in `lib/belief-v2.test.ts`.
+Canonical scoring and source wording are in `lib/belief-v2-engine.ts`; the locked browser session is in `lib/belief-v2-session.ts`; regression coverage is in `lib/belief-v2-engine.test.ts` and `lib/belief-v2-session.test.ts`.
 
-The current production-like user flow still uses the previous v1 questionnaire implementation. BELIEVE v2 is intentionally additive at this stage so the new measurement architecture can be reviewed and validated before it replaces the working v1 flow.
+The public engine routes now use BELIEVE v2.1:
+
+- `/quiz` administers the locked 26-item Quick stage;
+- `/results` reads the BELIEVE v2 session and calculates the canonical polygon/family model;
+- `/deep` administers the remaining 16 BELIEVE items and the separately scored CLASSIFY / UNDERSTAND political-literacy block.
+
+Raw political answers remain browser/session-local in the current implementation. Visual design remains deliberately out of scope for this engine-validation phase.
