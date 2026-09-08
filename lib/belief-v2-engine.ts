@@ -71,6 +71,7 @@ export const canonicalFamilyProfilesV2: readonly FamilyProfile[] = [
     name: 'Liberalism',
     loadings: [
       loading('social-change', 1, -1, ['SEP-LIBERALISM', 'CHES-ECON-GALTAN']),
+      loading('ownership', 1, 1, ['SEP-LIBERALISM', 'CHES-ECON-GALTAN']),
       loading('personal-autonomy', 2, -1, ['SEP-LIBERALISM']),
       loading('authority-order', 2, -1, ['SEP-LIBERALISM', 'VDEM-LIBERAL-DEMOCRACY']),
       loading('pluralism', 2, -1, ['SEP-LIBERALISM', 'VDEM-LIBERAL-DEMOCRACY']),
@@ -84,7 +85,6 @@ export const canonicalFamilyProfilesV2: readonly FamilyProfile[] = [
       loading('personal-autonomy', 1, 1, ['SEP-CONSERVATISM', 'CHES-ECON-GALTAN']),
       loading('ownership', 1, 1, ['SEP-CONSERVATISM', 'CAMBRIDGE-CHRISTIAN-DEMOCRACY', 'CHES-ECON-GALTAN']),
       loading('authority-order', 1, 1, ['SEP-CONSERVATISM', 'CHES-ECON-GALTAN']),
-      loading('pluralism', 1, -1, ['SEP-CONSERVATISM', 'VDEM-LIBERAL-DEMOCRACY']),
     ],
   },
   {
@@ -115,6 +115,7 @@ export const canonicalFamilyProfilesV2: readonly FamilyProfile[] = [
       loading('pluralism', 1, -1, ['CAMBRIDGE-GREEN-POLITICS']),
       loading('world-sovereignty', 1, -1, ['CAMBRIDGE-GREEN-POLITICS']),
       loading('ecology-growth', 2, -1, ['CAMBRIDGE-GREEN-POLITICS']),
+      loading('subsidiarity', 1, 1, ['CAMBRIDGE-GREEN-POLITICS']),
     ],
   },
 ] as const;
