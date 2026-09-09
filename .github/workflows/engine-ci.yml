@@ -3,10 +3,13 @@ name: Politangle Engine CI
 on:
   push:
     branches:
+      - main
       - engine/v1
       - school/v1
+      - school/age-bands-v2
   pull_request:
     branches:
+      - main
       - staging
       - engine/v1
 
