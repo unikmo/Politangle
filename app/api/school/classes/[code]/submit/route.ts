@@ -15,12 +15,13 @@ function validRecord(value: unknown): value is SchoolClassRecord {
 export async function POST(request: Request, context: { params: Promise<{ code: string }> }) {
   const code = await codeFrom(context);
   const raw = await request.json().catch(() => null);
-  const payload = validateClassroomResponse(raw);
-  if (!payload) return NextResponse.json({ error: 'Invalid classroom response.' }, { status: 400 });
-
+  const receiptInput = raw && typeof raw === 'object' ? raw as { participantToken?: unknown; questionId?: unknown } : null;
+  if (!receiptInput || typeof receiptInput.participantToken !== 'string' || typeof receiptInput.questionId !== 'string') {
+    return NextResponse.json({ error: 'Invalid classroom response.' }, { status: 400 });
+  }
   const db = getAdminDb();
   const classRef = db.collection('schoolClasses').doc(code);
-  const receiptId = hashSchoolSecret(`${payload.participantToken}:${payload.questionId}`);
+  const receiptId = hashSchoolSecret(`${receiptInput.participantToken}:${receiptInput.questionId}`);
   const receiptRef = classRef.collection('responseReceipts').doc(receiptId);
 
   const result = await db.runTransaction(async (transaction) => {
@@ -28,6 +29,8 @@ export async function POST(request: Request, context: { params: Promise<{ code: 
     if (!classSnapshot.exists) return { status: 404 as const, body: { error: 'Class not found.' } };
     const data = classSnapshot.data();
     if (!validRecord(data)) return { status: 409 as const, body: { error: 'Older School pilot room. Create a new classroom.' } };
+    const payload = validateClassroomResponse(raw, data.activity.ageBand);
+    if (!payload) return { status: 400 as const, body: { error: 'Invalid classroom response.' } };
     if (data.status !== 'active') return { status: 409 as const, body: { error: 'Class is closed.' } };
     if (!data.activity.questionIds.includes(payload.questionId)) return { status: 409 as const, body: { error: 'Question is not active in this classroom.' } };
     if (data.activity.pacing === 'teacher' && (!data.questionOpen || data.currentQuestionId !== payload.questionId)) return { status: 409 as const, body: { error: 'This question is not open.' } };
