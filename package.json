@@ -6,6 +6,7 @@
     "dev": "next dev",
     "verify:engine": "tsx --test lib/*.test.ts",
     "verify:firebase": "node scripts/verify-firebase.mjs",
+    "school:provision-license-pack": "tsx scripts/provision-school-license-pack.ts",
     "prebuild": "npm run verify:engine && npm run verify:firebase",
     "build": "next build",
     "start": "next start"

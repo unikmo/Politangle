@@ -4,9 +4,11 @@ on:
   push:
     branches:
       - engine/v1
+      - school/v1
   pull_request:
     branches:
       - staging
+      - engine/v1
 
 jobs:
   verify-engine:

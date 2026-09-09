@@ -1,0 +1,61 @@
+import assert from 'node:assert/strict';
+import test from 'node:test';
+import {
+  buildClassroomActivity,
+  classroomActivityOptions,
+  classroomFullIds,
+  classroomLiteracyIds,
+  classroomQuickIds,
+  getClassroomQuestion,
+  publicClassroomQuestion,
+  validateClassroomResponse,
+} from './school-classroom';
+
+test('classroom exposes locked Quick 26, Full 42 and 15 literacy questions', () => {
+  assert.equal(classroomQuickIds.length, 26);
+  assert.equal(classroomFullIds.length, 42);
+  assert.equal(classroomLiteracyIds.length, 15);
+  assert.equal(new Set(classroomFullIds).size, 42);
+});
+
+test('teacher can configure all core classroom activity types', () => {
+  assert.equal(buildClassroomActivity({ type: 'quick26', pacing: 'teacher', projectorMode: 'reveal' })?.questionIds.length, 26);
+  assert.equal(buildClassroomActivity({ type: 'full42', pacing: 'student', projectorMode: 'live' })?.questionIds.length, 42);
+  assert.equal(buildClassroomActivity({ type: 'literacy' })?.questionIds.length, 15);
+  assert.equal(buildClassroomActivity({ type: 'guided', lessonId: 'room-stand' })?.questionIds.length, 7);
+  assert.equal(buildClassroomActivity({ type: 'guided', lessonId: 'quick26-lab' })?.questionIds.length, 26);
+  assert.equal(buildClassroomActivity({ type: 'custom', title: 'Two questions', questionIds: ['T01', 'C1'] })?.questionIds.length, 2);
+  assert.equal(buildClassroomActivity({ type: 'custom', questionIds: ['bad-id'] }), null);
+});
+
+test('student-safe literacy question does not expose answer key before reveal', () => {
+  const hidden = publicClassroomQuestion('C1', false)!;
+  assert.equal(hidden.kind, 'literacy');
+  assert.equal(hidden.acceptedAnswerSets, undefined);
+  assert.equal(hidden.explanation, undefined);
+  const revealed = publicClassroomQuestion('C1', true)!;
+  assert.ok(revealed.acceptedAnswerSets?.length);
+  assert.ok(revealed.explanation);
+});
+
+test('BELIEVE classroom responses accept five-point scale plus unsure', () => {
+  for (const answer of ['-2', '-1', '0', '1', '2', 'unsure']) {
+    assert.ok(validateClassroomResponse({ participantToken: 'anonymous-browser-123', questionId: 'T01', answer }));
+  }
+  assert.equal(validateClassroomResponse({ participantToken: 'anonymous-browser-123', questionId: 'T01', answer: '7' }), null);
+});
+
+test('literacy classroom responses are validated against canonical options', () => {
+  const q = getClassroomQuestion('C1')!;
+  const option = q.options[0].id;
+  assert.ok(validateClassroomResponse({ participantToken: 'anonymous-browser-123', questionId: 'C1', answer: [option] }));
+  assert.equal(validateClassroomResponse({ participantToken: 'anonymous-browser-123', questionId: 'C1', answer: ['not-an-option'] }), null);
+});
+
+test('activity metadata exposes guided lesson choices without student identities', () => {
+  const options = classroomActivityOptions();
+  assert.equal(options.quick26.length, 26);
+  assert.equal(options.full42.length, 42);
+  assert.equal(options.literacy.length, 15);
+  assert.equal(options.lessons.length, 6);
+});
