@@ -1,10 +1,11 @@
 import { lockedBeliefItemsV2 } from './belief-v2-engine';
 import type { BeliefConstruct, BeliefItem } from './belief-v2';
 
-export type SchoolAgeBand = 'junior-12-13' | 'youth-14-18';
+export type SchoolAgeBand = 'junior-10-13' | 'youth-14-18';
+export type LegacySchoolAgeBand = 'junior-12-13';
 
 export const SCHOOL_YOUTH_BELIEVE_VERSION = 'school-youth-believe-2026.09-candidate-v1' as const;
-export const SCHOOL_JUNIOR_BELIEVE_VERSION = 'school-junior-believe-2026.09-candidate-v1' as const;
+export const SCHOOL_JUNIOR_BELIEVE_VERSION = 'school-junior-believe-2026.09-candidate-v2' as const;
 
 type ModePairs = { think: readonly [string, string]; feel: readonly [string, string]; act: readonly [string, string] };
 
@@ -91,22 +92,22 @@ export const schoolYouthBeliefItems: readonly BeliefItem[] = lockedBeliefItemsV2
 
 const juniorSources = ['T01', 'T02', 'T03', 'T04', 'T05', 'T07', 'T08', 'T09', 'T10', 'T11', 'T12', 'T13', 'T14', 'F07', 'F08', 'F11'] as const;
 const juniorPairs: readonly (readonly [string, string])[] = [
-  ['Government should make sure every family can get essential services such as healthcare and education.', 'Families should make more of their own arrangements, with government playing a smaller role.'],
-  ['Taxes and public support should reduce very large gaps between rich and poor.', 'Government should interfere less with income differences, even when the gaps are large.'],
-  ['Workers, cooperatives or the public should own more of very large companies.', 'Very large companies should normally remain owned mainly by private investors.'],
-  ['School and public rules should change fairly soon when society’s views change.', 'Long-standing rules should change slowly and only after broad agreement.'],
-  ['People should be free to make private choices when those choices do not harm anyone else.', 'Some private choices may be restricted to protect important shared values.'],
-  ['Authorities should limit freedom only when there is a clear risk of serious harm.', 'Authorities may limit some freedom early to prevent serious disorder.'],
-  ['Even elected leaders must be checked by courts, laws, opposition parties and independent media.', 'Leaders who win an election should have wide freedom to carry out what voters chose.'],
-  ['Countries should accept shared international rules when problems such as climate change cross borders.', 'Each country should keep the final say even when solving shared problems becomes harder.'],
-  ['A person who becomes a citizen can belong just as fully as someone who was born a citizen.', 'Being born a citizen should count more when deciding who fully belongs.'],
-  ['Politics usually contains several groups with real interests, not only good ordinary people against a bad elite.', 'Politics is often ordinary people against an elite that protects itself and ignores them.'],
-  ['Protecting nature should sometimes come before economic growth.', 'Economic growth should normally come first while environmental damage is reduced in other ways.'],
-  ['Religious beliefs should not be used to make laws for people who do not share them.', 'Religious beliefs can be fair reasons for laws even when not everyone shares them.'],
-  ['National government should run important services when that gives everyone the same standard.', 'Local communities should run important services whenever they are able to do so.'],
-  ['During a crisis, I worry more about leaders receiving too much power.', 'During a crisis, I worry more about leaders not having enough power to keep people safe.'],
-  ['I feel more worried when elected leaders weaken courts, laws or independent media.', 'I feel more worried when courts or other institutions repeatedly block elected leaders.'],
-  ['When politics goes badly, I first think about hard choices and groups wanting different things.', 'When politics goes badly, I first think an elite is ignoring ordinary people.'],
+  ['Government should make sure every family can use schools and doctors.', 'Families should make more of their own choices, with less government help.'],
+  ['Taxes should help make the gap between rich and poor smaller.', 'People should keep more of what they earn, even if the gap stays large.'],
+  ['Workers or the public should own more of the biggest businesses.', 'The biggest businesses should mostly belong to private owners.'],
+  ['Public rules should change when most people’s views change.', 'Old rules should change slowly, after people have agreed for a long time.'],
+  ['Adults should be free to make private choices if nobody is harmed.', 'Some private choices may be limited to protect values shared by many people.'],
+  ['Leaders should limit freedom only when there is a clear, serious danger.', 'Leaders may limit some freedom early to stop serious trouble.'],
+  ['Courts, laws, other parties and news organisations should check elected leaders.', 'Election winners should have wide freedom to do what voters chose.'],
+  ['Countries should follow shared rules for problems that cross borders.', 'Each country should keep the final say, even if shared problems are harder to solve.'],
+  ['Someone who becomes a citizen belongs just as fully as someone born a citizen.', 'Being born a citizen should count more when deciding who fully belongs.'],
+  ['Politics usually has many groups with different needs and ideas.', 'Politics is often ordinary people against a powerful group that ignores them.'],
+  ['Protecting nature should sometimes come before growing the economy.', 'Growing the economy should usually come first while we also protect nature.'],
+  ['Religion should not be used to make laws for people who do not share it.', 'Religion can be a fair reason for laws, even when not everyone shares it.'],
+  ['National government should run key services so everyone gets the same standard.', 'Local communities should run key services whenever they can.'],
+  ['In a crisis, I worry more that leaders will get too much power.', 'In a crisis, I worry more that leaders will lack the power to keep people safe.'],
+  ['I worry more when elected leaders weaken courts, laws or independent news.', 'I worry more when courts or other bodies keep blocking elected leaders.'],
+  ['When politics goes badly, I first think people face hard choices and want different things.', 'When politics goes badly, I first think a powerful group is ignoring ordinary people.'],
 ];
 
 export const schoolJuniorBeliefItems: readonly BeliefItem[] = juniorSources.map((sourceId, index) => {
@@ -115,6 +116,10 @@ export const schoolJuniorBeliefItems: readonly BeliefItem[] = juniorSources.map(
   return { ...source, id: `J${String(index + 1).padStart(2, '0')}`, stage: 'quick', negative: pair[0], positive: pair[1] };
 });
 
-export function schoolBeliefItems(ageBand: SchoolAgeBand) {
-  return ageBand === 'junior-12-13' ? schoolJuniorBeliefItems : schoolYouthBeliefItems;
+export function isJuniorSchoolAgeBand(ageBand: SchoolAgeBand | LegacySchoolAgeBand | string): boolean {
+  return ageBand === 'junior-10-13' || ageBand === 'junior-12-13';
+}
+
+export function schoolBeliefItems(ageBand: SchoolAgeBand | LegacySchoolAgeBand) {
+  return isJuniorSchoolAgeBand(ageBand) ? schoolJuniorBeliefItems : schoolYouthBeliefItems;
 }

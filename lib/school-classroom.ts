@@ -3,7 +3,7 @@ import { scoreLiteracyItem, type LiteracyQuestion } from './deep-engine';
 import { lockedBeliefItemsV2 } from './belief-v2-engine';
 import type { AnswerValue } from './questions';
 import { getSchoolLesson, schoolLessons, type SchoolLessonId } from './school-lessons';
-import { schoolBeliefItems, schoolJuniorBeliefItems, type SchoolAgeBand } from './school-believe';
+import { isJuniorSchoolAgeBand, schoolBeliefItems, schoolJuniorBeliefItems, type SchoolAgeBand } from './school-believe';
 
 export const SCHOOL_CLASSROOM_VERSION = 'school-classroom-2026.09-v3' as const;
 
@@ -119,19 +119,19 @@ export function buildClassroomActivity(input: unknown): ClassroomActivityConfig 
   if (!input || typeof input !== 'object') return null;
   const value = input as Record<string, unknown>;
   const type = value.type;
-  const ageBand: SchoolAgeBand = value.ageBand === 'junior-12-13' ? 'junior-12-13' : 'youth-14-18';
+  const ageBand: SchoolAgeBand = isJuniorSchoolAgeBand(String(value.ageBand ?? '')) ? 'junior-10-13' : 'youth-14-18';
   const pacing = value.pacing === 'student' ? 'student' : value.pacing === 'teacher' || value.pacing === undefined ? 'teacher' : null;
   const projectorMode = value.projectorMode === 'live' ? 'live' : value.projectorMode === 'reveal' || value.projectorMode === undefined ? 'reveal' : null;
   if (!pacing || !projectorMode || !['junior', 'quick26', 'full42', 'literacy', 'guided', 'custom'].includes(String(type))) return null;
 
-  if (type === 'junior') return { type, title: 'Junior 16', questionIds: [...classroomJuniorIds], pacing, projectorMode, ageBand: 'junior-12-13' };
+  if (type === 'junior') return { type, title: 'Junior 16', questionIds: [...classroomJuniorIds], pacing, projectorMode, ageBand: 'junior-10-13' };
   if (type === 'quick26') return { type, title: 'Youth Quick 26', questionIds: [...classroomQuickIds], pacing, projectorMode, ageBand };
   if (type === 'full42') return { type, title: 'Youth Full 42', questionIds: [...classroomFullIds], pacing, projectorMode, ageBand };
   if (type === 'literacy') return { type, title: 'Political Literacy Quiz', questionIds: [...classroomLiteracyIds], pacing, projectorMode, ageBand };
   if (type === 'guided') {
     const lesson = getSchoolLesson(typeof value.lessonId === 'string' ? value.lessonId : undefined);
     if (!lesson) return null;
-    const lessonAgeBand: SchoolAgeBand = lesson.ageBand === '12–13' ? 'junior-12-13' : 'youth-14-18';
+    const lessonAgeBand: SchoolAgeBand = lesson.ageBand === '10–13' ? 'junior-10-13' : 'youth-14-18';
     const questionIds = lesson.questionIds.length
       ? [...lesson.questionIds]
       : lesson.id === 'quick26-lab'

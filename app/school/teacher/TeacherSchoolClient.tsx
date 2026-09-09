@@ -23,7 +23,7 @@ type TeacherSummary = {
   createdAt: string;
   roomLabel: string;
   joinedCount: number;
-  activity: { type: string; title: string; questionIds: string[]; pacing: 'teacher' | 'student'; projectorMode: 'live' | 'reveal'; ageBand: 'junior-12-13' | 'youth-14-18'; lessonId?: string };
+  activity: { type: string; title: string; questionIds: string[]; pacing: 'teacher' | 'student'; projectorMode: 'live' | 'reveal'; ageBand: 'junior-10-13' | 'youth-14-18'; lessonId?: string };
   currentIndex: number;
   currentQuestionId: string | null;
   questionOpen: boolean;
@@ -66,7 +66,7 @@ export default function TeacherSchoolClient() {
   const [message, setMessage] = useState('');
   const [busy, setBusy] = useState(false);
   const [roomLabel, setRoomLabel] = useState('');
-  const [ageBand, setAgeBand] = useState<'junior-12-13' | 'youth-14-18'>('youth-14-18');
+  const [ageBand, setAgeBand] = useState<'junior-10-13' | 'youth-14-18'>('youth-14-18');
   const [activityType, setActivityType] = useState<'junior' | 'quick26' | 'full42' | 'literacy' | 'guided' | 'custom'>('quick26');
   const [lessonId, setLessonId] = useState('room-stand');
   const [pacing, setPacing] = useState<'teacher' | 'student'>('teacher');
@@ -137,7 +137,7 @@ export default function TeacherSchoolClient() {
   const currentQuestionIds = summary?.activity.questionIds ?? [];
   const currentQuestion = summary?.currentQuestion;
   const lesson = summary?.activity.lessonId ? schoolLessons.find((item) => item.id === summary.activity.lessonId) : null;
-  const availableLessons = schoolLessons.filter((item) => item.ageBand === (ageBand === 'junior-12-13' ? '12–13' : '14–18'));
+  const availableLessons = schoolLessons.filter((item) => item.ageBand === (ageBand === 'junior-10-13' ? '10–13' : '14–18'));
   const joinUrl = summary && origin ? `${origin}/school/student?code=${summary.code}` : '';
   const projectorUrl = summary && origin ? `${origin}/school/projector?code=${summary.code}` : '';
 
@@ -146,13 +146,13 @@ export default function TeacherSchoolClient() {
       <p className="engine-kicker">Choose what to teach</p>
       <div className="school-config-grid">
         <label><span>Room label</span><input value={roomLabel} onChange={(e) => setRoomLabel(e.target.value)} placeholder="Politics Year 10" /></label>
-        <label><span>Age band</span><select value={ageBand} onChange={(e) => { const next = e.target.value as typeof ageBand; setAgeBand(next); setActivityType(next === 'junior-12-13' ? 'junior' : 'quick26'); setLessonId(next === 'junior-12-13' ? 'junior-social-media' : 'room-stand'); setCustomIds(next === 'junior-12-13' ? ['J01'] : ['T01']); }}><option value="junior-12-13">Junior · ages 12–13</option><option value="youth-14-18">Youth · ages 14–18</option></select></label>
-        <label><span>Activity</span><select value={activityType} onChange={(e) => setActivityType(e.target.value as typeof activityType)}>{ageBand === 'junior-12-13' ? <option value="junior">Junior 16</option> : <><option value="quick26">Youth Quick 26</option><option value="full42">Youth Full 42</option></>}<option value="literacy">Political Literacy Quiz</option><option value="guided">Guided Lesson</option><option value="custom">Build my own / single question</option></select></label>
+        <label><span>Age band</span><select value={ageBand} onChange={(e) => { const next = e.target.value as typeof ageBand; setAgeBand(next); setActivityType(next === 'junior-10-13' ? 'junior' : 'quick26'); setLessonId(next === 'junior-10-13' ? 'junior-social-media' : 'room-stand'); setCustomIds(next === 'junior-10-13' ? ['J01'] : ['T01']); }}><option value="junior-10-13">Junior · ages 10–13</option><option value="youth-14-18">Youth · ages 14–18</option></select></label>
+        <label><span>Activity</span><select value={activityType} onChange={(e) => setActivityType(e.target.value as typeof activityType)}>{ageBand === 'junior-10-13' ? <option value="junior">Junior 16</option> : <><option value="quick26">Youth Quick 26</option><option value="full42">Youth Full 42</option></>}<option value="literacy">Political Literacy Quiz</option><option value="guided">Guided Lesson</option><option value="custom">Build my own / single question</option></select></label>
         {activityType === 'guided' && <label><span>Lesson</span><select value={lessonId} onChange={(e) => setLessonId(e.target.value)}>{availableLessons.map((item) => <option key={item.id} value={item.id}>{item.title} · {item.duration}</option>)}</select></label>}
         <label><span>Pacing</span><select value={pacing} onChange={(e) => setPacing(e.target.value as 'teacher' | 'student')}><option value="teacher">Teacher-paced</option><option value="student">Student-paced</option></select></label>
         <label><span>Projector distribution</span><select value={projectorMode} onChange={(e) => setProjectorMode(e.target.value as 'live' | 'reveal')}><option value="reveal">Reveal when teacher chooses</option><option value="live">Show live while answers arrive</option></select></label>
       </div>
-      {activityType === 'custom' && <details className="engine-details" open><summary>Select approved questions ({customIds.length} selected)</summary><div className="school-question-picker">{(ageBand === 'junior-12-13' ? activityOptions.junior : activityOptions.full42).map((id) => <label key={id}><input type="checkbox" checked={customIds.includes(id)} onChange={() => toggleCustom(id)} /> {classroomQuestionLabel(id, ageBand)}</label>)}{activityOptions.literacy.map((id) => <label key={id}><input type="checkbox" checked={customIds.includes(id)} onChange={() => toggleCustom(id)} /> {classroomQuestionLabel(id, ageBand)}</label>)}</div></details>}
+      {activityType === 'custom' && <details className="engine-details" open><summary>Select approved questions ({customIds.length} selected)</summary><div className="school-question-picker">{(ageBand === 'junior-10-13' ? activityOptions.junior : activityOptions.full42).map((id) => <label key={id}><input type="checkbox" checked={customIds.includes(id)} onChange={() => toggleCustom(id)} /> {classroomQuestionLabel(id, ageBand)}</label>)}{activityOptions.literacy.map((id) => <label key={id}><input type="checkbox" checked={customIds.includes(id)} onChange={() => toggleCustom(id)} /> {classroomQuestionLabel(id, ageBand)}</label>)}</div></details>}
       {!summary ? <div className="engine-result-actions"><button className="engine-primary-link" type="button" disabled={busy || (activityType === 'custom' && !customIds.length)} onClick={createClass}>Start classroom</button></div> : <div className="engine-result-actions"><button className="engine-primary-link" type="button" disabled={busy || (activityType === 'custom' && !customIds.length)} onClick={applyActivity}>Load this activity</button></div>}
     </article>
   );
@@ -161,7 +161,7 @@ export default function TeacherSchoolClient() {
 
   return (
     <section className="engine-shell school-shell school-teacher-print">
-      <div className="school-room-strip"><strong>{summary.roomLabel || `Class ${summary.code}`}</strong><span>{summary.activity.title}</span><span>{summary.activity.ageBand === 'junior-12-13' ? 'Ages 12–13' : 'Ages 14–18'}</span><span>{summary.joinedCount} joined</span><span>{summary.status}</span></div>
+      <div className="school-room-strip"><strong>{summary.roomLabel || `Class ${summary.code}`}</strong><span>{summary.activity.title}</span><span>{summary.activity.ageBand === 'junior-10-13' ? 'Ages 10–13' : 'Ages 14–18'}</span><span>{summary.joinedCount} joined</span><span>{summary.status}</span></div>
       {message && <p className="school-status-message no-print">{message}</p>}
       <article className="engine-card school-room-card"><p className="engine-kicker">Classroom onboarding</p><div className="school-code-display"><span>ROOM CODE</span><strong>{summary.code}</strong></div><p><strong>Student join:</strong> <code>{joinUrl || `/school/student?code=${summary.code}`}</code></p><p><strong>Projector:</strong> <code>{projectorUrl || `/school/projector?code=${summary.code}`}</code></p><div className="engine-result-actions no-print"><button className="engine-primary-link" type="button" onClick={copyJoinLink}>Copy student link</button><a className="engine-primary-link" href={`/school/projector?code=${summary.code}`} target="_blank" rel="noreferrer">Open projector</a><button className="engine-link-button" type="button" onClick={() => teacherAction({ action: 'status', status: summary.status === 'active' ? 'closed' : 'active' })}>{summary.status === 'active' ? 'End classroom' : 'Reopen classroom'}</button><button className="engine-link-button" type="button" onClick={clearLocal}>Forget key</button></div><p className="engine-help">Students join without names or accounts. The teacher dashboard receives aggregate room distributions, not participant-to-answer records.</p></article>
       <div className="no-print" style={{ marginTop: 18 }}>{configuration}</div>

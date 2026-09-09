@@ -29,7 +29,7 @@ Narrower concepts remain contextual or conditional rather than expanding the hea
 
 ## Audience
 
-Primary product bands are **Junior 12–13** and **Youth 14–18** in secondary education.
+Primary product bands are **Junior 10–13** and **Youth 14–18** in upper-primary and secondary education.
 
 Junior uses a separately versioned 16-question candidate bank and guided social-media/political-literacy lessons. Youth uses a plain-language parallel form of all 42 BELIEVE items. The adult form remains unchanged. Neither new form should be described as age-validated until cognitive and empirical testing is complete.
 
