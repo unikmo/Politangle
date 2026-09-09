@@ -29,9 +29,9 @@ Narrower concepts remain contextual or conditional rather than expanding the hea
 
 ## Audience
 
-Primary product target: approximately **14–18 years old** in secondary education.
+Primary product bands are **Junior 12–13** and **Youth 14–18** in secondary education.
 
-Teacher should be able to select an age/level band in future versions. The first School form should use the canonical validated question wording unless and until a separately validated youth-language form is created.
+Junior uses a separately versioned 16-question candidate bank and guided social-media/political-literacy lessons. Youth uses a plain-language parallel form of all 42 BELIEVE items. The adult form remains unchanged. Neither new form should be described as age-validated until cognitive and empirical testing is complete.
 
 ## Teacher use principles
 

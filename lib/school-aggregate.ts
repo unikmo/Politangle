@@ -11,6 +11,7 @@ import {
 } from './school-classroom';
 import { canonicalFamilyProfilesV2, lockedBeliefItemsV2 } from './belief-v2-engine';
 import { polygonAxesV2, type AttitudeMode, type BeliefConstruct } from './belief-v2';
+import type { SchoolAgeBand } from './school-believe';
 
 export const SCHOOL_AGGREGATE_SCHEMA = 2 as const;
 
@@ -36,21 +37,21 @@ export type SchoolClassRecord = {
   questions: Record<string, SchoolQuestionAggregate>;
 };
 
-function emptyQuestion(id: string): SchoolQuestionAggregate {
+function emptyQuestion(id: string, ageBand: SchoolAgeBand = 'youth-14-18'): SchoolQuestionAggregate {
   return {
     responses: 0,
-    optionCounts: Object.fromEntries(optionKeysForQuestion(id).map((key) => [key, 0])),
+    optionCounts: Object.fromEntries(optionKeysForQuestion(id, ageBand).map((key) => [key, 0])),
     correct: 0,
   };
 }
 
-function ensureQuestions(current: Record<string, SchoolQuestionAggregate>, ids: readonly string[]) {
+function ensureQuestions(current: Record<string, SchoolQuestionAggregate>, ids: readonly string[], ageBand: SchoolAgeBand = 'youth-14-18') {
   const next = Object.fromEntries(Object.entries(current).map(([id, value]) => [id, {
     responses: value.responses,
     optionCounts: { ...value.optionCounts },
     correct: value.correct,
   }])) as Record<string, SchoolQuestionAggregate>;
-  for (const id of ids) if (!next[id]) next[id] = emptyQuestion(id);
+  for (const id of ids) if (!next[id]) next[id] = emptyQuestion(id, ageBand);
   return next;
 }
 
@@ -74,7 +75,7 @@ export function createSchoolClassRecord(
     currentQuestionId: null,
     questionOpen: false,
     revealed: false,
-    questions: ensureQuestions({}, activity.questionIds),
+    questions: ensureQuestions({}, activity.questionIds, activity.ageBand),
   };
 }
 
@@ -100,13 +101,13 @@ export function configureSchoolClass(record: SchoolClassRecord, rawActivity: unk
     currentQuestionId: null,
     questionOpen: false,
     revealed: false,
-    questions: ensureQuestions(record.questions, activity.questionIds),
+    questions: ensureQuestions(record.questions, activity.questionIds, activity.ageBand),
   };
 }
 
 export function launchSchoolQuestion(record: SchoolClassRecord, questionId: string) {
   const index = record.activity.questionIds.indexOf(questionId);
-  if (index < 0 || !getClassroomQuestion(questionId)) throw new Error('Question is not part of this activity');
+  if (index < 0 || !getClassroomQuestion(questionId, record.activity.ageBand)) throw new Error('Question is not part of this activity');
   return { ...record, currentIndex: index, currentQuestionId: questionId, questionOpen: true, revealed: false };
 }
 
@@ -126,9 +127,9 @@ export function nextSchoolQuestion(record: SchoolClassRecord) {
 
 export function applySchoolResponse(record: SchoolClassRecord, response: ClassroomResponse) {
   if (!record.activity.questionIds.includes(response.questionId)) throw new Error('Question is outside the current classroom activity');
-  const question = getClassroomQuestion(response.questionId);
+  const question = getClassroomQuestion(response.questionId, record.activity.ageBand);
   if (!question) throw new Error('Unknown classroom question');
-  const current = record.questions[response.questionId] ?? emptyQuestion(response.questionId);
+  const current = record.questions[response.questionId] ?? emptyQuestion(response.questionId, record.activity.ageBand);
   const next: SchoolQuestionAggregate = {
     responses: current.responses + 1,
     optionCounts: { ...current.optionCounts },
@@ -148,8 +149,8 @@ function percent(value: number, total: number) {
   return total ? Math.round((value / total) * 100) : 0;
 }
 
-function questionSummary(id: string, aggregate: SchoolQuestionAggregate) {
-  const question = getClassroomQuestion(id);
+function questionSummary(id: string, aggregate: SchoolQuestionAggregate, ageBand: SchoolAgeBand = 'youth-14-18') {
+  const question = getClassroomQuestion(id, ageBand);
   if (!question) return null;
   const distribution = question.options.map((option) => ({
     id: option.id,
@@ -258,7 +259,7 @@ function familySummary(record: SchoolClassRecord) {
 
 export function schoolClassSummary(record: SchoolClassRecord) {
   const questionResults = Object.entries(record.questions)
-    .map(([id, aggregate]) => ({ summary: questionSummary(id, aggregate), diversity: entropy(aggregate) }))
+    .map(([id, aggregate]) => ({ summary: questionSummary(id, aggregate, record.activity.ageBand), diversity: entropy(aggregate) }))
     .filter((row): row is { summary: NonNullable<ReturnType<typeof questionSummary>>; diversity: number } => Boolean(row.summary))
     .filter((row) => row.summary.responses > 0);
   const ranked = questionResults.filter((row) => row.summary.responses >= 2);
@@ -304,9 +305,9 @@ export function publicSchoolClassSummary(record: SchoolClassRecord) {
     currentQuestionId: record.currentQuestionId,
     questionOpen: record.questionOpen,
     revealed: record.revealed,
-    currentQuestion: record.currentQuestionId ? publicClassroomQuestion(record.currentQuestionId, record.revealed) : null,
-    activityQuestions: record.activity.questionIds.map((id) => publicClassroomQuestion(id, false)).filter(Boolean),
-    projectorDistribution: projectorVisible && record.currentQuestionId && currentAggregate ? questionSummary(record.currentQuestionId, currentAggregate) : null,
+    currentQuestion: record.currentQuestionId ? publicClassroomQuestion(record.currentQuestionId, record.revealed, record.activity.ageBand) : null,
+    activityQuestions: record.activity.questionIds.map((id) => publicClassroomQuestion(id, false, record.activity.ageBand)).filter(Boolean),
+    projectorDistribution: projectorVisible && record.currentQuestionId && currentAggregate ? questionSummary(record.currentQuestionId, currentAggregate, record.activity.ageBand) : null,
   };
 }
 
@@ -323,8 +324,8 @@ export function teacherSchoolClassSummary(record: SchoolClassRecord) {
     currentQuestionId: record.currentQuestionId,
     questionOpen: record.questionOpen,
     revealed: record.revealed,
-    currentQuestion: record.currentQuestionId ? getClassroomQuestion(record.currentQuestionId) : null,
-    currentDistribution: record.currentQuestionId && currentAggregate ? questionSummary(record.currentQuestionId, currentAggregate) : null,
+    currentQuestion: record.currentQuestionId ? getClassroomQuestion(record.currentQuestionId, record.activity.ageBand) : null,
+    currentDistribution: record.currentQuestionId && currentAggregate ? questionSummary(record.currentQuestionId, currentAggregate, record.activity.ageBand) : null,
     classSummary: schoolClassSummary(record),
     privacy: {
       individualStudentsVisible: false,

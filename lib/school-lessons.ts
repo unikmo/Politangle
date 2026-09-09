@@ -4,7 +4,9 @@ export type SchoolLessonId =
   | 'think-feel-act'
   | 'quick26-lab'
   | 'full42-lab'
-  | 'democracy-pluralism-populism';
+  | 'democracy-pluralism-populism'
+  | 'junior-social-media'
+  | 'junior-power-and-fairness';
 
 export type SchoolLesson = {
   id: SchoolLessonId;
@@ -19,6 +21,38 @@ export type SchoolLesson = {
 };
 
 export const schoolLessons: readonly SchoolLesson[] = [
+  {
+    id: 'junior-social-media',
+    title: 'Who is trying to influence me?',
+    ageBand: '12–13',
+    duration: '45 min',
+    goals: ['Recognise emotional political messages without assuming they are false.', 'Separate evidence from blame and people-versus-elite storytelling.', 'Pause before sharing content designed to create anger or fear.'],
+    questionIds: ['J10', 'J16', 'U1', 'U3'],
+    timeline: [
+      { minutes: '0–8', teacher: 'Show two fictional social posts: one gives evidence and one mainly triggers anger.', students: 'Identify words designed to create an immediate reaction.' },
+      { minutes: '8–22', teacher: 'Run the Junior populism questions anonymously.', students: 'Answer without revealing their individual choices.' },
+      { minutes: '22–35', teacher: 'Teach claim, evidence, emotion and scapegoat as four separate features.', students: 'Sort fictional statements and explain what evidence would be needed.' },
+      { minutes: '35–45', teacher: 'Use the pause-check-compare routine.', students: 'Rewrite one manipulative post as a fair, checkable claim.' },
+    ],
+    discussionPrompts: ['Can a message be emotional and still true?', 'Why is blaming one group attractive when a problem is complicated?', 'What would make a source trustworthy?'],
+    followUp: 'Power, fairness and disagreement',
+  },
+  {
+    id: 'junior-power-and-fairness',
+    title: 'Power, fairness and disagreement',
+    ageBand: '12–13',
+    duration: '45 min',
+    goals: ['Understand that elections and limits on power work together.', 'See that reasonable people can value freedom, safety and fairness differently.', 'Practise describing both sides without insults or labels.'],
+    questionIds: ['J01', 'J02', 'J06', 'J07', 'J14', 'J15'],
+    timeline: [
+      { minutes: '0–8', teacher: 'Explain anonymity and that perspective questions do not have one correct answer.', students: 'Join and practise using the five-position scale.' },
+      { minutes: '8–28', teacher: 'Run six Junior questions and pause on split distributions.', students: 'Give the strongest fair reason for each side.' },
+      { minutes: '28–38', teacher: 'Explain why elected power still needs rules and independent checks.', students: 'Design one rule that limits a fictional student council fairly.' },
+      { minutes: '38–45', teacher: 'Review the distribution without naming a class ideology.', students: 'Write one view they understand better, even if they disagree.' },
+    ],
+    discussionPrompts: ['When can safety justify limiting freedom?', 'Why might a majority still need rules?', 'Is fairness always the same as giving everyone the same thing?'],
+    followUp: 'Who is trying to influence me?',
+  },
   {
     id: 'room-stand',
     title: 'Where does our room stand?',

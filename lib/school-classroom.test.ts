@@ -10,6 +10,7 @@ import {
   publicClassroomQuestion,
   validateClassroomResponse,
 } from './school-classroom';
+import { lockedBeliefItemsV2 } from './belief-v2-engine';
 
 test('classroom exposes locked Quick 26, Full 42 and 15 literacy questions', () => {
   assert.equal(classroomQuickIds.length, 26);
@@ -24,8 +25,20 @@ test('teacher can configure all core classroom activity types', () => {
   assert.equal(buildClassroomActivity({ type: 'literacy' })?.questionIds.length, 15);
   assert.equal(buildClassroomActivity({ type: 'guided', lessonId: 'room-stand' })?.questionIds.length, 7);
   assert.equal(buildClassroomActivity({ type: 'guided', lessonId: 'quick26-lab' })?.questionIds.length, 26);
+  assert.equal(buildClassroomActivity({ type: 'guided', lessonId: 'junior-social-media' })?.ageBand, 'junior-12-13');
   assert.equal(buildClassroomActivity({ type: 'custom', title: 'Two questions', questionIds: ['T01', 'C1'] })?.questionIds.length, 2);
   assert.equal(buildClassroomActivity({ type: 'custom', questionIds: ['bad-id'] }), null);
+});
+
+test('classroom exposes separate Junior and Youth candidate forms', () => {
+  const junior = buildClassroomActivity({ type: 'junior', ageBand: 'junior-12-13' })!;
+  assert.equal(junior.questionIds.length, 16);
+  assert.equal(junior.ageBand, 'junior-12-13');
+  assert.ok(junior.questionIds.every((id) => id.startsWith('J')));
+  const youth = buildClassroomActivity({ type: 'full42', ageBand: 'youth-14-18' })!;
+  assert.equal(youth.questionIds.length, 42);
+  assert.equal(youth.ageBand, 'youth-14-18');
+  assert.notEqual(getClassroomQuestion('T01', 'youth-14-18')?.negative, lockedBeliefItemsV2.find((item) => item.id === 'T01')?.negative);
 });
 
 test('student-safe literacy question does not expose answer key before reveal', () => {
@@ -57,5 +70,6 @@ test('activity metadata exposes guided lesson choices without student identities
   assert.equal(options.quick26.length, 26);
   assert.equal(options.full42.length, 42);
   assert.equal(options.literacy.length, 15);
-  assert.equal(options.lessons.length, 6);
+  assert.equal(options.junior.length, 16);
+  assert.equal(options.lessons.length, 8);
 });
