@@ -4,7 +4,7 @@ Status: **implemented candidate forms; non-production pending cognitive and empi
 
 ## Product bands
 
-### Junior 12-13
+### Junior 10-13
 
 - 16 concrete perspective questions across 13 constructs.
 - Two guided lessons: `Who is trying to influence me?` and `Power, fairness and disagreement`.
@@ -25,7 +25,7 @@ Automated tests establish structural equivalence and reading-load constraints. T
 
 Before real-school use:
 
-1. cognitive interviews with diverse 12-13 and 14-18 year olds;
+1. cognitive interviews with diverse 10-13 and 14-18 year olds;
 2. teacher review for neutrality, safeguarding and curricular fit;
 3. comprehension and completion-time testing;
 4. item non-response and `unsure` analysis;

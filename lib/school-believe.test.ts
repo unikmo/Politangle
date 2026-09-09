@@ -33,6 +33,6 @@ test('Junior bank is separately identified, short and construct-diverse', () => 
   assert.ok(schoolJuniorBeliefItems.every((item) => /^J\d{2}$/.test(item.id)));
   assert.equal(new Set(schoolJuniorBeliefItems.map((item) => item.construct)).size, 13);
   const sides = schoolJuniorBeliefItems.flatMap((item) => [item.negative, item.positive]);
-  assert.ok(sides.every((side) => words(side) <= 25));
+  assert.ok(sides.every((side) => words(side) <= 18));
   assert.ok(sides.reduce((sum, side) => sum + words(side), 0) / sides.length <= 17);
 });

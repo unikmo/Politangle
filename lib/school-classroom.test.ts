@@ -25,20 +25,25 @@ test('teacher can configure all core classroom activity types', () => {
   assert.equal(buildClassroomActivity({ type: 'literacy' })?.questionIds.length, 15);
   assert.equal(buildClassroomActivity({ type: 'guided', lessonId: 'room-stand' })?.questionIds.length, 7);
   assert.equal(buildClassroomActivity({ type: 'guided', lessonId: 'quick26-lab' })?.questionIds.length, 26);
-  assert.equal(buildClassroomActivity({ type: 'guided', lessonId: 'junior-social-media' })?.ageBand, 'junior-12-13');
+  assert.equal(buildClassroomActivity({ type: 'guided', lessonId: 'junior-social-media' })?.ageBand, 'junior-10-13');
   assert.equal(buildClassroomActivity({ type: 'custom', title: 'Two questions', questionIds: ['T01', 'C1'] })?.questionIds.length, 2);
   assert.equal(buildClassroomActivity({ type: 'custom', questionIds: ['bad-id'] }), null);
 });
 
 test('classroom exposes separate Junior and Youth candidate forms', () => {
-  const junior = buildClassroomActivity({ type: 'junior', ageBand: 'junior-12-13' })!;
+  const junior = buildClassroomActivity({ type: 'junior', ageBand: 'junior-10-13' })!;
   assert.equal(junior.questionIds.length, 16);
-  assert.equal(junior.ageBand, 'junior-12-13');
+  assert.equal(junior.ageBand, 'junior-10-13');
   assert.ok(junior.questionIds.every((id) => id.startsWith('J')));
   const youth = buildClassroomActivity({ type: 'full42', ageBand: 'youth-14-18' })!;
   assert.equal(youth.questionIds.length, 42);
   assert.equal(youth.ageBand, 'youth-14-18');
   assert.notEqual(getClassroomQuestion('T01', 'youth-14-18')?.negative, lockedBeliefItemsV2.find((item) => item.id === 'T01')?.negative);
+});
+
+test('legacy Junior rooms migrate to the 10-13 band', () => {
+  const migrated = buildClassroomActivity({ type: 'junior', ageBand: 'junior-12-13' })!;
+  assert.equal(migrated.ageBand, 'junior-10-13');
 });
 
 test('student-safe literacy question does not expose answer key before reveal', () => {

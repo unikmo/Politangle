@@ -24,7 +24,7 @@ export const schoolLessons: readonly SchoolLesson[] = [
   {
     id: 'junior-social-media',
     title: 'Who is trying to influence me?',
-    ageBand: '12–13',
+    ageBand: '10–13',
     duration: '45 min',
     goals: ['Recognise emotional political messages without assuming they are false.', 'Separate evidence from blame and people-versus-elite storytelling.', 'Pause before sharing content designed to create anger or fear.'],
     questionIds: ['J10', 'J16', 'U1', 'U3'],
@@ -40,7 +40,7 @@ export const schoolLessons: readonly SchoolLesson[] = [
   {
     id: 'junior-power-and-fairness',
     title: 'Power, fairness and disagreement',
-    ageBand: '12–13',
+    ageBand: '10–13',
     duration: '45 min',
     goals: ['Understand that elections and limits on power work together.', 'See that reasonable people can value freedom, safety and fairness differently.', 'Practise describing both sides without insults or labels.'],
     questionIds: ['J01', 'J02', 'J06', 'J07', 'J14', 'J15'],
