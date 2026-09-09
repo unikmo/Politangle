@@ -18,6 +18,11 @@ import { pairedAnswerOptions, type AnswerValue } from '../../lib/questions';
 export const BELIEF_SESSION_KEY = 'politangle.believe.v2.session';
 const LITERACY_SESSION_KEY = 'politangle.literacy.v2.session';
 
+function constructLabel(construct: string) {
+  if (construct === 'nationhood-membership') return 'Nationhood';
+  return construct.replaceAll('-', ' ').replace(/\b\w/g, (letter) => letter.toUpperCase());
+}
+
 function newSeed() {
   if (typeof crypto !== 'undefined' && 'getRandomValues' in crypto) {
     const values = new Uint32Array(1);
@@ -91,27 +96,32 @@ export default function QuizClient() {
       </div>
 
       <article className="engine-card">
-        <p className="engine-kicker">Quick · {current.mode.toUpperCase()} · {current.construct.replaceAll('-', ' ')}</p>
-        <h1>Which comes closer to your own view?</h1>
+        <p className="engine-kicker quick-topic">{constructLabel(current.construct)}</p>
+        <h1>Which view is closer to yours?</h1>
         <div className="engine-pair" aria-label="Two political views">
           <div><span>First view</span><p>{first}</p></div>
           <div><span>Second view</span><p>{second}</p></div>
         </div>
-        <p className="engine-help">Choose the closer view, use the middle when you are genuinely balanced or it depends, or choose “Not sure” when you cannot answer. Not-sure responses are excluded from scoring.</p>
-
-        <div className="engine-answer-grid paired" role="radiogroup" aria-label="Response">
+        <div className="quick-scale" role="radiogroup" aria-label="Response">
           {pairedAnswerOptions.map((option) => (
             <button
               type="button"
               role="radio"
               aria-checked={selected === option.value}
-              className={selected === option.value ? 'engine-answer selected' : 'engine-answer'}
+              aria-label={option.label}
+              className={selected === option.value ? 'quick-scale-answer selected' : 'quick-scale-answer'}
               key={String(option.value)}
               onClick={() => choose(option.value)}
             >
-              {option.label}
+              {option.value === 'unsure' ? '?' : option.value > 0 ? `+${option.value}` : String(option.value).replace('-', '−')}
             </button>
           ))}
+        </div>
+        <div className="quick-scale-key">
+          <span><b>−2</b> First view</span>
+          <span><b>0</b> Balanced / depends</span>
+          <span><b>+2</b> Second view</span>
+          <span><b>?</b> Not sure</span>
         </div>
       </article>
 
