@@ -1,1 +1,25 @@
-{"name":"politangle","version":"0.1.0","private":true,"scripts":{"dev":"next dev","build":"next build","start":"next start"},"dependencies":{"next":"^15.5.2","react":"^19.1.1","react-dom":"^19.1.1"},"devDependencies":{"@types/node":"^22","@types/react":"^19","@types/react-dom":"^19","typescript":"^5.9.2"}}
+{
+  "name": "politangle",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "verify:engine": "tsx --test lib/*.test.ts",
+    "verify:firebase": "node scripts/verify-firebase.mjs",
+    "school:provision-license-pack": "tsx scripts/provision-school-license-pack.ts",
+    "prebuild": "npm run verify:engine && npm run verify:firebase",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@types/node": "20.17.6",
+    "@types/react": "19.1.1",
+    "@types/react-dom": "19.1.1",
+    "firebase-admin": "14.3.0",
+    "next": "15.5.25",
+    "react": "19.1.1",
+    "react-dom": "19.1.1",
+    "tsx": "4.20.6",
+    "typescript": "5.8.2"
+  }
+}
