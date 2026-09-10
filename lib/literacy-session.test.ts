@@ -1,20 +1,36 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { deepLiteracyQuestions } from './deep-bank';
+import { literacyQuestions as deepLiteracyQuestions } from './literacy-questions';
 import {
   answerLiteracy,
   completeLiteracySession,
   createLiteracySession,
+  literacyOptionOrder,
   literacyPhaseProgress,
   parseLiteracySession,
   revealLiteracyAnswer,
 } from './literacy-session';
 
-test('literacy training keeps nine CLASSIFY and six UNDERSTAND questions', () => {
+test('CLASSIFY and UNDERSTAND each keep 20 independent questions', () => {
   const session = createLiteracySession('literacy-count');
-  assert.equal(session.classifyOrder.length, 9);
-  assert.equal(session.understandOrder.length, 6);
-  assert.equal(new Set([...session.classifyOrder, ...session.understandOrder]).size, 15);
+  assert.equal(session.classifyOrder.length, 20);
+  assert.equal(session.understandOrder.length, 20);
+  assert.equal(new Set([...session.classifyOrder, ...session.understandOrder]).size, 40);
+});
+
+test('literacy option order is deterministic within a session and shuffled by session seed', () => {
+  const first = createLiteracySession('options-a');
+  const second = createLiteracySession('options-b');
+  let changed = false;
+  for (const question of deepLiteracyQuestions) {
+    const a1 = literacyOptionOrder(first, question.id);
+    const a2 = literacyOptionOrder(first, question.id);
+    const b = literacyOptionOrder(second, question.id);
+    assert.deepEqual(a1, a2);
+    assert.deepEqual(new Set(a1), new Set(question.options.map((option) => option.id)));
+    if (a1.join('|') !== b.join('|')) changed = true;
+  }
+  assert.equal(changed, true);
 });
 
 test('literacy training requires checking an answer before a question is complete', () => {
@@ -38,7 +54,7 @@ test('checked literacy answers are locked against post-feedback changes', () => 
   assert.deepEqual(locked.answers[id], session.answers[id]);
 });
 
-test('literacy training round-trips and completion requires all checked questions', () => {
+test('literacy training round-trips and completion requires both independent quizzes to be complete', () => {
   let session = createLiteracySession('literacy-complete');
   assert.throws(() => completeLiteracySession(session));
   for (const id of [...session.classifyOrder, ...session.understandOrder]) {
@@ -46,7 +62,7 @@ test('literacy training round-trips and completion requires all checked question
     session = answerLiteracy(session, id, [question.acceptedAnswerSets[0][0]]);
     session = revealLiteracyAnswer(session, id);
   }
-  const completed = completeLiteracySession(session, '2026-09-07T16:00:00.000Z');
+  const completed = completeLiteracySession(session, '2026-09-10T16:00:00.000Z');
   assert.ok(completed.completedAt);
   assert.deepEqual(parseLiteracySession(JSON.stringify(completed)), completed);
 });

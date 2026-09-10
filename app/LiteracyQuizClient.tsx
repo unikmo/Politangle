@@ -2,11 +2,12 @@
 
 import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
-import { deepLiteracyQuestions } from '../lib/deep-bank';
+import { literacyQuestions as deepLiteracyQuestions } from '../lib/literacy-questions';
 import { calculateDeepLiteracyResult, scoreLiteracyItem, type DeepSection } from '../lib/deep-engine';
 import {
   answerLiteracy,
   createLiteracySession,
+  literacyOptionOrder,
   literacyOrder,
   literacyPhaseProgress,
   parseLiteracySession,
@@ -55,6 +56,13 @@ export default function LiteracyQuizClient({ section }: { section: DeepSection }
     return deepLiteracyQuestions.find((question) => question.id === id) ?? null;
   }, [session, section, index, showResult]);
 
+  const orderedOptions = useMemo(() => {
+    if (!session || !current) return [];
+    return literacyOptionOrder(session, current.id)
+      .map((id) => current.options.find((option) => option.id === id))
+      .filter((option): option is NonNullable<typeof option> => Boolean(option));
+  }, [session, current]);
+
   if (!session) return <section className="engine-shell"><article className="engine-card"><p>Loading…</p></article></section>;
 
   const progress = literacyPhaseProgress(session, section);
@@ -64,8 +72,8 @@ export default function LiteracyQuizClient({ section }: { section: DeepSection }
   const sectionResult = calculateDeepLiteracyResult(deepLiteracyQuestions, session.answers).sections[section];
   const title = section === 'classify' ? 'CLASSIFY' : 'UNDERSTAND';
   const description = section === 'classify'
-    ? 'Match each description to the political tradition that fits it best.'
-    : 'Test whether you can distinguish political concepts and common misconceptions.';
+    ? 'Match political descriptions to the tradition that fits them best.'
+    : 'Distinguish political concepts, boundaries and common misconceptions.';
 
   function save(next: LiteracySession) {
     sessionStorage.setItem(LITERACY_SESSION_KEY, JSON.stringify(next));
@@ -108,8 +116,8 @@ export default function LiteracyQuizClient({ section }: { section: DeepSection }
 
   if (showResult) {
     return (
-      <section className="engine-shell">
-        <article className="engine-card">
+      <section className="engine-shell literacy-shell">
+        <article className="engine-card literacy-result-card">
           <p className="engine-kicker">{title} · result</p>
           <h1>{sectionResult.percent}%</h1>
           <p className="result-lede">{sectionResult.correct} of {sectionResult.total} correct. {description}</p>
@@ -123,45 +131,49 @@ export default function LiteracyQuizClient({ section }: { section: DeepSection }
   }
 
   if (!current) return null;
+  const germanPrompt = germanLiteracyPrompt(current.id);
+  const useGerman = locale === 'de'
+    && Boolean(germanPrompt)
+    && current.options.every((option) => germanLiteracyOption(option.id, option.label) !== option.label)
+    && germanLiteracyExplanation(current.id, current.explanation) !== current.explanation;
   const correctLabels = current.acceptedAnswerSets[0]
     .map((id) => {
       const option = current.options.find((candidate) => candidate.id === id);
-      return option ? (locale === 'de' ? germanLiteracyOption(option.id, option.label) : option.label) : undefined;
+      return option ? (useGerman ? germanLiteracyOption(option.id, option.label) : option.label) : undefined;
     })
     .filter(Boolean)
     .join(', ');
-  const prompt = locale === 'de' ? germanLiteracyPrompt(current.id) ?? current.prompt : current.prompt;
+  const prompt = useGerman ? germanPrompt! : current.prompt;
 
   return (
-    <section className="engine-shell">
+    <section className="engine-shell literacy-shell">
       <div className="engine-progress-row">
-        <span>{title} {progress.checked} / {progress.total}</span>
+        <span>{title} · {progress.checked}/{progress.total}</span>
         <div className="engine-progress" aria-label={`${progress.percent}% complete`}><span style={{ width: `${progress.percent}%` }} /></div>
         <button type="button" className="engine-link-button" onClick={restart}>Restart</button>
       </div>
 
-      <article className="engine-card">
-        <p className="engine-kicker">{title} · {index + 1} of {progress.total}</p>
-        <h1>{prompt}</h1>
-        <p className="engine-help">{section === 'classify' ? 'Choose the best-fitting political tradition.' : 'Choose the best-supported explanation.'}</p>
-        <div className="deep-options">
-          {current.options.map((option) => (
-            <button type="button" disabled={checked} className={selected.includes(option.id) ? 'deep-option selected' : 'deep-option'} key={option.id} onClick={() => choose(option.id)}>{locale === 'de' ? germanLiteracyOption(option.id, option.label) : option.label}</button>
+      <article className="engine-card literacy-card">
+        <p className="engine-kicker">Question {index + 1} of {progress.total}</p>
+        <h1 className="literacy-prompt">{prompt}</h1>
+        <div className="deep-options literacy-options">
+          {orderedOptions.map((option) => (
+            <button type="button" disabled={checked} className={selected.includes(option.id) ? 'deep-option selected' : 'deep-option'} key={option.id} onClick={() => choose(option.id)}>{useGerman ? germanLiteracyOption(option.id, option.label) : option.label}</button>
           ))}
         </div>
 
         {checked && itemResult && (
-          <div className="engine-card" style={{ marginTop: 16 }}>
+          <div className="literacy-feedback">
             <p className="engine-kicker">{itemResult.correct ? 'Correct' : 'Not quite'}</p>
             {!itemResult.correct && <p><strong>Best answer:</strong> {correctLabels}</p>}
-            <p>{locale === 'de' ? germanLiteracyExplanation(current.id, current.explanation) : current.explanation}</p>
+            <p>{useGerman ? germanLiteracyExplanation(current.id, current.explanation) : current.explanation}</p>
           </div>
         )}
       </article>
 
-      <div className="engine-nav">
+      <div className="engine-nav literacy-nav">
         <button type="button" onClick={() => setIndex((value) => Math.max(0, value - 1))} disabled={index === 0}>Previous</button>
-        <span>{description}</span>
+        <span>{index + 1} / {progress.total}</span>
         {checked ? <button type="button" onClick={next}>{index === progress.total - 1 ? `See ${title} result` : 'Next'}</button> : <button type="button" onClick={check} disabled={!selected.length}>Check answer</button>}
       </div>
     </section>

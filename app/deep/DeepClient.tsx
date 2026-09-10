@@ -20,6 +20,7 @@ import {
 } from '../../lib/belief-v2-session';
 import { collapseStatementAnswers } from '../../lib/belief-statements';
 import { assessNuancesV2 } from '../../lib/nuance-model';
+import { describePolitangleHome, familyMeaningText } from '../../lib/politangle-home';
 import { agreementAnswerOptions, type AnswerValue } from '../../lib/questions';
 import { germanBeliefStatement } from '../../lib/german-believe';
 import { romanceBeliefStatement } from '../../lib/romance-believe';
@@ -36,22 +37,13 @@ type FullOutput = {
   families: ReturnType<typeof assessFamiliesV2Canonical>;
   tendencies: ReturnType<typeof assessTendenciesV2>;
   nuances: ReturnType<typeof assessNuancesV2>;
-  consistency: ReturnType<typeof assessResponseConsistencyV2>;
+  coherence: ReturnType<typeof assessResponseConsistencyV2>;
 };
 
-function familyBand(score: number | null) {
+function coherenceBand(score: number | null) {
   if (score === null) return 'Not enough information';
-  if (score >= 75) return 'Strong match';
-  if (score >= 60) return 'Broad match';
-  if (score >= 40) return 'Mixed / overlapping';
-  if (score >= 25) return 'Limited match';
-  return 'Strong tension';
-}
-
-function consistencyBand(score: number | null) {
-  if (score === null) return 'Not enough information';
-  if (score >= 80) return 'Highly consistent';
-  if (score >= 65) return 'Mostly consistent';
+  if (score >= 80) return 'Highly coherent';
+  if (score >= 65) return 'Mostly coherent';
   if (score >= 45) return 'Context-sensitive';
   return 'Strongly mixed';
 }
@@ -63,6 +55,15 @@ function directionLabel(score: number | null, low: string, high: string) {
   if (score <= 60) return 'Mixed / balanced';
   if (score <= 74) return `Leans toward ${high.toLowerCase()}`;
   return `Strongly toward ${high.toLowerCase()}`;
+}
+
+function axisSentence(score: number | null, low: string, high: string) {
+  if (score === null) return 'This part of your profile needs more information.';
+  if (score <= 24) return `${low} is one of the strongest features of your political profile.`;
+  if (score <= 39) return `You lean toward ${low.toLowerCase()} while retaining some balance.`;
+  if (score <= 60) return `You are comparatively balanced between ${low.toLowerCase()} and ${high.toLowerCase()}.`;
+  if (score <= 74) return `You lean toward ${high.toLowerCase()} while retaining some balance.`;
+  return `${high} is one of the strongest features of your political profile.`;
 }
 
 function referencePeople(familyId: string) {
@@ -77,10 +78,10 @@ function referencePeople(familyId: string) {
 }
 
 function PoliticalShape({ axes }: { axes: ReturnType<typeof calculatePolygonV2Canonical> }) {
-  const size = 520;
+  const size = 500;
   const center = size / 2;
-  const radius = 170;
-  const labelRadius = 222;
+  const radius = 162;
+  const labelRadius = 214;
   const known = axes.map((axis) => axis.score ?? 50);
   const point = (index: number, value: number, r = radius) => {
     const angle = -Math.PI / 2 + (index * Math.PI * 2) / axes.length;
@@ -91,7 +92,7 @@ function PoliticalShape({ axes }: { axes: ReturnType<typeof calculatePolygonV2Ca
   const rings = [25, 50, 75, 100].map((level) => axes.map((_, index) => point(index, level)).map(([x, y]) => `${x},${y}`).join(' '));
 
   return (
-    <div className="shape-wrap">
+    <div className="shape-wrap compact-shape">
       <svg className="political-shape" viewBox={`0 0 ${size} ${size}`} role="img" aria-label="Your completed eight-axis political shape">
         {rings.map((ring, index) => <polygon key={index} className="shape-ring" points={ring} />)}
         {axes.map((axis, index) => {
@@ -131,7 +132,7 @@ function buildOutput(belief: BeliefV2Session): FullOutput {
     families: assessFamiliesV2Canonical(canonicalAnswers),
     tendencies: assessTendenciesV2(canonicalAnswers),
     nuances: assessNuancesV2(canonicalAnswers),
-    consistency: assessResponseConsistencyV2(canonicalAnswers),
+    coherence: assessResponseConsistencyV2(canonicalAnswers),
   };
 }
 
@@ -201,8 +202,9 @@ export default function DeepClient() {
   }
 
   if (output) {
-    const topFamily = output.families.find((family) => family.overall !== null) ?? output.families[0];
-    const people = topFamily ? referencePeople(topFamily.id) : [];
+    const home = describePolitangleHome(output.families, output.polygon, true);
+    const people = home.primary ? referencePeople(home.primary.id) : [];
+    const topFamilies = [home.primary, home.secondary, home.tertiary].filter((family): family is NonNullable<typeof family> => Boolean(family && family.overall !== null));
     const gaps = output.thinkPolygon.map((axis, axisIndex) => {
       const think = axis.score;
       const feel = output.feelPolygon[axisIndex]?.score ?? null;
@@ -213,79 +215,85 @@ export default function DeepClient() {
     const biggestGap = gaps[0];
 
     return (
-      <section className="engine-shell">
-        <article className="engine-card result-hero">
-          <p className="engine-kicker">Your Full political shape</p>
-          <h1>Your answers, checked from three angles.</h1>
-          <p className="result-lede">Full compares what you think in principle, what feels important to you and what you say you would do when a trade-off becomes concrete.</p>
+      <section className="engine-shell result-shell">
+        <article className="engine-card politangle-home-card">
+          <p className="engine-kicker">Your Politangle · Full</p>
+          <h1>{home.headline}</h1>
+          <p className="result-lede">{home.summary}</p>
+
+          <div className="politangle-family-story" aria-label="Your political home">
+            {topFamilies.map((family, familyIndex) => (
+              <p key={family.id}>
+                <strong>{familyIndex === 0 ? 'Main home' : familyIndex === 1 ? 'Significant leaning' : 'Additional influence'} · {family.name} · {family.overall}/100</strong>
+                <span>{familyMeaningText(family.id)}.</span>
+              </p>
+            ))}
+          </div>
+
+          {people.length > 0 && home.primary && (
+            <p className="home-reference"><strong>Historical reference points for {home.primary.name}:</strong> {people.join(' · ')}. They illustrate the tradition, not your exact personal profile.</p>
+          )}
+
           <PoliticalShape axes={output.polygon} />
         </article>
 
-        <article className="engine-card result-story-card" style={{ marginTop: 18 }}>
-          <p className="engine-kicker">Response consistency</p>
-          <div className="consistency-hero">
-            <strong>{output.consistency.score ?? '—'}<small>/100</small></strong>
-            <div>
-              <h2>{consistencyBand(output.consistency.score)}</h2>
-              <p>Your consistency score measures how closely your THINK, FEEL and ACT answers line up on the same topics.</p>
-            </div>
-          </div>
-          <p className="engine-help">This is not a knowledge, honesty or conviction score. A lower score can mean genuine nuance, changing priorities between principle and practice, uncertainty, or question noise. A high score simply means your answers usually point in the same direction across contexts.</p>
-          {biggestGap && biggestGap.gap >= 25 && (
-            <div className="result-tension">
-              <strong>Your biggest shift is on {biggestGap.name}.</strong>
-              <p>THINK {biggestGap.think ?? '—'} · FEEL {biggestGap.feel ?? '—'} · ACT {biggestGap.act ?? '—'}. That gap is worth noticing because it shows where context changes your answer most.</p>
-            </div>
-          )}
-        </article>
-
-        <article className="engine-card" style={{ marginTop: 18 }}>
-          <p className="engine-kicker">Closest political traditions</p>
-          <h2>Where your answers overlap most.</h2>
-          <div className="family-cards">
-            {output.families.slice(0, 3).map((family) => (
-              <section className="family-card" key={family.id}>
-                <span>{family.overall ?? '—'}</span>
-                <div><strong>{family.name}</strong><p>{familyBand(family.overall)} · {family.coverage}% measured</p></div>
+        <article className="engine-card result-story-card compact-result-card" style={{ marginTop: 18 }}>
+          <p className="engine-kicker">What defines your political home</p>
+          <h2>The strongest edges of your profile.</h2>
+          <div className="result-insight-grid">
+            {home.strongestAxes.map((axis) => (
+              <section key={axis.id} className="result-insight">
+                <strong>{axis.name}</strong>
+                <span>{axis.score} / 100</span>
+                <p>{axisSentence(axis.score, axis.low, axis.high)}</p>
               </section>
             ))}
           </div>
-          {topFamily && people.length > 0 && (
-            <div className="reference-people">
-              <strong>Historical reference points</strong>
-              <p>{people.join(' · ')}</p>
-              <small>These are examples associated with {topFamily.name.toLowerCase()} traditions, not claims that they had your exact profile.</small>
+        </article>
+
+        <article className="engine-card compact-result-card" style={{ marginTop: 18 }}>
+          <p className="engine-kicker">Response coherence</p>
+          <div className="consistency-hero">
+            <strong>{output.coherence.score ?? '—'}<small>/100</small></strong>
+            <div>
+              <h2>{coherenceBand(output.coherence.score)}</h2>
+              <p>This measures how closely your THINK, FEEL and ACT answers line up when they test the same underlying political topic from different angles.</p>
+            </div>
+          </div>
+          <p className="engine-help">Coherence is not a knowledge, intelligence, honesty or conviction score. A lower score can reflect genuine nuance, uncertainty or a shift between principle and practice.</p>
+          {biggestGap && biggestGap.gap >= 25 && (
+            <div className="result-tension">
+              <strong>Your biggest internal shift is on {biggestGap.name}.</strong>
+              <p>THINK {biggestGap.think ?? '—'} · FEEL {biggestGap.feel ?? '—'} · ACT {biggestGap.act ?? '—'}. The {biggestGap.gap}-point spread shows where your principle, instinct and practical choice diverge most.</p>
             </div>
           )}
         </article>
 
-        <article className="engine-card axis-detail-card" style={{ marginTop: 18 }}>
-          <p className="engine-kicker">All eight axes</p>
-          <h2>Your completed shape in detail.</h2>
-          <div className="engine-results">
+        <details className="engine-card result-details-card" style={{ marginTop: 18 }}>
+          <summary>See all eight political axes</summary>
+          <div className="engine-results compact-axis-results">
             {output.polygon.map((axis) => (
               <section className="engine-dimension" key={axis.id}>
                 <div className="engine-dimension-head"><strong>{axis.name}</strong><span>{directionLabel(axis.score, axis.low, axis.high)}</span></div>
                 <div className="engine-poles"><span>{axis.low}</span><span>{axis.high}</span></div>
                 <div className="engine-score-track">{axis.score !== null && <span style={{ left: `${axis.score}%` }} />}</div>
-                <div className="engine-dimension-meta"><span>{axis.score === null ? 'No score' : `${axis.score} / 100`}</span><span>{axis.coverage}% measured</span></div>
               </section>
             ))}
           </div>
-        </article>
+        </details>
 
         {(output.tendencies.length > 0 || output.nuances.length > 0) && (
-          <article className="engine-card" style={{ marginTop: 18 }}>
-            <details className="engine-details">
-              <summary>See additional patterns</summary>
+          <details className="engine-card result-details-card" style={{ marginTop: 18 }}>
+            <summary>See additional political patterns</summary>
+            <div className="additional-patterns">
               {output.tendencies.map((item) => (
-                <div className="deep-literacy-line" key={item.id}><span>{item.id.replaceAll('-', ' ')}</span><strong>{item.score === null ? '—' : `${item.score} / 100`}</strong></div>
+                <p key={item.id}><strong>{item.id.replaceAll('-', ' ')}</strong><span>{item.score === null ? 'Not enough information' : `${item.score}/100`}</span></p>
               ))}
               {output.nuances.map((nuance) => (
-                <p className="engine-help" key={nuance.id}><strong>{nuance.name}</strong><br />{nuance.explanation}</p>
+                <p key={nuance.id}><strong>{nuance.name}</strong><span>{nuance.explanation}</span></p>
               ))}
-            </details>
-          </article>
+            </div>
+          </details>
         )}
 
         <div className="engine-result-actions">
@@ -293,7 +301,7 @@ export default function DeepClient() {
             <button className="engine-primary-link" type="button" onClick={restartFull}>Retake Full</button>
             <Link className="engine-primary-link" href="/results">Back to Quick result</Link>
           </div>
-          <span>Full is complete. CLASSIFY and UNDERSTAND are separate quizzes.</span>
+          <span>42 BELIEVE questions complete: 26 Quick + 16 Full. CLASSIFY and UNDERSTAND remain independent quizzes.</span>
         </div>
       </section>
     );

@@ -1,6 +1,6 @@
 import type { DeepBeliefQuestion, LiteracyQuestion } from './deep-engine';
 
-export const DEEP_QUESTIONNAIRE_VERSION = 'deep-2026.09-v1' as const;
+export const DEEP_QUESTIONNAIRE_VERSION = 'deep-2026.09-v1.2' as const;
 
 export const deepBeliefQuestions: readonly DeepBeliefQuestion[] = [
   {
@@ -65,6 +65,11 @@ export const deepBeliefQuestions: readonly DeepBeliefQuestion[] = [
   },
 ] as const;
 
+/**
+ * Compact 15-question literacy form retained for the school baseline/practice
+ * and its matched post-test. The public CLASSIFY and UNDERSTAND quizzes use
+ * the separate 20+20 bank in literacy-questions.ts.
+ */
 export const deepLiteracyQuestions: readonly LiteracyQuestion[] = [
   {
     id: 'C1', section: 'classify',
@@ -120,16 +125,16 @@ export const deepLiteracyQuestions: readonly LiteracyQuestion[] = [
   },
   {
     id: 'C5', section: 'classify',
-    prompt: 'A movement supports private property and a market economy but also strong social obligations, welfare institutions and distributive justice, often framed through a social-market tradition. Which family is the best fit?',
+    prompt: 'A movement supports private property and markets, prefers gradual social change, and accepts welfare programs or regulation when they help preserve social cohesion. Which broad tradition fits best?',
     options: [
       { id: 'christian-democracy', label: 'Christian democracy' },
       { id: 'libertarianism', label: 'Libertarianism' },
-      { id: 'communism', label: 'Communism' },
+      { id: 'conservatism', label: 'Conservatism' },
       { id: 'fascism', label: 'Fascism' },
     ],
-    acceptedAnswerSets: [['christian-democracy']],
-    explanation: 'Christian democratic social capitalism combines private property and markets with welfare, social obligations and distributive justice.',
-    evidenceIds: ['CAMBRIDGE-CHRISTIAN-DEMOCRACY'],
+    acceptedAnswerSets: [['conservatism']],
+    explanation: 'Conservatism need not mean a minimal state. Conservative traditions can accept welfare institutions and regulation while retaining private property, continuity and gradual social change.',
+    evidenceIds: ['SEP-CONSERVATISM', 'CHES-ECON-GALTAN'],
   },
   {
     id: 'C6', section: 'classify',
@@ -183,7 +188,6 @@ export const deepLiteracyQuestions: readonly LiteracyQuestion[] = [
     explanation: 'Nationalism is a family of beliefs about nations and political self-determination that can combine with different economic and social ideologies.',
     evidenceIds: ['SEP-NATIONALISM'],
   },
-
   {
     id: 'U1', section: 'understand',
     prompt: 'Which statement about populism is most accurate?',

@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { deepLiteracyQuestions } from './deep-bank';
+import { literacyQuestions as deepLiteracyQuestions } from './literacy-questions';
 import {
   answerLiteracyV2,
   completeLiteracySessionV2,
@@ -11,28 +11,28 @@ import {
   revealLiteracyAnswerV2,
 } from './literacy-session-v2';
 
-test('literacy v2 preserves nine CLASSIFY and six UNDERSTAND items', () => {
+test('literacy v2 preserves 20 CLASSIFY and 20 UNDERSTAND items', () => {
   const session = createLiteracySessionV2('literacy');
-  assert.equal(session.classifyOrder.length, 9);
-  assert.equal(session.understandOrder.length, 6);
-  assert.equal(new Set([...session.classifyOrder, ...session.understandOrder]).size, 15);
+  assert.equal(session.classifyOrder.length, 20);
+  assert.equal(session.understandOrder.length, 20);
+  assert.equal(new Set([...session.classifyOrder, ...session.understandOrder]).size, 40);
 });
 
-test('literacy v2 training completes only after all fifteen answers are checked', () => {
+test('literacy v2 training completes only after all forty answers are checked', () => {
   let session = createLiteracySessionV2('complete');
   assert.throws(() => completeLiteracySessionV2(session));
   for (const question of deepLiteracyQuestions) {
     session = answerLiteracyV2(session, question.id, [question.options[0].id]);
     session = revealLiteracyAnswerV2(session, question.id);
   }
-  assert.deepEqual(literacyOverallProgressV2(session), { answered: 15, checked: 15, total: 15, complete: true, percent: 100 });
+  assert.deepEqual(literacyOverallProgressV2(session), { answered: 40, checked: 40, total: 40, complete: true, percent: 100 });
   assert.doesNotThrow(() => completeLiteracySessionV2(session));
 });
 
 test('literacy phases remain separate from BELIEVE and require checking for progress', () => {
   let session = createLiteracySessionV2('phases');
-  assert.deepEqual(literacyPhaseProgressV2(session, 'classify'), { answered: 0, checked: 0, total: 9, complete: false, percent: 0 });
-  assert.deepEqual(literacyPhaseProgressV2(session, 'understand'), { answered: 0, checked: 0, total: 6, complete: false, percent: 0 });
+  assert.deepEqual(literacyPhaseProgressV2(session, 'classify'), { answered: 0, checked: 0, total: 20, complete: false, percent: 0 });
+  assert.deepEqual(literacyPhaseProgressV2(session, 'understand'), { answered: 0, checked: 0, total: 20, complete: false, percent: 0 });
   const id = session.classifyOrder[0];
   const question = deepLiteracyQuestions.find((item) => item.id === id)!;
   session = answerLiteracyV2(session, id, [question.options[0].id]);
@@ -52,8 +52,8 @@ test('checked training answers are locked against post-feedback changes', () => 
   assert.deepEqual(attempted.answers[id], session.answers[id]);
 });
 
-test('literacy session safely round-trips and rejects older schema', () => {
-  let session = createLiteracySessionV2('parse', '2026-09-07T00:00:00.000Z');
+test('literacy session safely round-trips and rejects older schema or bank versions', () => {
+  let session = createLiteracySessionV2('parse', '2026-09-10T00:00:00.000Z');
   const question = deepLiteracyQuestions[0];
   session = answerLiteracyV2(session, question.id, [question.options[0].id]);
   session = revealLiteracyAnswerV2(session, question.id);
