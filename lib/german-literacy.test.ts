@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { deepLiteracyQuestions } from './deep-bank';
 import { germanLiteracyExplanation, germanLiteracyOption, germanLiteracyPrompt, germanLiteracyQuestionCount } from './german-literacy';
+import { literacyQuestions as deepLiteracyQuestions } from './literacy-questions';
 
 test('German candidate form retains its translated core while the expanded bank can fall back cleanly to English', () => {
   assert.equal(germanLiteracyQuestionCount, 15);
