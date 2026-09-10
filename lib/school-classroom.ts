@@ -1,4 +1,4 @@
-import { deepLiteracyQuestions } from './deep-bank';
+import { schoolBaselineQuestions } from './school-literacy';
 import { scoreLiteracyItem, type LiteracyQuestion } from './deep-engine';
 import { lockedBeliefItemsV2 } from './belief-v2-engine';
 import { expandBeliefItems, type BeliefPolarity } from './belief-statements';
@@ -7,7 +7,7 @@ import { getSchoolLesson, schoolLessons, type SchoolLessonId } from './school-le
 import { isJuniorSchoolAgeBand, schoolBeliefItems, schoolJuniorBeliefItems, type SchoolAgeBand } from './school-believe';
 import { lockedFullFollowUpStatementIds, lockedQuickStatementIds } from './belief-v2-session';
 
-export const SCHOOL_CLASSROOM_VERSION = 'school-classroom-2026.09-v5-full42' as const;
+export const SCHOOL_CLASSROOM_VERSION = 'school-classroom-2026.09-v6-reader' as const;
 
 export type ClassroomActivityType = 'junior' | 'quick26' | 'full42' | 'literacy' | 'guided' | 'custom';
 export type ClassroomPacing = 'teacher' | 'student';
@@ -49,12 +49,12 @@ export const BELIEVE_CLASSROOM_OPTIONS = [
   { id: 'unsure', label: 'Not sure / I do not understand' },
 ] as const;
 
-const literacyById = new Map(deepLiteracyQuestions.map((question) => [question.id, question]));
+const literacyById = new Map(schoolBaselineQuestions.map((question) => [question.id, question]));
 const adultBeliefStatements = expandBeliefItems(lockedBeliefItemsV2);
 
 export const classroomQuickIds = [...lockedQuickStatementIds];
 export const classroomFullIds = [...lockedQuickStatementIds, ...lockedFullFollowUpStatementIds];
-export const classroomLiteracyIds = deepLiteracyQuestions.map((question) => question.id);
+export const classroomLiteracyIds = schoolBaselineQuestions.map((question) => question.id);
 export const classroomAllIds = [...classroomFullIds, ...classroomLiteracyIds];
 export const classroomJuniorIds = expandBeliefItems(schoolJuniorBeliefItems).map((item) => item.id);
 
