@@ -131,14 +131,19 @@ export default function LiteracyQuizClient({ section }: { section: DeepSection }
   }
 
   if (!current) return null;
+  const germanPrompt = germanLiteracyPrompt(current.id);
+  const useGerman = locale === 'de'
+    && Boolean(germanPrompt)
+    && current.options.every((option) => germanLiteracyOption(option.id, option.label) !== option.label)
+    && germanLiteracyExplanation(current.id, current.explanation) !== current.explanation;
   const correctLabels = current.acceptedAnswerSets[0]
     .map((id) => {
       const option = current.options.find((candidate) => candidate.id === id);
-      return option ? (locale === 'de' ? germanLiteracyOption(option.id, option.label) : option.label) : undefined;
+      return option ? (useGerman ? germanLiteracyOption(option.id, option.label) : option.label) : undefined;
     })
     .filter(Boolean)
     .join(', ');
-  const prompt = locale === 'de' ? germanLiteracyPrompt(current.id) ?? current.prompt : current.prompt;
+  const prompt = useGerman ? germanPrompt! : current.prompt;
 
   return (
     <section className="engine-shell literacy-shell">
@@ -153,7 +158,7 @@ export default function LiteracyQuizClient({ section }: { section: DeepSection }
         <h1 className="literacy-prompt">{prompt}</h1>
         <div className="deep-options literacy-options">
           {orderedOptions.map((option) => (
-            <button type="button" disabled={checked} className={selected.includes(option.id) ? 'deep-option selected' : 'deep-option'} key={option.id} onClick={() => choose(option.id)}>{locale === 'de' ? germanLiteracyOption(option.id, option.label) : option.label}</button>
+            <button type="button" disabled={checked} className={selected.includes(option.id) ? 'deep-option selected' : 'deep-option'} key={option.id} onClick={() => choose(option.id)}>{useGerman ? germanLiteracyOption(option.id, option.label) : option.label}</button>
           ))}
         </div>
 
@@ -161,7 +166,7 @@ export default function LiteracyQuizClient({ section }: { section: DeepSection }
           <div className="literacy-feedback">
             <p className="engine-kicker">{itemResult.correct ? 'Correct' : 'Not quite'}</p>
             {!itemResult.correct && <p><strong>Best answer:</strong> {correctLabels}</p>}
-            <p>{locale === 'de' ? germanLiteracyExplanation(current.id, current.explanation) : current.explanation}</p>
+            <p>{useGerman ? germanLiteracyExplanation(current.id, current.explanation) : current.explanation}</p>
           </div>
         )}
       </article>
