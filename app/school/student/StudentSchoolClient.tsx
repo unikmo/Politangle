@@ -9,8 +9,7 @@ type ClassroomQuestion = {
   construct?: string;
   mode?: string;
   section?: string;
-  negative?: string;
-  positive?: string;
+  statement?: string;
   prompt?: string;
   multiSelect?: boolean;
   options: readonly { id: string; label: string }[];
@@ -197,11 +196,11 @@ export default function StudentSchoolClient({ initialCode }: { initialCode: stri
         <article className="engine-card school-question-card">
           <p className="engine-kicker">{room.activity.pacing === 'teacher' ? `Live question ${room.currentIndex + 1}` : `Question ${studentIndex + 1} of ${room.activity.questionIds.length}`} · {question.title}</p>
           {question.kind === 'believe' ? (
-            <><h1>Which position is closer to your view?</h1><div className="engine-pair"><div><span>First position</span><p>{question.negative}</p></div><div><span>Second position</span><p>{question.positive}</p></div></div></>
+            <><h1>How much do you agree?</h1><div className="engine-statement"><p>{question.statement}</p></div></>
           ) : <><h1>{question.prompt}</h1><p className="engine-help">This is a political-literacy question. A correct answer can be revealed after the class responds.</p></>}
 
           {!alreadySubmitted && (room.activity.pacing === 'student' || room.questionOpen) ? (
-            <><div className={question.kind === 'believe' ? 'school-believe-options' : 'deep-options'}>{question.options.map((option) => { const active = Array.isArray(selected) ? selected.includes(option.id) : selected === option.id; return <button key={option.id} type="button" className={active ? 'deep-option selected' : 'deep-option'} onClick={() => choose(option.id)}>{option.label}</button>; })}</div><div className="engine-result-actions"><button className="engine-primary-link" type="button" disabled={busy || selected === undefined || (Array.isArray(selected) && !selected.length)} onClick={submit}>{busy ? 'Submitting…' : 'Submit anonymously'}</button></div></>
+            <><div className={question.kind === 'believe' ? 'school-believe-options' : 'deep-options'}>{question.options.map((option) => { const active = Array.isArray(selected) ? selected.includes(option.id) : selected === option.id; const compactLabel = option.id === 'unsure' ? '?' : Number(option.id) > 0 ? `+${option.id}` : option.id.replace('-', '−'); return <button key={option.id} type="button" aria-label={option.label} className={active ? 'deep-option selected' : 'deep-option'} onClick={() => choose(option.id)}>{question.kind === 'believe' ? compactLabel : option.label}</button>; })}</div>{question.kind === 'believe' && <div className="quick-scale-key"><span><b>−2</b> Strongly disagree</span><span><b>0</b> Neither / depends</span><span><b>+2</b> Strongly agree</span><span><b>?</b> Not sure</span></div>}<div className="engine-result-actions"><button className="engine-primary-link" type="button" disabled={busy || selected === undefined || (Array.isArray(selected) && !selected.length)} onClick={submit}>{busy ? 'Submitting…' : 'Submit anonymously'}</button></div></>
           ) : alreadySubmitted ? <div className="school-submitted"><strong>Response received.</strong><span>Waiting for the class / teacher.</span></div> : <p className="engine-callout">Waiting for your teacher to open this question.</p>}
 
           {revealForCurrent && room.projectorDistribution && <div className="school-reveal-panel"><p className="engine-kicker">How the room answered · {room.projectorDistribution.responses} responses</p><DistributionChart data={room.projectorDistribution} />{question.kind === 'literacy' && question.explanation && <div className="deep-explanation"><strong>Explanation</strong><br />{question.explanation}</div>}</div>}
