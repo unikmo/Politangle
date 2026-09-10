@@ -582,7 +582,7 @@ export function validateCanonicalBeliefV2() {
   const redistributionAct = lockedBeliefItemsV2.find((item) => item.id === 'A02');
   if (!redistributionAct || /public service/i.test(`${redistributionAct.negative} ${redistributionAct.positive}`)) errors.push('Redistribution ACT item must not double-barrel redistribution with public services');
   const nationhood = lockedBeliefItemsV2.filter((item) => item.construct === 'nationhood-membership');
-  if (nationhood.some((item) => !/naturalized/i.test(`${item.negative} ${item.positive}`) || !/citizen from birth/i.test(`${item.negative} ${item.positive}`))) errors.push('Nationhood THINK / FEEL / ACT items must stay aligned on naturalized versus citizen-from-birth national membership');
+  if (nationhood.some((item) => !/naturalized/i.test(`${item.negative} ${item.positive}`) || !/citizens? from birth/i.test(`${item.negative} ${item.positive}`))) errors.push('Nationhood THINK / FEEL / ACT items must stay aligned on naturalized versus citizen-from-birth national membership');
   if (nationhood.some((item) => /parent|birthplace|citizenship-at-birth/i.test(`${item.negative} ${item.positive}`))) errors.push('Nationhood core must not use citizenship-at-birth law as a proxy for national belonging');
   const populistAct = lockedBeliefItemsV2.find((item) => item.id === 'A11');
   if (!populistAct || !/well-connected/i.test(`${populistAct.negative} ${populistAct.positive}`) || !/ordinary voters/i.test(`${populistAct.negative} ${populistAct.positive}`)) errors.push('Populism ACT should measure unequal political influence without relying on an elite-versus-people slogan');
