@@ -212,7 +212,7 @@ const phase1ValidatedPairs: Record<BeliefConstruct, CanonicalModePairs> = {
     ],
     feel: [
       'I feel confident when national or regional government sets the same minimum standard for important services everywhere.',
-      'I feel more confident when capable local institutions keep control rather than handing decisions to regional or national government.',
+      'I feel confident when capable local institutions keep control rather than handing decisions to regional or national government.',
     ],
     act: [
       'If local areas provided very different quality, I would support national or regional standards even if local control were reduced.',
