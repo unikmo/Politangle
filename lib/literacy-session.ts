@@ -2,7 +2,7 @@ import { deepLiteracyQuestions } from './deep-bank';
 import type { DeepSection, LiteracyAnswers } from './deep-engine';
 
 export const LITERACY_SESSION_SCHEMA = 1 as const;
-export const LITERACY_SESSION_VERSION = 'literacy-2026.09-v1' as const;
+export const LITERACY_SESSION_VERSION = 'literacy-2026.09-v2-20x20' as const;
 
 export type LiteracySession = {
   schemaVersion: typeof LITERACY_SESSION_SCHEMA;
@@ -68,6 +68,12 @@ export function createLiteracySession(seed: number | string, startedAt = new Dat
 
 export function literacyOrder(session: LiteracySession, section: DeepSection) {
   return section === 'classify' ? session.classifyOrder : session.understandOrder;
+}
+
+export function literacyOptionOrder(session: LiteracySession, questionId: string) {
+  const question = questionById.get(questionId);
+  if (!question) throw new Error(`Unknown literacy question: ${questionId}`);
+  return shuffled(question.options.map((option) => option.id), session.seed, `options:${questionId}`);
 }
 
 export function answerLiteracy(session: LiteracySession, questionId: string, optionIds: readonly string[]): LiteracySession {
