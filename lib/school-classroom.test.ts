@@ -38,7 +38,17 @@ test('classroom exposes separate Junior and Youth candidate forms', () => {
   const youth = buildClassroomActivity({ type: 'full42', ageBand: 'youth-14-18' })!;
   assert.equal(youth.questionIds.length, 42);
   assert.equal(youth.ageBand, 'youth-14-18');
-  assert.notEqual(getClassroomQuestion('T01', 'youth-14-18')?.negative, lockedBeliefItemsV2.find((item) => item.id === 'T01')?.negative);
+  assert.notEqual(getClassroomQuestion('T01', 'youth-14-18')?.statement, lockedBeliefItemsV2.find((item) => item.id === 'T01')?.positive);
+});
+
+test('public BELIEVE questions expose exactly one statement and an agreement scale', () => {
+  const question = publicClassroomQuestion('T01', false, 'youth-14-18')!;
+  assert.ok(question.statement);
+  assert.equal('negative' in question, false);
+  assert.equal('positive' in question, false);
+  assert.deepEqual(question.options.map((option) => option.label), [
+    'Strongly disagree', 'Disagree', 'Neither / it depends', 'Agree', 'Strongly agree', 'Not sure / I do not understand',
+  ]);
 });
 
 test('legacy Junior rooms migrate to the 10-13 band', () => {
