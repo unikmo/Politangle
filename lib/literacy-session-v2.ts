@@ -2,7 +2,7 @@ import { literacyQuestions as deepLiteracyQuestions } from './literacy-questions
 import type { LiteracyAnswers } from './deep-engine';
 
 export const LITERACY_SESSION_V2_SCHEMA = 2 as const;
-export const LITERACY_BANK_VERSION = 'literacy-2026.09-v3-20x20' as const;
+export const LITERACY_BANK_VERSION = 'literacy-2026.09-v4-reader' as const;
 
 export type LiteracyPhaseV2 = 'classify' | 'understand';
 

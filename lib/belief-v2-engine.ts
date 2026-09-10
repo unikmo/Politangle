@@ -34,7 +34,7 @@ const phase1ValidatedPairs: Record<BeliefConstruct, CanonicalModePairs> = {
     ],
     act: [
       'I would support public funding to keep an essential local service available when private provision would leave people without access.',
-      'I would prefer private provision for an essential local service when it can deliver reliable access without additional public funding.',
+      'If an essential local service could be delivered reliably either way, I would prefer a private provider to additional public funding.',
     ],
   },
   redistribution: {
@@ -44,7 +44,7 @@ const phase1ValidatedPairs: Record<BeliefConstruct, CanonicalModePairs> = {
     ],
     feel: [
       'Very large income gaps concern me enough to justify higher taxes on some people.',
-      'High compulsory taxes concern me even when they are intended to reduce large income gaps.',
+      'High taxes concern me even when they are intended to reduce very large income gaps.',
     ],
     act: [
       'I would accept a moderate increase in my own taxes if it substantially reduced very large income gaps.',
@@ -54,29 +54,29 @@ const phase1ValidatedPairs: Record<BeliefConstruct, CanonicalModePairs> = {
   ownership: {
     think: [
       'Workers, cooperatives or public bodies should own a larger share of major businesses.',
-      'Major businesses should normally remain mainly owned by private investors, with laws protecting workers.',
+      'Major businesses should usually remain privately owned, with strong legal protections for workers.',
     ],
     feel: [
       'It feels fair when workers or the public have a meaningful ownership stake in major businesses.',
       'It feels fair when private investors retain most ownership of major businesses, subject to worker protections.',
     ],
     act: [
-      'I would support policies that give workers, cooperatives or public funds a substantial ownership stake in large companies.',
-      'I would prefer ownership of large companies to remain mainly with private shareholders.',
+      'If a large company offered employees a meaningful ownership stake in exchange for reducing outside shareholder control, I would support the change.',
+      'If a large company were performing well, I would keep ownership mainly with private shareholders rather than shift a substantial stake to workers or public funds.',
     ],
   },
   'social-change': {
     think: [
-      'Public rules should adapt reasonably quickly when a new social norm gains strong and sustained support.',
-      'Long-standing public rules should change only after a new social norm has broad and durable support.',
+      'Laws and public rules should change reasonably quickly when a new social norm gains strong and sustained support.',
+      'Long-standing laws and public rules should change only after a new social norm has broad and durable support.',
     ],
     feel: [
       'I am uncomfortable when public rules lag far behind a social change that has strong support.',
       'I am uncomfortable when long-standing rules change before a new social norm is broadly accepted.',
     ],
     act: [
-      'If an old public rule no longer fitted a widely accepted social norm, I would support changing it fairly soon.',
-      'I would keep an old public rule until support for changing it was broad and durable.',
+      'If an old law no longer matched a widely accepted social norm, I would support changing it fairly soon.',
+      'I would keep an old law until support for changing it was broad and durable.',
     ],
   },
   'personal-autonomy': {
@@ -128,7 +128,7 @@ const phase1ValidatedPairs: Record<BeliefConstruct, CanonicalModePairs> = {
     ],
     feel: [
       'It concerns me when an elected majority weakens independent checks on government power.',
-      'It concerns me when independent bodies repeatedly stop an elected government from carrying out policies that are legal and constitutional.',
+      'It concerns me when independent bodies repeatedly block an elected government from carrying out policies that are legal and constitutional.',
     ],
     act: [
       'If a court blocked a policy I strongly supported, I would still defend the court’s independence.',
@@ -151,7 +151,7 @@ const phase1ValidatedPairs: Record<BeliefConstruct, CanonicalModePairs> = {
   },
   'nationhood-membership': {
     think: [
-      'A naturalized citizen can belong to the nation just as fully as a citizen from birth.',
+      'Someone who becomes a citizen can belong to the nation just as fully as someone who was a citizen from birth.',
       'Being a citizen from birth is an important part of national belonging beyond legal citizenship alone.',
     ],
     feel: [
@@ -159,7 +159,7 @@ const phase1ValidatedPairs: Record<BeliefConstruct, CanonicalModePairs> = {
       'Long-standing family roots in the country matter to my sense of national belonging.',
     ],
     act: [
-      'I would support allowing naturalized citizens to hold the same elected offices as citizens from birth.',
+      'I would support allowing naturalized citizens to hold the same elected offices as people who have been citizens from birth.',
       'I would support reserving some senior elected offices for citizens from birth.',
     ],
   },
@@ -207,12 +207,12 @@ const phase1ValidatedPairs: Record<BeliefConstruct, CanonicalModePairs> = {
   },
   subsidiarity: {
     think: [
-      'National or regional government should handle important services when that is the best way to guarantee equal access and standards.',
+      'National or regional government should take responsibility for important services when that is the best way to guarantee equal access and standards.',
       'Important services should usually stay with local government or community institutions when they can provide them well.',
     ],
     feel: [
       'I feel confident when national or regional government sets the same minimum standard for important services everywhere.',
-      'I feel confident when capable local institutions keep control instead of decisions being moved upward.',
+      'I feel confident when capable local institutions keep control rather than handing decisions to regional or national government.',
     ],
     act: [
       'If local areas provided very different quality, I would support national or regional standards even if local control were reduced.',
@@ -582,7 +582,7 @@ export function validateCanonicalBeliefV2() {
   const redistributionAct = lockedBeliefItemsV2.find((item) => item.id === 'A02');
   if (!redistributionAct || /public service/i.test(`${redistributionAct.negative} ${redistributionAct.positive}`)) errors.push('Redistribution ACT item must not double-barrel redistribution with public services');
   const nationhood = lockedBeliefItemsV2.filter((item) => item.construct === 'nationhood-membership');
-  if (nationhood.some((item) => !/naturalized/i.test(`${item.negative} ${item.positive}`) || !/citizens? from birth/i.test(`${item.negative} ${item.positive}`))) errors.push('Nationhood THINK / FEEL / ACT items must stay aligned on naturalized versus citizen-from-birth national membership');
+  if (nationhood.some((item) => !/naturalized|becomes a citizen/i.test(`${item.negative} ${item.positive}`) || !/citizens? from birth/i.test(`${item.negative} ${item.positive}`))) errors.push('Nationhood THINK / FEEL / ACT items must stay aligned on naturalized versus citizen-from-birth national membership');
   if (nationhood.some((item) => /parent|birthplace|citizenship-at-birth/i.test(`${item.negative} ${item.positive}`))) errors.push('Nationhood core must not use citizenship-at-birth law as a proxy for national belonging');
   const populistAct = lockedBeliefItemsV2.find((item) => item.id === 'A11');
   if (!populistAct || !/well-connected/i.test(`${populistAct.negative} ${populistAct.positive}`) || !/ordinary voters/i.test(`${populistAct.negative} ${populistAct.positive}`)) errors.push('Populism ACT should measure unequal political influence without relying on an elite-versus-people slogan');

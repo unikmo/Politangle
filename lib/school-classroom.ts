@@ -1,4 +1,4 @@
-import { deepLiteracyQuestions } from './deep-bank';
+import { schoolBaselineQuestions } from './school-literacy';
 import { scoreLiteracyItem, type LiteracyQuestion } from './deep-engine';
 import { lockedBeliefItemsV2 } from './belief-v2-engine';
 import { expandBeliefItems, type BeliefPolarity } from './belief-statements';
@@ -7,7 +7,7 @@ import { getSchoolLesson, schoolLessons, type SchoolLessonId } from './school-le
 import { isJuniorSchoolAgeBand, schoolBeliefItems, schoolJuniorBeliefItems, type SchoolAgeBand } from './school-believe';
 import { lockedFullFollowUpStatementIds, lockedQuickStatementIds } from './belief-v2-session';
 
-export const SCHOOL_CLASSROOM_VERSION = 'school-classroom-2026.09-v5-full42' as const;
+export const SCHOOL_CLASSROOM_VERSION = 'school-classroom-2026.09-v7-reader' as const;
 
 export type ClassroomActivityType = 'junior' | 'quick26' | 'full42' | 'literacy' | 'guided' | 'custom';
 export type ClassroomPacing = 'teacher' | 'student';
@@ -49,14 +49,16 @@ export const BELIEVE_CLASSROOM_OPTIONS = [
   { id: 'unsure', label: 'Not sure / I do not understand' },
 ] as const;
 
-const literacyById = new Map(deepLiteracyQuestions.map((question) => [question.id, question]));
+const literacyById = new Map(schoolBaselineQuestions.map((question) => [question.id, question]));
 const adultBeliefStatements = expandBeliefItems(lockedBeliefItemsV2);
 
 export const classroomQuickIds = [...lockedQuickStatementIds];
 export const classroomFullIds = [...lockedQuickStatementIds, ...lockedFullFollowUpStatementIds];
-export const classroomLiteracyIds = deepLiteracyQuestions.map((question) => question.id);
+export const classroomLiteracyIds = schoolBaselineQuestions.map((question) => question.id);
 export const classroomAllIds = [...classroomFullIds, ...classroomLiteracyIds];
-export const classroomJuniorIds = expandBeliefItems(schoolJuniorBeliefItems).map((item) => item.id);
+// Junior also shows one statement per source item. Alternating polarity avoids a
+// one-sided form without making a child answer the same idea twice in opposite words.
+export const classroomJuniorIds = schoolJuniorBeliefItems.map((item, index) => `${item.id}-${index % 2 === 0 ? 'P' : 'N'}`);
 
 function titleForConstruct(construct: string) {
   if (construct === 'nationhood-membership') return 'Nationhood';
@@ -130,7 +132,7 @@ export function buildClassroomActivity(input: unknown): ClassroomActivityConfig 
   const projectorMode = value.projectorMode === 'live' ? 'live' : value.projectorMode === 'reveal' || value.projectorMode === undefined ? 'reveal' : null;
   if (!pacing || !projectorMode || !['junior', 'quick26', 'full42', 'literacy', 'guided', 'custom'].includes(String(type))) return null;
 
-  if (type === 'junior') return { type, title: 'Junior 32', questionIds: [...classroomJuniorIds], pacing, projectorMode, ageBand: 'junior-10-13' };
+  if (type === 'junior') return { type, title: 'Junior 16', questionIds: [...classroomJuniorIds], pacing, projectorMode, ageBand: 'junior-10-13' };
   if (type === 'quick26') return { type, title: 'Youth Quick 26', questionIds: [...classroomQuickIds], pacing, projectorMode, ageBand };
   if (type === 'full42') return { type, title: 'Youth Full 42', questionIds: [...classroomFullIds], pacing, projectorMode, ageBand };
   if (type === 'literacy') return { type, title: 'Political Literacy Quiz', questionIds: [...classroomLiteracyIds], pacing, projectorMode, ageBand };

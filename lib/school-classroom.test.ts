@@ -25,16 +25,17 @@ test('teacher can configure all core classroom activity types', () => {
   assert.equal(buildClassroomActivity({ type: 'literacy' })?.questionIds.length, 15);
   assert.equal(buildClassroomActivity({ type: 'guided', lessonId: 'room-stand' })?.questionIds.length, 14);
   assert.equal(buildClassroomActivity({ type: 'guided', lessonId: 'quick26-lab' })?.questionIds.length, 26);
-  assert.equal(buildClassroomActivity({ type: 'junior', ageBand: 'junior-10-13' })?.questionIds.length, 32);
+  assert.equal(buildClassroomActivity({ type: 'junior', ageBand: 'junior-10-13' })?.questionIds.length, 16);
   assert.equal(buildClassroomActivity({ type: 'custom', title: 'Two questions', questionIds: ['T01-P', 'C1'] })?.questionIds.length, 2);
   assert.equal(buildClassroomActivity({ type: 'custom', questionIds: ['bad-id'] }), null);
 });
 
 test('classroom exposes separate Junior and Youth candidate forms', () => {
   const junior = buildClassroomActivity({ type: 'junior', ageBand: 'junior-10-13' })!;
-  assert.equal(junior.questionIds.length, 32);
+  assert.equal(junior.questionIds.length, 16);
   assert.equal(junior.ageBand, 'junior-10-13');
   assert.ok(junior.questionIds.every((id) => id.startsWith('J')));
+  assert.equal(new Set(junior.questionIds.map((id) => id.replace(/-[NP]$/, ''))).size, 16);
   const youth = buildClassroomActivity({ type: 'full42', ageBand: 'youth-14-18' })!;
   assert.equal(youth.questionIds.length, 42);
   assert.equal(youth.ageBand, 'youth-14-18');
@@ -85,6 +86,6 @@ test('activity metadata exposes guided lesson choices without student identities
   assert.equal(options.quick26.length, 26);
   assert.equal(options.full42.length, 42);
   assert.equal(options.literacy.length, 15);
-  assert.equal(options.junior.length, 32);
+  assert.equal(options.junior.length, 16);
   assert.equal(options.lessons.length, 8);
 });

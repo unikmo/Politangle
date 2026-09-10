@@ -75,7 +75,7 @@ export default function TeacherSchoolClient() {
   const [lessonId, setLessonId] = useState('room-stand');
   const [pacing, setPacing] = useState<'teacher' | 'student'>('teacher');
   const [projectorMode, setProjectorMode] = useState<'live' | 'reveal'>('reveal');
-  const [customIds, setCustomIds] = useState<string[]>(['T01']);
+  const [customIds, setCustomIds] = useState<string[]>(['T01-P']);
   const [origin, setOrigin] = useState('');
 
   useEffect(() => {
@@ -153,8 +153,8 @@ export default function TeacherSchoolClient() {
       <p className="engine-kicker">Choose what to teach</p>
       <div className="school-config-grid">
         <label><span>Room label</span><input value={roomLabel} onChange={(e) => setRoomLabel(e.target.value)} placeholder="Politics Year 10" /></label>
-        <label><span>Age band</span><select value={ageBand} onChange={(e) => { const next = e.target.value as typeof ageBand; setAgeBand(next); setActivityType(next === 'junior-10-13' ? 'junior' : 'quick26'); setLessonId(next === 'junior-10-13' ? 'junior-social-media' : 'room-stand'); setCustomIds(next === 'junior-10-13' ? ['J01'] : ['T01']); }}><option value="junior-10-13">Junior · ages 10–13</option><option value="youth-14-18">Youth · ages 14–18</option></select></label>
-        <label><span>Activity</span><select value={activityType} onChange={(e) => setActivityType(e.target.value as typeof activityType)}>{ageBand === 'junior-10-13' ? <option value="junior">Junior 32</option> : <><option value="quick26">Youth Quick 26</option><option value="full42">Youth Full 42</option></>}<option value="literacy">Political Literacy Quiz</option><option value="guided">Guided Lesson</option><option value="custom">Build my own / single question</option></select></label>
+        <label><span>Age band</span><select value={ageBand} onChange={(e) => { const next = e.target.value as typeof ageBand; setAgeBand(next); setActivityType(next === 'junior-10-13' ? 'junior' : 'quick26'); setLessonId(next === 'junior-10-13' ? 'junior-social-media' : 'room-stand'); setCustomIds(next === 'junior-10-13' ? ['J01-P'] : ['T01-P']); }}><option value="junior-10-13">Junior · ages 10–13</option><option value="youth-14-18">Youth · ages 14–18</option></select></label>
+        <label><span>Activity</span><select value={activityType} onChange={(e) => setActivityType(e.target.value as typeof activityType)}>{ageBand === 'junior-10-13' ? <option value="junior">Junior 16</option> : <><option value="quick26">Youth Quick 26</option><option value="full42">Youth Full 42</option></>}<option value="literacy">Political Literacy Quiz</option><option value="guided">Guided Lesson</option><option value="custom">Build my own / single question</option></select></label>
         {activityType === 'guided' && <label><span>Lesson</span><select value={lessonId} onChange={(e) => setLessonId(e.target.value)}>{availableLessons.map((item) => <option key={item.id} value={item.id}>{item.title} · {item.duration}</option>)}</select></label>}
         <label><span>Pacing</span><select value={pacing} onChange={(e) => setPacing(e.target.value as 'teacher' | 'student')}><option value="teacher">Teacher-paced</option><option value="student">Student-paced</option></select></label>
         <label><span>Projector distribution</span><select value={projectorMode} onChange={(e) => setProjectorMode(e.target.value as 'live' | 'reveal')}><option value="reveal">Reveal when teacher chooses</option><option value="live">Show live while answers arrive</option></select></label>

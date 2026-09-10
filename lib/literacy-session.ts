@@ -2,7 +2,7 @@ import { literacyQuestions as deepLiteracyQuestions } from './literacy-questions
 import type { DeepSection, LiteracyAnswers } from './deep-engine';
 
 export const LITERACY_SESSION_SCHEMA = 1 as const;
-export const LITERACY_SESSION_VERSION = 'literacy-2026.09-v2-20x20' as const;
+export const LITERACY_SESSION_VERSION = 'literacy-2026.09-v3-reader' as const;
 
 export type LiteracySession = {
   schemaVersion: typeof LITERACY_SESSION_SCHEMA;

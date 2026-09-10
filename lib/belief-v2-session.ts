@@ -3,7 +3,7 @@ import { lockedBeliefItemsV2 } from './belief-v2-engine';
 import { expandBeliefItems } from './belief-statements';
 import type { AnswerValue } from './questions';
 
-export const BELIEF_V2_SESSION_SCHEMA = 4 as const;
+export const BELIEF_V2_SESSION_SCHEMA = 5 as const;
 export const lockedBeliefStatementsV3 = expandBeliefItems(lockedBeliefItemsV2);
 
 const quickSourceIds = [

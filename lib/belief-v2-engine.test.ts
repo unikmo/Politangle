@@ -59,7 +59,7 @@ test('nationhood THINK FEEL ACT items vary the context while staying on national
   assert.equal(new Set(allStatements).size, allStatements.length);
   for (const item of triplet) {
     const text = `${item.negative} ${item.positive}`;
-    assert.match(text, /naturalized/i);
+    assert.match(text, /naturalized|becomes a citizen/i);
     assert.match(text, /citizens? from birth/i);
     assert.doesNotMatch(text, /parent|birthplace|citizenship-at-birth/i);
   }

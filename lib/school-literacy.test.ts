@@ -30,6 +30,21 @@ test('school literacy and learning cards are evidence-bound', () => {
   }
 });
 
+test('school social-market item is broad conservatism unless religion is actually present', () => {
+  const item = schoolPostQuestions.find((question) => question.id === 'SC5')!;
+  assert.deepEqual(item.acceptedAnswerSets, [['conservatism']]);
+  assert.doesNotMatch(item.prompt, /christian|religio|subsidiar/i);
+});
+
+test('school reader copy avoids elite-versus-people trigger wording', () => {
+  const text = [
+    ...schoolBaselineQuestions.flatMap((question) => [question.prompt, question.explanation, ...question.options.map((option) => option.label)]),
+    ...schoolPostQuestions.flatMap((question) => [question.prompt, question.explanation, ...question.options.map((option) => option.label)]),
+    ...schoolLearningCards.flatMap((card) => [card.title, card.summary, card.misconception]),
+  ].join(' ');
+  assert.doesNotMatch(text, /\belites?\b/i);
+});
+
 test('school learning keeps narrow concepts contextual instead of expanding the five headline families', () => {
   const titles = schoolLearningCards.map((card) => card.title);
   assert.ok(titles.includes('Liberalism'));
