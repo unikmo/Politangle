@@ -5,9 +5,11 @@ import type { AnswerValue } from './questions';
 
 export const BELIEF_V2_SESSION_SCHEMA = 3 as const;
 export const lockedBeliefStatementsV3 = expandBeliefItems(lockedBeliefItemsV2);
-export const lockedQuickStatementIds = lockedBeliefItemsV2
-  .filter((item) => item.stage === 'quick')
-  .map((item, index) => `${item.id}-${index % 2 === 0 ? 'P' : 'N'}`);
+const quickSourceIds = [
+  ...lockedBeliefItemsV2.filter((item) => item.mode === 'think').map((item) => item.id),
+  ...lockedBeliefItemsV2.filter((item) => item.mode === 'act').slice(0, 12).map((item) => item.id),
+];
+export const lockedQuickStatementIds = quickSourceIds.map((id, index) => `${id}-${index % 2 === 0 ? 'P' : 'N'}`);
 export const lockedFullFollowUpStatementIds = lockedBeliefStatementsV3
   .map((item) => item.id)
   .filter((id) => !lockedQuickStatementIds.includes(id));
@@ -109,6 +111,12 @@ export function beliefV2StageProgress(session: BeliefV2Session, stage: BeliefV2S
     complete: answered === order.length,
     percent: order.length ? Math.round((answered / order.length) * 100) : 0,
   };
+}
+
+export function firstUnansweredIndex(session: BeliefV2Session, stage: BeliefV2Stage) {
+  const order = stage === 'quick' ? session.quickOrder : session.deepOrder;
+  const index = order.findIndex((id) => !validAnswer(session.answers[id]));
+  return index === -1 ? null : index;
 }
 
 export function beliefV2OverallProgress(session: BeliefV2Session) {

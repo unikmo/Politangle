@@ -7,6 +7,7 @@ import {
   completeBeliefV2Session,
   createBeliefV2Session,
   displayedToStoredBeliefV2Answer,
+  firstUnansweredIndex,
   getBeliefV2Item,
   isBeliefV2PoleFlipped,
   lockedBeliefStatementsV3,
@@ -40,6 +41,15 @@ test('Quick and Deep progress stay separate while overall progress joins them', 
   assert.equal(beliefV2StageProgress(session, 'deep').complete, false);
   assert.equal(beliefV2OverallProgress(session).answered, 26);
   assert.equal(beliefV2OverallProgress(session).total, 84);
+});
+
+test('a skipped Quick response can always be located from the final screen', () => {
+  let session = createBeliefV2Session('missing-answer-test');
+  const missing = session.quickOrder[7];
+  for (const id of session.quickOrder) if (id !== missing) session = answerBeliefV2(session, id, 0);
+  assert.equal(firstUnansweredIndex(session, 'quick'), 7);
+  session = answerBeliefV2(session, missing, 0);
+  assert.equal(firstUnansweredIndex(session, 'quick'), null);
 });
 
 test('Think Feel Act mode progress contains twenty-eight statements each', () => {

@@ -100,7 +100,7 @@ export default function ResultsClient() {
             </tbody>
           </table>
         </div>
-        <p className="engine-help">Quick contains all 14 THINK items and 12 of the 14 FEEL items. ACT is intentionally not inferred from THINK or FEEL; all 14 ACT items are in Deep.</p>
+        <p className="engine-help">Quick begins with 14 principle questions, then checks 12 of those themes through practical choices. Full adds the balancing statements and completes every THINK, FEEL and ACT construct.</p>
       </article>
 
       <div className="engine-result-actions">

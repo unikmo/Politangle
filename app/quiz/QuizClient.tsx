@@ -6,12 +6,15 @@ import {
   answerBeliefV2,
   beliefV2StageProgress,
   createBeliefV2Session,
+  firstUnansweredIndex,
   getBeliefV2Item,
   parseBeliefV2Session,
   type BeliefV2Session,
 } from '../../lib/belief-v2-session';
 import { agreementAnswerOptions, type AnswerValue } from '../../lib/questions';
 import { germanBeliefStatement } from '../../lib/german-believe';
+import { expandBeliefItems } from '../../lib/belief-statements';
+import { schoolYouthBeliefItems } from '../../lib/school-believe';
 import { useLocale } from '../LocaleProvider';
 
 export const BELIEF_SESSION_KEY = 'politangle.believe.v2.session';
@@ -21,6 +24,15 @@ function constructLabel(construct: string) {
   if (construct === 'nationhood-membership') return 'Nationhood';
   return construct.replaceAll('-', ' ').replace(/\b\w/g, (letter) => letter.toUpperCase());
 }
+
+const simpleTopics: Record<string, string> = {
+  'public-provision': 'Essential services', redistribution: 'Income gap', ownership: 'Business ownership',
+  'social-change': 'Social change', 'personal-autonomy': 'Personal freedom', abortion: 'Abortion',
+  'authority-order': 'Safety and freedom', pluralism: 'Checks on government', 'world-sovereignty': 'Countries working together',
+  'nationhood-membership': 'Belonging', populism: 'People and elites', 'ecology-growth': 'Environment and growth',
+  'religion-public-role': 'Religion and law', subsidiarity: 'Local or national',
+};
+const youthStatements = new Map(expandBeliefItems(schoolYouthBeliefItems).map((item) => [item.id, item.statement]));
 
 const germanConstructs: Record<string, string> = {
   'public-provision': 'Öffentliche Daseinsvorsorge', redistribution: 'Umverteilung', ownership: 'Eigentum', 'social-change': 'Gesellschaftlicher Wandel',
@@ -50,8 +62,8 @@ export default function QuizClient() {
     sessionStorage.setItem(BELIEF_SESSION_KEY, JSON.stringify(initial));
     setSession(initial);
 
-    const firstUnanswered = initial.quickOrder.findIndex((id) => initial.answers[id] === undefined);
-    setIndex(firstUnanswered === -1 ? initial.quickOrder.length - 1 : firstUnanswered);
+    const firstUnanswered = firstUnansweredIndex(initial, 'quick');
+    setIndex(firstUnanswered ?? initial.quickOrder.length - 1);
   }, []);
 
   const current = useMemo(() => {
@@ -99,9 +111,9 @@ export default function QuizClient() {
       </div>
 
       <article className="engine-card">
-        <p className="engine-kicker quick-topic">{locale === 'de' ? germanConstructs[current.construct] ?? constructLabel(current.construct) : constructLabel(current.construct)}</p>
-        <h1>{locale === 'de' ? 'Wie sehr stimmen Sie zu?' : 'How much do you agree?'}</h1>
-        <div className="engine-statement"><p>{locale === 'de' ? germanBeliefStatement(current.sourceItemId, current.polarity) ?? current.statement : current.statement}</p></div>
+        <p className="engine-kicker quick-topic">{current.mode === 'act' ? (locale === 'de' ? 'IN DER PRAXIS · ' : 'IN PRACTICE · ') : ''}{locale === 'de' ? germanConstructs[current.construct] ?? constructLabel(current.construct) : simpleTopics[current.construct] ?? constructLabel(current.construct)}</p>
+        <h1>{locale === 'de' ? 'Stimmen Sie zu?' : 'Do you agree?'}</h1>
+        <div className="engine-statement"><p>{locale === 'de' ? germanBeliefStatement(current.sourceItemId, current.polarity) ?? current.statement : youthStatements.get(current.id) ?? current.statement}</p></div>
         <div className="quick-scale" role="radiogroup" aria-label="Response">
           {agreementAnswerOptions.map((option) => (
             <button
@@ -129,9 +141,10 @@ export default function QuizClient() {
         <button type="button" onClick={() => setIndex((value) => Math.max(0, value - 1))} disabled={index === 0}>{locale === 'de' ? 'Zurück' : 'Previous'}</button>
         <span>{progress.unsure ? (locale === 'de' ? `${progress.unsure} als unsicher markiert` : `${progress.unsure} marked not sure`) : (locale === 'de' ? 'Bisher keine unsicheren Antworten' : 'No unsure responses so far')}</span>
         {index === session.quickOrder.length - 1 ? (
-          <button type="button" onClick={finish} disabled={!progress.complete}>{locale === 'de' ? 'Quick-Ergebnis anzeigen' : 'See Quick result'}</button>
+          progress.complete ? <button type="button" onClick={finish}>{locale === 'de' ? 'Quick-Ergebnis anzeigen' : 'See Quick result'}</button> :
+          <button type="button" onClick={() => setIndex(firstUnansweredIndex(session, 'quick') ?? index)}>{locale === 'de' ? 'Fehlende Frage beantworten' : 'Answer missing question'}</button>
         ) : (
-          <button type="button" onClick={() => setIndex((value) => Math.min(session.quickOrder.length - 1, value + 1))}>{locale === 'de' ? 'Weiter' : 'Next'}</button>
+          <button type="button" disabled={selected === undefined} onClick={() => setIndex((value) => Math.min(session.quickOrder.length - 1, value + 1))}>{locale === 'de' ? 'Weiter' : 'Next'}</button>
         )}
       </div>
     </section>
