@@ -34,6 +34,7 @@ import { assessNuancesV2 } from '../../lib/nuance-model';
 import { agreementAnswerOptions, type AnswerValue } from '../../lib/questions';
 import { resultTraditions } from '../../lib/result-traditions';
 import { germanBeliefStatement } from '../../lib/german-believe';
+import { romanceBeliefStatement } from '../../lib/romance-believe';
 import { germanLiteracyExplanation, germanLiteracyOption, germanLiteracyPrompt } from '../../lib/german-literacy';
 import { useLocale } from '../LocaleProvider';
 
@@ -410,15 +411,15 @@ export default function DeepClient() {
       {phase === 'believe' && currentBelief && beliefDisplay && (
         <article className="engine-card">
           <p className="engine-kicker">BELIEVE · {currentBelief.mode.toUpperCase()} · {currentBelief.construct.replaceAll('-', ' ')}</p>
-          <h1>{locale === 'de' ? 'Wie sehr stimmen Sie zu?' : 'How much do you agree?'}</h1>
-          <div className="engine-statement"><p>{locale === 'de' ? germanBeliefStatement(currentBelief.sourceItemId, currentBelief.polarity) ?? beliefDisplay.statement : beliefDisplay.statement}</p></div>
-          <p className="engine-help">{locale === 'de' ? 'Dies sind die verbleibenden 58 Aussagen des 84-Aussagen-Modells. Es gibt keine politisch richtige Antwort.' : 'These are the remaining 58 statements of the 84-statement BELIEVE model. There is no correct political answer.'}</p>
+          <h1>{locale === 'de' ? 'Stimmst du zu?' : locale === 'es' ? '¿Estás de acuerdo?' : locale === 'fr' ? 'Êtes-vous d’accord ?' : 'Do you agree?'}</h1>
+          <div className="engine-statement"><p>{locale === 'de' ? germanBeliefStatement(currentBelief.sourceItemId, currentBelief.polarity) ?? beliefDisplay.statement : locale === 'es' || locale === 'fr' ? romanceBeliefStatement(locale, currentBelief.sourceItemId, currentBelief.polarity) ?? beliefDisplay.statement : beliefDisplay.statement}</p></div>
+          <p className="engine-help">{locale === 'de' ? 'Dies sind die übrigen 58 Aussagen. Es gibt keine politisch richtige Antwort.' : locale === 'es' ? 'Estas son las 58 afirmaciones restantes. No existe una respuesta políticamente correcta.' : locale === 'fr' ? 'Voici les 58 affirmations restantes. Il n’existe pas de bonne réponse politique.' : 'These are the remaining 58 statements of the 84-statement BELIEVE model. There is no correct political answer.'}</p>
           <div className="quick-scale" role="radiogroup" aria-label="Belief response">
             {agreementAnswerOptions.map((option) => (
               <button type="button" role="radio" aria-checked={beliefDisplay.selected === option.value} aria-label={option.label} className={beliefDisplay.selected === option.value ? 'quick-scale-answer selected' : 'quick-scale-answer'} key={String(option.value)} onClick={() => chooseBelief(option.value)}>{option.value === 'unsure' ? '?' : option.value > 0 ? `+${option.value}` : String(option.value).replace('-', '−')}</button>
             ))}
           </div>
-          <div className="quick-scale-key"><span><b>−2</b> {locale === 'de' ? 'Stimme gar nicht zu' : 'Strongly disagree'}</span><span><b>0</b> {locale === 'de' ? 'Neutral / kommt darauf an' : 'Neither / depends'}</span><span><b>+2</b> {locale === 'de' ? 'Stimme voll zu' : 'Strongly agree'}</span><span><b>?</b> {locale === 'de' ? 'Unsicher' : 'Not sure'}</span></div>
+          <div className="quick-scale-key"><span><b>−2</b> {locale === 'de' ? 'Nein, gar nicht' : locale === 'es' ? 'Totalmente en desacuerdo' : locale === 'fr' ? 'Pas du tout d’accord' : 'Strongly disagree'}</span><span><b>0</b> {locale === 'de' ? 'Teils teils / kommt darauf an' : locale === 'es' ? 'Neutral / depende' : locale === 'fr' ? 'Neutre / cela dépend' : 'Neither / depends'}</span><span><b>+2</b> {locale === 'de' ? 'Ja, völlig' : locale === 'es' ? 'Totalmente de acuerdo' : locale === 'fr' ? 'Tout à fait d’accord' : 'Strongly agree'}</span><span><b>?</b> {locale === 'de' ? 'Unsicher' : locale === 'es' ? 'No estoy seguro' : locale === 'fr' ? 'Je ne sais pas' : 'Not sure'}</span></div>
         </article>
       )}
 

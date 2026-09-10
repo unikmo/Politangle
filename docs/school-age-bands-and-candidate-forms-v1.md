@@ -15,13 +15,14 @@ Status: **implemented candidate forms; non-production pending cognitive and empi
 ### Youth 14-18
 
 - Youth Quick 26 and Youth Full 42.
-- Plain-language parallel wording for every adult BELIEVE v2.1 item.
+- Plain-language parallel wording for every adult BELIEVE item.
+- One statement is shown per screen. The opposite direction is a randomized alternate form, never a second question displayed beside it.
 - IDs, constructs, THINK/FEEL/ACT mode, scoring direction, stage and evidence references remain aligned with the adult bank.
 - The adult bank is unchanged.
 
 ## Validation boundary
 
-Automated tests establish structural equivalence and reading-load constraints. They do not establish psychometric equivalence or age suitability.
+Automated tests establish structural equivalence, reading-load constraints and basic duplication guardrails. They do not establish psychometric equivalence or age suitability.
 
 Before real-school use:
 

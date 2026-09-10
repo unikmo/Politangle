@@ -6,6 +6,7 @@ import { assessFamiliesV2Canonical, calculatePolygonV2Canonical } from '../../li
 import { beliefV2StageProgress, lockedBeliefStatementsV3, parseBeliefV2Session, type BeliefV2Session } from '../../lib/belief-v2-session';
 import { collapseStatementAnswers } from '../../lib/belief-statements';
 import { useLocale } from '../LocaleProvider';
+import { translate } from '../translations';
 
 const BELIEF_SESSION_KEY = 'politangle.believe.v2.session';
 
@@ -29,7 +30,7 @@ function familyBand(score: number | null) {
 
 export default function ResultsClient() {
   const { locale } = useLocale();
-  const t = (en: string, de: string) => locale === 'de' ? de : en;
+  const t = (en: string, de: string) => translate(locale, en, de);
   const [session, setSession] = useState<BeliefV2Session | null | undefined>(undefined);
 
   useEffect(() => {

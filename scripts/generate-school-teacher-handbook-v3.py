@@ -161,14 +161,16 @@ def worksheet_page(title, intro, prompts):
         style.append(('BACKGROUND',(0,i*2+1),(1,i*2+1),WHITE))
     t.setStyle(TableStyle(style)); story.extend([Spacer(1,3*mm),t,PageBreak()])
 
-def question_card(code, meta, first, second, body_height=35*mm):
+def statement_card(code, meta, statement, body_height=18*mm):
     t=Table([
         [P(code,'whitebold'),P(meta.upper(),'label')],
-        [P('<b>A</b><br/>'+first,'question'),P('<b>B</b><br/>'+second,'question')]
-    ],colWidths=[88*mm,88*mm],rowHeights=[10*mm,body_height])
+        [P(statement,'question'),''],
+        [P('<b>-2</b> No, not at all &nbsp;&nbsp; <b>0</b> In between / it depends &nbsp;&nbsp; <b>+2</b> Yes, completely &nbsp;&nbsp; <b>?</b> Not sure','tiny'),'']
+    ],colWidths=[138*mm,38*mm],rowHeights=[10*mm,body_height,9*mm])
     t.setStyle(TableStyle([
         ('BACKGROUND',(0,0),(0,0),TEAL),('BACKGROUND',(1,0),(1,0),MIST),
-        ('BACKGROUND',(0,1),(0,1),PAPER),('BACKGROUND',(1,1),(1,1),WHITE),
+        ('BACKGROUND',(0,1),(-1,1),PAPER),('BACKGROUND',(0,2),(-1,2),WHITE),
+        ('SPAN',(0,1),(1,1)),('SPAN',(0,2),(1,2)),
         ('BOX',(0,0),(-1,-1),0.8,LINE),('INNERGRID',(0,0),(-1,-1),0.5,LINE),
         ('VALIGN',(0,0),(-1,-1),'TOP'),('PADDING',(0,0),(-1,-1),8),
     ]))
@@ -179,7 +181,7 @@ cover=Table([
     [P('POLITANGLE SCHOOL','whitebold')],
     [P('Teach political thinking.<br/>Without telling students<br/>what to think.','display')],
     [P('THE SCHOOL-READY TEACHER HANDBOOK','whitebold')],
-    [P('Junior 10-13  /  Youth 14-18<br/>Eight guided lessons  /  Printable tools  /  Question banks','white')],
+    [P('Junior 10-13  /  Youth 14-18<br/>Eight guided lessons  /  Printable tools  /  One-screen wording reference','white')],
     [P('CANDIDATE v3   ·   CONTROLLED PILOT','label')]
 ],colWidths=[176*mm],rowHeights=[27*mm,83*mm,20*mm,47*mm,13*mm])
 cover.setStyle(TableStyle([
@@ -192,12 +194,12 @@ cover.setStyle(TableStyle([
 # Contents
 story.extend([P('START HERE','label'),P('Your route through the pack','h1'),P('Designed for preparation at a glance and confident use during a live lesson.','quote'),Spacer(1,7*mm)])
 contents=[
-    ('01','Start safely','Purpose, privacy promise and activity choice','3-5'),
-    ('02','Teach','Eight complete lesson plans','7-14'),
-    ('03','Facilitate','Neutrality, safeguarding and result language','16-18'),
-    ('04','Print','Four reusable classroom tools','20-23'),
-    ('05','Reference','Junior 16 and Youth Full 42 question banks','25-39'),
-    ('06','Validate','Pilot evidence and teacher checklist','41-42'),
+    ('01','Start safely','Purpose, privacy promise and activity choice','Section 1'),
+    ('02','Teach','Eight complete lesson plans','Section 2'),
+    ('03','Facilitate','Neutrality, safeguarding and result language','Section 3'),
+    ('04','Print','Four reusable classroom tools','Section 4'),
+    ('05','Reference','One-screen Junior and Youth wording','Section 5'),
+    ('06','Validate','Pilot protocol and teacher checklist','Section 6'),
 ]
 ct=Table([[P(n,'whitebold'),P(f'<b>{title}</b><br/>{desc}','body'),P(page,'h2')] for n,title,desc,page in contents],colWidths=[20*mm,135*mm,21*mm],rowHeights=[25*mm]*6)
 ct.setStyle(TableStyle([
@@ -293,14 +295,15 @@ worksheet_page('Teacher room plan','Complete before opening a classroom. Keep th
 worksheet_page('Private exit ticket','Students keep this sheet. Do not collect it unless the school has explicitly approved that process.',[
 ('I understand','One concept, value or reason I understand better.'),('I still wonder','One question that needs another explanation or source.'),('I can explain','One view, not necessarily my own, I can now explain fairly.'),('My next check','What will I verify before sharing or acting on a political claim?'),('Private note','Something I want to think about without discussing publicly.')])
 
-story.extend(section_page(5,'Reference','Candidate question wording for teacher review. Each item is presented at readable print size with equal visual weight for both directions.',GOLD))
+story.extend(section_page(5,'Reference','Candidate wording for teacher review. Every card below represents one screen. Students never see two competing statements at once.',GOLD))
 src=(ROOT/'lib'/'school-believe.ts').read_text()
 junior_block=src.split('const juniorPairs',1)[1].split('export const schoolJuniorBeliefItems',1)[0]
 junior=re.findall(r"\['([^']+)', '([^']+)'\]",junior_block)
-for start in range(0,len(junior),4):
-    story.extend([P('JUNIOR QUESTION BANK','label'),P(f'Junior 16  /  items {start+1}-{min(start+4,16)}','h1'),P('Candidate v2. Classroom discussion instrument; not an individual diagnostic profile.','small'),Spacer(1,4*mm)])
-    for i,(a,b) in enumerate(junior[start:start+4],start+1):
-        story.extend([question_card(f'J{i:02d}','PERSPECTIVE',a,b),Spacer(1,4*mm)])
+junior_forms=[(i,side,text) for i,(a,b) in enumerate(junior,1) for side,text in [('A',a),('B',b)]]
+for start in range(0,len(junior_forms),5):
+    story.extend([P('JUNIOR WORDING REFERENCE','label'),P(f'Junior 16  /  statement forms {start+1}-{min(start+5,32)}','h1'),P('Each student receives one randomly selected direction per item. One statement appears on each screen.','small'),Spacer(1,4*mm)])
+    for i,side,text in junior_forms[start:start+5]:
+        story.extend([statement_card(f'J{i:02d}-{side}','ONE-SCREEN STATEMENT',text),Spacer(1,4*mm)])
     story.append(PageBreak())
 
 youth_block=src.split('const youthPairs',1)[1].split('export const schoolYouthBeliefItems',1)[0]
@@ -311,13 +314,11 @@ for construct in constructs:
     block=youth_block.split(marker,1)[1].split('\n  },',1)[0]
     for mode,a,b in re.findall(r"(think|feel|act): \['([^']+)', '([^']+)'\]",block):
         pairsets.append((construct,mode,a,b))
-for start in range(0,len(pairsets),4):
-    story.extend([P('YOUTH QUESTION BANK','label'),P(f'Youth Full 42  /  items {start+1}-{min(start+4,42)}','h1'),P('Candidate v1 parallel form. Adult IDs and scoring coordinates are preserved; wording equivalence must be tested.','small'),Spacer(1,4*mm)])
-    page_items=pairsets[start:start+4]
-    body_height=72*mm if len(page_items)==2 else 35*mm
-    gap=7*mm if len(page_items)==2 else 4*mm
-    for i,(construct,mode,a,b) in enumerate(page_items,start+1):
-        story.extend([question_card(f'{i:02d}',f'{construct.replace("-"," ")}  /  {mode}',a,b,body_height),Spacer(1,gap)])
+youth_forms=[(i,construct,mode,side,text) for i,(construct,mode,a,b) in enumerate(pairsets,1) for side,text in [('A',a),('B',b)]]
+for start in range(0,len(youth_forms),5):
+    story.extend([P('YOUTH WORDING REFERENCE','label'),P(f'Youth Full 42  /  statement forms {start+1}-{min(start+5,84)}','h1'),P('Each student receives one randomly selected direction per item. One statement appears on each screen.','small'),Spacer(1,4*mm)])
+    for i,construct,mode,side,text in youth_forms[start:start+5]:
+        story.extend([statement_card(f'{i:02d}-{side}',f'{construct.replace("-"," ")}  /  {mode}',text),Spacer(1,4*mm)])
     story.append(PageBreak())
 
 story.extend(section_page(6,'Validate','Engineering checks protect structure. Only cognitive interviews, accessibility testing and empirical comparison can establish whether the forms work for intended students.',CORAL))

@@ -36,3 +36,23 @@ test('Junior bank is separately identified, short and construct-diverse', () => 
   assert.ok(sides.every((side) => words(side) <= 18));
   assert.ok(sides.reduce((sum, side) => sum + words(side), 0) / sides.length <= 17);
 });
+
+function tokens(value: string) {
+  const stop = new Set(['a','an','and','as','at','be','for','if','in','is','it','of','on','or','should','that','the','to','would']);
+  return new Set(value.toLowerCase().replace(/[^a-z ]/g, ' ').split(/\s+/).filter((word) => word.length > 2 && !stop.has(word)));
+}
+
+function similarity(left: string, right: string) {
+  const a = tokens(left); const b = tokens(right);
+  const shared = [...a].filter((word) => b.has(word)).length;
+  return shared / new Set([...a, ...b]).size;
+}
+
+test('Youth Quick practical checks are scenarios, not near-duplicates of principle wording', () => {
+  const byConstruct = new Map(schoolYouthBeliefItems.map((item) => [`${item.construct}:${item.mode}`, item]));
+  for (const think of schoolYouthBeliefItems.filter((item) => item.mode === 'think').slice(0, 12)) {
+    const act = byConstruct.get(`${think.construct}:act`)!;
+    assert.ok(similarity(think.negative, act.negative) < 0.58, `${think.construct} negative wording is repetitive`);
+    assert.ok(similarity(think.positive, act.positive) < 0.58, `${think.construct} positive wording is repetitive`);
+  }
+});

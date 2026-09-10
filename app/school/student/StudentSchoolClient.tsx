@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import { germanBeliefStatement } from '../../../lib/german-believe';
+import { romanceBeliefStatement } from '../../../lib/romance-believe';
 import { germanLiteracyExplanation, germanLiteracyOption, germanLiteracyPrompt } from '../../../lib/german-literacy';
 import { useLocale } from '../../LocaleProvider';
 
@@ -202,7 +203,7 @@ export default function StudentSchoolClient({ initialCode }: { initialCode: stri
         <article className="engine-card school-question-card">
           <p className="engine-kicker">{room.activity.pacing === 'teacher' ? `Live question ${room.currentIndex + 1}` : `Question ${studentIndex + 1} of ${room.activity.questionIds.length}`} · {question.title}</p>
           {question.kind === 'believe' ? (
-            <><h1>{locale === 'de' ? 'Wie sehr stimmen Sie zu?' : 'How much do you agree?'}</h1><div className="engine-statement"><p>{locale === 'de' && question.sourceItemId && question.polarity ? germanBeliefStatement(question.sourceItemId, question.polarity) ?? question.statement : question.statement}</p></div></>
+            <><h1>{locale === 'de' ? 'Stimmst du zu?' : locale === 'es' ? '¿Estás de acuerdo?' : locale === 'fr' ? 'Es-tu d’accord ?' : 'Do you agree?'}</h1><div className="engine-statement"><p>{question.sourceItemId && question.polarity ? (locale === 'de' ? germanBeliefStatement(question.sourceItemId, question.polarity) : locale === 'es' || locale === 'fr' ? romanceBeliefStatement(locale, question.sourceItemId, question.polarity) : question.statement) ?? question.statement : question.statement}</p></div></>
           ) : <><h1>{locale === 'de' ? germanLiteracyPrompt(question.id) ?? question.prompt : question.prompt}</h1><p className="engine-help">{locale === 'de' ? 'Dies ist eine Frage zur politischen Bildung. Nach den Antworten kann die richtige Lösung eingeblendet werden.' : 'This is a political-literacy question. A correct answer can be revealed after the class responds.'}</p></>}
 
           {!alreadySubmitted && (room.activity.pacing === 'student' || room.questionOpen) ? (

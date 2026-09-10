@@ -33,6 +33,8 @@ Primary product bands are **Junior 10–13** and **Youth 14–18** in upper-prim
 
 Junior uses a separately versioned 16-question candidate bank and guided social-media/political-literacy lessons. Youth uses a plain-language parallel form of all 42 BELIEVE items. The adult form remains unchanged. Neither new form should be described as age-validated until cognitive and empirical testing is complete.
 
+Every BELIEVE screen contains exactly one statement and one -2 to +2 agreement scale. A balanced alternate statement exists for each item to reduce direction bias, but the student never sees both forms together. Teachers should describe Quick as 26 questions, not 52 statements.
+
 ## Teacher use principles
 
 - Ask before explaining when possible.
