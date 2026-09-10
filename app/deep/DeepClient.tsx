@@ -32,7 +32,7 @@ import {
   type LiteracySession,
 } from '../../lib/literacy-session';
 import { assessNuancesV2 } from '../../lib/nuance-model';
-import { pairedAnswerOptions, type AnswerValue } from '../../lib/questions';
+import { agreementAnswerOptions, type AnswerValue } from '../../lib/questions';
 import { resultTraditions } from '../../lib/result-traditions';
 
 const BELIEF_SESSION_KEY = 'politangle.believe.v2.session';
@@ -390,8 +390,7 @@ export default function DeepClient() {
   const beliefDisplay = currentBelief ? (() => {
     const flipped = isBeliefV2PoleFlipped(beliefSession.seed, currentBelief.id);
     return {
-      first: flipped ? currentBelief.positive : currentBelief.negative,
-      second: flipped ? currentBelief.negative : currentBelief.positive,
+      statement: flipped ? currentBelief.negative : currentBelief.positive,
       selected: storedToDisplayedBeliefV2Answer(beliefSelected, flipped),
     };
   })() : null;
@@ -415,17 +414,15 @@ export default function DeepClient() {
       {phase === 'believe' && currentBelief && beliefDisplay && (
         <article className="engine-card">
           <p className="engine-kicker">BELIEVE · {currentBelief.mode.toUpperCase()} · {currentBelief.construct.replaceAll('-', ' ')}</p>
-          <h1>Which comes closer to your own view?</h1>
-          <div className="engine-pair">
-            <div><span>First view</span><p>{beliefDisplay.first}</p></div>
-            <div><span>Second view</span><p>{beliefDisplay.second}</p></div>
-          </div>
+          <h1>How much do you agree?</h1>
+          <div className="engine-statement"><p>{beliefDisplay.statement}</p></div>
           <p className="engine-help">These are the remaining 16 items of the locked 42-question BELIEVE model. There is no correct political answer.</p>
-          <div className="engine-answer-grid paired" role="radiogroup" aria-label="Belief response">
-            {pairedAnswerOptions.map((option) => (
-              <button type="button" role="radio" aria-checked={beliefDisplay.selected === option.value} className={beliefDisplay.selected === option.value ? 'engine-answer selected' : 'engine-answer'} key={String(option.value)} onClick={() => chooseBelief(option.value)}>{option.label}</button>
+          <div className="quick-scale" role="radiogroup" aria-label="Belief response">
+            {agreementAnswerOptions.map((option) => (
+              <button type="button" role="radio" aria-checked={beliefDisplay.selected === option.value} aria-label={option.label} className={beliefDisplay.selected === option.value ? 'quick-scale-answer selected' : 'quick-scale-answer'} key={String(option.value)} onClick={() => chooseBelief(option.value)}>{option.value === 'unsure' ? '?' : option.value > 0 ? `+${option.value}` : String(option.value).replace('-', '−')}</button>
             ))}
           </div>
+          <div className="quick-scale-key"><span><b>−2</b> Strongly disagree</span><span><b>0</b> Neither / depends</span><span><b>+2</b> Strongly agree</span><span><b>?</b> Not sure</span></div>
         </article>
       )}
 
