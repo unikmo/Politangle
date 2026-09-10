@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import './engine.css';
+import './literacy.css';
 import './results-shape.css';
 import './school.css';
 import './home.css';
