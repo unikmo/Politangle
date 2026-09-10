@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import './engine.css';
 import './school.css';
+import './home.css';
 import { LocaleProvider } from './LocaleProvider';
 
 export const metadata: Metadata = {
