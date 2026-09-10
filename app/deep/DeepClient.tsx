@@ -169,7 +169,7 @@ export default function DeepClient() {
         <article className="engine-card">
           <p className="engine-kicker">Quick comes first</p>
           <h1>Complete Politangle Quick before Deep.</h1>
-          <p>Quick contains 52 statements. Deep adds the remaining 32 BELIEVE statements and the political-literacy training block.</p>
+          <p>Quick contains 26 questions. Full adds the remaining 58 BELIEVE statements and the political-literacy training block.</p>
           <Link className="engine-primary-link" href="/quiz">Start Quick</Link>
         </article>
       </section>
@@ -412,7 +412,7 @@ export default function DeepClient() {
           <p className="engine-kicker">BELIEVE · {currentBelief.mode.toUpperCase()} · {currentBelief.construct.replaceAll('-', ' ')}</p>
           <h1>{locale === 'de' ? 'Wie sehr stimmen Sie zu?' : 'How much do you agree?'}</h1>
           <div className="engine-statement"><p>{locale === 'de' ? germanBeliefStatement(currentBelief.sourceItemId, currentBelief.polarity) ?? beliefDisplay.statement : beliefDisplay.statement}</p></div>
-          <p className="engine-help">{locale === 'de' ? 'Dies sind die verbleibenden 32 Aussagen des 84-Aussagen-Modells. Es gibt keine politisch richtige Antwort.' : 'These are the remaining 32 statements of the 84-statement BELIEVE model. There is no correct political answer.'}</p>
+          <p className="engine-help">{locale === 'de' ? 'Dies sind die verbleibenden 58 Aussagen des 84-Aussagen-Modells. Es gibt keine politisch richtige Antwort.' : 'These are the remaining 58 statements of the 84-statement BELIEVE model. There is no correct political answer.'}</p>
           <div className="quick-scale" role="radiogroup" aria-label="Belief response">
             {agreementAnswerOptions.map((option) => (
               <button type="button" role="radio" aria-checked={beliefDisplay.selected === option.value} aria-label={option.label} className={beliefDisplay.selected === option.value ? 'quick-scale-answer selected' : 'quick-scale-answer'} key={String(option.value)} onClick={() => chooseBelief(option.value)}>{option.value === 'unsure' ? '?' : option.value > 0 ? `+${option.value}` : String(option.value).replace('-', '−')}</button>

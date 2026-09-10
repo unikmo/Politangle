@@ -6,7 +6,7 @@ import { LocaleProvider } from './LocaleProvider';
 
 export const metadata: Metadata = {
   title: 'Politangle — Politics from every angle',
-  description: 'Discover your political angle without party labels. 52 statements. About 6 minutes.',
+  description: 'Discover your political angle without party labels. 26 questions. About 3 minutes.',
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

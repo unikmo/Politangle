@@ -23,7 +23,7 @@ export default function SchoolPage() {
           <article className="engine-card school-entry-card">
             <p className="engine-kicker">Students · private</p>
             <h2>{t('Explore on your own device','Auf dem eigenen Gerät entdecken')}</h2>
-            <p>{t('Take Quick 52, continue to Full 84, or practise political literacy. Your individual result is not sent to a teacher.','Quick 52 durchführen, mit Full 84 fortfahren oder politische Bildung üben. Das persönliche Ergebnis wird nicht an eine Lehrkraft gesendet.')}</p>
+            <p>{t('Take Quick 26, continue to Full 84, or practise political literacy. Your individual result is not sent to a teacher.','Quick 26 durchführen, mit Full 84 fortfahren oder politische Bildung üben. Das persönliche Ergebnis wird nicht an eine Lehrkraft gesendet.')}</p>
             <Link className="engine-primary-link" href="/school/private">{t('Private Student Mode','Privater Schülerbereich')}</Link>
           </article>
           <article className="engine-card school-entry-card">
@@ -35,7 +35,7 @@ export default function SchoolPage() {
           <article className="engine-card school-entry-card">
             <p className="engine-kicker">Teachers</p>
             <h2>{t('Run a live lesson','Live-Unterricht durchführen')}</h2>
-            <p>School pack: <strong>$300 for 10 teacher licenses.</strong> A licensed teacher can generate temporary session codes and run Quick 52, Full 84, literacy, guided or custom activities.</p>
+            <p>School pack: <strong>$300 for 10 teacher licenses.</strong> A licensed teacher can generate temporary session codes and run Quick 26, Full 84, literacy, guided or custom activities.</p>
             <Link className="engine-primary-link" href="/school/teacher">{t('Teacher classroom','Lehrkraft-Bereich')}</Link>
           </article>
         </div>

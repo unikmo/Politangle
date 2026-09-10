@@ -7,7 +7,7 @@ export default function QuizPage() {
     <main className="engine-page">
       <header className="engine-header">
         <Link href="/" className="engine-brand">Politangle</Link>
-        <span>Quick · 52 statements</span><LanguageSelector />
+        <span>Quick · 26 questions</span><LanguageSelector />
       </header>
       <QuizClient />
     </main>

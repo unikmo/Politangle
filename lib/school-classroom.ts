@@ -5,6 +5,7 @@ import { expandBeliefItems, type BeliefPolarity } from './belief-statements';
 import type { AnswerValue } from './questions';
 import { getSchoolLesson, schoolLessons, type SchoolLessonId } from './school-lessons';
 import { isJuniorSchoolAgeBand, schoolBeliefItems, schoolJuniorBeliefItems, type SchoolAgeBand } from './school-believe';
+import { lockedQuickStatementIds } from './belief-v2-session';
 
 export const SCHOOL_CLASSROOM_VERSION = 'school-classroom-2026.09-v4-single-statements' as const;
 
@@ -51,7 +52,7 @@ export const BELIEVE_CLASSROOM_OPTIONS = [
 const literacyById = new Map(deepLiteracyQuestions.map((question) => [question.id, question]));
 const adultBeliefStatements = expandBeliefItems(lockedBeliefItemsV2);
 
-export const classroomQuickIds = adultBeliefStatements.filter((item) => item.stage === 'quick').map((item) => item.id);
+export const classroomQuickIds = [...lockedQuickStatementIds];
 export const classroomFullIds = adultBeliefStatements.map((item) => item.id);
 export const classroomLiteracyIds = deepLiteracyQuestions.map((question) => question.id);
 export const classroomAllIds = [...classroomFullIds, ...classroomLiteracyIds];
@@ -110,7 +111,7 @@ export function classroomQuestionLabel(id: string, ageBand: SchoolAgeBand = 'you
 }
 
 export function defaultClassroomActivity(): ClassroomActivityConfig {
-  return { type: 'quick26', title: 'Youth Quick 52', questionIds: [...classroomQuickIds], pacing: 'teacher', projectorMode: 'reveal', ageBand: 'youth-14-18' };
+  return { type: 'quick26', title: 'Youth Quick 26', questionIds: [...classroomQuickIds], pacing: 'teacher', projectorMode: 'reveal', ageBand: 'youth-14-18' };
 }
 
 function cleanIds(ids: unknown, ageBand: SchoolAgeBand): string[] | null {
@@ -130,7 +131,7 @@ export function buildClassroomActivity(input: unknown): ClassroomActivityConfig 
   if (!pacing || !projectorMode || !['junior', 'quick26', 'full42', 'literacy', 'guided', 'custom'].includes(String(type))) return null;
 
   if (type === 'junior') return { type, title: 'Junior 32', questionIds: [...classroomJuniorIds], pacing, projectorMode, ageBand: 'junior-10-13' };
-  if (type === 'quick26') return { type, title: 'Youth Quick 52', questionIds: [...classroomQuickIds], pacing, projectorMode, ageBand };
+  if (type === 'quick26') return { type, title: 'Youth Quick 26', questionIds: [...classroomQuickIds], pacing, projectorMode, ageBand };
   if (type === 'full42') return { type, title: 'Youth Full 84', questionIds: [...classroomFullIds], pacing, projectorMode, ageBand };
   if (type === 'literacy') return { type, title: 'Political Literacy Quiz', questionIds: [...classroomLiteracyIds], pacing, projectorMode, ageBand };
   if (type === 'guided') {

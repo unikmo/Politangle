@@ -15,13 +15,13 @@ import {
   storedToDisplayedBeliefV2Answer,
 } from './belief-v2-session';
 
-test('BELIEVE session deterministically contains 52 Quick and 32 Deep statements', () => {
+test('BELIEVE session deterministically contains 26 Quick and 58 Full follow-up statements', () => {
   const first = createBeliefV2Session('same-seed', '2026-09-07T00:00:00.000Z');
   const second = createBeliefV2Session('same-seed', '2026-09-07T00:00:00.000Z');
   assert.deepEqual(first.quickOrder, second.quickOrder);
   assert.deepEqual(first.deepOrder, second.deepOrder);
-  assert.equal(first.quickOrder.length, 52);
-  assert.equal(first.deepOrder.length, 32);
+  assert.equal(first.quickOrder.length, 26);
+  assert.equal(first.deepOrder.length, 58);
   assert.equal(new Set([...first.quickOrder, ...first.deepOrder]).size, 84);
 });
 
@@ -38,7 +38,7 @@ test('Quick and Deep progress stay separate while overall progress joins them', 
   for (const id of session.quickOrder) session = answerBeliefV2(session, id, 0);
   assert.equal(beliefV2StageProgress(session, 'quick').complete, true);
   assert.equal(beliefV2StageProgress(session, 'deep').complete, false);
-  assert.equal(beliefV2OverallProgress(session).answered, 52);
+  assert.equal(beliefV2OverallProgress(session).answered, 26);
   assert.equal(beliefV2OverallProgress(session).total, 84);
 });
 

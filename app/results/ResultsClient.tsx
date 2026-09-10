@@ -53,7 +53,7 @@ export default function ResultsClient() {
         <article className="engine-card">
           <p className="engine-kicker">{t('No complete Quick result','Kein vollständiges Quick-Ergebnis')}</p>
           <h1>{t('Take Politangle Quick first.','Starten Sie zuerst Politangle Quick.')}</h1>
-          <p>{t('Quick contains 52 independently answered statements from the first 26 constructs of the 84-statement BELIEVE model.','Quick enthält 52 einzeln beantwortete Aussagen aus den ersten 26 Konstrukten des BELIEVE-Modells mit 84 Aussagen.')}</p>
+          <p>{t('Quick contains one clear question for each of 26 constructs. Full adds balancing statements for greater depth.','Quick enthält eine klare Frage für jedes von 26 Konstrukten. Full ergänzt Gegenfragen für mehr Tiefe.')}</p>
           <Link className="engine-primary-link" href="/quiz">{t('Start Quick','Quick starten')}</Link>
         </article>
       </section>
@@ -65,7 +65,7 @@ export default function ResultsClient() {
       <article className="engine-card">
         <p className="engine-kicker">{t('Your Political Shape · Quick','Ihre politische Form · Quick')}</p>
         <h1>{t('Eight political axes — not one box.','Acht politische Achsen – keine Schublade.')}</h1>
-        <p className="engine-help">{t('These positions combine the 52 independently answered Quick statements into 26 balanced construct scores. A middle value means mixed or balanced answers, not “no politics”. Deep adds the remaining 32 statements.','Diese Positionen verbinden 52 einzeln beantwortete Aussagen zu 26 ausgewogenen Konstruktwerten. Ein mittlerer Wert bedeutet gemischte oder ausgewogene Antworten. Deep ergänzt 32 weitere Aussagen.')}</p>
+        <p className="engine-help">{t('These positions use 26 independently answered Quick questions. A middle value means mixed or balanced answers, not “no politics”. Full adds 58 balancing and additional statements.','Diese Positionen basieren auf 26 unabhängig beantworteten Quick-Fragen. Ein mittlerer Wert bedeutet gemischte oder ausgewogene Antworten. Full ergänzt 58 Gegen- und Zusatzfragen.')}</p>
 
         <div className="engine-results">
           {result.polygon.map((axis) => (
@@ -105,10 +105,10 @@ export default function ResultsClient() {
 
       <div className="engine-result-actions">
         <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-          <Link className="engine-primary-link" href="/deep">{t('Continue: 32 Deep statements','Weiter: 32 Deep-Aussagen')}</Link>
+          <Link className="engine-primary-link" href="/deep">{t('Continue to Full: 58 more','Weiter zu Full: 58 weitere')}</Link>
           <Link className="engine-primary-link" href="/quiz">{t('Review Quick','Quick prüfen')}</Link>
         </div>
-        <span>{t('BELIEVE model: 52 Quick + 32 Deep = 84 statements.','BELIEVE-Modell: 52 Quick + 32 Deep = 84 Aussagen.')}</span>
+        <span>{t('BELIEVE model: 26 Quick + 58 Full follow-up = 84 statements.','BELIEVE-Modell: 26 Quick + 58 Full-Zusatzfragen = 84 Aussagen.')}</span>
       </div>
 
       <p className="engine-disclaimer">Content-validation engine. The family relevance matrix is evidence-informed but still requires respondent calibration, reliability testing and cross-national validation. Scores describe compatibility with measured characteristics; they do not assign a political identity.</p>

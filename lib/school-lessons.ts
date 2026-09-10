@@ -83,7 +83,7 @@ export const schoolLessons: readonly SchoolLesson[] = [
       { minutes: '50–60', teacher: 'Review the most-missed concepts in the class summary.', students: 'Correct one misconception in their own words.' },
     ],
     discussionPrompts: ['Why does universal healthcare not by itself make a system socialist?', 'Why can nationalism attach to more than one economic ideology?', 'Which differences between political families are about ownership, and which are about social values or political institutions?'],
-    followUp: 'Quick 52 classroom lab',
+    followUp: 'Quick 26 classroom lab',
   },
   {
     id: 'think-feel-act',
@@ -103,14 +103,14 @@ export const schoolLessons: readonly SchoolLesson[] = [
   },
   {
     id: 'quick26-lab',
-    title: 'Quick 52 classroom lab',
+    title: 'Quick 26 classroom lab',
     ageBand: '14–18',
     duration: '60–75 min',
     goals: ['Explore a multidimensional political landscape without forcing one party label.', 'Read distributions as well as averages.', 'Identify where the room has consensus and where it is genuinely divided.'],
     questionIds: [],
     timeline: [
       { minutes: '0–8', teacher: 'Explain anonymity, the five-position scale and that there are no correct BELIEVE answers.', students: 'Join and test the response scale.' },
-      { minutes: '8–50', teacher: 'Run Quick 52 teacher-paced or student-paced.', students: 'Complete all 52 Quick statements anonymously.' },
+      { minutes: '8–35', teacher: 'Run Quick 26 teacher-paced or student-paced.', students: 'Complete all 26 Quick questions anonymously.' },
       { minutes: '50–65', teacher: 'Review the class map, family compatibility and divided/consensus items.', students: 'Interpret at least one distribution before looking at its average.' },
       { minutes: '65–75', teacher: 'Optional discussion or private self-exploration.', students: 'Choose one result they would like to understand better.' },
     ],
