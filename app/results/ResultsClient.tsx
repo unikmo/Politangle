@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { assessFamiliesV2Canonical, assessResponseConsistencyV2, calculatePolygonV2Canonical } from '../../lib/belief-v2-engine';
 import { beliefV2StageProgress, lockedBeliefStatementsV3, parseBeliefV2Session, type BeliefV2Session } from '../../lib/belief-v2-session';
 import { collapseStatementAnswers } from '../../lib/belief-statements';
+import { describePolitangleHome, familyMeaningText } from '../../lib/politangle-home';
 import { useLocale } from '../LocaleProvider';
 import { translate } from '../translations';
 
@@ -19,19 +20,10 @@ function directionLabel(score: number | null, low: string, high: string) {
   return `Strongly toward ${high.toLowerCase()}`;
 }
 
-function familyBand(score: number | null) {
+function coherenceBand(score: number | null) {
   if (score === null) return 'Not enough information';
-  if (score >= 75) return 'Strong match';
-  if (score >= 60) return 'Broad match';
-  if (score >= 40) return 'Mixed / overlapping';
-  if (score >= 25) return 'Limited match';
-  return 'Strong tension';
-}
-
-function consistencyBand(score: number | null) {
-  if (score === null) return 'Not enough information';
-  if (score >= 80) return 'Highly consistent';
-  if (score >= 65) return 'Mostly consistent';
+  if (score >= 80) return 'Highly coherent';
+  if (score >= 65) return 'Mostly coherent';
   if (score >= 45) return 'Context-sensitive';
   return 'Strongly mixed';
 }
@@ -57,10 +49,10 @@ function referencePeople(familyId: string) {
 }
 
 function PoliticalShape({ axes }: { axes: ReturnType<typeof calculatePolygonV2Canonical> }) {
-  const size = 520;
+  const size = 500;
   const center = size / 2;
-  const radius = 170;
-  const labelRadius = 222;
+  const radius = 162;
+  const labelRadius = 214;
   const known = axes.map((axis) => axis.score ?? 50);
   const point = (index: number, value: number, r = radius) => {
     const angle = -Math.PI / 2 + (index * Math.PI * 2) / axes.length;
@@ -71,7 +63,7 @@ function PoliticalShape({ axes }: { axes: ReturnType<typeof calculatePolygonV2Ca
   const rings = [25, 50, 75, 100].map((level) => axes.map((_, index) => point(index, level)).map(([x, y]) => `${x},${y}`).join(' '));
 
   return (
-    <div className="shape-wrap">
+    <div className="shape-wrap compact-shape">
       <svg className="political-shape" viewBox={`0 0 ${size} ${size}`} role="img" aria-label="Your eight-axis political shape">
         {rings.map((ring, index) => <polygon key={index} className="shape-ring" points={ring} />)}
         {axes.map((axis, index) => {
@@ -92,7 +84,6 @@ function PoliticalShape({ axes }: { axes: ReturnType<typeof calculatePolygonV2Ca
           return <circle key={axes[index].id} className="shape-dot" cx={x} cy={y} r="5" />;
         })}
       </svg>
-      <p className="shape-caption">Each spoke is one political axis. The inner end represents the first pole shown below; the outer end represents the second. The middle ring is the balanced area.</p>
     </div>
   );
 }
@@ -115,7 +106,7 @@ export default function ResultsClient() {
       thinkPolygon: calculatePolygonV2Canonical(canonicalAnswers, 'think'),
       actPolygon: calculatePolygonV2Canonical(canonicalAnswers, 'act'),
       families: assessFamiliesV2Canonical(canonicalAnswers),
-      consistency: assessResponseConsistencyV2(canonicalAnswers),
+      coherence: assessResponseConsistencyV2(canonicalAnswers),
     };
   }, [session]);
 
@@ -134,44 +125,56 @@ export default function ResultsClient() {
     );
   }
 
-  const rankedAxes = [...result.polygon].filter((axis) => axis.score !== null).sort((a, b) => Math.abs((b.score ?? 50) - 50) - Math.abs((a.score ?? 50) - 50));
-  const strongest = rankedAxes.slice(0, 3);
-  const topFamily = result.families.find((family) => family.overall !== null) ?? result.families[0];
-  const people = topFamily ? referencePeople(topFamily.id) : [];
+  const home = describePolitangleHome(result.families, result.polygon, false);
+  const people = home.primary ? referencePeople(home.primary.id) : [];
   const divergences = result.thinkPolygon.map((axis, index) => {
     const think = axis.score;
     const act = result.actPolygon[index]?.score ?? null;
     return { ...axis, think, act, gap: think === null || act === null ? 0 : Math.abs(think - act) };
   }).filter((axis) => axis.think !== null && axis.act !== null).sort((a, b) => b.gap - a.gap);
   const largestGap = divergences[0];
+  const topFamilies = [home.primary, home.secondary, home.tertiary].filter((family): family is NonNullable<typeof family> => Boolean(family && family.overall !== null));
 
   const copyShape = async () => {
     const axisText = result.polygon.map((axis) => `${axis.name} ${axis.score ?? '—'}`).join(' · ');
-    const familyText = result.families.slice(0, 3).filter((family) => family.overall !== null).map((family) => `${family.name} ${family.overall}`).join(' · ');
-    const text = `My Politangle political shape: ${axisText}. Broad family matches: ${familyText}.`;
+    const text = `My Politangle: ${home.headline} ${axisText}`;
     if (navigator.clipboard) await navigator.clipboard.writeText(text);
     setCopied(true);
     window.setTimeout(() => setCopied(false), 1600);
   };
 
   return (
-    <section className="engine-shell">
-      <article className="engine-card result-hero">
-        <p className="engine-kicker">{t('Your Political Shape · Quick','Ihre politische Form · Quick')}</p>
-        <h1>{t('This is what your politics look like.','So sieht Ihre Politik aus.')}</h1>
-        <p className="result-lede">You are not one dot on a left–right line. Your answers form an eight-sided shape. The sharpest corners show where your answers lean most clearly; flatter areas show balance or moderation.</p>
+    <section className="engine-shell result-shell">
+      <article className="engine-card politangle-home-card">
+        <p className="engine-kicker">{t('Your Politangle · Quick','Ihr Politangle · Quick')}</p>
+        <h1>{home.headline}</h1>
+        <p className="result-lede">{home.summary}</p>
+
+        <div className="politangle-family-story" aria-label="Closest political traditions">
+          {topFamilies.map((family, index) => (
+            <p key={family.id}>
+              <strong>{index === 0 ? 'Main home' : index === 1 ? 'Significant leaning' : 'Additional influence'} · {family.name} · {family.overall}/100</strong>
+              <span>{familyMeaningText(family.id)}.</span>
+            </p>
+          ))}
+        </div>
+
+        {people.length > 0 && home.primary && (
+          <p className="home-reference"><strong>Historical reference points for {home.primary.name}:</strong> {people.join(' · ')}. They illustrate the tradition, not your exact personal profile.</p>
+        )}
+
         <PoliticalShape axes={result.polygon} />
-        <div className="result-action-row">
-          <button className="engine-primary-link" type="button" onClick={copyShape}>{copied ? 'Copied' : 'Copy my shape'}</button>
-          <span>Quick is a first reading. Full adds 16 different questions to complete THINK, FEEL and ACT across all topics.</span>
+        <div className="result-action-row compact-actions">
+          <button className="engine-primary-link" type="button" onClick={copyShape}>{copied ? 'Copied' : 'Copy my Politangle'}</button>
+          <span>The shape shows where you sit across eight political dimensions. It is meant to complement the political-home reading, not replace it.</span>
         </div>
       </article>
 
-      <article className="engine-card result-story-card" style={{ marginTop: 18 }}>
-        <p className="engine-kicker">What stands out</p>
-        <h2>Start with the clearest parts of your shape.</h2>
+      <article className="engine-card result-story-card compact-result-card" style={{ marginTop: 18 }}>
+        <p className="engine-kicker">Why this is your result</p>
+        <h2>The three positions that shape your profile most.</h2>
         <div className="result-insight-grid">
-          {strongest.map((axis) => (
+          {home.strongestAxes.map((axis) => (
             <section key={axis.id} className="result-insight">
               <strong>{axis.name}</strong>
               <span>{axis.score} / 100</span>
@@ -181,88 +184,38 @@ export default function ResultsClient() {
         </div>
 
         <div className="consistency-quick">
-          <div><strong>{result.consistency.score ?? '—'}<small>/100</small></strong><span>{consistencyBand(result.consistency.score)}</span></div>
-          <p><b>Preliminary response consistency.</b> This checks whether your principle and practical-choice answers point in similar directions on comparable topics. It is not a knowledge or conviction score.</p>
+          <div><strong>{result.coherence.score ?? '—'}<small>/100</small></strong><span>{coherenceBand(result.coherence.score)}</span></div>
+          <p><b>Response coherence.</b> This checks whether your answers to related THINK and ACT questions point in similar directions. It does not judge whether your politics are correct, informed or strongly held.</p>
         </div>
 
-        {largestGap && largestGap.gap >= 20 ? (
+        {largestGap && largestGap.gap >= 20 && (
           <div className="result-tension">
-            <strong>Your principles and practical choices are not identical.</strong>
-            <p>On <b>{largestGap.name}</b>, your principle answer sits at {largestGap.think}, while your practical-choice answer sits at {largestGap.act}. That {largestGap.gap}-point gap is useful: it shows where a concrete trade-off changes your position.</p>
-          </div>
-        ) : (
-          <div className="result-tension">
-            <strong>Your principles and practical choices are broadly consistent so far.</strong>
-            <p>Quick did not find a large THINK-versus-ACT split on the axes it could compare. Full adds FEEL and the two remaining ACT topics before treating that pattern as complete.</p>
+            <strong>Your largest principle-to-choice shift is on {largestGap.name}.</strong>
+            <p>Your principle position is {largestGap.think}, while your practical-choice position is {largestGap.act}. That {largestGap.gap}-point difference suggests that concrete trade-offs change how you answer on this topic.</p>
           </div>
         )}
       </article>
 
-      <article className="engine-card" style={{ marginTop: 18 }}>
-        <p className="engine-kicker">Political families</p>
-        <h2>Your closest traditions, in ordinary language.</h2>
-        <p className="engine-help">A family score means your measured answers resemble important parts of that tradition. It does not mean you belong to a party, agree with every policy, or have been assigned an identity. Overlap is normal.</p>
-        <div className="family-cards">
-          {result.families.slice(0, 3).map((family) => (
-            <section className="family-card" key={family.id}>
-              <span>{family.overall ?? '—'}</span>
-              <div><strong>{family.name}</strong><p>{familyBand(family.overall)} · {family.coverage}% measured</p></div>
-            </section>
-          ))}
-        </div>
-        {topFamily && people.length > 0 && (
-          <div className="reference-people">
-            <strong>Historical reference points</strong>
-            <p>{people.join(' · ')}</p>
-            <small>These people are examples associated with {topFamily.name.toLowerCase()} traditions, not claims that they had your exact eight-axis profile.</small>
-          </div>
-        )}
-        <details className="engine-details">
-          <summary>Show the technical family scores</summary>
-          <div className="engine-table-wrap">
-            <table className="engine-table">
-              <thead><tr><th>Family</th><th>Quick match</th><th>THINK</th><th>FEEL</th><th>ACT</th><th>Coverage</th></tr></thead>
-              <tbody>
-                {result.families.map((family) => (
-                  <tr key={family.id}>
-                    <td><strong>{family.name}</strong></td>
-                    <td>{family.overall === null ? '—' : `${family.overall} · ${familyBand(family.overall)}`}</td>
-                    <td>{family.think ?? '—'}</td>
-                    <td>{family.feel ?? 'Full'}</td>
-                    <td>{family.act ?? '—'}</td>
-                    <td>{family.coverage}%</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </details>
-      </article>
-
-      <article className="engine-card axis-detail-card" style={{ marginTop: 18 }}>
-        <p className="engine-kicker">All eight axes</p>
-        <h2>See exactly where each edge of the shape comes from.</h2>
-        <div className="engine-results">
+      <details className="engine-card result-details-card" style={{ marginTop: 18 }}>
+        <summary>See all eight political axes</summary>
+        <div className="engine-results compact-axis-results">
           {result.polygon.map((axis) => (
             <section className="engine-dimension" key={axis.id}>
               <div className="engine-dimension-head"><strong>{axis.name}</strong><span>{directionLabel(axis.score, axis.low, axis.high)}</span></div>
               <div className="engine-poles"><span>{axis.low}</span><span>{axis.high}</span></div>
               <div className="engine-score-track">{axis.score !== null && <span style={{ left: `${axis.score}%` }} />}</div>
-              <div className="engine-dimension-meta"><span>{axis.score === null ? 'No score' : `${axis.score} / 100`}</span><span>{axis.coverage}% measured in Quick</span></div>
             </section>
           ))}
         </div>
-      </article>
+      </details>
 
       <div className="engine-result-actions">
         <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
           <Link className="engine-primary-link" href="/deep">{t('Continue to Full: 16 more','Weiter zu Full: 16 weitere')}</Link>
           <Link className="engine-primary-link" href="/quiz">{t('Review Quick','Quick prüfen')}</Link>
         </div>
-        <span>{t('Full adds 16 different questions, then shows the completed result.','Full ergänzt 16 andere Fragen und zeigt danach direkt das vollständige Ergebnis.')}</span>
+        <span>{t('Full adds 16 questions and then gives you the completed Politangle.','Full ergänzt 16 Fragen und zeigt dann direkt Ihr vollständiges Politangle.')}</span>
       </div>
-
-      <p className="engine-disclaimer">Quick is an explanatory first reading, not a diagnosis or party assignment. Full completes the three-angle comparison and response-consistency measure.</p>
     </section>
   );
 }
