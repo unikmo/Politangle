@@ -12,13 +12,12 @@ import {
   beliefV2OverallProgress,
   beliefV2StageProgress,
   completeBeliefV2Session,
-  displayedToStoredBeliefV2Answer,
   getBeliefV2Item,
-  isBeliefV2PoleFlipped,
   parseBeliefV2Session,
-  storedToDisplayedBeliefV2Answer,
+  lockedBeliefStatementsV3,
   type BeliefV2Session,
 } from '../../lib/belief-v2-session';
+import { collapseStatementAnswers } from '../../lib/belief-statements';
 import { deepLiteracyQuestions } from '../../lib/deep-bank';
 import { calculateDeepLiteracyResult, scoreLiteracyItem, type DeepLiteracyResult, type DeepSection } from '../../lib/deep-engine';
 import {
@@ -34,6 +33,9 @@ import {
 import { assessNuancesV2 } from '../../lib/nuance-model';
 import { agreementAnswerOptions, type AnswerValue } from '../../lib/questions';
 import { resultTraditions } from '../../lib/result-traditions';
+import { germanBeliefStatement } from '../../lib/german-believe';
+import { germanLiteracyExplanation, germanLiteracyOption, germanLiteracyPrompt } from '../../lib/german-literacy';
+import { useLocale } from '../LocaleProvider';
 
 const BELIEF_SESSION_KEY = 'politangle.believe.v2.session';
 const LITERACY_SESSION_KEY = 'politangle.literacy.v2.session';
@@ -94,16 +96,18 @@ function firstUncheckedLiteracy(session: LiteracySession, section: DeepSection) 
 }
 
 function buildOutput(belief: BeliefV2Session, literacy: LiteracySession): DeepOutput {
+  const canonicalAnswers = collapseStatementAnswers(belief.answers, lockedBeliefStatementsV3);
   return {
-    polygon: calculatePolygonV2Canonical(belief.answers),
-    families: assessFamiliesV2Canonical(belief.answers),
-    tendencies: assessTendenciesV2(belief.answers),
-    nuances: assessNuancesV2(belief.answers),
+    polygon: calculatePolygonV2Canonical(canonicalAnswers),
+    families: assessFamiliesV2Canonical(canonicalAnswers),
+    tendencies: assessTendenciesV2(canonicalAnswers),
+    nuances: assessNuancesV2(canonicalAnswers),
     literacy: calculateDeepLiteracyResult(deepLiteracyQuestions, literacy.answers),
   };
 }
 
 export default function DeepClient() {
+  const { locale } = useLocale();
   const [beliefSession, setBeliefSession] = useState<BeliefV2Session | null | undefined>(undefined);
   const [literacySession, setLiteracySession] = useState<LiteracySession | null>(null);
   const [phase, setPhase] = useState<DeepPhase>('believe');
@@ -165,7 +169,7 @@ export default function DeepClient() {
         <article className="engine-card">
           <p className="engine-kicker">Quick comes first</p>
           <h1>Complete Politangle Quick before Deep.</h1>
-          <p>Quick contains the first 26 items of the locked 42-item BELIEVE model. Deep adds the remaining 16 BELIEVE items and the political-literacy training block.</p>
+          <p>Quick contains 52 statements. Deep adds the remaining 32 BELIEVE statements and the political-literacy training block.</p>
           <Link className="engine-primary-link" href="/quiz">Start Quick</Link>
         </article>
       </section>
@@ -224,7 +228,7 @@ export default function DeepClient() {
       <section className="engine-shell">
         <article className="engine-card">
           <p className="engine-kicker">1 · Your completed political shape</p>
-          <h1>42 BELIEVE items: THINK, FEEL and ACT.</h1>
+          <h1>84 BELIEVE statements: THINK, FEEL and ACT.</h1>
           <p className="engine-help">The polygon is a multidimensional profile, not an ideology box. ACT reflects stated choices or intentions, not independently observed real-world behavior.</p>
           <div className="engine-results">
             {output.polygon.map((axis) => (
@@ -339,9 +343,7 @@ export default function DeepClient() {
 
   function chooseBelief(displayedValue: AnswerValue) {
     if (!currentBelief) return;
-    const flipped = isBeliefV2PoleFlipped(beliefSession.seed, currentBelief.id);
-    const stored = displayedToStoredBeliefV2Answer(displayedValue, flipped);
-    saveBelief(answerBeliefV2(beliefSession, currentBelief.id, stored));
+    saveBelief(answerBeliefV2(beliefSession, currentBelief.id, displayedValue));
   }
 
   function chooseLiteracy(optionId: string) {
@@ -387,17 +389,11 @@ export default function DeepClient() {
     finishDeep();
   }
 
-  const beliefDisplay = currentBelief ? (() => {
-    const flipped = isBeliefV2PoleFlipped(beliefSession.seed, currentBelief.id);
-    return {
-      statement: flipped ? currentBelief.negative : currentBelief.positive,
-      selected: storedToDisplayedBeliefV2Answer(beliefSelected, flipped),
-    };
-  })() : null;
+  const beliefDisplay = currentBelief ? { statement: currentBelief.statement, selected: beliefSelected } : null;
 
   const literacyItemResult = currentLiteracy && literacyChecked ? scoreLiteracyItem(currentLiteracy, literacySelected) : null;
   const correctLabels = currentLiteracy
-    ? currentLiteracy.acceptedAnswerSets[0].map((id) => currentLiteracy.options.find((option) => option.id === id)?.label).filter(Boolean).join(', ')
+    ? currentLiteracy.acceptedAnswerSets[0].map((id) => { const option = currentLiteracy.options.find((candidate) => candidate.id === id); return option ? (locale === 'de' ? germanLiteracyOption(option.id, option.label) : option.label) : undefined; }).filter(Boolean).join(', ')
     : '';
 
   return (
@@ -406,34 +402,34 @@ export default function DeepClient() {
         {phaseOrder.map((item) => <span className={item === phase ? 'active' : ''} key={item}>{phaseTitle[item]}</span>)}
       </div>
       <div className="engine-progress-row">
-        <span>BELIEVE {deepProgress.answered}/16 · CLASSIFY {classifyProgress.checked}/9 · UNDERSTAND {understandProgress.checked}/6</span>
-        <div className="engine-progress" aria-label="Deep progress"><span style={{ width: `${Math.round(((deepProgress.answered + classifyProgress.checked + understandProgress.checked) / 31) * 100)}%` }} /></div>
+        <span>BELIEVE {deepProgress.answered}/32 · CLASSIFY {classifyProgress.checked}/9 · UNDERSTAND {understandProgress.checked}/6</span>
+        <div className="engine-progress" aria-label="Deep progress"><span style={{ width: `${Math.round(((deepProgress.answered + classifyProgress.checked + understandProgress.checked) / 47) * 100)}%` }} /></div>
         <button type="button" className="engine-link-button" onClick={restartDeep}>Restart Deep</button>
       </div>
 
       {phase === 'believe' && currentBelief && beliefDisplay && (
         <article className="engine-card">
           <p className="engine-kicker">BELIEVE · {currentBelief.mode.toUpperCase()} · {currentBelief.construct.replaceAll('-', ' ')}</p>
-          <h1>How much do you agree?</h1>
-          <div className="engine-statement"><p>{beliefDisplay.statement}</p></div>
-          <p className="engine-help">These are the remaining 16 items of the locked 42-question BELIEVE model. There is no correct political answer.</p>
+          <h1>{locale === 'de' ? 'Wie sehr stimmen Sie zu?' : 'How much do you agree?'}</h1>
+          <div className="engine-statement"><p>{locale === 'de' ? germanBeliefStatement(currentBelief.sourceItemId, currentBelief.polarity) ?? beliefDisplay.statement : beliefDisplay.statement}</p></div>
+          <p className="engine-help">{locale === 'de' ? 'Dies sind die verbleibenden 32 Aussagen des 84-Aussagen-Modells. Es gibt keine politisch richtige Antwort.' : 'These are the remaining 32 statements of the 84-statement BELIEVE model. There is no correct political answer.'}</p>
           <div className="quick-scale" role="radiogroup" aria-label="Belief response">
             {agreementAnswerOptions.map((option) => (
               <button type="button" role="radio" aria-checked={beliefDisplay.selected === option.value} aria-label={option.label} className={beliefDisplay.selected === option.value ? 'quick-scale-answer selected' : 'quick-scale-answer'} key={String(option.value)} onClick={() => chooseBelief(option.value)}>{option.value === 'unsure' ? '?' : option.value > 0 ? `+${option.value}` : String(option.value).replace('-', '−')}</button>
             ))}
           </div>
-          <div className="quick-scale-key"><span><b>−2</b> Strongly disagree</span><span><b>0</b> Neither / depends</span><span><b>+2</b> Strongly agree</span><span><b>?</b> Not sure</span></div>
+          <div className="quick-scale-key"><span><b>−2</b> {locale === 'de' ? 'Stimme gar nicht zu' : 'Strongly disagree'}</span><span><b>0</b> {locale === 'de' ? 'Neutral / kommt darauf an' : 'Neither / depends'}</span><span><b>+2</b> {locale === 'de' ? 'Stimme voll zu' : 'Strongly agree'}</span><span><b>?</b> {locale === 'de' ? 'Unsicher' : 'Not sure'}</span></div>
         </article>
       )}
 
       {phase !== 'believe' && currentLiteracy && (
         <article className="engine-card">
           <p className="engine-kicker">{phaseTitle[phase]} · training question {index + 1} of {literacyOrder(literacySession, phase).length}</p>
-          <h1>{currentLiteracy.prompt}</h1>
+          <h1>{locale === 'de' ? germanLiteracyPrompt(currentLiteracy.id) ?? currentLiteracy.prompt : currentLiteracy.prompt}</h1>
           <p className="engine-help">{phase === 'classify' ? 'Match the description to the best-fitting political tradition.' : 'Choose the best-supported explanation.'} Check your answer to reveal the evidence-backed teaching explanation.</p>
           <div className="deep-options">
             {currentLiteracy.options.map((option) => (
-              <button type="button" disabled={literacyChecked} className={literacySelected.includes(option.id) ? 'deep-option selected' : 'deep-option'} key={option.id} onClick={() => chooseLiteracy(option.id)}>{option.label}</button>
+              <button type="button" disabled={literacyChecked} className={literacySelected.includes(option.id) ? 'deep-option selected' : 'deep-option'} key={option.id} onClick={() => chooseLiteracy(option.id)}>{locale === 'de' ? germanLiteracyOption(option.id, option.label) : option.label}</button>
             ))}
           </div>
 
@@ -441,7 +437,7 @@ export default function DeepClient() {
             <div className="engine-card" style={{ marginTop: 16 }}>
               <p className="engine-kicker">{literacyItemResult.correct ? 'Correct' : 'Not quite'}</p>
               {!literacyItemResult.correct && <p><strong>Best answer:</strong> {correctLabels}</p>}
-              <p>{currentLiteracy.explanation}</p>
+              <p>{locale === 'de' ? germanLiteracyExplanation(currentLiteracy.id, currentLiteracy.explanation) : currentLiteracy.explanation}</p>
             </div>
           )}
         </article>
@@ -449,7 +445,7 @@ export default function DeepClient() {
 
       <div className="engine-nav">
         <button type="button" onClick={() => setIndex((value) => Math.max(0, value - 1))} disabled={index === 0}>Previous</button>
-        <span>{phase === 'believe' ? `BELIEVE ${deepProgress.answered}/16` : `${phaseTitle[phase]} ${phase === 'classify' ? classifyProgress.checked : understandProgress.checked}/${literacyOrder(literacySession, phase).length}`}</span>
+        <span>{phase === 'believe' ? `BELIEVE ${deepProgress.answered}/32` : `${phaseTitle[phase]} ${phase === 'classify' ? classifyProgress.checked : understandProgress.checked}/${literacyOrder(literacySession, phase).length}`}</span>
         {phase === 'believe' ? (
           <button type="button" onClick={advanceBelief} disabled={!currentBelief || beliefSession.answers[currentBelief.id] === undefined || (index === beliefSession.deepOrder.length - 1 && !deepProgress.complete)}>{index === beliefSession.deepOrder.length - 1 ? 'Continue to CLASSIFY' : 'Next'}</button>
         ) : literacyChecked ? (

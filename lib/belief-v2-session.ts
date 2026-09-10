@@ -1,8 +1,10 @@
 import { BELIEF_V2_VERSION, type AttitudeMode, type BeliefAnswersV2 } from './belief-v2';
 import { lockedBeliefItemsV2 } from './belief-v2-engine';
+import { expandBeliefItems } from './belief-statements';
 import type { AnswerValue } from './questions';
 
-export const BELIEF_V2_SESSION_SCHEMA = 1 as const;
+export const BELIEF_V2_SESSION_SCHEMA = 2 as const;
+export const lockedBeliefStatementsV3 = expandBeliefItems(lockedBeliefItemsV2);
 
 export type BeliefV2Stage = 'quick' | 'deep';
 
@@ -53,8 +55,8 @@ function validAnswer(value: unknown): value is AnswerValue {
 
 export function createBeliefV2Session(seed: number | string, startedAt = new Date().toISOString()): BeliefV2Session {
   const numericSeed = typeof seed === 'number' ? seed >>> 0 : hashSeed(seed);
-  const quick = lockedBeliefItemsV2.filter((item) => item.stage === 'quick').map((item) => item.id);
-  const deep = lockedBeliefItemsV2.filter((item) => item.stage === 'deep').map((item) => item.id);
+  const quick = lockedBeliefStatementsV3.filter((item) => item.stage === 'quick').map((item) => item.id);
+  const deep = lockedBeliefStatementsV3.filter((item) => item.stage === 'deep').map((item) => item.id);
   return {
     schemaVersion: BELIEF_V2_SESSION_SCHEMA,
     questionnaireVersion: BELIEF_V2_VERSION,
@@ -67,7 +69,7 @@ export function createBeliefV2Session(seed: number | string, startedAt = new Dat
 }
 
 export function getBeliefV2Item(id: string) {
-  return lockedBeliefItemsV2.find((item) => item.id === id) ?? null;
+  return lockedBeliefStatementsV3.find((item) => item.id === id) ?? null;
 }
 
 export function isBeliefV2PoleFlipped(seed: number, itemId: string) {
@@ -118,14 +120,14 @@ export function beliefV2OverallProgress(session: BeliefV2Session) {
 }
 
 export function modeProgress(session: BeliefV2Session, mode: AttitudeMode) {
-  const ids = lockedBeliefItemsV2.filter((item) => item.mode === mode).map((item) => item.id);
+  const ids = lockedBeliefStatementsV3.filter((item) => item.mode === mode).map((item) => item.id);
   const answered = ids.filter((id) => validAnswer(session.answers[id])).length;
   const scored = ids.filter((id) => typeof session.answers[id] === 'number').length;
   return { answered, scored, total: ids.length, complete: answered === ids.length };
 }
 
 export function completeBeliefV2Session(session: BeliefV2Session, completedAt = new Date().toISOString()): BeliefV2Session {
-  if (!beliefV2OverallProgress(session).complete) throw new Error('Cannot complete an unfinished 42-item BELIEVE v2 session');
+  if (!beliefV2OverallProgress(session).complete) throw new Error('Cannot complete an unfinished 84-statement BELIEVE session');
   return { ...session, completedAt };
 }
 
@@ -137,8 +139,8 @@ export function parseBeliefV2Session(raw: string | null): BeliefV2Session | null
     if (candidate.questionnaireVersion !== BELIEF_V2_VERSION) return null;
     if (typeof candidate.seed !== 'number' || typeof candidate.startedAt !== 'string') return null;
     if (!Array.isArray(candidate.quickOrder) || !Array.isArray(candidate.deepOrder)) return null;
-    const expectedQuick = new Set(lockedBeliefItemsV2.filter((item) => item.stage === 'quick').map((item) => item.id));
-    const expectedDeep = new Set(lockedBeliefItemsV2.filter((item) => item.stage === 'deep').map((item) => item.id));
+    const expectedQuick = new Set(lockedBeliefStatementsV3.filter((item) => item.stage === 'quick').map((item) => item.id));
+    const expectedDeep = new Set(lockedBeliefStatementsV3.filter((item) => item.stage === 'deep').map((item) => item.id));
     const sameIds = (actual: string[], expected: Set<string>) => actual.length === expected.size && new Set(actual).size === expected.size && actual.every((id) => expected.has(id));
     if (!sameIds(candidate.quickOrder, expectedQuick) || !sameIds(candidate.deepOrder, expectedDeep)) return null;
     if (!candidate.answers || typeof candidate.answers !== 'object') return null;

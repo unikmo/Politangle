@@ -3,7 +3,9 @@
 import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
 import { assessFamiliesV2Canonical, calculatePolygonV2Canonical } from '../../lib/belief-v2-engine';
-import { beliefV2StageProgress, parseBeliefV2Session, type BeliefV2Session } from '../../lib/belief-v2-session';
+import { beliefV2StageProgress, lockedBeliefStatementsV3, parseBeliefV2Session, type BeliefV2Session } from '../../lib/belief-v2-session';
+import { collapseStatementAnswers } from '../../lib/belief-statements';
+import { useLocale } from '../LocaleProvider';
 
 const BELIEF_SESSION_KEY = 'politangle.believe.v2.session';
 
@@ -26,6 +28,8 @@ function familyBand(score: number | null) {
 }
 
 export default function ResultsClient() {
+  const { locale } = useLocale();
+  const t = (en: string, de: string) => locale === 'de' ? de : en;
   const [session, setSession] = useState<BeliefV2Session | null | undefined>(undefined);
 
   useEffect(() => {
@@ -34,22 +38,23 @@ export default function ResultsClient() {
 
   const result = useMemo(() => {
     if (!session || !beliefV2StageProgress(session, 'quick').complete) return null;
+    const canonicalAnswers = collapseStatementAnswers(session.answers, lockedBeliefStatementsV3);
     return {
-      polygon: calculatePolygonV2Canonical(session.answers),
-      families: assessFamiliesV2Canonical(session.answers),
+      polygon: calculatePolygonV2Canonical(canonicalAnswers),
+      families: assessFamiliesV2Canonical(canonicalAnswers),
     };
   }, [session]);
 
-  if (session === undefined) return <section className="engine-card"><p>Loading result…</p></section>;
+  if (session === undefined) return <section className="engine-card"><p>{t('Loading result…', 'Ergebnis wird geladen…')}</p></section>;
 
   if (!session || !result) {
     return (
       <section className="engine-shell">
         <article className="engine-card">
-          <p className="engine-kicker">No complete Quick result</p>
-          <h1>Take Politangle Quick first.</h1>
-          <p>Quick is the first 26 items of the locked 42-item BELIEVE model.</p>
-          <Link className="engine-primary-link" href="/quiz">Start Quick</Link>
+          <p className="engine-kicker">{t('No complete Quick result','Kein vollständiges Quick-Ergebnis')}</p>
+          <h1>{t('Take Politangle Quick first.','Starten Sie zuerst Politangle Quick.')}</h1>
+          <p>{t('Quick contains 52 independently answered statements from the first 26 constructs of the 84-statement BELIEVE model.','Quick enthält 52 einzeln beantwortete Aussagen aus den ersten 26 Konstrukten des BELIEVE-Modells mit 84 Aussagen.')}</p>
+          <Link className="engine-primary-link" href="/quiz">{t('Start Quick','Quick starten')}</Link>
         </article>
       </section>
     );
@@ -58,9 +63,9 @@ export default function ResultsClient() {
   return (
     <section className="engine-shell">
       <article className="engine-card">
-        <p className="engine-kicker">Your Political Shape · Quick</p>
-        <h1>Eight political axes — not one box.</h1>
-        <p className="engine-help">These are bipolar positions from the 26 Quick items. The eventual polygon uses these same eight axes. A value near the middle means mixed or balanced answers, not “no politics”. Deep completes the remaining 16 BELIEVE items and adds ACT.</p>
+        <p className="engine-kicker">{t('Your Political Shape · Quick','Ihre politische Form · Quick')}</p>
+        <h1>{t('Eight political axes — not one box.','Acht politische Achsen – keine Schublade.')}</h1>
+        <p className="engine-help">{t('These positions combine the 52 independently answered Quick statements into 26 balanced construct scores. A middle value means mixed or balanced answers, not “no politics”. Deep adds the remaining 32 statements.','Diese Positionen verbinden 52 einzeln beantwortete Aussagen zu 26 ausgewogenen Konstruktwerten. Ein mittlerer Wert bedeutet gemischte oder ausgewogene Antworten. Deep ergänzt 32 weitere Aussagen.')}</p>
 
         <div className="engine-results">
           {result.polygon.map((axis) => (
@@ -100,10 +105,10 @@ export default function ResultsClient() {
 
       <div className="engine-result-actions">
         <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-          <Link className="engine-primary-link" href="/deep">Continue: 16 Deep BELIEVE items</Link>
-          <Link className="engine-primary-link" href="/quiz">Review Quick</Link>
+          <Link className="engine-primary-link" href="/deep">{t('Continue: 32 Deep statements','Weiter: 32 Deep-Aussagen')}</Link>
+          <Link className="engine-primary-link" href="/quiz">{t('Review Quick','Quick prüfen')}</Link>
         </div>
-        <span>Locked BELIEVE model: 26 Quick + 16 Deep = 42.</span>
+        <span>{t('BELIEVE model: 52 Quick + 32 Deep = 84 statements.','BELIEVE-Modell: 52 Quick + 32 Deep = 84 Aussagen.')}</span>
       </div>
 
       <p className="engine-disclaimer">Content-validation engine. The family relevance matrix is evidence-informed but still requires respondent calibration, reliability testing and cross-national validation. Scores describe compatibility with measured characteristics; they do not assign a political identity.</p>

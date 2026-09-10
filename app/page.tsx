@@ -1,17 +1,22 @@
+'use client';
+import { LanguageSelector, useLocale } from './LocaleProvider';
+
 const Triangle = ({small=false}:{small?:boolean}) => <div className={small?'triangle small':'triangle'}><span className="dot"/></div>;
 
 export default function Home(){
+ const { locale } = useLocale();
+ const t = (en:string,de:string) => locale === 'de' ? de : en;
  return <main>
   <header className="nav wrap">
    <a className="brand" href="/"><Triangle small/><span><b>Politangle</b><small>Politics from every angle.</small></span></a>
-   <nav><a href="/quiz">Take the Quiz</a><a href="#learn">Learn</a><a href="#schools">For Schools</a><a href="#about">About</a></nav>
-   <div className="actions"><button className="lang">◎ &nbsp; EN⌄</button><a className="button dark" href="/quiz">Get Started</a></div>
+   <nav><a href="/quiz">{t('Take the Quiz','Test starten')}</a><a href="#learn">{t('Learn','Lernen')}</a><a href="#schools">{t('For Schools','Für Schulen')}</a><a href="#about">{t('About','Über uns')}</a></nav>
+   <div className="actions"><LanguageSelector/><a className="button dark" href="/quiz">{t('Get Started','Loslegen')}</a></div>
   </header>
 
   <section className="hero" id="quiz">
    <div className="heroPhoto" aria-hidden="true"/>
    <div className="wrap heroGrid">
-    <div className="heroCopy"><p className="eyebrow">PEOPLE. IDEAS. A BRIGHTER TOMORROW.</p><h1>Different<br/>views.<br/>A stronger<br/>tomorrow.</h1><div className="rule"/><p className="lede">Explore your political angle, understand the bigger picture, and be part of a more open conversation.</p><a className="button dark heroButton" href="/quiz">Take the Quiz <span>→</span></a><p className="micro">26 statements · about 3 minutes · free</p></div>
+    <div className="heroCopy"><p className="eyebrow">{t('PEOPLE. IDEAS. A BRIGHTER TOMORROW.','MENSCHEN. IDEEN. EINE BESSERE ZUKUNFT.')}</p><h1>{t('Different views. A stronger tomorrow.','Verschiedene Ansichten. Eine stärkere Zukunft.')}</h1><div className="rule"/><p className="lede">{t('Explore your political angle, understand the bigger picture, and be part of a more open conversation.','Entdecken Sie Ihre politische Perspektive, verstehen Sie das Gesamtbild und werden Sie Teil eines offeneren Gesprächs.')}</p><a className="button dark heroButton" href="/quiz">{t('Take the Quiz','Test starten')} <span>→</span></a><p className="micro">{t('52 statements · about 6 minutes · free','52 Aussagen · etwa 6 Minuten · kostenlos')}</p></div>
     <div className="heroVisual"><div className="axis top"><span>More collective<br/>solutions</span><span>More market<br/>freedom</span></div><Triangle/><div className="axis side left">More social<br/>progress</div><div className="axis side right">More tradition<br/>and continuity</div><div className="axis bottom">More individual freedom</div><p className="script">Curious minds<br/>build a stronger<br/>tomorrow.</p></div>
    </div>
   </section>
@@ -22,7 +27,7 @@ export default function Home(){
 
   <section className="schools" id="schools"><div className="schoolCopy"><p className="eyebrow">FOR SCHOOLS</p><h2>Better conversations.<br/>Brighter futures.</h2><p>The school model is being designed to measure learning while keeping individual political beliefs private from teachers.</p><a className="textLink" href="#schools">School model in development &nbsp;→</a></div><div className="schoolPhoto"/><p className="schoolScript">Curious minds<br/>build a stronger<br/>tomorrow.</p></section>
 
-  <section className="stats wrap"><div><b>26 statements</b><small>Versioned Quick assessment</small></div><div><b>4 dimensions</b><small>Scored independently</small></div><div><b>Session-local</b><small>Raw answers are not written to Firestore in this build.</small></div><div><b>Versioned engine</b><small>Questionnaire and scoring versions travel with every result.</small></div></section>
+  <section className="stats wrap"><div><b>{t('52 statements','52 Aussagen')}</b><small>{t('Versioned Quick assessment','Versionierter Quick-Test')}</small></div><div><b>{t('4 dimensions','4 Dimensionen')}</b><small>{t('Scored independently','Unabhängig ausgewertet')}</small></div><div><b>{t('Session-local','Nur in dieser Sitzung')}</b><small>{t('Raw answers are not written to Firestore in this build.','Rohantworten werden in dieser Version nicht in Firestore gespeichert.')}</small></div><div><b>{t('Versioned engine','Versionierte Auswertung')}</b><small>{t('Questionnaire and scoring versions travel with every result.','Fragebogen- und Auswertungsversion gehören zu jedem Ergebnis.')}</small></div></section>
   <footer className="wrap" id="about"><a className="brand" href="/"><Triangle small/><span><b>Politangle</b><small>Politics from every angle.</small></span></a><div><a href="#">Imprint</a><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Contact</a></div><small>Validation build.</small></footer>
  </main>
 }

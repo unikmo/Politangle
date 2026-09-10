@@ -1,6 +1,9 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
+import { germanBeliefStatement } from '../../../lib/german-believe';
+import { germanLiteracyExplanation, germanLiteracyOption, germanLiteracyPrompt } from '../../../lib/german-literacy';
+import { useLocale } from '../../LocaleProvider';
 
 type ClassroomQuestion = {
   id: string;
@@ -8,6 +11,8 @@ type ClassroomQuestion = {
   title: string;
   construct?: string;
   mode?: string;
+  sourceItemId?: string;
+  polarity?: 'negative' | 'positive';
   section?: string;
   statement?: string;
   prompt?: string;
@@ -61,6 +66,7 @@ function DistributionChart({ data }: { data: Distribution }) {
 }
 
 export default function StudentSchoolClient({ initialCode }: { initialCode: string }) {
+  const { locale } = useLocale();
   const [entryCode, setEntryCode] = useState(initialCode.toUpperCase());
   const [code, setCode] = useState('');
   const [token, setToken] = useState('');
@@ -196,14 +202,14 @@ export default function StudentSchoolClient({ initialCode }: { initialCode: stri
         <article className="engine-card school-question-card">
           <p className="engine-kicker">{room.activity.pacing === 'teacher' ? `Live question ${room.currentIndex + 1}` : `Question ${studentIndex + 1} of ${room.activity.questionIds.length}`} · {question.title}</p>
           {question.kind === 'believe' ? (
-            <><h1>How much do you agree?</h1><div className="engine-statement"><p>{question.statement}</p></div></>
-          ) : <><h1>{question.prompt}</h1><p className="engine-help">This is a political-literacy question. A correct answer can be revealed after the class responds.</p></>}
+            <><h1>{locale === 'de' ? 'Wie sehr stimmen Sie zu?' : 'How much do you agree?'}</h1><div className="engine-statement"><p>{locale === 'de' && question.sourceItemId && question.polarity ? germanBeliefStatement(question.sourceItemId, question.polarity) ?? question.statement : question.statement}</p></div></>
+          ) : <><h1>{locale === 'de' ? germanLiteracyPrompt(question.id) ?? question.prompt : question.prompt}</h1><p className="engine-help">{locale === 'de' ? 'Dies ist eine Frage zur politischen Bildung. Nach den Antworten kann die richtige Lösung eingeblendet werden.' : 'This is a political-literacy question. A correct answer can be revealed after the class responds.'}</p></>}
 
           {!alreadySubmitted && (room.activity.pacing === 'student' || room.questionOpen) ? (
-            <><div className={question.kind === 'believe' ? 'school-believe-options' : 'deep-options'}>{question.options.map((option) => { const active = Array.isArray(selected) ? selected.includes(option.id) : selected === option.id; const compactLabel = option.id === 'unsure' ? '?' : Number(option.id) > 0 ? `+${option.id}` : option.id.replace('-', '−'); return <button key={option.id} type="button" aria-label={option.label} className={active ? 'deep-option selected' : 'deep-option'} onClick={() => choose(option.id)}>{question.kind === 'believe' ? compactLabel : option.label}</button>; })}</div>{question.kind === 'believe' && <div className="quick-scale-key"><span><b>−2</b> Strongly disagree</span><span><b>0</b> Neither / depends</span><span><b>+2</b> Strongly agree</span><span><b>?</b> Not sure</span></div>}<div className="engine-result-actions"><button className="engine-primary-link" type="button" disabled={busy || selected === undefined || (Array.isArray(selected) && !selected.length)} onClick={submit}>{busy ? 'Submitting…' : 'Submit anonymously'}</button></div></>
+            <><div className={question.kind === 'believe' ? 'school-believe-options' : 'deep-options'}>{question.options.map((option) => { const active = Array.isArray(selected) ? selected.includes(option.id) : selected === option.id; const compactLabel = option.id === 'unsure' ? '?' : Number(option.id) > 0 ? `+${option.id}` : option.id.replace('-', '−'); return <button key={option.id} type="button" aria-label={option.label} className={active ? 'deep-option selected' : 'deep-option'} onClick={() => choose(option.id)}>{question.kind === 'believe' ? compactLabel : locale === 'de' ? germanLiteracyOption(option.id, option.label) : option.label}</button>; })}</div>{question.kind === 'believe' && <div className="quick-scale-key"><span><b>−2</b> {locale === 'de' ? 'Stimme gar nicht zu' : 'Strongly disagree'}</span><span><b>0</b> {locale === 'de' ? 'Neutral / kommt darauf an' : 'Neither / depends'}</span><span><b>+2</b> {locale === 'de' ? 'Stimme voll zu' : 'Strongly agree'}</span><span><b>?</b> {locale === 'de' ? 'Unsicher' : 'Not sure'}</span></div>}<div className="engine-result-actions"><button className="engine-primary-link" type="button" disabled={busy || selected === undefined || (Array.isArray(selected) && !selected.length)} onClick={submit}>{busy ? (locale === 'de' ? 'Wird gesendet…' : 'Submitting…') : (locale === 'de' ? 'Anonym absenden' : 'Submit anonymously')}</button></div></>
           ) : alreadySubmitted ? <div className="school-submitted"><strong>Response received.</strong><span>Waiting for the class / teacher.</span></div> : <p className="engine-callout">Waiting for your teacher to open this question.</p>}
 
-          {revealForCurrent && room.projectorDistribution && <div className="school-reveal-panel"><p className="engine-kicker">How the room answered · {room.projectorDistribution.responses} responses</p><DistributionChart data={room.projectorDistribution} />{question.kind === 'literacy' && question.explanation && <div className="deep-explanation"><strong>Explanation</strong><br />{question.explanation}</div>}</div>}
+          {revealForCurrent && room.projectorDistribution && <div className="school-reveal-panel"><p className="engine-kicker">{locale === 'de' ? 'Antworten der Klasse' : 'How the room answered'} · {room.projectorDistribution.responses}</p><DistributionChart data={room.projectorDistribution} />{question.kind === 'literacy' && question.explanation && <div className="deep-explanation"><strong>{locale === 'de' ? 'Erklärung' : 'Explanation'}</strong><br />{locale === 'de' ? germanLiteracyExplanation(question.id, question.explanation) : question.explanation}</div>}</div>}
 
           {room.activity.pacing === 'student' && alreadySubmitted && <div className="engine-nav"><button type="button" disabled={studentIndex === 0} onClick={() => setStudentIndex((value) => Math.max(0, value - 1))}>Previous</button><span>{submittedIds.filter((id) => room.activity.questionIds.includes(id)).length}/{room.activity.questionIds.length} submitted</span><button type="button" disabled={studentIndex >= room.activity.questionIds.length - 1} onClick={() => setStudentIndex((value) => Math.min(room.activity.questionIds.length - 1, value + 1))}>Next</button></div>}
         </article>

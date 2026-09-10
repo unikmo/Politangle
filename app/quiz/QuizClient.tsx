@@ -6,14 +6,13 @@ import {
   answerBeliefV2,
   beliefV2StageProgress,
   createBeliefV2Session,
-  displayedToStoredBeliefV2Answer,
   getBeliefV2Item,
-  isBeliefV2PoleFlipped,
   parseBeliefV2Session,
-  storedToDisplayedBeliefV2Answer,
   type BeliefV2Session,
 } from '../../lib/belief-v2-session';
 import { agreementAnswerOptions, type AnswerValue } from '../../lib/questions';
+import { germanBeliefStatement } from '../../lib/german-believe';
+import { useLocale } from '../LocaleProvider';
 
 export const BELIEF_SESSION_KEY = 'politangle.believe.v2.session';
 const LITERACY_SESSION_KEY = 'politangle.literacy.v2.session';
@@ -22,6 +21,13 @@ function constructLabel(construct: string) {
   if (construct === 'nationhood-membership') return 'Nationhood';
   return construct.replaceAll('-', ' ').replace(/\b\w/g, (letter) => letter.toUpperCase());
 }
+
+const germanConstructs: Record<string, string> = {
+  'public-provision': 'Öffentliche Daseinsvorsorge', redistribution: 'Umverteilung', ownership: 'Eigentum', 'social-change': 'Gesellschaftlicher Wandel',
+  'personal-autonomy': 'Persönliche Autonomie', abortion: 'Schwangerschaftsabbruch', 'authority-order': 'Freiheit und Ordnung', pluralism: 'Pluralismus',
+  'world-sovereignty': 'Internationale Zusammenarbeit', 'nationhood-membership': 'Zugehörigkeit zur Nation', populism: 'Populismus',
+  'ecology-growth': 'Ökologie und Wachstum', 'religion-public-role': 'Religion im öffentlichen Raum', subsidiarity: 'Subsidiarität',
+};
 
 function newSeed() {
   if (typeof crypto !== 'undefined' && 'getRandomValues' in crypto) {
@@ -33,6 +39,7 @@ function newSeed() {
 }
 
 export default function QuizClient() {
+  const { locale } = useLocale();
   const router = useRouter();
   const [session, setSession] = useState<BeliefV2Session | null>(null);
   const [index, setIndex] = useState(0);
@@ -57,9 +64,7 @@ export default function QuizClient() {
   }
 
   const progress = beliefV2StageProgress(session, 'quick');
-  const flipped = isBeliefV2PoleFlipped(session.seed, current.id);
-  const statement = flipped ? current.negative : current.positive;
-  const selected = storedToDisplayedBeliefV2Answer(session.answers[current.id], flipped);
+  const selected = session.answers[current.id];
 
   function save(next: BeliefV2Session) {
     sessionStorage.setItem(BELIEF_SESSION_KEY, JSON.stringify(next));
@@ -67,8 +72,7 @@ export default function QuizClient() {
   }
 
   function choose(displayedValue: AnswerValue) {
-    const storedValue = displayedToStoredBeliefV2Answer(displayedValue, flipped);
-    const next = answerBeliefV2(session, current.id, storedValue);
+    const next = answerBeliefV2(session, current.id, displayedValue);
     save(next);
     if (index < next.quickOrder.length - 1) window.setTimeout(() => setIndex((value) => value + 1), 90);
   }
@@ -91,20 +95,20 @@ export default function QuizClient() {
       <div className="engine-progress-row">
         <span>{progress.answered} / {progress.total}</span>
         <div className="engine-progress" aria-label={`${progress.percent}% complete`}><span style={{ width: `${progress.percent}%` }} /></div>
-        <button type="button" className="engine-link-button" onClick={restart}>Restart</button>
+        <button type="button" className="engine-link-button" onClick={restart}>{locale === 'de' ? 'Neu starten' : 'Restart'}</button>
       </div>
 
       <article className="engine-card">
-        <p className="engine-kicker quick-topic">{constructLabel(current.construct)}</p>
-        <h1>How much do you agree?</h1>
-        <div className="engine-statement"><p>{statement}</p></div>
+        <p className="engine-kicker quick-topic">{locale === 'de' ? germanConstructs[current.construct] ?? constructLabel(current.construct) : constructLabel(current.construct)}</p>
+        <h1>{locale === 'de' ? 'Wie sehr stimmen Sie zu?' : 'How much do you agree?'}</h1>
+        <div className="engine-statement"><p>{locale === 'de' ? germanBeliefStatement(current.sourceItemId, current.polarity) ?? current.statement : current.statement}</p></div>
         <div className="quick-scale" role="radiogroup" aria-label="Response">
           {agreementAnswerOptions.map((option) => (
             <button
               type="button"
               role="radio"
               aria-checked={selected === option.value}
-              aria-label={option.label}
+              aria-label={locale === 'de' ? ({ '-2': 'Stimme gar nicht zu', '-1': 'Stimme eher nicht zu', '0': 'Neutral oder kommt darauf an', '1': 'Stimme eher zu', '2': 'Stimme voll zu', unsure: 'Unsicher oder nicht verstanden' } as Record<string,string>)[String(option.value)] : option.label}
               className={selected === option.value ? 'quick-scale-answer selected' : 'quick-scale-answer'}
               key={String(option.value)}
               onClick={() => choose(option.value)}
@@ -114,20 +118,20 @@ export default function QuizClient() {
           ))}
         </div>
         <div className="quick-scale-key">
-          <span><b>−2</b> Strongly disagree</span>
-          <span><b>0</b> Neither / depends</span>
-          <span><b>+2</b> Strongly agree</span>
-          <span><b>?</b> Not sure</span>
+          <span><b>−2</b> {locale === 'de' ? 'Stimme gar nicht zu' : 'Strongly disagree'}</span>
+          <span><b>0</b> {locale === 'de' ? 'Neutral / kommt darauf an' : 'Neither / depends'}</span>
+          <span><b>+2</b> {locale === 'de' ? 'Stimme voll zu' : 'Strongly agree'}</span>
+          <span><b>?</b> {locale === 'de' ? 'Unsicher' : 'Not sure'}</span>
         </div>
       </article>
 
       <div className="engine-nav">
-        <button type="button" onClick={() => setIndex((value) => Math.max(0, value - 1))} disabled={index === 0}>Previous</button>
-        <span>{progress.unsure ? `${progress.unsure} marked not sure` : 'No unsure responses so far'}</span>
+        <button type="button" onClick={() => setIndex((value) => Math.max(0, value - 1))} disabled={index === 0}>{locale === 'de' ? 'Zurück' : 'Previous'}</button>
+        <span>{progress.unsure ? (locale === 'de' ? `${progress.unsure} als unsicher markiert` : `${progress.unsure} marked not sure`) : (locale === 'de' ? 'Bisher keine unsicheren Antworten' : 'No unsure responses so far')}</span>
         {index === session.quickOrder.length - 1 ? (
-          <button type="button" onClick={finish} disabled={!progress.complete}>See Quick result</button>
+          <button type="button" onClick={finish} disabled={!progress.complete}>{locale === 'de' ? 'Quick-Ergebnis anzeigen' : 'See Quick result'}</button>
         ) : (
-          <button type="button" onClick={() => setIndex((value) => Math.min(session.quickOrder.length - 1, value + 1))}>Next</button>
+          <button type="button" onClick={() => setIndex((value) => Math.min(session.quickOrder.length - 1, value + 1))}>{locale === 'de' ? 'Weiter' : 'Next'}</button>
         )}
       </div>
     </section>

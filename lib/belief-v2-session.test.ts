@@ -9,27 +9,27 @@ import {
   displayedToStoredBeliefV2Answer,
   getBeliefV2Item,
   isBeliefV2PoleFlipped,
+  lockedBeliefStatementsV3,
   modeProgress,
   parseBeliefV2Session,
   storedToDisplayedBeliefV2Answer,
 } from './belief-v2-session';
-import { lockedBeliefItemsV2 } from './belief-v2-engine';
 
-test('BELIEVE v2 session deterministically contains 26 Quick and 16 Deep items', () => {
+test('BELIEVE session deterministically contains 52 Quick and 32 Deep statements', () => {
   const first = createBeliefV2Session('same-seed', '2026-09-07T00:00:00.000Z');
   const second = createBeliefV2Session('same-seed', '2026-09-07T00:00:00.000Z');
   assert.deepEqual(first.quickOrder, second.quickOrder);
   assert.deepEqual(first.deepOrder, second.deepOrder);
-  assert.equal(first.quickOrder.length, 26);
-  assert.equal(first.deepOrder.length, 16);
-  assert.equal(new Set([...first.quickOrder, ...first.deepOrder]).size, 42);
+  assert.equal(first.quickOrder.length, 52);
+  assert.equal(first.deepOrder.length, 32);
+  assert.equal(new Set([...first.quickOrder, ...first.deepOrder]).size, 84);
 });
 
-test('all forty-two locked items are required to complete BELIEVE v2', () => {
+test('all eighty-four statements are required to complete BELIEVE', () => {
   let session = createBeliefV2Session('complete-test');
   assert.throws(() => completeBeliefV2Session(session));
-  for (const item of lockedBeliefItemsV2) session = answerBeliefV2(session, item.id, 0);
-  assert.deepEqual(beliefV2OverallProgress(session), { answered: 42, unsure: 0, total: 42, complete: true, percent: 100 });
+  for (const item of lockedBeliefStatementsV3) session = answerBeliefV2(session, item.id, 0);
+  assert.deepEqual(beliefV2OverallProgress(session), { answered: 84, unsure: 0, total: 84, complete: true, percent: 100 });
   assert.doesNotThrow(() => completeBeliefV2Session(session));
 });
 
@@ -38,15 +38,15 @@ test('Quick and Deep progress stay separate while overall progress joins them', 
   for (const id of session.quickOrder) session = answerBeliefV2(session, id, 0);
   assert.equal(beliefV2StageProgress(session, 'quick').complete, true);
   assert.equal(beliefV2StageProgress(session, 'deep').complete, false);
-  assert.equal(beliefV2OverallProgress(session).answered, 26);
-  assert.equal(beliefV2OverallProgress(session).total, 42);
+  assert.equal(beliefV2OverallProgress(session).answered, 52);
+  assert.equal(beliefV2OverallProgress(session).total, 84);
 });
 
-test('Think Feel Act mode progress contains fourteen items each', () => {
+test('Think Feel Act mode progress contains twenty-eight statements each', () => {
   const session = createBeliefV2Session('mode-test');
-  assert.equal(modeProgress(session, 'think').total, 14);
-  assert.equal(modeProgress(session, 'feel').total, 14);
-  assert.equal(modeProgress(session, 'act').total, 14);
+  assert.equal(modeProgress(session, 'think').total, 28);
+  assert.equal(modeProgress(session, 'feel').total, 28);
+  assert.equal(modeProgress(session, 'act').total, 28);
 });
 
 test('pole flipping preserves midpoint and unsure while reversing directional answers', () => {

@@ -55,11 +55,11 @@ test('anonymous joins increase only the room total', () => {
 test('teacher can configure and launch Quick, Full, literacy or custom activities', () => {
   let current = record();
   current = configureSchoolClass(current, { type: 'full42', pacing: 'student', projectorMode: 'live' });
-  assert.equal(current.activity.questionIds.length, 42);
+  assert.equal(current.activity.questionIds.length, 84);
   assert.equal(current.activity.pacing, 'student');
-  current = configureSchoolClass(current, { type: 'custom', questionIds: ['T01', 'C1'] });
-  current = launchSchoolQuestion(current, 'T01');
-  assert.equal(current.currentQuestionId, 'T01');
+  current = configureSchoolClass(current, { type: 'custom', questionIds: ['T01-P', 'C1'] });
+  current = launchSchoolQuestion(current, 'T01-P');
+  assert.equal(current.currentQuestionId, 'T01-P');
   assert.equal(current.questionOpen, true);
   current = closeSchoolQuestion(current);
   assert.equal(current.questionOpen, false);
@@ -71,26 +71,26 @@ test('teacher can configure and launch Quick, Full, literacy or custom activitie
 
 test('BELIEVE answers are stored only as aggregate option buckets', () => {
   let current = record();
-  current = applySchoolResponse(current, belief('T01', '-2', 'browser-a'));
-  current = applySchoolResponse(current, belief('T01', '2', 'browser-b'));
-  assert.equal(current.questions.T01.responses, 2);
-  assert.equal(current.questions.T01.optionCounts['-2'], 1);
-  assert.equal(current.questions.T01.optionCounts['2'], 1);
-  assert.equal('participantToken' in current.questions.T01, false);
+  current = applySchoolResponse(current, belief('T01-P', '-2', 'browser-a'));
+  current = applySchoolResponse(current, belief('T01-P', '2', 'browser-b'));
+  assert.equal(current.questions['T01-P'].responses, 2);
+  assert.equal(current.questions['T01-P'].optionCounts['-2'], 1);
+  assert.equal(current.questions['T01-P'].optionCounts['2'], 1);
+  assert.equal('participantToken' in current.questions['T01-P'], false);
   assert.equal('answers' in current, false);
 });
 
 test('teacher sees developing aggregate distribution without an n threshold', () => {
-  let current = launchSchoolQuestion(record(), 'T01');
-  current = applySchoolResponse(current, belief('T01', '-1'));
+  let current = launchSchoolQuestion(record(), 'T01-P');
+  current = applySchoolResponse(current, belief('T01-P', '-1'));
   const teacher = teacherSchoolClassSummary(current);
   assert.equal(teacher.currentDistribution?.responses, 1);
   assert.equal(teacher.currentDistribution?.distribution.find((item) => item.id === '-1')?.count, 1);
 });
 
 test('projector reveal mode hides distribution until reveal while teacher still sees it', () => {
-  let current = launchSchoolQuestion(record(), 'T01');
-  current = applySchoolResponse(current, belief('T01', '1'));
+  let current = launchSchoolQuestion(record(), 'T01-P');
+  current = applySchoolResponse(current, belief('T01-P', '1'));
   assert.equal(publicSchoolClassSummary(current).projectorDistribution, null);
   assert.equal(teacherSchoolClassSummary(current).currentDistribution?.responses, 1);
   current = revealSchoolQuestion(current, true);
@@ -99,8 +99,8 @@ test('projector reveal mode hides distribution until reveal while teacher still 
 
 test('live projector mode can show aggregate while voting remains open', () => {
   let current = configureSchoolClass(record(), { type: 'quick26', projectorMode: 'live' });
-  current = launchSchoolQuestion(current, 'T01');
-  current = applySchoolResponse(current, belief('T01', '0'));
+  current = launchSchoolQuestion(current, 'T01-P');
+  current = applySchoolResponse(current, belief('T01-P', '0'));
   assert.equal(publicSchoolClassSummary(current).projectorDistribution?.responses, 1);
 });
 
@@ -121,12 +121,12 @@ test('class summary retains split distributions and produces aggregate political
     current = applySchoolResponse(current, belief(id, '2', `participant-b-${id}`));
   }
   const summary = schoolClassSummary(current);
-  assert.equal(summary.answeredQuestions, 42);
+  assert.equal(summary.answeredQuestions, 84);
   assert.equal(summary.polygon.length, 8);
   assert.equal(summary.families.length, 5);
   assert.ok(summary.families.every((family) => family.overall !== null));
   assert.ok(summary.constructModes.every((row) => row.think !== null && row.feel !== null && row.act !== null));
-  const first = summary.questions.find((q) => q.id === 'T01')!;
+  const first = summary.questions.find((q) => q.id === 'T01-N')!;
   assert.equal(first.distribution.find((item) => item.id === '-2')?.percent, 50);
   assert.equal(first.distribution.find((item) => item.id === '2')?.percent, 50);
 });
