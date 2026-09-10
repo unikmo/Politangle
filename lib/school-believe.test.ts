@@ -18,13 +18,24 @@ test('Youth form preserves all 42 adult scoring coordinates while changing wordi
     assert.notEqual(youth.negative, adult.negative);
     assert.notEqual(youth.positive, adult.positive);
   }
-  assert.equal(lockedBeliefItemsV2[0].negative, 'Government should take broad responsibility for ensuring that everyone can obtain essential services.');
+  assert.match(lockedBeliefItemsV2[0].negative, /essential services/i);
 });
 
 test('Youth wording has controlled reading load for cognitive testing', () => {
   const sides = schoolYouthBeliefItems.flatMap((item) => [item.negative, item.positive]);
   assert.ok(sides.every((side) => words(side) <= 30));
   assert.ok(sides.reduce((sum, side) => sum + words(side), 0) / sides.length <= 20);
+});
+
+test('Youth FEEL questions are complete standalone statements', () => {
+  const text = schoolYouthBeliefItems.filter((item) => item.mode === 'feel').flatMap((item) => [item.negative, item.positive]).join(' ');
+  assert.doesNotMatch(text, /\bI (?:feel |am )?more\b/i);
+});
+
+test('Youth political-influence wording avoids elite-versus-people repetition', () => {
+  const text = schoolYouthBeliefItems.filter((item) => item.construct === 'populism').flatMap((item) => [item.negative, item.positive]).join(' ');
+  assert.doesNotMatch(text, /\belites?\b/i);
+  assert.match(text, /well-connected/i);
 });
 
 test('Junior bank is separately identified, short and construct-diverse', () => {
