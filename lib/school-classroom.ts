@@ -5,9 +5,9 @@ import { expandBeliefItems, type BeliefPolarity } from './belief-statements';
 import type { AnswerValue } from './questions';
 import { getSchoolLesson, schoolLessons, type SchoolLessonId } from './school-lessons';
 import { isJuniorSchoolAgeBand, schoolBeliefItems, schoolJuniorBeliefItems, type SchoolAgeBand } from './school-believe';
-import { lockedQuickStatementIds } from './belief-v2-session';
+import { lockedFullFollowUpStatementIds, lockedQuickStatementIds } from './belief-v2-session';
 
-export const SCHOOL_CLASSROOM_VERSION = 'school-classroom-2026.09-v4-single-statements' as const;
+export const SCHOOL_CLASSROOM_VERSION = 'school-classroom-2026.09-v5-full42' as const;
 
 export type ClassroomActivityType = 'junior' | 'quick26' | 'full42' | 'literacy' | 'guided' | 'custom';
 export type ClassroomPacing = 'teacher' | 'student';
@@ -53,7 +53,7 @@ const literacyById = new Map(deepLiteracyQuestions.map((question) => [question.i
 const adultBeliefStatements = expandBeliefItems(lockedBeliefItemsV2);
 
 export const classroomQuickIds = [...lockedQuickStatementIds];
-export const classroomFullIds = adultBeliefStatements.map((item) => item.id);
+export const classroomFullIds = [...lockedQuickStatementIds, ...lockedFullFollowUpStatementIds];
 export const classroomLiteracyIds = deepLiteracyQuestions.map((question) => question.id);
 export const classroomAllIds = [...classroomFullIds, ...classroomLiteracyIds];
 export const classroomJuniorIds = expandBeliefItems(schoolJuniorBeliefItems).map((item) => item.id);
@@ -132,7 +132,7 @@ export function buildClassroomActivity(input: unknown): ClassroomActivityConfig 
 
   if (type === 'junior') return { type, title: 'Junior 32', questionIds: [...classroomJuniorIds], pacing, projectorMode, ageBand: 'junior-10-13' };
   if (type === 'quick26') return { type, title: 'Youth Quick 26', questionIds: [...classroomQuickIds], pacing, projectorMode, ageBand };
-  if (type === 'full42') return { type, title: 'Youth Full 84', questionIds: [...classroomFullIds], pacing, projectorMode, ageBand };
+  if (type === 'full42') return { type, title: 'Youth Full 42', questionIds: [...classroomFullIds], pacing, projectorMode, ageBand };
   if (type === 'literacy') return { type, title: 'Political Literacy Quiz', questionIds: [...classroomLiteracyIds], pacing, projectorMode, ageBand };
   if (type === 'guided') {
     const lesson = getSchoolLesson(typeof value.lessonId === 'string' ? value.lessonId : undefined);
