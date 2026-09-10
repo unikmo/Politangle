@@ -10,37 +10,43 @@ import {
   firstUnansweredIndex,
   getBeliefV2Item,
   isBeliefV2PoleFlipped,
-  lockedBeliefStatementsV3,
   modeProgress,
   parseBeliefV2Session,
   storedToDisplayedBeliefV2Answer,
 } from './belief-v2-session';
 
-test('BELIEVE session deterministically contains 26 Quick and 58 Full follow-up statements', () => {
+test('BELIEVE session deterministically contains 26 Quick and 16 Full questions', () => {
   const first = createBeliefV2Session('same-seed', '2026-09-07T00:00:00.000Z');
   const second = createBeliefV2Session('same-seed', '2026-09-07T00:00:00.000Z');
   assert.deepEqual(first.quickOrder, second.quickOrder);
   assert.deepEqual(first.deepOrder, second.deepOrder);
   assert.equal(first.quickOrder.length, 26);
-  assert.equal(first.deepOrder.length, 58);
-  assert.equal(new Set([...first.quickOrder, ...first.deepOrder]).size, 84);
+  assert.equal(first.deepOrder.length, 16);
+  assert.equal(new Set([...first.quickOrder, ...first.deepOrder]).size, 42);
 });
 
-test('all eighty-four statements are required to complete BELIEVE', () => {
+test('the user sees each source item only once across Quick and Full', () => {
+  const session = createBeliefV2Session('one-source-one-question');
+  const sourceIds = [...session.quickOrder, ...session.deepOrder].map((id) => getBeliefV2Item(id)!.sourceItemId);
+  assert.equal(sourceIds.length, 42);
+  assert.equal(new Set(sourceIds).size, 42);
+});
+
+test('all forty-two selected questions are required to complete BELIEVE', () => {
   let session = createBeliefV2Session('complete-test');
   assert.throws(() => completeBeliefV2Session(session));
-  for (const item of lockedBeliefStatementsV3) session = answerBeliefV2(session, item.id, 0);
-  assert.deepEqual(beliefV2OverallProgress(session), { answered: 84, unsure: 0, total: 84, complete: true, percent: 100 });
+  for (const id of [...session.quickOrder, ...session.deepOrder]) session = answerBeliefV2(session, id, 0);
+  assert.deepEqual(beliefV2OverallProgress(session), { answered: 42, unsure: 0, total: 42, complete: true, percent: 100 });
   assert.doesNotThrow(() => completeBeliefV2Session(session));
 });
 
-test('Quick and Deep progress stay separate while overall progress joins them', () => {
+test('Quick and Full progress stay separate while overall progress joins them', () => {
   let session = createBeliefV2Session('progress-test');
   for (const id of session.quickOrder) session = answerBeliefV2(session, id, 0);
   assert.equal(beliefV2StageProgress(session, 'quick').complete, true);
   assert.equal(beliefV2StageProgress(session, 'deep').complete, false);
   assert.equal(beliefV2OverallProgress(session).answered, 26);
-  assert.equal(beliefV2OverallProgress(session).total, 84);
+  assert.equal(beliefV2OverallProgress(session).total, 42);
 });
 
 test('a skipped Quick response can always be located from the final screen', () => {
@@ -52,11 +58,11 @@ test('a skipped Quick response can always be located from the final screen', () 
   assert.equal(firstUnansweredIndex(session, 'quick'), null);
 });
 
-test('Think Feel Act mode progress contains twenty-eight statements each', () => {
+test('Think Feel Act mode progress contains fourteen questions each', () => {
   const session = createBeliefV2Session('mode-test');
-  assert.equal(modeProgress(session, 'think').total, 28);
-  assert.equal(modeProgress(session, 'feel').total, 28);
-  assert.equal(modeProgress(session, 'act').total, 28);
+  assert.equal(modeProgress(session, 'think').total, 14);
+  assert.equal(modeProgress(session, 'feel').total, 14);
+  assert.equal(modeProgress(session, 'act').total, 14);
 });
 
 test('pole flipping preserves midpoint and unsure while reversing directional answers', () => {
