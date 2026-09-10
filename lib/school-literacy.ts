@@ -147,7 +147,7 @@ export const schoolPostQuestions: readonly SchoolLiteracyQuestion[] = [
     parallelOf: 'C8',
     topic: 'fascism',
     section: 'classify',
-    prompt: 'A movement combines ultranationalism, authoritarian rule, rejection of political pluralism and hostility to liberal democracy. Which ideology fits best?',
+    prompt: 'A movement wants an authoritarian state built around an exclusionary national project and rejects liberal democracy and political pluralism. Which ideology fits best?',
     options: [
       { id: 'fascism', label: 'Fascism' },
       { id: 'conservatism', label: 'Conservatism' },
