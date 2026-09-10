@@ -7,7 +7,7 @@ export default function DeepPage() {
     <main className="engine-page">
       <header className="engine-header">
         <Link href="/" className="engine-brand">Politangle</Link>
-        <span>Deep · beliefs + political literacy</span><LanguageSelector />
+        <span>Full · deeper political profile</span><LanguageSelector />
       </header>
       <DeepClient />
     </main>
