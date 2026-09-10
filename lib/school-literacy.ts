@@ -131,7 +131,7 @@ export const schoolPostQuestions: readonly SchoolLiteracyQuestion[] = [
     parallelOf: 'C7',
     topic: 'communism',
     section: 'classify',
-    prompt: 'A movement aims ultimately for a classless, stateless society with no private ownership of the means of production. Which tradition is being described?',
+    prompt: 'A theory describes its eventual goal as a society without social classes, a state or private ownership of productive assets. Which tradition is this?',
     options: [
       { id: 'communism', label: 'Communism' },
       { id: 'social-democracy', label: 'Social democracy' },
