@@ -4,7 +4,7 @@ import type { BeliefConstruct, BeliefItem } from './belief-v2';
 export type SchoolAgeBand = 'junior-10-13' | 'youth-14-18';
 export type LegacySchoolAgeBand = 'junior-12-13';
 
-export const SCHOOL_YOUTH_BELIEVE_VERSION = 'school-youth-believe-2026.09-candidate-v2' as const;
+export const SCHOOL_YOUTH_BELIEVE_VERSION = 'school-youth-believe-2026.09-candidate-v3' as const;
 export const SCHOOL_JUNIOR_BELIEVE_VERSION = 'school-junior-believe-2026.09-candidate-v3' as const;
 
 type ModePairs = { think: readonly [string, string]; feel: readonly [string, string]; act: readonly [string, string] };
@@ -15,73 +15,73 @@ type ModePairs = { think: readonly [string, string]; feel: readonly [string, str
 const youthPairs: Record<BeliefConstruct, ModePairs> = {
   'public-provision': {
     think: ['Government should make sure everyone can get essential services such as healthcare and education.', 'Government should have a smaller role, with people using more private choices for essential services.'],
-    feel: ['I worry more when people may miss essential services because they cannot afford private options.', 'I worry more when government control of essential services reduces choice and independence.'],
+    feel: ['It worries me when people may miss essential services because they cannot afford private options.', 'It worries me when government control of essential services leaves people with too little choice.'],
     act: ['If a local clinic might close, I would support public funding to keep it open for everyone.', 'If a local clinic might close, I would first look for a private provider instead of more public funding.'],
   },
   redistribution: {
     think: ['Government should use taxes and support payments to reduce very large income gaps.', 'Government should interfere less with income differences, even when some gaps become very large.'],
-    feel: ['Very large income gaps concern me more than the higher taxes used to reduce them.', 'Higher taxes concern me more than very large income gaps.'],
+    feel: ['Very large income gaps bother me enough to justify higher taxes on some people.', 'High taxes bother me even when they are intended to reduce very large income gaps.'],
     act: ['I would accept paying a little more tax if it helped families with very low incomes.', 'I would choose lower taxes, even if less money was available to support families with very low incomes.'],
   },
   ownership: {
     think: ['Workers, cooperatives or the public should own a larger share of big companies.', 'Big companies should normally remain mainly owned by private investors, with rules protecting workers.'],
-    feel: ['It feels fairer when workers, cooperatives or the public own more of big companies.', 'It feels fairer when private investors keep most ownership, while laws protect workers.'],
+    feel: ['It feels fair when workers, cooperatives or the public own a meaningful part of big companies.', 'It feels fair when private investors keep most ownership while laws protect workers.'],
     act: ['At a large company, I would give workers a real ownership stake and a vote on major decisions.', 'At a large company, I would leave ownership and major decisions mainly with its private investors.'],
   },
   'social-change': {
     think: ['Public rules should change fairly soon when a new social norm gains strong support.', 'Long-standing rules should change only after a new social norm has broad and lasting support.'],
-    feel: ['I feel more uneasy when public rules fall behind a widely supported social change.', 'I feel more uneasy when long-standing rules change before society broadly accepts the change.'],
+    feel: ['I am uncomfortable when public rules fall far behind a social change that has strong support.', 'I am uncomfortable when long-standing rules change before a new social norm is widely accepted.'],
     act: ['If a long-standing school rule no longer fitted most students’ lives, I would change it fairly soon.', 'I would keep a long-standing school rule until support for changing it was broad and lasting.'],
   },
   'personal-autonomy': {
     think: ['Adults should normally be free to make private choices that do not directly harm other people.', 'Law may restrict some private adult choices to protect shared moral standards, even without direct harm.'],
-    feel: ['I am more uncomfortable when government restricts harmless private choices between adults.', 'I am more uncomfortable when law gives no weight to shared moral standards.'],
+    feel: ['Government restricting harmless private choices between adults makes me uncomfortable.', 'A legal system that gives no weight to widely shared moral standards makes me uncomfortable.'],
     act: ['If adults made a private choice I disliked but harmed nobody, I would still oppose a legal ban.', 'I could support a legal ban on a private adult choice if it seriously went against shared values.'],
   },
   abortion: {
     think: ['Abortion should generally remain legal because the pregnant person should make the main decision.', 'Abortion should face stronger legal limits because prenatal life should receive greater protection.'],
-    feel: ['I am more concerned about taking the decision away from the pregnant person.', 'I am more concerned about not protecting prenatal life.'],
+    feel: ['Restrictions on abortion concern me because they can take an important decision away from the pregnant person.', 'Broad abortion access concerns me because prenatal life may receive too little protection.'],
     act: ['In a vote on abortion law, I would support wider legal access.', 'In a vote on abortion law, I would support stronger legal limits.'],
   },
   'authority-order': {
     think: ['Government should restrict freedom only when it can show a clear and serious risk of harm.', 'Government may restrict some freedoms early when there is a believable risk of serious disorder.'],
-    feel: ['During a crisis, I worry more about government using too much power.', 'During a crisis, I worry more about authorities lacking enough power to restore safety.'],
+    feel: ['During a crisis, government using too much power worries me.', 'During a crisis, authorities having too little power to restore safety worries me.'],
     act: ['During violent unrest, I would keep strong legal safeguards even if the police response was slower.', 'During violent unrest, I would give police wider temporary powers even if some safeguards were reduced.'],
   },
   pluralism: {
-    think: ['Winning an election should not remove checks from courts, laws, opposition parties and independent media.', 'An elected government should have wide freedom to carry out its programme even when other institutions block it.'],
-    feel: ['I am more alarmed when an elected majority weakens independent checks on its power.', 'I am more alarmed when unelected institutions repeatedly block an elected government.'],
-    act: ['If a court stopped a policy I supported, I would still defend the court’s independence.', 'If courts often stopped policies voters chose, I could support reducing their power.'],
+    think: ['Winning an election should not remove checks from courts, laws, opposition parties and independent media.', 'An elected government should have wide freedom to carry out legal policies even when other institutions strongly oppose them.'],
+    feel: ['It worries me when elected leaders weaken independent checks on their power.', 'It worries me when independent bodies repeatedly stop legal and constitutional policies chosen by an elected government.'],
+    act: ['If a court stopped a policy I supported, I would still defend the court’s independence.', 'If courts often stopped legal policies voters chose, I could support reducing some of their power.'],
   },
   'world-sovereignty': {
     think: ['Countries should accept binding international rules when shared problems cannot be solved alone.', 'Countries should keep the final national decision even when cooperation becomes less effective.'],
-    feel: ['I feel more uneasy when shared problems remain unsolved because countries refuse binding agreements.', 'I feel more uneasy when international agreements limit my country’s final say.'],
+    feel: ['It worries me when shared problems remain unsolved because countries refuse binding cooperation.', 'It worries me when international agreements prevent my country from making its own final decision on an important issue.'],
     act: ['I would follow a shared climate agreement even if it limited some choices in my country.', 'I would keep my country free to decide, even if that weakened the shared climate plan.'],
   },
   'nationhood-membership': {
-    think: ['A naturalised citizen can belong to the nation just as fully as someone who was a citizen from birth.', 'Being a citizen from birth should carry extra weight in deciding who fully belongs to the nation.'],
-    feel: ['A naturalised citizen who takes part in the country’s life feels just as fully part of the nation to me.', 'A citizen from birth feels more fully part of the nation to me than a naturalised citizen.'],
-    act: ['For a public job, I would treat two equally suitable citizens equally, wherever they were born.', 'For a public job, I would prefer the citizen born in the country if both were equally suitable.'],
+    think: ['A naturalized citizen can belong to the nation just as fully as a citizen from birth.', 'Being a citizen from birth is an important part of national belonging beyond legal citizenship alone.'],
+    feel: ['A naturalized citizen who takes part in civic life feels fully part of the nation to me.', 'Long-standing family roots in the country matter to my sense of national belonging.'],
+    act: ['I would allow naturalized citizens to hold the same elected offices as citizens from birth.', 'I would reserve some senior elected offices for citizens from birth.'],
   },
   populism: {
-    think: ['Political disagreements usually involve several real interests and values, not only ordinary people against an elite.', 'Politics is often ordinary people against a self-serving elite that ignores their common interests.'],
-    feel: ['When politics fails, I am more likely to think difficult trade-offs and competing interests are responsible.', 'When politics fails, I am more likely to blame a self-serving elite that ignores ordinary people.'],
-    act: ['I would distrust a candidate who blames nearly every problem on one powerful elite.', 'I would support a candidate who promised to take power from a powerful elite and return it to ordinary people.'],
+    think: ['Political disagreements usually reflect real conflicts among interests and values, not one side simply betraying ordinary voters.', 'Political decisions often give too much influence to well-connected groups and too little to ordinary voters.'],
+    feel: ['When politics disappoints me, I usually think difficult trade-offs and competing interests are the main reason.', 'When politics disappoints me, I often suspect well-connected groups are being heard more than ordinary voters.'],
+    act: ['I prefer candidates who explain political trade-offs openly, even when the message is less dramatic.', 'I prefer candidates who promise to reduce the influence of well-connected groups and give ordinary voters more direct influence.'],
   },
   'ecology-growth': {
     think: ['Environmental limits should sometimes come before economic growth, even if growth becomes slower.', 'Economic growth should normally come first, while environmental harm is reduced without deliberately slowing growth.'],
-    feel: ['I worry more about environmental damage when growth is given priority.', 'I worry more about jobs and living standards when environmental limits are given priority.'],
+    feel: ['Serious environmental damage worries me even when preventing it could slow economic growth.', 'Lost jobs and living standards worry me when environmental limits significantly slow economic growth.'],
     act: ['I would accept somewhat higher prices if a product caused serious environmental damage.', 'I would avoid rules that raise prices and rely more on cleaner technology to protect the environment.'],
   },
   'religion-public-role': {
-    think: ['Religious principles should not be used as reasons for laws applying to people who do not share that religion.', 'Religious principles can be legitimate reasons for laws even when some citizens do not share the religion.'],
-    feel: ['I feel more uneasy when religious principles are used to justify laws for everyone.', 'I feel more uneasy when religious views are dismissed from public debate simply because they are religious.'],
-    act: ['I would prefer politicians not to use religious principles as reasons for laws applying to everyone.', 'I would accept politicians using religious principles as legitimate reasons for laws applying to everyone.'],
+    think: ['Religious principles should not be enough to justify laws applying to people who do not share that religion.', 'Religious principles can be legitimate reasons for laws even when some citizens do not share the religion.'],
+    feel: ['I am uneasy when religious principles are used to justify laws for people who do not share that faith.', 'I am uneasy when religious views are dismissed from public debate simply because they are religious.'],
+    act: ['I would prefer politicians not to rely mainly on religious principles when justifying laws that apply to everyone.', 'I would accept politicians using religious principles as legitimate reasons for laws applying to everyone.'],
   },
   subsidiarity: {
-    think: ['Higher-level government should handle important services when that best guarantees equal access and standards.', 'Important services should stay with the lowest level able to manage them, such as local communities.'],
-    feel: ['I feel more comfortable when higher government guarantees the same standards for everyone.', 'I feel more comfortable when capable families, communities or local institutions keep responsibility.'],
-    act: ['If both approaches could work, I would choose higher government to guarantee consistent standards.', 'If both approaches could work, I would keep responsibility at the lowest capable level.'],
+    think: ['National or regional government should handle important services when that best guarantees equal access and standards.', 'Important services should usually stay with local government or community institutions when they can provide them well.'],
+    feel: ['I feel confident when national or regional government sets the same minimum standard for important services everywhere.', 'I feel confident when capable local institutions keep control instead of decisions being moved upward.'],
+    act: ['If local areas provided very different quality, I would support national or regional standards even if local control were reduced.', 'If local services worked well, I would keep decisions local even if national rules would make them more uniform.'],
   },
 };
 
@@ -101,10 +101,10 @@ const juniorPairs: readonly (readonly [string, string])[] = [
   ['Courts, laws, other parties and news organisations should check elected leaders.', 'Election winners should have wide freedom to do what voters chose.'],
   ['Countries should follow shared rules for problems that cross borders.', 'Each country should keep the final say, even if shared problems are harder to solve.'],
   ['Someone who becomes a citizen belongs just as fully as someone born a citizen.', 'Being born a citizen should count more when deciding who fully belongs.'],
-  ['Politics usually has many groups with different needs and ideas.', 'Politics is often ordinary people against a powerful group that ignores them.'],
+  ['Politics usually has many groups with different needs and ideas.', 'Political decisions can give too much influence to well-connected groups and too little to ordinary voters.'],
   ['Protecting nature should sometimes come before growing the economy.', 'Growing the economy should usually come first while we also protect nature.'],
   ['Religion should not be used to make laws for people who do not share it.', 'Religion can be a fair reason for laws, even when not everyone shares it.'],
-  ['National government should run key services so everyone gets the same standard.', 'Local communities should run key services whenever they can.'],
+  ['National or regional government should run key services when that is needed to guarantee the same minimum standard.', 'Local communities should run key services whenever they can provide them well.'],
   ['If violence broke out, I would keep strict limits on police powers.', 'If violence broke out, I would give police more power for a short time.'],
   ['If a court stopped a popular leader, I would still protect the court’s independence.', 'If courts often stopped what voters chose, I would give elected leaders more freedom.'],
   ['I would check several sources before sharing a post that blames one powerful group.', 'I would share the post quickly if it spoke for ordinary people like me.'],

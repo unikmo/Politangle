@@ -12,20 +12,20 @@ import {
 } from './school-classroom';
 import { lockedBeliefItemsV2 } from './belief-v2-engine';
 
-test('classroom exposes Quick 26, Full 84 and 15 literacy questions', () => {
+test('classroom exposes Quick 26, Full 42 and 15 literacy questions', () => {
   assert.equal(classroomQuickIds.length, 26);
-  assert.equal(classroomFullIds.length, 84);
+  assert.equal(classroomFullIds.length, 42);
   assert.equal(classroomLiteracyIds.length, 15);
-  assert.equal(new Set(classroomFullIds).size, 84);
+  assert.equal(new Set(classroomFullIds).size, 42);
 });
 
 test('teacher can configure all core classroom activity types', () => {
   assert.equal(buildClassroomActivity({ type: 'quick26', pacing: 'teacher', projectorMode: 'reveal' })?.questionIds.length, 26);
-  assert.equal(buildClassroomActivity({ type: 'full42', pacing: 'student', projectorMode: 'live' })?.questionIds.length, 84);
+  assert.equal(buildClassroomActivity({ type: 'full42', pacing: 'student', projectorMode: 'live' })?.questionIds.length, 42);
   assert.equal(buildClassroomActivity({ type: 'literacy' })?.questionIds.length, 15);
   assert.equal(buildClassroomActivity({ type: 'guided', lessonId: 'room-stand' })?.questionIds.length, 14);
   assert.equal(buildClassroomActivity({ type: 'guided', lessonId: 'quick26-lab' })?.questionIds.length, 26);
-  assert.equal(buildClassroomActivity({ type: 'guided', lessonId: 'junior-social-media' })?.ageBand, 'junior-10-13');
+  assert.equal(buildClassroomActivity({ type: 'junior', ageBand: 'junior-10-13' })?.questionIds.length, 32);
   assert.equal(buildClassroomActivity({ type: 'custom', title: 'Two questions', questionIds: ['T01-P', 'C1'] })?.questionIds.length, 2);
   assert.equal(buildClassroomActivity({ type: 'custom', questionIds: ['bad-id'] }), null);
 });
@@ -36,7 +36,7 @@ test('classroom exposes separate Junior and Youth candidate forms', () => {
   assert.equal(junior.ageBand, 'junior-10-13');
   assert.ok(junior.questionIds.every((id) => id.startsWith('J')));
   const youth = buildClassroomActivity({ type: 'full42', ageBand: 'youth-14-18' })!;
-  assert.equal(youth.questionIds.length, 84);
+  assert.equal(youth.questionIds.length, 42);
   assert.equal(youth.ageBand, 'youth-14-18');
   assert.notEqual(getClassroomQuestion('T01-P', 'youth-14-18')?.statement, lockedBeliefItemsV2.find((item) => item.id === 'T01')?.positive);
 });
@@ -83,7 +83,7 @@ test('literacy classroom responses are validated against canonical options', () 
 test('activity metadata exposes guided lesson choices without student identities', () => {
   const options = classroomActivityOptions();
   assert.equal(options.quick26.length, 26);
-  assert.equal(options.full42.length, 84);
+  assert.equal(options.full42.length, 42);
   assert.equal(options.literacy.length, 15);
   assert.equal(options.junior.length, 32);
   assert.equal(options.lessons.length, 8);

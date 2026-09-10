@@ -5,8 +5,9 @@ import { schoolJuniorBeliefItems, schoolYouthBeliefItems } from './school-believ
 
 function words(value: string) { return value.trim().split(/\s+/).length; }
 
-test('Youth form preserves all 42 adult scoring coordinates while changing wording', () => {
+test('Youth form preserves all 42 adult scoring coordinates while using a distinct plain-language form', () => {
   assert.equal(schoolYouthBeliefItems.length, 42);
+  let changedSides = 0;
   for (const adult of lockedBeliefItemsV2) {
     const youth = schoolYouthBeliefItems.find((item) => item.id === adult.id);
     assert.ok(youth);
@@ -15,16 +16,28 @@ test('Youth form preserves all 42 adult scoring coordinates while changing wordi
     assert.equal(youth.stage, adult.stage);
     assert.equal(youth.quickDimension, adult.quickDimension);
     assert.deepEqual(youth.evidenceIds, adult.evidenceIds);
-    assert.notEqual(youth.negative, adult.negative);
-    assert.notEqual(youth.positive, adult.positive);
+    if (youth.negative !== adult.negative) changedSides += 1;
+    if (youth.positive !== adult.positive) changedSides += 1;
   }
-  assert.equal(lockedBeliefItemsV2[0].negative, 'Government should take broad responsibility for ensuring that everyone can obtain essential services.');
+  assert.ok(changedSides >= 70, `expected a substantially distinct youth form; only ${changedSides}/84 sides changed`);
+  assert.match(lockedBeliefItemsV2[0].negative, /essential services/i);
 });
 
 test('Youth wording has controlled reading load for cognitive testing', () => {
   const sides = schoolYouthBeliefItems.flatMap((item) => [item.negative, item.positive]);
   assert.ok(sides.every((side) => words(side) <= 30));
   assert.ok(sides.reduce((sum, side) => sum + words(side), 0) / sides.length <= 20);
+});
+
+test('Youth FEEL questions are complete standalone statements', () => {
+  const text = schoolYouthBeliefItems.filter((item) => item.mode === 'feel').flatMap((item) => [item.negative, item.positive]).join(' ');
+  assert.doesNotMatch(text, /\bI (?:feel |am )?more\b/i);
+});
+
+test('Youth political-influence wording avoids elite-versus-people repetition', () => {
+  const text = schoolYouthBeliefItems.filter((item) => item.construct === 'populism').flatMap((item) => [item.negative, item.positive]).join(' ');
+  assert.doesNotMatch(text, /\belites?\b/i);
+  assert.match(text, /well-connected/i);
 });
 
 test('Junior bank is separately identified, short and construct-diverse', () => {

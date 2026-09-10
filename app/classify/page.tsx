@@ -1,15 +1,15 @@
 import Link from 'next/link';
-import DeepClient from './DeepClient';
+import LiteracyQuizClient from '../LiteracyQuizClient';
 import { LanguageSelector } from '../LocaleProvider';
 
-export default function DeepPage() {
+export default function ClassifyPage() {
   return (
     <main className="engine-page">
       <header className="engine-header">
         <Link href="/" className="engine-brand">Politangle</Link>
-        <span>Full · deeper political profile</span><LanguageSelector />
+        <span>CLASSIFY · independent quiz</span><LanguageSelector />
       </header>
-      <DeepClient />
+      <LiteracyQuizClient section="classify" />
     </main>
   );
 }

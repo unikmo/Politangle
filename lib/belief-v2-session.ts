@@ -3,16 +3,24 @@ import { lockedBeliefItemsV2 } from './belief-v2-engine';
 import { expandBeliefItems } from './belief-statements';
 import type { AnswerValue } from './questions';
 
-export const BELIEF_V2_SESSION_SCHEMA = 3 as const;
+export const BELIEF_V2_SESSION_SCHEMA = 4 as const;
 export const lockedBeliefStatementsV3 = expandBeliefItems(lockedBeliefItemsV2);
+
 const quickSourceIds = [
   ...lockedBeliefItemsV2.filter((item) => item.mode === 'think').map((item) => item.id),
   ...lockedBeliefItemsV2.filter((item) => item.mode === 'act').slice(0, 12).map((item) => item.id),
 ];
-export const lockedQuickStatementIds = quickSourceIds.map((id, index) => `${id}-${index % 2 === 0 ? 'P' : 'N'}`);
-export const lockedFullFollowUpStatementIds = lockedBeliefStatementsV3
+
+const fullSourceIds = lockedBeliefItemsV2
   .map((item) => item.id)
-  .filter((id) => !lockedQuickStatementIds.includes(id));
+  .filter((id) => !quickSourceIds.includes(id));
+
+// One statement per source item. Quick covers 26 source items and Full covers the
+// remaining 16, so a completed BELIEVE profile is 42 questions: 14 THINK,
+// 14 FEEL and 14 ACT. We no longer ask both polarities of the same source item.
+export const lockedQuickStatementIds = quickSourceIds.map((id, index) => `${id}-${index % 2 === 0 ? 'P' : 'N'}`);
+export const lockedFullFollowUpStatementIds = fullSourceIds.map((id, index) => `${id}-${index % 2 === 0 ? 'N' : 'P'}`);
+const selectedStatementIds = [...lockedQuickStatementIds, ...lockedFullFollowUpStatementIds];
 
 export type BeliefV2Stage = 'quick' | 'deep';
 
@@ -63,14 +71,12 @@ function validAnswer(value: unknown): value is AnswerValue {
 
 export function createBeliefV2Session(seed: number | string, startedAt = new Date().toISOString()): BeliefV2Session {
   const numericSeed = typeof seed === 'number' ? seed >>> 0 : hashSeed(seed);
-  const quick = lockedQuickStatementIds;
-  const deep = lockedFullFollowUpStatementIds;
   return {
     schemaVersion: BELIEF_V2_SESSION_SCHEMA,
     questionnaireVersion: BELIEF_V2_VERSION,
     seed: numericSeed,
-    quickOrder: shuffled(quick, numericSeed, 'quick'),
-    deepOrder: shuffled(deep, numericSeed, 'deep'),
+    quickOrder: shuffled(lockedQuickStatementIds, numericSeed, 'quick'),
+    deepOrder: shuffled(lockedFullFollowUpStatementIds, numericSeed, 'deep'),
     answers: {},
     startedAt,
   };
@@ -134,14 +140,14 @@ export function beliefV2OverallProgress(session: BeliefV2Session) {
 }
 
 export function modeProgress(session: BeliefV2Session, mode: AttitudeMode) {
-  const ids = lockedBeliefStatementsV3.filter((item) => item.mode === mode).map((item) => item.id);
+  const ids = selectedStatementIds.filter((id) => getBeliefV2Item(id)?.mode === mode);
   const answered = ids.filter((id) => validAnswer(session.answers[id])).length;
   const scored = ids.filter((id) => typeof session.answers[id] === 'number').length;
   return { answered, scored, total: ids.length, complete: answered === ids.length };
 }
 
 export function completeBeliefV2Session(session: BeliefV2Session, completedAt = new Date().toISOString()): BeliefV2Session {
-  if (!beliefV2OverallProgress(session).complete) throw new Error('Cannot complete an unfinished 84-statement BELIEVE session');
+  if (!beliefV2OverallProgress(session).complete) throw new Error('Cannot complete an unfinished BELIEVE session');
   return { ...session, completedAt };
 }
 

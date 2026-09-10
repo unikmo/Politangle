@@ -3,6 +3,7 @@ import test from 'node:test';
 import {
   assessConservativeSubtypeV2,
   assessFamiliesV2Canonical,
+  assessResponseConsistencyV2,
   assessTendenciesV2,
   calculateConstructModesV2,
   calculatePolygonV2Canonical,
@@ -21,7 +22,7 @@ test('canonical BELIEVE v2 preserves the 42-item / 14x3 lock', () => {
   assert.equal(lockedBeliefItemsV2.filter((item) => item.mode === 'act').length, 14);
 });
 
-test('phase-1 source wording keeps every alternative within the burden guardrail', () => {
+test('source wording keeps every alternative within the burden guardrail', () => {
   const wordCount = (text: string) => text.trim().split(/\s+/).filter(Boolean).length;
   for (const item of lockedBeliefItemsV2) {
     assert.ok(wordCount(item.negative) <= 26, `${item.id} negative pole is too long`);
@@ -29,12 +30,17 @@ test('phase-1 source wording keeps every alternative within the burden guardrail
   }
 });
 
+test('FEEL wording is standalone rather than an unfinished comparative', () => {
+  const feelText = lockedBeliefItemsV2.filter((item) => item.mode === 'feel').flatMap((item) => [item.negative, item.positive]).join(' ');
+  assert.doesNotMatch(feelText, /\bI (?:feel |am )?more\b/i);
+});
+
 test('public provision is separated from productive ownership', () => {
   const triplet = lockedBeliefItemsV2.filter((item) => item.construct === 'public-provision');
   assert.equal(triplet.length, 3);
   for (const item of triplet) {
     assert.doesNotMatch(`${item.negative} ${item.positive}`, /ownership|shareholder|worker-owned/i);
-    assert.match(`${item.negative} ${item.positive}`, /essential services/i);
+    assert.match(`${item.negative} ${item.positive}`, /essential (?:local )?services?/i);
   }
 });
 
@@ -46,23 +52,27 @@ test('redistribution ACT item measures redistribution rather than bundling publi
   assert.doesNotMatch(text, /public service/i);
 });
 
-test('nationhood THINK FEEL ACT items measure national membership rather than citizenship-at-birth law', () => {
+test('nationhood THINK FEEL ACT items vary the context while staying on national membership', () => {
   const triplet = lockedBeliefItemsV2.filter((item) => item.construct === 'nationhood-membership');
   assert.equal(triplet.length, 3);
+  const allStatements = triplet.flatMap((item) => [item.negative, item.positive]);
+  assert.equal(new Set(allStatements).size, allStatements.length);
   for (const item of triplet) {
     const text = `${item.negative} ${item.positive}`;
     assert.match(text, /naturalized/i);
-    assert.match(text, /citizen from birth/i);
+    assert.match(text, /citizens? from birth/i);
     assert.doesNotMatch(text, /parent|birthplace|citizenship-at-birth/i);
   }
 });
 
-test('populism ACT item does not collapse into anti-pluralism, institutions or leader authoritarianism', () => {
-  const item = lockedBeliefItemsV2.find((candidate) => candidate.id === 'A11')!;
-  const text = `${item.negative} ${item.positive}`.toLowerCase();
-  assert.match(text, /elite/);
-  assert.match(text, /ordinary people/);
-  assert.doesNotMatch(text, /court|institution|media|opposition|leader/);
+test('populism wording avoids repetitive elite-versus-people slogans', () => {
+  const triplet = lockedBeliefItemsV2.filter((item) => item.construct === 'populism');
+  const text = triplet.flatMap((item) => [item.negative, item.positive]).join(' ');
+  assert.doesNotMatch(text, /\belites?\b/i);
+  assert.match(text, /well-connected/i);
+  assert.match(text, /ordinary voters/i);
+  const act = triplet.find((item) => item.mode === 'act')!;
+  assert.doesNotMatch(`${act.negative} ${act.positive}`.toLowerCase(), /court|institution|media|opposition|leader/);
 });
 
 test('religion public-role triplet measures legitimacy of religious moral reasons rather than theocracy', () => {
@@ -75,11 +85,12 @@ test('religion public-role triplet measures legitimacy of religious moral reason
   }
 });
 
-test('subsidiarity THINK FEEL ACT poles point in the same direction', () => {
+test('subsidiarity uses natural national/regional versus local wording', () => {
   const triplet = lockedBeliefItemsV2.filter((item) => item.construct === 'subsidiarity');
   const act = triplet.find((item) => item.mode === 'act')!;
-  assert.match(act.negative, /higher-level government/i);
-  assert.match(act.positive, /lowest capable/i);
+  assert.match(act.negative, /national or regional/i);
+  assert.match(act.positive, /local/i);
+  assert.doesNotMatch(`${act.negative} ${act.positive}`, /higher-level government|lowest capable/i);
 });
 
 test('main family priors are deliberately sparse rather than forcing every issue into every ideology', () => {
@@ -151,6 +162,27 @@ test('Think Feel Act tension is calculated within identical constructs', () => {
   assert.equal(result.feel, 100);
   assert.equal(result.act, 0);
   assert.equal(result.tension, 100);
+});
+
+test('response consistency reports coherence without treating missing answers as inconsistency', () => {
+  const answers: BeliefAnswersV2 = {};
+  const triplet = lockedBeliefItemsV2.filter((item) => item.construct === 'pluralism');
+  answers[triplet.find((item) => item.mode === 'think')!.id] = -2;
+  answers[triplet.find((item) => item.mode === 'feel')!.id] = -2;
+  answers[triplet.find((item) => item.mode === 'act')!.id] = -2;
+  const result = assessResponseConsistencyV2(answers);
+  assert.equal(result.score, 100);
+  assert.equal(result.comparedConstructs, 1);
+  assert.ok(result.coverage > 0 && result.coverage < 100);
+});
+
+test('response consistency detects a large principle-to-action split', () => {
+  const answers: BeliefAnswersV2 = {};
+  const triplet = lockedBeliefItemsV2.filter((item) => item.construct === 'pluralism');
+  answers[triplet.find((item) => item.mode === 'think')!.id] = -2;
+  answers[triplet.find((item) => item.mode === 'feel')!.id] = 0;
+  answers[triplet.find((item) => item.mode === 'act')!.id] = 2;
+  assert.equal(assessResponseConsistencyV2(answers).score, 0);
 });
 
 test('family triangle can show different Think Feel Act compatibility scores', () => {
