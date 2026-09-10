@@ -1,6 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { germanBeliefStatement } from '../../../lib/german-believe';
+import { useLocale } from '../../LocaleProvider';
 
 type PublicRoom = {
   code: string;
@@ -11,11 +13,12 @@ type PublicRoom = {
   currentQuestionId: string | null;
   questionOpen: boolean;
   revealed: boolean;
-  currentQuestion: { id: string; kind: 'believe' | 'literacy'; title: string; negative?: string; positive?: string; prompt?: string; explanation?: string } | null;
+  currentQuestion: { id: string; kind: 'believe' | 'literacy'; title: string; sourceItemId?: string; polarity?: 'negative' | 'positive'; statement?: string; prompt?: string; explanation?: string } | null;
   projectorDistribution: { responses: number; distribution: { id: string; label: string; count: number; percent: number }[]; correctPercent: number | null } | null;
 };
 
 export default function ProjectorSchoolClient({ code }: { code: string }) {
+  const { locale } = useLocale();
   const [room, setRoom] = useState<PublicRoom | null>(null);
   const [error, setError] = useState('');
 
@@ -34,11 +37,14 @@ export default function ProjectorSchoolClient({ code }: { code: string }) {
 
   if (error) return <section className="engine-shell"><article className="engine-card"><h1>{error}</h1></article></section>;
   if (!room) return <section className="engine-shell"><article className="engine-card"><p>Loading classroom…</p></article></section>;
+  const projectedStatement = room.currentQuestion?.kind === 'believe' && locale === 'de' && room.currentQuestion.sourceItemId && room.currentQuestion.polarity
+    ? germanBeliefStatement(room.currentQuestion.sourceItemId, room.currentQuestion.polarity) ?? room.currentQuestion.statement
+    : room.currentQuestion?.statement;
 
   return (
     <section className="engine-shell school-projector-shell">
       <div className="school-room-strip"><strong>{room.roomLabel || `Class ${room.code}`}</strong><span>{room.activity.title}</span><span>{room.joinedCount} joined</span></div>
-      {!room.currentQuestion ? <article className="engine-card school-projector-card"><p className="engine-kicker">Politangle School</p><h1>Waiting for the teacher to launch a question.</h1><div className="school-code-display"><span>JOIN</span><strong>{room.code}</strong></div></article> : <article className="engine-card school-projector-card"><p className="engine-kicker">{room.currentQuestion.id} · {room.currentQuestion.title}</p>{room.currentQuestion.kind === 'believe' ? <><h1>Where does our room stand?</h1><div className="engine-pair"><div><span>First position</span><p>{room.currentQuestion.negative}</p></div><div><span>Second position</span><p>{room.currentQuestion.positive}</p></div></div></> : <h1>{room.currentQuestion.prompt}</h1>}{room.projectorDistribution ? <div className="school-distribution school-projector-distribution">{room.projectorDistribution.distribution.map((row) => <div className="school-bar-row" key={row.id}><div className="school-bar-label"><span>{row.label}</span><strong>{row.percent}% · {row.count}</strong></div><div className="school-bar-track"><span style={{ width: `${row.percent}%` }} /></div></div>)}</div> : <div className="school-projector-wait"><strong>Responses are coming in.</strong><span>The teacher has chosen to reveal the distribution later.</span></div>}{room.revealed && room.currentQuestion.explanation && <div className="deep-explanation">{room.currentQuestion.explanation}</div>}</article>}
+      {!room.currentQuestion ? <article className="engine-card school-projector-card"><p className="engine-kicker">Politangle School</p><h1>Waiting for the teacher to launch a question.</h1><div className="school-code-display"><span>JOIN</span><strong>{room.code}</strong></div></article> : <article className="engine-card school-projector-card"><p className="engine-kicker">{room.currentQuestion.id} · {room.currentQuestion.title}</p>{room.currentQuestion.kind === 'believe' ? <><h1>How much do you agree?</h1><div className="engine-statement"><p>{projectedStatement}</p></div></> : <h1>{room.currentQuestion.prompt}</h1>}{room.projectorDistribution ? <div className="school-distribution school-projector-distribution">{room.projectorDistribution.distribution.map((row) => <div className="school-bar-row" key={row.id}><div className="school-bar-label"><span>{row.label}</span><strong>{row.percent}% · {row.count}</strong></div><div className="school-bar-track"><span style={{ width: `${row.percent}%` }} /></div></div>)}</div> : <div className="school-projector-wait"><strong>Responses are coming in.</strong><span>The teacher has chosen to reveal the distribution later.</span></div>}{room.revealed && room.currentQuestion.explanation && <div className="deep-explanation">{room.currentQuestion.explanation}</div>}</article>}
     </section>
   );
 }

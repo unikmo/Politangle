@@ -29,7 +29,7 @@ export type BeliefItem = {
   evidenceIds: readonly string[];
 };
 
-export const BELIEF_V2_VERSION = 'belief-2026.09-v2.1-phase1' as const;
+export const BELIEF_V2_VERSION = 'belief-2026.09-v4-quick26-full84' as const;
 export const BELIEF_V2_LOCKED_COUNT = 42 as const;
 export const BELIEF_V2_PER_MODE = 14 as const;
 

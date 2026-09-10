@@ -1,11 +1,13 @@
 import { deepLiteracyQuestions } from './deep-bank';
 import { scoreLiteracyItem, type LiteracyQuestion } from './deep-engine';
 import { lockedBeliefItemsV2 } from './belief-v2-engine';
+import { expandBeliefItems, type BeliefPolarity } from './belief-statements';
 import type { AnswerValue } from './questions';
 import { getSchoolLesson, schoolLessons, type SchoolLessonId } from './school-lessons';
 import { isJuniorSchoolAgeBand, schoolBeliefItems, schoolJuniorBeliefItems, type SchoolAgeBand } from './school-believe';
+import { lockedQuickStatementIds } from './belief-v2-session';
 
-export const SCHOOL_CLASSROOM_VERSION = 'school-classroom-2026.09-v3' as const;
+export const SCHOOL_CLASSROOM_VERSION = 'school-classroom-2026.09-v4-single-statements' as const;
 
 export type ClassroomActivityType = 'junior' | 'quick26' | 'full42' | 'literacy' | 'guided' | 'custom';
 export type ClassroomPacing = 'teacher' | 'student';
@@ -27,9 +29,10 @@ export type ClassroomQuestionView = {
   title: string;
   construct?: string;
   mode?: string;
+  sourceItemId?: string;
+  polarity?: BeliefPolarity;
   section?: string;
-  negative?: string;
-  positive?: string;
+  statement?: string;
   prompt?: string;
   multiSelect?: boolean;
   options: readonly { id: string; label: string }[];
@@ -38,38 +41,41 @@ export type ClassroomQuestionView = {
 };
 
 export const BELIEVE_CLASSROOM_OPTIONS = [
-  { id: '-2', label: 'Strongly first' },
-  { id: '-1', label: 'Somewhat first' },
-  { id: '0', label: 'Between / depends' },
-  { id: '1', label: 'Somewhat second' },
-  { id: '2', label: 'Strongly second' },
-  { id: 'unsure', label: 'Unsure' },
+  { id: '-2', label: 'Strongly disagree' },
+  { id: '-1', label: 'Disagree' },
+  { id: '0', label: 'Neither / it depends' },
+  { id: '1', label: 'Agree' },
+  { id: '2', label: 'Strongly agree' },
+  { id: 'unsure', label: 'Not sure / I do not understand' },
 ] as const;
 
 const literacyById = new Map(deepLiteracyQuestions.map((question) => [question.id, question]));
-const adultBeliefById = new Map(lockedBeliefItemsV2.map((item) => [item.id, item]));
+const adultBeliefStatements = expandBeliefItems(lockedBeliefItemsV2);
 
-export const classroomQuickIds = lockedBeliefItemsV2.filter((item) => item.stage === 'quick').map((item) => item.id);
-export const classroomFullIds = lockedBeliefItemsV2.map((item) => item.id);
+export const classroomQuickIds = [...lockedQuickStatementIds];
+export const classroomFullIds = adultBeliefStatements.map((item) => item.id);
 export const classroomLiteracyIds = deepLiteracyQuestions.map((question) => question.id);
 export const classroomAllIds = [...classroomFullIds, ...classroomLiteracyIds];
-export const classroomJuniorIds = schoolJuniorBeliefItems.map((item) => item.id);
+export const classroomJuniorIds = expandBeliefItems(schoolJuniorBeliefItems).map((item) => item.id);
 
-function titleForMode(mode: string) {
-  return mode === 'think' ? 'THINK' : mode === 'feel' ? 'FEEL' : 'ACT';
+function titleForConstruct(construct: string) {
+  if (construct === 'nationhood-membership') return 'Nationhood';
+  return construct.replaceAll('-', ' ').replace(/\b\w/g, (letter) => letter.toUpperCase());
 }
 
 export function getClassroomQuestion(id: string, ageBand: SchoolAgeBand = 'youth-14-18'): ClassroomQuestionView | null {
-  const belief = new Map(schoolBeliefItems(ageBand).map((item) => [item.id, item])).get(id) ?? adultBeliefById.get(id);
+  const belief = new Map(expandBeliefItems(schoolBeliefItems(ageBand)).map((item) => [item.id, item])).get(id)
+    ?? new Map(adultBeliefStatements.map((item) => [item.id, item])).get(id);
   if (belief) {
     return {
       id: belief.id,
       kind: 'believe',
-      title: `${titleForMode(belief.mode)} · ${belief.construct.replaceAll('-', ' ')}`,
+      title: titleForConstruct(belief.construct),
       construct: belief.construct,
       mode: belief.mode,
-      negative: belief.negative,
-      positive: belief.positive,
+      sourceItemId: belief.sourceItemId,
+      polarity: belief.polarity,
+      statement: belief.statement,
       options: BELIEVE_CLASSROOM_OPTIONS,
     };
   }
@@ -124,16 +130,17 @@ export function buildClassroomActivity(input: unknown): ClassroomActivityConfig 
   const projectorMode = value.projectorMode === 'live' ? 'live' : value.projectorMode === 'reveal' || value.projectorMode === undefined ? 'reveal' : null;
   if (!pacing || !projectorMode || !['junior', 'quick26', 'full42', 'literacy', 'guided', 'custom'].includes(String(type))) return null;
 
-  if (type === 'junior') return { type, title: 'Junior 16', questionIds: [...classroomJuniorIds], pacing, projectorMode, ageBand: 'junior-10-13' };
+  if (type === 'junior') return { type, title: 'Junior 32', questionIds: [...classroomJuniorIds], pacing, projectorMode, ageBand: 'junior-10-13' };
   if (type === 'quick26') return { type, title: 'Youth Quick 26', questionIds: [...classroomQuickIds], pacing, projectorMode, ageBand };
-  if (type === 'full42') return { type, title: 'Youth Full 42', questionIds: [...classroomFullIds], pacing, projectorMode, ageBand };
+  if (type === 'full42') return { type, title: 'Youth Full 84', questionIds: [...classroomFullIds], pacing, projectorMode, ageBand };
   if (type === 'literacy') return { type, title: 'Political Literacy Quiz', questionIds: [...classroomLiteracyIds], pacing, projectorMode, ageBand };
   if (type === 'guided') {
     const lesson = getSchoolLesson(typeof value.lessonId === 'string' ? value.lessonId : undefined);
     if (!lesson) return null;
     const lessonAgeBand: SchoolAgeBand = lesson.ageBand === '10–13' ? 'junior-10-13' : 'youth-14-18';
+    const lessonBeliefStatements = expandBeliefItems(schoolBeliefItems(lessonAgeBand));
     const questionIds = lesson.questionIds.length
-      ? [...lesson.questionIds]
+      ? lesson.questionIds.flatMap((id) => lessonBeliefStatements.some((item) => item.sourceItemId === id) ? [`${id}-N`, `${id}-P`] : [id])
       : lesson.id === 'quick26-lab'
         ? [...classroomQuickIds]
         : lesson.id === 'full42-lab'

@@ -181,6 +181,21 @@ function numericPosition(aggregate: SchoolQuestionAggregate) {
   return Math.round(((mean + 2) / 4) * 100);
 }
 
+function canonicalAggregateForSource(record: SchoolClassRecord, sourceItemId: string): SchoolQuestionAggregate | null {
+  const negative = record.questions[`${sourceItemId}-N`];
+  const positive = record.questions[`${sourceItemId}-P`];
+  if (!negative && !positive) return null;
+  const optionCounts: Record<string, number> = { '-2': 0, '-1': 0, '0': 0, '1': 0, '2': 0, unsure: 0 };
+  if (positive) for (const [key, count] of Object.entries(positive.optionCounts)) optionCounts[key] = (optionCounts[key] ?? 0) + count;
+  if (negative) {
+    for (const [key, count] of Object.entries(negative.optionCounts)) {
+      const canonicalKey = key === 'unsure' || key === '0' ? key : String(-Number(key));
+      optionCounts[canonicalKey] = (optionCounts[canonicalKey] ?? 0) + count;
+    }
+  }
+  return { responses: (negative?.responses ?? 0) + (positive?.responses ?? 0), optionCounts, correct: 0 };
+}
+
 function entropy(aggregate: SchoolQuestionAggregate) {
   const counts = Object.values(aggregate.optionCounts).filter((count) => count > 0);
   const total = counts.reduce((sum, count) => sum + count, 0);
@@ -198,7 +213,8 @@ function constructModes(record: SchoolClassRecord) {
     const values = {} as Record<AttitudeMode, number | null>;
     for (const mode of ['think', 'feel', 'act'] as const) {
       const item = lockedBeliefItemsV2.find((candidate) => candidate.construct === construct && candidate.mode === mode)!;
-      values[mode] = record.questions[item.id] ? numericPosition(record.questions[item.id]) : null;
+      const aggregate = canonicalAggregateForSource(record, item.id);
+      values[mode] = aggregate ? numericPosition(aggregate) : null;
     }
     const known = [values.think, values.feel, values.act].filter((value): value is number => value !== null);
     return {
@@ -244,7 +260,7 @@ function familySummary(record: SchoolClassRecord) {
       const items = lockedBeliefItemsV2.filter((item) => item.construct === loading.construct);
       for (const item of items) {
         totalWeight += loading.relevance;
-        const aggregate = record.questions[item.id];
+        const aggregate = canonicalAggregateForSource(record, item.id);
         const position = aggregate ? numericPosition(aggregate) : null;
         if (position === null) continue;
         knownWeight += loading.relevance;

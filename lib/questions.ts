@@ -242,3 +242,12 @@ export const pairedAnswerOptions: readonly { label: string; value: AnswerValue; 
   { label: 'Much closer to the second view', value: 2, scored: true },
   { label: 'Not sure / I do not understand', value: 'unsure', scored: false },
 ] as const;
+
+export const agreementAnswerOptions: readonly { label: string; value: AnswerValue; scored: boolean }[] = [
+  { label: 'Strongly disagree', value: -2, scored: true },
+  { label: 'Disagree', value: -1, scored: true },
+  { label: 'Neither / it depends', value: 0, scored: true },
+  { label: 'Agree', value: 1, scored: true },
+  { label: 'Strongly agree', value: 2, scored: true },
+  { label: 'Not sure / I do not understand', value: 'unsure', scored: false },
+] as const;

@@ -99,7 +99,7 @@ export const schoolLessons: readonly SchoolLesson[] = [
       { minutes: '55–60', teacher: 'Summarize that ACT is stated intention, not observed behavior.', students: 'Record one example of a legitimate tension.' },
     ],
     discussionPrompts: ['When might someone support a principle but choose differently in a concrete situation?', 'Why is tension not the same as hypocrisy?', 'Which mode is most sensitive to context?'],
-    followUp: 'Full 42 profile lab',
+    followUp: 'Full 84 profile lab',
   },
   {
     id: 'quick26-lab',
@@ -110,23 +110,23 @@ export const schoolLessons: readonly SchoolLesson[] = [
     questionIds: [],
     timeline: [
       { minutes: '0–8', teacher: 'Explain anonymity, the five-position scale and that there are no correct BELIEVE answers.', students: 'Join and test the response scale.' },
-      { minutes: '8–50', teacher: 'Run Quick 26 teacher-paced or student-paced.', students: 'Complete all Quick questions anonymously.' },
+      { minutes: '8–35', teacher: 'Run Quick 26 teacher-paced or student-paced.', students: 'Complete all 26 Quick questions anonymously.' },
       { minutes: '50–65', teacher: 'Review the class map, family compatibility and divided/consensus items.', students: 'Interpret at least one distribution before looking at its average.' },
       { minutes: '65–75', teacher: 'Optional discussion or private self-exploration.', students: 'Choose one result they would like to understand better.' },
     ],
     discussionPrompts: ['Where does an average hide a split class?', 'Which two dimensions seem least related in our room?', 'Why can several political families fit the same room at once?'],
-    followUp: 'Full 42 profile lab',
+    followUp: 'Full 84 profile lab',
   },
   {
     id: 'full42-lab',
-    title: 'Full 42 profile lab',
+    title: 'Full 84 profile lab',
     ageBand: '14–18',
     duration: '90 min / 2 × 45',
     goals: ['Complete all 14 constructs across THINK, FEEL and ACT.', 'Compare the room’s multidimensional political shape with its five broad family compatibilities.', 'Use class-level tension as a discussion tool rather than an individual diagnosis.'],
     questionIds: [],
     timeline: [
-      { minutes: '0–10', teacher: 'Set up the room and review the anonymity rule.', students: 'Join and prepare to answer all 42 items.' },
-      { minutes: '10–60', teacher: 'Run or release the 42-item activity.', students: 'Complete the full questionnaire anonymously.' },
+      { minutes: '0–10', teacher: 'Set up the room and review the anonymity rule.', students: 'Join and prepare to answer all 84 statements.' },
+      { minutes: '10–60', teacher: 'Run or release the 84-statement activity.', students: 'Complete the full questionnaire anonymously.' },
       { minutes: '60–80', teacher: 'Review polygon, family compatibility and THINK/FEEL/ACT summaries.', students: 'Interpret the room-level patterns.' },
       { minutes: '80–90', teacher: 'Use one high-tension construct for structured discussion.', students: 'Offer competing explanations for the class pattern.' },
     ],
@@ -147,7 +147,7 @@ export const schoolLessons: readonly SchoolLesson[] = [
       { minutes: '45–60', teacher: 'Optional structured controversy discussion.', students: 'State the strongest argument for both institutional checks and democratic responsiveness.' },
     ],
     discussionPrompts: ['Can someone be populist and still support strong democratic checks?', 'Can someone favor stronger executive authority without being populist?', 'Why can unelected institutions be both a safeguard and a source of democratic tension?'],
-    followUp: 'Private or classroom Full 42 exploration',
+    followUp: 'Private or classroom Full 84 exploration',
   },
 ] as const;
 
