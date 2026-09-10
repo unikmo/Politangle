@@ -107,7 +107,7 @@ const juniorPairs: readonly (readonly [string, string])[] = [
   ['National or regional government should run key services when that is needed to guarantee the same minimum standard.', 'Local communities should run key services whenever they can provide them well.'],
   ['If violence broke out, I would keep strict limits on police powers.', 'If violence broke out, I would give police more power for a short time.'],
   ['If a court stopped a popular policy, I would still protect the court’s independence.', 'If courts often stopped legal policies voters chose, I would give elected leaders more freedom.'],
-  ['I would listen to a candidate who explains why different groups want different things, even if the answer is complicated.', 'I would prefer a candidate who says well-connected groups have too much influence and ordinary voters need more say.'],
+  ['I would listen to a candidate who explains different groups’ needs, even when the answer is complicated.', 'I prefer a candidate who says well-connected groups have too much influence and ordinary voters need more say.'],
 ];
 
 export const schoolJuniorBeliefItems: readonly BeliefItem[] = juniorSources.map((sourceId, index) => {
