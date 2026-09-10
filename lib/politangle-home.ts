@@ -9,6 +9,10 @@ const familyMeaning: Record<string, string> = {
   'green-politics': 'ecological limits, sustainability, pluralism and cooperative politics',
 };
 
+export function familyMeaningText(familyId: string) {
+  return familyMeaning[familyId] ?? 'the core ideas of that tradition';
+}
+
 export type PolitangleHome = {
   headline: string;
   summary: string;
@@ -49,7 +53,7 @@ export function describePolitangleHome(
   }
 
   const parts: string[] = [];
-  if (primary) parts.push(`Your strongest family match is ${scoreText(primary)}, reflecting ${familyMeaning[primary.id] ?? 'the core ideas of that tradition'}.`);
+  if (primary) parts.push(`Your strongest family match is ${scoreText(primary)}, reflecting ${familyMeaningText(primary.id)}.`);
   if (secondary && secondary.overall !== null && (primary?.overall === null || primary?.overall === undefined || secondary.overall >= 45)) {
     parts.push(`${secondary.name} also matters at ${secondary.overall}/100, so a one-word label would leave out a meaningful part of your profile.`);
   }
