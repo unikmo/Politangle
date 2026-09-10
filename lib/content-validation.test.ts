@@ -1,8 +1,9 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { allDeepBeliefQuestions, deepLiteracyQuestions } from './deep-bank';
+import { allDeepBeliefQuestions } from './deep-bank';
 import { deepBeliefAxisMeta, validateDeepBeliefQuestion, validateLiteracyQuestion } from './deep-engine';
 import { evidenceById } from './evidence';
+import { literacyQuestions as deepLiteracyQuestions } from './literacy-questions';
 import { quickQuestions } from './questions';
 
 function assertEvidence(ids: readonly string[], label: string) {
