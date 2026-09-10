@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { deepLiteracyQuestions } from './deep-bank';
+import { literacyQuestions as deepLiteracyQuestions } from './literacy-questions';
 import {
   answerLiteracy,
   completeLiteracySession,
