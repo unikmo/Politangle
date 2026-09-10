@@ -1,4 +1,4 @@
-import { deepLiteracyQuestions } from './deep-bank';
+import { literacyQuestions as deepLiteracyQuestions } from './literacy-questions';
 import type { LiteracyAnswers } from './deep-engine';
 
 export const LITERACY_SESSION_V2_SCHEMA = 2 as const;
