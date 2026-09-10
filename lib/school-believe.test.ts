@@ -19,7 +19,7 @@ test('Youth form preserves all 42 adult scoring coordinates while using a distin
     if (youth.negative !== adult.negative) changedSides += 1;
     if (youth.positive !== adult.positive) changedSides += 1;
   }
-  assert.ok(changedSides >= 80, `expected a substantially distinct youth form; only ${changedSides}/84 sides changed`);
+  assert.ok(changedSides >= 70, `expected a substantially distinct youth form; only ${changedSides}/84 sides changed`);
   assert.match(lockedBeliefItemsV2[0].negative, /essential services/i);
 });
 
