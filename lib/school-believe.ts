@@ -80,7 +80,7 @@ const youthPairs: Record<BeliefConstruct, ModePairs> = {
   },
   subsidiarity: {
     think: ['National or regional government should run important services when that is the best way to guarantee equal access and standards.', 'Important services should usually stay with local government or community institutions when they can provide them well.'],
-    feel: ['I feel confident when national or regional government sets the same minimum standard for important services everywhere.', 'I feel more confident when capable local institutions keep control rather than handing decisions to regional or national government.'],
+    feel: ['I feel confident when national or regional government sets the same minimum standard for important services everywhere.', 'I feel confident when capable local institutions keep control rather than handing decisions to regional or national government.'],
     act: ['If local areas provided very different quality, I would support national or regional standards even if local control were reduced.', 'If local services worked well, I would keep decisions local even if national rules would make them more uniform.'],
   },
 };
