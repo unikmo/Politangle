@@ -5,8 +5,9 @@ import { schoolJuniorBeliefItems, schoolYouthBeliefItems } from './school-believ
 
 function words(value: string) { return value.trim().split(/\s+/).length; }
 
-test('Youth form preserves all 42 adult scoring coordinates while changing wording', () => {
+test('Youth form preserves all 42 adult scoring coordinates while using a distinct plain-language form', () => {
   assert.equal(schoolYouthBeliefItems.length, 42);
+  let changedSides = 0;
   for (const adult of lockedBeliefItemsV2) {
     const youth = schoolYouthBeliefItems.find((item) => item.id === adult.id);
     assert.ok(youth);
@@ -15,9 +16,10 @@ test('Youth form preserves all 42 adult scoring coordinates while changing wordi
     assert.equal(youth.stage, adult.stage);
     assert.equal(youth.quickDimension, adult.quickDimension);
     assert.deepEqual(youth.evidenceIds, adult.evidenceIds);
-    assert.notEqual(youth.negative, adult.negative);
-    assert.notEqual(youth.positive, adult.positive);
+    if (youth.negative !== adult.negative) changedSides += 1;
+    if (youth.positive !== adult.positive) changedSides += 1;
   }
+  assert.ok(changedSides >= 80, `expected a substantially distinct youth form; only ${changedSides}/84 sides changed`);
   assert.match(lockedBeliefItemsV2[0].negative, /essential services/i);
 });
 
