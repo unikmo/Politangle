@@ -13,6 +13,7 @@ import {
 } from '../../lib/belief-v2-session';
 import { agreementAnswerOptions, type AnswerValue } from '../../lib/questions';
 import { germanBeliefStatement } from '../../lib/german-believe';
+import { romanceBeliefStatement } from '../../lib/romance-believe';
 import { expandBeliefItems } from '../../lib/belief-statements';
 import { schoolYouthBeliefItems } from '../../lib/school-believe';
 import { useLocale } from '../LocaleProvider';
@@ -35,10 +36,16 @@ const simpleTopics: Record<string, string> = {
 const youthStatements = new Map(expandBeliefItems(schoolYouthBeliefItems).map((item) => [item.id, item.statement]));
 
 const germanConstructs: Record<string, string> = {
-  'public-provision': 'Öffentliche Daseinsvorsorge', redistribution: 'Umverteilung', ownership: 'Eigentum', 'social-change': 'Gesellschaftlicher Wandel',
-  'personal-autonomy': 'Persönliche Autonomie', abortion: 'Schwangerschaftsabbruch', 'authority-order': 'Freiheit und Ordnung', pluralism: 'Pluralismus',
-  'world-sovereignty': 'Internationale Zusammenarbeit', 'nationhood-membership': 'Zugehörigkeit zur Nation', populism: 'Populismus',
-  'ecology-growth': 'Ökologie und Wachstum', 'religion-public-role': 'Religion im öffentlichen Raum', subsidiarity: 'Subsidiarität',
+  'public-provision': 'Wichtige Angebote', redistribution: 'Arm und Reich', ownership: 'Unternehmen', 'social-change': 'Gesellschaftlicher Wandel',
+  'personal-autonomy': 'Persönliche Freiheit', abortion: 'Schwangerschaftsabbruch', 'authority-order': 'Sicherheit und Freiheit', pluralism: 'Kontrolle der Regierung',
+  'world-sovereignty': 'Zusammenarbeit der Länder', 'nationhood-membership': 'Zugehörigkeit', populism: 'Menschen und Eliten',
+  'ecology-growth': 'Umwelt und Wachstum', 'religion-public-role': 'Religion und Gesetze', subsidiarity: 'Vor Ort oder zentral',
+};
+const spanishConstructs: Record<string, string> = {
+  'public-provision':'Servicios esenciales', redistribution:'Ricos y pobres', ownership:'Empresas', 'social-change':'Cambio social', 'personal-autonomy':'Libertad personal', abortion:'Aborto', 'authority-order':'Seguridad y libertad', pluralism:'Control del gobierno', 'world-sovereignty':'Cooperación entre países', 'nationhood-membership':'Pertenencia', populism:'Gente y élites', 'ecology-growth':'Ambiente y crecimiento', 'religion-public-role':'Religión y leyes', subsidiarity:'Local o central',
+};
+const frenchConstructs: Record<string, string> = {
+  'public-provision':'Services essentiels', redistribution:'Riches et pauvres', ownership:'Entreprises', 'social-change':'Changement social', 'personal-autonomy':'Liberté personnelle', abortion:'Avortement', 'authority-order':'Sécurité et liberté', pluralism:'Contrôle du gouvernement', 'world-sovereignty':'Coopération entre pays', 'nationhood-membership':'Appartenance', populism:'Peuple et élites', 'ecology-growth':'Environnement et croissance', 'religion-public-role':'Religion et lois', subsidiarity:'Local ou central',
 };
 
 function newSeed() {
@@ -77,6 +84,24 @@ export default function QuizClient() {
 
   const progress = beliefV2StageProgress(session, 'quick');
   const selected = session.answers[current.id];
+  const ui = locale === 'de' ? {
+    topicPrefix: 'IN DER PRAXIS · ', agree: 'Stimmst du zu?', restart: 'Neu starten', previous: 'Zurück', next: 'Weiter', result: 'Quick-Ergebnis anzeigen', missing: 'Fehlende Frage beantworten', none: 'Bisher keine unsicheren Antworten', marked: 'als unsicher markiert',
+    labels: ['Nein, gar nicht','Eher nicht','Teils teils oder kommt darauf an','Eher ja','Ja, völlig','Unsicher oder nicht verstanden'], key: ['Nein, gar nicht','Teils teils / kommt darauf an','Ja, völlig','Unsicher'],
+  } : locale === 'es' ? {
+    topicPrefix: 'EN LA PRÁCTICA · ', agree: '¿Estás de acuerdo?', restart: 'Reiniciar', previous: 'Anterior', next: 'Siguiente', result: 'Ver resultado Quick', missing: 'Responder pregunta pendiente', none: 'Ninguna respuesta insegura', marked: 'marcadas como inseguras',
+    labels: ['Totalmente en desacuerdo','En desacuerdo','Ni de acuerdo ni en desacuerdo / depende','De acuerdo','Totalmente de acuerdo','No estoy seguro o no lo entiendo'], key: ['Totalmente en desacuerdo','Neutral / depende','Totalmente de acuerdo','No estoy seguro'],
+  } : locale === 'fr' ? {
+    topicPrefix: 'EN PRATIQUE · ', agree: 'Êtes-vous d’accord ?', restart: 'Recommencer', previous: 'Précédent', next: 'Suivant', result: 'Voir le résultat Quick', missing: 'Répondre à la question manquante', none: 'Aucune réponse incertaine', marked: 'marquées comme incertaines',
+    labels: ['Pas du tout d’accord','Pas d’accord','Ni d’accord ni pas d’accord / cela dépend','D’accord','Tout à fait d’accord','Je ne sais pas ou je ne comprends pas'], key: ['Pas du tout d’accord','Neutre / cela dépend','Tout à fait d’accord','Je ne sais pas'],
+  } : {
+    topicPrefix: 'IN PRACTICE · ', agree: 'Do you agree?', restart: 'Restart', previous: 'Previous', next: 'Next', result: 'See Quick result', missing: 'Answer missing question', none: 'No unsure responses so far', marked: 'marked not sure',
+    labels: agreementAnswerOptions.map((option) => option.label), key: ['Strongly disagree','Neither / depends','Strongly agree','Not sure'],
+  };
+  const localizedStatement = locale === 'de'
+    ? germanBeliefStatement(current.sourceItemId, current.polarity)
+    : locale === 'es' || locale === 'fr'
+      ? romanceBeliefStatement(locale, current.sourceItemId, current.polarity)
+      : youthStatements.get(current.id);
 
   function save(next: BeliefV2Session) {
     sessionStorage.setItem(BELIEF_SESSION_KEY, JSON.stringify(next));
@@ -107,20 +132,20 @@ export default function QuizClient() {
       <div className="engine-progress-row">
         <span>{progress.answered} / {progress.total}</span>
         <div className="engine-progress" aria-label={`${progress.percent}% complete`}><span style={{ width: `${progress.percent}%` }} /></div>
-        <button type="button" className="engine-link-button" onClick={restart}>{locale === 'de' ? 'Neu starten' : 'Restart'}</button>
+        <button type="button" className="engine-link-button" onClick={restart}>{ui.restart}</button>
       </div>
 
       <article className="engine-card">
-        <p className="engine-kicker quick-topic">{current.mode === 'act' ? (locale === 'de' ? 'IN DER PRAXIS · ' : 'IN PRACTICE · ') : ''}{locale === 'de' ? germanConstructs[current.construct] ?? constructLabel(current.construct) : simpleTopics[current.construct] ?? constructLabel(current.construct)}</p>
-        <h1>{locale === 'de' ? 'Stimmen Sie zu?' : 'Do you agree?'}</h1>
-        <div className="engine-statement"><p>{locale === 'de' ? germanBeliefStatement(current.sourceItemId, current.polarity) ?? current.statement : youthStatements.get(current.id) ?? current.statement}</p></div>
+        <p className="engine-kicker quick-topic">{current.mode === 'act' ? ui.topicPrefix : ''}{(locale === 'de' ? germanConstructs : locale === 'es' ? spanishConstructs : locale === 'fr' ? frenchConstructs : simpleTopics)[current.construct] ?? constructLabel(current.construct)}</p>
+        <h1>{ui.agree}</h1>
+        <div className="engine-statement"><p>{localizedStatement ?? current.statement}</p></div>
         <div className="quick-scale" role="radiogroup" aria-label="Response">
           {agreementAnswerOptions.map((option) => (
             <button
               type="button"
               role="radio"
               aria-checked={selected === option.value}
-              aria-label={locale === 'de' ? ({ '-2': 'Stimme gar nicht zu', '-1': 'Stimme eher nicht zu', '0': 'Neutral oder kommt darauf an', '1': 'Stimme eher zu', '2': 'Stimme voll zu', unsure: 'Unsicher oder nicht verstanden' } as Record<string,string>)[String(option.value)] : option.label}
+              aria-label={ui.labels[agreementAnswerOptions.indexOf(option)]}
               className={selected === option.value ? 'quick-scale-answer selected' : 'quick-scale-answer'}
               key={String(option.value)}
               onClick={() => choose(option.value)}
@@ -130,21 +155,18 @@ export default function QuizClient() {
           ))}
         </div>
         <div className="quick-scale-key">
-          <span><b>−2</b> {locale === 'de' ? 'Stimme gar nicht zu' : 'Strongly disagree'}</span>
-          <span><b>0</b> {locale === 'de' ? 'Neutral / kommt darauf an' : 'Neither / depends'}</span>
-          <span><b>+2</b> {locale === 'de' ? 'Stimme voll zu' : 'Strongly agree'}</span>
-          <span><b>?</b> {locale === 'de' ? 'Unsicher' : 'Not sure'}</span>
+          <span><b>−2</b> {ui.key[0]}</span><span><b>0</b> {ui.key[1]}</span><span><b>+2</b> {ui.key[2]}</span><span><b>?</b> {ui.key[3]}</span>
         </div>
       </article>
 
       <div className="engine-nav">
-        <button type="button" onClick={() => setIndex((value) => Math.max(0, value - 1))} disabled={index === 0}>{locale === 'de' ? 'Zurück' : 'Previous'}</button>
-        <span>{progress.unsure ? (locale === 'de' ? `${progress.unsure} als unsicher markiert` : `${progress.unsure} marked not sure`) : (locale === 'de' ? 'Bisher keine unsicheren Antworten' : 'No unsure responses so far')}</span>
+        <button type="button" onClick={() => setIndex((value) => Math.max(0, value - 1))} disabled={index === 0}>{ui.previous}</button>
+        <span>{progress.unsure ? `${progress.unsure} ${ui.marked}` : ui.none}</span>
         {index === session.quickOrder.length - 1 ? (
-          progress.complete ? <button type="button" onClick={finish}>{locale === 'de' ? 'Quick-Ergebnis anzeigen' : 'See Quick result'}</button> :
-          <button type="button" onClick={() => setIndex(firstUnansweredIndex(session, 'quick') ?? index)}>{locale === 'de' ? 'Fehlende Frage beantworten' : 'Answer missing question'}</button>
+          progress.complete ? <button type="button" onClick={finish}>{ui.result}</button> :
+          <button type="button" onClick={() => setIndex(firstUnansweredIndex(session, 'quick') ?? index)}>{ui.missing}</button>
         ) : (
-          <button type="button" disabled={selected === undefined} onClick={() => setIndex((value) => Math.min(session.quickOrder.length - 1, value + 1))}>{locale === 'de' ? 'Weiter' : 'Next'}</button>
+          <button type="button" disabled={selected === undefined} onClick={() => setIndex((value) => Math.min(session.quickOrder.length - 1, value + 1))}>{ui.next}</button>
         )}
       </div>
     </section>

@@ -1,10 +1,11 @@
 'use client';
 import Link from 'next/link';
 import { LanguageSelector, useLocale } from '../../LocaleProvider';
+import { translate } from '../../translations';
 
 export default function PrivateSchoolPage() {
   const { locale } = useLocale();
-  const t = (en: string, de: string) => locale === 'de' ? de : en;
+  const t = (en: string, de: string) => translate(locale, en, de);
   return (
     <main className="engine-page school-page">
       <header className="engine-header"><Link href="/school" className="engine-brand">Politangle School</Link><span>{t('Private Student Mode','Privater Schülerbereich')}</span><LanguageSelector /></header>

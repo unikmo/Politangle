@@ -1,12 +1,13 @@
 'use client';
 import { LanguageSelector, useLocale } from './LocaleProvider';
+import { translate } from './translations';
 
 const Arrow = () => <span aria-hidden="true">→</span>;
 const Mark = () => <span className="p-mark" aria-hidden="true"><i/><i/><i/></span>;
 
 export default function Home() {
  const { locale } = useLocale();
- const t = (en:string,de:string) => locale === 'de' ? de : en;
+ const t = (en:string,de:string) => translate(locale, en, de);
  const dimensions = [[t('Economy','Wirtschaft'),t('Public provision ↔ Market freedom','Öffentliche Vorsorge ↔ Marktfreiheit'),'68'],[t('Society','Gesellschaft'),t('Social change ↔ Continuity','Sozialer Wandel ↔ Kontinuität'),'43'],[t('Power','Macht'),t('Personal freedom ↔ Authority','Persönliche Freiheit ↔ Autorität'),'77'],[t('World','Welt'),t('Cooperation ↔ Sovereignty','Zusammenarbeit ↔ Souveränität'),'55']];
  return <main className="home">
   <header className="p-nav"><a className="p-brand" href="/"><Mark/><span>Politangle</span></a><nav><a href="#method">{t('How it works','So funktioniert es')}</a><a href="#result">{t('Your result','Ihr Ergebnis')}</a><a href="#schools">{t('For schools','Für Schulen')}</a></nav><div className="p-nav-actions"><LanguageSelector/><a className="p-button compact" href="/quiz">{t('Take Quick','Quick starten')} <Arrow/></a></div></header>

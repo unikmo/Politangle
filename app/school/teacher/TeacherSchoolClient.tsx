@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { classroomActivityOptions, classroomQuestionLabel, getClassroomQuestion } from '../../../lib/school-classroom';
 import { schoolLessons } from '../../../lib/school-lessons';
 import { germanBeliefStatement } from '../../../lib/german-believe';
+import { romanceBeliefStatement } from '../../../lib/romance-believe';
 import { useLocale } from '../../LocaleProvider';
 
 type DistributionRow = { id: string; label: string; count: number; percent: number };
@@ -139,8 +140,8 @@ export default function TeacherSchoolClient() {
 
   const currentQuestionIds = summary?.activity.questionIds ?? [];
   const currentQuestion = summary?.currentQuestion;
-  const currentQuestionStatement = currentQuestion?.kind === 'believe' && locale === 'de' && currentQuestion.sourceItemId && currentQuestion.polarity
-    ? germanBeliefStatement(currentQuestion.sourceItemId, currentQuestion.polarity) ?? currentQuestion.statement
+  const currentQuestionStatement = currentQuestion?.kind === 'believe' && currentQuestion.sourceItemId && currentQuestion.polarity
+    ? (locale === 'de' ? germanBeliefStatement(currentQuestion.sourceItemId, currentQuestion.polarity) : locale === 'es' || locale === 'fr' ? romanceBeliefStatement(locale, currentQuestion.sourceItemId, currentQuestion.polarity) : currentQuestion.statement) ?? currentQuestion.statement
     : currentQuestion?.statement;
   const lesson = summary?.activity.lessonId ? schoolLessons.find((item) => item.id === summary.activity.lessonId) : null;
   const availableLessons = schoolLessons.filter((item) => item.ageBand === (ageBand === 'junior-10-13' ? '10–13' : '14–18'));
