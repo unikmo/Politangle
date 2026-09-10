@@ -55,7 +55,7 @@ test('anonymous joins increase only the room total', () => {
 test('teacher can configure and launch Quick, Full, literacy or custom activities', () => {
   let current = record();
   current = configureSchoolClass(current, { type: 'full42', pacing: 'student', projectorMode: 'live' });
-  assert.equal(current.activity.questionIds.length, 84);
+  assert.equal(current.activity.questionIds.length, 42);
   assert.equal(current.activity.pacing, 'student');
   current = configureSchoolClass(current, { type: 'custom', questionIds: ['T01-P', 'C1'] });
   current = launchSchoolQuestion(current, 'T01-P');
@@ -121,12 +121,12 @@ test('class summary retains split distributions and produces aggregate political
     current = applySchoolResponse(current, belief(id, '2', `participant-b-${id}`));
   }
   const summary = schoolClassSummary(current);
-  assert.equal(summary.answeredQuestions, 84);
+  assert.equal(summary.answeredQuestions, 42);
   assert.equal(summary.polygon.length, 8);
   assert.equal(summary.families.length, 5);
   assert.ok(summary.families.every((family) => family.overall !== null));
   assert.ok(summary.constructModes.every((row) => row.think !== null && row.feel !== null && row.act !== null));
-  const first = summary.questions.find((q) => q.id === 'T01-N')!;
+  const first = summary.questions.find((q) => q.id === 'T01-P')!;
   assert.equal(first.distribution.find((item) => item.id === '-2')?.percent, 50);
   assert.equal(first.distribution.find((item) => item.id === '2')?.percent, 50);
 });
