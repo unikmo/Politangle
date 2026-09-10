@@ -13,7 +13,7 @@ import {
   storedToDisplayedBeliefV2Answer,
   type BeliefV2Session,
 } from '../../lib/belief-v2-session';
-import { pairedAnswerOptions, type AnswerValue } from '../../lib/questions';
+import { agreementAnswerOptions, type AnswerValue } from '../../lib/questions';
 
 export const BELIEF_SESSION_KEY = 'politangle.believe.v2.session';
 const LITERACY_SESSION_KEY = 'politangle.literacy.v2.session';
@@ -58,8 +58,7 @@ export default function QuizClient() {
 
   const progress = beliefV2StageProgress(session, 'quick');
   const flipped = isBeliefV2PoleFlipped(session.seed, current.id);
-  const first = flipped ? current.positive : current.negative;
-  const second = flipped ? current.negative : current.positive;
+  const statement = flipped ? current.negative : current.positive;
   const selected = storedToDisplayedBeliefV2Answer(session.answers[current.id], flipped);
 
   function save(next: BeliefV2Session) {
@@ -97,13 +96,10 @@ export default function QuizClient() {
 
       <article className="engine-card">
         <p className="engine-kicker quick-topic">{constructLabel(current.construct)}</p>
-        <h1>Which view is closer to yours?</h1>
-        <div className="engine-pair" aria-label="Two political views">
-          <div><span>First view</span><p>{first}</p></div>
-          <div><span>Second view</span><p>{second}</p></div>
-        </div>
+        <h1>How much do you agree?</h1>
+        <div className="engine-statement"><p>{statement}</p></div>
         <div className="quick-scale" role="radiogroup" aria-label="Response">
-          {pairedAnswerOptions.map((option) => (
+          {agreementAnswerOptions.map((option) => (
             <button
               type="button"
               role="radio"
@@ -118,9 +114,9 @@ export default function QuizClient() {
           ))}
         </div>
         <div className="quick-scale-key">
-          <span><b>−2</b> First view</span>
-          <span><b>0</b> Balanced / depends</span>
-          <span><b>+2</b> Second view</span>
+          <span><b>−2</b> Strongly disagree</span>
+          <span><b>0</b> Neither / depends</span>
+          <span><b>+2</b> Strongly agree</span>
           <span><b>?</b> Not sure</span>
         </div>
       </article>
