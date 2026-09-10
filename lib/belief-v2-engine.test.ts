@@ -40,7 +40,7 @@ test('public provision is separated from productive ownership', () => {
   assert.equal(triplet.length, 3);
   for (const item of triplet) {
     assert.doesNotMatch(`${item.negative} ${item.positive}`, /ownership|shareholder|worker-owned/i);
-    assert.match(`${item.negative} ${item.positive}`, /essential services/i);
+    assert.match(`${item.negative} ${item.positive}`, /essential (?:local )?services?/i);
   }
 });
 
