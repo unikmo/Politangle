@@ -16,208 +16,207 @@ import {
 type CanonicalModePairs = Record<AttitudeMode, readonly [string, string]>;
 
 /**
- * Phase-1 academically and methodologically reviewed source wording.
+ * Plain-language source wording for the adult BELIEVE bank.
  *
- * These pairs are deliberately written as balanced alternatives rather than
- * agree/disagree statements. THINK, FEEL and ACT stay on the same attitude
- * object within each construct. ACT is a stated choice/intention, not observed
- * real-world behaviour.
+ * THINK, FEEL and ACT stay on the same attitude object, but each mode uses a
+ * different angle so users are not asked the same sentence repeatedly. The
+ * session shows only one polarity of each source item, not both alternatives.
  */
 const phase1ValidatedPairs: Record<BeliefConstruct, CanonicalModePairs> = {
   'public-provision': {
     think: [
-      'Government should take broad responsibility for ensuring that everyone can obtain essential services.',
-      'Government should keep a more limited role, with people relying more on private arrangements for essential services.',
+      'Government should make sure everyone can obtain essential services such as healthcare and education.',
+      'Government should have a limited role in essential services, with people relying more on private providers and personal choice.',
     ],
     feel: [
-      'I worry more about people missing essential services when access depends heavily on private arrangements.',
-      'I worry more about dependence and weak choice when government takes broad responsibility for essential services.',
+      'It concerns me when people can miss essential services because access depends too much on private arrangements.',
+      'It concerns me when government control of essential services leaves people with too little choice.',
     ],
     act: [
-      'If I voted on essential services, I would favor broader public responsibility for ensuring access.',
-      'If I voted on essential services, I would favor a more limited government role and greater reliance on private arrangements.',
+      'I would support public funding to keep an essential local service available when private provision would leave people without access.',
+      'I would prefer private provision for an essential local service when it can deliver reliable access without additional public funding.',
     ],
   },
   redistribution: {
     think: [
-      'Government should reduce large income differences through taxes and transfers, even if this means higher taxes for some people.',
-      'Government should interfere less with income differences produced by the economy, even if large gaps remain.',
+      'Government should use taxes and transfers to reduce very large income gaps.',
+      'Government should interfere less with income differences produced by the economy, even when the gaps become large.',
     ],
     feel: [
-      'Large income gaps trouble me more than the higher tax burden used to reduce those gaps.',
-      'Higher tax burdens trouble me more than large income gaps produced by the economy.',
+      'Very large income gaps concern me enough to justify higher taxes on some people.',
+      'High compulsory taxes concern me even when they are intended to reduce large income gaps.',
     ],
     act: [
-      'I would support higher taxes and transfers that reduced large income gaps, even if my own taxes rose moderately.',
-      'I would prefer lower taxes even if large income gaps remained.',
+      'I would accept a moderate increase in my own taxes if it substantially reduced very large income gaps.',
+      'I would prefer lower taxes even if very large income gaps remained.',
     ],
   },
   ownership: {
     think: [
-      'A larger share of large businesses should be owned by workers, cooperatives or public bodies rather than mainly by private shareholders.',
-      'Large businesses should normally remain mainly privately owned, even when government regulates them and protects workers.',
+      'Workers, cooperatives or public bodies should own a larger share of major businesses.',
+      'Major businesses should normally remain mainly owned by private investors, with laws protecting workers.',
     ],
     feel: [
-      'It feels fairer when workers, cooperatives or the public own a larger share of large businesses.',
-      'It feels fairer when private investors retain most ownership of large businesses, subject to law and worker protections.',
+      'It feels fair when workers or the public have a meaningful ownership stake in major businesses.',
+      'It feels fair when private investors retain most ownership of major businesses, subject to worker protections.',
     ],
     act: [
-      'I would support policies that shift a substantial share of large-company ownership to workers, cooperatives or public funds.',
-      'I would prefer large-company ownership to remain primarily with private shareholders.',
+      'I would support policies that give workers, cooperatives or public funds a substantial ownership stake in large companies.',
+      'I would prefer ownership of large companies to remain mainly with private shareholders.',
     ],
   },
   'social-change': {
     think: [
-      'When a new social norm gains substantial support but remains contested, public institutions should adapt relatively early.',
-      'When a new social norm remains contested, public institutions should wait for broad and durable acceptance before changing long-standing rules.',
+      'Public rules should adapt reasonably quickly when a new social norm gains strong and sustained support.',
+      'Long-standing public rules should change only after a new social norm has broad and durable support.',
     ],
     feel: [
-      'I feel more uneasy when public institutions lag behind a social change that has gained substantial support.',
-      'I feel more uneasy when public institutions change long-standing rules before a new social norm is broadly accepted.',
+      'I am uncomfortable when public rules lag far behind a social change that has strong support.',
+      'I am uncomfortable when long-standing rules change before a new social norm is broadly accepted.',
     ],
     act: [
-      'If a new social norm had substantial but not yet overwhelming support, I would generally favor updating an old rule sooner.',
-      'I would generally keep the old rule until the new norm had broad and durable acceptance.',
+      'If an old public rule no longer fitted a widely accepted social norm, I would support changing it fairly soon.',
+      'I would keep an old public rule until support for changing it was broad and durable.',
     ],
   },
   'personal-autonomy': {
     think: [
       'Law should generally leave private, consensual adult behavior alone when it does not directly harm others.',
-      'Law may legitimately restrict some private, consensual adult behavior to uphold shared moral standards, even without direct harm to others.',
+      'Law may restrict some private, consensual adult behavior to uphold shared moral standards, even without direct harm to others.',
     ],
     feel: [
-      'I feel more uneasy when government restricts private, consensual adult behavior that does not directly harm others.',
-      'I feel more uneasy when law gives no weight to shared moral standards in regulating private adult behavior.',
+      'I am uncomfortable when government restricts private adult choices that do not directly harm anyone else.',
+      'I am uncomfortable when law gives no weight to shared moral standards in private adult behavior.',
     ],
     act: [
-      'If I strongly disapproved of private adult behavior that caused no direct harm, I would still oppose legal restrictions.',
-      'If I thought that behavior seriously undermined shared moral standards, I could support legal restrictions even without direct harm.',
+      'If I strongly disliked a private adult choice that harmed nobody else, I would still oppose banning it.',
+      'I could support legal limits on a private adult choice if I believed it seriously undermined shared moral standards.',
     ],
   },
   abortion: {
     think: [
       'Abortion should generally remain legally available because the pregnant person should have primary decision-making authority.',
-      'Abortion should generally face stronger legal limits because the state should give greater protection to prenatal life.',
+      'Abortion should generally face stronger legal limits because prenatal life should receive greater legal protection.',
     ],
     feel: [
-      'In abortion policy, I feel greater concern about restricting the pregnant person’s autonomy.',
-      'In abortion policy, I feel greater concern about failing to protect prenatal life.',
+      'Restrictions on abortion concern me because they can take an important personal decision away from the pregnant person.',
+      'Broad abortion access concerns me because I believe prenatal life deserves stronger protection.',
     ],
     act: [
-      'If I voted directly on abortion law, I would vote toward broader legal access and decision-making autonomy.',
-      'If I voted directly on abortion law, I would vote toward stronger legal limits intended to protect prenatal life.',
+      'If abortion law were put to a vote, I would support broader legal access.',
+      'If abortion law were put to a vote, I would support tighter legal limits.',
     ],
   },
   'authority-order': {
     think: [
-      'Government should restrict liberty only when it can show a concrete and serious risk of harm.',
-      'Government may restrict some liberties preventively when there is a credible risk of serious disorder.',
+      'Government should restrict individual freedom only when it can show a concrete and serious risk of harm.',
+      'Government may restrict some freedoms before harm occurs when there is a credible risk of serious disorder.',
     ],
     feel: [
-      'During unrest or crisis, I worry more about government overreach and unnecessary limits on liberty.',
-      'During unrest or crisis, I worry more about authorities lacking enough power to restore safety and order.',
+      'During a crisis, government using more power than necessary worries me.',
+      'During a crisis, authorities having too little power to restore safety worries me.',
     ],
     act: [
-      'During serious disorder, I would keep strong legal safeguards even if the response were slower or less forceful.',
+      'During serious disorder, I would keep strong legal safeguards even if the response became slower.',
       'During serious disorder, I would allow broader temporary powers even if some legal safeguards were reduced.',
     ],
   },
   pluralism: {
     think: [
-      'Winning an election should not free a government from independent checks such as courts and legal safeguards.',
-      'An elected government should have wide latitude to carry out its program even when independent institutions try to block it.',
+      'Winning an election should not remove independent checks such as courts, constitutional rules and opposition rights.',
+      'An elected government should have wide freedom to carry out its legal program even when independent bodies strongly oppose it.',
     ],
     feel: [
-      'I am more alarmed when an elected majority weakens independent checks on government power.',
-      'I am more alarmed when independent institutions repeatedly block an elected government from carrying out its program.',
+      'It concerns me when an elected majority weakens independent checks on government power.',
+      'It concerns me when independent bodies repeatedly stop an elected government from carrying out policies that are legal and constitutional.',
     ],
     act: [
-      'If a government I strongly supported clashed with independent checks, I would still defend those checks even when they slowed its program.',
-      'If those checks repeatedly blocked the elected program, I could support reducing some of their power.',
+      'If a court blocked a policy I strongly supported, I would still defend the court’s independence.',
+      'If independent checks repeatedly blocked legal policies voters chose, I could support reducing some of those checks.',
     ],
   },
   'world-sovereignty': {
     think: [
-      'Countries should accept binding international rules when joint action is needed to solve cross-border problems.',
-      'Countries should keep the final national say even when this makes joint action on cross-border problems less effective.',
+      'Countries should accept binding international rules when shared problems cannot be solved effectively by each country acting alone.',
+      'Countries should keep the final national say even when this makes joint action on shared problems less effective.',
     ],
     feel: [
-      'I feel more uneasy when shared problems go unsolved because countries refuse binding international commitments.',
-      'I feel more uneasy when international commitments limit my country’s final say.',
+      'I am uncomfortable when shared problems remain unsolved because countries refuse binding cooperation.',
+      'I am uncomfortable when international commitments prevent my country from making its own final decision on an important issue.',
     ],
     act: [
-      'I would support a binding international agreement when it was necessary for a shared problem, even if it limited some national decision-making.',
-      'I would prefer to keep national decision-making even if that made the international response less effective.',
+      'I would support a binding international agreement when it was necessary to solve a shared problem, even if it limited some national choices.',
+      'I would keep national decision-making even when doing so made a shared international response less effective.',
     ],
   },
   'nationhood-membership': {
     think: [
-      'A naturalized citizen can be just as fully part of the nation as someone who has been a citizen from birth.',
-      'Being a citizen from birth should carry additional weight in deciding who is fully part of the nation.',
+      'A naturalized citizen can belong to the nation just as fully as a citizen from birth.',
+      'Being a citizen from birth is an important part of national belonging beyond legal citizenship alone.',
     ],
     feel: [
-      'A naturalized citizen who embraces the country’s civic life feels just as fully part of the nation to me as a citizen from birth.',
-      'A citizen from birth feels more fully part of the nation to me than a naturalized citizen.',
+      'I feel the same national belonging toward naturalized citizens who take part in civic life as toward citizens from birth.',
+      'Long-standing family roots in the country matter to my sense of national belonging.',
     ],
     act: [
-      'If two otherwise similar candidates were citizens, I would not prefer one simply because they had been a citizen from birth.',
-      'If two otherwise similar candidates were citizens, I would prefer the citizen from birth over a naturalized citizen.',
+      'I would support allowing naturalized citizens to hold the same elected offices as citizens from birth.',
+      'I would support reserving some senior elected offices for citizens from birth.',
     ],
   },
   populism: {
     think: [
-      'Most political disagreements reflect genuine conflicts among groups and values, not mainly a struggle between ordinary people and a self-serving elite.',
-      'Politics is often a conflict between ordinary people and a self-serving elite that ignores the people’s common interests.',
+      'Political disagreements usually reflect real conflicts among interests and values, not one side simply betraying ordinary voters.',
+      'Political decisions often give too much influence to well-connected groups and too little to ordinary voters.',
     ],
     feel: [
-      'When politics disappoints, I am more likely to blame difficult trade-offs among competing interests.',
-      'When politics disappoints, I am more likely to blame a self-serving elite that ignores ordinary people.',
+      'When politics disappoints me, I usually think difficult trade-offs and competing interests are the main reason.',
+      'When politics disappoints me, I often suspect that well-connected groups are being heard more than ordinary voters.',
     ],
     act: [
-      'When choosing between otherwise similar candidates, I would prefer one who says political problems cannot usually be reduced to people versus elite.',
-      'I would prefer one who promises to take power back from a self-serving elite and carry out the common will of ordinary people.',
+      'I prefer candidates who explain political trade-offs openly, even when their message is less dramatic or popular.',
+      'I prefer candidates who promise to reduce the influence of well-connected groups and give ordinary voters more direct influence.',
     ],
   },
   'ecology-growth': {
     think: [
       'When environmental protection and economic growth clearly conflict, ecological limits should sometimes take priority even if growth is slower.',
-      'When they conflict, economic growth should generally take priority, with environmental harm addressed without deliberately limiting growth.',
+      'When they conflict, economic growth should generally take priority while environmental harm is reduced through other means.',
     ],
     feel: [
-      'In a real trade-off, I worry more about ecological damage from prioritizing growth.',
-      'In a real trade-off, I worry more about jobs and living standards from prioritizing environmental limits.',
+      'Serious ecological damage worries me even when preventing it could slow economic growth.',
+      'Lost jobs and living standards worry me when environmental limits significantly slow economic growth.',
     ],
     act: [
       'I would support binding environmental limits even if they moderately slowed economic growth.',
-      'I would oppose limits that deliberately slow growth and prefer environmental policies designed to preserve growth.',
+      'I would oppose environmental limits that deliberately slow growth and prefer approaches designed to preserve growth.',
     ],
   },
   'religion-public-role': {
     think: [
-      'Religious moral principles should not count as legitimate public reasons for laws that apply to people who do not share the religion.',
-      'Religious moral principles can legitimately count as public reasons for laws even when some citizens do not share the religion.',
+      'Religious moral principles should not be enough to justify laws that apply to people who do not share the religion.',
+      'Religious moral principles can be legitimate reasons for laws even when some citizens do not share the religion.',
     ],
     feel: [
-      'I feel more uneasy when religious moral principles are used to justify laws for people who do not share that faith.',
-      'I feel more uneasy when religious moral principles are treated as illegitimate in public debate simply because they are religious.',
+      'I am uneasy when religious moral principles are used to justify laws for people who do not share that faith.',
+      'I am uneasy when religious moral principles are dismissed from public debate simply because they are religious.',
     ],
     act: [
-      'I would prefer public officials not to cite religious moral principles as reasons for laws that apply to everyone.',
-      'I would accept public officials citing religious moral principles as legitimate reasons for laws that apply to everyone.',
+      'I would prefer public officials not to rely mainly on religious moral principles when justifying laws that apply to everyone.',
+      'I would accept public officials using religious moral principles as legitimate reasons for laws that apply to everyone.',
     ],
   },
   subsidiarity: {
     think: [
-      'Important social tasks should usually be handled by higher-level government when that is the best way to guarantee equal standards and access.',
-      'Important social tasks should stay at the lowest capable level, with higher government stepping in only when needed.',
+      'National or regional government should handle important services when that is the best way to guarantee equal access and standards.',
+      'Important services should usually stay with local government or community institutions when they can provide them well.',
     ],
     feel: [
-      'I feel more comfortable when higher-level government takes responsibility for important social tasks to guarantee consistent standards.',
-      'I feel more comfortable when capable families, communities or local institutions keep responsibility instead of passing it upward.',
+      'I feel confident when national or regional government sets the same minimum standard for important services everywhere.',
+      'I feel confident when capable local institutions keep control instead of decisions being moved upward.',
     ],
     act: [
-      'If both approaches could work, I would usually choose higher-level government responsibility to guarantee consistent standards.',
-      'If both approaches could work, I would usually keep responsibility with the lowest capable family, community or local institution.',
+      'If local areas provided very different quality, I would support national or regional standards even if local control were reduced.',
+      'If local services worked well, I would keep decisions local even if national rules would make them more uniform.',
     ],
   },
 };
@@ -340,6 +339,38 @@ export function calculateConstructModesV2(answers: BeliefAnswersV2): ConstructMo
   });
 }
 
+export type ResponseConsistencyV2 = {
+  score: number | null;
+  coverage: number;
+  comparedConstructs: number;
+  highlyAligned: number;
+  contextSensitive: number;
+};
+
+/**
+ * Measures response coherence across THINK, FEEL and ACT within the same
+ * construct. It is not a conviction, knowledge or honesty score. A lower score
+ * can reflect genuine trade-offs, context sensitivity, uncertainty or noise.
+ */
+export function assessResponseConsistencyV2(answers: BeliefAnswersV2): ResponseConsistencyV2 {
+  const results = calculateConstructModesV2(answers);
+  const comparable = results.flatMap((result) => {
+    const known = [result.think, result.feel, result.act].filter((value): value is number => value !== null);
+    if (known.length < 2) return [];
+    const spread = Math.max(...known) - Math.min(...known);
+    return [{ consistency: 100 - spread }];
+  });
+  if (!comparable.length) return { score: null, coverage: 0, comparedConstructs: 0, highlyAligned: 0, contextSensitive: 0 };
+  const score = Math.round(comparable.reduce((sum, item) => sum + item.consistency, 0) / comparable.length);
+  return {
+    score,
+    coverage: Math.round((comparable.length / results.length) * 100),
+    comparedConstructs: comparable.length,
+    highlyAligned: comparable.filter((item) => item.consistency >= 75).length,
+    contextSensitive: comparable.filter((item) => item.consistency <= 50).length,
+  };
+}
+
 export type FamilyCompatibilityV2 = {
   id: FamilyId;
   name: string;
@@ -442,8 +473,6 @@ export function statementFamilyRelevanceV2(itemId: string) {
  * versus final national discretion. Nationalism can be civic or culturally
  * restrictive and national self-determination is not identical to state
  * sovereignty, so averaging those two axes would create a false single score.
- * The two dimensions remain visible separately in the political polygon and
- * nationalism remains available as an educational/context concept.
  */
 export type TendencyIdV2 = 'populism' | 'authority-democratic-constraints';
 export type TendencyResultV2 = { id: TendencyIdV2; score: number | null; coverage: number };
@@ -544,6 +573,10 @@ export function validateCanonicalBeliefV2() {
   for (const item of lockedBeliefItemsV2) {
     if (wordCount(item.negative) > 26 || wordCount(item.positive) > 26) errors.push(`${item.id} exceeds the 26-word source-language burden guardrail`);
   }
+  const allText = lockedBeliefItemsV2.flatMap((item) => [item.negative, item.positive]).join(' ');
+  if (/\belites?\b/i.test(allText)) errors.push('BELIEVE wording should not repeatedly frame politics around elites');
+  const incompleteComparatives = lockedBeliefItemsV2.filter((item) => item.mode === 'feel' && /\bI (?:feel |am )?more\b/i.test(`${item.negative} ${item.positive}`));
+  if (incompleteComparatives.length) errors.push('FEEL items should be complete standalone statements, not unfinished “more ...” comparisons');
   const provision = lockedBeliefItemsV2.filter((item) => item.construct === 'public-provision');
   if (provision.some((item) => /ownership|shareholder|worker-owned/i.test(`${item.negative} ${item.positive}`))) errors.push('Public-provision triplet must not collapse into ownership');
   const redistributionAct = lockedBeliefItemsV2.find((item) => item.id === 'A02');
@@ -552,11 +585,12 @@ export function validateCanonicalBeliefV2() {
   if (nationhood.some((item) => !/naturalized/i.test(`${item.negative} ${item.positive}`) || !/citizen from birth/i.test(`${item.negative} ${item.positive}`))) errors.push('Nationhood THINK / FEEL / ACT items must stay aligned on naturalized versus citizen-from-birth national membership');
   if (nationhood.some((item) => /parent|birthplace|citizenship-at-birth/i.test(`${item.negative} ${item.positive}`))) errors.push('Nationhood core must not use citizenship-at-birth law as a proxy for national belonging');
   const populistAct = lockedBeliefItemsV2.find((item) => item.id === 'A11');
-  if (!populistAct || /court|institution|media|opposition|leader/.test(`${populistAct.negative} ${populistAct.positive}`.toLowerCase())) errors.push('Populism ACT item must not collapse into anti-pluralism or leader authoritarianism');
+  if (!populistAct || !/well-connected/i.test(`${populistAct.negative} ${populistAct.positive}`) || !/ordinary voters/i.test(`${populistAct.negative} ${populistAct.positive}`)) errors.push('Populism ACT should measure unequal political influence without relying on an elite-versus-people slogan');
+  if (populistAct && /court|institution|media|opposition|leader/.test(`${populistAct.negative} ${populistAct.positive}`.toLowerCase())) errors.push('Populism ACT item must not collapse into anti-pluralism or leader authoritarianism');
   const religion = lockedBeliefItemsV2.filter((item) => item.construct === 'religion-public-role');
   if (religion.some((item) => !/religious moral principles/i.test(`${item.negative} ${item.positive}`))) errors.push('Religion-public-role triplet must stay aligned on legitimacy of religious moral principles in public reasoning');
   const subsidiarityAct = lockedBeliefItemsV2.find((item) => item.id === 'A14');
-  if (!subsidiarityAct || !/higher-level government/i.test(subsidiarityAct.negative) || !/lowest capable/i.test(subsidiarityAct.positive)) errors.push('Subsidiarity ACT poles are not aligned with THINK/FEEL orientation');
+  if (!subsidiarityAct || !/national or regional/i.test(subsidiarityAct.negative) || !/local/i.test(subsidiarityAct.positive)) errors.push('Subsidiarity ACT poles are not aligned with national/regional versus local responsibility');
   return { valid: errors.length === 0, errors };
 }
 
