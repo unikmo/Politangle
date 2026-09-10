@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
-import { deepLiteracyQuestions } from '../lib/deep-bank';
+import { literacyQuestions as deepLiteracyQuestions } from '../lib/literacy-questions';
 import { calculateDeepLiteracyResult, scoreLiteracyItem, type DeepSection } from '../lib/deep-engine';
 import {
   answerLiteracy,
