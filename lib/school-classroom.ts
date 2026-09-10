@@ -28,8 +28,7 @@ export type ClassroomQuestionView = {
   construct?: string;
   mode?: string;
   section?: string;
-  negative?: string;
-  positive?: string;
+  statement?: string;
   prompt?: string;
   multiSelect?: boolean;
   options: readonly { id: string; label: string }[];
@@ -38,12 +37,12 @@ export type ClassroomQuestionView = {
 };
 
 export const BELIEVE_CLASSROOM_OPTIONS = [
-  { id: '-2', label: 'Strongly first' },
-  { id: '-1', label: 'Somewhat first' },
-  { id: '0', label: 'Between / depends' },
-  { id: '1', label: 'Somewhat second' },
-  { id: '2', label: 'Strongly second' },
-  { id: 'unsure', label: 'Unsure' },
+  { id: '-2', label: 'Strongly disagree' },
+  { id: '-1', label: 'Disagree' },
+  { id: '0', label: 'Neither / it depends' },
+  { id: '1', label: 'Agree' },
+  { id: '2', label: 'Strongly agree' },
+  { id: 'unsure', label: 'Not sure / I do not understand' },
 ] as const;
 
 const literacyById = new Map(deepLiteracyQuestions.map((question) => [question.id, question]));
@@ -55,8 +54,9 @@ export const classroomLiteracyIds = deepLiteracyQuestions.map((question) => ques
 export const classroomAllIds = [...classroomFullIds, ...classroomLiteracyIds];
 export const classroomJuniorIds = schoolJuniorBeliefItems.map((item) => item.id);
 
-function titleForMode(mode: string) {
-  return mode === 'think' ? 'THINK' : mode === 'feel' ? 'FEEL' : 'ACT';
+function titleForConstruct(construct: string) {
+  if (construct === 'nationhood-membership') return 'Nationhood';
+  return construct.replaceAll('-', ' ').replace(/\b\w/g, (letter) => letter.toUpperCase());
 }
 
 export function getClassroomQuestion(id: string, ageBand: SchoolAgeBand = 'youth-14-18'): ClassroomQuestionView | null {
@@ -65,11 +65,10 @@ export function getClassroomQuestion(id: string, ageBand: SchoolAgeBand = 'youth
     return {
       id: belief.id,
       kind: 'believe',
-      title: `${titleForMode(belief.mode)} · ${belief.construct.replaceAll('-', ' ')}`,
+      title: titleForConstruct(belief.construct),
       construct: belief.construct,
       mode: belief.mode,
-      negative: belief.negative,
-      positive: belief.positive,
+      statement: belief.positive,
       options: BELIEVE_CLASSROOM_OPTIONS,
     };
   }
