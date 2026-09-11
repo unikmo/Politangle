@@ -27,10 +27,10 @@ export const schoolLessons: readonly SchoolLesson[] = [
     ageBand: '10–13',
     duration: '45 min',
     goals: ['Recognise emotional political messages without assuming they are false.', 'Separate evidence from blame and simplistic us-versus-them stories.', 'Pause before sharing content designed to create anger or fear.'],
-    questionIds: ['J10', 'J16', 'U1', 'U3'],
+    questionIds: ['J10', 'J16', 'JQ7', 'JQ3'],
     timeline: [
       { minutes: '0–8', teacher: 'Show two fictional social posts: one gives evidence and one mainly triggers anger.', students: 'Identify words designed to create an immediate reaction.' },
-      { minutes: '8–22', teacher: 'Run the Junior political-influence questions anonymously.', students: 'Answer without revealing their individual choices.' },
+      { minutes: '8–22', teacher: 'Run the Junior political-influence and democracy questions anonymously.', students: 'Answer without revealing their individual choices.' },
       { minutes: '22–35', teacher: 'Teach claim, evidence, emotion and scapegoat as four separate features.', students: 'Sort fictional statements and explain what evidence would be needed.' },
       { minutes: '35–45', teacher: 'Use the pause-check-compare routine.', students: 'Rewrite one manipulative post as a fair, checkable claim.' },
     ],
