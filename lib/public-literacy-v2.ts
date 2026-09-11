@@ -32,16 +32,16 @@ const communismUpgrades: Record<string, QuestionOverride> = {
     evidenceIds: ['SEP-SOCIALISM', 'OXFORD-COMMUNISM'],
   },
   U20: {
-    prompt: 'Why is a permanent one-party state not the Marxian final ideal of communism?',
+    prompt: 'Why should communist theory and historical communist-party governments not be treated as exactly the same thing?',
     options: [
-      { id: 'u20-a', label: 'It is the final ideal; Marx defined communism as permanent one-party rule and centralized state planning.' },
-      { id: 'u20-b', label: 'The Marxian final ideal is classless and ultimately stateless, so a permanent party-state is not the end condition it describes.' },
-      { id: 'u20-c', label: 'Because communism is mainly a theory of nationalism rather than a theory about class, ownership and the state.' },
-      { id: 'u20-d', label: 'Because the communist ideal requires a constitutional monarchy rather than a republic.' },
+      { id: 'u20-a', label: 'They are exactly the same: Marx defined the final communist ideal as a permanent centralized one-party state.' },
+      { id: 'u20-b', label: 'Marxian communism describes a classless, ultimately stateless end goal, while historical communist-party governments were states and did not themselves match that final condition.' },
+      { id: 'u20-c', label: 'Because communist theory is mainly about nationalism, while historical communist governments were mainly libertarian.' },
+      { id: 'u20-d', label: 'Because communism is only an economic policy and has no ideas about class, ownership or the state.' },
     ],
     acceptedAnswerSets: [['u20-b']],
-    explanation: 'The Marxian communist end state is classless and ultimately stateless, with collective ownership of the means of production. A permanent one-party state is therefore not the final communist ideal described by that theory.',
-    evidenceIds: ['OXFORD-COMMUNISM'],
+    explanation: 'The word communism is used both for a Marxian theoretical end state and for historical movements and governments associated with that tradition. The theoretical end state is classless and ultimately stateless, so those are not identical concepts.',
+    evidenceIds: ['OXFORD-COMMUNISM', 'SEP-SOCIALISM'],
   },
 };
 
