@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import DeepClient from './DeepClient';
+import ResultExtras from '../ResultExtras';
 import { LanguageSelector } from '../LocaleProvider';
 
 export default function DeepPage() {
@@ -10,6 +11,7 @@ export default function DeepPage() {
         <span>Full · 16 more questions</span><LanguageSelector />
       </header>
       <DeepClient />
+      <ResultExtras stage="full" />
     </main>
   );
 }
