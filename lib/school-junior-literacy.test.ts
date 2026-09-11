@@ -18,7 +18,7 @@ test('Junior literacy is a short independent bank for ages 10 to 13', () => {
 });
 
 test('Junior literacy keeps an eleven-year-old reading load instead of reusing adult stems', () => {
-  const banned = /subsidiarity|pluralism|nativism|means of production|thin-centered|autocratization|majoritarian|constitutionalism/i;
+  const banned = /subsidiarity|pluralism|nativism|means of production|thin-centered|autocratization|majoritarian|constitutionalism|establishment|welfare state|rule of law|liberal democracy/i;
   for (const question of schoolJuniorLiteracyQuestions) {
     assert.ok(words(question.prompt) <= 22, `${question.id} prompt is too long: ${words(question.prompt)} words`);
     assert.doesNotMatch(question.prompt, banned, `${question.id} uses specialist language in the prompt`);
