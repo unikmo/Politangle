@@ -359,21 +359,16 @@
 .home .p-language-list{border:0}
 .home .p-language-list span{min-height:180px;border-right:1px solid #ddd4cc;color:var(--ink);font-size:0}
 .home .p-language-list span:first-child{border-left:1px solid #ddd4cc}
-.home .p-language-list img{width:78px;height:112px;object-fit:contain}
+.home .p-language-list img{width:100%;height:128px;object-fit:contain;mix-blend-mode:multiply}
 .home .p-language-list small{margin-top:10px;color:#4e443f;font-size:12px;font-weight:500}
 .home .p-languages>aside{display:flex;flex-direction:column}.home .p-languages>aside i{margin:0 0 14px}
 
-.home .p-final{position:relative;min-height:270px;margin:0 auto 52px;padding:42px 38px;overflow:hidden;background:#f1ece4;color:var(--ink)}
+.home .p-final{position:relative;min-height:270px;margin:0 auto 52px;padding:42px 38px;overflow:hidden;background:#f1ece4 url('/images/curiosity-mountains.webp') center bottom/cover no-repeat;color:var(--ink)}
 .home .p-final>div:first-child{position:relative;z-index:2;max-width:430px}
 .home .p-final h2{margin:0 0 14px;color:var(--ink);font-size:38px}
 .home .p-final p{max-width:390px;color:#756a63;font-size:14px;line-height:1.55}
 .home .p-final .p-button{margin-top:10px;background:var(--brand-orange);color:#fff}
 .home .p-final>aside{position:absolute;z-index:2;top:48px;right:48px;width:170px}.home .p-final>aside i{display:block;margin:0 0 14px}
-.home .p-mountains{position:absolute;inset:auto 0 0;height:150px}
-.home .p-mountains i{position:absolute;inset:auto 0 0;height:100%;clip-path:polygon(0 100%,10% 70%,18% 82%,27% 43%,36% 74%,48% 28%,56% 71%,65% 47%,74% 78%,85% 62%,100% 88%,100% 100%)}
-.home .p-mountains i:nth-child(1){height:135px;background:#ded4c7;opacity:.65;transform:translateX(-5%)}
-.home .p-mountains i:nth-child(2){height:105px;background:#c6ad96;opacity:.65;transform:translateX(13%)}
-.home .p-mountains i:nth-child(3){height:78px;background:#c85122;opacity:.92;transform:translateX(28%)}
 
 .home .p-footer.p-shell{width:100%;min-height:116px;padding:0 max(36px,calc(50vw - 590px));background:#fff}
 
