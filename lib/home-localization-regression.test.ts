@@ -32,7 +32,7 @@ test('French marketing localization uses tu rather than vous', () => {
 
 test('Spanish marketing localization stays on informal tú copy and avoids usted', () => {
   assert.match(translations, /Tus ideas políticas no caben en un eje izquierda-derecha\./);
-  assert.match(translations, /te resulte más natural pensar/);
+  assert.match(translations, /tu forma de pensar políticamente/);
   assert.doesNotMatch(translations, /\bustedes?\b/i);
 });
 
