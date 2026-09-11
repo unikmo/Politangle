@@ -4,6 +4,7 @@ import {
   buildClassroomActivity,
   classroomActivityOptions,
   classroomFullIds,
+  classroomJuniorLiteracyIds,
   classroomLiteracyIds,
   classroomQuickIds,
   getClassroomQuestion,
@@ -12,10 +13,11 @@ import {
 } from './school-classroom';
 import { lockedBeliefItemsV2 } from './belief-v2-engine';
 
-test('classroom exposes Quick 26, Full 42 and 15 literacy questions', () => {
+test('classroom exposes Quick 26, Full 42, Youth literacy and Junior literacy separately', () => {
   assert.equal(classroomQuickIds.length, 26);
   assert.equal(classroomFullIds.length, 42);
   assert.equal(classroomLiteracyIds.length, 15);
+  assert.equal(classroomJuniorLiteracyIds.length, 8);
   assert.equal(new Set(classroomFullIds).size, 42);
 });
 
@@ -23,6 +25,7 @@ test('teacher can configure all core classroom activity types', () => {
   assert.equal(buildClassroomActivity({ type: 'quick26', pacing: 'teacher', projectorMode: 'reveal' })?.questionIds.length, 26);
   assert.equal(buildClassroomActivity({ type: 'full42', pacing: 'student', projectorMode: 'live' })?.questionIds.length, 42);
   assert.equal(buildClassroomActivity({ type: 'literacy' })?.questionIds.length, 15);
+  assert.equal(buildClassroomActivity({ type: 'literacy', ageBand: 'junior-10-13' })?.questionIds.length, 8);
   assert.equal(buildClassroomActivity({ type: 'guided', lessonId: 'room-stand' })?.questionIds.length, 14);
   assert.equal(buildClassroomActivity({ type: 'guided', lessonId: 'quick26-lab' })?.questionIds.length, 26);
   assert.equal(buildClassroomActivity({ type: 'junior', ageBand: 'junior-10-13' })?.questionIds.length, 16);
@@ -40,6 +43,14 @@ test('classroom exposes separate Junior and Youth candidate forms', () => {
   assert.equal(youth.questionIds.length, 42);
   assert.equal(youth.ageBand, 'youth-14-18');
   assert.notEqual(getClassroomQuestion('T01-P', 'youth-14-18')?.statement, lockedBeliefItemsV2.find((item) => item.id === 'T01')?.positive);
+});
+
+test('Junior political literacy never falls through to the Youth C and U bank', () => {
+  const junior = buildClassroomActivity({ type: 'literacy', ageBand: 'junior-10-13' })!;
+  assert.ok(junior.questionIds.every((id) => id.startsWith('JQ')));
+  assert.equal(getClassroomQuestion('C1', 'junior-10-13'), null);
+  assert.ok(getClassroomQuestion('JQ1', 'junior-10-13'));
+  assert.equal(getClassroomQuestion('JQ1', 'youth-14-18'), null);
 });
 
 test('public BELIEVE questions expose exactly one statement and an agreement scale', () => {
@@ -65,6 +76,10 @@ test('student-safe literacy question does not expose answer key before reveal', 
   const revealed = publicClassroomQuestion('C1', true)!;
   assert.ok(revealed.acceptedAnswerSets?.length);
   assert.ok(revealed.explanation);
+
+  const juniorHidden = publicClassroomQuestion('JQ1', false, 'junior-10-13')!;
+  assert.equal(juniorHidden.acceptedAnswerSets, undefined);
+  assert.equal(juniorHidden.explanation, undefined);
 });
 
 test('BELIEVE classroom responses accept five-point scale plus unsure', () => {
@@ -74,11 +89,15 @@ test('BELIEVE classroom responses accept five-point scale plus unsure', () => {
   assert.equal(validateClassroomResponse({ participantToken: 'anonymous-browser-123', questionId: 'T01-P', answer: '7' }), null);
 });
 
-test('literacy classroom responses are validated against canonical options', () => {
+test('literacy classroom responses are validated against the correct age bank', () => {
   const q = getClassroomQuestion('C1')!;
   const option = q.options[0].id;
   assert.ok(validateClassroomResponse({ participantToken: 'anonymous-browser-123', questionId: 'C1', answer: [option] }));
   assert.equal(validateClassroomResponse({ participantToken: 'anonymous-browser-123', questionId: 'C1', answer: ['not-an-option'] }), null);
+
+  const junior = getClassroomQuestion('JQ1', 'junior-10-13')!;
+  assert.ok(validateClassroomResponse({ participantToken: 'anonymous-browser-123', questionId: 'JQ1', answer: [junior.options[0].id] }, 'junior-10-13'));
+  assert.equal(validateClassroomResponse({ participantToken: 'anonymous-browser-123', questionId: 'C1', answer: [option] }, 'junior-10-13'), null);
 });
 
 test('activity metadata exposes guided lesson choices without student identities', () => {
@@ -86,6 +105,7 @@ test('activity metadata exposes guided lesson choices without student identities
   assert.equal(options.quick26.length, 26);
   assert.equal(options.full42.length, 42);
   assert.equal(options.literacy.length, 15);
+  assert.equal(options.juniorLiteracy.length, 8);
   assert.equal(options.junior.length, 16);
   assert.equal(options.lessons.length, 8);
 });
