@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import LiteracyQuizClient from '../LiteracyQuizClient';
+import LiteracyQuizClientV2 from '../LiteracyQuizClientV2';
 import { LanguageSelector } from '../LocaleProvider';
 
 export default async function UnderstandPage({ searchParams }: { searchParams: Promise<{ mode?: string }> }) {
@@ -11,7 +11,7 @@ export default async function UnderstandPage({ searchParams }: { searchParams: P
         <Link href={schoolMode ? '/school/private' : '/'} className="engine-brand">Politangle</Link>
         <span>UNDERSTAND · 20</span><LanguageSelector />
       </header>
-      <LiteracyQuizClient section="understand" feedbackMode={schoolMode ? 'instant' : 'end'} />
+      <LiteracyQuizClientV2 section="understand" feedbackMode={schoolMode ? 'instant' : 'end'} />
     </main>
   );
 }
