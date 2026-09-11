@@ -9,7 +9,7 @@ export default async function ClassifyPage({ searchParams }: { searchParams: Pro
     <main className="engine-page">
       <header className="engine-header">
         <Link href={schoolMode ? '/school/private' : '/'} className="engine-brand">Politangle</Link>
-        <span>CLASSIFY · 20 questions</span><LanguageSelector />
+        <span>CLASSIFY · 20</span><LanguageSelector />
       </header>
       <LiteracyQuizClient section="classify" feedbackMode={schoolMode ? 'instant' : 'end'} />
     </main>
