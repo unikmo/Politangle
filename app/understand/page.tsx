@@ -9,7 +9,7 @@ export default async function UnderstandPage({ searchParams }: { searchParams: P
     <main className="engine-page">
       <header className="engine-header">
         <Link href={schoolMode ? '/school/private' : '/'} className="engine-brand">Politangle</Link>
-        <span>UNDERSTAND · 20 questions</span><LanguageSelector />
+        <span>UNDERSTAND · 20</span><LanguageSelector />
       </header>
       <LiteracyQuizClient section="understand" feedbackMode={schoolMode ? 'instant' : 'end'} />
     </main>
