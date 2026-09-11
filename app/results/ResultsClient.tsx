@@ -87,7 +87,7 @@ function PoliticalShape({ axes }: { axes: ReturnType<typeof calculatePolygonV2Ca
           return <circle key={axes[index].id} className="shape-dot" cx={x} cy={y} r="5" />;
         })}
       </svg>
-      <p className="shape-scale-note">The map uses the actual 0–100 score on every spoke. Political-family matches are calculated separately, so your strongest family does not force any one axis to be your most extreme.</p>
+      <p className="shape-scale-note">Each spoke is one political dimension. Your political home comes from the overall pattern—not simply from whichever spoke happens to be longest.</p>
     </div>
   );
 }
@@ -170,7 +170,7 @@ export default function ResultsClient() {
         <PoliticalShape axes={result.polygon} />
         <div className="result-action-row compact-actions">
           <button className="engine-primary-link" type="button" onClick={copyShape}>{copied ? 'Copied' : 'Copy my Politangle'}</button>
-          <span>Your eight-axis map is the visual Politangle. The family reading explains which political traditions most closely resemble that wider pattern.</span>
+          <span>This eight-sided shape is your Politangle. The reading beside it explains the political traditions that most closely resemble the whole pattern.</span>
         </div>
       </article>
 
@@ -189,7 +189,7 @@ export default function ResultsClient() {
 
         <div className="consistency-quick">
           <div><strong>{result.coherence.score ?? '—'}<small>/100</small></strong><span>{coherenceBand(result.coherence.score)}</span></div>
-          <p><b>Response coherence.</b> This checks whether your answers to related THINK and ACT questions point in similar directions. It does not judge whether your politics are correct, informed or strongly held.</p>
+          <p><b>Response coherence.</b> This checks whether your answers to related principle and practical-choice questions point in similar directions. It does not judge whether your politics are correct, informed or strongly held.</p>
         </div>
 
         {largestGap && largestGap.gap >= 20 && (
@@ -218,7 +218,7 @@ export default function ResultsClient() {
           <Link className="engine-primary-link" href="/deep">{t('Continue to Full: 16 more','Weiter zu Full: 16 weitere')}</Link>
           <Link className="engine-primary-link" href="/quiz">{t('Review Quick','Quick prüfen')}</Link>
         </div>
-        <span>{t('Full adds 16 questions and then gives you the completed Politangle.','Full ergänzt 16 Fragen und zeigt dann direkt Ihr vollständiges Politangle.')}</span>
+        <span>{t('Add 16 more questions for the fuller picture.','Beantworten Sie 16 weitere Fragen für ein vollständigeres Bild.')}</span>
       </div>
     </section>
   );

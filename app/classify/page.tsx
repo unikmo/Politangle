@@ -7,7 +7,7 @@ export default function ClassifyPage() {
     <main className="engine-page">
       <header className="engine-header">
         <Link href="/" className="engine-brand">Politangle</Link>
-        <span>CLASSIFY · independent quiz</span><LanguageSelector />
+        <span>CLASSIFY · 20 questions</span><LanguageSelector />
       </header>
       <LiteracyQuizClient section="classify" />
     </main>

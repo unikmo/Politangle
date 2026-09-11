@@ -4,10 +4,10 @@
 .p-hero-shape-hook{position:relative;width:min(100%,500px);padding:28px 26px 22px;border:1px solid rgba(255,255,255,.72);border-radius:38px;background:rgba(255,255,255,.96);box-shadow:0 34px 90px rgba(108,48,7,.2);transform:rotate(1.2deg)}
 .p-hero-shape-hook:before{content:"";position:absolute;z-index:-1;inset:24px -24px -24px 24px;border-radius:38px;background:rgba(255,255,255,.22);transform:rotate(-3deg)}
 .p-shape-preview{display:block;width:100%;height:auto}
-.p-shape-ring{fill:none;stroke:#ead8c8;stroke-width:1}
-.p-shape-spoke{stroke:#efdfd0;stroke-width:1}
-.p-shape-area{fill:rgba(246,130,31,.18);stroke:#f6821f;stroke-width:3;stroke-linejoin:round}
-.p-shape-dot{fill:#173f70;stroke:#fff;stroke-width:2.5}
-.p-shape-label{fill:#173f70;font-size:9px;font-weight:800;letter-spacing:.015em}
+.p-shape-ring{fill:none;stroke:#ead9cf;stroke-width:1}
+.p-shape-spoke{stroke:#efe1d8;stroke-width:1}
+.p-shape-area{fill:rgba(244,90,31,.17);stroke:#f45a1f;stroke-width:3;stroke-linejoin:round}
+.p-shape-dot{fill:#6f2c19;stroke:#fff;stroke-width:2.5}
+.p-shape-label{fill:#5a372a;font-size:9px;font-weight:800;letter-spacing:.015em}
 @media(max-width:900px){.p-hero h1{font-size:clamp(40px,7vw,56px)}.p-hero-stage{min-height:500px}.p-hero-shape-hook{width:min(88vw,500px)}}
 @media(max-width:600px){.p-hero h1{font-size:40px}.p-hero-stage{min-height:420px}.p-hero-shape-hook{width:94%;padding:18px 16px 14px;border-radius:28px}.p-hero-shape-hook:before{inset:16px -12px -16px 12px;border-radius:28px}.p-shape-label{font-size:8px}}

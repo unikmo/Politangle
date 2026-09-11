@@ -164,7 +164,7 @@ function PoliticalShape({ axes }: { axes: ReturnType<typeof calculatePolygonV2Ca
           return <circle key={axes[index].id} className="shape-dot" cx={x} cy={y} r="5" />;
         })}
       </svg>
-      <p className="shape-scale-note">The map uses the actual 0–100 score on every spoke. Political-family matches are calculated separately, so your strongest family does not force any one axis to be your most extreme.</p>
+      <p className="shape-scale-note">Each spoke is one political dimension. Your political home comes from the overall pattern—not simply from whichever spoke happens to be longest.</p>
     </div>
   );
 }
@@ -356,7 +356,7 @@ export default function DeepClient() {
           <article className="engine-card compact-result-card political-style-card" style={{ marginTop: 18 }}>
             <p className="engine-kicker">Power & political style</p>
             <h2>Patterns that do not fit neatly into one axis.</h2>
-            <p className="result-lede">These are secondary readings made from the same BELIEVE answers. They are not extra political families and they do not override your eight-dimension Politangle.</p>
+            <p className="result-lede">These patterns describe how you think about representation and political power. They add context to your main Politangle; they are not separate political homes.</p>
             <div className="tendency-grid">
               {output.tendencies.map((item) => {
                 const reading = tendencyReading(item.id, item.score);
@@ -384,7 +384,7 @@ export default function DeepClient() {
             <button className="engine-primary-link" type="button" onClick={restartFull}>Retake Full</button>
             <Link className="engine-primary-link" href="/results">Back to Quick result</Link>
           </div>
-          <span>42 BELIEVE questions complete: 26 Quick + 16 Full. CLASSIFY and UNDERSTAND remain independent quizzes.</span>
+          <span>Your Full Politangle is complete. CLASSIFY and UNDERSTAND are available whenever you want to test political knowledge.</span>
         </div>
       </section>
     );

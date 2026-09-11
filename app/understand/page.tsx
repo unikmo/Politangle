@@ -7,7 +7,7 @@ export default function UnderstandPage() {
     <main className="engine-page">
       <header className="engine-header">
         <Link href="/" className="engine-brand">Politangle</Link>
-        <span>UNDERSTAND · independent quiz</span><LanguageSelector />
+        <span>UNDERSTAND · 20 questions</span><LanguageSelector />
       </header>
       <LiteracyQuizClient section="understand" />
     </main>
