@@ -15,10 +15,13 @@ test('new communism items distinguish socialism, public ownership, and theory fr
   const byId = new Map(publicLiteracyQuestions.map((question) => [question.id, question]));
   assert.match(byId.get('U12')!.prompt, /related to socialism/i);
   assert.match(byId.get('U17')!.prompt, /automatically make a country communist/i);
-  assert.match(byId.get('U20')!.prompt, /theory and history/i);
+  assert.match(byId.get('U20')!.prompt, /communist theory.*historical communist-party governments/i);
   assert.deepEqual(byId.get('U12')!.acceptedAnswerSets[0], ['u12-b']);
   assert.deepEqual(byId.get('U17')!.acceptedAnswerSets[0], ['u17-c']);
   assert.deepEqual(byId.get('U20')!.acceptedAnswerSets[0], ['u20-b']);
+  assert.deepEqual(byId.get('U12')!.evidenceIds, ['SEP-SOCIALISM', 'OXFORD-COMMUNISM']);
+  assert.deepEqual(byId.get('U17')!.evidenceIds, ['SEP-SOCIALISM', 'OXFORD-COMMUNISM']);
+  assert.deepEqual(byId.get('U20')!.evidenceIds, ['OXFORD-COMMUNISM', 'SEP-SOCIALISM']);
 });
 
 test('DE ES FR public literacy content is explicitly localized', () => {
