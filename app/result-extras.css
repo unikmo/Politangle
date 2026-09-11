@@ -1,4 +1,7 @@
 main.engine-page:not(.school-page):not(.school-projector-page) .result-extras-shell{padding-top:0;padding-bottom:38px}
+/* The legacy Quick result copied a text summary. The visual PNG share below now
+   replaces that action so users do not see two competing share controls. */
+main.engine-page:not(.school-page):not(.school-projector-page) .result-shell .result-action-row.compact-actions{display:none}
 main.engine-page:not(.school-page):not(.school-projector-page) .country-lens-card,
 main.engine-page:not(.school-page):not(.school-projector-page) .result-tools-card{margin-top:18px;padding:30px 34px}
 main.engine-page:not(.school-page):not(.school-projector-page) .country-lens-card h2,
