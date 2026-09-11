@@ -1,20 +1,13 @@
-/* Homepage hero: quieter headline, useful result preview. */
+/* Homepage hero: the Politangle itself is the hook. */
 .p-hero h1{max-width:640px;font-size:clamp(40px,4.7vw,64px);line-height:1.01;letter-spacing:-.04em}
-.p-hero-stage{min-height:560px}
-.p-result-window-hero{width:min(100%,470px);transform:perspective(1200px) rotateY(-1deg)}
-.p-result-window-hero .p-window-body{padding:20px 24px 24px}
+.p-hero-stage{min-height:520px;display:grid;place-items:center}
+.p-hero-shape-hook{position:relative;width:min(100%,500px);padding:28px 26px 22px;border:1px solid rgba(255,255,255,.72);border-radius:38px;background:rgba(255,255,255,.96);box-shadow:0 34px 90px rgba(108,48,7,.2);transform:rotate(1.2deg)}
+.p-hero-shape-hook:before{content:"";position:absolute;z-index:-1;inset:24px -24px -24px 24px;border-radius:38px;background:rgba(255,255,255,.22);transform:rotate(-3deg)}
 .p-shape-preview{display:block;width:100%;height:auto}
-.p-shape-ring{fill:none;stroke:#ded9d4;stroke-width:1}
-.p-shape-spoke{stroke:#e7e2dd;stroke-width:1}
-.p-shape-area{fill:rgba(246,130,31,.18);stroke:#f6821f;stroke-width:2.5;stroke-linejoin:round}
-.p-shape-dot{fill:#222;stroke:#fff;stroke-width:2}
-.p-shape-label{fill:#706860;font-size:9px;font-weight:700;letter-spacing:.015em}
-.p-home-result-story{margin-top:-2px;padding:17px 18px;border:1px solid #ece3da;border-radius:14px;background:#fff7ef}
-.p-home-result-story small{display:block;margin-bottom:7px;color:#a44b09;font-size:8px;font-weight:800;letter-spacing:.16em}
-.p-home-result-story strong{display:block;color:#222;font-size:17px;line-height:1.28;letter-spacing:-.015em}
-.p-home-result-story p{margin:7px 0 0;color:#6d655e;font-size:10px;line-height:1.5}
-.p-preview-signals{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:9px}
-.p-preview-signals span{padding:10px 12px;border:1px solid #ece6e0;border-radius:11px;background:#fff;color:#746b63;font-size:8px;line-height:1.35}
-.p-preview-signals b{display:block;margin-bottom:2px;color:#d95f00;font-size:10px}
-@media(max-width:900px){.p-hero h1{font-size:clamp(40px,7vw,56px)}.p-hero-stage{min-height:530px}}
-@media(max-width:600px){.p-hero h1{font-size:40px}.p-hero-stage{min-height:470px}.p-result-window-hero{width:94%}.p-result-window-hero .p-window-body{padding:16px}.p-shape-label{font-size:8px}.p-home-result-story strong{font-size:15px}}
+.p-shape-ring{fill:none;stroke:#ead8c8;stroke-width:1}
+.p-shape-spoke{stroke:#efdfd0;stroke-width:1}
+.p-shape-area{fill:rgba(246,130,31,.18);stroke:#f6821f;stroke-width:3;stroke-linejoin:round}
+.p-shape-dot{fill:#173f70;stroke:#fff;stroke-width:2.5}
+.p-shape-label{fill:#173f70;font-size:9px;font-weight:800;letter-spacing:.015em}
+@media(max-width:900px){.p-hero h1{font-size:clamp(40px,7vw,56px)}.p-hero-stage{min-height:500px}.p-hero-shape-hook{width:min(88vw,500px)}}
+@media(max-width:600px){.p-hero h1{font-size:40px}.p-hero-stage{min-height:420px}.p-hero-shape-hook{width:94%;padding:18px 16px 14px;border-radius:28px}.p-hero-shape-hook:before{inset:16px -12px -16px 12px;border-radius:28px}.p-shape-label{font-size:8px}}
