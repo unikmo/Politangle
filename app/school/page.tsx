@@ -24,7 +24,7 @@ export default function SchoolPage() {
           <article className="engine-card school-entry-card">
             <p className="engine-kicker">{t('Students · private','Schüler · privat')}</p>
             <h2>{t('Explore on your own device','Auf dem eigenen Gerät entdecken')}</h2>
-            <p>{t('Take Quick 26, continue to Full 84, or practise political literacy. Your individual result is not sent to a teacher.','Quick 26 durchführen, mit Full 84 fortfahren oder politische Bildung üben. Das persönliche Ergebnis wird nicht an eine Lehrkraft gesendet.')}</p>
+            <p>{t('Take Quick 26, continue to Full 42, or practise political literacy. Your individual result is not sent to a teacher.','Quick 26 durchführen, mit Full 42 fortfahren oder politische Bildung üben. Das persönliche Ergebnis wird nicht an eine Lehrkraft gesendet.')}</p>
             <Link className="engine-primary-link" href="/school/private">{t('Private Student Mode','Privater Schülerbereich')}</Link>
           </article>
           <article className="engine-card school-entry-card">
