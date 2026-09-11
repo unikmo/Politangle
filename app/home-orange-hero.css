@@ -1,0 +1,52 @@
+/* Homepage colour override: Cloudflare-orange energy without a black hero. */
+.home{
+  --navy:#173f70;
+}
+.home .p-mark{
+  background:#173f70;
+}
+.home .p-steps article>span,
+.home .p-school-proof span{
+  background:#173f70;
+}
+.home .p-hero{
+  color:#173f70;
+  background:
+    radial-gradient(circle at 82% 18%,rgba(255,255,255,.38),transparent 26%),
+    radial-gradient(circle at 92% 76%,rgba(255,221,170,.42),transparent 31%),
+    linear-gradient(135deg,#f6821f 0%,#f7902b 58%,#faae40 100%);
+}
+.home .p-hero .p-kicker{
+  color:#6e2d06;
+}
+.home .p-hero h1{
+  color:#173f70;
+}
+.home .p-hero .p-lead{
+  color:#264b68;
+}
+.home .p-hero .p-trust{
+  color:#315873;
+}
+.home .p-hero .p-button.light{
+  background:#fff;
+  color:#173f70;
+  box-shadow:0 14px 34px rgba(104,45,5,.14);
+}
+.home .p-hero .p-text-link.light{
+  color:#173f70;
+}
+.home .p-orbit{
+  border-color:rgba(255,255,255,.3);
+}
+.home .p-dark-section{
+  background:#173f70;
+}
+.home .p-final{
+  background:linear-gradient(135deg,#173f70,#245b94);
+  color:#fff;
+}
+.home .p-dark-section .p-kicker.light,
+.home .p-final .p-kicker.light{
+  color:#ffbd68;
+}
