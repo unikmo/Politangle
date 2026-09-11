@@ -8,19 +8,18 @@ const Mark = () => <span className="p-mark" aria-hidden="true"><i/><i/><i/></spa
 function ShapePreview({ axes }: { axes: readonly (readonly [string, number])[] }) {
  const cx = 180;
  const cy = 160;
+ const maxRadius = 108;
  const polar = (radius:number,index:number) => {
   const angle = (-90 + index * 45) * Math.PI / 180;
   return { x: cx + Math.cos(angle) * radius, y: cy + Math.sin(angle) * radius };
  };
- const points = (radius:number) => axes.map((_,index) => { const p = polar(radius,index); return `${p.x},${p.y}`; }).join(' ');
- const profile = axes.map(([,score],index) => { const p = polar(30 + (score / 100) * 78,index); return `${p.x},${p.y}`; }).join(' ');
- return <svg className="p-shape-preview" viewBox="0 0 360 320" role="img" aria-label="Example eight-axis political shape">
-  <polygon className="p-shape-ring" points={points(108)}/>
-  <polygon className="p-shape-ring" points={points(74)}/>
-  <polygon className="p-shape-ring" points={points(40)}/>
-  {axes.map((_,index) => { const p = polar(108,index); return <line className="p-shape-spoke" key={`spoke-${index}`} x1={cx} y1={cy} x2={p.x} y2={p.y}/>; })}
+ const points = (level:number) => axes.map((_,index) => { const p = polar(maxRadius * (level / 100),index); return `${p.x},${p.y}`; }).join(' ');
+ const profile = axes.map(([,score],index) => { const p = polar(maxRadius * (score / 100),index); return `${p.x},${p.y}`; }).join(' ');
+ return <svg className="p-shape-preview" viewBox="0 0 360 320" role="img" aria-label="Example eight-axis Politangle shape">
+  {[25,50,75,100].map((level) => <polygon className="p-shape-ring" key={level} points={points(level)}/>)}
+  {axes.map((_,index) => { const p = polar(maxRadius,index); return <line className="p-shape-spoke" key={`spoke-${index}`} x1={cx} y1={cy} x2={p.x} y2={p.y}/>; })}
   <polygon className="p-shape-area" points={profile}/>
-  {axes.map(([,score],index) => { const p = polar(30 + (score / 100) * 78,index); return <circle className="p-shape-dot" key={`dot-${index}`} cx={p.x} cy={p.y} r="4"/>; })}
+  {axes.map(([,score],index) => { const p = polar(maxRadius * (score / 100),index); return <circle className="p-shape-dot" key={`dot-${index}`} cx={p.x} cy={p.y} r="4"/>; })}
   {axes.map(([label],index) => { const p = polar(132,index); const anchor = p.x > cx + 14 ? 'start' : p.x < cx - 14 ? 'end' : 'middle'; return <text className="p-shape-label" key={label} x={p.x} y={p.y} textAnchor={anchor} dominantBaseline="middle">{label}</text>; })}
  </svg>;
 }
@@ -35,7 +34,7 @@ export default function Home() {
 
   <section className="p-hero"><div className="p-orbit one"/><div className="p-orbit two"/><div className="p-shell p-hero-grid">
    <div className="p-hero-copy"><p className="p-kicker">{t('POLITICS WITHOUT THE BOXES','POLITIK OHNE SCHUBLADEN')}</p><h1>{t('See your politics from every angle.','Sehen Sie Ihre Politik aus jedem Blickwinkel.')}</h1><p className="p-lead">{t('Answer 26 clear questions. Get a multidimensional picture of what you think—without being forced into a party label.','Beantworten Sie 26 klare Fragen. Erhalten Sie ein mehrdimensionales Bild Ihrer Ansichten – ohne in eine Parteischublade gesteckt zu werden.')}</p><div className="p-actions"><a className="p-button light" href="/quiz">{t('Start the 3-minute Quick','3-Minuten-Quick starten')} <Arrow/></a><a className="p-text-link light" href="#method">{t('See how it works','So funktioniert es')}</a></div><div className="p-trust"><span>✓ {t('Free','Kostenlos')}</span><span>✓ {t('No account','Kein Konto')}</span><span>✓ {t('Answers stay in your session','Antworten bleiben in Ihrer Sitzung')}</span></div></div>
-   <div className="p-hero-stage"><div className="p-result-window p-result-window-hero"><div className="p-window-head"><span><i/><i/><i/></span><small>{t('EXAMPLE RESULT','BEISPIELERGEBNIS')}</small></div><div className="p-window-body"><ShapePreview axes={heroShapeAxes}/><div className="p-home-result-story"><small>{t('YOUR POLITANGLE','IHR POLITANGLE')}</small><strong>{t('Mainly social democratic, with significant green leanings.','Überwiegend sozialdemokratisch, mit deutlichen grünen Tendenzen.')}</strong><p>{t('Strongest signals: ecology, pluralism and public provision.','Stärkste Signale: Ökologie, Pluralismus und öffentliche Daseinsvorsorge.')}</p></div><div className="p-preview-signals"><span><b>{t('High','Hoch')}</b>{t('Response coherence','Antwortkohärenz')}</span><span><b>{t('Aligned','Stimmig')}</b>{t('THINK ↔ ACT','DENKEN ↔ HANDELN')}</span></div></div></div></div>
+   <div className="p-hero-stage"><div className="p-hero-shape-hook"><ShapePreview axes={heroShapeAxes}/></div></div>
   </div></section>
 
   <section className="p-proof p-shell"><div><small>{t('START LIGHT','EINFACH STARTEN')}</small><strong>26</strong><span>{t('Quick questions','Quick-Fragen')}</span></div><div><small>{t('SEE MORE','MEHR SEHEN')}</small><strong>8</strong><span>{t('political axes','politische Achsen')}</span></div><div><small>{t('GO DEEPER','TIEFER GEHEN')}</small><strong>16</strong><span>{t('additional Full questions','zusätzliche Full-Fragen')}</span></div><div><small>{t('STAY PRIVATE','PRIVAT BLEIBEN')}</small><strong>0</strong><span>{t('accounts required','Konten erforderlich')}</span></div></section>

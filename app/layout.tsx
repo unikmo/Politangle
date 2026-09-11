@@ -7,6 +7,7 @@ import './school.css';
 import './home.css';
 import './palette.css';
 import './hero-preview.css';
+import './home-orange-hero.css';
 import './elite-engine-palette.css';
 import './results-interpretation.css';
 import { LocaleProvider } from './LocaleProvider';
