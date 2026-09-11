@@ -1,74 +1,117 @@
-/* Rich, restrained question/results palette.
-   Cloudflare-inspired energy: saturated orange + cobalt, balanced by deep blue rather than black. */
+/* Public assessment design system.
+   Saturated orange + white, restrained warm neutrals, and no blue/black-dominant surfaces. */
 :root{
-  --elite-navy:#173f70;
-  --elite-navy-deep:#12345d;
-  --elite-blue:#2160fd;
-  --elite-blue-deep:#1748bd;
-  --elite-orange:#f6821f;
-  --elite-orange-deep:#cf5c0c;
-  --elite-amber:#ffb84d;
-  --elite-canvas:#eef3f8;
+  --elite-orange:#f45a1f;
+  --elite-orange-bright:#ff681f;
+  --elite-orange-deep:#c94412;
+  --elite-amber:#ff9a45;
+  --elite-canvas:#f6f2ee;
   --elite-card:#ffffff;
-  --elite-cream:#fff5e9;
-  --elite-blue-soft:#edf4ff;
-  --elite-ink:#18324d;
-  --elite-muted:#5b6c7d;
-  --elite-line:#cfdae6;
+  --elite-cream:#fff6f0;
+  --elite-blue-soft:#fff5ee;
+  --elite-ink:#3b251d;
+  --elite-muted:#74635b;
+  --elite-line:#e8d9cf;
+  /* Legacy variable aliases used by older result CSS; deliberately warm, not blue. */
+  --elite-blue:#f45a1f;
+  --elite-blue-deep:#d84a14;
+  --elite-navy:#7a321d;
+  --elite-navy-deep:#542317;
 }
 
-/* Public BELIEVE / Full / CLASSIFY / UNDERSTAND / results only. */
+/* Public Quick / Full / CLASSIFY / UNDERSTAND / results only. */
 main.engine-page:not(.school-page):not(.school-projector-page){
   --paper:var(--elite-canvas);
-  --surface:var(--elite-blue-soft);
+  --surface:var(--elite-cream);
   --ink:var(--elite-ink);
   --muted:var(--elite-muted);
   --accent:var(--elite-orange);
-  --line:rgba(24,50,77,.14);
+  --line:rgba(84,35,23,.12);
+  position:relative;
   min-height:100vh;
-  background:
-    radial-gradient(circle at 86% 5%,rgba(246,130,31,.3),transparent 22%),
-    linear-gradient(180deg,var(--elite-navy) 0 235px,var(--elite-canvas) 235px 100%);
+  background:linear-gradient(180deg,var(--elite-orange) 0 320px,var(--elite-canvas) 320px 100%);
   color:var(--elite-ink);
+}
+main.engine-page:not(.school-page):not(.school-projector-page)::before{
+  content:"";
+  position:absolute;
+  z-index:0;
+  top:0;
+  left:0;
+  right:0;
+  height:320px;
+  pointer-events:none;
+  opacity:.48;
+  background-image:radial-gradient(circle,rgba(255,255,255,.28) .7px,transparent .85px);
+  background-size:8px 8px;
+}
+main.engine-page:not(.school-page):not(.school-projector-page) .engine-header,
+main.engine-page:not(.school-page):not(.school-projector-page) .engine-shell{
+  position:relative;
+  z-index:1;
+  width:min(1120px,calc(100% - 64px));
+  max-width:none;
+  margin-left:auto;
+  margin-right:auto;
 }
 
 main.engine-page:not(.school-page):not(.school-projector-page) .engine-header{
-  border-bottom:1px solid rgba(255,255,255,.16);
-  background:rgba(23,63,112,.94);
-  box-shadow:0 8px 28px rgba(18,52,93,.12);
-  backdrop-filter:blur(16px);
+  height:80px;
+  padding:0;
+  border-bottom:1px solid rgba(255,255,255,.3);
+  background:transparent;
+  box-shadow:none;
+  backdrop-filter:none;
 }
 main.engine-page:not(.school-page):not(.school-projector-page) .engine-brand{
   color:#fff;
+  font-size:12px;
+  font-weight:750;
+  letter-spacing:.25em;
 }
 main.engine-page:not(.school-page):not(.school-projector-page) .engine-header>span{
-  color:#cbd8e7;
+  color:rgba(255,255,255,.82);
+  font-size:10px;
+  letter-spacing:.08em;
 }
 main.engine-page:not(.school-page):not(.school-projector-page) .engine-header .lang{
   color:#fff;
 }
+main.engine-page:not(.school-page):not(.school-projector-page) .engine-shell{
+  padding:42px 0 78px;
+}
 
+main.engine-page:not(.school-page):not(.school-projector-page) .engine-progress-row{
+  margin-bottom:24px;
+  color:#fff;
+  font-size:11px;
+  letter-spacing:.04em;
+}
 main.engine-page:not(.school-page):not(.school-projector-page) .engine-progress{
-  background:rgba(255,255,255,.24);
+  height:3px;
+  background:rgba(255,255,255,.34);
 }
 main.engine-page:not(.school-page):not(.school-projector-page) .engine-progress>span{
-  background:linear-gradient(90deg,var(--elite-orange),var(--elite-amber));
-  box-shadow:0 0 14px rgba(246,130,31,.28);
-}
-main.engine-page:not(.school-page):not(.school-projector-page) .engine-progress-row{
-  color:#d5dfeb;
+  background:#fff;
+  box-shadow:none;
 }
 main.engine-page:not(.school-page):not(.school-projector-page) .engine-progress-row .engine-link-button{
-  color:#ffd29c;
+  color:#fff;
+  font-size:10px;
+  text-decoration:underline;
+  text-decoration-color:rgba(255,255,255,.45);
+  text-underline-offset:4px;
 }
 
 main.engine-page:not(.school-page):not(.school-projector-page) .engine-card{
-  border:1px solid rgba(23,63,112,.14);
+  border:1px solid rgba(84,35,23,.1);
+  border-radius:28px;
+  padding:clamp(34px,4.7vw,54px);
   background:var(--elite-card);
-  box-shadow:0 22px 58px rgba(18,52,93,.11);
+  box-shadow:0 26px 72px rgba(102,43,17,.12);
 }
 main.engine-page:not(.school-page):not(.school-projector-page) .engine-shell>.engine-card:first-child{
-  box-shadow:inset 0 4px 0 var(--elite-orange),0 22px 58px rgba(18,52,93,.11);
+  box-shadow:0 26px 72px rgba(102,43,17,.12);
 }
 main.engine-page:not(.school-page):not(.school-projector-page) .engine-card h1,
 main.engine-page:not(.school-page):not(.school-projector-page) .engine-card h2{
@@ -76,7 +119,11 @@ main.engine-page:not(.school-page):not(.school-projector-page) .engine-card h2{
 }
 main.engine-page:not(.school-page):not(.school-projector-page) .engine-kicker,
 main.engine-page:not(.school-page):not(.school-projector-page) .quick-topic{
+  margin-bottom:18px;
   color:var(--elite-orange-deep);
+  font-size:9px;
+  font-weight:800;
+  letter-spacing:.22em;
 }
 main.engine-page:not(.school-page):not(.school-projector-page) .engine-help,
 main.engine-page:not(.school-page):not(.school-projector-page) .engine-card>p{
@@ -84,22 +131,29 @@ main.engine-page:not(.school-page):not(.school-projector-page) .engine-card>p{
 }
 
 main.engine-page:not(.school-page):not(.school-projector-page) .engine-statement{
-  border:1px solid #c9d7e7;
-  background:linear-gradient(135deg,#eef5ff 0%,#f9fbff 56%,#fff3e4 100%);
-  box-shadow:inset 4px 0 0 var(--elite-orange);
+  margin-bottom:28px;
+  padding:clamp(24px,3.7vw,38px);
+  border:1px solid #efd7ca;
+  border-radius:20px;
+  background:#fff8f4;
+  box-shadow:inset 3px 0 0 var(--elite-orange);
 }
 main.engine-page:not(.school-page):not(.school-projector-page) .engine-statement p{
+  max-width:900px;
   color:var(--elite-ink);
+  font-size:clamp(19px,1.85vw,26px);
+  line-height:1.42;
+  letter-spacing:-.018em;
 }
 main.engine-page:not(.school-page):not(.school-projector-page) .engine-pair{
-  border-color:#cbd8e5;
+  border-color:var(--elite-line);
 }
 main.engine-page:not(.school-page):not(.school-projector-page) .engine-pair>div{
-  background:var(--elite-blue-soft);
+  background:#fff7f1;
 }
 main.engine-page:not(.school-page):not(.school-projector-page) .engine-pair>div+div{
-  border-color:#cbd8e5;
-  background:var(--elite-cream);
+  border-color:var(--elite-line);
+  background:#fff;
 }
 main.engine-page:not(.school-page):not(.school-projector-page) .engine-pair span{
   color:var(--elite-orange-deep);
@@ -109,82 +163,96 @@ main.engine-page:not(.school-page):not(.school-projector-page) .engine-pair p{
 }
 
 main.engine-page:not(.school-page):not(.school-projector-page) :is(.quick-scale-answer,.engine-answer,.deep-option){
-  border:1px solid #bdcad9;
+  border:1px solid #ddcec4;
   background:#fff;
   color:var(--elite-ink);
-  box-shadow:0 3px 10px rgba(18,52,93,.025);
+  box-shadow:none;
 }
 main.engine-page:not(.school-page):not(.school-projector-page) :is(.quick-scale-answer,.engine-answer,.deep-option):hover,
 main.engine-page:not(.school-page):not(.school-projector-page) :is(.quick-scale-answer,.engine-answer,.deep-option):focus-visible{
-  border-color:var(--elite-blue);
-  background:#eef4ff;
-  box-shadow:0 5px 18px rgba(33,96,253,.1);
+  border-color:var(--elite-orange);
+  background:#fff2e9;
+  box-shadow:0 7px 18px rgba(244,90,31,.1);
 }
 main.engine-page:not(.school-page):not(.school-projector-page) :is(.quick-scale-answer,.engine-answer,.deep-option).selected{
-  border-color:var(--elite-blue);
-  background:linear-gradient(135deg,var(--elite-blue),var(--elite-blue-deep));
+  border-color:var(--elite-orange);
+  background:var(--elite-orange);
   color:#fff;
-  box-shadow:0 0 0 2px rgba(246,130,31,.72),0 9px 20px rgba(33,96,253,.18);
+  box-shadow:0 10px 24px rgba(210,67,15,.18);
 }
 main.engine-page:not(.school-page):not(.school-projector-page) .quick-scale-key{
-  color:#65778a;
+  color:#796b64;
 }
 main.engine-page:not(.school-page):not(.school-projector-page) .quick-scale-key b{
   color:var(--elite-orange-deep);
 }
 
 main.engine-page:not(.school-page):not(.school-projector-page) :is(.engine-nav button,.engine-primary-link){
-  background:linear-gradient(135deg,var(--elite-blue),var(--elite-blue-deep));
+  min-height:42px;
+  border:0;
+  background:var(--elite-orange);
   color:#fff;
-  box-shadow:0 9px 22px rgba(33,96,253,.18);
+  box-shadow:0 9px 22px rgba(210,67,15,.16);
 }
 main.engine-page:not(.school-page):not(.school-projector-page) :is(.engine-nav button,.engine-primary-link):hover{
-  background:linear-gradient(135deg,#2d6cff,#153fa5);
-  box-shadow:0 11px 26px rgba(33,96,253,.24);
+  background:var(--elite-orange-deep);
+  color:#fff;
+  box-shadow:0 11px 26px rgba(185,57,12,.2);
+}
+main.engine-page:not(.school-page):not(.school-projector-page) .engine-nav button:disabled{
+  background:#e8b69e;
+  color:#fff;
+  box-shadow:none;
+  opacity:.72;
 }
 main.engine-page:not(.school-page):not(.school-projector-page) .engine-nav>span{
-  color:#617386;
+  color:#7a6c65;
 }
 
 main.engine-page:not(.school-page):not(.school-projector-page) .deep-phase-tabs span{
-  border:1px solid #d0dae5;
+  border:1px solid #e3d4ca;
   background:#fff;
-  color:#5b6e82;
+  color:#73645c;
 }
 main.engine-page:not(.school-page):not(.school-projector-page) .deep-phase-tabs .active{
-  border-color:var(--elite-blue);
-  background:var(--elite-blue);
+  border-color:var(--elite-orange);
+  background:var(--elite-orange);
   color:#fff;
 }
 main.engine-page:not(.school-page):not(.school-projector-page) .deep-explanation,
 main.engine-page:not(.school-page):not(.school-projector-page) .engine-callout{
   border-left-color:var(--elite-orange);
-  background:linear-gradient(90deg,#fff0df,#f6f9ff);
-  color:#445a70;
+  background:#fff3eb;
+  color:#65544c;
 }
 main.engine-page:not(.school-page):not(.school-projector-page) .literacy-feedback{
-  border-top-color:#d7e1ec;
-  background:linear-gradient(135deg,#fff2e3,#edf4ff);
+  border-top-color:#eadbd1;
+  background:#fff5ee;
+}
+main.engine-page:not(.school-page):not(.school-projector-page) .literacy-card .literacy-prompt{
+  max-width:920px;
+  font-size:clamp(30px,3.25vw,42px);
+  line-height:1.08;
 }
 
-/* Results: more colour, but let the interpretation remain the focus. */
+/* Results: strong hierarchy with orange as the only saturated hue. */
 main.engine-page:not(.school-page):not(.school-projector-page) .politangle-home-card{
-  background:linear-gradient(145deg,#fff 0%,#fff 72%,#f2f6ff 100%);
-  box-shadow:inset 0 5px 0 var(--elite-orange),0 24px 62px rgba(18,52,93,.12);
+  background:#fff;
+  box-shadow:0 28px 78px rgba(102,43,17,.13);
 }
 main.engine-page:not(.school-page):not(.school-projector-page) .politangle-family-story p{
-  border-color:#d4dee9;
+  border-color:#eaded5;
   background:#fff;
-  box-shadow:0 6px 18px rgba(18,52,93,.045);
+  box-shadow:0 6px 18px rgba(84,35,23,.04);
 }
 main.engine-page:not(.school-page):not(.school-projector-page) .politangle-family-story p:nth-child(1){
-  box-shadow:inset 0 3px 0 var(--elite-orange),0 6px 18px rgba(18,52,93,.045);
+  box-shadow:inset 0 3px 0 var(--elite-orange),0 6px 18px rgba(84,35,23,.04);
 }
 main.engine-page:not(.school-page):not(.school-projector-page) .politangle-family-story p:nth-child(2){
-  box-shadow:inset 0 3px 0 var(--elite-blue),0 6px 18px rgba(18,52,93,.045);
+  box-shadow:inset 0 3px 0 #e46d3c,0 6px 18px rgba(84,35,23,.04);
 }
 main.engine-page:not(.school-page):not(.school-projector-page) .politangle-family-story p:nth-child(3){
-  box-shadow:inset 0 3px 0 var(--elite-amber),0 6px 18px rgba(18,52,93,.045);
+  box-shadow:inset 0 3px 0 var(--elite-amber),0 6px 18px rgba(84,35,23,.04);
 }
 main.engine-page:not(.school-page):not(.school-projector-page) .politangle-family-story strong{
   color:var(--elite-ink);
@@ -195,18 +263,18 @@ main.engine-page:not(.school-page):not(.school-projector-page) .home-reference{
 }
 
 main.engine-page:not(.school-page):not(.school-projector-page) .shape-ring{
-  stroke:rgba(23,63,112,.15);
+  stroke:rgba(84,35,23,.14);
 }
 main.engine-page:not(.school-page):not(.school-projector-page) .shape-spoke{
-  stroke:rgba(23,63,112,.18);
+  stroke:rgba(84,35,23,.16);
 }
 main.engine-page:not(.school-page):not(.school-projector-page) .shape-area{
-  fill:rgba(33,96,253,.16);
+  fill:rgba(244,90,31,.16);
   stroke:var(--elite-orange);
   stroke-width:3;
 }
 main.engine-page:not(.school-page):not(.school-projector-page) .shape-dot{
-  fill:var(--elite-navy);
+  fill:#6b2d1c;
   stroke:#fff;
 }
 main.engine-page:not(.school-page):not(.school-projector-page) .shape-label{
@@ -214,17 +282,17 @@ main.engine-page:not(.school-page):not(.school-projector-page) .shape-label{
 }
 
 main.engine-page:not(.school-page):not(.school-projector-page) .result-insight{
-  border-color:#d1dce8;
+  border-color:#eadbd1;
   background:#fff;
-  box-shadow:inset 0 3px 0 var(--elite-blue),0 7px 18px rgba(18,52,93,.04);
+  box-shadow:inset 0 3px 0 var(--elite-orange),0 7px 18px rgba(84,35,23,.035);
 }
 main.engine-page:not(.school-page):not(.school-projector-page) .result-insight>span{
   color:var(--elite-orange-deep);
 }
 main.engine-page:not(.school-page):not(.school-projector-page) .consistency-quick{
   border:0;
-  background:linear-gradient(135deg,var(--elite-navy),#1b4f8c);
-  box-shadow:0 14px 30px rgba(18,52,93,.17);
+  background:linear-gradient(135deg,#a73b17,#d7501c);
+  box-shadow:0 14px 30px rgba(127,45,18,.16);
 }
 main.engine-page:not(.school-page):not(.school-projector-page) .consistency-quick>div>strong,
 main.engine-page:not(.school-page):not(.school-projector-page) .consistency-quick>div>strong small,
@@ -233,51 +301,58 @@ main.engine-page:not(.school-page):not(.school-projector-page) .consistency-quic
   color:#fff;
 }
 main.engine-page:not(.school-page):not(.school-projector-page) .consistency-quick>div>span{
-  color:#ffc776;
+  color:#ffd2b8;
 }
 main.engine-page:not(.school-page):not(.school-projector-page) .result-tension{
   border-left:4px solid var(--elite-orange);
-  background:linear-gradient(90deg,#ffecd7,#f5f8ff);
+  background:#fff0e7;
   color:var(--elite-ink);
 }
 main.engine-page:not(.school-page):not(.school-projector-page) .result-tension p{
-  color:#526579;
+  color:#6b5a52;
 }
 main.engine-page:not(.school-page):not(.school-projector-page) .reference-people{
-  border:1px solid #d0dceb;
-  background:#edf4ff;
+  border:1px solid #eadbd1;
+  background:#fff6f0;
 }
 main.engine-page:not(.school-page):not(.school-projector-page) .family-card{
-  border-color:#d3deea;
+  border-color:#eadbd1;
   background:#fff;
 }
 main.engine-page:not(.school-page):not(.school-projector-page) .family-card>span{
-  background:linear-gradient(135deg,var(--elite-orange),var(--elite-amber));
-  color:var(--elite-navy-deep);
+  background:var(--elite-orange);
+  color:#fff;
 }
 main.engine-page:not(.school-page):not(.school-projector-page) .engine-dimension{
-  border-top-color:#d7e0ea;
+  border-top-color:#eadfd7;
 }
 main.engine-page:not(.school-page):not(.school-projector-page) .engine-score-track{
-  background:linear-gradient(90deg,#4f7fff,#e8edf3 50%,#f6821f);
+  background:linear-gradient(90deg,#f7b08c,#eee8e4 50%,#f45a1f);
 }
 main.engine-page:not(.school-page):not(.school-projector-page) .engine-score-track>span{
-  background:var(--elite-navy-deep);
+  background:#6a2c1b;
   border-color:#fff;
-  box-shadow:0 2px 8px rgba(18,52,93,.26);
+  box-shadow:0 2px 8px rgba(84,35,23,.2);
 }
 main.engine-page:not(.school-page):not(.school-projector-page) .result-details-card{
-  background:#f8fbff;
-  border-color:#cedae7;
+  background:#fffaf7;
+  border-color:#e8dbd2;
 }
 main.engine-page:not(.school-page):not(.school-projector-page) .result-action-row{
-  border-top-color:#d4dee8;
+  border-top-color:#eadfd7;
 }
 
 @media(max-width:760px){
   main.engine-page:not(.school-page):not(.school-projector-page){
-    background:
-      radial-gradient(circle at 90% 2%,rgba(246,130,31,.28),transparent 20%),
-      linear-gradient(180deg,var(--elite-navy) 0 190px,var(--elite-canvas) 190px 100%);
+    background:linear-gradient(180deg,var(--elite-orange) 0 260px,var(--elite-canvas) 260px 100%);
   }
+  main.engine-page:not(.school-page):not(.school-projector-page)::before{height:260px}
+  main.engine-page:not(.school-page):not(.school-projector-page) .engine-header,
+  main.engine-page:not(.school-page):not(.school-projector-page) .engine-shell{
+    width:calc(100% - 32px);
+  }
+  main.engine-page:not(.school-page):not(.school-projector-page) .engine-header{height:66px}
+  main.engine-page:not(.school-page):not(.school-projector-page) .engine-shell{padding:28px 0 52px}
+  main.engine-page:not(.school-page):not(.school-projector-page) .engine-card{padding:26px 20px;border-radius:22px}
+  main.engine-page:not(.school-page):not(.school-projector-page) .engine-statement{padding:22px 20px}
 }
