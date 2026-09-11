@@ -28,15 +28,26 @@ export function useLocale() { return useContext(LocaleContext); }
 
 export function LanguageSelector() {
   const { locale, setLocale } = useLocale();
-  const locales: Locale[] = ['en', 'de', 'es', 'fr'];
   const names: Record<Locale, string> = { en: 'English (US)', de: 'Deutsch', es: 'Español', fr: 'Français' };
-  const next = locales[(locales.indexOf(locale) + 1) % locales.length];
   const aria = locale === 'de'
-    ? `Sprache: ${names[locale]}. Wechseln zu ${names[next]}`
+    ? 'Sprache auswählen'
     : locale === 'es'
-      ? `Idioma: ${names[locale]}. Cambiar a ${names[next]}`
+      ? 'Elegir idioma'
       : locale === 'fr'
-        ? `Langue : ${names[locale]}. Passer à ${names[next]}`
-        : `Language: ${names[locale]}. Switch to ${names[next]}`;
-  return <button type="button" className="lang" aria-label={aria} onClick={() => setLocale(next)}>◎ &nbsp; {locale === 'en' ? 'EN-US' : locale.toUpperCase()}</button>;
+        ? 'Choisir la langue'
+        : 'Choose language';
+
+  return (
+    <label className="p-language-picker">
+      <span aria-hidden="true">◎</span>
+      <select
+        className="lang"
+        aria-label={aria}
+        value={locale}
+        onChange={(event) => setLocale(event.target.value as Locale)}
+      >
+        {(Object.keys(names) as Locale[]).map((code) => <option key={code} value={code}>{names[code]}</option>)}
+      </select>
+    </label>
+  );
 }
