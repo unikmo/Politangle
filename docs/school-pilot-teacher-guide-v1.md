@@ -13,7 +13,7 @@ Politangle School is designed to give students a structured, non-partisan place 
 3. **Understand democratic power.** See elections, rights, rule of law, opposition and independent checks as related but distinct parts of democratic government.
 4. **Disagree without caricature.** Be able to state the strongest fair reason for a different view before criticizing it.
 
-The product is not designed to tell students what political position to hold. For BELIEVE questions the student is told plainly: **There is no correct political answer.** For CLASSIFY / UNDERSTAND-style knowledge questions, the product teaches evidence-backed definitions and distinctions.
+The product is not designed to tell students what political position to hold. For BELIEVE questions the student is told plainly: **There is no correct political answer.** For knowledge questions, the product teaches evidence-backed definitions and distinctions.
 
 ## Privacy rule
 
@@ -25,17 +25,11 @@ A teacher pilot request must contain adult/school contact information only. **Do
 
 ## What teachers can see before registering
 
-The public Teacher area intentionally shows the resource catalogue before access is granted so a teacher can decide whether Politangle is relevant to the class. The preview shows:
-
-- lesson title;
-- intended age band;
-- estimated duration;
-- learning-goal count;
-- whether the lesson is Junior or Youth.
+The public Teacher area intentionally shows the resource catalogue before access is granted so a teacher can decide whether Politangle is relevant to the class. The preview shows lesson title, intended age band, estimated duration and learning-goal scope.
 
 The complete lesson flow, discussion prompts, live classroom controls and class-summary tools remain gated. A teacher first submits the pilot request and receives an approved teacher access code before those operational resources open.
 
-This is a deliberate pilot gate, not a sales trick. It lets us control minor-facing rollout while we test comprehension, classroom dynamics, privacy expectations and teacher usability with real schools.
+This is a deliberate pilot gate. It lets us control minor-facing rollout while we test comprehension, classroom dynamics, privacy expectations and teacher usability with real schools.
 
 ## Ages 10–13 — Junior
 
@@ -46,27 +40,13 @@ Junior is a separate product form, not the older Youth questionnaire with a smal
 - 16 single-statement political-perspective questions;
 - 13 constructs represented;
 - short wording with automated reading-load and jargon guardrails;
-- full-word choices rather than numeric survey shorthand:
-  - No, definitely not
-  - Mostly no
-  - It depends
-  - Mostly yes
-  - Yes, definitely
-  - I'm not sure / I don't understand
-- no individual political profile is sent to the teacher.
+- full-word choices rather than numeric survey shorthand;
+- an explicit **I'm not sure / I don't understand** option;
+- no individual political profile sent to the teacher.
 
 ### Junior political know-how
 
-Junior has its own eight-question knowledge bank rather than using the older Youth bank. It covers:
-
-- socialism and ownership;
-- the Marxian communist ideal;
-- elections plus rights and checks;
-- public funding versus public ownership;
-- why one state-owned company does not make a country communist;
-- why national self-government does not by itself tell you left or right;
-- a basic definition of populism;
-- why a large welfare state does not automatically make a country socialist.
+Junior has its own eight-question knowledge bank rather than using the older Youth bank. It covers socialism and ownership, the Marxian communist ideal, elections plus rights and checks, public funding versus ownership, why one state-owned company does not make a country communist, why national self-government does not by itself tell you left or right, a basic definition of populism, and why a large welfare state does not automatically make a country socialist.
 
 Prompts and answer choices are intentionally short and avoid specialist terms such as *subsidiarity*, *pluralism*, *nativism*, *majoritarianism* and *means of production*. A teacher can introduce formal vocabulary after the underlying idea is understood.
 
@@ -82,29 +62,17 @@ Students explore freedom, safety, fairness, elections and limits on power. They 
 
 ## Ages 14–18 — Youth
 
-Youth may use:
+Youth may use Quick 26, Full 42, political-literacy questions, guided lesson packs, teacher-paced or student-paced classroom activities, and selected single questions/custom activities.
 
-- Quick 26;
-- Full 42;
-- political-literacy questions;
-- guided lesson packs;
-- teacher-paced or student-paced classroom activities;
-- selected single questions and custom activities.
-
-The Youth wording is separate from the adult source form while preserving the source scoring coordinates. This is still a versioned measurement form and should be treated as a candidate form until validation is complete.
+The Youth wording is separate from the adult source form while preserving the source scoring coordinates. It remains a versioned candidate form until validation is complete.
 
 ## Supported interactive languages
 
-The current interactive School implementation supports:
+The current interactive School implementation supports **English, German, Spanish and French**.
 
-- English;
-- German;
-- Spanish;
-- French.
+Student join/privacy copy, Junior response choices, Junior BELIEVE wording, Junior knowledge questions, the public literacy question bank, School landing/private routes, teacher access/pilot flow, teacher dashboard controls and the classroom projector have language-specific content in these four languages.
 
-Student join/privacy copy, Junior response choices, Junior BELIEVE wording, Junior knowledge questions, the public literacy question bank, teacher access/pilot flow, teacher dashboard controls and the classroom projector have language-specific content in these four languages.
-
-**Current documentation limitation:** the long-form teacher handbook PDFs and every detailed line of the older Youth lesson-guide prose have not yet been professionally translated into all four languages. Do not describe the documentation library as fully localized until that pass is complete.
+**Current documentation limitation:** the long-form legacy teacher handbook PDFs and every detailed line of the older Youth lesson-guide prose have not yet been professionally translated into all four languages. Do not describe the documentation library as fully localized until that pass is complete.
 
 ## How to run an 11-year-old pilot
 
@@ -125,31 +93,13 @@ For each selected Junior item:
 
 ### Revision triggers
 
-A Junior item should be revised before broader use when:
-
-- several students paraphrase it as a different question;
-- a key word repeatedly needs explanation before the student can answer;
-- students cannot distinguish the response choices;
-- wording makes one political position sound morally approved by the product;
-- the item requires knowledge the question is supposed to measure as a personal perspective;
-- the student misunderstands what the teacher can see;
-- a question creates avoidable distress without educational necessity.
+A Junior item should be revised before broader use when several students paraphrase it as a different question, a key word repeatedly needs adult explanation, students cannot distinguish the response choices, wording makes one political position sound morally approved by the product, the item requires knowledge the question is supposed to measure as a personal perspective, the student misunderstands what the teacher can see, or a question creates avoidable distress without educational necessity.
 
 Do not lower the bar because a child eventually understands after an adult explains the intended answer. The first interpretation is part of the test.
 
 ## Teacher observation checklist
 
-During a pilot lesson, record aggregate observations rather than political notes about named students:
-
-- number joining successfully without help;
-- number needing help with the room code;
-- concepts that produce many “I don't understand” selections;
-- questions students ask about vocabulary;
-- whether students understand the difference between BELIEVE and knowledge questions;
-- whether live class distributions increase discussion quality or create peer pressure;
-- whether manual reveal reduces conformity pressure;
-- which discussion prompts produce evidence-based reasoning rather than party-label arguments;
-- total lesson time versus estimated time.
+During a pilot lesson, record aggregate observations rather than political notes about named students: join success, vocabulary questions, “I don't understand” use, understanding of BELIEVE versus knowledge questions, whether live distributions improve discussion or create peer pressure, whether manual reveal reduces conformity pressure, and actual lesson time.
 
 ## Release gates before broad 10–13 rollout
 
