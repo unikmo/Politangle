@@ -24,15 +24,15 @@ test('new communism items distinguish socialism, public ownership, and theory fr
   assert.deepEqual(byId.get('U20')!.evidenceIds, ['OXFORD-COMMUNISM', 'SEP-SOCIALISM']);
 });
 
-test('DE ES FR public literacy content is explicitly localized', () => {
-  const ids = ['C1', 'C16', 'U1', 'U12', 'U17', 'U20'];
-  for (const id of ids) {
-    const question = publicLiteracyQuestions.find((item) => item.id === id)!;
+test('every public CLASSIFY and UNDERSTAND item is explicitly localized in DE ES FR', () => {
+  assert.equal(publicLiteracyQuestions.length, 40);
+  for (const question of publicLiteracyQuestions) {
     for (const locale of ['de', 'es', 'fr'] as const) {
-      assert.notEqual(publicLiteracyPrompt(locale, question), question.prompt, `${id} prompt should be localized for ${locale}`);
-      assert.notEqual(publicLiteracyExplanation(locale, question), question.explanation, `${id} explanation should be localized for ${locale}`);
-      const option = question.options[0];
-      assert.notEqual(publicLiteracyOption(locale, question, option.id), option.label, `${id} option should be localized for ${locale}`);
+      assert.notEqual(publicLiteracyPrompt(locale, question), question.prompt, `${question.id} prompt should be localized for ${locale}`);
+      assert.notEqual(publicLiteracyExplanation(locale, question), question.explanation, `${question.id} explanation should be localized for ${locale}`);
+      for (const option of question.options) {
+        assert.notEqual(publicLiteracyOption(locale, question, option.id), option.label, `${question.id}/${option.id} should be localized for ${locale}`);
+      }
     }
   }
 });
