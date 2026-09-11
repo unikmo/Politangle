@@ -1,6 +1,5 @@
 import Link from 'next/link';
-import LiteracyQuizClientV2 from '../LiteracyQuizClientV2';
-import LiteracySessionMigration from '../LiteracySessionMigration';
+import LiteracyQuizEntry from '../LiteracyQuizEntry';
 import { LanguageSelector } from '../LocaleProvider';
 
 export default async function UnderstandPage({ searchParams }: { searchParams: Promise<{ mode?: string }> }) {
@@ -12,8 +11,7 @@ export default async function UnderstandPage({ searchParams }: { searchParams: P
         <Link href={schoolMode ? '/school/private' : '/'} className="engine-brand">Politangle</Link>
         <span>UNDERSTAND · 20</span><LanguageSelector />
       </header>
-      <LiteracySessionMigration active={schoolMode} />
-      <LiteracyQuizClientV2 section="understand" feedbackMode={schoolMode ? 'instant' : 'end'} />
+      <LiteracyQuizEntry section="understand" schoolMode={schoolMode} />
     </main>
   );
 }
