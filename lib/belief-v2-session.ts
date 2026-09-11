@@ -3,13 +3,44 @@ import { lockedBeliefItemsV2 } from './belief-v2-engine';
 import { expandBeliefItems } from './belief-statements';
 import type { AnswerValue } from './questions';
 
-export const BELIEF_V2_SESSION_SCHEMA = 5 as const;
-export const lockedBeliefStatementsV3 = expandBeliefItems(lockedBeliefItemsV2);
+export const BELIEF_V2_SESSION_SCHEMA = 6 as const;
 
-const quickSourceIds = [
-  ...lockedBeliefItemsV2.filter((item) => item.mode === 'think').map((item) => item.id),
-  ...lockedBeliefItemsV2.filter((item) => item.mode === 'act').slice(0, 12).map((item) => item.id),
-];
+// Public-facing wording can be refined without changing scoring metadata. Keep
+// the source IDs, construct, mode and polarity unchanged so results remain
+// comparable while the scenarios read naturally to a respondent.
+const publicBeliefItems = lockedBeliefItemsV2.map((item) => {
+  if (item.id === 'A05') {
+    return {
+      ...item,
+      negative: 'If adults chose a consensual relationship or lifestyle I personally disapproved of, I would oppose a legal ban unless it directly harmed someone else.',
+      positive: 'If a consensual adult relationship or lifestyle seriously conflicted with widely shared moral standards, I could support some legal restrictions even without direct harm.',
+    };
+  }
+  if (item.id === 'A08') {
+    return {
+      ...item,
+      negative: 'If an independent court, applying clear constitutional rules, struck down a policy I strongly supported, I would still defend the court’s authority to make that ruling.',
+      positive: 'If courts acting within their formal powers repeatedly stopped legal policies voters chose, I could support changing those powers so elected government had more room to act.',
+    };
+  }
+  return item;
+});
+
+export const lockedBeliefStatementsV3 = expandBeliefItems(publicBeliefItems);
+
+const quickThinkSourceIds = lockedBeliefItemsV2
+  .filter((item) => item.mode === 'think')
+  .map((item) => item.id);
+
+// Quick still has 12 practical-choice questions, but abortion and private-adult
+// autonomy are each asked only once in Quick. Their ACT versions move to Full;
+// religion/public-role and subsidiarity ACT move into Quick instead. This keeps
+// the 26/16 structure while reducing the strongest feeling of repetition.
+const quickActSourceIds = lockedBeliefItemsV2
+  .filter((item) => item.mode === 'act' && item.construct !== 'personal-autonomy' && item.construct !== 'abortion')
+  .map((item) => item.id);
+
+const quickSourceIds = [...quickThinkSourceIds, ...quickActSourceIds];
 
 const fullSourceIds = lockedBeliefItemsV2
   .map((item) => item.id)
