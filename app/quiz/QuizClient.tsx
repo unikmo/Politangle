@@ -82,16 +82,16 @@ export default function QuizClient() {
   const progress = beliefV2StageProgress(session, 'quick');
   const selected = session.answers[current.id];
   const ui = locale === 'de' ? {
-    topicPrefix: 'IN DER PRAXIS · ', restart: 'Neu starten', previous: 'Zurück', next: 'Weiter', result: 'Quick-Ergebnis anzeigen', missing: 'Fehlende Frage beantworten', none: 'Bisher keine unsicheren Antworten', marked: 'als unsicher markiert',
+    topicPrefix: 'IN DER PRAXIS · ', restart: 'Neu starten', previous: 'Zurück', next: 'Weiter', result: 'Quick-Ergebnis anzeigen', missing: 'Fehlende Frage beantworten', none: 'Bisher keine unsicheren Antworten', marked: 'als unsicher markiert', noCorrectAnswer: 'Es gibt keine politisch richtige Antwort.',
     labels: ['Nein, gar nicht','Eher nicht','Teils teils oder kommt darauf an','Eher ja','Ja, völlig','Unsicher oder nicht verstanden'], key: ['Nein, gar nicht','Teils teils / kommt darauf an','Ja, völlig','Unsicher'],
   } : locale === 'es' ? {
-    topicPrefix: 'EN LA PRÁCTICA · ', restart: 'Reiniciar', previous: 'Anterior', next: 'Siguiente', result: 'Ver resultado Quick', missing: 'Responder pregunta pendiente', none: 'Ninguna respuesta insegura', marked: 'marcadas como inseguras',
+    topicPrefix: 'EN LA PRÁCTICA · ', restart: 'Reiniciar', previous: 'Anterior', next: 'Siguiente', result: 'Ver resultado Quick', missing: 'Responder pregunta pendiente', none: 'Ninguna respuesta insegura', marked: 'marcadas como inseguras', noCorrectAnswer: 'No hay una respuesta política correcta.',
     labels: ['Totalmente en desacuerdo','En desacuerdo','Ni de acuerdo ni en desacuerdo / depende','De acuerdo','Totalmente de acuerdo','No estoy seguro o no lo entiendo'], key: ['Totalmente en desacuerdo','Neutral / depende','Totalmente de acuerdo','No estoy seguro'],
   } : locale === 'fr' ? {
-    topicPrefix: 'EN PRATIQUE · ', restart: 'Recommencer', previous: 'Précédent', next: 'Suivant', result: 'Voir le résultat Quick', missing: 'Répondre à la question manquante', none: 'Aucune réponse incertaine', marked: 'marquées comme incertaines',
+    topicPrefix: 'EN PRATIQUE · ', restart: 'Recommencer', previous: 'Précédent', next: 'Suivant', result: 'Voir le résultat Quick', missing: 'Répondre à la question manquante', none: 'Aucune réponse incertaine', marked: 'marquées comme incertaines', noCorrectAnswer: 'Il n’y a pas de bonne réponse politique.',
     labels: ['Pas du tout d’accord','Pas d’accord','Ni d’accord ni pas d’accord / cela dépend','D’accord','Tout à fait d’accord','Je ne sais pas ou je ne comprends pas'], key: ['Pas du tout d’accord','Neutre / cela dépend','Tout à fait d’accord','Je ne sais pas'],
   } : {
-    topicPrefix: 'IN PRACTICE · ', restart: 'Restart', previous: 'Previous', next: 'Next', result: 'See Quick result', missing: 'Answer missing question', none: 'No unsure responses so far', marked: 'marked not sure',
+    topicPrefix: 'IN PRACTICE · ', restart: 'Restart', previous: 'Previous', next: 'Next', result: 'See Quick result', missing: 'Answer missing question', none: 'No unsure responses so far', marked: 'marked not sure', noCorrectAnswer: 'There is no correct political answer.',
     labels: agreementAnswerOptions.map((option) => option.label), key: ['Strongly disagree','Neither / depends','Strongly agree','Not sure'],
   };
   const localizedStatement = locale === 'de'
@@ -135,6 +135,7 @@ export default function QuizClient() {
       <article className="engine-card">
         <p className="engine-kicker quick-topic">{current.mode === 'act' ? ui.topicPrefix : ''}{(locale === 'de' ? germanConstructs : locale === 'es' ? spanishConstructs : locale === 'fr' ? frenchConstructs : simpleTopics)[current.construct] ?? constructLabel(current.construct)}</p>
         <div className="engine-statement"><p>{localizedStatement ?? current.statement}</p></div>
+        <p className="engine-help">{ui.noCorrectAnswer}</p>
         <div className="quick-scale" role="radiogroup" aria-label="Response">
           {agreementAnswerOptions.map((option) => (
             <button
