@@ -6,6 +6,7 @@ import './results-shape.css';
 import './school.css';
 import './home.css';
 import './palette.css';
+import './hero-preview.css';
 import { LocaleProvider } from './LocaleProvider';
 
 export const metadata: Metadata = {
