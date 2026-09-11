@@ -1,5 +1,136 @@
-/* Homepage refinement: keep the approved natural mountain artwork while protecting copy readability.
-   The closing CTA uses a true split composition so no essential text sits over photography. */
+/* Final homepage refinement layer.
+   Goals: preserve the approved editorial mockup, keep essential copy off imagery,
+   give the canonical eight-axis result enough room, and simplify the lower page. */
+
+/* Canonical eight-axis example: two calm columns instead of one tall stack. */
+.home .p-result-grid{
+  grid-template-columns:minmax(0,.78fr) minmax(560px,1.22fr);
+  gap:70px;
+}
+.home .p-dimension-card{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  column-gap:28px;
+  padding:28px 30px 24px;
+}
+.home .p-dimension-card .p-card-top,
+.home .p-dimension-card>p{grid-column:1/-1}
+.home .p-dimension{padding:12px 0}
+.home .p-dimension strong{font-size:11px;line-height:1.35}
+.home .p-dimension small{font-size:7.5px;line-height:1.35}
+.home .p-dimension b{font-size:17px}
+.home .p-dimension>i{height:5px;margin-top:8px}
+.home .p-dimension-card>p{margin-top:18px}
+.home .p-shape-label{font-size:8px;letter-spacing:0}
+
+/* School section: editorial story first, age bands second, proof as a quiet footer row. */
+.home .p-schools{
+  grid-template-columns:minmax(0,1.2fr) minmax(300px,.8fr);
+  gap:52px 66px;
+  align-items:start;
+  padding-top:82px;
+  padding-bottom:82px;
+}
+.home .p-school-intro{grid-column:1;padding-right:0}
+.home .p-school-intro h2{max-width:720px;font-size:44px}
+.home .p-school-intro>p{max-width:650px;font-size:15px;line-height:1.72}
+.home .p-schools .p-age-bands{
+  grid-column:2;
+  grid-template-columns:1fr;
+  gap:12px;
+  margin:2px 0 0;
+  padding:0;
+  border:0;
+}
+.home .p-schools .p-age-bands>span{
+  min-height:142px;
+  padding:24px 26px;
+  justify-content:flex-start;
+  border:1px solid #e2d8d0;
+  background:#f1ece6;
+  font-size:30px;
+}
+.home .p-schools .p-age-bands b{font-size:10px}
+.home .p-schools .p-age-bands small{margin-top:auto;font-size:10px;line-height:1.5}
+.home .p-schools .p-school-proof{
+  grid-column:1/-1;
+  display:grid;
+  grid-template-columns:repeat(3,1fr) auto;
+  gap:0;
+  align-items:center;
+  padding:22px 0 0;
+  border:0;
+  border-top:1px solid #dfd5cd;
+}
+.home .p-schools .p-school-proof>div{
+  min-height:58px;
+  padding:0 26px;
+  grid-template-columns:30px 1fr;
+  border:0;
+  border-right:1px solid #dfd5cd;
+}
+.home .p-schools .p-school-proof>div:first-child{padding-left:0}
+.home .p-schools .p-school-proof span{font-size:20px}
+.home .p-schools .p-school-proof strong{font-size:11px;line-height:1.45}
+.home .p-schools .p-school-proof>small{
+  max-width:185px;
+  margin:0;
+  padding-left:28px;
+  font-size:8px;
+  line-height:1.55;
+}
+
+/* Languages: images get the visual weight the approved mockup calls for. */
+.home .p-languages{
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:28px 56px;
+  align-items:start;
+  padding-top:78px;
+  padding-bottom:84px;
+}
+.home .p-languages>div:first-child{max-width:720px}
+.home .p-languages h2{max-width:650px;margin:0;font-size:40px}
+.home .p-languages>div>p{max-width:650px;margin-top:18px;font-size:14px;line-height:1.7}
+.home .p-languages>aside{
+  grid-column:2;
+  grid-row:1;
+  display:flex;
+  width:145px;
+  margin-top:8px;
+  flex-direction:column;
+}
+.home .p-languages>aside i{margin:0 0 14px}
+.home .p-language-list{
+  grid-column:1/-1;
+  grid-row:2;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  margin-top:16px;
+  border-top:1px solid #ddd4cc;
+  border-bottom:1px solid #ddd4cc;
+}
+.home .p-language-list span{
+  min-height:232px;
+  padding:18px 16px 16px;
+  border-right:1px solid #ddd4cc;
+  background:transparent;
+}
+.home .p-language-list span:first-child{border-left:0}
+.home .p-language-list span:last-child{border-right:0}
+.home .p-language-list img{
+  width:100%;
+  height:174px;
+  object-fit:contain;
+  mix-blend-mode:multiply;
+}
+.home .p-language-list small{
+  margin-top:10px;
+  color:#433a35;
+  font-size:13px;
+  font-weight:650;
+}
+
+/* Closing CTA: copy and art are intentionally separate. */
 .home .p-final{
   display:grid;
   grid-template-columns:minmax(0,1.08fr) minmax(360px,.92fr);
@@ -40,7 +171,7 @@
   align-self:start;
 }
 .home .p-final h2{
-  max-width:470px;
+  max-width:480px;
   margin:0 0 16px;
   color:var(--ink);
   font-size:clamp(38px,4vw,50px);
@@ -50,7 +181,7 @@
 .home .p-final p{
   max-width:430px;
   margin:0;
-  color:#675d57;
+  color:#5f5651;
   font-size:15px;
   line-height:1.65;
 }
@@ -69,24 +200,52 @@
   max-width:360px;
   margin-top:42px;
   align-self:end;
-  color:#786d66;
+  color:#6c625c;
 }
 .home .p-final>aside i{
   display:inline-block;
   margin:0 14px 0 0;
 }
 
-@media(max-width:900px){
-  .home .p-final{
-    grid-template-columns:minmax(0,1fr) minmax(300px,.72fr);
-    column-gap:38px;
-    padding:44px 40px;
-  }
-  .home .p-final::before{width:40%}
-  .home .p-final::after{left:60%}
+/* Footer is full-bleed but aligned with the content grid. */
+.home .p-footer.p-shell{
+  width:100%;
+  min-height:116px;
+  padding:0 max(36px,calc(50vw - 590px));
+  background:#fff;
 }
 
-@media(max-width:700px){
+@media(max-width:1050px){
+  .home .p-result-grid{grid-template-columns:1fr;gap:48px}
+  .home .p-dimension-card{max-width:760px}
+  .home .p-schools{grid-template-columns:1fr;gap:38px}
+  .home .p-school-intro,.home .p-schools .p-age-bands,.home .p-schools .p-school-proof{grid-column:1}
+  .home .p-schools .p-age-bands{grid-template-columns:1fr 1fr}
+  .home .p-schools .p-school-proof{grid-template-columns:repeat(3,1fr)}
+  .home .p-schools .p-school-proof>small{grid-column:1/-1;max-width:none;padding:18px 0 0}
+  .home .p-languages{grid-template-columns:1fr}
+  .home .p-languages>aside{display:none}
+  .home .p-language-list{grid-column:1;grid-row:auto}
+}
+
+@media(max-width:760px){
+  .home .p-dimension-card{grid-template-columns:1fr;padding:24px}
+  .home .p-dimension-card .p-card-top,.home .p-dimension-card>p{grid-column:1}
+  .home .p-school-intro h2{font-size:38px}
+  .home .p-schools .p-age-bands{grid-template-columns:1fr}
+  .home .p-schools .p-school-proof{grid-template-columns:1fr}
+  .home .p-schools .p-school-proof>div{
+    padding:15px 0;
+    border-right:0;
+    border-bottom:1px solid #e2d8d0;
+  }
+  .home .p-schools .p-school-proof>small{padding-top:20px}
+  .home .p-languages h2{font-size:34px}
+  .home .p-language-list{grid-template-columns:1fr 1fr}
+  .home .p-language-list span{min-height:196px}
+  .home .p-language-list span:nth-child(2){border-right:0}
+  .home .p-language-list span:nth-child(-n+2){border-bottom:1px solid #ddd4cc}
+  .home .p-language-list img{height:140px}
   .home .p-final{
     display:block;
     width:calc(100% - 32px);
@@ -109,9 +268,12 @@
     border-top:1px solid rgba(121,99,86,.18);
   }
   .home .p-final h2{font-size:40px}
-  .home .p-final>aside{
-    display:block;
-    max-width:310px;
-    margin-top:30px;
-  }
+  .home .p-final>aside{display:block;max-width:310px;margin-top:30px}
+}
+
+@media(max-width:520px){
+  .home .p-language-list{grid-template-columns:1fr}
+  .home .p-language-list span{min-height:210px;border-right:0;border-bottom:1px solid #ddd4cc!important}
+  .home .p-language-list span:last-child{border-bottom:0!important}
+  .home .p-language-list img{height:155px}
 }
