@@ -8,6 +8,7 @@ import './home.css';
 import './palette.css';
 import './hero-preview.css';
 import './home-orange-hero.css';
+import './home-readability-fix.css';
 import './elite-engine-palette.css';
 import './results-interpretation.css';
 import './info.css';
