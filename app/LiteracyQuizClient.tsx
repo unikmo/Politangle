@@ -157,9 +157,15 @@ export default function LiteracyQuizClient({ section, feedbackMode = 'end' }: { 
   const itemResult = current && checked ? scoreLiteracyItem(current, selected) : null;
   const sectionResult = calculateDeepLiteracyResult(questionBank, session.answers).sections[section];
   const title = section === 'classify' ? 'CLASSIFY' : 'UNDERSTAND';
+  const hookTitle = section === 'classify'
+    ? (isGerman ? 'Erkennen Sie die politische Richtung ohne Etikett?' : 'Can you spot the politics without the label?')
+    : (isGerman ? 'Können Sie ähnliche politische Ideen auseinanderhalten?' : 'Can you tell similar political ideas apart?');
+  const hookDescription = section === 'classify'
+    ? (isGerman ? 'Lesen Sie, wofür eine Partei oder Bewegung steht, und wählen Sie die Richtung, die am besten passt.' : 'Read what a party or movement stands for, then choose the political tradition that fits best.')
+    : (isGerman ? 'Testen Sie Unterschiede, die in politischen Debatten häufig verwechselt werden.' : 'Test the differences that people often mix up in political debate.');
   const description = section === 'classify'
-    ? (isGerman ? 'Politische Traditionen anhand ihrer Merkmale erkennen.' : 'Recognise political traditions from their defining features.')
-    : (isGerman ? 'Politische Begriffe, Unterschiede und typische Missverständnisse auseinanderhalten.' : 'Distinguish political concepts, boundaries and common misconceptions.');
+    ? (isGerman ? 'CLASSIFY misst, ob Sie eine politische Richtung an ihren Inhalten erkennen, ohne dass der Name vorher genannt wird.' : 'CLASSIFY measures whether you can recognise a political tradition from what it stands for, without being given the label first.')
+    : (isGerman ? 'UNDERSTAND misst, ob Sie politische Ideen unterscheiden können, die häufig verwechselt werden.' : 'UNDERSTAND measures whether you can tell apart political ideas that are often confused.');
 
   function localizedPrompt(question: LiteracyQuestion) {
     if (!isGerman) return question.prompt;
@@ -349,6 +355,12 @@ export default function LiteracyQuizClient({ section, feedbackMode = 'end' }: { 
 
   return (
     <section className="engine-shell literacy-shell">
+      {feedbackMode === 'end' && index === 0 && progress.answered === 0 && (
+        <div className="literacy-hook">
+          <strong>{hookTitle}</strong>
+          <span>{hookDescription}</span>
+        </div>
+      )}
       <div className="engine-progress-row">
         <span>{title} · {feedbackMode === 'end' ? `${progress.answered}/${progress.total}` : `${progress.checked}/${progress.total}`}</span>
         <div className="engine-progress" aria-label={`${Math.round(((feedbackMode === 'end' ? progress.answered : progress.checked) / progress.total) * 100)}% complete`}>
