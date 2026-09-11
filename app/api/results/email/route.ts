@@ -67,6 +67,8 @@ export async function POST(request: Request) {
         source: 'politangle-result-email',
         locale: payload.locale,
         resultStage: payload.stage,
+        status: 'pending-double-opt-in',
+        canEmailMarketing: false,
       }, { merge: true });
       marketingSaved = true;
     } catch {
