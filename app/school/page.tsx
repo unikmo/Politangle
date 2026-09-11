@@ -22,32 +22,32 @@ export default function SchoolPage() {
 
         <div className="school-entry-grid">
           <article className="engine-card school-entry-card">
-            <p className="engine-kicker">Students · private</p>
+            <p className="engine-kicker">{t('Students · private','Schüler · privat')}</p>
             <h2>{t('Explore on your own device','Auf dem eigenen Gerät entdecken')}</h2>
-            <p>{t('Take Quick 26, continue to Full 84, or practise political literacy. Your individual result is not sent to a teacher.','Quick 26 durchführen, mit Full 84 fortfahren oder politische Bildung üben. Das persönliche Ergebnis wird nicht an eine Lehrkraft gesendet.')}</p>
+            <p>{t('Take Quick 26, continue to Full 42, or practise political literacy. Your individual result is not sent to a teacher.','Quick 26 durchführen, mit Full 42 fortfahren oder politische Bildung üben. Das persönliche Ergebnis wird nicht an eine Lehrkraft gesendet.')}</p>
             <Link className="engine-primary-link" href="/school/private">{t('Private Student Mode','Privater Schülerbereich')}</Link>
           </article>
           <article className="engine-card school-entry-card">
-            <p className="engine-kicker">Students · classroom</p>
+            <p className="engine-kicker">{t('Students · classroom','Schüler · Klassenraum')}</p>
             <h2>{t('Join an anonymous classroom','Anonym einem Klassenraum beitreten')}</h2>
             <p>{t('Enter the six-character session code from your teacher. No name, email, username or student ID is required.','Den sechsstelligen Sitzungscode der Lehrkraft eingeben. Name, E-Mail-Adresse, Benutzername oder Schüler-ID sind nicht erforderlich.')}</p>
             <Link className="engine-primary-link" href="/school/student">{t('Join classroom','Klassenraum beitreten')}</Link>
           </article>
-          <article className="engine-card school-entry-card">
-            <p className="engine-kicker">Teachers</p>
+          <article className="engine-card school-entry-card school-sales-card">
+            <p className="engine-kicker">{t('For teachers','Für Lehrkräfte')}</p>
             <h2>{t('Run a live lesson','Live-Unterricht durchführen')}</h2>
-            <p>School pack: <strong>$300 for 10 teacher licenses.</strong> A licensed teacher can generate temporary session codes and run Quick 26, Full 84, literacy, guided or custom activities.</p>
-            <Link className="engine-primary-link" href="/school/teacher">{t('Teacher classroom','Lehrkraft-Bereich')}</Link>
+            <p>{t('School pack: $300 for 10 teacher licenses. Licensed teachers can create temporary classroom codes and run Quick, Full, knowledge quizzes, guided lessons or custom activities.','Schulpaket: 300 $ für 10 Lehrkraft-Lizenzen. Lizenzierte Lehrkräfte können temporäre Klassenraumcodes erstellen und Quick, Full, Wissensquizze, geführte Unterrichtseinheiten oder eigene Aktivitäten durchführen.')}</p>
+            <Link className="engine-primary-link" href="/school/teacher">{t('Open teacher classroom','Lehrkraft-Bereich öffnen')}</Link>
           </article>
         </div>
 
         <article className="engine-card" style={{ marginTop: 18 }}>
-          <p className="engine-kicker">What the teacher can see</p>
+          <p className="engine-kicker">{t('What the teacher can see','Was die Lehrkraft sehen kann')}</p>
           <div className="school-principle-grid">
-            <div><strong>YES</strong><span>Joined count, response totals, live class distributions, aggregate political shape, literacy patterns and lesson summary.</span></div>
-            <div><strong>NEVER</strong><span>Student names, who chose an answer, an individual political profile, individual polygon or individual literacy score.</span></div>
+            <div><strong>{t('YES','JA')}</strong><span>{t('Joined count, response totals, live class distributions, aggregate political shape, literacy patterns and lesson summary.','Teilnehmerzahl, Antwortsummen, Live-Verteilungen der Klasse, aggregierte politische Form, Wissensmuster und Unterrichtszusammenfassung.')}</span></div>
+            <div><strong>{t('NEVER','NIE')}</strong><span>{t('Student names, who chose an answer, an individual political profile, individual polygon or individual literacy score.','Schülernamen, wer welche Antwort gewählt hat, individuelle politische Profile, individuelle Polygone oder individuelle Wissenswerte.')}</span></div>
           </div>
-          <p className="engine-disclaimer"><strong>REQUIRES QUALIFIED LEGAL REVIEW</strong> before real deployment with minors or schools. The current implementation is a non-production pilot.</p>
+          <p className="engine-disclaimer"><strong>{t('LEGAL REVIEW REQUIRED','RECHTLICHE PRÜFUNG ERFORDERLICH')}</strong> {t('before deployment with minors or schools. The current implementation is a non-production pilot.','vor einem Einsatz mit Minderjährigen oder Schulen. Die aktuelle Umsetzung ist ein Pilot und nicht für den Produktivbetrieb bestimmt.')}</p>
         </article>
       </section>
     </main>
