@@ -1,0 +1,117 @@
+/* Homepage refinement: keep the approved natural mountain artwork while protecting copy readability.
+   The closing CTA uses a true split composition so no essential text sits over photography. */
+.home .p-final{
+  display:grid;
+  grid-template-columns:minmax(0,1.08fr) minmax(360px,.92fr);
+  column-gap:56px;
+  min-height:330px;
+  margin:0 auto 52px;
+  padding:50px 52px;
+  isolation:isolate;
+  background:#f3eee7;
+  color:var(--ink);
+}
+.home .p-final::before{
+  content:"";
+  position:absolute;
+  z-index:0;
+  top:0;
+  right:0;
+  bottom:0;
+  width:43%;
+  background:
+    linear-gradient(90deg,rgba(243,238,231,.35),rgba(243,238,231,0) 16%),
+    url('/images/curiosity-mountains.webp') center 58%/cover no-repeat;
+}
+.home .p-final::after{
+  content:"";
+  position:absolute;
+  z-index:1;
+  top:34px;
+  bottom:34px;
+  left:57%;
+  border-left:1px solid rgba(121,99,86,.18);
+}
+.home .p-final>div:first-child{
+  position:relative;
+  z-index:2;
+  grid-column:1;
+  max-width:500px;
+  align-self:start;
+}
+.home .p-final h2{
+  max-width:470px;
+  margin:0 0 16px;
+  color:var(--ink);
+  font-size:clamp(38px,4vw,50px);
+  line-height:1.02;
+  letter-spacing:-.04em;
+}
+.home .p-final p{
+  max-width:430px;
+  margin:0;
+  color:#675d57;
+  font-size:15px;
+  line-height:1.65;
+}
+.home .p-final .p-button{
+  margin-top:24px;
+  background:var(--brand-orange);
+  color:#fff;
+}
+.home .p-final>aside{
+  position:relative;
+  z-index:2;
+  top:auto;
+  right:auto;
+  grid-column:1;
+  width:auto;
+  max-width:360px;
+  margin-top:42px;
+  align-self:end;
+  color:#786d66;
+}
+.home .p-final>aside i{
+  display:inline-block;
+  margin:0 14px 0 0;
+}
+
+@media(max-width:900px){
+  .home .p-final{
+    grid-template-columns:minmax(0,1fr) minmax(300px,.72fr);
+    column-gap:38px;
+    padding:44px 40px;
+  }
+  .home .p-final::before{width:40%}
+  .home .p-final::after{left:60%}
+}
+
+@media(max-width:700px){
+  .home .p-final{
+    display:block;
+    width:calc(100% - 32px);
+    min-height:0;
+    padding:36px 28px 258px;
+  }
+  .home .p-final::before{
+    top:auto;
+    left:0;
+    width:100%;
+    height:220px;
+    background:url('/images/curiosity-mountains.webp') center 58%/cover no-repeat;
+  }
+  .home .p-final::after{
+    top:auto;
+    right:28px;
+    bottom:220px;
+    left:28px;
+    border-left:0;
+    border-top:1px solid rgba(121,99,86,.18);
+  }
+  .home .p-final h2{font-size:40px}
+  .home .p-final>aside{
+    display:block;
+    max-width:310px;
+    margin-top:30px;
+  }
+}
