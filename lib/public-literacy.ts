@@ -4,68 +4,30 @@ import { literacyQuestions } from './literacy-questions';
 type QuestionOverride = Partial<Pick<LiteracyQuestion, 'prompt' | 'options' | 'acceptedAnswerSets' | 'explanation'>>;
 
 const classifyOverrides: Record<string, QuestionOverride> = {
-  C1: {
-    prompt: 'Most businesses stay privately owned. Government provides strong public services, social insurance and worker protections, paid for partly through higher taxes on higher incomes.',
-  },
-  C2: {
-    prompt: 'Major businesses should be owned much more by the public, workers or cooperatives, rather than mainly by private shareholders.',
-  },
-  C3: {
-    prompt: 'Individual freedom, private property and voluntary exchange come first. Government should interfere as little as possible in peaceful personal and economic choices.',
-  },
-  C4: {
-    prompt: 'Long-standing institutions deserve respect. Change should usually be gradual, and large social experiments should be treated with caution.',
-  },
-  C5: {
-    prompt: 'Markets and private property are important, but welfare and regulation can be useful when they help keep society stable and cohesive.',
-  },
-  C6: {
-    prompt: 'Environmental limits and long-term sustainability should be central to politics, together with public participation, local decision-making and social justice.',
-  },
-  C7: {
-    prompt: 'The long-term goal is a classless society with no private ownership of major productive property and, eventually, no state.',
-  },
-  C8: {
-    prompt: 'The nation should be remade under a strong authoritarian leader. Opposition parties and liberal democracy are rejected, and individual rights come second to the national project.',
-  },
-  C9: {
-    prompt: 'Nations have special political value and should be able to govern themselves. This view does not by itself tell you what someone thinks about markets, welfare or taxes.',
-  },
-  C10: {
-    prompt: 'Individual freedom and equal legal rights are central. People in this tradition disagree about markets, welfare and how much government is needed to protect freedom.',
-  },
-  C11: {
-    prompt: 'The movement is influenced by Christian social ideas. It supports a social-market economy and welfare, and prefers decisions to be made as locally as practical, with higher levels stepping in when needed.',
-  },
-  C12: {
-    prompt: 'Politics is seen as a struggle between ordinary people and a corrupt establishment. Government should carry out the common will of the people.',
-  },
-  C13: {
-    prompt: 'The movement wants strict law and order, gives preference to people seen as long-established members of the nation, and says it represents ordinary people against a corrupt elite. It still competes in elections.',
-  },
-  C14: {
-    prompt: 'The movement rejects democracy itself and says political opponents should not have an equal right to compete for power.',
-  },
-  C15: {
-    prompt: 'There are competitive elections, civil rights, courts that apply the law, and independent checks on elected leaders.',
-  },
+  C1: { prompt: 'Most businesses stay privately owned. Government provides strong public services, social insurance and worker protections, paid for partly through higher taxes on higher incomes.' },
+  C2: { prompt: 'Major businesses should be owned much more by the public, workers or cooperatives, rather than mainly by private shareholders.' },
+  C3: { prompt: 'Individual freedom, private property and voluntary exchange come first. Government should interfere as little as possible in peaceful personal and economic choices.' },
+  C4: { prompt: 'Long-standing institutions deserve respect. Change should usually be gradual, and large social experiments should be treated with caution.' },
+  C5: { prompt: 'Markets and private property are important, but welfare and regulation can be useful when they help keep society stable and cohesive.' },
+  C6: { prompt: 'Environmental limits and long-term sustainability should be central to politics, together with public participation, local decision-making and social justice.' },
+  C7: { prompt: 'The long-term goal is a classless society with no private ownership of major productive property and, eventually, no state.' },
+  C8: { prompt: 'The nation should be remade under a strong authoritarian leader. Opposition parties and liberal democracy are rejected, and individual rights come second to the national project.' },
+  C9: { prompt: 'Nations have special political value and should be able to govern themselves. This view does not by itself tell you what someone thinks about markets, welfare or taxes.' },
+  C10: { prompt: 'Individual freedom and equal legal rights are central. People in this tradition disagree about markets, welfare and how much government is needed to protect freedom.' },
+  C11: { prompt: 'The movement is influenced by Christian social ideas. It supports a social-market economy and welfare, and prefers decisions to be made as locally as practical, with higher levels stepping in when needed.' },
+  C12: { prompt: 'Politics is seen as a struggle between ordinary people and a corrupt establishment. Government should carry out the common will of the people.' },
+  C13: { prompt: 'The movement wants strict law and order, gives preference to people seen as long-established members of the nation, and says it represents ordinary people against a corrupt elite. It still competes in elections.' },
+  C14: { prompt: 'The movement rejects democracy itself and says political opponents should not have an equal right to compete for power.' },
+  C15: { prompt: 'There are competitive elections, civil rights, courts that apply the law, and independent checks on elected leaders.' },
   C16: {
     prompt: 'A revolutionary movement wants to end capitalist ownership of major industries, replace it with common ownership, and eventually build a classless society.',
     acceptedAnswerSets: [['communism']],
     explanation: 'Communism grew from the Marxist goal of replacing capitalist ownership and class divisions with common ownership and, ultimately, a classless society. Some communist movements also built revolutionary parties and transitional states.',
   },
-  C17: {
-    prompt: 'A democratic movement wants much more worker, cooperative or public ownership while keeping competitive elections, civil rights and opposition parties.',
-  },
-  C18: {
-    prompt: 'Wealthy societies may sometimes need to consume less because environmental limits cannot always be solved by cleaner technology alone.',
-  },
-  C19: {
-    prompt: 'Government should protect rights and contracts but otherwise interfere as little as possible in the peaceful choices of adults, businesses and voluntary groups.',
-  },
-  C20: {
-    prompt: 'Social order, continuity and long-standing institutions are important, while elections, opposition parties and constitutional limits should remain in place.',
-  },
+  C17: { prompt: 'A democratic movement wants much more worker, cooperative or public ownership while keeping competitive elections, civil rights and opposition parties.' },
+  C18: { prompt: 'Wealthy societies may sometimes need to consume less because environmental limits cannot always be solved by cleaner technology alone.' },
+  C19: { prompt: 'Government should protect rights and contracts but otherwise interfere as little as possible in the peaceful choices of adults, businesses and voluntary groups.' },
+  C20: { prompt: 'Social order, continuity and long-standing institutions are important, while elections, opposition parties and constitutional limits should remain in place.' },
 };
 
 const understandOverrides: Record<string, QuestionOverride> = {
@@ -272,26 +234,26 @@ const understandOverrides: Record<string, QuestionOverride> = {
 };
 
 const germanClassifyPrompts: Record<string, string> = {
-  C1: 'Die meisten Unternehmen bleiben in Privatbesitz. Der Staat garantiert starke öffentliche Leistungen, Sozialversicherung und Arbeitnehmerschutz, teilweise finanziert durch stärker gestaffelte Steuern.',
-  C2: 'Große Unternehmen sollen deutlich stärker der Öffentlichkeit, den Beschäftigten oder Genossenschaften gehören statt hauptsächlich externen Anteilseignern.',
-  C3: 'Individuelle Freiheit, Privateigentum und freiwilliger Austausch stehen an erster Stelle. Staatliche Eingriffe in friedliche persönliche und wirtschaftliche Entscheidungen sollen auf ein Minimum begrenzt werden.',
-  C4: 'Gewachsene Institutionen verdienen Respekt, Veränderungen sollten meist schrittweise erfolgen, und große gesellschaftliche Experimente aus der Theorie heraus sollten mit Vorsicht betrachtet werden.',
-  C5: 'Märkte und Privateigentum sind wichtig, aber Sozialleistungen und Regulierung können sinnvoll sein, wenn sie Stabilität, Verantwortung und gesellschaftlichen Zusammenhalt stärken.',
-  C6: 'Ökologische Grenzen und langfristige Nachhaltigkeit sollen im Zentrum der Politik stehen, zusammen mit Bürgerbeteiligung, Dezentralisierung und sozialer Gerechtigkeit.',
-  C7: 'Langfristiges Ziel ist eine klassenlose Gesellschaft ohne Privateigentum an den wichtigsten Produktionsmitteln und schließlich ohne Staat.',
-  C8: 'Die Nation soll unter starker autoritärer Führung grundlegend erneuert werden. Politischer Pluralismus und liberale Demokratie werden abgelehnt, individuelle Rechte dem nationalen Projekt untergeordnet.',
+  C1: 'Die meisten Unternehmen bleiben privat. Der Staat bietet starke öffentliche Leistungen, Sozialversicherung und Arbeitnehmerschutz. Menschen mit höheren Einkommen zahlen dafür stärker mit.',
+  C2: 'Große Unternehmen sollen deutlich öfter der Öffentlichkeit, den Beschäftigten oder Genossenschaften gehören statt privaten Anteilseignern.',
+  C3: 'Individuelle Freiheit, Privateigentum und freiwilliger Austausch stehen an erster Stelle. Der Staat soll sich so wenig wie möglich in friedliche persönliche und wirtschaftliche Entscheidungen einmischen.',
+  C4: 'Lang bestehende Institutionen verdienen Respekt. Veränderungen sollten meist schrittweise erfolgen, und große gesellschaftliche Experimente sollten vorsichtig betrachtet werden.',
+  C5: 'Märkte und Privateigentum sind wichtig. Sozialleistungen und Regeln können aber sinnvoll sein, wenn sie Stabilität und gesellschaftlichen Zusammenhalt stärken.',
+  C6: 'Umweltgrenzen und langfristige Nachhaltigkeit sollen im Zentrum der Politik stehen, zusammen mit Bürgerbeteiligung, lokalen Entscheidungen und sozialer Gerechtigkeit.',
+  C7: 'Langfristiges Ziel ist eine klassenlose Gesellschaft. Große Produktionsbetriebe sollen nicht privat gehören, und am Ende soll es keinen Staat mehr geben.',
+  C8: 'Die Nation soll unter einem starken autoritären Führer grundlegend verändert werden. Oppositionsparteien und liberale Demokratie werden abgelehnt, individuelle Rechte dem nationalen Projekt untergeordnet.',
   C9: 'Nationen haben einen besonderen politischen Wert und sollen sich selbst regieren können. Daraus folgt allein noch keine feste Position zu Märkten, Sozialstaat oder Steuern.',
-  C10: 'Individuelle Freiheit und gleiche Rechte stehen im Mittelpunkt, zugleich gibt es innerhalb dieser Tradition große Unterschiede bei Märkten, Sozialstaat und der Rolle des Staates beim Schutz der Freiheit.',
-  C11: 'Die politischen Ideen sind von christlicher Soziallehre geprägt. Die Bewegung unterstützt soziale Marktwirtschaft und Sozialstaat und möchte Entscheidungen möglichst nah bei den Betroffenen treffen, während höhere Ebenen nur eingreifen, wenn es nötig ist.',
+  C10: 'Individuelle Freiheit und gleiche Rechte stehen im Mittelpunkt. Innerhalb dieser Richtung gibt es große Unterschiede bei Märkten, Sozialstaat und der Rolle des Staates.',
+  C11: 'Die Bewegung ist von christlichen sozialen Ideen geprägt. Sie unterstützt soziale Marktwirtschaft und Sozialstaat. Entscheidungen sollen möglichst nah bei den Betroffenen fallen; höhere Ebenen greifen nur ein, wenn es nötig ist.',
   C12: 'Politik wird als Konflikt zwischen normalen Bürgerinnen und Bürgern und einem korrupten Establishment verstanden. Die Regierung soll den gemeinsamen Willen des Volkes umsetzen.',
-  C13: 'Die Bewegung fordert strenge Law-and-Order-Politik, gibt Einheimischen oder seit Langem Zugehörigen Vorrang und behauptet, die normalen Leute gegen eine korrupte Elite zu vertreten, während sie an Wahlen teilnimmt.',
-  C14: 'Die Bewegung lehnt Demokratie selbst ab und bestreitet politischen Gegnern das gleiche Recht, um Macht zu konkurrieren.',
-  C15: 'Freie Wahlen werden mit Bürgerrechten, Rechtsstaatlichkeit und unabhängigen Kontrollen der gewählten Regierung verbunden.',
-  C16: 'Eine revolutionäre Partei beruft sich auf Marx und Lenin, will kapitalistisches Eigentum durch gemeinsames Eigentum an der wichtigsten Produktion ersetzen und strebt letztlich eine klassenlose Gesellschaft an.',
-  C17: 'Eine demokratische Bewegung will deutlich mehr Eigentum von Beschäftigten, Genossenschaften oder der öffentlichen Hand und zugleich freie Wahlen, Bürgerrechte und Oppositionsparteien erhalten.',
-  C18: 'Wohlhabende Gesellschaften müssen möglicherweise teilweise weniger konsumieren, weil ökologische Grenzen nicht immer allein durch sauberere Technik gelöst werden können.',
-  C19: 'Der Staat soll Rechte und Verträge schützen, Erwachsene, Märkte und freiwillige Zusammenschlüsse ansonsten aber so weit wie möglich frei von staatlichen Eingriffen lassen.',
-  C20: 'Gesellschaftliche Ordnung, Kontinuität und gewachsene Institutionen sind wichtig, während Wahlen, Oppositionsparteien und verfassungsrechtliche Grenzen erhalten bleiben sollen.',
+  C13: 'Die Bewegung fordert strenge Regeln gegen Kriminalität, gibt Menschen Vorrang, die sie als seit Langem zur Nation gehörend ansieht, und sagt, sie vertrete normale Leute gegen eine korrupte Elite. Sie nimmt weiterhin an Wahlen teil.',
+  C14: 'Die Bewegung lehnt Demokratie selbst ab und sagt, politische Gegner sollten nicht das gleiche Recht haben, um Macht zu konkurrieren.',
+  C15: 'Es gibt freie Wahlen, Bürgerrechte, Gerichte, die das Recht anwenden, und unabhängige Kontrollen der gewählten Regierung.',
+  C16: 'Eine revolutionäre Bewegung will das private Eigentum an großen Industrien beenden, es durch gemeinsames Eigentum ersetzen und schließlich eine klassenlose Gesellschaft schaffen.',
+  C17: 'Eine demokratische Bewegung will deutlich mehr Eigentum von Beschäftigten, Genossenschaften oder der öffentlichen Hand. Freie Wahlen, Bürgerrechte und Oppositionsparteien sollen bleiben.',
+  C18: 'Wohlhabende Gesellschaften müssen möglicherweise weniger konsumieren, weil Umweltgrenzen nicht immer allein durch sauberere Technik gelöst werden können.',
+  C19: 'Der Staat soll Rechte und Verträge schützen, sich ansonsten aber so wenig wie möglich in friedliche Entscheidungen von Erwachsenen, Unternehmen und freiwilligen Gruppen einmischen.',
+  C20: 'Gesellschaftliche Ordnung, Kontinuität und lang bestehende Institutionen sind wichtig. Wahlen, Oppositionsparteien und verfassungsrechtliche Grenzen sollen erhalten bleiben.',
 };
 
 const germanClassifyExplanations: Record<string, string> = {
