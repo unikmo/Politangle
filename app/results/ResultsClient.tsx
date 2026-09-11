@@ -56,7 +56,7 @@ function PoliticalShape({ axes }: { axes: ReturnType<typeof calculatePolygonV2Ca
   const known = axes.map((axis) => axis.score ?? 50);
   const point = (index: number, value: number, r = radius) => {
     const angle = -Math.PI / 2 + (index * Math.PI * 2) / axes.length;
-    const scaled = r * (0.22 + 0.78 * (value / 100));
+    const scaled = r * (value / 100);
     return [center + Math.cos(angle) * scaled, center + Math.sin(angle) * scaled] as const;
   };
   const polygon = known.map((value, index) => point(index, value)).map(([x, y]) => `${x},${y}`).join(' ');
@@ -74,7 +74,10 @@ function PoliticalShape({ axes }: { axes: ReturnType<typeof calculatePolygonV2Ca
           return (
             <g key={axis.id}>
               <line className="shape-spoke" x1={center} y1={center} x2={x} y2={y} />
-              <text className="shape-label" x={lx} y={ly} textAnchor={lx < center - 12 ? 'end' : lx > center + 12 ? 'start' : 'middle'} dominantBaseline="middle">{axis.name}</text>
+              <text className="shape-label" x={lx} y={ly} textAnchor={lx < center - 12 ? 'end' : lx > center + 12 ? 'start' : 'middle'} dominantBaseline="middle">
+                <tspan x={lx} dy="-0.25em">{axis.name}</tspan>
+                <tspan className="shape-axis-score" x={lx} dy="1.35em">{axis.score ?? '—'}</tspan>
+              </text>
             </g>
           );
         })}
@@ -84,6 +87,7 @@ function PoliticalShape({ axes }: { axes: ReturnType<typeof calculatePolygonV2Ca
           return <circle key={axes[index].id} className="shape-dot" cx={x} cy={y} r="5" />;
         })}
       </svg>
+      <p className="shape-scale-note">The map uses the actual 0–100 score on every spoke. Political-family matches are calculated separately, so your strongest family does not force any one axis to be your most extreme.</p>
     </div>
   );
 }
@@ -166,7 +170,7 @@ export default function ResultsClient() {
         <PoliticalShape axes={result.polygon} />
         <div className="result-action-row compact-actions">
           <button className="engine-primary-link" type="button" onClick={copyShape}>{copied ? 'Copied' : 'Copy my Politangle'}</button>
-          <span>The shape shows where you sit across eight political dimensions. It is meant to complement the political-home reading, not replace it.</span>
+          <span>Your eight-axis map is the visual Politangle. The family reading explains which political traditions most closely resemble that wider pattern.</span>
         </div>
       </article>
 

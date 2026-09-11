@@ -8,6 +8,7 @@ import './home.css';
 import './palette.css';
 import './hero-preview.css';
 import './elite-engine-palette.css';
+import './results-interpretation.css';
 import { LocaleProvider } from './LocaleProvider';
 
 export const metadata: Metadata = {

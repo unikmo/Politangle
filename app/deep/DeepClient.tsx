@@ -57,6 +57,15 @@ function directionLabel(score: number | null, low: string, high: string) {
   return `Strongly toward ${high.toLowerCase()}`;
 }
 
+function modeDirection(score: number | null, low: string, high: string) {
+  if (score === null) return 'Not enough information';
+  if (score <= 24) return `Strongly ${low.toLowerCase()}`;
+  if (score <= 39) return `Leans ${low.toLowerCase()}`;
+  if (score <= 60) return 'Between both poles';
+  if (score <= 74) return `Leans ${high.toLowerCase()}`;
+  return `Strongly ${high.toLowerCase()}`;
+}
+
 function axisSentence(score: number | null, low: string, high: string) {
   if (score === null) return 'This part of your profile needs more information.';
   if (score <= 24) return `${low} is one of the strongest features of your political profile.`;
@@ -64,6 +73,45 @@ function axisSentence(score: number | null, low: string, high: string) {
   if (score <= 60) return `You are comparatively balanced between ${low.toLowerCase()} and ${high.toLowerCase()}.`;
   if (score <= 74) return `You lean toward ${high.toLowerCase()} while retaining some balance.`;
   return `${high} is one of the strongest features of your political profile.`;
+}
+
+function explainGap(think: number | null, feel: number | null, act: number | null) {
+  const entries: { key: 'THINK' | 'FEEL' | 'ACT'; value: number }[] = [];
+  if (think !== null) entries.push({ key: 'THINK', value: think });
+  if (feel !== null) entries.push({ key: 'FEEL', value: feel });
+  if (act !== null) entries.push({ key: 'ACT', value: act });
+  if (entries.length < 2) return 'There are not enough comparable answers to interpret this difference.';
+  if (entries.length === 2) return 'The available modes point in different directions, so this topic is more context-dependent than your overall score alone suggests.';
+
+  const pairs = [
+    { keys: ['THINK', 'FEEL'] as const, distance: Math.abs(think! - feel!) },
+    { keys: ['THINK', 'ACT'] as const, distance: Math.abs(think! - act!) },
+    { keys: ['FEEL', 'ACT'] as const, distance: Math.abs(feel! - act!) },
+  ].sort((a, b) => a.distance - b.distance);
+  const closest = pairs[0];
+  const outsider = entries.find((entry) => !closest.keys.includes(entry.key as never));
+
+  if (closest.distance <= 30 && outsider) {
+    if (outsider.key === 'THINK') return 'Your stated principle is the outlier while instinct and practical choice are closer. The general rule you endorse may shift when the issue is felt or applied concretely.';
+    if (outsider.key === 'FEEL') return 'Your instinctive reaction is the outlier while principle and practical choice are closer. The issue may create an emotional pull that you do not fully carry into your rule or action.';
+    return 'Your practical choice is the outlier while principle and instinct are closer. Consequences, feasibility or trade-offs may change what you would actually do.';
+  }
+
+  return 'No single mode explains the gap: THINK, FEEL and ACT are spread across the scale. Treat this as a genuinely context-dependent position rather than a simple contradiction.';
+}
+
+function tendencyReading(id: string, score: number | null) {
+  if (id === 'populism') {
+    if (score === null) return { title: 'Political influence & representation', explanation: 'Not enough information for a stable reading.' };
+    if (score >= 70) return { title: 'Political influence & representation', explanation: 'You often suspect that well-connected groups are heard more than ordinary voters. That is a populist-style signal about representation, not a political-family label.' };
+    if (score <= 30) return { title: 'Political influence & representation', explanation: 'You tend to see political conflict as competition among legitimate interests and values rather than mainly as ordinary voters versus powerful groups.' };
+    return { title: 'Political influence & representation', explanation: 'You combine some suspicion of unequal political influence with a belief that genuine conflicts among interests and values also matter.' };
+  }
+
+  if (score === null) return { title: 'Elected power & democratic checks', explanation: 'Not enough information for a stable reading.' };
+  if (score >= 70) return { title: 'Elected power & democratic checks', explanation: 'You are relatively willing to give elected authorities more room to act, even when that can reduce some institutional checks or procedural safeguards.' };
+  if (score <= 30) return { title: 'Elected power & democratic checks', explanation: 'You strongly prioritize legal safeguards, institutional checks and limits on concentrated government power, even when they slow action.' };
+  return { title: 'Elected power & democratic checks', explanation: 'You balance effective elected authority with courts, opposition rights and procedural safeguards rather than consistently favoring one side.' };
 }
 
 function referencePeople(familyId: string) {
@@ -85,7 +133,7 @@ function PoliticalShape({ axes }: { axes: ReturnType<typeof calculatePolygonV2Ca
   const known = axes.map((axis) => axis.score ?? 50);
   const point = (index: number, value: number, r = radius) => {
     const angle = -Math.PI / 2 + (index * Math.PI * 2) / axes.length;
-    const scaled = r * (0.22 + 0.78 * (value / 100));
+    const scaled = r * (value / 100);
     return [center + Math.cos(angle) * scaled, center + Math.sin(angle) * scaled] as const;
   };
   const polygon = known.map((value, index) => point(index, value)).map(([x, y]) => `${x},${y}`).join(' ');
@@ -103,7 +151,10 @@ function PoliticalShape({ axes }: { axes: ReturnType<typeof calculatePolygonV2Ca
           return (
             <g key={axis.id}>
               <line className="shape-spoke" x1={center} y1={center} x2={x} y2={y} />
-              <text className="shape-label" x={lx} y={ly} textAnchor={lx < center - 12 ? 'end' : lx > center + 12 ? 'start' : 'middle'} dominantBaseline="middle">{axis.name}</text>
+              <text className="shape-label" x={lx} y={ly} textAnchor={lx < center - 12 ? 'end' : lx > center + 12 ? 'start' : 'middle'} dominantBaseline="middle">
+                <tspan x={lx} dy="-0.25em">{axis.name}</tspan>
+                <tspan className="shape-axis-score" x={lx} dy="1.35em">{axis.score ?? '—'}</tspan>
+              </text>
             </g>
           );
         })}
@@ -113,6 +164,7 @@ function PoliticalShape({ axes }: { axes: ReturnType<typeof calculatePolygonV2Ca
           return <circle key={axes[index].id} className="shape-dot" cx={x} cy={y} r="5" />;
         })}
       </svg>
+      <p className="shape-scale-note">The map uses the actual 0–100 score on every spoke. Political-family matches are calculated separately, so your strongest family does not force any one axis to be your most extreme.</p>
     </div>
   );
 }
@@ -212,7 +264,7 @@ export default function DeepClient() {
       const known = [think, feel, act].filter((value): value is number => value !== null);
       return { ...axis, think, feel, act, gap: known.length > 1 ? Math.max(...known) - Math.min(...known) : 0 };
     }).sort((a, b) => b.gap - a.gap);
-    const biggestGap = gaps[0];
+    const meaningfulGaps = gaps.filter((gap) => gap.gap >= 20).slice(0, 3);
 
     return (
       <section className="engine-shell result-shell">
@@ -251,20 +303,38 @@ export default function DeepClient() {
           </div>
         </article>
 
-        <article className="engine-card compact-result-card" style={{ marginTop: 18 }}>
+        <article className="engine-card compact-result-card coherence-card" style={{ marginTop: 18 }}>
           <p className="engine-kicker">Response coherence</p>
           <div className="consistency-hero">
             <strong>{output.coherence.score ?? '—'}<small>/100</small></strong>
             <div>
               <h2>{coherenceBand(output.coherence.score)}</h2>
-              <p>This measures how closely your THINK, FEEL and ACT answers line up when they test the same underlying political topic from different angles.</p>
+              <p>The score is only the summary. The useful part is seeing where your principle, instinct and practical choice move apart.</p>
             </div>
           </div>
-          <p className="engine-help">Coherence is not a knowledge, intelligence, honesty or conviction score. A lower score can reflect genuine nuance, uncertainty or a shift between principle and practice.</p>
-          {biggestGap && biggestGap.gap >= 25 && (
-            <div className="result-tension">
-              <strong>Your biggest internal shift is on {biggestGap.name}.</strong>
-              <p>THINK {biggestGap.think ?? '—'} · FEEL {biggestGap.feel ?? '—'} · ACT {biggestGap.act ?? '—'}. The {biggestGap.gap}-point spread shows where your principle, instinct and practical choice diverge most.</p>
+          <p className="engine-help">Coherence is not a knowledge, intelligence, honesty or conviction score. Differences can reflect genuine nuance, uncertainty or changing trade-offs.</p>
+
+          {meaningfulGaps.length > 0 ? (
+            <div className="coherence-gap-list">
+              {meaningfulGaps.map((gap, gapIndex) => (
+                <section className="coherence-gap-card" key={gap.id}>
+                  <div className="coherence-gap-head">
+                    <strong>{gapIndex === 0 ? 'Biggest shift' : 'Another shift'} · {gap.name}</strong>
+                    <span>{gap.gap}-point spread</span>
+                  </div>
+                  <div className="coherence-mode-grid">
+                    <div><b>THINK</b><strong>{gap.think ?? '—'}</strong><span>{modeDirection(gap.think, gap.low, gap.high)}</span></div>
+                    <div><b>FEEL</b><strong>{gap.feel ?? '—'}</strong><span>{modeDirection(gap.feel, gap.low, gap.high)}</span></div>
+                    <div><b>ACT</b><strong>{gap.act ?? '—'}</strong><span>{modeDirection(gap.act, gap.low, gap.high)}</span></div>
+                  </div>
+                  <p><b>What may explain the gap:</b> {explainGap(gap.think, gap.feel, gap.act)}</p>
+                </section>
+              ))}
+            </div>
+          ) : (
+            <div className="result-tension coherence-steady">
+              <strong>No large principle–instinct–choice shifts stand out.</strong>
+              <p>Your THINK, FEEL and ACT positions stay within 20 points of one another across the eight dimensions.</p>
             </div>
           )}
         </article>
@@ -283,17 +353,30 @@ export default function DeepClient() {
         </details>
 
         {(output.tendencies.length > 0 || output.nuances.length > 0) && (
-          <details className="engine-card result-details-card" style={{ marginTop: 18 }}>
-            <summary>See additional political patterns</summary>
-            <div className="additional-patterns">
-              {output.tendencies.map((item) => (
-                <p key={item.id}><strong>{item.id.replaceAll('-', ' ')}</strong><span>{item.score === null ? 'Not enough information' : `${item.score}/100`}</span></p>
-              ))}
-              {output.nuances.map((nuance) => (
-                <p key={nuance.id}><strong>{nuance.name}</strong><span>{nuance.explanation}</span></p>
-              ))}
+          <article className="engine-card compact-result-card political-style-card" style={{ marginTop: 18 }}>
+            <p className="engine-kicker">Power & political style</p>
+            <h2>Patterns that do not fit neatly into one axis.</h2>
+            <p className="result-lede">These are secondary readings made from the same BELIEVE answers. They are not extra political families and they do not override your eight-dimension Politangle.</p>
+            <div className="tendency-grid">
+              {output.tendencies.map((item) => {
+                const reading = tendencyReading(item.id, item.score);
+                return (
+                  <section className="tendency-card" key={item.id}>
+                    <div><strong>{reading.title}</strong><span>{item.score === null ? '—' : `${item.score}/100`}</span></div>
+                    <p>{reading.explanation}</p>
+                  </section>
+                );
+              })}
             </div>
-          </details>
+            {output.nuances.length > 0 && (
+              <div className="nuance-readings">
+                <strong>Specific combinations in your answers</strong>
+                {output.nuances.map((nuance) => (
+                  <p key={nuance.id}><b>{nuance.name}.</b> {nuance.explanation}</p>
+                ))}
+              </div>
+            )}
+          </article>
         )}
 
         <div className="engine-result-actions">
