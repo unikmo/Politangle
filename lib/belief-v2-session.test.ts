@@ -25,6 +25,15 @@ test('BELIEVE session deterministically contains 26 Quick and 16 Full questions'
   assert.equal(new Set([...first.quickOrder, ...first.deepOrder]).size, 42);
 });
 
+test('Quick asks abortion and private-adult autonomy only once each', () => {
+  const session = createBeliefV2Session('sensitive-construct-balance');
+  const constructs = session.quickOrder.map((id) => getBeliefV2Item(id)!.construct);
+  assert.equal(constructs.filter((construct) => construct === 'abortion').length, 1);
+  assert.equal(constructs.filter((construct) => construct === 'personal-autonomy').length, 1);
+  assert.equal(constructs.filter((construct) => construct === 'religion-public-role').length, 2);
+  assert.equal(constructs.filter((construct) => construct === 'subsidiarity').length, 2);
+});
+
 test('the user sees each source item only once across Quick and Full', () => {
   const session = createBeliefV2Session('one-source-one-question');
   const sourceIds = [...session.quickOrder, ...session.deepOrder].map((id) => getBeliefV2Item(id)!.sourceItemId);
