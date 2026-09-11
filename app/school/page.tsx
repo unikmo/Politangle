@@ -35,9 +35,9 @@ export default function SchoolPage() {
           </article>
           <article className="engine-card school-entry-card">
             <p className="engine-kicker">Teachers</p>
-            <h2>{t('Run a live lesson','Live-Unterricht durchführen')}</h2>
-            <p>School pack: <strong>$300 for 10 teacher licenses.</strong> A licensed teacher can generate temporary session codes and run Quick 26, Full 84, literacy, guided or custom activities.</p>
-            <Link className="engine-primary-link" href="/school/teacher">{t('Teacher classroom','Lehrkraft-Bereich')}</Link>
+            <h2>{t('Explore the controlled pilot','Kontrollierten Pilot erkunden')}</h2>
+            <p>{t('The classroom system is available for educator evaluation. Real-student use and paid licensing remain gated by legal, accessibility and age-band validation.','Das Klassenzimmer-System kann von Lehrkräften geprüft werden. Der Einsatz mit echten Schülerinnen und Schülern und bezahlte Lizenzen bleiben bis zur rechtlichen, barrierefreien und altersgerechten Validierung gesperrt.')}</p>
+            <Link className="engine-primary-link" href="/school/pilot">{t('School pilot information','Informationen zum Schulpilot')}</Link>
           </article>
         </div>
 
@@ -47,7 +47,7 @@ export default function SchoolPage() {
             <div><strong>YES</strong><span>Joined count, response totals, live class distributions, aggregate political shape, literacy patterns and lesson summary.</span></div>
             <div><strong>NEVER</strong><span>Student names, who chose an answer, an individual political profile, individual polygon or individual literacy score.</span></div>
           </div>
-          <p className="engine-disclaimer"><strong>REQUIRES QUALIFIED LEGAL REVIEW</strong> before real deployment with minors or schools. The current implementation is a non-production pilot.</p>
+          <p className="engine-disclaimer"><strong>{t('CONTROLLED PILOT — NOT AUTHORIZED FOR REAL STUDENT USE.','KONTROLLIERTER PILOT – NICHT FÜR DEN EINSATZ MIT ECHTEN SCHÜLERINNEN UND SCHÜLERN FREIGEGEBEN.')}</strong> {t('Qualified legal, accessibility and educational review remain mandatory.','Eine qualifizierte rechtliche, barrierefreie und pädagogische Prüfung bleibt verpflichtend.')}</p>
         </article>
       </section>
     </main>
