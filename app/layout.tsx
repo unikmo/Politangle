@@ -3,6 +3,7 @@ import './globals.css';
 import './engine.css';
 import './literacy.css';
 import './results-shape.css';
+import './multilingual-shape-fix.css';
 import './school.css';
 import './home.css';
 import './palette.css';
