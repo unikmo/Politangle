@@ -1,4 +1,5 @@
 import type { BeliefPolarity } from './belief-statements';
+import { schoolJuniorBeliefStatement } from './school-junior-believe-i18n';
 
 export const SPANISH_BELIEVE_VERSION = 'es-believe-2026.09-candidate-v1' as const;
 export const FRENCH_BELIEVE_VERSION = 'fr-believe-2026.09-candidate-v1' as const;
@@ -96,6 +97,7 @@ const fr: Record<string, Pair> = {
 };
 
 export function romanceBeliefStatement(locale: 'es' | 'fr', sourceItemId: string, polarity: BeliefPolarity) {
+  if (sourceItemId.startsWith('J')) return schoolJuniorBeliefStatement(locale, sourceItemId, polarity);
   const pair = (locale === 'es' ? es : fr)[sourceItemId];
   return pair?.[polarity === 'negative' ? 0 : 1] ?? null;
 }

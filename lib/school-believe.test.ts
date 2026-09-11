@@ -50,6 +50,14 @@ test('Junior bank is separately identified, short and construct-diverse', () => 
   assert.ok(sides.reduce((sum, side) => sum + words(side), 0) / sides.length <= 17);
 });
 
+test('Junior BELIEVE avoids adult survey and political-science jargon', () => {
+  const banned = /subsidiarity|pluralism|nativism|redistribution|means of production|majoritarian|autocratization|constitutionalism|sovereignty|electorate|ideological|institutional safeguards/i;
+  for (const item of schoolJuniorBeliefItems) {
+    assert.doesNotMatch(item.negative, banned, `${item.id} negative side contains adult jargon`);
+    assert.doesNotMatch(item.positive, banned, `${item.id} positive side contains adult jargon`);
+  }
+});
+
 function tokens(value: string) {
   const stop = new Set(['a','an','and','as','at','be','for','if','in','is','it','of','on','or','should','that','the','to','would']);
   return new Set(value.toLowerCase().replace(/[^a-z ]/g, ' ').split(/\s+/).filter((word) => word.length > 2 && !stop.has(word)));

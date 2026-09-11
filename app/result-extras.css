@@ -1,0 +1,33 @@
+main.engine-page:not(.school-page):not(.school-projector-page) .result-extras-shell{padding-top:0;padding-bottom:38px}
+/* The legacy Quick result copied a text summary. The visual PNG share below now
+   replaces that action so users do not see two competing share controls. */
+main.engine-page:not(.school-page):not(.school-projector-page) .result-shell .result-action-row.compact-actions{display:none}
+main.engine-page:not(.school-page):not(.school-projector-page) .country-lens-card,
+main.engine-page:not(.school-page):not(.school-projector-page) .result-tools-card{margin-top:18px;padding:30px 34px}
+main.engine-page:not(.school-page):not(.school-projector-page) .country-lens-card h2,
+main.engine-page:not(.school-page):not(.school-projector-page) .result-tools-card h2{max-width:760px;margin-bottom:10px}
+main.engine-page:not(.school-page):not(.school-projector-page) .country-lens-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:22px 0 18px}
+main.engine-page:not(.school-page):not(.school-projector-page) .country-lens-grid label,
+main.engine-page:not(.school-page):not(.school-projector-page) .result-email-form>label:first-child{display:grid;gap:7px}
+main.engine-page:not(.school-page):not(.school-projector-page) .country-lens-grid label>span,
+main.engine-page:not(.school-page):not(.school-projector-page) .result-email-form>label:first-child>span{color:#6d5c54;font-size:10px;font-weight:800;letter-spacing:.04em}
+main.engine-page:not(.school-page):not(.school-projector-page) .country-lens-grid input,
+main.engine-page:not(.school-page):not(.school-projector-page) .result-email-form input[type=email]{width:100%;min-height:46px;padding:10px 12px;border:1px solid #dfd0c7;border-radius:11px;background:#fff;color:#3b251d;font:inherit;outline:none}
+main.engine-page:not(.school-page):not(.school-projector-page) .country-lens-grid input:focus,
+main.engine-page:not(.school-page):not(.school-projector-page) .result-email-form input[type=email]:focus{border-color:#f45a1f;box-shadow:0 0 0 3px rgba(244,90,31,.11)}
+main.engine-page:not(.school-page):not(.school-projector-page) .result-tools-grid{display:grid;grid-template-columns:minmax(220px,.75fr) minmax(320px,1.25fr);gap:16px;margin-top:22px}
+main.engine-page:not(.school-page):not(.school-projector-page) .share-tool,
+main.engine-page:not(.school-page):not(.school-projector-page) .result-email-form{padding:20px;border:1px solid #eadbd1;border-radius:16px;background:#fffaf7}
+main.engine-page:not(.school-page):not(.school-projector-page) .share-tool{display:flex;flex-direction:column;align-items:flex-start;gap:12px}
+main.engine-page:not(.school-page):not(.school-projector-page) .share-tool>p{margin:0;color:#8b7469;font-size:10px;font-weight:800;letter-spacing:.08em}
+main.engine-page:not(.school-page):not(.school-projector-page) .result-email-form{display:grid;gap:13px}
+main.engine-page:not(.school-page):not(.school-projector-page) .result-marketing-consent{display:flex!important;align-items:flex-start;gap:9px;color:#625149;font-size:11px;line-height:1.45}
+main.engine-page:not(.school-page):not(.school-projector-page) .result-marketing-consent input{margin-top:2px}
+main.engine-page:not(.school-page):not(.school-projector-page) .result-email-form>p{margin:0;color:#8a746a;font-size:10px;line-height:1.5}
+main.engine-page:not(.school-page):not(.school-projector-page) .result-tool-message{display:block;color:#6f2c19;font-size:10px;line-height:1.45}
+@media(max-width:760px){
+  main.engine-page:not(.school-page):not(.school-projector-page) .country-lens-card,
+  main.engine-page:not(.school-page):not(.school-projector-page) .result-tools-card{padding:24px 20px}
+  main.engine-page:not(.school-page):not(.school-projector-page) .country-lens-grid,
+  main.engine-page:not(.school-page):not(.school-projector-page) .result-tools-grid{grid-template-columns:1fr}
+}

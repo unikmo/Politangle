@@ -1,15 +1,17 @@
 import Link from 'next/link';
-import LiteracyQuizClient from '../LiteracyQuizClient';
+import LiteracyQuizEntry from '../LiteracyQuizEntry';
 import { LanguageSelector } from '../LocaleProvider';
 
-export default function UnderstandPage() {
+export default async function UnderstandPage({ searchParams }: { searchParams: Promise<{ mode?: string }> }) {
+  const params = await searchParams;
+  const schoolMode = params.mode === 'school';
   return (
     <main className="engine-page">
       <header className="engine-header">
-        <Link href="/" className="engine-brand">Politangle</Link>
-        <span>UNDERSTAND · 20 questions</span><LanguageSelector />
+        <Link href={schoolMode ? '/school/private' : '/'} className="engine-brand">Politangle</Link>
+        <span>UNDERSTAND · 20</span><LanguageSelector />
       </header>
-      <LiteracyQuizClient section="understand" />
+      <LiteracyQuizEntry section="understand" schoolMode={schoolMode} />
     </main>
   );
 }

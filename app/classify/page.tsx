@@ -1,15 +1,17 @@
 import Link from 'next/link';
-import LiteracyQuizClient from '../LiteracyQuizClient';
+import LiteracyQuizEntry from '../LiteracyQuizEntry';
 import { LanguageSelector } from '../LocaleProvider';
 
-export default function ClassifyPage() {
+export default async function ClassifyPage({ searchParams }: { searchParams: Promise<{ mode?: string }> }) {
+  const params = await searchParams;
+  const schoolMode = params.mode === 'school';
   return (
     <main className="engine-page">
       <header className="engine-header">
-        <Link href="/" className="engine-brand">Politangle</Link>
-        <span>CLASSIFY · 20 questions</span><LanguageSelector />
+        <Link href={schoolMode ? '/school/private' : '/'} className="engine-brand">Politangle</Link>
+        <span>CLASSIFY · 20</span><LanguageSelector />
       </header>
-      <LiteracyQuizClient section="classify" />
+      <LiteracyQuizEntry section="classify" schoolMode={schoolMode} />
     </main>
   );
 }

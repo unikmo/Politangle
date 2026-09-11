@@ -1,4 +1,5 @@
 import { schoolBaselineQuestions } from './school-literacy';
+import { schoolJuniorLiteracyQuestions } from './school-junior-literacy';
 import { scoreLiteracyItem, type LiteracyQuestion } from './deep-engine';
 import { lockedBeliefItemsV2 } from './belief-v2-engine';
 import { expandBeliefItems, type BeliefPolarity } from './belief-statements';
@@ -7,7 +8,7 @@ import { getSchoolLesson, schoolLessons, type SchoolLessonId } from './school-le
 import { isJuniorSchoolAgeBand, schoolBeliefItems, schoolJuniorBeliefItems, type SchoolAgeBand } from './school-believe';
 import { lockedFullFollowUpStatementIds, lockedQuickStatementIds } from './belief-v2-session';
 
-export const SCHOOL_CLASSROOM_VERSION = 'school-classroom-2026.09-v7-reader' as const;
+export const SCHOOL_CLASSROOM_VERSION = 'school-classroom-2026.09-v8-junior-literacy' as const;
 
 export type ClassroomActivityType = 'junior' | 'quick26' | 'full42' | 'literacy' | 'guided' | 'custom';
 export type ClassroomPacing = 'teacher' | 'student';
@@ -49,14 +50,16 @@ export const BELIEVE_CLASSROOM_OPTIONS = [
   { id: 'unsure', label: 'Not sure / I do not understand' },
 ] as const;
 
-const literacyById = new Map(schoolBaselineQuestions.map((question) => [question.id, question]));
+const youthLiteracyById = new Map(schoolBaselineQuestions.map((question) => [question.id, question]));
+const juniorLiteracyById = new Map(schoolJuniorLiteracyQuestions.map((question) => [question.id, question]));
 const adultBeliefStatements = expandBeliefItems(lockedBeliefItemsV2);
 
 export const classroomQuickIds = [...lockedQuickStatementIds];
 export const classroomFullIds = [...lockedQuickStatementIds, ...lockedFullFollowUpStatementIds];
 export const classroomLiteracyIds = schoolBaselineQuestions.map((question) => question.id);
-export const classroomAllIds = [...classroomFullIds, ...classroomLiteracyIds];
-// Junior also shows one statement per source item. Alternating polarity avoids a
+export const classroomJuniorLiteracyIds = schoolJuniorLiteracyQuestions.map((question) => question.id);
+export const classroomAllIds = [...classroomFullIds, ...classroomLiteracyIds, ...classroomJuniorLiteracyIds];
+// Junior shows one statement per source item. Alternating polarity avoids a
 // one-sided form without making a child answer the same idea twice in opposite words.
 export const classroomJuniorIds = schoolJuniorBeliefItems.map((item, index) => `${item.id}-${index % 2 === 0 ? 'P' : 'N'}`);
 
@@ -65,9 +68,13 @@ function titleForConstruct(construct: string) {
   return construct.replaceAll('-', ' ').replace(/\b\w/g, (letter) => letter.toUpperCase());
 }
 
+function literacyForAge(id: string, ageBand: SchoolAgeBand) {
+  return isJuniorSchoolAgeBand(ageBand) ? juniorLiteracyById.get(id) : youthLiteracyById.get(id);
+}
+
 export function getClassroomQuestion(id: string, ageBand: SchoolAgeBand = 'youth-14-18'): ClassroomQuestionView | null {
   const belief = new Map(expandBeliefItems(schoolBeliefItems(ageBand)).map((item) => [item.id, item])).get(id)
-    ?? new Map(adultBeliefStatements.map((item) => [item.id, item])).get(id);
+    ?? (!isJuniorSchoolAgeBand(ageBand) ? new Map(adultBeliefStatements.map((item) => [item.id, item])).get(id) : undefined);
   if (belief) {
     return {
       id: belief.id,
@@ -81,12 +88,12 @@ export function getClassroomQuestion(id: string, ageBand: SchoolAgeBand = 'youth
       options: BELIEVE_CLASSROOM_OPTIONS,
     };
   }
-  const literacy = literacyById.get(id);
+  const literacy = literacyForAge(id, ageBand);
   if (!literacy) return null;
   return {
     id: literacy.id,
     kind: 'literacy',
-    title: `${literacy.section.toUpperCase()} quiz`,
+    title: isJuniorSchoolAgeBand(ageBand) ? 'Political know-how' : `${literacy.section.toUpperCase()} quiz`,
     section: literacy.section,
     prompt: literacy.prompt,
     multiSelect: literacy.multiSelect,
@@ -135,7 +142,10 @@ export function buildClassroomActivity(input: unknown): ClassroomActivityConfig 
   if (type === 'junior') return { type, title: 'Junior 16', questionIds: [...classroomJuniorIds], pacing, projectorMode, ageBand: 'junior-10-13' };
   if (type === 'quick26') return { type, title: 'Youth Quick 26', questionIds: [...classroomQuickIds], pacing, projectorMode, ageBand };
   if (type === 'full42') return { type, title: 'Youth Full 42', questionIds: [...classroomFullIds], pacing, projectorMode, ageBand };
-  if (type === 'literacy') return { type, title: 'Political Literacy Quiz', questionIds: [...classroomLiteracyIds], pacing, projectorMode, ageBand };
+  if (type === 'literacy') {
+    const ids = isJuniorSchoolAgeBand(ageBand) ? classroomJuniorLiteracyIds : classroomLiteracyIds;
+    return { type, title: isJuniorSchoolAgeBand(ageBand) ? 'Junior political know-how' : 'Political Literacy Quiz', questionIds: [...ids], pacing, projectorMode, ageBand };
+  }
   if (type === 'guided') {
     const lesson = getSchoolLesson(typeof value.lessonId === 'string' ? value.lessonId : undefined);
     if (!lesson) return null;
@@ -163,7 +173,8 @@ export function classroomActivityOptions() {
     full42: [...classroomFullIds],
     junior: [...classroomJuniorIds],
     literacy: [...classroomLiteracyIds],
-    lessons: schoolLessons.map((lesson) => ({ id: lesson.id, title: lesson.title, duration: lesson.duration, goals: lesson.goals })),
+    juniorLiteracy: [...classroomJuniorLiteracyIds],
+    lessons: schoolLessons.map((lesson) => ({ id: lesson.id, title: lesson.title, ageBand: lesson.ageBand, duration: lesson.duration, goals: lesson.goals })),
   };
 }
 
@@ -208,8 +219,8 @@ export function optionKeysForQuestion(id: string, ageBand: SchoolAgeBand = 'yout
   return question?.options.map((option) => option.id) ?? [];
 }
 
-export function classroomResponseIsCorrect(questionId: string, answer: string | string[]) {
-  const question = literacyById.get(questionId) as LiteracyQuestion | undefined;
+export function classroomResponseIsCorrect(questionId: string, answer: string | string[], ageBand: SchoolAgeBand = 'youth-14-18') {
+  const question = literacyForAge(questionId, ageBand) as LiteracyQuestion | undefined;
   if (!question) return null;
   const selected = Array.isArray(answer) ? answer : [answer];
   return scoreLiteracyItem(question, selected).correct;
