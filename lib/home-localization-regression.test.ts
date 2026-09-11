@@ -10,6 +10,7 @@ const layout = readFileSync(join(root, 'app/layout.tsx'), 'utf8');
 const localeProvider = readFileSync(join(root, 'app/LocaleProvider.tsx'), 'utf8');
 const deepClient = readFileSync(join(root, 'app/deep/DeepClient.tsx'), 'utf8');
 const deepNative = readFileSync(join(root, 'app/deep/deep-native.ts'), 'utf8');
+const schoolPage = readFileSync(join(root, 'app/school/page.tsx'), 'utf8');
 
 test('homepage uses the locked eight-axis names instead of the former four-axis shorthand', () => {
   for (const axis of ['Economic role', 'Ownership', 'Social values', 'Authority', 'Pluralism', 'World', 'Nationhood', 'Ecology']) {
@@ -64,4 +65,15 @@ test('Full German interface uses direct informal address in user-facing copy', (
   assert.match(deepNative, /Mach Politangle Quick, bevor du mit Full weitermachst\./);
   assert.match(deepNative, /Dein politisches Profil bleibt gemischt\./);
   assert.match(deepNative, /deinem Profil/);
+});
+
+test('School uses the locked 42-question total and native privacy copy', () => {
+  assert.doesNotMatch(schoolPage, /Full 84/);
+  assert.match(schoolPage, /Full to 42 questions in total/);
+  assert.match(schoolPage, /geh mit Full auf insgesamt 42 Fragen/);
+  assert.match(schoolPage, /sigue con Full hasta 42 preguntas en total/);
+  assert.match(schoolPage, /Full pour aller jusqu’à 42 questions au total/);
+  assert.match(schoolPage, /Die Lehrkraft sieht das Gesamtbild der Klasse, aber nie, wer welche Antwort gegeben hat/);
+  assert.match(schoolPage, /el profesor ve el conjunto de la clase, nunca quién dio cada respuesta/);
+  assert.match(schoolPage, /l’enseignant voit l’ensemble du groupe, jamais qui a donné quelle réponse/);
 });
