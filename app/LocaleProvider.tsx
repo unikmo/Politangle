@@ -31,5 +31,12 @@ export function LanguageSelector() {
   const locales: Locale[] = ['en', 'de', 'es', 'fr'];
   const names: Record<Locale, string> = { en: 'English (US)', de: 'Deutsch', es: 'Español', fr: 'Français' };
   const next = locales[(locales.indexOf(locale) + 1) % locales.length];
-  return <button type="button" className="lang" aria-label={`Language: ${names[locale]}. Switch to ${names[next]}`} onClick={() => setLocale(next)}>◎ &nbsp; {locale === 'en' ? 'EN-US' : locale.toUpperCase()}</button>;
+  const aria = locale === 'de'
+    ? `Sprache: ${names[locale]}. Wechseln zu ${names[next]}`
+    : locale === 'es'
+      ? `Idioma: ${names[locale]}. Cambiar a ${names[next]}`
+      : locale === 'fr'
+        ? `Langue : ${names[locale]}. Passer à ${names[next]}`
+        : `Language: ${names[locale]}. Switch to ${names[next]}`;
+  return <button type="button" className="lang" aria-label={aria} onClick={() => setLocale(next)}>◎ &nbsp; {locale === 'en' ? 'EN-US' : locale.toUpperCase()}</button>;
 }
