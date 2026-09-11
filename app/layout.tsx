@@ -11,6 +11,7 @@ import './home-orange-hero.css';
 import './elite-engine-palette.css';
 import './results-interpretation.css';
 import './public-literacy-overrides.css';
+import './result-extras.css';
 import { LocaleProvider } from './LocaleProvider';
 
 export const metadata: Metadata = {
