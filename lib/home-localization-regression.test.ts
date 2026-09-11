@@ -8,6 +8,8 @@ const homepage = readFileSync(join(root, 'app/page.tsx'), 'utf8');
 const translations = readFileSync(join(root, 'app/translations.ts'), 'utf8');
 const layout = readFileSync(join(root, 'app/layout.tsx'), 'utf8');
 const localeProvider = readFileSync(join(root, 'app/LocaleProvider.tsx'), 'utf8');
+const deepClient = readFileSync(join(root, 'app/deep/DeepClient.tsx'), 'utf8');
+const deepNative = readFileSync(join(root, 'app/deep/deep-native.ts'), 'utf8');
 
 test('homepage uses the locked eight-axis names instead of the former four-axis shorthand', () => {
   for (const axis of ['Economic role', 'Ownership', 'Social values', 'Authority', 'Pluralism', 'World', 'Nationhood', 'Ecology']) {
@@ -38,4 +40,26 @@ test('English locale is explicitly US English in document and selector', () => {
   assert.match(layout, /<html lang="en-US"/);
   assert.match(localeProvider, /en: 'English \(US\)'/);
   assert.match(localeProvider, /'EN-US'/);
+});
+
+test('Full keeps validated statement banks but localizes the surrounding experience', () => {
+  assert.match(deepClient, /germanBeliefStatement/);
+  assert.match(deepClient, /romanceBeliefStatement/);
+  assert.match(deepClient, /deepUi\(locale\)/);
+  assert.match(deepClient, /deepAxis\(locale/);
+  assert.match(deepClient, /deepFamily\(locale/);
+  assert.match(deepClient, /deepConstruct\(locale/);
+});
+
+test('Full native copy follows informal French and Spanish address rules', () => {
+  assert.match(deepNative, /Ton profil politique reste mixte\./);
+  assert.match(deepNative, /Tu perfil político sigue siendo mixto\./);
+  assert.doesNotMatch(deepNative, /\b(?:vous|votre|vos)\b/i);
+  assert.doesNotMatch(deepNative, /\bustedes?\b/i);
+});
+
+test('Full German interface uses direct informal address in user-facing copy', () => {
+  assert.match(deepNative, /Mach Politangle Quick, bevor du mit Full weitermachst\./);
+  assert.match(deepNative, /Dein politisches Profil bleibt gemischt\./);
+  assert.match(deepNative, /deinem Profil/);
 });
