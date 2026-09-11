@@ -6,6 +6,8 @@ import { join } from 'node:path';
 const root = process.cwd();
 const homepage = readFileSync(join(root, 'app/page.tsx'), 'utf8');
 const translations = readFileSync(join(root, 'app/translations.ts'), 'utf8');
+const layout = readFileSync(join(root, 'app/layout.tsx'), 'utf8');
+const localeProvider = readFileSync(join(root, 'app/LocaleProvider.tsx'), 'utf8');
 
 test('homepage uses the locked eight-axis names instead of the former four-axis shorthand', () => {
   for (const axis of ['Economic role', 'Ownership', 'Social values', 'Authority', 'Pluralism', 'World', 'Nationhood', 'Ecology']) {
@@ -30,4 +32,10 @@ test('Spanish marketing localization stays on informal tú copy and avoids usted
   assert.match(translations, /Tus ideas políticas no caben en un eje izquierda-derecha\./);
   assert.match(translations, /te resulte más natural pensar/);
   assert.doesNotMatch(translations, /\bustedes?\b/i);
+});
+
+test('English locale is explicitly US English in document and selector', () => {
+  assert.match(layout, /<html lang="en-US"/);
+  assert.match(localeProvider, /en: 'English \(US\)'/);
+  assert.match(localeProvider, /'EN-US'/);
 });
