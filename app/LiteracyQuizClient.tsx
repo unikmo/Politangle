@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
-import { literacyQuestions as deepLiteracyQuestions } from '../lib/literacy-questions';
 import { calculateDeepLiteracyResult, scoreLiteracyItem, type DeepSection, type LiteracyQuestion } from '../lib/deep-engine';
 import {
   answerLiteracy,
@@ -105,14 +104,16 @@ export default function LiteracyQuizClient({ section, feedbackMode = 'end' }: { 
   const [showResult, setShowResult] = useState(false);
   const [shared, setShared] = useState(false);
 
-  const questionBank = feedbackMode === 'end' ? publicLiteracyQuestions : deepLiteracyQuestions;
+  // The interaction changes in School mode, not the language quality. Both modes
+  // use the same plain-language, evidence-bound question bank.
+  const questionBank = publicLiteracyQuestions;
   const sessionKey = feedbackMode === 'end' ? PUBLIC_LITERACY_SESSION_KEY : LITERACY_SESSION_KEY;
 
   useEffect(() => {
     const restored = parseLiteracySession(sessionStorage.getItem(sessionKey));
     let initial = restored ?? createLiteracySession(newSeed());
     const rawOrder = literacyOrder(initial, section);
-    const displayOrder = feedbackMode === 'end' && section === 'classify'
+    const displayOrder = section === 'classify'
       ? deClusterLiteracyOrder(rawOrder, publicLiteracyQuestions)
       : rawOrder;
     const progress = literacyPhaseProgress(initial, section);
@@ -131,10 +132,10 @@ export default function LiteracyQuizClient({ section, feedbackMode = 'end' }: { 
   const displayOrder = useMemo(() => {
     if (!session) return [];
     const raw = literacyOrder(session, section);
-    return feedbackMode === 'end' && section === 'classify'
+    return section === 'classify'
       ? deClusterLiteracyOrder(raw, questionBank)
       : raw;
-  }, [session, section, feedbackMode, questionBank]);
+  }, [session, section, questionBank]);
 
   const current = useMemo(() => {
     if (!session || showResult) return null;
@@ -169,7 +170,7 @@ export default function LiteracyQuizClient({ section, feedbackMode = 'end' }: { 
 
   function localizedPrompt(question: LiteracyQuestion) {
     if (!isGerman) return question.prompt;
-    if (feedbackMode === 'end' && question.section === 'classify') {
+    if (question.section === 'classify') {
       return publicGermanLiteracyPrompt(question.id) ?? germanLiteracyPrompt(question.id) ?? question.prompt;
     }
     return germanLiteracyPrompt(question.id) ?? question.prompt;
@@ -177,7 +178,7 @@ export default function LiteracyQuizClient({ section, feedbackMode = 'end' }: { 
 
   function localizedExplanation(question: LiteracyQuestion) {
     if (!isGerman) return question.explanation;
-    if (feedbackMode === 'end' && question.section === 'classify') {
+    if (question.section === 'classify') {
       return publicGermanLiteracyExplanation(question.id) ?? germanLiteracyExplanation(question.id, question.explanation);
     }
     return germanLiteracyExplanation(question.id, question.explanation);
