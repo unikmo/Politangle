@@ -140,7 +140,7 @@ export function applySchoolResponse(record: SchoolClassRecord, response: Classro
     if (!(option in next.optionCounts)) throw new Error('Unknown response option');
     next.optionCounts[option] += 1;
   }
-  const correct = classroomResponseIsCorrect(response.questionId, response.answer);
+  const correct = classroomResponseIsCorrect(response.questionId, response.answer, record.activity.ageBand);
   if (correct === true) next.correct += 1;
   return { ...record, questions: { ...record.questions, [response.questionId]: next } };
 }
