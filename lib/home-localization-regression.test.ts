@@ -11,6 +11,8 @@ const localeProvider = readFileSync(join(root, 'app/LocaleProvider.tsx'), 'utf8'
 const deepClient = readFileSync(join(root, 'app/deep/DeepClient.tsx'), 'utf8');
 const deepNative = readFileSync(join(root, 'app/deep/deep-native.ts'), 'utf8');
 const schoolPage = readFileSync(join(root, 'app/school/page.tsx'), 'utf8');
+const infoShell = readFileSync(join(root, 'app/InfoShell.tsx'), 'utf8');
+const localizedInfo = readFileSync(join(root, 'app/LocalizedInfoPage.tsx'), 'utf8');
 
 test('homepage uses the locked eight-axis names instead of the former four-axis shorthand', () => {
   for (const axis of ['Economic role', 'Ownership', 'Social values', 'Authority', 'Pluralism', 'World', 'Nationhood', 'Ecology']) {
@@ -76,4 +78,23 @@ test('School uses the locked 42-question total and native privacy copy', () => {
   assert.match(schoolPage, /Die Lehrkraft sieht das Gesamtbild der Klasse, aber nie, wer welche Antwort gegeben hat/);
   assert.match(schoolPage, /el profesor ve el conjunto de la clase, nunca quién dio cada respuesta/);
   assert.match(schoolPage, /l’enseignant voit l’ensemble du groupe, jamais qui a donné quelle réponse/);
+});
+
+test('trust and information pages are native multilingual pages, not English fallbacks', () => {
+  assert.doesNotMatch(infoShell, /page.*only.*English|page.*in English|nur auf Englisch|sigue en inglés|encore en anglais/i);
+  assert.match(localizedInfo, /Mehrere Achsen statt einer politischen Schublade\./);
+  assert.match(localizedInfo, /Un mapa de matices, no una etiqueta\./);
+  assert.match(localizedInfo, /Plusieurs axes pour garder les nuances\./);
+  assert.match(localizedInfo, /Quick 26 te da una primera lectura/);
+  assert.match(localizedInfo, /Quick 26 donne une première lecture/);
+});
+
+test('native trust copy keeps informal address and the locked 42-question total', () => {
+  assert.doesNotMatch(localizedInfo, /\b(?:Sie|Ihnen|Ihre|Ihrem|Ihren|Ihrer)\b/);
+  assert.doesNotMatch(localizedInfo, /\b(?:vous|votre|vos)\b/i);
+  assert.doesNotMatch(localizedInfo, /\bustedes?\b/i);
+  assert.doesNotMatch(localizedInfo, /Full 84/);
+  assert.match(localizedInfo, /42 Fragen insgesamt/);
+  assert.match(localizedInfo, /42 preguntas en total/);
+  assert.match(localizedInfo, /42 questions au total/);
 });
