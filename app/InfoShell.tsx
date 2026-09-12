@@ -12,7 +12,6 @@ type ShellCopy = {
   imprint: string;
   terms: string;
   contact: string;
-  languageNote?: string;
 };
 
 const shellCopy: Record<Locale, ShellCopy> = {
@@ -23,17 +22,14 @@ const shellCopy: Record<Locale, ShellCopy> = {
   de: {
     method: 'Methode', validation: 'Validierung', schools: 'Schulen', start: 'Quick starten',
     privacy: 'Datenschutz', imprint: 'Impressum', terms: 'Nutzungsbedingungen', contact: 'Kontakt',
-    languageNote: 'Diese Infoseite gibt es derzeit nur auf Englisch. Quick und Full bleiben auf Deutsch verfügbar.',
   },
   es: {
     method: 'Método', validation: 'Validación', schools: 'Centros educativos', start: 'Empezar Quick',
     privacy: 'Privacidad', imprint: 'Aviso legal', terms: 'Condiciones', contact: 'Contacto',
-    languageNote: 'Esta página informativa sigue en inglés. Quick y Full siguen disponibles en español.',
   },
   fr: {
     method: 'Méthode', validation: 'Validation', schools: 'Établissements', start: 'Lancer Quick',
     privacy: 'Vie privée', imprint: 'Mentions légales', terms: 'Conditions', contact: 'Contact',
-    languageNote: 'Cette page d’information est encore en anglais. Quick et Full restent disponibles en français.',
   },
 };
 
@@ -43,7 +39,6 @@ export function InfoShell({ eyebrow, title, intro, children }: { eyebrow: string
 
   return <main className="info-page">
     <header className="info-nav"><Link href="/" className="info-brand">Politangle<small>politangle.org</small></Link><nav><Link href="/method">{copy.method}</Link><Link href="/validation">{copy.validation}</Link><Link href="/school">{copy.schools}</Link></nav><LanguageSelector/><Link className="info-cta" href="/quiz">{copy.start} →</Link></header>
-    {copy.languageNote && <div className="info-language-note"><div className="info-shell">{copy.languageNote}</div></div>}
     <section className="info-hero"><div className="info-shell"><p>{eyebrow}</p><h1>{title}</h1><div>{intro}</div></div></section>
     <section className="info-shell info-content">{children}</section>
     <footer className="info-footer info-shell"><Link href="/">Politangle</Link><div><Link href="/privacy">{copy.privacy}</Link><Link href="/imprint">{copy.imprint}</Link><Link href="/terms">{copy.terms}</Link><Link href="/contact">{copy.contact}</Link></div><small>© 2026 Politangle</small></footer>
