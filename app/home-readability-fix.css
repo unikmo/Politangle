@@ -215,15 +215,16 @@ html[lang="fr"] .home .p-shape-label{font-size:7px}
 /* Closing CTA: copy and art are intentionally separate; nothing essential sits on the image. */
 .home .p-final{
   display:grid;
-  grid-template-columns:minmax(0,1.06fr) minmax(360px,.94fr);
+  grid-template-columns:minmax(0,1fr) minmax(360px,.92fr);
   column-gap:60px;
   min-height:344px;
   margin:0 auto 54px;
   padding:54px 54px;
   isolation:isolate;
   border:1px solid #e1d7cf;
-  background:#f3eee7;
+  background:linear-gradient(90deg,#f3eee7 0%,#f3eee7 49%,#f7f0e7 67%,#fbf5ea 100%);
   color:var(--ink);
+  text-align:left;
 }
 .home .p-final::before{
   content:"";
@@ -232,17 +233,13 @@ html[lang="fr"] .home .p-shape-label{font-size:7px}
   top:0;
   right:0;
   bottom:0;
-  width:44%;
+  width:58%;
   background:url('/images/curiosity-mountains.webp') center 58%/cover no-repeat;
+  -webkit-mask-image:linear-gradient(to right,transparent 0%,rgba(0,0,0,.24) 15%,#000 38%);
+  mask-image:linear-gradient(to right,transparent 0%,rgba(0,0,0,.24) 15%,#000 38%);
 }
 .home .p-final::after{
-  content:"";
-  position:absolute;
-  z-index:1;
-  top:36px;
-  bottom:36px;
-  left:56%;
-  border-left:1px solid rgba(121,99,86,.18);
+  content:none;
 }
 .home .p-final>div:first-child{
   position:relative;
@@ -349,14 +346,11 @@ html[lang="fr"] .home .p-shape-label{font-size:7px}
     width:100%;
     height:226px;
     background:url('/images/curiosity-mountains.webp') center 58%/cover no-repeat;
+    -webkit-mask-image:linear-gradient(to bottom,transparent 0%,rgba(0,0,0,.32) 14%,#000 34%);
+    mask-image:linear-gradient(to bottom,transparent 0%,rgba(0,0,0,.32) 14%,#000 34%);
   }
   .home .p-final::after{
-    top:auto;
-    right:28px;
-    bottom:226px;
-    left:28px;
-    border-left:0;
-    border-top:1px solid rgba(121,99,86,.18);
+    content:none;
   }
   .home .p-final h2{font-size:40px}
   .home .p-final>aside{display:block;max-width:310px;margin-top:30px}
