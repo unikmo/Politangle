@@ -13,6 +13,9 @@ const deepNative = readFileSync(join(root, 'app/deep/deep-native.ts'), 'utf8');
 const schoolPage = readFileSync(join(root, 'app/school/page.tsx'), 'utf8');
 const infoShell = readFileSync(join(root, 'app/InfoShell.tsx'), 'utf8');
 const localizedInfo = readFileSync(join(root, 'app/LocalizedInfoPage.tsx'), 'utf8');
+const privateStudent = readFileSync(join(root, 'app/school/private/page.tsx'), 'utf8');
+const classroomStudent = readFileSync(join(root, 'app/school/student/student-native.ts'), 'utf8');
+const privateLiteracy = readFileSync(join(root, 'app/school/private/literacy/PrivateLiteracyClient.tsx'), 'utf8');
 
 test('homepage uses the locked eight-axis names instead of the former four-axis shorthand', () => {
   for (const axis of ['Economic role', 'Ownership', 'Social values', 'Authority', 'Pluralism', 'World', 'Nationhood', 'Ecology']) {
@@ -97,4 +100,31 @@ test('native trust copy keeps informal address and the locked 42-question total'
   assert.match(localizedInfo, /42 Fragen insgesamt/);
   assert.match(localizedInfo, /42 preguntas en total/);
   assert.match(localizedInfo, /42 questions au total/);
+});
+
+test('Private Student Mode uses native informal copy instead of formal German', () => {
+  assert.match(privateStudent, /Dein Gerät · dein Ergebnis/);
+  assert.match(privateStudent, /Tu dispositivo · tu resultado/);
+  assert.match(privateStudent, /Ton appareil · ton résultat/);
+  assert.doesNotMatch(privateStudent, /\b(?:Sie|Ihnen|Ihre|Ihrem|Ihren|Ihrer)\b/);
+  assert.doesNotMatch(privateStudent, /\b(?:vous|votre|vos)\b/i);
+  assert.doesNotMatch(privateStudent, /\bustedes?\b/i);
+  assert.doesNotMatch(privateStudent, /Full 84/);
+});
+
+test('anonymous classroom student UI stays native and informal in DE ES FR', () => {
+  assert.match(classroomStudent, /Du brauchst weder Namen noch E-Mail-Adresse/);
+  assert.match(classroomStudent, /No necesitas nombre, correo, usuario ni número de estudiante/);
+  assert.match(classroomStudent, /Aucun nom, e-mail, identifiant ou numéro d’élève n’est demandé/);
+  assert.doesNotMatch(classroomStudent, /\b(?:Sie|Ihnen|Ihre|Ihrem|Ihren|Ihrer)\b/);
+  assert.doesNotMatch(classroomStudent, /\b(?:vous|votre|vos)\b/i);
+  assert.doesNotMatch(classroomStudent, /\bustedes?\b/i);
+});
+
+test('private literacy UI is native while unvalidated ES FR question banks remain explicitly marked', () => {
+  assert.match(privateLiteracy, /Dein privates Wissens-Ergebnis/);
+  assert.match(privateLiteracy, /Tu resultado privado de conocimientos/);
+  assert.match(privateLiteracy, /Ton résultat privé de culture politique/);
+  assert.match(privateLiteracy, /preguntas siguen en inglés mientras se valida/);
+  assert.match(privateLiteracy, /questions restent en anglais pendant la validation/);
 });
