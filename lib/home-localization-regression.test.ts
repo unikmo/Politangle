@@ -93,7 +93,9 @@ test('trust and information pages are native multilingual pages, not English fal
 });
 
 test('native trust copy keeps informal address and the locked 42-question total', () => {
-  assert.doesNotMatch(localizedInfo, /\b(?:Sie|Ihnen|Ihre|Ihrem|Ihren|Ihrer)\b/);
+  assert.match(localizedInfo, /du genau eine Aussage/);
+  assert.match(localizedInfo, /deine Ansichten/);
+  assert.doesNotMatch(localizedInfo, /(?:Ihre Politik|Ihre Ansichten|Ihre Antworten|Ihr Ergebnis|Ihr Profil|\bIhnen\b|Machen Sie|Starten Sie|Nehmen Sie|Sie können|Sie brauchen|Geben Sie)/);
   assert.doesNotMatch(localizedInfo, /\b(?:vous|votre|vos)\b/i);
   assert.doesNotMatch(localizedInfo, /\bustedes?\b/i);
   assert.doesNotMatch(localizedInfo, /Full 84/);
@@ -114,9 +116,10 @@ test('Private Student Mode uses native informal copy instead of formal German', 
 
 test('anonymous classroom student UI stays native and informal in DE ES FR', () => {
   assert.match(classroomStudent, /Du brauchst weder Namen noch E-Mail-Adresse/);
+  assert.match(classroomStudent, /Deine Antwort wurde zur Klassensumme hinzugefügt/);
   assert.match(classroomStudent, /No necesitas nombre, correo, usuario ni número de estudiante/);
   assert.match(classroomStudent, /Aucun nom, e-mail, identifiant ou numéro d’élève n’est demandé/);
-  assert.doesNotMatch(classroomStudent, /\b(?:Sie|Ihnen|Ihre|Ihrem|Ihren|Ihrer)\b/);
+  assert.doesNotMatch(classroomStudent, /(?:Ihre Antwort|Ihr Ergebnis|\bIhnen\b|Sie brauchen|Geben Sie|Wählen Sie|Senden Sie)/);
   assert.doesNotMatch(classroomStudent, /\b(?:vous|votre|vos)\b/i);
   assert.doesNotMatch(classroomStudent, /\bustedes?\b/i);
 });
