@@ -6,7 +6,7 @@ export function studentUi(locale: Locale) {
     codeAria:'Klassencode', join:'Anonym beitreten', joining:'Anonymer Beitritt läuft…', badCode:'Gib den sechsstelligen Klassencode ein.', notFound:'Klasse nicht gefunden oder nicht verfügbar.', closed:'Diese Klasse ist geschlossen.', joinFailed:'Der Beitritt hat nicht funktioniert.', joined:'Du bist anonym beigetreten. Die Lehrkraft sieht nur Summen und Verteilungen der Klasse, nicht deine einzelne Antwort.',
     privacyDisclaimer:'Klassenantworten fließen nur in aggregierte Statistiken ein. Das System ist so gebaut, dass keine Zuordnung von Teilnehmer zu Antwort gespeichert wird. Ein echter Schuleinsatz mit Minderjährigen braucht weiterhin qualifizierte Rechts- und Datenschutzprüfung.',
     loading:'Klasse wird geladen…', joinedCount:(n:number)=>`${n} dabei`, classLabel:(code:string)=>`Klasse ${code}`,
-    responseFailed:'Antwort konnte nicht gesendet werden.', received:'Antwort angekommen. Sie wurde zur Klassensumme hinzugefügt, ohne eine Zuordnung zwischen dir und deiner Antwort zu speichern.',
+    responseFailed:'Antwort konnte nicht gesendet werden.', received:'Antwort angekommen. Deine Antwort wurde zur Klassensumme hinzugefügt, ohne eine Zuordnung zwischen dir und der Antwort zu speichern.',
     sessionEnded:'Sitzung beendet', closedTitle:'Diese Klasse ist geschlossen.', closedText:'Deine persönlichen Politangle-Aktivitäten bleiben im privaten Schülerbereich verfügbar.',
     complete:'Aktivität abgeschlossen', completeTitle:(n:number)=>`Alle ${n} Antworten sind abgegeben.`, completeText:'Die Lehrkraft erhält die Verteilung der Klasse, keinen Einzelbericht über dich.',
     liveQuestion:(n:number)=>`Live-Frage ${n}`, questionOf:(n:number,total:number)=>`Frage ${n} von ${total}`,
