@@ -1,14 +1,10 @@
-import Link from 'next/link';
+import AssessmentHeader from '../AssessmentHeader';
 import ResultsClient from './ResultsClient';
-import { LanguageSelector } from '../LocaleProvider';
 
 export default function ResultsPage() {
   return (
     <main className="engine-page">
-      <header className="engine-header">
-        <Link href="/" className="engine-brand">Politangle</Link>
-        <span>Quick result</span><LanguageSelector />
-      </header>
+      <AssessmentHeader kind="quick-result" />
       <ResultsClient />
     </main>
   );

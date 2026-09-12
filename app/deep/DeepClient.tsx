@@ -20,11 +20,25 @@ import {
 } from '../../lib/belief-v2-session';
 import { collapseStatementAnswers } from '../../lib/belief-statements';
 import { assessNuancesV2 } from '../../lib/nuance-model';
-import { describePolitangleHome, familyMeaningText } from '../../lib/politangle-home';
+import { describePolitangleHome } from '../../lib/politangle-home';
 import { agreementAnswerOptions, type AnswerValue } from '../../lib/questions';
 import { germanBeliefStatement } from '../../lib/german-believe';
 import { romanceBeliefStatement } from '../../lib/romance-believe';
-import { useLocale } from '../LocaleProvider';
+import { useLocale, type Locale } from '../LocaleProvider';
+import {
+  deepAxis,
+  deepAxisSentence,
+  deepCoherence,
+  deepConstruct,
+  deepDirection,
+  deepFamily,
+  deepGap,
+  deepHome,
+  deepModeDirection,
+  deepNuance,
+  deepTendency,
+  deepUi,
+} from './deep-native';
 
 const BELIEF_SESSION_KEY = 'politangle.believe.v2.session';
 const FULL_RESULT_KEY = 'politangle.full.result.v3';
@@ -40,80 +54,6 @@ type FullOutput = {
   coherence: ReturnType<typeof assessResponseConsistencyV2>;
 };
 
-function coherenceBand(score: number | null) {
-  if (score === null) return 'Not enough information';
-  if (score >= 80) return 'Highly coherent';
-  if (score >= 65) return 'Mostly coherent';
-  if (score >= 45) return 'Context-sensitive';
-  return 'Strongly mixed';
-}
-
-function directionLabel(score: number | null, low: string, high: string) {
-  if (score === null) return 'Not enough information';
-  if (score <= 24) return `Strongly toward ${low.toLowerCase()}`;
-  if (score <= 39) return `Leans toward ${low.toLowerCase()}`;
-  if (score <= 60) return 'Mixed / balanced';
-  if (score <= 74) return `Leans toward ${high.toLowerCase()}`;
-  return `Strongly toward ${high.toLowerCase()}`;
-}
-
-function modeDirection(score: number | null, low: string, high: string) {
-  if (score === null) return 'Not enough information';
-  if (score <= 24) return `Strongly ${low.toLowerCase()}`;
-  if (score <= 39) return `Leans ${low.toLowerCase()}`;
-  if (score <= 60) return 'Between both poles';
-  if (score <= 74) return `Leans ${high.toLowerCase()}`;
-  return `Strongly ${high.toLowerCase()}`;
-}
-
-function axisSentence(score: number | null, low: string, high: string) {
-  if (score === null) return 'This part of your profile needs more information.';
-  if (score <= 24) return `${low} is one of the strongest features of your political profile.`;
-  if (score <= 39) return `You lean toward ${low.toLowerCase()} while retaining some balance.`;
-  if (score <= 60) return `You are comparatively balanced between ${low.toLowerCase()} and ${high.toLowerCase()}.`;
-  if (score <= 74) return `You lean toward ${high.toLowerCase()} while retaining some balance.`;
-  return `${high} is one of the strongest features of your political profile.`;
-}
-
-function explainGap(think: number | null, feel: number | null, act: number | null) {
-  const entries: { key: 'THINK' | 'FEEL' | 'ACT'; value: number }[] = [];
-  if (think !== null) entries.push({ key: 'THINK', value: think });
-  if (feel !== null) entries.push({ key: 'FEEL', value: feel });
-  if (act !== null) entries.push({ key: 'ACT', value: act });
-  if (entries.length < 2) return 'There are not enough comparable answers to interpret this difference.';
-  if (entries.length === 2) return 'The available modes point in different directions, so this topic is more context-dependent than your overall score alone suggests.';
-
-  const pairs = [
-    { keys: ['THINK', 'FEEL'] as const, distance: Math.abs(think! - feel!) },
-    { keys: ['THINK', 'ACT'] as const, distance: Math.abs(think! - act!) },
-    { keys: ['FEEL', 'ACT'] as const, distance: Math.abs(feel! - act!) },
-  ].sort((a, b) => a.distance - b.distance);
-  const closest = pairs[0];
-  const outsider = entries.find((entry) => !closest.keys.includes(entry.key as never));
-
-  if (closest.distance <= 30 && outsider) {
-    if (outsider.key === 'THINK') return 'Your stated principle is the outlier while instinct and practical choice are closer. The general rule you endorse may shift when the issue is felt or applied concretely.';
-    if (outsider.key === 'FEEL') return 'Your instinctive reaction is the outlier while principle and practical choice are closer. The issue may create an emotional pull that you do not fully carry into your rule or action.';
-    return 'Your practical choice is the outlier while principle and instinct are closer. Consequences, feasibility or trade-offs may change what you would actually do.';
-  }
-
-  return 'No single mode explains the gap: THINK, FEEL and ACT are spread across the scale. Treat this as a genuinely context-dependent position rather than a simple contradiction.';
-}
-
-function tendencyReading(id: string, score: number | null) {
-  if (id === 'populism') {
-    if (score === null) return { title: 'Political influence & representation', explanation: 'Not enough information for a stable reading.' };
-    if (score >= 70) return { title: 'Political influence & representation', explanation: 'You often suspect that well-connected groups are heard more than ordinary voters. That is a populist-style signal about representation, not a political-family label.' };
-    if (score <= 30) return { title: 'Political influence & representation', explanation: 'You tend to see political conflict as competition among legitimate interests and values rather than mainly as ordinary voters versus powerful groups.' };
-    return { title: 'Political influence & representation', explanation: 'You combine some suspicion of unequal political influence with a belief that genuine conflicts among interests and values also matter.' };
-  }
-
-  if (score === null) return { title: 'Elected power & democratic checks', explanation: 'Not enough information for a stable reading.' };
-  if (score >= 70) return { title: 'Elected power & democratic checks', explanation: 'You are relatively willing to give elected authorities more room to act, even when that can reduce some institutional checks or procedural safeguards.' };
-  if (score <= 30) return { title: 'Elected power & democratic checks', explanation: 'You strongly prioritize legal safeguards, institutional checks and limits on concentrated government power, even when they slow action.' };
-  return { title: 'Elected power & democratic checks', explanation: 'You balance effective elected authority with courts, opposition rights and procedural safeguards rather than consistently favoring one side.' };
-}
-
 function referencePeople(familyId: string) {
   const groups: Record<string, readonly string[]> = {
     'social-democracy': ['Willy Brandt', 'Olof Palme', 'Clement Attlee'],
@@ -125,7 +65,18 @@ function referencePeople(familyId: string) {
   return groups[familyId] ?? [];
 }
 
-function PoliticalShape({ axes }: { axes: ReturnType<typeof calculatePolygonV2Canonical> }) {
+function answerAria(locale: Locale, value: AnswerValue) {
+  if (value === 'unsure') return locale === 'de' ? 'Unsicher' : locale === 'es' ? 'No estoy seguro' : locale === 'fr' ? 'Je ne sais pas' : 'Not sure';
+  const map: Record<Locale, Record<string, string>> = {
+    en: { '-2':'Strongly disagree', '-1':'Disagree', '0':'Neither / depends', '1':'Agree', '2':'Strongly agree' },
+    de: { '-2':'Stimme gar nicht zu', '-1':'Stimme eher nicht zu', '0':'Teils teils / kommt darauf an', '1':'Stimme eher zu', '2':'Stimme völlig zu' },
+    es: { '-2':'Totalmente en desacuerdo', '-1':'Más bien en desacuerdo', '0':'Neutral / depende', '1':'Más bien de acuerdo', '2':'Totalmente de acuerdo' },
+    fr: { '-2':'Pas du tout d’accord', '-1':'Plutôt pas d’accord', '0':'Neutre / cela dépend', '1':'Plutôt d’accord', '2':'Tout à fait d’accord' },
+  };
+  return map[locale][String(value)];
+}
+
+function PoliticalShape({ axes, locale }: { axes: ReturnType<typeof calculatePolygonV2Canonical>; locale: Locale }) {
   const size = 500;
   const center = size / 2;
   const radius = 162;
@@ -138,12 +89,15 @@ function PoliticalShape({ axes }: { axes: ReturnType<typeof calculatePolygonV2Ca
   };
   const polygon = known.map((value, index) => point(index, value)).map(([x, y]) => `${x},${y}`).join(' ');
   const rings = [25, 50, 75, 100].map((level) => axes.map((_, index) => point(index, level)).map(([x, y]) => `${x},${y}`).join(' '));
+  const shapeAria = locale === 'de' ? 'Dein vollständiges politisches Profil mit acht Achsen' : locale === 'es' ? 'Tu perfil político completo de ocho ejes' : locale === 'fr' ? 'Ton profil politique complet à huit axes' : 'Your completed eight-axis political shape';
+  const ui = deepUi(locale);
 
   return (
     <div className="shape-wrap compact-shape">
-      <svg className="political-shape" viewBox={`0 0 ${size} ${size}`} role="img" aria-label="Your completed eight-axis political shape">
+      <svg className="political-shape" viewBox={`0 0 ${size} ${size}`} role="img" aria-label={shapeAria}>
         {rings.map((ring, index) => <polygon key={index} className="shape-ring" points={ring} />)}
         {axes.map((axis, index) => {
+          const display = deepAxis(locale, axis);
           const angle = -Math.PI / 2 + (index * Math.PI * 2) / axes.length;
           const [x, y] = point(index, 100);
           const lx = center + Math.cos(angle) * labelRadius;
@@ -152,7 +106,7 @@ function PoliticalShape({ axes }: { axes: ReturnType<typeof calculatePolygonV2Ca
             <g key={axis.id}>
               <line className="shape-spoke" x1={center} y1={center} x2={x} y2={y} />
               <text className="shape-label" x={lx} y={ly} textAnchor={lx < center - 12 ? 'end' : lx > center + 12 ? 'start' : 'middle'} dominantBaseline="middle">
-                <tspan x={lx} dy="-0.25em">{axis.name}</tspan>
+                <tspan x={lx} dy="-0.25em">{display.name}</tspan>
                 <tspan className="shape-axis-score" x={lx} dy="1.35em">{axis.score ?? '—'}</tspan>
               </text>
             </g>
@@ -164,7 +118,7 @@ function PoliticalShape({ axes }: { axes: ReturnType<typeof calculatePolygonV2Ca
           return <circle key={axes[index].id} className="shape-dot" cx={x} cy={y} r="5" />;
         })}
       </svg>
-      <p className="shape-scale-note">Each spoke is one political dimension. Your political home comes from the overall pattern—not simply from whichever spoke happens to be longest.</p>
+      <p className="shape-scale-note">{ui.shapeNote}</p>
     </div>
   );
 }
@@ -190,6 +144,7 @@ function buildOutput(belief: BeliefV2Session): FullOutput {
 
 export default function DeepClient() {
   const { locale } = useLocale();
+  const ui = deepUi(locale);
   const [beliefSession, setBeliefSession] = useState<BeliefV2Session | null | undefined>(undefined);
   const [index, setIndex] = useState(0);
   const [output, setOutput] = useState<FullOutput | null>(null);
@@ -213,16 +168,16 @@ export default function DeepClient() {
   }, [beliefSession, output, index]);
 
   if (beliefSession === undefined) {
-    return <section className="engine-shell"><article className="engine-card"><p>Loading Full…</p></article></section>;
+    return <section className="engine-shell"><article className="engine-card"><p>{ui.loading}</p></article></section>;
   }
 
   if (!beliefSession || !beliefV2StageProgress(beliefSession, 'quick').complete) {
     return (
       <section className="engine-shell">
         <article className="engine-card">
-          <p className="engine-kicker">Quick comes first</p>
-          <h1>Complete Politangle Quick before Full.</h1>
-          <Link className="engine-primary-link" href="/quiz">Start Quick</Link>
+          <p className="engine-kicker">{ui.quickFirst}</p>
+          <h1>{ui.quickFirstTitle}</h1>
+          <Link className="engine-primary-link" href="/quiz">{ui.startQuick}</Link>
         </article>
       </section>
     );
@@ -255,6 +210,7 @@ export default function DeepClient() {
 
   if (output) {
     const home = describePolitangleHome(output.families, output.polygon, true);
+    const localizedHome = deepHome(locale, home, true);
     const people = home.primary ? referencePeople(home.primary.id) : [];
     const topFamilies = [home.primary, home.secondary, home.tertiary].filter((family): family is NonNullable<typeof family> => Boolean(family && family.overall !== null));
     const gaps = output.thinkPolygon.map((axis, axisIndex) => {
@@ -269,97 +225,111 @@ export default function DeepClient() {
     return (
       <section className="engine-shell result-shell">
         <article className="engine-card politangle-home-card">
-          <p className="engine-kicker">Your Politangle · Full</p>
-          <h1>{home.headline}</h1>
-          <p className="result-lede">{home.summary}</p>
+          <p className="engine-kicker">{ui.fullLabel}</p>
+          <h1>{localizedHome.headline}</h1>
+          <p className="result-lede">{localizedHome.summary}</p>
 
-          <div className="politangle-family-story" aria-label="Your political home">
-            {topFamilies.map((family, familyIndex) => (
-              <p key={family.id}>
-                <strong>{familyIndex === 0 ? 'Main home' : familyIndex === 1 ? 'Significant leaning' : 'Additional influence'} · {family.name} · {family.overall}/100</strong>
-                <span>{familyMeaningText(family.id)}.</span>
-              </p>
-            ))}
+          <div className="politangle-family-story" aria-label={ui.homeAria}>
+            {topFamilies.map((family, familyIndex) => {
+              const display = deepFamily(locale, family.id, family.name);
+              const label = familyIndex === 0 ? ui.mainHome : familyIndex === 1 ? ui.secondary : ui.tertiary;
+              return (
+                <p key={family.id}>
+                  <strong>{label} · {display.name} · {family.overall}/100</strong>
+                  <span>{display.meaning}.</span>
+                </p>
+              );
+            })}
           </div>
 
-          {people.length > 0 && home.primary && (
-            <p className="home-reference"><strong>Historical reference points for {home.primary.name}:</strong> {people.join(' · ')}. They illustrate the tradition, not your exact personal profile.</p>
-          )}
+          {people.length > 0 && home.primary && (() => {
+            const display = deepFamily(locale, home.primary.id, home.primary.name);
+            return <p className="home-reference"><strong>{ui.historical} · {display.name}:</strong> {people.join(' · ')}. {ui.historicalNote}</p>;
+          })()}
 
-          <PoliticalShape axes={output.polygon} />
+          <PoliticalShape axes={output.polygon} locale={locale} />
         </article>
 
         <article className="engine-card result-story-card compact-result-card" style={{ marginTop: 18 }}>
-          <p className="engine-kicker">What defines your political home</p>
-          <h2>The strongest edges of your profile.</h2>
+          <p className="engine-kicker">{ui.defines}</p>
+          <h2>{ui.strongest}</h2>
           <div className="result-insight-grid">
-            {home.strongestAxes.map((axis) => (
-              <section key={axis.id} className="result-insight">
-                <strong>{axis.name}</strong>
-                <span>{axis.score} / 100</span>
-                <p>{axisSentence(axis.score, axis.low, axis.high)}</p>
-              </section>
-            ))}
+            {home.strongestAxes.map((axis) => {
+              const display = deepAxis(locale, axis);
+              return (
+                <section key={axis.id} className="result-insight">
+                  <strong>{display.name}</strong>
+                  <span>{axis.score} / 100</span>
+                  <p>{deepAxisSentence(locale, axis.score, display.low, display.high)}</p>
+                </section>
+              );
+            })}
           </div>
         </article>
 
         <article className="engine-card compact-result-card coherence-card" style={{ marginTop: 18 }}>
-          <p className="engine-kicker">Response coherence</p>
+          <p className="engine-kicker">{ui.coherence}</p>
           <div className="consistency-hero">
             <strong>{output.coherence.score ?? '—'}<small>/100</small></strong>
             <div>
-              <h2>{coherenceBand(output.coherence.score)}</h2>
-              <p>The score is only the summary. The useful part is seeing where your principle, instinct and practical choice move apart.</p>
+              <h2>{deepCoherence(locale, output.coherence.score)}</h2>
+              <p>{ui.coherenceIntro}</p>
             </div>
           </div>
-          <p className="engine-help">Coherence is not a knowledge, intelligence, honesty or conviction score. Differences can reflect genuine nuance, uncertainty or changing trade-offs.</p>
+          <p className="engine-help">{ui.coherenceHelp}</p>
 
           {meaningfulGaps.length > 0 ? (
             <div className="coherence-gap-list">
-              {meaningfulGaps.map((gap, gapIndex) => (
-                <section className="coherence-gap-card" key={gap.id}>
-                  <div className="coherence-gap-head">
-                    <strong>{gapIndex === 0 ? 'Biggest shift' : 'Another shift'} · {gap.name}</strong>
-                    <span>{gap.gap}-point spread</span>
-                  </div>
-                  <div className="coherence-mode-grid">
-                    <div><b>THINK</b><strong>{gap.think ?? '—'}</strong><span>{modeDirection(gap.think, gap.low, gap.high)}</span></div>
-                    <div><b>FEEL</b><strong>{gap.feel ?? '—'}</strong><span>{modeDirection(gap.feel, gap.low, gap.high)}</span></div>
-                    <div><b>ACT</b><strong>{gap.act ?? '—'}</strong><span>{modeDirection(gap.act, gap.low, gap.high)}</span></div>
-                  </div>
-                  <p><b>What may explain the gap:</b> {explainGap(gap.think, gap.feel, gap.act)}</p>
-                </section>
-              ))}
+              {meaningfulGaps.map((gap, gapIndex) => {
+                const display = deepAxis(locale, gap);
+                return (
+                  <section className="coherence-gap-card" key={gap.id}>
+                    <div className="coherence-gap-head">
+                      <strong>{gapIndex === 0 ? ui.biggestShift : ui.anotherShift} · {display.name}</strong>
+                      <span>{gap.gap}-{ui.spread}</span>
+                    </div>
+                    <div className="coherence-mode-grid">
+                      <div><b>THINK</b><strong>{gap.think ?? '—'}</strong><span>{deepModeDirection(locale, gap.think, display.low, display.high)}</span></div>
+                      <div><b>FEEL</b><strong>{gap.feel ?? '—'}</strong><span>{deepModeDirection(locale, gap.feel, display.low, display.high)}</span></div>
+                      <div><b>ACT</b><strong>{gap.act ?? '—'}</strong><span>{deepModeDirection(locale, gap.act, display.low, display.high)}</span></div>
+                    </div>
+                    <p><b>{ui.explain}</b> {deepGap(locale, gap.think, gap.feel, gap.act)}</p>
+                  </section>
+                );
+              })}
             </div>
           ) : (
             <div className="result-tension coherence-steady">
-              <strong>No large principle–instinct–choice shifts stand out.</strong>
-              <p>Your THINK, FEEL and ACT positions stay within 20 points of one another across the eight dimensions.</p>
+              <strong>{ui.noLarge}</strong>
+              <p>{ui.noLargeText}</p>
             </div>
           )}
         </article>
 
         <details className="engine-card result-details-card" style={{ marginTop: 18 }}>
-          <summary>See all eight political axes</summary>
+          <summary>{ui.allAxes}</summary>
           <div className="engine-results compact-axis-results">
-            {output.polygon.map((axis) => (
-              <section className="engine-dimension" key={axis.id}>
-                <div className="engine-dimension-head"><strong>{axis.name}</strong><span>{directionLabel(axis.score, axis.low, axis.high)}</span></div>
-                <div className="engine-poles"><span>{axis.low}</span><span>{axis.high}</span></div>
-                <div className="engine-score-track">{axis.score !== null && <span style={{ left: `${axis.score}%` }} />}</div>
-              </section>
-            ))}
+            {output.polygon.map((axis) => {
+              const display = deepAxis(locale, axis);
+              return (
+                <section className="engine-dimension" key={axis.id}>
+                  <div className="engine-dimension-head"><strong>{display.name}</strong><span>{deepDirection(locale, axis.score, display.low, display.high)}</span></div>
+                  <div className="engine-poles"><span>{display.low}</span><span>{display.high}</span></div>
+                  <div className="engine-score-track">{axis.score !== null && <span style={{ left: `${axis.score}%` }} />}</div>
+                </section>
+              );
+            })}
           </div>
         </details>
 
         {(output.tendencies.length > 0 || output.nuances.length > 0) && (
           <article className="engine-card compact-result-card political-style-card" style={{ marginTop: 18 }}>
-            <p className="engine-kicker">Power & political style</p>
-            <h2>Patterns that do not fit neatly into one axis.</h2>
-            <p className="result-lede">These patterns describe how you think about representation and political power. They add context to your main Politangle; they are not separate political homes.</p>
+            <p className="engine-kicker">{ui.powerStyle}</p>
+            <h2>{ui.powerStyleTitle}</h2>
+            <p className="result-lede">{ui.powerStyleLead}</p>
             <div className="tendency-grid">
               {output.tendencies.map((item) => {
-                const reading = tendencyReading(item.id, item.score);
+                const reading = deepTendency(locale, item.id, item.score);
                 return (
                   <section className="tendency-card" key={item.id}>
                     <div><strong>{reading.title}</strong><span>{item.score === null ? '—' : `${item.score}/100`}</span></div>
@@ -370,10 +340,11 @@ export default function DeepClient() {
             </div>
             {output.nuances.length > 0 && (
               <div className="nuance-readings">
-                <strong>Specific combinations in your answers</strong>
-                {output.nuances.map((nuance) => (
-                  <p key={nuance.id}><b>{nuance.name}.</b> {nuance.explanation}</p>
-                ))}
+                <strong>{ui.combinations}</strong>
+                {output.nuances.map((nuance) => {
+                  const reading = deepNuance(locale, nuance);
+                  return <p key={nuance.id}><b>{reading.name}.</b> {reading.explanation}{reading.caution ? ` ${reading.caution}` : ''}</p>;
+                })}
               </div>
             )}
           </article>
@@ -381,10 +352,10 @@ export default function DeepClient() {
 
         <div className="engine-result-actions">
           <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-            <button className="engine-primary-link" type="button" onClick={restartFull}>Retake Full</button>
-            <Link className="engine-primary-link" href="/results">Back to Quick result</Link>
+            <button className="engine-primary-link" type="button" onClick={restartFull}>{ui.retake}</button>
+            <Link className="engine-primary-link" href="/results">{ui.backQuick}</Link>
           </div>
-          <span>Your Full Politangle is complete. CLASSIFY and UNDERSTAND are available whenever you want to test political knowledge.</span>
+          <span>{ui.complete}</span>
         </div>
       </section>
     );
@@ -417,30 +388,39 @@ export default function DeepClient() {
 
   if (!currentBelief) return null;
 
+  const unsureStatus = fullProgress.unsure ? `${fullProgress.unsure} ${ui.marked}` : ui.noUnsure;
+  const progressAria = locale === 'de' ? `${fullProgress.percent}% abgeschlossen` : locale === 'es' ? `${fullProgress.percent}% completado` : locale === 'fr' ? `${fullProgress.percent}% terminé` : `${fullProgress.percent}% complete`;
+  const beliefAria = locale === 'de' ? 'Antwort auf die politische Aussage' : locale === 'es' ? 'Respuesta a la afirmación política' : locale === 'fr' ? 'Réponse à l’affirmation politique' : 'Belief response';
+
   return (
     <section className="engine-shell">
       <div className="engine-progress-row">
         <span>Full {fullProgress.answered} / {fullProgress.total}</span>
-        <div className="engine-progress" aria-label={`${fullProgress.percent}% complete`}><span style={{ width: `${fullProgress.percent}%` }} /></div>
-        <button type="button" className="engine-link-button" onClick={restartFull}>Restart Full</button>
+        <div className="engine-progress" aria-label={progressAria}><span style={{ width: `${fullProgress.percent}%` }} /></div>
+        <button type="button" className="engine-link-button" onClick={restartFull}>{ui.restart}</button>
       </div>
 
       <article className="engine-card">
-        <p className="engine-kicker">{currentBelief.mode.toUpperCase()} · {currentBelief.construct.replaceAll('-', ' ')}</p>
+        <p className="engine-kicker">{currentBelief.mode.toUpperCase()} · {deepConstruct(locale, currentBelief.construct)}</p>
         <div className="engine-statement"><p>{localizedStatement ?? currentBelief.statement}</p></div>
-        <p className="engine-help">{locale === 'de' ? 'Es gibt keine politisch richtige Antwort.' : locale === 'es' ? 'No hay una respuesta política correcta.' : locale === 'fr' ? 'Il n’y a pas de bonne réponse politique.' : 'There is no correct political answer.'}</p>
-        <div className="quick-scale" role="radiogroup" aria-label="Belief response">
+        <p className="engine-help">{ui.noCorrect}</p>
+        <div className="quick-scale" role="radiogroup" aria-label={beliefAria}>
           {agreementAnswerOptions.map((option) => (
-            <button type="button" role="radio" aria-checked={selected === option.value} aria-label={option.label} className={selected === option.value ? 'quick-scale-answer selected' : 'quick-scale-answer'} key={String(option.value)} onClick={() => chooseBelief(option.value)}>{option.value === 'unsure' ? '?' : option.value > 0 ? `+${option.value}` : String(option.value).replace('-', '−')}</button>
+            <button type="button" role="radio" aria-checked={selected === option.value} aria-label={answerAria(locale, option.value)} className={selected === option.value ? 'quick-scale-answer selected' : 'quick-scale-answer'} key={String(option.value)} onClick={() => chooseBelief(option.value)}>{option.value === 'unsure' ? '?' : option.value > 0 ? `+${option.value}` : String(option.value).replace('-', '−')}</button>
           ))}
         </div>
-        <div className="quick-scale-key"><span><b>−2</b> {locale === 'de' ? 'Nein, gar nicht' : locale === 'es' ? 'Totalmente en desacuerdo' : locale === 'fr' ? 'Pas du tout d’accord' : 'Strongly disagree'}</span><span><b>0</b> {locale === 'de' ? 'Teils teils / kommt darauf an' : locale === 'es' ? 'Neutral / depende' : locale === 'fr' ? 'Neutre / cela dépend' : 'Neither / depends'}</span><span><b>+2</b> {locale === 'de' ? 'Ja, völlig' : locale === 'es' ? 'Totalmente de acuerdo' : locale === 'fr' ? 'Tout à fait d’accord' : 'Strongly agree'}</span><span><b>?</b> {locale === 'de' ? 'Unsicher' : locale === 'es' ? 'No estoy seguro' : locale === 'fr' ? 'Je ne sais pas' : 'Not sure'}</span></div>
+        <div className="quick-scale-key">
+          <span><b>−2</b> {answerAria(locale, -2)}</span>
+          <span><b>0</b> {answerAria(locale, 0)}</span>
+          <span><b>+2</b> {answerAria(locale, 2)}</span>
+          <span><b>?</b> {answerAria(locale, 'unsure')}</span>
+        </div>
       </article>
 
       <div className="engine-nav">
-        <button type="button" onClick={() => setIndex((value) => Math.max(0, value - 1))} disabled={index === 0}>Previous</button>
-        <span>{fullProgress.unsure ? `${fullProgress.unsure} marked not sure` : 'No unsure responses so far'}</span>
-        <button type="button" onClick={advanceBelief} disabled={selected === undefined || (index === beliefSession.deepOrder.length - 1 && !fullProgress.complete)}>{index === beliefSession.deepOrder.length - 1 ? 'See Full result' : 'Next'}</button>
+        <button type="button" onClick={() => setIndex((value) => Math.max(0, value - 1))} disabled={index === 0}>{ui.previous}</button>
+        <span>{unsureStatus}</span>
+        <button type="button" onClick={advanceBelief} disabled={selected === undefined || (index === beliefSession.deepOrder.length - 1 && !fullProgress.complete)}>{index === beliefSession.deepOrder.length - 1 ? ui.result : ui.next}</button>
       </div>
     </section>
   );

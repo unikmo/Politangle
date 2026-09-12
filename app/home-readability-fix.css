@@ -1,0 +1,373 @@
+/* Final homepage refinement layer.
+   Goals: preserve the approved editorial mockup, keep essential copy off imagery,
+   give the canonical eight-axis result enough room, and simplify the lower page. */
+
+/* Direct language choice: compact, visible and usable on mobile. */
+.home .p-language-picker{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  height:36px;
+  padding:0 9px 0 10px;
+  border:1px solid #e2d8d0;
+  border-radius:10px;
+  background:#fff;
+  color:#76655d;
+}
+.home .p-language-picker>span{font-size:13px;line-height:1}
+.home .p-language-picker .lang{
+  display:block;
+  width:112px;
+  min-width:0;
+  padding:0 18px 0 0;
+  border:0;
+  outline:0;
+  background:transparent;
+  color:#5d4f48;
+  font-size:10px;
+  font-weight:750;
+  line-height:1;
+  cursor:pointer;
+}
+.home .p-language-picker:focus-within{
+  border-color:#d26a42;
+  box-shadow:0 0 0 3px rgba(244,90,31,.12);
+}
+
+/* Canonical eight-axis example: two calm columns instead of one tall stack. */
+.home .p-result-grid{
+  grid-template-columns:minmax(0,.78fr) minmax(560px,1.22fr);
+  gap:70px;
+}
+.home .p-dimension-card{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  column-gap:32px;
+  padding:30px 32px 26px;
+}
+.home .p-dimension-card .p-card-top,
+.home .p-dimension-card>p{grid-column:1/-1}
+.home .p-dimension{min-width:0;padding:13px 0}
+.home .p-dimension>div{min-width:0}
+.home .p-dimension strong{
+  min-width:0;
+  font-size:12px;
+  line-height:1.35;
+  overflow-wrap:anywhere;
+}
+.home .p-dimension small{
+  min-width:0;
+  padding-right:8px;
+  font-size:8.5px;
+  line-height:1.4;
+  overflow-wrap:anywhere;
+  hyphens:auto;
+}
+.home .p-dimension b{font-size:18px}
+.home .p-dimension>i{height:5px;margin-top:9px}
+.home .p-dimension-card>p{margin-top:19px}
+.home .p-shape-label{font-size:8px;letter-spacing:0}
+html[lang="de"] .home .p-shape-label,
+html[lang="es"] .home .p-shape-label,
+html[lang="fr"] .home .p-shape-label{font-size:7px}
+
+/* School section: editorial story first, age bands second, proof as a restrained rule row. */
+.home .p-schools{
+  grid-template-columns:minmax(0,1.28fr) minmax(300px,.72fr);
+  gap:56px 74px;
+  align-items:start;
+  padding-top:94px;
+  padding-bottom:88px;
+}
+.home .p-school-intro{grid-column:1;padding-right:0}
+.home .p-school-intro h2{max-width:760px;font-size:46px}
+.home .p-school-intro>p{max-width:660px;font-size:15px;line-height:1.75}
+.home .p-school-intro .p-button{margin-top:24px}
+.home .p-schools .p-age-bands{
+  grid-column:2;
+  grid-template-columns:1fr;
+  gap:0;
+  margin:4px 0 0;
+  padding:0;
+  border:0;
+  border-top:1px solid #ddd4cc;
+  border-bottom:1px solid #ddd4cc;
+}
+.home .p-schools .p-age-bands>span{
+  min-height:136px;
+  padding:24px 4px 22px;
+  justify-content:flex-start;
+  border:0;
+  border-bottom:1px solid #e4dbd4;
+  background:transparent;
+  font-size:32px;
+  letter-spacing:-.03em;
+}
+.home .p-schools .p-age-bands>span:last-child{border-bottom:0}
+.home .p-schools .p-age-bands b{font-size:9px;letter-spacing:.15em}
+.home .p-schools .p-age-bands small{
+  max-width:245px;
+  margin-top:auto;
+  color:#746860;
+  font-size:10px;
+  line-height:1.5;
+}
+.home .p-schools .p-school-proof{
+  grid-column:1/-1;
+  display:grid;
+  grid-template-columns:repeat(3,1fr) minmax(170px,.75fr);
+  gap:0;
+  align-items:center;
+  padding:24px 0 0;
+  border:0;
+  border-top:1px solid #ddd4cc;
+}
+.home .p-schools .p-school-proof>div{
+  min-height:54px;
+  padding:0 28px;
+  grid-template-columns:16px 1fr;
+  gap:12px;
+  border:0;
+  border-right:1px solid #e1d8d1;
+}
+.home .p-schools .p-school-proof>div:first-child{padding-left:0}
+.home .p-schools .p-school-proof span{
+  display:block;
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:var(--brand-orange);
+  color:transparent;
+  font-size:0;
+}
+.home .p-schools .p-school-proof strong{
+  color:#4d433d;
+  font-size:11px;
+  font-weight:600;
+  line-height:1.45;
+}
+.home .p-schools .p-school-proof>small{
+  max-width:205px;
+  margin:0;
+  padding-left:30px;
+  color:#7c7069;
+  font-size:8px;
+  line-height:1.55;
+}
+
+/* Languages: large imagery, no dashboard-card treatment. */
+.home .p-languages{
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:30px 58px;
+  align-items:start;
+  padding-top:86px;
+  padding-bottom:92px;
+}
+.home .p-languages>div:first-child{max-width:760px}
+.home .p-languages h2{max-width:690px;margin:0;font-size:41px}
+.home .p-languages>div>p{
+  max-width:670px;
+  margin-top:20px;
+  color:#6d615b;
+  font-size:14px;
+  line-height:1.75;
+}
+.home .p-languages>aside{
+  grid-column:2;
+  grid-row:1;
+  display:flex;
+  width:148px;
+  margin-top:8px;
+  flex-direction:column;
+}
+.home .p-languages>aside i{margin:0 0 14px}
+.home .p-language-list{
+  grid-column:1/-1;
+  grid-row:2;
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  margin-top:22px;
+  border-top:1px solid #ddd4cc;
+  border-bottom:1px solid #ddd4cc;
+}
+.home .p-language-list span{
+  min-width:0;
+  min-height:244px;
+  padding:20px 18px 17px;
+  border-right:1px solid #ddd4cc;
+  background:transparent;
+}
+.home .p-language-list span:first-child{border-left:0}
+.home .p-language-list span:last-child{border-right:0}
+.home .p-language-list img{
+  width:100%;
+  height:182px;
+  object-fit:contain;
+  mix-blend-mode:normal;
+}
+.home .p-language-list small{
+  margin-top:12px;
+  color:#433a35;
+  font-size:13px;
+  font-weight:650;
+}
+
+/* Closing CTA: copy and art are intentionally separate; nothing essential sits on the image. */
+.home .p-final{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(360px,.92fr);
+  column-gap:60px;
+  min-height:344px;
+  margin:0 auto 54px;
+  padding:54px 54px;
+  isolation:isolate;
+  border:1px solid #e1d7cf;
+  background:linear-gradient(90deg,#f3eee7 0%,#f3eee7 49%,#f7f0e7 67%,#fbf5ea 100%);
+  color:var(--ink);
+  text-align:left;
+}
+.home .p-final::before{
+  content:"";
+  position:absolute;
+  z-index:0;
+  top:0;
+  right:0;
+  bottom:0;
+  width:58%;
+  background:url('/images/curiosity-mountains.webp') center 58%/cover no-repeat;
+  -webkit-mask-image:linear-gradient(to right,transparent 0%,rgba(0,0,0,.24) 15%,#000 38%);
+  mask-image:linear-gradient(to right,transparent 0%,rgba(0,0,0,.24) 15%,#000 38%);
+}
+.home .p-final::after{
+  content:none;
+}
+.home .p-final>div:first-child{
+  position:relative;
+  z-index:2;
+  grid-column:1;
+  max-width:500px;
+  align-self:start;
+}
+.home .p-final h2{
+  max-width:490px;
+  margin:0 0 16px;
+  color:var(--ink);
+  font-size:clamp(38px,4vw,50px);
+  line-height:1.02;
+  letter-spacing:-.04em;
+}
+.home .p-final p{
+  max-width:435px;
+  margin:0;
+  color:#5f5651;
+  font-size:15px;
+  line-height:1.65;
+}
+.home .p-final .p-button{
+  margin-top:24px;
+  background:var(--brand-orange);
+  color:#fff;
+}
+.home .p-final>aside{
+  position:relative;
+  z-index:2;
+  top:auto;
+  right:auto;
+  grid-column:1;
+  width:auto;
+  max-width:370px;
+  margin-top:44px;
+  align-self:end;
+  color:#6c625c;
+}
+.home .p-final>aside i{
+  display:inline-block;
+  margin:0 14px 0 0;
+}
+
+/* Footer is full-bleed but aligned with the content grid. */
+.home .p-footer.p-shell{
+  width:100%;
+  min-height:128px;
+  padding:0 max(36px,calc(50vw - 590px));
+  border-top:1px solid #e7ded7;
+  background:#fff;
+}
+.home .p-footer>div{display:flex;flex-wrap:wrap;justify-content:center;gap:14px 24px}
+
+@media(max-width:1050px){
+  .home .p-result-grid{grid-template-columns:1fr;gap:48px}
+  .home .p-dimension-card{max-width:760px}
+  .home .p-schools{grid-template-columns:1fr;gap:38px}
+  .home .p-school-intro,.home .p-schools .p-age-bands,.home .p-schools .p-school-proof{grid-column:1}
+  .home .p-schools .p-age-bands{grid-template-columns:1fr 1fr;border-bottom:1px solid #ddd4cc}
+  .home .p-schools .p-age-bands>span{border-bottom:0;border-right:1px solid #e4dbd4;padding:22px}
+  .home .p-schools .p-age-bands>span:last-child{border-right:0}
+  .home .p-schools .p-school-proof{grid-template-columns:repeat(3,1fr)}
+  .home .p-schools .p-school-proof>small{grid-column:1/-1;max-width:none;padding:18px 0 0}
+  .home .p-languages{grid-template-columns:1fr}
+  .home .p-languages>aside{display:none}
+  .home .p-language-list{grid-column:1;grid-row:auto}
+}
+
+@media(max-width:760px){
+  .home .p-dimension-card{grid-template-columns:1fr;padding:24px}
+  .home .p-dimension-card .p-card-top,.home .p-dimension-card>p{grid-column:1}
+  .home .p-dimension strong{font-size:12px}
+  .home .p-dimension small{font-size:9px}
+  .home .p-school-intro h2{font-size:38px}
+  .home .p-schools{padding-top:76px;padding-bottom:76px}
+  .home .p-schools .p-age-bands{grid-template-columns:1fr}
+  .home .p-schools .p-age-bands>span{border-right:0;border-bottom:1px solid #e4dbd4;padding:22px 4px}
+  .home .p-schools .p-age-bands>span:last-child{border-bottom:0}
+  .home .p-schools .p-school-proof{grid-template-columns:1fr}
+  .home .p-schools .p-school-proof>div{
+    padding:15px 0;
+    border-right:0;
+    border-bottom:1px solid #e2d8d0;
+  }
+  .home .p-schools .p-school-proof>small{padding-top:20px}
+  .home .p-languages{padding-top:74px;padding-bottom:78px}
+  .home .p-languages h2{font-size:34px}
+  .home .p-language-list{grid-template-columns:1fr 1fr}
+  .home .p-language-list span{min-height:204px}
+  .home .p-language-list span:nth-child(2){border-right:0}
+  .home .p-language-list span:nth-child(-n+2){border-bottom:1px solid #ddd4cc}
+  .home .p-language-list img{height:146px}
+  .home .p-final{
+    display:block;
+    width:calc(100% - 32px);
+    min-height:0;
+    padding:38px 28px 266px;
+  }
+  .home .p-final::before{
+    top:auto;
+    left:0;
+    width:100%;
+    height:226px;
+    background:url('/images/curiosity-mountains.webp') center 58%/cover no-repeat;
+    -webkit-mask-image:linear-gradient(to bottom,transparent 0%,rgba(0,0,0,.32) 14%,#000 34%);
+    mask-image:linear-gradient(to bottom,transparent 0%,rgba(0,0,0,.32) 14%,#000 34%);
+  }
+  .home .p-final::after{
+    content:none;
+  }
+  .home .p-final h2{font-size:40px}
+  .home .p-final>aside{display:block;max-width:310px;margin-top:30px}
+  .home .p-footer.p-shell{padding:30px 20px;align-items:flex-start;flex-direction:column}
+  .home .p-footer>div{justify-content:flex-start}
+}
+
+@media(max-width:600px){
+  .home .p-nav-actions .lang{display:block}
+  .home .p-language-picker{height:34px;padding-inline:8px}
+  .home .p-language-picker .lang{width:88px;font-size:9px}
+}
+
+@media(max-width:520px){
+  .home .p-nav-actions .p-button.compact{display:none}
+  .home .p-language-list{grid-template-columns:1fr}
+  .home .p-language-list span{min-height:216px;border-right:0;border-bottom:1px solid #ddd4cc!important}
+  .home .p-language-list span:last-child{border-bottom:0!important}
+  .home .p-language-list img{height:160px}
+}

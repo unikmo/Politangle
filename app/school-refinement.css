@@ -1,0 +1,78 @@
+/* School trust and readability refinements for the controlled pilot surfaces. */
+
+.school-page .engine-header .p-language-picker{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  height:34px;
+  margin-left:auto;
+  padding:0 8px;
+  border:1px solid #d8e1e8;
+  border-radius:9px;
+  background:#fff;
+  color:#617587;
+}
+.school-page .engine-header .p-language-picker>span{font-size:12px;line-height:1}
+.school-page .engine-header .lang{
+  display:block;
+  width:104px;
+  min-width:0;
+  padding:0 16px 0 0;
+  border:0;
+  outline:0;
+  background:transparent;
+  color:#526779;
+  font-size:9.5px;
+  font-weight:750;
+  cursor:pointer;
+}
+.school-page .engine-header .p-language-picker:focus-within{
+  border-color:#6e8ba3;
+  box-shadow:0 0 0 3px rgba(49,95,136,.1);
+}
+
+.school-hero-card .engine-callout{
+  margin-top:24px;
+  border-left-color:#315f88;
+  background:#f5f8fa;
+}
+.school-entry-card h2{line-height:1.12}
+.school-entry-card p:not(.engine-kicker){line-height:1.62}
+.school-visibility-card{margin-top:18px}
+.school-visibility-card>.engine-kicker{margin-bottom:16px}
+.school-principle-grid>div{
+  min-height:150px;
+  padding:22px;
+  border-radius:14px;
+  background:#fff;
+}
+.school-principle-grid>div strong{
+  font-size:10px;
+  letter-spacing:.14em;
+}
+.school-principle-grid>div span{
+  display:block;
+  margin-top:12px;
+  font-size:13px;
+  line-height:1.62;
+}
+.school-visible{border-color:#cfdde7!important}
+.school-visible strong{color:#315f88}
+.school-never{border-color:#e2d8d2!important}
+.school-never strong{color:#76574a}
+.school-visibility-card .engine-disclaimer{
+  margin-top:22px;
+  padding-top:20px;
+  border-top:1px solid #dbe4ec;
+  line-height:1.6;
+}
+
+@media(max-width:720px){
+  .school-page .engine-header>span{display:none}
+  .school-page .engine-header .lang{width:88px}
+}
+
+@media(max-width:420px){
+  .school-page .engine-header .lang{width:76px}
+  .school-page .engine-header .p-language-picker{padding-inline:7px}
+}

@@ -4,7 +4,8 @@ import { useEffect, useMemo, useState } from 'react';
 import { germanBeliefStatement } from '../../../lib/german-believe';
 import { romanceBeliefStatement } from '../../../lib/romance-believe';
 import { germanLiteracyExplanation, germanLiteracyOption, germanLiteracyPrompt } from '../../../lib/german-literacy';
-import { useLocale } from '../../LocaleProvider';
+import { useLocale, type Locale } from '../../LocaleProvider';
+import { studentUi } from './student-native';
 
 type ClassroomQuestion = {
   id: string;
@@ -53,21 +54,39 @@ const CODE_KEY = 'politangle.school.classroom.code';
 function tokenKey(code: string) { return `politangle.school.classroom.token.${code}`; }
 function answerKey(code: string) { return `politangle.school.classroom.local.${code}`; }
 
-function DistributionChart({ data }: { data: Distribution }) {
+function beliefAria(locale: Locale, id: string) {
+  const labels: Record<Locale, Record<string, string>> = {
+    en: { '-2':'Strongly disagree', '-1':'Disagree', '0':'Neither / depends', '1':'Agree', '2':'Strongly agree', unsure:'Not sure' },
+    de: { '-2':'Stimme gar nicht zu', '-1':'Stimme eher nicht zu', '0':'Teils teils / kommt darauf an', '1':'Stimme eher zu', '2':'Stimme völlig zu', unsure:'Unsicher' },
+    es: { '-2':'Totalmente en desacuerdo', '-1':'Más bien en desacuerdo', '0':'Neutral / depende', '1':'Más bien de acuerdo', '2':'Totalmente de acuerdo', unsure:'No estoy seguro' },
+    fr: { '-2':'Pas du tout d’accord', '-1':'Plutôt pas d’accord', '0':'Neutre / cela dépend', '1':'Plutôt d’accord', '2':'Tout à fait d’accord', unsure:'Je ne sais pas' },
+  };
+  return labels[locale][id] ?? id;
+}
+
+function DistributionChart({ data, locale, question }: { data: Distribution; locale: Locale; question: ClassroomQuestion | null }) {
   return (
-    <div className="school-distribution" aria-label={`Aggregate distribution for ${data.title}`}>
-      {data.distribution.map((row) => (
-        <div className="school-bar-row" key={row.id}>
-          <div className="school-bar-label"><span>{row.label}</span><strong>{row.percent}% · {row.count}</strong></div>
-          <div className="school-bar-track"><span style={{ width: `${row.percent}%` }} /></div>
-        </div>
-      ))}
+    <div className="school-distribution" aria-label={`${studentUi(locale).roomAnswers}: ${data.title}`}>
+      {data.distribution.map((row) => {
+        const label = question?.kind === 'believe'
+          ? beliefAria(locale, row.id)
+          : locale === 'de' && question
+            ? germanLiteracyOption(row.id, row.label)
+            : row.label;
+        return (
+          <div className="school-bar-row" key={row.id}>
+            <div className="school-bar-label"><span>{label}</span><strong>{row.percent}% · {row.count}</strong></div>
+            <div className="school-bar-track"><span style={{ width: `${row.percent}%` }} /></div>
+          </div>
+        );
+      })}
     </div>
   );
 }
 
 export default function StudentSchoolClient({ initialCode }: { initialCode: string }) {
   const { locale } = useLocale();
+  const ui = studentUi(locale);
   const [entryCode, setEntryCode] = useState(initialCode.toUpperCase());
   const [code, setCode] = useState('');
   const [token, setToken] = useState('');
@@ -97,13 +116,13 @@ export default function StudentSchoolClient({ initialCode }: { initialCode: stri
 
   async function join() {
     const normalized = entryCode.trim().toUpperCase();
-    if (normalized.length !== 6) { setMessage('Enter the six-character classroom code.'); return; }
+    if (normalized.length !== 6) { setMessage(ui.badCode); return; }
     setBusy(true);
-    setMessage('Joining anonymously…');
+    setMessage(ui.joining);
     const status = await fetch(`/api/school/classes/${encodeURIComponent(normalized)}`, { cache: 'no-store' }).catch(() => null);
-    if (!status?.ok) { setBusy(false); setMessage('Classroom not found or unavailable.'); return; }
+    if (!status?.ok) { setBusy(false); setMessage(ui.notFound); return; }
     const preview = await status.json() as PublicRoom;
-    if (!preview.active) { setBusy(false); setMessage('This classroom is closed.'); return; }
+    if (!preview.active) { setBusy(false); setMessage(ui.closed); return; }
     let nextToken = sessionStorage.getItem(tokenKey(normalized)) ?? '';
     if (!nextToken) {
       nextToken = crypto.randomUUID();
@@ -112,7 +131,7 @@ export default function StudentSchoolClient({ initialCode }: { initialCode: stri
     const response = await fetch(`/api/school/classes/${encodeURIComponent(normalized)}/join`, {
       method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ participantToken: nextToken }),
     }).catch(() => null);
-    if (!response?.ok) { setBusy(false); setMessage('Could not join this classroom.'); return; }
+    if (!response?.ok) { setBusy(false); setMessage(ui.joinFailed); return; }
     const saved = JSON.parse(sessionStorage.getItem(answerKey(normalized)) ?? '{}') as { answers?: Record<string, string | string[]>; submitted?: string[] };
     setLocalAnswers(saved.answers ?? {});
     setSubmittedIds(saved.submitted ?? []);
@@ -120,7 +139,7 @@ export default function StudentSchoolClient({ initialCode }: { initialCode: stri
     setCode(normalized);
     setToken(nextToken);
     setRoom(preview);
-    setMessage('You joined anonymously. Your teacher sees class totals and distributions, not which answer is yours.');
+    setMessage(ui.joined);
     setBusy(false);
   }
 
@@ -160,13 +179,13 @@ export default function StudentSchoolClient({ initialCode }: { initialCode: stri
     }).catch(() => null);
     if (!response?.ok) {
       const error = response ? await response.json().catch(() => null) as { error?: string } | null : null;
-      setMessage(error?.error ?? 'Response could not be submitted.');
+      setMessage(locale === 'en' && error?.error ? error.error : ui.responseFailed);
       setBusy(false);
       return;
     }
     const nextSubmitted = [...new Set([...submittedIds, question.id])];
     saveLocal(localAnswers, nextSubmitted);
-    setMessage('Response received. Your answer was added to the class total without storing a student-to-answer record.');
+    setMessage(ui.received);
     setBusy(false);
   }
 
@@ -174,47 +193,59 @@ export default function StudentSchoolClient({ initialCode }: { initialCode: stri
     return (
       <section className="engine-shell school-shell">
         <article className="engine-card school-join-card">
-          <p className="engine-kicker">Join classroom</p>
-          <h1>Enter the room code.</h1>
-          <p className="engine-help">No name, email, username or student ID is required. Your teacher sees how the room answers, not which answer came from you.</p>
-          <input className="school-code-input" value={entryCode} maxLength={6} onChange={(event) => setEntryCode(event.target.value.toUpperCase().replace(/[^A-Z0-9]/g, ''))} placeholder="ABC234" aria-label="Classroom code" />
-          <div className="engine-result-actions"><button className="engine-primary-link" type="button" disabled={busy} onClick={join}>{busy ? 'Joining…' : 'Join anonymously'}</button></div>
+          <p className="engine-kicker">{ui.joinKicker}</p>
+          <h1>{ui.joinTitle}</h1>
+          <p className="engine-help">{ui.joinHelp}</p>
+          <input className="school-code-input" value={entryCode} maxLength={6} onChange={(event) => setEntryCode(event.target.value.toUpperCase().replace(/[^A-Z0-9]/g, ''))} placeholder="ABC234" aria-label={ui.codeAria} />
+          <div className="engine-result-actions"><button className="engine-primary-link" type="button" disabled={busy} onClick={join}>{busy ? ui.joining : ui.join}</button></div>
           {message && <p className="engine-help">{message}</p>}
-          <p className="engine-disclaimer">Classroom answers contribute to aggregate room statistics. The classroom backend is designed not to retain a participant-to-answer mapping. Real school/minor deployment requires qualified legal/privacy review.</p>
+          <p className="engine-disclaimer">{ui.privacyDisclaimer}</p>
         </article>
       </section>
     );
   }
 
-  if (!room) return <section className="engine-shell school-shell"><article className="engine-card"><p>Loading classroom…</p></article></section>;
+  if (!room) return <section className="engine-shell school-shell"><article className="engine-card"><p>{ui.loading}</p></article></section>;
 
   const studentPacedComplete = room.activity.pacing === 'student' && room.activity.questionIds.every((id) => submittedIds.includes(id));
   const revealForCurrent = room.activity.pacing === 'teacher' && room.revealed && room.currentQuestionId === question?.id;
+  const localizedQuestionTitle = question?.kind === 'believe' && question.construct ? question.construct.replaceAll('-', ' ') : question?.title;
 
   return (
     <section className="engine-shell school-shell">
-      <div className="school-room-strip"><strong>{room.roomLabel || `Class ${room.code}`}</strong><span>{room.activity.title}</span><span>{room.joinedCount} joined</span></div>
+      <div className="school-room-strip"><strong>{room.roomLabel || ui.classLabel(room.code)}</strong><span>{room.activity.title}</span><span>{ui.joinedCount(room.joinedCount)}</span></div>
       {message && <p className="school-status-message">{message}</p>}
       {room.status === 'closed' ? (
-        <article className="engine-card"><p className="engine-kicker">Session ended</p><h1>This classroom is closed.</h1><p>Your personal Politangle activities remain available in Private Student Mode.</p></article>
+        <article className="engine-card"><p className="engine-kicker">{ui.sessionEnded}</p><h1>{ui.closedTitle}</h1><p>{ui.closedText}</p></article>
       ) : studentPacedComplete ? (
-        <article className="engine-card"><p className="engine-kicker">Activity complete</p><h1>All {room.activity.questionIds.length} responses submitted.</h1><p>Your teacher receives the class distribution, not an individual report about you.</p></article>
+        <article className="engine-card"><p className="engine-kicker">{ui.complete}</p><h1>{ui.completeTitle(room.activity.questionIds.length)}</h1><p>{ui.completeText}</p></article>
       ) : question ? (
         <article className="engine-card school-question-card">
-          <p className="engine-kicker">{room.activity.pacing === 'teacher' ? `Live question ${room.currentIndex + 1}` : `Question ${studentIndex + 1} of ${room.activity.questionIds.length}`} · {question.title}</p>
+          <p className="engine-kicker">{room.activity.pacing === 'teacher' ? ui.liveQuestion(room.currentIndex + 1) : ui.questionOf(studentIndex + 1, room.activity.questionIds.length)} · {localizedQuestionTitle}</p>
           {question.kind === 'believe' ? (
             <div className="engine-statement"><p>{question.sourceItemId && question.polarity ? (locale === 'de' ? germanBeliefStatement(question.sourceItemId, question.polarity) : locale === 'es' || locale === 'fr' ? romanceBeliefStatement(locale, question.sourceItemId, question.polarity) : question.statement) ?? question.statement : question.statement}</p></div>
-          ) : <h1>{locale === 'de' ? germanLiteracyPrompt(question.id) ?? question.prompt : question.prompt}</h1>}
+          ) : <><h1>{locale === 'de' ? germanLiteracyPrompt(question.id) ?? question.prompt : question.prompt}</h1>{ui.literacyNotice && <p className="engine-help">{ui.literacyNotice}</p>}</>}
 
           {!alreadySubmitted && (room.activity.pacing === 'student' || room.questionOpen) ? (
-            <><div className={question.kind === 'believe' ? 'school-believe-options' : 'deep-options'}>{question.options.map((option) => { const active = Array.isArray(selected) ? selected.includes(option.id) : selected === option.id; const compactLabel = option.id === 'unsure' ? '?' : Number(option.id) > 0 ? `+${option.id}` : option.id.replace('-', '−'); return <button key={option.id} type="button" aria-label={option.label} className={active ? 'deep-option selected' : 'deep-option'} onClick={() => choose(option.id)}>{question.kind === 'believe' ? compactLabel : locale === 'de' ? germanLiteracyOption(option.id, option.label) : option.label}</button>; })}</div>{question.kind === 'believe' && <div className="quick-scale-key"><span><b>−2</b> {locale === 'de' ? 'Stimme gar nicht zu' : 'Strongly disagree'}</span><span><b>0</b> {locale === 'de' ? 'Neutral / kommt darauf an' : 'Neither / depends'}</span><span><b>+2</b> {locale === 'de' ? 'Stimme voll zu' : 'Strongly agree'}</span><span><b>?</b> {locale === 'de' ? 'Unsicher' : 'Not sure'}</span></div>}<div className="engine-result-actions"><button className="engine-primary-link" type="button" disabled={busy || selected === undefined || (Array.isArray(selected) && !selected.length)} onClick={submit}>{busy ? (locale === 'de' ? 'Wird gesendet…' : 'Submitting…') : (locale === 'de' ? 'Anonym absenden' : 'Submit anonymously')}</button></div></>
-          ) : alreadySubmitted ? <div className="school-submitted"><strong>Response received.</strong><span>Waiting for the class / teacher.</span></div> : <p className="engine-callout">Waiting for your teacher to open this question.</p>}
+            <>
+              <div className={question.kind === 'believe' ? 'school-believe-options' : 'deep-options'}>
+                {question.options.map((option) => {
+                  const active = Array.isArray(selected) ? selected.includes(option.id) : selected === option.id;
+                  const compactLabel = option.id === 'unsure' ? '?' : Number(option.id) > 0 ? `+${option.id}` : option.id.replace('-', '−');
+                  const label = question.kind === 'believe' ? beliefAria(locale, option.id) : locale === 'de' ? germanLiteracyOption(option.id, option.label) : option.label;
+                  return <button key={option.id} type="button" aria-label={label} className={active ? 'deep-option selected' : 'deep-option'} onClick={() => choose(option.id)}>{question.kind === 'believe' ? compactLabel : label}</button>;
+                })}
+              </div>
+              {question.kind === 'believe' && <div className="quick-scale-key"><span><b>−2</b> {ui.scale[0]}</span><span><b>0</b> {ui.scale[1]}</span><span><b>+2</b> {ui.scale[2]}</span><span><b>?</b> {ui.scale[3]}</span></div>}
+              <div className="engine-result-actions"><button className="engine-primary-link" type="button" disabled={busy || selected === undefined || (Array.isArray(selected) && !selected.length)} onClick={submit}>{busy ? ui.submitting : ui.submit}</button></div>
+            </>
+          ) : alreadySubmitted ? <div className="school-submitted"><strong>{ui.submitted}</strong><span>{ui.waitingClass}</span></div> : <p className="engine-callout">{ui.waitingOpen}</p>}
 
-          {revealForCurrent && room.projectorDistribution && <div className="school-reveal-panel"><p className="engine-kicker">{locale === 'de' ? 'Antworten der Klasse' : 'How the room answered'} · {room.projectorDistribution.responses}</p><DistributionChart data={room.projectorDistribution} />{question.kind === 'literacy' && question.explanation && <div className="deep-explanation"><strong>{locale === 'de' ? 'Erklärung' : 'Explanation'}</strong><br />{locale === 'de' ? germanLiteracyExplanation(question.id, question.explanation) : question.explanation}</div>}</div>}
+          {revealForCurrent && room.projectorDistribution && <div className="school-reveal-panel"><p className="engine-kicker">{ui.roomAnswers} · {room.projectorDistribution.responses}</p><DistributionChart data={room.projectorDistribution} locale={locale} question={question} />{question.kind === 'literacy' && question.explanation && <div className="deep-explanation"><strong>{ui.explanation}</strong><br />{locale === 'de' ? germanLiteracyExplanation(question.id, question.explanation) : question.explanation}</div>}</div>}
 
-          {room.activity.pacing === 'student' && alreadySubmitted && <div className="engine-nav"><button type="button" disabled={studentIndex === 0} onClick={() => setStudentIndex((value) => Math.max(0, value - 1))}>Previous</button><span>{submittedIds.filter((id) => room.activity.questionIds.includes(id)).length}/{room.activity.questionIds.length} submitted</span><button type="button" disabled={studentIndex >= room.activity.questionIds.length - 1} onClick={() => setStudentIndex((value) => Math.min(room.activity.questionIds.length - 1, value + 1))}>Next</button></div>}
+          {room.activity.pacing === 'student' && alreadySubmitted && <div className="engine-nav"><button type="button" disabled={studentIndex === 0} onClick={() => setStudentIndex((value) => Math.max(0, value - 1))}>{ui.previous}</button><span>{ui.submittedCount(submittedIds.filter((id) => room.activity.questionIds.includes(id)).length, room.activity.questionIds.length)}</span><button type="button" disabled={studentIndex >= room.activity.questionIds.length - 1} onClick={() => setStudentIndex((value) => Math.min(room.activity.questionIds.length - 1, value + 1))}>{ui.next}</button></div>}
         </article>
-      ) : <article className="engine-card"><p className="engine-kicker">Anonymous lobby</p><h1>You’re in.</h1><p>Waiting for your teacher to launch the next question.</p></article>}
+      ) : <article className="engine-card"><p className="engine-kicker">{ui.lobby}</p><h1>{ui.inTitle}</h1><p>{ui.inText}</p></article>}
     </section>
   );
 }

@@ -1,0 +1,41 @@
+/* Multilingual eight-axis chart legibility.
+   SVG axis labels do not wrap automatically, so longer DE/ES/FR names need
+   extra breathing room and slightly tighter type without shrinking the chart itself. */
+
+.shape-wrap{
+  max-width:780px;
+  padding-inline:46px;
+  box-sizing:border-box;
+}
+.shape-label{
+  font-size:11px;
+  letter-spacing:-.015em;
+}
+.shape-axis-score{
+  fill:var(--muted,#6c6861);
+  font-size:9px;
+  font-weight:750;
+  letter-spacing:0;
+}
+html[lang="de"] .shape-label,
+html[lang="es"] .shape-label,
+html[lang="fr"] .shape-label{
+  font-size:9.5px;
+  letter-spacing:-.025em;
+}
+
+@media(max-width:760px){
+  .shape-wrap{padding-inline:20px}
+  .shape-label{font-size:9px}
+  .shape-axis-score{font-size:7.5px}
+  html[lang="de"] .shape-label,
+  html[lang="es"] .shape-label,
+  html[lang="fr"] .shape-label{font-size:8px}
+}
+
+@media(max-width:420px){
+  .shape-wrap{padding-inline:12px}
+  html[lang="de"] .shape-label,
+  html[lang="es"] .shape-label,
+  html[lang="fr"] .shape-label{font-size:7.5px}
+}
