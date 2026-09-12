@@ -24,13 +24,13 @@ function copy(locale: Locale) {
     verifyFailed:'No se pudo comprobar la licencia docente.', checking:'Comprobando la licencia docente…', active:'La licencia docente está activa en esta sesión del navegador.', removed:'La licencia docente se ha eliminado de esta sesión del navegador.',
     access:'Acceso docente', title:'Introduce tu licencia docente', pack:'El paquete escolar cuesta 300 $ e incluye 10 licencias docentes. Tu licencia permite crear aulas; el alumnado sigue entrando de forma anónima con el código temporal que generes.',
     license:'Licencia docente', use:'Usar licencia', privacy:'Para este acceso no necesitamos tu nombre, una lista de alumnos ni cuentas del alumnado. La licencia se conserva únicamente como credencial segura durante esta sesión del navegador.',
-    licensed:'acceso docente con licencia', another:'Usar otra licencia', dashboardNotice:'La entrada y el contenido de BELIEVE ya respetan el idioma seleccionado. La consola docente avanzada aún conserva algunos controles operativos en inglés mientras completamos su revisión lingüística.',
+    licensed:'acceso docente con licencia', another:'Usar otra licencia', dashboardNotice:null as string | null,
   };
   if (locale === 'fr') return {
     verifyFailed:'Impossible de vérifier la licence enseignant.', checking:'Vérification de la licence enseignant…', active:'La licence enseignant est active pour cette session du navigateur.', removed:'La licence enseignant a été retirée de cette session du navigateur.',
     access:'Accès enseignant', title:'Entre ta licence enseignant', pack:'Le pack établissement coûte 300 $ et comprend 10 licences enseignant. Ta licence permet de créer des classes ; les élèves continuent de rejoindre anonymement avec le code temporaire que tu génères.',
     license:'Licence enseignant', use:'Utiliser la licence', privacy:'Cet accès ne demande ni ton nom, ni liste d’élèves, ni comptes élèves. La licence reste uniquement comme identifiant sécurisé pendant cette session du navigateur.',
-    licensed:'accès enseignant sous licence', another:'Utiliser une autre licence', dashboardNotice:'L’accès et les contenus BELIEVE respectent déjà la langue choisie. La console enseignant avancée conserve encore quelques commandes opérationnelles en anglais pendant la fin de sa révision linguistique.',
+    licensed:'accès enseignant sous licence', another:'Utiliser une autre licence', dashboardNotice:null as string | null,
   };
   return {
     verifyFailed:'Teacher license could not be verified.', checking:'Checking teacher license…', active:'Teacher license active for this browser session.', removed:'Teacher license removed from this browser session.',
@@ -105,7 +105,6 @@ export default function TeacherLicenseGate() {
       <section className="engine-shell school-shell no-print">
         <div className="school-room-strip"><strong>{status.license.schoolName}</strong><span>{status.license.seatLabel}</span><span>{c.licensed}</span><button className="engine-link-button" type="button" disabled={busy} onClick={forget}>{c.another}</button></div>
         {message && <p className="school-status-message">{message}</p>}
-        {c.dashboardNotice && <p className="engine-help">{c.dashboardNotice}</p>}
       </section>
       <TeacherSchoolClient />
     </>
