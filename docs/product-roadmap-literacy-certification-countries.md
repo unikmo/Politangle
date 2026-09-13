@@ -7,6 +7,21 @@
 
 > This document records approved product direction so it is not lost across sessions or implementation phases. Unless explicitly superseded by a later documented decision, implementation should preserve these rules.
 
+### Founder decisions recorded 13 September 2026
+
+- School age bands remain **Junior 10–13** and **Youth 14–18**.
+- Certified tests and certificates launch for adults aged **18+** only. Under-18 users may use Learn and Practice.
+- The certificate holder's name is **supplied by the holder**; Politangle does not independently verify legal identity.
+- Third-party verification works only through the exact high-entropy certificate ID / QR URL. There is no name search, public directory or indexable certificate catalogue.
+- Before issuance, the holder must clearly acknowledge that anyone given the certificate URL / QR code can see the verification record. This acknowledgement is mandatory and must not be hidden or pre-ticked.
+- Certification launches in **English only**. Other languages remain Learn / Practice until their complete banks pass the required review.
+- Practice and certified attempts are free.
+- Certificate issuance costs **EUR 9.90 at launch**, later **EUR 16.99**. The transition requires an explicit founder decision and must not happen automatically.
+- Renewal after two years costs **EUR 13.90** and requires passing the then-current certified assessment.
+- The commercial policy is no refund after the personalised certificate has been issued, except where applicable law or a defective service requires otherwise.
+- Politangle will not claim accreditation, professional qualification, independently verified identity, supervised examination or cheating prevention. The certificate records only the assessment passed, scores, version and dates.
+- The first country group is the **United States, Germany, France, United Kingdom, Netherlands, Denmark, Finland, Iceland, Norway and Sweden**. The first four are template-proving profiles; the remaining six follow only after that quality gate passes.
+
 ---
 
 ## 1. Product principle
@@ -174,7 +189,7 @@ A 40-question bank contains only 15 questions that were unseen after a 25-questi
 
 ### Product
 
-Politangle should offer an individual **Political Literacy Certificate / Certificate of Achievement** to users who pass both certified tests.
+Politangle should offer an individual **Politangle Political Literacy Certificate** to users who pass both certified tests.
 
 It must be framed as a Politangle-issued achievement certificate, **not as an accredited academic or professional qualification unless external accreditation is actually obtained later**.
 
@@ -199,6 +214,8 @@ A certificate should eventually include / expose:
 - verification URL / QR code
 - status: `VALID`, `EXPIRED`, or `REVOKED`
 
+The public verification payload must not expose email, account ID, payment information, individual answers, attempt history or BELIEVE results. Verification pages must be `noindex`; identifiers must be non-sequential and resistant to guessing.
+
 Example public verification language:
 
 > Valid until 13 September 2028
@@ -209,7 +226,13 @@ After expiry:
 
 ### Commercial model
 
-A small fee for the personalised certificate / verification record is acceptable product direction, while taking the underlying literacy tests should remain accessible. **Exact certificate pricing is not yet locked and must be decided separately.**
+Learn, Practice and certified attempts are free. A passing attempt creates eligibility to buy a personalised certificate; it does not automatically issue one.
+
+- Launch certificate issuance: **EUR 9.90**
+- Later standard issuance: **EUR 16.99**
+- Renewal after two years: **EUR 13.90**
+
+Prices are server-configured and versioned rather than hard-coded in the client. The launch-to-standard transition requires an explicit founder decision. Consumer-facing prices include applicable VAT where legally required.
 
 The commercial flow must never imply that the user can buy a passing result.
 
@@ -430,30 +453,20 @@ Do **not** immediately mass-generate ~195 near-identical country pages.
 
 Start with approximately **20 high-quality country profiles** and expand based on quality, search demand, educational value and maintainability.
 
-An initial candidate set may include:
+The locked initial country group is:
 
 - United States
 - Germany
-- United Kingdom
 - France
-- Spain
-- Italy
-- Canada
-- Australia
-- India
-- Brazil
-- Mexico
-- Argentina
-- South Africa
-- Nigeria
-- Cameroon
-- China
-- Russia
-- Ukraine
-- Turkey
-- Israel
+- United Kingdom
+- Netherlands
+- Denmark
+- Finland
+- Iceland
+- Norway
+- Sweden
 
-The final launch set may change based on evidence, data quality, demand and editorial capacity.
+Build the United States, Germany, France and United Kingdom first to prove the schema and editorial workflow. Add the remaining six only after those four pass the country-profile quality gate. Further expansion toward approximately 20 profiles may change based on evidence, data quality, demand and editorial capacity.
 
 Every page must offer meaningful country-specific analysis. Programmatic templating may support structure, but it must not create thin or merely reworded pages.
 

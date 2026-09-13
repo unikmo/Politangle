@@ -16,25 +16,25 @@ type LicenseStatus = { active: false } | { active: true; license: LicenseInfo };
 function copy(locale: Locale) {
   if (locale === 'de') return {
     verifyFailed:'Die Lehrkraft-Lizenz konnte nicht geprüft werden.', checking:'Lehrkraft-Lizenz wird geprüft…', active:'Die Lehrkraft-Lizenz ist für diese Browser-Sitzung aktiv.', removed:'Die Lehrkraft-Lizenz wurde aus dieser Browser-Sitzung entfernt.',
-    access:'Zugang für Lehrkräfte', title:'Gib deine Lehrkraft-Lizenz ein', pack:'Ein Schulpaket kostet 300 $ und enthält 10 Lehrkraft-Lizenzen. Mit deiner Lizenz kannst du Klassenräume erstellen; Schüler:innen treten weiterhin anonym mit einem temporären Sitzungscode bei.',
+    access:'Zugang für Lehrkräfte', title:'Gib deine Lehrkraft-Lizenz ein', pack:'Politangle stellt Pilot-Lizenzen nur für freigegebene Tests bereit. Mit deiner Lizenz kannst du Klassenräume erstellen; Schüler:innen treten weiterhin anonym mit einem temporären Sitzungscode bei.',
     license:'Lehrkraft-Lizenz', use:'Lizenz verwenden', privacy:'Für diesen Zugang brauchen wir weder deinen Namen noch eine Schülerliste oder Schülerkonten. Die Lizenz bleibt nur als geschützter Zugang für diese Browser-Sitzung gespeichert.',
     licensed:'lizenzierter Lehrkraft-Zugang', another:'Andere Lizenz verwenden', dashboardNotice:null as string | null,
   };
   if (locale === 'es') return {
     verifyFailed:'No se pudo comprobar la licencia docente.', checking:'Comprobando la licencia docente…', active:'La licencia docente está activa en esta sesión del navegador.', removed:'La licencia docente se ha eliminado de esta sesión del navegador.',
-    access:'Acceso docente', title:'Introduce tu licencia docente', pack:'El paquete escolar cuesta 300 $ e incluye 10 licencias docentes. Tu licencia permite crear aulas; el alumnado sigue entrando de forma anónima con el código temporal que generes.',
+    access:'Acceso docente', title:'Introduce tu licencia docente', pack:'Politangle proporciona licencias piloto únicamente para pruebas autorizadas. Tu licencia permite crear aulas; el alumnado sigue entrando de forma anónima con el código temporal que generes.',
     license:'Licencia docente', use:'Usar licencia', privacy:'Para este acceso no necesitamos tu nombre, una lista de alumnos ni cuentas del alumnado. La licencia se conserva únicamente como credencial segura durante esta sesión del navegador.',
     licensed:'acceso docente con licencia', another:'Usar otra licencia', dashboardNotice:null as string | null,
   };
   if (locale === 'fr') return {
     verifyFailed:'Impossible de vérifier la licence enseignant.', checking:'Vérification de la licence enseignant…', active:'La licence enseignant est active pour cette session du navigateur.', removed:'La licence enseignant a été retirée de cette session du navigateur.',
-    access:'Accès enseignant', title:'Entre ta licence enseignant', pack:'Le pack établissement coûte 300 $ et comprend 10 licences enseignant. Ta licence permet de créer des classes ; les élèves continuent de rejoindre anonymement avec le code temporaire que tu génères.',
+    access:'Accès enseignant', title:'Entre ta licence enseignant', pack:'Politangle fournit des licences pilotes uniquement pour les essais autorisés. Ta licence permet de créer des classes ; les élèves continuent de rejoindre anonymement avec le code temporaire que tu génères.',
     license:'Licence enseignant', use:'Utiliser la licence', privacy:'Cet accès ne demande ni ton nom, ni liste d’élèves, ni comptes élèves. La licence reste uniquement comme identifiant sécurisé pendant cette session du navigateur.',
     licensed:'accès enseignant sous licence', another:'Utiliser une autre licence', dashboardNotice:null as string | null,
   };
   return {
     verifyFailed:'Teacher license could not be verified.', checking:'Checking teacher license…', active:'Teacher license active for this browser session.', removed:'Teacher license removed from this browser session.',
-    access:'Teacher access', title:'Enter your school teacher license', pack:'A school pack is $300 for 10 teacher licenses. Your teacher license unlocks classroom creation; students still join anonymously with the temporary session code you generate.',
+    access:'Teacher access', title:'Enter your school teacher license', pack:'Politangle provides pilot licenses only for approved testing. Your license unlocks classroom creation; students still join anonymously with the temporary session code you generate.',
     license:'Teacher license', use:'Use teacher license', privacy:'No teacher name, student roster or student account is required by this access step. The license is kept only as a secure browser-session credential.',
     licensed:'licensed teacher access', another:'Use another license', dashboardNotice:null as string | null,
   };

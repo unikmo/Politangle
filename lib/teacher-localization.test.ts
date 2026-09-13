@@ -17,6 +17,8 @@ test('teacher route uses native DE ES FR entry and license language', () => {
   assert.match(teacherGate, /Introduce tu licencia docente/);
   assert.match(teacherGate, /Entre ta licence enseignant/);
   assert.doesNotMatch(teacherGate, /(?:Geben Sie|Ihre Lizenz|\busted\b|\bvous\b)/i);
+  assert.doesNotMatch(teacherGate, /(?:\$300|300 \$|costs 300|kostet 300|cuesta 300|coûte 300)/i);
+  assert.match(teacherGate, /pilot licenses only for approved testing/i);
 });
 
 test('advanced teacher console routes operational copy through the native dictionary', () => {
