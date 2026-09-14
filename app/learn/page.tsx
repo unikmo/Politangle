@@ -24,7 +24,7 @@ export default function LearnPage() {
       intro="Start here before you practise. Each entry gives the short meaning first, then the distinction that usually causes confusion."
     >
       <div className="learn-intro-actions">
-        <Link className="engine-primary-link" href="/practice">Try a free practice set →</Link>
+        <div className="engine-result-actions"><Link className="engine-primary-link" href="/practice">Try a free practice set →</Link><Link className="engine-primary-link secondary" href="/populism-quiz">Take the populism quiz →</Link></div>
         <p>No score is recorded here. Open any term whenever you need it.</p>
       </div>
       {categories.map((category) => (
