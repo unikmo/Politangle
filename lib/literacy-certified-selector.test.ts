@@ -190,6 +190,36 @@ test('practice minimizes repeated primary concepts while meeting topic and diffi
   }
 });
 
+test('parallel anarchism checks use different clues and are not served together', () => {
+  const c24 = literacyMasterBankCandidates.find((question) => question.id === 'C24');
+  const c36 = literacyMasterBankCandidates.find((question) => question.id === 'C36');
+  assert.ok(c24);
+  assert.ok(c36);
+  assert.equal(c24.secondaryTags[0], 'anarchism');
+  assert.equal(c36.secondaryTags[0], 'anarchism');
+  assert.notEqual(c24.prompt, c36.prompt);
+
+  const normalizedWords = (prompt: string) => new Set(prompt.toLowerCase().match(/[a-z]+/g) ?? []);
+  const c24Words = normalizedWords(c24.prompt);
+  const c36Words = normalizedWords(c36.prompt);
+  const sharedWordCount = [...c24Words].filter((word) => c36Words.has(word)).length;
+  const totalWordCount = new Set([...c24Words, ...c36Words]).size;
+  assert.ok(sharedWordCount / totalWordCount < 0.25, 'C24 and C36 should use materially different wording');
+
+  for (let seed = 0; seed < 50; seed += 1) {
+    const result = selectPracticeQuestionPlan({
+      questions: literacyMasterBankCandidates,
+      section: 'classify',
+      bankVersion: LITERACY_MASTER_BANK_VERSION,
+      seed: `anarchism-parallel-check-${seed}`,
+    });
+    assert.equal(result.ok, true);
+    if (!result.ok) continue;
+    const selected = new Set(result.plan.questionIds);
+    assert.equal(selected.has('C24') && selected.has('C36'), false, `seed ${seed} served C24 and C36 together`);
+  }
+});
+
 test('balanced selection still varies materially across seeds', () => {
   for (const section of ['classify', 'understand'] as const) {
     const selectedSets = new Set<string>();

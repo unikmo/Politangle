@@ -14,6 +14,13 @@ test('consequential literacy and certification decisions remain locked', () => {
   assert.equal(literacy.certificateValidityYears, 2);
   assert.equal(literacy.practiceIsFree, true);
   assert.equal(literacy.certifiedAttemptsAreFree, true);
+  assert.deepEqual(literacy.bankLifecycle, {
+    currentStage: 'founder_review',
+    sequence: ['founder_review', 'pilot_frozen', 'pilot_running', 'post_pilot_review', 'final_frozen'],
+    founderApprovalRequiredForPilotFreeze: true,
+    contentChangeAfterFreezeRequiresNewVersion: true,
+    finalFreezeRequiresPilotEvidence: true,
+  });
   assert.deepEqual(literacy.pricesEur, { launchIssuance: 9.9, standardIssuance: 16.99, renewal: 13.9 });
   assert.deepEqual(countries.templateProfiles, ['US', 'DE', 'FR', 'GB']);
   assert.deepEqual(countries.initialProfiles, ['US', 'DE', 'FR', 'GB', 'NL', 'DK', 'FI', 'IS', 'NO', 'SE']);

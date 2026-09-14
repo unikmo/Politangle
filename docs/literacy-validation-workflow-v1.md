@@ -1,6 +1,6 @@
 # Political literacy bank validation workflow v1
 
-**Status:** Implemented validation gate; internal editorial pass complete; external review and human testing pending  
+**Status:** Implemented validation gate; internal editorial pass complete; founder review pending
 **Bank:** `literacy-master-2026.09-candidate-1`  
 **Review:** `literacy-editorial-review-2026.09-1`  
 **Audience:** English-speaking adults aged 18+  
@@ -15,8 +15,8 @@ This is an **editorial review**, not expert, cognitive or psychometric validatio
 
 | Outcome | Count | Meaning |
 |---|---:|---|
-| Ready for independent content review | 79 | No blocking internal wording issue remains. This is not approval for certification. |
-| Held for content expert | 1 | The political classification itself needs an independent decision before testing. |
+| Ready for founder review | 80 | No blocking internal wording issue remains. This is not approval for certification. |
+| Held | 0 | C36 was replaced rather than forcing a disputed classification. |
 | Validated | 0 | No candidate may enter certified play yet. |
 
 ### Wording repaired in this pass
@@ -33,106 +33,122 @@ This is an **editorial review**, not expert, cognitive or psychometric validatio
 | U14 | The answer gave an example but did not explain why two ideas are separate | Reframed it as two different questions: who rules and who belongs. |
 | U38 | The item tested what Politangle should do | Replaced it with a reader-facing mixed-profile interpretation task. |
 
-### Unresolved item
+### C36 resolution
 
-**C36 is held.** Its current “market-oriented anarchism” classification combines rejection of state power with strong private-property and market claims. Academic treatments acknowledge individualist/libertarian varieties but also emphasize that the boundaries and labels are disputed. An independent political-theory reviewer must choose one of three actions:
+The disputed “market-oriented anarchism” item was removed. Its replacement tests the less disputed core question of whether governments possess an automatic moral right to command.
 
-1. approve the item with a narrower label and explanation;
-2. rewrite it around individualist anarchism without making strong property claims; or
-3. replace it with a less disputed anarchism item.
+This is intentionally different from C24:
 
-Until then, C36 must not advance to cognitive testing.
+- **C24** recognizes anarchism through imposed hierarchy, voluntary groups and mutual aid.
+- **C36** recognizes anarchism through its challenge to the moral legitimacy of political authority.
+
+Both test the same broad concept from different directions. Their shared primary concept tag prevents the selector from serving them together when a different anarchism item can satisfy the blueprint.
 
 ## Duplicate-concept control
 
-Some pairs examine the same broad distinction through different wording: `C1/C16`, `C14/C32`, `C17/C21`, `U3/U34`, and `U7/U22`.
+Some pairs examine the same broad distinction through genuinely different wording: `C1/C16`, `C14/C32`, `C17/C21`, `C24/C36`, `U3/U34`, and `U7/U22`.
 
-The balanced selector now minimizes repeated primary concepts after satisfying the locked topic and difficulty quotas. Automated tests exercise 50 seeds per section and allow no more than two repeated primary concepts in a 25-question run. This is a serving safeguard, not proof that both items in each pair deserve to remain in the final bank. Independent review must still decide whether each pair provides useful parallel coverage or whether one item should be replaced.
+The paired wording must not be a cosmetic paraphrase. Each item must approach the concept through a different clue or application so later testing can distinguish understanding from recognition or guessing.
+
+The balanced selector minimizes repeated primary concepts after satisfying the locked topic and difficulty quotas. Automated tests exercise 50 seeds per section and allow no more than two repeated primary concepts in a 25-question run. Parallel items remain in the master bank, but the same attempt should not teach or reveal one through the other.
 
 ## Required progression
 
 ```mermaid
 flowchart TD
-  A[Candidate wording] --> B[Independent content review]
+  A[Candidate wording] --> B[Founder review]
   B -->|revise| A
-  B -->|approve| C[Adult cognitive interviews]
-  C -->|misunderstood| A
-  C -->|clear| D[Pilot and item calibration]
-  D -->|weak or biased| A
-  D -->|meets approved criteria| E[Final recorded approval]
-  E --> F[Validated bank]
+  B -->|approve all 80| C[Freeze pilot version]
+  C --> D[Pilot with other adults]
+  D -->|wording changes| A
+  D -->|evidence accepted| E[Post-pilot approval]
+  E --> F[Freeze final version]
+  F --> G[Validated bank]
 ```
 
-### 1. Independent content review
+### 1. Founder review
 
-Each question requires a reviewer who did not write the item to assess:
+The founder reviews all 80 items—not a random 25-question subset—and records `approve`, `revise`, `replace`, or `hold`, with a reason where approval is withheld.
+
+The review assesses:
 
 - whether the accepted answer is defensible from the cited evidence;
 - whether another answer could reasonably be defended from the prompt;
-- whether the wording treats ideologies symmetrically;
-- whether distractors represent plausible misunderstandings rather than jokes or obviously false absolutes;
-- whether the assigned difficulty matches the knowledge required;
+- whether the wording is understandable without political-science training;
+- whether distractors are plausible without being tricks;
+- whether the framing treats comparable traditions consistently;
 - whether the concept and explanation fit Politangle’s multidimensional model; and
 - whether overlap with another item is useful or wasteful.
 
-The reviewer records `approve`, `revise`, `replace`, or `hold`, with a reason. Silence never counts as approval.
+Silence never counts as approval. The pilot freeze requires an explicit approval covering the exact fingerprint of all 80 questions.
 
-### 2. Cognitive interviews with ordinary adults
+### 2. First freeze: pilot bank
+
+Founder approval creates a separately versioned, immutable pilot bank. It does not create a validated or certifiable bank.
+
+- The frozen version records the bank fingerprint, approval reference and date.
+- Pilot sessions must use that exact version.
+- Any change to a prompt, answer, explanation or evidence binding creates a new candidate version.
+- A changed version returns to founder review before another pilot freeze.
+
+### 3. Pilot with ordinary adults
 
 Use English-speaking adults aged 18+ with varied education levels, political familiarity and political viewpoints. For every tested item, ask the participant to:
 
-1. read it without glossary help;
-2. explain the question in their own words;
-3. choose an answer and explain why;
-4. identify any unfamiliar or loaded word;
-5. say whether another answer also seems reasonable; and
-6. explain the feedback after answering.
+- answer without assistance;
+- explain the question in their own words;
+- explain why they chose the answer;
+- identify any unfamiliar, loaded or confusing words; and
+- say whether another option also appears defensible.
 
 Record comprehension errors, hesitation, alternative interpretations and terms that require prior specialist knowledge. Do not coach the participant toward the intended answer.
 
-### 3. Pilot and calibration
+### 4. Pilot analysis and calibration
 
 Before pilot collection, approve a written analysis plan covering at least:
 
-- target sample and recruitment mix;
-- minimum and maximum difficulty ranges;
-- distractor-selection expectations;
-- item discrimination rule;
-- subgroup checks for education and political orientation;
-- missing/abandonment handling;
-- replacement and retest rules; and
-- how the 23/25 threshold will be evaluated.
+- item difficulty;
+- distractor selection;
+- blank or abandoned responses;
+- completion time;
+- subgroup comprehension differences;
+- item-total relationship;
+- local dependence between parallel-concept items; and
+- qualitative ambiguity or bias reports.
 
 No numeric threshold is invented in this document. The research lead must approve those criteria before seeing the outcome data.
 
-### 4. Final recorded approval
+### 5. Second freeze: final bank
 
-The code now requires a validated item to point to all three real artifacts:
+The post-pilot bank may be frozen as final only when the pilot evidence has been reviewed and every retained item is explicitly approved. The code requires a validated item to point to all three real artifacts:
 
 - independent content-review artifact;
 - cognitive-test artifact; and
 - calibration artifact.
 
-It also requires a named approval record. A content-only checklist can no longer make an item certifiable.
+It also requires a named approval record. A content-only checklist can no longer make a candidate certifiable.
 
-## Integrity controls implemented
+## Integrity controls now implemented
 
-- Every internal review entry is pinned to a fingerprint of the prompt, choices, accepted answer, explanation and evidence IDs.
+- Every candidate is pinned to a content fingerprint.
 - Any later content change makes the review stale and fails the test suite until re-reviewed.
 - The ledger contains one and only one record for every candidate.
 - An editorial pass cannot change `candidate` to `validated`.
-- C36 is excluded from the external-review-ready set.
+- All 80 items, including the replacement C36, are in the founder-review set.
+- The lifecycle is locked as founder review → pilot freeze → pilot → post-pilot review → final freeze.
+- Content changes after either review invalidate fingerprints and require a new version.
 - Candidate Practice remains available; certified selection still returns `BANK_NOT_READY`.
 
 ## Next executable work
 
-1. Obtain the independent decision on C36.
-2. Give the 79-item packet to at least one independent political-theory/civic-education reviewer.
-3. Apply and fingerprint approved revisions.
-4. Freeze a cognitive-test bank version.
-5. Run and document adult cognitive interviews.
-6. Approve the calibration plan before collecting pilot outcomes.
-7. Promote items only when their three evidence artifacts and final approval are recorded.
+1. Founder reviews all 80 questions and records corrections or approval.
+2. Apply corrections and repeat the fingerprinted review where necessary.
+3. On explicit founder approval, create the immutable pilot-bank version.
+4. Run and document pilot testing with other English-speaking adults.
+5. Review comprehension, ambiguity, distractor and difficulty evidence.
+6. Apply changes through a new version and repeat the required review if necessary.
+7. On explicit post-pilot approval, create the immutable final-bank version.
+8. Promote items only when their required evidence artifacts and final approval are recorded.
 
 ## Evidence used for the workflow
 

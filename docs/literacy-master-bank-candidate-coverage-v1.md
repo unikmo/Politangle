@@ -81,8 +81,8 @@ These are reading-load guardrails, not proof of comprehension. Cognitive intervi
 
 The question-by-question internal reader pass is recorded in `docs/literacy-validation-workflow-v1.md` and enforced by `lib/literacy-editorial-review.ts`.
 
-- 79 items are ready for independent content review.
-- C36 is held for an independent decision on its contested anarchism label and property framing.
+- All 80 items are ready for founder review.
+- C36 now tests the legitimacy of political authority, replacing the disputed market/property classification.
 - 0 items are validated for certified play.
 - Any content change invalidates the pinned editorial-review fingerprint.
 - A final `validated` record now requires independent content-review, cognitive-test and calibration artifacts plus explicit approval.

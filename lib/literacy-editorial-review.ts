@@ -2,7 +2,7 @@ import type { LiteracyQuestionRecord } from './literacy-bank-schema';
 
 export const LITERACY_EDITORIAL_REVIEW_VERSION = 'literacy-editorial-review-2026.09-1' as const;
 
-export type EditorialReviewDisposition = 'ready_for_external_review' | 'hold_for_content_expert';
+export type EditorialReviewDisposition = 'ready_for_founder_review';
 
 export type EditorialReviewEntry = {
   questionId: string;
@@ -23,7 +23,7 @@ const CONTENT_FINGERPRINTS: Readonly<Record<string, string>> = {
   C21: 'ae10f036', C22: '9d920197', C23: '160775f3', C24: '7de8091e', C25: 'ba8c4a2c',
   C26: '4f776656', C27: '8721768c', C28: '93f4ad19', C29: 'cc767389', C30: '2226b8a1',
   C31: 'a858fe3e', C32: '9ee317bd', C33: '4693003f', C34: '1b0d3eb6', C35: '43b7f1e6',
-  C36: '40b2c206', C37: '10e61f2c', C38: 'cc0e4312', C39: 'd411b0e5', C40: '74a2bc16',
+  C36: 'a4cde3ed', C37: '10e61f2c', C38: 'cc0e4312', C39: 'd411b0e5', C40: '74a2bc16',
   U1: 'b1bf255d', U2: '77c5f6e5', U3: '742a8d8c', U4: 'd1b39ed9', U5: 'b8ec92ce',
   U6: '890ffff5', U7: 'fc60e5f2', U8: '9d519c21', U9: '5bd335c2', U10: 'cef526ea',
   U11: '8a900e32', U12: '94ed9dfc', U13: '5f275fe1', U14: 'df6c428b', U15: '4c4e4c51',
@@ -34,8 +34,8 @@ const CONTENT_FINGERPRINTS: Readonly<Record<string, string>> = {
   U36: '3abef426', U37: 'e985f13c', U38: 'a6dcf63b', U39: 'b3832390', U40: 'b236e865',
 };
 
-const REVISED_FOR_READER = new Set(['C5', 'C24', 'C34', 'C35', 'C37', 'C38', 'U9', 'U14', 'U38']);
-const CONCEPT_OVERLAP = new Set(['C1', 'C16', 'C14', 'C32', 'C17', 'C21', 'U3', 'U34', 'U7', 'U22']);
+const REVISED_FOR_READER = new Set(['C5', 'C24', 'C34', 'C35', 'C36', 'C37', 'C38', 'U9', 'U14', 'U38']);
+const CONCEPT_OVERLAP = new Set(['C1', 'C16', 'C14', 'C32', 'C17', 'C21', 'C24', 'C36', 'U3', 'U34', 'U7', 'U22']);
 
 function fingerprint(question: LiteracyQuestionRecord) {
   const content = JSON.stringify({
@@ -54,27 +54,16 @@ function fingerprint(question: LiteracyQuestionRecord) {
 }
 
 function reviewEntry(question: LiteracyQuestionRecord): EditorialReviewEntry {
-  if (question.id === 'C36') {
-    return {
-      questionId: question.id,
-      contentFingerprint: CONTENT_FINGERPRINTS[question.id],
-      disposition: 'hold_for_content_expert',
-      readerComprehension: 'pass',
-      ambiguity: 'concern',
-      ideologicalFraming: 'concern',
-      distractors: 'pass',
-      note: 'Market-oriented anarchism and strong private-property claims are contested; approve, narrow, or replace before cognitive testing.',
-    };
-  }
   const notes: string[] = [];
   if (REVISED_FOR_READER.has(question.id)) notes.push('Reader wording revised in this pass.');
   if (CONCEPT_OVERLAP.has(question.id)) notes.push('Concept overlaps another bank item; selection must prevent repetitive serving.');
-  if (question.id === 'C30') notes.push('External review must preserve the limits of the civic-versus-ancestry contrast.');
-  if (question.id === 'U21') notes.push('External review should confirm the simplified description of the revolutionary party role.');
+  if (question.id === 'C30') notes.push('Founder review must preserve the limits of the civic-versus-ancestry contrast.');
+  if (question.id === 'U21') notes.push('Founder review should confirm the simplified description of the revolutionary party role.');
+  if (question.id === 'C36') notes.push('Disputed market-property framing replaced with a separate political-authority test.');
   return {
     questionId: question.id,
     contentFingerprint: CONTENT_FINGERPRINTS[question.id],
-    disposition: 'ready_for_external_review',
+    disposition: 'ready_for_founder_review',
     readerComprehension: 'pass',
     ambiguity: 'pass',
     ideologicalFraming: 'pass',
@@ -109,10 +98,10 @@ export function validateEditorialReviewLedger(
   return { valid: errors.length === 0, errors };
 }
 
-export function questionsReadyForExternalReview(
+export function questionsReadyForFounderReview(
   questions: readonly LiteracyQuestionRecord[],
   entries: readonly EditorialReviewEntry[],
 ) {
-  const ready = new Set(entries.filter((entry) => entry.disposition === 'ready_for_external_review').map((entry) => entry.questionId));
+  const ready = new Set(entries.filter((entry) => entry.disposition === 'ready_for_founder_review').map((entry) => entry.questionId));
   return questions.filter((question) => ready.has(question.id));
 }

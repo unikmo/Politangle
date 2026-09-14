@@ -9,6 +9,8 @@
 
 **Implementation checkpoint:** Internal reader/editorial review is recorded in `docs/literacy-validation-workflow-v1.md`. It does not validate the bank. A validated item now requires linked independent content-review, cognitive-test and calibration artifacts plus explicit approval.
 
+**Locked bank-freeze sequence:** All 80 candidates remain editable during founder review. Explicit founder approval freezes an immutable pilot-bank version. Other adults then test that exact version. Any content change creates a new version and requires founder review and a new pilot freeze. After the pilot evidence is reviewed, explicit post-pilot approval creates the final frozen bank. Only that final version may be promoted to validated/certifiable status.
+
 ### Founder decisions recorded 13 September 2026
 
 - School age bands remain **Junior 10–13** and **Youth 14–18**.

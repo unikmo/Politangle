@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import {
   buildEditorialReviewLedger,
-  questionsReadyForExternalReview,
+  questionsReadyForFounderReview,
   validateEditorialReviewLedger,
 } from './literacy-editorial-review';
 import { literacyMasterBankCandidates } from './literacy-master-bank';
@@ -21,11 +21,11 @@ test('a wording change invalidates the pinned editorial review', () => {
   assert.match(validation.errors.join(' '), /C1 changed after editorial review/);
 });
 
-test('contested C36 remains outside the external-review-ready set', () => {
+test('replacement C36 is included in the founder-review set', () => {
   const ledger = buildEditorialReviewLedger(literacyMasterBankCandidates);
-  const ready = questionsReadyForExternalReview(literacyMasterBankCandidates, ledger);
-  assert.equal(ready.length, 79);
-  assert.equal(ready.some((question) => question.id === 'C36'), false);
+  const ready = questionsReadyForFounderReview(literacyMasterBankCandidates, ledger);
+  assert.equal(ready.length, 80);
+  assert.equal(ready.some((question) => question.id === 'C36'), true);
 });
 
 test('editorial review never changes candidate questions to validated', () => {

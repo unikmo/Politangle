@@ -1,5 +1,5 @@
 export const POLITANGLE_PRODUCT_DECISIONS = {
-  version: '2026-09-13.1',
+  version: '2026-09-14.1',
   schoolAgeBands: {
     junior: { min: 10, max: 13 },
     youth: { min: 14, max: 18 },
@@ -17,6 +17,13 @@ export const POLITANGLE_PRODUCT_DECISIONS = {
     certificateValidityYears: 2,
     practiceIsFree: true,
     certifiedAttemptsAreFree: true,
+    bankLifecycle: {
+      currentStage: 'founder_review',
+      sequence: ['founder_review', 'pilot_frozen', 'pilot_running', 'post_pilot_review', 'final_frozen'],
+      founderApprovalRequiredForPilotFreeze: true,
+      contentChangeAfterFreezeRequiresNewVersion: true,
+      finalFreezeRequiresPilotEvidence: true,
+    },
     pricesEur: {
       launchIssuance: 9.9,
       standardIssuance: 16.99,
