@@ -46,6 +46,10 @@ function syntheticBank(section: LiteracyQuestionRecord['section']): LiteracyQues
       validation: {
         reviewedAt: '2026-09-13',
         reviewerRole: 'synthetic-test-reviewer',
+        approvedBy: 'synthetic-approval-fixture',
+        contentReviewArtifact: 'fixture://content-review',
+        cognitiveTestArtifact: 'fixture://cognitive-test',
+        calibrationArtifact: 'fixture://calibration',
         definitionEvidence: 'pass',
         ambiguity: 'pass',
         ideologicalBias: 'pass',
@@ -80,6 +84,11 @@ test('validated status requires the full recorded review gate', () => {
   const question = syntheticBank('classify')[0];
   const withoutReview = { ...question, validation: undefined } as LiteracyQuestionRecord;
   assert.equal(validateLiteracyQuestionRecord(withoutReview).valid, false);
+  const withoutCognitiveEvidence = {
+    ...question,
+    validation: { ...question.validation!, cognitiveTestArtifact: '' },
+  } as LiteracyQuestionRecord;
+  assert.equal(validateLiteracyQuestionRecord(withoutCognitiveEvidence).valid, false);
 });
 
 test('selector returns a deterministic balanced 25-question plan', () => {
@@ -158,6 +167,43 @@ test('practice draws a balanced 25-question set from the candidate bank without 
     assert.equal(new Set(result.plan.questionIds).size, 25);
     assert.deepEqual(result.plan.topicCoverage, certifiedBlueprintFor(section).topicQuotas);
     assert.deepEqual(result.plan.difficultyCoverage, certifiedBlueprintFor(section).difficultyQuotas);
+  }
+});
+
+test('practice minimizes repeated primary concepts while meeting topic and difficulty quotas', () => {
+  for (const section of ['classify', 'understand'] as const) {
+    for (let seed = 0; seed < 50; seed += 1) {
+      const result = selectPracticeQuestionPlan({
+        questions: literacyMasterBankCandidates,
+        section,
+        bankVersion: LITERACY_MASTER_BANK_VERSION,
+        seed: `concept-diversity-${seed}`,
+      });
+      assert.equal(result.ok, true);
+      if (!result.ok) continue;
+      const selected = result.plan.questionIds.map((id) => literacyMasterBankCandidates.find((question) => question.id === id)!);
+      const keys = selected.map((question) => `${question.blueprintBucket}:${question.secondaryTags[0] ?? question.id}`);
+      const repeated = keys.length - new Set(keys).size;
+      assert.ok(repeated <= 2, `${section} repeated ${repeated} primary concepts for seed ${seed}`);
+      assert.ok(Math.max(...[...new Set(keys)].map((key) => keys.filter((candidate) => candidate === key).length)) <= 2);
+    }
+  }
+});
+
+test('balanced selection still varies materially across seeds', () => {
+  for (const section of ['classify', 'understand'] as const) {
+    const selectedSets = new Set<string>();
+    for (let seed = 0; seed < 50; seed += 1) {
+      const result = selectPracticeQuestionPlan({
+        questions: literacyMasterBankCandidates,
+        section,
+        bankVersion: LITERACY_MASTER_BANK_VERSION,
+        seed: `variation-${seed}`,
+      });
+      assert.equal(result.ok, true);
+      if (result.ok) selectedSets.add([...result.plan.questionIds].sort().join(','));
+    }
+    assert.ok(selectedSets.size >= 10, `${section} produced only ${selectedSets.size} distinct balanced sets`);
   }
 });
 

@@ -7,6 +7,8 @@
 
 > This document records approved product direction so it is not lost across sessions or implementation phases. Unless explicitly superseded by a later documented decision, implementation should preserve these rules.
 
+**Implementation checkpoint:** Internal reader/editorial review is recorded in `docs/literacy-validation-workflow-v1.md`. It does not validate the bank. A validated item now requires linked independent content-review, cognitive-test and calibration artifacts plus explicit approval.
+
 ### Founder decisions recorded 13 September 2026
 
 - School age bands remain **Junior 10–13** and **Youth 14–18**.

@@ -55,7 +55,7 @@ export const literacyQuestions: readonly LiteracyQuestion[] = [
   },
   {
     id: 'C5', section: 'classify',
-    prompt: 'A movement supports markets, gradual change and welfare programs that hold society together. Which broad tradition fits best?',
+    prompt: 'A movement values inherited institutions, gradual reform and social duties. It accepts markets and welfare. Which tradition fits best?',
     options: [
       { id: 'libertarianism', label: 'Libertarianism' },
       { id: 'social-democracy', label: 'Social democracy' },
@@ -63,7 +63,7 @@ export const literacyQuestions: readonly LiteracyQuestion[] = [
       { id: 'communism', label: 'Communism' },
     ],
     acceptedAnswerSets: [['conservatism']],
-    explanation: 'Conservatism does not always mean minimal government. It can support welfare and regulation to protect stability and social duty.',
+    explanation: 'The key clues are inherited institutions, gradual reform and social duty. Conservatism does not always mean minimal government.',
     evidenceIds: ['SEP-CONSERVATISM', 'CHES-ECON-GALTAN'],
   },
   {
@@ -371,12 +371,12 @@ export const literacyQuestions: readonly LiteracyQuestion[] = [
     prompt: 'What makes Christian democracy more than markets plus welfare?',
     options: [
       { id: 'u9-a', label: 'Its support for markets and generous welfare.' },
-      { id: 'u9-b', label: 'Its Christian social ideas and support for local decisions.' },
+      { id: 'u9-b', label: 'Christian social ideas and decisions kept close to communities.' },
       { id: 'u9-c', label: 'Its support for families and traditional values.' },
       { id: 'u9-d', label: 'Its support for European political cooperation.' },
     ],
     acceptedAnswerSets: [['u9-b']],
-    explanation: 'Other traditions also mix markets and welfare. Christian social ideas and keeping suitable decisions local make this tradition more specific.',
+    explanation: 'Other traditions also mix markets and welfare. Christian social ideas and subsidiarity make Christian democracy more specific.',
     evidenceIds: ['CAMBRIDGE-CHRISTIAN-DEMOCRACY', 'CAMBRIDGE-CD-RELIGIOUS-INSPIRATION', 'CAMBRIDGE-CD-SUBSIDIARITY'],
   },
   {
@@ -436,7 +436,7 @@ export const literacyQuestions: readonly LiteracyQuestion[] = [
     prompt: 'Why should national self-government and national membership be measured separately?',
     options: [
       { id: 'u14-a', label: 'Self-government requires fewer rights for naturalized citizens.' },
-      { id: 'u14-b', label: 'Self-government can include naturalized citizens as full members.' },
+      { id: 'u14-b', label: 'They ask different questions: who rules, and who belongs.' },
       { id: 'u14-c', label: 'Self-government concerns immigration; membership concerns trade.' },
       { id: 'u14-d', label: 'Self-government and membership are the same political idea.' },
     ],

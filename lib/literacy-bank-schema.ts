@@ -27,6 +27,10 @@ const VALIDATION_STATUSES = new Set<LiteracyValidationStatus>([
 export type LiteracyValidationRecord = {
   reviewedAt: string;
   reviewerRole: string;
+  approvedBy: string;
+  contentReviewArtifact: string;
+  cognitiveTestArtifact: string;
+  calibrationArtifact: string;
   definitionEvidence: 'pass';
   ambiguity: 'pass';
   ideologicalBias: 'pass';
@@ -136,7 +140,14 @@ export function validateLiteracyQuestionRecord(question: LiteracyQuestionRecord)
     }
   }
   if (question.status === 'validated') {
-    if (!question.validation?.reviewedAt || !question.validation.reviewerRole.trim()) {
+    if (
+      !question.validation?.reviewedAt ||
+      !question.validation.reviewerRole.trim() ||
+      !question.validation.approvedBy.trim() ||
+      !question.validation.contentReviewArtifact.trim() ||
+      !question.validation.cognitiveTestArtifact.trim() ||
+      !question.validation.calibrationArtifact.trim()
+    ) {
       errors.push(`Validated question ${question.id} has no complete validation record`);
     } else {
       const checks = [

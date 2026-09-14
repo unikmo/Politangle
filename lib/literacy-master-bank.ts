@@ -109,7 +109,7 @@ const addedClassifyCandidates: readonly LiteracyQuestionRecord[] = [
   }, { blueprintBucket: 'democracy_authoritarianism', difficulty: 'intermediate', secondaryTags: ['authoritarianism', 'political-competition', 'constraints'] }),
   asCandidate({
     id: 'C24', section: 'classify',
-    prompt: 'A tradition rejects unjustified central power and favors voluntary groups, mutual aid and local self-rule. Which tradition fits best?',
+    prompt: 'A tradition questions state rule and other imposed hierarchies. It favors voluntary groups and mutual aid. Which tradition fits best?',
     options: [
       { id: 'libertarianism', label: 'Libertarianism' },
       { id: 'anarchism', label: 'Anarchism' },
@@ -117,7 +117,7 @@ const addedClassifyCandidates: readonly LiteracyQuestionRecord[] = [
       { id: 'federalism', label: 'Federalism' },
     ],
     acceptedAnswerSets: [['anarchism']],
-    explanation: 'Anarchist traditions question central power and hierarchy and often favor voluntary, local cooperation.',
+    explanation: 'Anarchist traditions question state rule and imposed hierarchy and often favor voluntary cooperation and mutual aid.',
     evidenceIds: ['SEP-ANARCHISM'],
   }, { blueprintBucket: 'anarchism_other', difficulty: 'introductory', secondaryTags: ['anarchism', 'mutual-aid', 'decentralization'] }),
   asCandidate({
@@ -239,7 +239,7 @@ const addedClassifyCandidates: readonly LiteracyQuestionRecord[] = [
   }, { blueprintBucket: 'democracy_authoritarianism', difficulty: 'advanced', secondaryTags: ['electoral-authoritarianism', 'competition', 'media'] }),
   asCandidate({
     id: 'C34', section: 'classify',
-    prompt: 'A system has fair elections but weak civil rights and weak checks on leaders. Which description fits best?',
+    prompt: 'A system meets basic standards for competitive elections but has weak civil rights and checks on leaders. Which description fits best?',
     options: [
       { id: 'electoral-democracy', label: 'Electoral democracy, but not full liberal democracy' },
       { id: 'liberal-democracy', label: 'Full liberal democracy by definition' },
@@ -252,7 +252,7 @@ const addedClassifyCandidates: readonly LiteracyQuestionRecord[] = [
   }, { blueprintBucket: 'democracy_authoritarianism', difficulty: 'advanced', secondaryTags: ['electoral-democracy', 'liberal-democracy', 'civil-liberties'] }),
   asCandidate({
     id: 'C35', section: 'classify',
-    prompt: 'A movement opposes state rule and bosses controlling workers. It favors worker-run groups and mutual aid. Which family fits best?',
+    prompt: 'A movement opposes state rule and private control of workplaces. It favors worker-run groups and mutual aid. Which family fits best?',
     options: [
       { id: 'social-anarchism', label: 'Social anarchism' },
       { id: 'marxism-leninism', label: 'Marxism–Leninism' },
@@ -260,7 +260,7 @@ const addedClassifyCandidates: readonly LiteracyQuestionRecord[] = [
       { id: 'classical-liberalism', label: 'Classical liberalism' },
     ],
     acceptedAnswerSets: [['social-anarchism']],
-    explanation: 'Social anarchism opposes both central state power and unfair workplace hierarchy and favors voluntary, worker-run cooperation.',
+    explanation: 'Social anarchism opposes state power and private workplace control and favors voluntary, worker-run cooperation.',
     evidenceIds: ['SEP-ANARCHISM', 'SEP-SOCIALISM'],
   }, { blueprintBucket: 'anarchism_other', difficulty: 'advanced', secondaryTags: ['social-anarchism', 'workplace-hierarchy', 'mutual-aid'] }),
   asCandidate({
@@ -278,7 +278,7 @@ const addedClassifyCandidates: readonly LiteracyQuestionRecord[] = [
   }, { blueprintBucket: 'anarchism_other', difficulty: 'advanced', secondaryTags: ['individualist-anarchism', 'markets', 'private-property'] }),
   asCandidate({
     id: 'C37', section: 'classify',
-    prompt: 'A party supports markets and family benefits but says nothing about Christian ideas or local decision-making. What can we conclude?',
+    prompt: 'A party supports markets and family benefits but mentions no Christian ideas or local decisions. Is that enough for Christian democracy?',
     options: [
       { id: 'yes-welfare', label: 'Yes; welfare and markets are sufficient' },
       { id: 'yes-family', label: 'Yes; family benefits are sufficient' },
@@ -291,7 +291,7 @@ const addedClassifyCandidates: readonly LiteracyQuestionRecord[] = [
   }, { blueprintBucket: 'cross_family', difficulty: 'advanced', secondaryTags: ['classification-evidence', 'christian-democracy', 'insufficient-information'] }),
   asCandidate({
     id: 'C38', section: 'classify',
-    prompt: 'A voter supports public railways, strict social rules and strong national self-government. Which single tradition clearly follows?',
+    prompt: 'A voter supports public ownership, strict social rules and strong national self-government. Which single tradition clearly follows?',
     options: [
       { id: 'socialism', label: 'This clearly shows socialism' },
       { id: 'conservatism', label: 'This clearly shows conservatism' },
@@ -554,15 +554,15 @@ const addedUnderstandCandidates: readonly LiteracyQuestionRecord[] = [
   }, { blueprintBucket: 'left_right_limits', difficulty: 'intermediate', secondaryTags: ['economic-dimension', 'social-cultural-dimension', 'left-right'] }),
   asCandidate({
     id: 'U38', section: 'understand',
-    prompt: 'What should Politangle do when a person’s answers point toward different traditions on different dimensions?',
+    prompt: 'A voter supports public ownership and strict traditional social rules. What is the safest interpretation?',
     options: [
-      { id: 'u38-a', label: 'Discard the answers that conflict with the strongest score.' },
-      { id: 'u38-b', label: 'Show the mixed pattern and explain its different parts.' },
-      { id: 'u38-c', label: 'Force the person into the nearest party label.' },
-      { id: 'u38-d', label: 'Average everything into one number and hide the differences.' },
+      { id: 'u38-a', label: 'The voter must be socialist on every issue.' },
+      { id: 'u38-b', label: 'The voter combines different economic and social positions.' },
+      { id: 'u38-c', label: 'The voter must be conservative on every issue.' },
+      { id: 'u38-d', label: 'The two positions cancel out and reveal nothing.' },
     ],
     acceptedAnswerSets: [['u38-b']],
-    explanation: 'A mixed pattern is useful information. Politangle should show the combination instead of hiding it behind one cleaner label.',
+    explanation: 'Economic and social positions can point in different directions. The combination is meaningful and should remain visible.',
     evidenceIds: ['CHES-2024', 'AAPOR-BEST-PRACTICES'],
   }, { blueprintBucket: 'multidimensional_patterns', difficulty: 'intermediate', secondaryTags: ['cross-pressure', 'mixed-pattern', 'interpretation'] }),
   asCandidate({

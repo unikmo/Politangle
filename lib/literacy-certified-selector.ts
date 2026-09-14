@@ -65,13 +65,49 @@ function allocations(total: number, limits: readonly number[], remaining: readon
 type SelectionSolution = {
   selected: LiteracyQuestionRecord[];
   reused: number;
+  repeatedConcepts: number;
+  rankScore: number;
   signature: string;
 };
 
 function betterSolution(current: SelectionSolution | null, candidate: SelectionSolution) {
   if (!current) return candidate;
   if (candidate.reused !== current.reused) return candidate.reused < current.reused ? candidate : current;
+  if (candidate.repeatedConcepts !== current.repeatedConcepts) {
+    return candidate.repeatedConcepts < current.repeatedConcepts ? candidate : current;
+  }
+  if (candidate.rankScore !== current.rankScore) return candidate.rankScore < current.rankScore ? candidate : current;
   return candidate.signature < current.signature ? candidate : current;
+}
+
+function conceptKey(question: LiteracyQuestionRecord) {
+  return `${question.blueprintBucket}:${question.secondaryTags[0] ?? question.id}`;
+}
+
+function repeatedConceptCount(questions: readonly LiteracyQuestionRecord[]) {
+  const counts = new Map<string, number>();
+  for (const question of questions) {
+    const key = conceptKey(question);
+    counts.set(key, (counts.get(key) ?? 0) + 1);
+  }
+  return [...counts.values()].reduce((total, count) => total + Math.max(0, count - 1), 0);
+}
+
+function combinations<T>(values: readonly T[], count: number): T[][] {
+  if (count === 0) return [[]];
+  if (count > values.length) return [];
+  const result: T[][] = [];
+  function visit(start: number, chosen: T[]) {
+    if (chosen.length === count) {
+      result.push(chosen);
+      return;
+    }
+    for (let index = start; index <= values.length - (count - chosen.length); index += 1) {
+      visit(index + 1, [...chosen, values[index]]);
+    }
+  }
+  visit(0, []);
+  return result;
 }
 
 function selectBalancedPlan(input: {
@@ -111,7 +147,9 @@ function selectBalancedPlan(input: {
   const memo = new Map<string, SelectionSolution | null>();
   function solve(topicIndex: number, remaining: readonly number[]): SelectionSolution | null {
     if (topicIndex === topicEntries.length) {
-      return remaining.every((count) => count === 0) ? { selected: [], reused: 0, signature: '' } : null;
+      return remaining.every((count) => count === 0)
+        ? { selected: [], reused: 0, repeatedConcepts: 0, rankScore: 0, signature: '' }
+        : null;
     }
     const key = `${topicIndex}:${remaining.join(',')}`;
     if (memo.has(key)) return memo.get(key) ?? null;
@@ -122,14 +160,26 @@ function selectBalancedPlan(input: {
     let best: SelectionSolution | null = null;
 
     for (const allocation of allocations(required, limits, remaining)) {
-      const chosen = DIFFICULTIES.flatMap((difficulty, index) => groups.get(difficulty)!.slice(0, allocation[index]));
       const nextRemaining = remaining.map((count, index) => count - allocation[index]);
       const tail = solve(topicIndex + 1, nextRemaining);
       if (!tail) continue;
-      const selected = [...chosen, ...tail.selected];
-      const reused = chosen.filter((question) => previousShown.has(question.id)).length + tail.reused;
-      const signature = selected.map((question) => question.id).join('|');
-      best = betterSolution(best, { selected, reused, signature });
+      const choices = DIFFICULTIES.map((difficulty, index) => combinations(groups.get(difficulty)!, allocation[index]));
+      for (const introductory of choices[0]) {
+        for (const intermediate of choices[1]) {
+          for (const advanced of choices[2]) {
+            const chosen = [...introductory, ...intermediate, ...advanced];
+            const selected = [...chosen, ...tail.selected];
+            const reused = chosen.filter((question) => previousShown.has(question.id)).length + tail.reused;
+            const repeatedConcepts = repeatedConceptCount(chosen) + tail.repeatedConcepts;
+            const rankScore = chosen.reduce(
+              (total, question) => total + deterministicRank(seed, `selection:${topic}`, question.id),
+              tail.rankScore,
+            );
+            const signature = selected.map((question) => question.id).join('|');
+            best = betterSolution(best, { selected, reused, repeatedConcepts, rankScore, signature });
+          }
+        }
+      }
     }
     memo.set(key, best);
     return best;

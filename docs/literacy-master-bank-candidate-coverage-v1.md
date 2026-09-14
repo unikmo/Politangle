@@ -76,3 +76,13 @@ The full English bank has received a plain-language pass for an ordinary adult r
 - no unexplained academic shorthand such as “thin-centered,” “host ideology” or “procedural democracy” in prompts or explanations.
 
 These are reading-load guardrails, not proof of comprehension. Cognitive interviews with the intended 18+ English audience remain required before validation.
+
+## Editorial validation checkpoint
+
+The question-by-question internal reader pass is recorded in `docs/literacy-validation-workflow-v1.md` and enforced by `lib/literacy-editorial-review.ts`.
+
+- 79 items are ready for independent content review.
+- C36 is held for an independent decision on its contested anarchism label and property framing.
+- 0 items are validated for certified play.
+- Any content change invalidates the pinned editorial-review fingerprint.
+- A final `validated` record now requires independent content-review, cognitive-test and calibration artifacts plus explicit approval.
