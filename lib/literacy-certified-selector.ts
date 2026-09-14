@@ -2,9 +2,11 @@ import {
   CERTIFIED_BLUEPRINT_VERSION,
   certifiedBlueprintFor,
   validateCertifiedMasterBank,
+  validateLiteracyQuestionRecord,
   type LiteracyDifficulty,
   type LiteracyQuestionRecord,
 } from './literacy-bank-schema';
+import { POLITANGLE_PRODUCT_DECISIONS } from './product-decisions';
 
 const DIFFICULTIES: readonly LiteracyDifficulty[] = ['introductory', 'intermediate', 'advanced'];
 
@@ -30,6 +32,8 @@ export type CertifiedSelectionResult =
       reason: 'BANK_NOT_READY' | 'BLUEPRINT_INFEASIBLE_AFTER_EXCLUSIONS';
       errors: readonly string[];
     };
+
+export type PracticeSelectionResult = CertifiedSelectionResult;
 
 function hashSeed(input: string) {
   let hash = 2166136261;
@@ -70,26 +74,18 @@ function betterSolution(current: SelectionSolution | null, candidate: SelectionS
   return candidate.signature < current.signature ? candidate : current;
 }
 
-export function selectCertifiedQuestionPlan(input: {
-  questions: readonly LiteracyQuestionRecord[];
+function selectBalancedPlan(input: {
+  candidates: readonly LiteracyQuestionRecord[];
   section: LiteracyQuestionRecord['section'];
   bankVersion: string;
   seed: number | string;
   previousAttempt?: PreviousCertifiedAttempt;
+  orderSalt: string;
 }): CertifiedSelectionResult {
-  const bankValidation = validateCertifiedMasterBank(input.questions, input.section, input.bankVersion);
-  if (!bankValidation.valid) return { ok: false, reason: 'BANK_NOT_READY', errors: bankValidation.errors };
-
   const seed = numericSeed(input.seed);
   const previousShown = new Set(input.previousAttempt?.shownQuestionIds ?? []);
   const excluded = new Set(input.previousAttempt?.incorrectQuestionIds ?? []);
-  const candidates = input.questions.filter(
-    (question) =>
-      question.section === input.section &&
-      question.bankVersion === input.bankVersion &&
-      question.status === 'validated' &&
-      !excluded.has(question.id),
-  );
+  const candidates = input.candidates.filter((question) => !excluded.has(question.id));
   const blueprint = certifiedBlueprintFor(input.section);
   const topicEntries = Object.entries(blueprint.topicQuotas) as [string, number][];
   const difficultyTarget = DIFFICULTIES.map((difficulty) => blueprint.difficultyQuotas[difficulty]);
@@ -155,7 +151,7 @@ export function selectCertifiedQuestionPlan(input: {
   }
 
   const ordered = [...solution.selected].sort(
-    (left, right) => deterministicRank(seed, 'certified-plan-order', left.id) - deterministicRank(seed, 'certified-plan-order', right.id),
+    (left, right) => deterministicRank(seed, input.orderSalt, left.id) - deterministicRank(seed, input.orderSalt, right.id),
   );
   const topicCoverage: Record<string, number> = {};
   const difficultyCoverage: Record<LiteracyDifficulty, number> = { introductory: 0, intermediate: 0, advanced: 0 };
@@ -176,4 +172,42 @@ export function selectCertifiedQuestionPlan(input: {
       difficultyCoverage,
     },
   };
+}
+
+export function selectCertifiedQuestionPlan(input: {
+  questions: readonly LiteracyQuestionRecord[];
+  section: LiteracyQuestionRecord['section'];
+  bankVersion: string;
+  seed: number | string;
+  previousAttempt?: PreviousCertifiedAttempt;
+}): CertifiedSelectionResult {
+  const bankValidation = validateCertifiedMasterBank(input.questions, input.section, input.bankVersion);
+  if (!bankValidation.valid) return { ok: false, reason: 'BANK_NOT_READY', errors: bankValidation.errors };
+  const candidates = input.questions.filter(
+    (question) =>
+      question.section === input.section &&
+      question.bankVersion === input.bankVersion &&
+      question.status === 'validated',
+  );
+  return selectBalancedPlan({ ...input, candidates, orderSalt: 'certified-plan-order' });
+}
+
+export function selectPracticeQuestionPlan(input: {
+  questions: readonly LiteracyQuestionRecord[];
+  section: LiteracyQuestionRecord['section'];
+  bankVersion: string;
+  seed: number | string;
+}): PracticeSelectionResult {
+  const candidates = input.questions.filter(
+    (question) =>
+      question.section === input.section &&
+      question.bankVersion === input.bankVersion &&
+      !['draft', 'retired'].includes(question.status),
+  );
+  const expected = POLITANGLE_PRODUCT_DECISIONS.literacy.masterBankSizePerSection;
+  const errors = candidates.length === expected
+    ? candidates.flatMap((question) => validateLiteracyQuestionRecord(question).errors)
+    : [`${input.section} practice requires exactly ${expected} eligible questions; found ${candidates.length}`];
+  if (errors.length > 0) return { ok: false, reason: 'BANK_NOT_READY', errors };
+  return selectBalancedPlan({ ...input, candidates, orderSalt: 'practice-plan-order' });
 }

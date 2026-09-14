@@ -8,7 +8,8 @@ import {
   type LiteracyDifficulty,
   type LiteracyQuestionRecord,
 } from './literacy-bank-schema';
-import { selectCertifiedQuestionPlan } from './literacy-certified-selector';
+import { selectCertifiedQuestionPlan, selectPracticeQuestionPlan } from './literacy-certified-selector';
+import { literacyMasterBankCandidates } from './literacy-master-bank';
 
 const DIFFICULTIES: readonly LiteracyDifficulty[] = ['introductory', 'intermediate', 'advanced'];
 
@@ -141,4 +142,38 @@ test('selector cannot certify an incomplete or unvalidated master bank', () => {
   assert.equal(result.ok, false);
   if (result.ok) return;
   assert.equal(result.reason, 'BANK_NOT_READY');
+});
+
+test('practice draws a balanced 25-question set from the candidate bank without certifying it', () => {
+  for (const section of ['classify', 'understand'] as const) {
+    const result = selectPracticeQuestionPlan({
+      questions: literacyMasterBankCandidates,
+      section,
+      bankVersion: LITERACY_MASTER_BANK_VERSION,
+      seed: `practice-${section}`,
+    });
+    assert.equal(result.ok, true);
+    if (!result.ok) continue;
+    assert.equal(result.plan.questionIds.length, 25);
+    assert.equal(new Set(result.plan.questionIds).size, 25);
+    assert.deepEqual(result.plan.topicCoverage, certifiedBlueprintFor(section).topicQuotas);
+    assert.deepEqual(result.plan.difficultyCoverage, certifiedBlueprintFor(section).difficultyQuotas);
+  }
+});
+
+test('practice selection does not weaken the certified validation gate', () => {
+  const practice = selectPracticeQuestionPlan({
+    questions: literacyMasterBankCandidates,
+    section: 'classify',
+    bankVersion: LITERACY_MASTER_BANK_VERSION,
+    seed: 'practice-candidates',
+  });
+  const certified = selectCertifiedQuestionPlan({
+    questions: literacyMasterBankCandidates,
+    section: 'classify',
+    bankVersion: LITERACY_MASTER_BANK_VERSION,
+    seed: 'certified-candidates',
+  });
+  assert.equal(practice.ok, true);
+  assert.equal(certified.ok, false);
 });

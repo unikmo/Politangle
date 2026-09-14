@@ -333,15 +333,15 @@ const addedClassifyCandidates: readonly LiteracyQuestionRecord[] = [
 const addedUnderstandCandidates: readonly LiteracyQuestionRecord[] = [
   asCandidate({
     id: 'U21', section: 'understand',
-    prompt: 'How should communism and Marxism–Leninism be distinguished?',
+    prompt: 'What is the main difference between communism and Marxism–Leninism?',
     options: [
-      { id: 'u21-a', label: 'They are exact synonyms for every theory of social ownership.' },
+      { id: 'u21-a', label: 'They are two names for every form of social ownership.' },
       { id: 'u21-b', label: 'Communism is broader; Marxism–Leninism adds rule by a revolutionary party.' },
       { id: 'u21-c', label: 'Communism means welfare capitalism, while Marxism–Leninism means democratic socialism.' },
       { id: 'u21-d', label: 'Marxism–Leninism rejects communism’s goal of collective ownership.' },
     ],
     acceptedAnswerSets: [['u21-b']],
-    explanation: 'Communism is broader than Marxism–Leninism. Marxism–Leninism is a historically specific doctrine centered on a disciplined vanguard party and centralized transition.',
+    explanation: 'Communism is broader. Marxism–Leninism is a specific doctrine in which a tightly organized revolutionary party leads the move toward communism.',
     evidenceIds: ['OXFORD-COMMUNISM', 'BRITANNICA-MARXISM-LENINISM'],
   }, { blueprintBucket: 'adjacent_distinctions', difficulty: 'advanced', secondaryTags: ['communism', 'marxism-leninism', 'vanguard-party'] }),
   asCandidate({
@@ -354,7 +354,7 @@ const addedUnderstandCandidates: readonly LiteracyQuestionRecord[] = [
       { id: 'u22-d', label: 'The two always mean exactly the same thing in every country and period.' },
     ],
     acceptedAnswerSets: [['u22-b']],
-    explanation: 'Both can support democracy and welfare. The clearest general distinction is the larger role that democratic socialism assigns to social ownership beyond regulated capitalism.',
+    explanation: 'Both can support democracy and welfare. Democratic socialism usually wants much more social ownership, while modern social democracy usually reforms capitalism.',
     evidenceIds: ['SEP-SOCIALISM', 'ROUTLEDGE-SOCIAL-DEMOCRACY'],
   }, { blueprintBucket: 'adjacent_distinctions', difficulty: 'intermediate', secondaryTags: ['democratic-socialism', 'social-democracy', 'ownership'] }),
   asCandidate({
@@ -367,7 +367,7 @@ const addedUnderstandCandidates: readonly LiteracyQuestionRecord[] = [
       { id: 'u23-d', label: 'Libertarianism values authority over individual choice.' },
     ],
     acceptedAnswerSets: [['u23-b']],
-    explanation: 'These traditions overlap around liberty but make different judgments about property, markets, welfare and permissible government action.',
+    explanation: 'All three value freedom. They disagree about property, markets, welfare and how much government action freedom may require.',
     evidenceIds: ['SEP-LIBERALISM', 'SEP-LIBERTARIANISM'],
   }, { blueprintBucket: 'adjacent_distinctions', difficulty: 'advanced', secondaryTags: ['classical-liberalism', 'social-liberalism', 'libertarianism'] }),
   asCandidate({
@@ -380,12 +380,12 @@ const addedUnderstandCandidates: readonly LiteracyQuestionRecord[] = [
       { id: 'u24-d', label: 'There is no meaningful distinction in political science.' },
     ],
     acceptedAnswerSets: [['u24-b']],
-    explanation: 'Both restrict political competition, but totalitarianism describes a more encompassing project to control institutions, society and private life.',
+    explanation: 'Both restrict political competition. Totalitarian rule goes further by trying to control society and much of private life too.',
     evidenceIds: ['OXFORD-TOTALITARIANISM', 'VDEM-REGIMES-OF-THE-WORLD'],
   }, { blueprintBucket: 'authoritarian_totalitarian', difficulty: 'intermediate', secondaryTags: ['authoritarianism', 'totalitarianism', 'state-control'] }),
   asCandidate({
     id: 'U25', section: 'understand',
-    prompt: 'Why is authoritarianism not inherently a left- or right-wing economic ideology?',
+    prompt: 'Why is authoritarian rule not automatically left-wing or right-wing?',
     options: [
       { id: 'u25-a', label: 'It describes political power, which can sit beside different economic systems.' },
       { id: 'u25-b', label: 'Because authoritarian regimes never make economic policy.' },
@@ -393,7 +393,7 @@ const addedUnderstandCandidates: readonly LiteracyQuestionRecord[] = [
       { id: 'u25-d', label: 'Because left and right refer only to foreign policy.' },
     ],
     acceptedAnswerSets: [['u25-a']],
-    explanation: 'Authoritarianism primarily describes concentrated, weakly accountable political power. It can coexist with different ownership and distribution arrangements.',
+    explanation: 'Authoritarianism describes how power is held. It can exist with different economic systems and different rules about ownership.',
     evidenceIds: ['VDEM-REGIMES-OF-THE-WORLD', 'CHES-ECON-GALTAN'],
   }, { blueprintBucket: 'authoritarian_totalitarian', difficulty: 'intermediate', secondaryTags: ['authoritarianism', 'economic-left-right', 'political-power'] }),
   asCandidate({
@@ -406,7 +406,7 @@ const addedUnderstandCandidates: readonly LiteracyQuestionRecord[] = [
       { id: 'u26-d', label: 'Yes, but only when the country is formally federal.' },
     ],
     acceptedAnswerSets: [['u26-b']],
-    explanation: 'Authoritarian systems can hold controlled elections and retain private firms. The key questions concern real competition, rights and constraints on rulers.',
+    explanation: 'Authoritarian systems can hold controlled elections and keep private businesses. What matters is real competition, protected rights and limits on rulers.',
     evidenceIds: ['VDEM-REGIMES-OF-THE-WORLD', 'VDEM-LIBERAL-DEMOCRACY'],
   }, { blueprintBucket: 'authoritarian_totalitarian', difficulty: 'introductory', secondaryTags: ['electoral-authoritarianism', 'private-ownership', 'accountability'] }),
   asCandidate({
@@ -419,7 +419,7 @@ const addedUnderstandCandidates: readonly LiteracyQuestionRecord[] = [
       { id: 'u27-d', label: 'They are two names for exactly the same claim about government.' },
     ],
     acceptedAnswerSets: [['u27-a']],
-    explanation: 'Negative liberty focuses on absence of interference, while positive liberty focuses on self-direction or effective capacity. Liberal traditions disagree about their implications.',
+    explanation: 'Negative liberty means being free from interference. Positive liberty asks whether people have the real ability to direct their own lives.',
     evidenceIds: ['SEP-LIBERALISM'],
   }, { blueprintBucket: 'definitions', difficulty: 'advanced', secondaryTags: ['negative-liberty', 'positive-liberty', 'liberalism'] }),
   asCandidate({
@@ -427,12 +427,12 @@ const addedUnderstandCandidates: readonly LiteracyQuestionRecord[] = [
     prompt: 'What is the democratic purpose of independent courts reviewing government action?',
     options: [
       { id: 'u28-a', label: 'To replace elections with rule by judges.' },
-      { id: 'u28-b', label: 'To help enforce law and constitutional limits even against current office holders.' },
+      { id: 'u28-b', label: 'To enforce legal limits even when current leaders object.' },
       { id: 'u28-c', label: 'To guarantee that courts always agree with public opinion.' },
       { id: 'u28-d', label: 'To let judges write every public policy directly.' },
     ],
     acceptedAnswerSets: [['u28-b']],
-    explanation: 'Independent courts can uphold rights, legality and constitutional limits. That constraining role complements rather than replaces competitive elections.',
+    explanation: 'Independent courts can protect rights and enforce legal limits. This supports fair elections; it does not replace them.',
     evidenceIds: ['VDEM-LIBERAL-DEMOCRACY'],
   }, { blueprintBucket: 'institutions_power', difficulty: 'intermediate', secondaryTags: ['judicial-independence', 'rule-of-law', 'executive-constraints'] }),
   asCandidate({
@@ -445,7 +445,7 @@ const addedUnderstandCandidates: readonly LiteracyQuestionRecord[] = [
       { id: 'u29-d', label: 'Checks matter only in countries without constitutions.' },
     ],
     acceptedAnswerSets: [['u29-b']],
-    explanation: 'Democratic authorization is limited: institutions protect rights, legality and future competition from abuse by current majorities or executives.',
+    explanation: 'Winning an election does not give unlimited power. Checks protect rights, law and the chance for opponents to compete next time.',
     evidenceIds: ['VDEM-LIBERAL-DEMOCRACY'],
   }, { blueprintBucket: 'institutions_power', difficulty: 'intermediate', secondaryTags: ['checks-and-balances', 'majority-rule', 'rights'] }),
   asCandidate({
@@ -458,7 +458,7 @@ const addedUnderstandCandidates: readonly LiteracyQuestionRecord[] = [
       { id: 'u30-d', label: 'State ownership refers only to welfare payments.' },
     ],
     acceptedAnswerSets: [['u30-b']],
-    explanation: 'Social ownership is broader than central state ownership and can include public, cooperative, municipal and worker-controlled arrangements.',
+    explanation: 'Social ownership is broader than state ownership. It can include public bodies, cooperatives, communities and worker-run organizations.',
     evidenceIds: ['SEP-SOCIALISM'],
   }, { blueprintBucket: 'economics_ownership', difficulty: 'intermediate', secondaryTags: ['social-ownership', 'state-ownership', 'cooperatives'] }),
   asCandidate({
@@ -497,7 +497,7 @@ const addedUnderstandCandidates: readonly LiteracyQuestionRecord[] = [
       { id: 'u33-d', label: 'Neither has any relation to economic institutions.' },
     ],
     acceptedAnswerSets: [['u33-a']],
-    explanation: 'Cooperative ownership concerns governance and ownership of production; redistribution concerns the allocation of income or wealth after or alongside production.',
+    explanation: 'A cooperative changes who owns and runs a business. Redistribution changes how income or wealth is shared through taxes, benefits or services.',
     evidenceIds: ['SEP-SOCIALISM', 'WVS-W7-DOCUMENTATION'],
   }, { blueprintBucket: 'economics_ownership', difficulty: 'advanced', secondaryTags: ['worker-cooperative', 'redistribution', 'ownership'] }),
   asCandidate({
@@ -510,7 +510,7 @@ const addedUnderstandCandidates: readonly LiteracyQuestionRecord[] = [
       { id: 'u34-d', label: 'Because only referendums are democratic.' },
     ],
     acceptedAnswerSets: [['u34-b']],
-    explanation: 'Liberal democracy combines meaningful electoral competition with liberties, legality and constraints. Controlled elections can also exist under authoritarian rule.',
+    explanation: 'Liberal democracy needs fair political competition, rights, law and limits on rulers. Authoritarian governments can also hold controlled elections.',
     evidenceIds: ['VDEM-LIBERAL-DEMOCRACY', 'VDEM-REGIMES-OF-THE-WORLD'],
   }, { blueprintBucket: 'misconceptions', difficulty: 'introductory', secondaryTags: ['elections', 'liberal-democracy', 'authoritarianism'] }),
   asCandidate({
@@ -523,7 +523,7 @@ const addedUnderstandCandidates: readonly LiteracyQuestionRecord[] = [
       { id: 'u35-d', label: 'Because every political tradition agrees on all policies.' },
     ],
     acceptedAnswerSets: [['u35-a']],
-    explanation: 'Political traditions overlap and contain internal variation. Classification needs a broader pattern rather than a single shared policy.',
+    explanation: 'Political traditions overlap and vary within themselves. A fair classification needs a wider pattern, not one shared policy.',
     evidenceIds: ['AAPOR-BEST-PRACTICES', 'SEP-LIBERALISM', 'SEP-CONSERVATISM', 'SEP-SOCIALISM'],
   }, { blueprintBucket: 'misconceptions', difficulty: 'introductory', secondaryTags: ['classification', 'single-issue', 'overlap'] }),
   asCandidate({
@@ -536,7 +536,7 @@ const addedUnderstandCandidates: readonly LiteracyQuestionRecord[] = [
       { id: 'u36-d', label: 'Because economic questions never influence left-right placement.' },
     ],
     acceptedAnswerSets: [['u36-a']],
-    explanation: 'Left-right language compresses historically and nationally specific conflicts. Its content can shift even though it remains politically useful.',
+    explanation: 'Left and right are shortcuts for political conflicts. The issues behind those shortcuts can change across countries and over time.',
     evidenceIds: ['CHES-2024', 'CHES-ECON-GALTAN', 'SEP-NATIONALISM'],
   }, { blueprintBucket: 'left_right_limits', difficulty: 'advanced', secondaryTags: ['left-right', 'context', 'political-history'] }),
   asCandidate({
@@ -549,7 +549,7 @@ const addedUnderstandCandidates: readonly LiteracyQuestionRecord[] = [
       { id: 'u37-d', label: 'Because only social-cultural issues matter in elections.' },
     ],
     acceptedAnswerSets: [['u37-a']],
-    explanation: 'Economic and social-cultural views correlate imperfectly. Measuring them separately preserves combinations that a single line can hide.',
+    explanation: 'Economic and social views do not always move together. Measuring them separately shows combinations that one left-right line can hide.',
     evidenceIds: ['CHES-2024', 'CHES-ECON-GALTAN'],
   }, { blueprintBucket: 'left_right_limits', difficulty: 'intermediate', secondaryTags: ['economic-dimension', 'social-cultural-dimension', 'left-right'] }),
   asCandidate({
@@ -567,15 +567,15 @@ const addedUnderstandCandidates: readonly LiteracyQuestionRecord[] = [
   }, { blueprintBucket: 'multidimensional_patterns', difficulty: 'intermediate', secondaryTags: ['cross-pressure', 'mixed-pattern', 'interpretation'] }),
   asCandidate({
     id: 'U39', section: 'understand',
-    prompt: 'If two political attitudes are often correlated, what can a questionnaire safely conclude about one individual?',
+    prompt: 'If two political views often appear together, what can a questionnaire conclude about one person?',
     options: [
       { id: 'u39-a', label: 'The individual must hold both attitudes.' },
       { id: 'u39-b', label: 'Measure them separately; a common pattern does not determine every person.' },
       { id: 'u39-c', label: 'Only the more common attitude needs to be measured.' },
-      { id: 'u39-d', label: 'Correlation proves both attitudes have the same meaning.' },
+      { id: 'u39-d', label: 'Appearing together proves both views mean the same thing.' },
     ],
     acceptedAnswerSets: [['u39-b']],
-    explanation: 'A recurring association does not make two constructs identical or determine an individual answer. Separate measurement preserves real exceptions and combinations.',
+    explanation: 'A common pattern does not decide what one person believes. Asking separately leaves room for real exceptions and combinations.',
     evidenceIds: ['AAPOR-BEST-PRACTICES', 'CHES-2024'],
   }, { blueprintBucket: 'multidimensional_patterns', difficulty: 'advanced', secondaryTags: ['correlation', 'individual-inference', 'measurement'] }),
   asCandidate({

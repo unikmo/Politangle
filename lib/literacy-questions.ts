@@ -187,7 +187,7 @@ export const literacyQuestions: readonly LiteracyQuestion[] = [
     id: 'C15', section: 'classify',
     prompt: 'A system combines real elections, civil rights, rule of law and independent checks on leaders. Which system is this?',
     options: [
-      { id: 'majoritarian-democracy', label: 'Unconstrained majoritarian democracy' },
+      { id: 'majoritarian-democracy', label: 'Elections with no limits on the winner' },
       { id: 'one-party-rule', label: 'One-party rule' },
       { id: 'authoritarianism', label: 'Authoritarian government' },
       { id: 'liberal-democracy', label: 'Liberal democracy' },
@@ -294,7 +294,7 @@ export const literacyQuestions: readonly LiteracyQuestion[] = [
     options: [
       { id: 'u3-a', label: 'Regular elections are enough.' },
       { id: 'u3-b', label: 'Private property and markets are enough.' },
-      { id: 'u3-c', label: 'The elected leader must be free from institutional checks.' },
+      { id: 'u3-c', label: 'Courts and lawmakers must not limit the elected leader.' },
       { id: 'u3-d', label: 'Elections work alongside civil rights, rule of law and checks on leaders.' },
     ],
     acceptedAnswerSets: [['u3-d']],
@@ -376,7 +376,7 @@ export const literacyQuestions: readonly LiteracyQuestion[] = [
       { id: 'u9-d', label: 'Its support for European political cooperation.' },
     ],
     acceptedAnswerSets: [['u9-b']],
-    explanation: 'Other traditions also mix markets and welfare. Christian social ideas and subsidiarity make the classification more specific.',
+    explanation: 'Other traditions also mix markets and welfare. Christian social ideas and keeping suitable decisions local make this tradition more specific.',
     evidenceIds: ['CAMBRIDGE-CHRISTIAN-DEMOCRACY', 'CAMBRIDGE-CD-RELIGIOUS-INSPIRATION', 'CAMBRIDGE-CD-SUBSIDIARITY'],
   },
   {
@@ -394,7 +394,7 @@ export const literacyQuestions: readonly LiteracyQuestion[] = [
   },
   {
     id: 'U11', section: 'understand',
-    prompt: 'Which description best matches the Marxian communist ideal?',
+    prompt: 'Which description best matches the communist ideal described by Marx?',
     options: [
       { id: 'u11-a', label: 'A classless society without a state or privately owned production.' },
       { id: 'u11-b', label: 'A permanent one-party state with central planning.' },
