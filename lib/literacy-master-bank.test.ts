@@ -25,6 +25,10 @@ function jaccard(left: Set<string>, right: Set<string>) {
   return union === 0 ? 0 : intersection / union;
 }
 
+function wordCount(value: string) {
+  return value.trim().split(/\s+/).filter(Boolean).length;
+}
+
 function assertBlueprintCapacity(
   questions: readonly LiteracyQuestionRecord[],
   topicQuotas: Readonly<Record<string, number>>,
@@ -106,3 +110,40 @@ test('candidate prompts avoid exact and near-duplicate wording', () => {
   }
 });
 
+test('reader-facing copy stays within the plain-English reading-load limits', () => {
+  for (const question of literacyMasterBankCandidates) {
+    assert.ok(wordCount(question.prompt) <= 22, `${question.id} prompt is too long`);
+    assert.ok(wordCount(question.explanation) <= 26, `${question.id} explanation is too long`);
+    assert.equal(question.options.length, 4, `${question.id} must offer exactly four choices`);
+    assert.equal(question.acceptedAnswerSets.length, 1, `${question.id} must have one defensible answer`);
+    assert.equal(question.acceptedAnswerSets[0].length, 1, `${question.id} must be single-answer`);
+    for (const option of question.options) {
+      assert.ok(wordCount(option.label) <= 16, `${question.id}/${option.id} is too long`);
+    }
+  }
+});
+
+test('answer wording does not reveal the correct choice through length', () => {
+  for (const question of literacyMasterBankCandidates) {
+    const accepted = new Set(question.acceptedAnswerSets.flat());
+    const correctLongest = Math.max(...question.options.filter((option) => accepted.has(option.id)).map((option) => wordCount(option.label)));
+    const distractorLongest = Math.max(...question.options.filter((option) => !accepted.has(option.id)).map((option) => wordCount(option.label)));
+    assert.ok(correctLongest - distractorLongest < 4, `${question.id} cues its answer through length`);
+  }
+});
+
+test('prompts and explanations avoid unexplained academic shorthand', () => {
+  const blocked = [
+    'thin-centered',
+    'host ideology',
+    'procedural democracy',
+    'cross-pressured',
+    'institutional forms',
+    'substantially socialized',
+    'coercive state power',
+  ];
+  for (const question of literacyMasterBankCandidates) {
+    const readerCopy = `${question.prompt} ${question.explanation}`.toLowerCase();
+    for (const phrase of blocked) assert.equal(readerCopy.includes(phrase), false, `${question.id} contains ${phrase}`);
+  }
+});

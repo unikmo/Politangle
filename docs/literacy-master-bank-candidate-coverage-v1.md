@@ -64,3 +64,15 @@ No item may change to `validated` until its record documents:
 
 Automated checks establish structural integrity and blueprint capacity; they do not substitute for content or psychometric validation.
 
+## Reader-first wording gate
+
+The full English bank has received a plain-language pass for an ordinary adult reader, not a political-science specialist. Automated regression limits now require:
+
+- no prompt longer than 22 words;
+- no answer choice longer than 16 words;
+- no explanation longer than 26 words;
+- exactly four choices and one defensible answer per question;
+- no correct answer that is visibly revealed by being much longer than every distractor;
+- no unexplained academic shorthand such as “thin-centered,” “host ideology” or “procedural democracy” in prompts or explanations.
+
+These are reading-load guardrails, not proof of comprehension. Cognitive interviews with the intended 18+ English audience remain required before validation.

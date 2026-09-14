@@ -87,21 +87,24 @@ test('Christian democracy is used only when distinctive religious and subsidiari
   const item = deepLiteracyQuestions.find((question) => question.id === 'C11')!;
   assert.deepEqual(item.acceptedAnswerSets, [['christian-democracy']]);
   assert.match(item.prompt, /Christian/i);
-  assert.match(item.prompt, /subsidiarity/i);
+  assert.match(item.prompt, /lowest capable level/i);
 });
 
-test('UNDERSTAND distractors are substantive instead of making the longest answer obviously correct', () => {
+test('UNDERSTAND choices are concise without making the longest answer obviously correct', () => {
   for (const question of deepLiteracyQuestions.filter((item) => item.section === 'understand')) {
     const correctId = question.acceptedAnswerSets[0][0];
     const correct = question.options.find((option) => option.id === correctId)!;
     const distractors = question.options.filter((option) => option.id !== correctId);
     const correctWords = wordCount(correct.label);
-    assert.ok(correctWords >= 10, `${question.id} correct answer is too terse`);
+    const longestDistractor = Math.max(...distractors.map((option) => wordCount(option.label)));
+    assert.ok(correctWords >= 4, `${question.id} correct answer is too terse`);
+    assert.ok(correctWords <= 16, `${question.id} correct answer is too long`);
     for (const option of distractors) {
       const words = wordCount(option.label);
-      assert.ok(words >= 10, `${question.id} distractor ${option.id} is too terse`);
-      assert.ok(Math.abs(words - correctWords) <= 9, `${question.id} option lengths make the key too visually obvious`);
+      assert.ok(words >= 4, `${question.id} distractor ${option.id} is too terse`);
+      assert.ok(words <= 16, `${question.id} distractor ${option.id} is too long`);
     }
+    assert.ok(correctWords - longestDistractor < 4, `${question.id} option lengths make the key too visually obvious`);
   }
 });
 

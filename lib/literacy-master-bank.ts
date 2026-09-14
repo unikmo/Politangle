@@ -70,7 +70,7 @@ export const existingLiteracyCandidateRecords: readonly LiteracyQuestionRecord[]
 const addedClassifyCandidates: readonly LiteracyQuestionRecord[] = [
   asCandidate({
     id: 'C21', section: 'classify',
-    prompt: 'A movement supports competitive democracy and civil liberties but wants to replace much of capitalist ownership with democratic social, cooperative or worker ownership. Which tradition fits best?',
+    prompt: 'A movement protects democracy and rights but wants far more public, cooperative or worker ownership. Which tradition fits best?',
     options: [
       { id: 'social-democracy', label: 'Modern social democracy' },
       { id: 'democratic-socialism', label: 'Democratic socialism' },
@@ -78,12 +78,12 @@ const addedClassifyCandidates: readonly LiteracyQuestionRecord[] = [
       { id: 'christian-democracy', label: 'Christian democracy' },
     ],
     acceptedAnswerSets: [['democratic-socialism']],
-    explanation: 'Democratic socialism combines political democracy with a substantially socialized economy; modern social democracy generally retains predominantly private ownership.',
+    explanation: 'Democratic socialism combines democracy with much more social ownership. Modern social democracy usually keeps most businesses private.',
     evidenceIds: ['SEP-SOCIALISM', 'ROUTLEDGE-SOCIAL-DEMOCRACY'],
   }, { blueprintBucket: 'socialist_communist', difficulty: 'intermediate', secondaryTags: ['democratic-socialism', 'social-democracy', 'social-ownership'] }),
   asCandidate({
     id: 'C22', section: 'classify',
-    prompt: 'A tradition emphasizes individual rights, constitutional limits, private property and competitive markets, while accepting a state that protects rights and contracts. Which tradition fits best?',
+    prompt: 'A tradition supports individual rights, limited government, private property and open markets. Which tradition fits best?',
     options: [
       { id: 'social-liberalism', label: 'Social liberalism' },
       { id: 'classical-liberalism', label: 'Classical liberalism' },
@@ -91,12 +91,12 @@ const addedClassifyCandidates: readonly LiteracyQuestionRecord[] = [
       { id: 'anarchism', label: 'Anarchism' },
     ],
     acceptedAnswerSets: [['classical-liberalism']],
-    explanation: 'Classical liberalism strongly associates liberty and constitutional government with private property and market exchange, without rejecting the state altogether.',
+    explanation: 'Classical liberalism links freedom and limited government with private property and markets. Unlike anarchism, it still accepts a state.',
     evidenceIds: ['SEP-LIBERALISM', 'SEP-LIBERTARIANISM'],
   }, { blueprintBucket: 'liberal', difficulty: 'intermediate', secondaryTags: ['classical-liberalism', 'constitutional-government', 'markets'] }),
   asCandidate({
     id: 'C23', section: 'classify',
-    prompt: 'A regime concentrates political power, prevents meaningful opposition and weakens checks on rulers, but may leave some private and social life outside direct state control. Which system fits best?',
+    prompt: 'A regime blocks real opposition and checks on rulers but leaves some private life alone. Which system fits best?',
     options: [
       { id: 'liberal-democracy', label: 'Liberal democracy' },
       { id: 'authoritarianism', label: 'Authoritarianism' },
@@ -104,12 +104,12 @@ const addedClassifyCandidates: readonly LiteracyQuestionRecord[] = [
       { id: 'federalism', label: 'Federalism' },
     ],
     acceptedAnswerSets: [['authoritarianism']],
-    explanation: 'Authoritarianism concentrates power and restricts competition and accountability. Unlike totalitarianism, it does not necessarily seek pervasive control of every sphere of life.',
+    explanation: 'Authoritarianism concentrates power and blocks real competition. Unlike totalitarianism, it may leave parts of private life alone.',
     evidenceIds: ['VDEM-REGIMES-OF-THE-WORLD', 'OXFORD-TOTALITARIANISM'],
   }, { blueprintBucket: 'democracy_authoritarianism', difficulty: 'intermediate', secondaryTags: ['authoritarianism', 'political-competition', 'constraints'] }),
   asCandidate({
     id: 'C24', section: 'classify',
-    prompt: 'A tradition questions the legitimacy of centralized coercive authority and favors voluntary association, mutual aid and decentralized self-government. Which tradition fits best?',
+    prompt: 'A tradition rejects unjustified central power and favors voluntary groups, mutual aid and local self-rule. Which tradition fits best?',
     options: [
       { id: 'libertarianism', label: 'Libertarianism' },
       { id: 'anarchism', label: 'Anarchism' },
@@ -117,12 +117,12 @@ const addedClassifyCandidates: readonly LiteracyQuestionRecord[] = [
       { id: 'federalism', label: 'Federalism' },
     ],
     acceptedAnswerSets: [['anarchism']],
-    explanation: 'Anarchist traditions share skepticism toward centralized hierarchy and unjustified authority and commonly emphasize voluntary, decentralized cooperation.',
+    explanation: 'Anarchist traditions question central power and hierarchy and often favor voluntary, local cooperation.',
     evidenceIds: ['SEP-ANARCHISM'],
   }, { blueprintBucket: 'anarchism_other', difficulty: 'introductory', secondaryTags: ['anarchism', 'mutual-aid', 'decentralization'] }),
   asCandidate({
     id: 'C25', section: 'classify',
-    prompt: 'A doctrine calls for a disciplined revolutionary vanguard party to seize and centralize political power in a transition toward communism. Which doctrine fits best?',
+    prompt: 'A doctrine calls for a tightly organized revolutionary party to seize power and lead a transition to communism. Which doctrine fits best?',
     options: [
       { id: 'democratic-socialism', label: 'Democratic socialism' },
       { id: 'marxism-leninism', label: 'Marxism–Leninism' },
@@ -130,12 +130,12 @@ const addedClassifyCandidates: readonly LiteracyQuestionRecord[] = [
       { id: 'anarchism', label: 'Anarchism' },
     ],
     acceptedAnswerSets: [['marxism-leninism']],
-    explanation: 'Marxism–Leninism is a historically specific communist doctrine associated with a centralized vanguard party; it is not a synonym for every socialist or communist view.',
+    explanation: 'Marxism–Leninism gives a leading role to a tightly organized revolutionary party. It is not another name for every socialist or communist view.',
     evidenceIds: ['BRITANNICA-MARXISM-LENINISM', 'OXFORD-COMMUNISM'],
   }, { blueprintBucket: 'socialist_communist', difficulty: 'advanced', secondaryTags: ['marxism-leninism', 'vanguard-party', 'communism'] }),
   asCandidate({
     id: 'C26', section: 'classify',
-    prompt: 'A liberal movement argues that public education, social insurance and regulation can help people exercise freedom in practice while retaining markets and private property. Which tradition fits best?',
+    prompt: 'A liberal movement says education, social insurance and market rules can give people more real freedom. Which tradition fits best?',
     options: [
       { id: 'classical-liberalism', label: 'Classical liberalism' },
       { id: 'social-liberalism', label: 'Social or modern liberalism' },
@@ -143,12 +143,12 @@ const addedClassifyCandidates: readonly LiteracyQuestionRecord[] = [
       { id: 'democratic-socialism', label: 'Democratic socialism' },
     ],
     acceptedAnswerSets: [['social-liberalism']],
-    explanation: 'Social or modern liberalism remains centered on liberty but accepts more public action to expand effective opportunity and freedom.',
+    explanation: 'Social or modern liberalism values freedom but accepts more government action to expand people’s real opportunities.',
     evidenceIds: ['SEP-LIBERALISM'],
   }, { blueprintBucket: 'liberal', difficulty: 'advanced', secondaryTags: ['social-liberalism', 'positive-liberty', 'welfare'] }),
   asCandidate({
     id: 'C27', section: 'classify',
-    prompt: 'A movement accepts markets and constitutional democracy but stresses social duty, inherited institutions and cautious reform more than individual autonomy. Which tradition fits best?',
+    prompt: 'A movement accepts markets and democracy but values social duty, tradition and cautious reform over individual choice. Which tradition fits best?',
     options: [
       { id: 'classical-liberalism', label: 'Classical liberalism' },
       { id: 'conservatism', label: 'Conservatism' },
@@ -156,12 +156,12 @@ const addedClassifyCandidates: readonly LiteracyQuestionRecord[] = [
       { id: 'social-democracy', label: 'Social democracy' },
     ],
     acceptedAnswerSets: [['conservatism']],
-    explanation: 'The distinguishing signals are continuity, inherited institutions, social duty and cautious reform—not markets alone, which several traditions accept.',
+    explanation: 'The strongest clues are tradition, social duty and cautious reform. Markets alone do not identify one tradition.',
     evidenceIds: ['SEP-CONSERVATISM', 'SEP-LIBERALISM'],
   }, { blueprintBucket: 'conservative_christian_democratic', difficulty: 'advanced', secondaryTags: ['conservatism', 'social-duty', 'gradual-change'] }),
   asCandidate({
     id: 'C28', section: 'classify',
-    prompt: 'A movement argues that ecological sustainability requires social ownership and a major reduction in capitalist control over production. Which combined tradition fits best?',
+    prompt: 'A movement says protecting nature requires much more public or worker ownership. Which combined tradition fits best?',
     options: [
       { id: 'eco-socialism', label: 'Eco-socialism' },
       { id: 'green-liberalism', label: 'Green liberalism' },
@@ -169,12 +169,12 @@ const addedClassifyCandidates: readonly LiteracyQuestionRecord[] = [
       { id: 'national-conservatism', label: 'National conservatism' },
     ],
     acceptedAnswerSets: [['eco-socialism']],
-    explanation: 'The statement combines green concern with ecological limits and the socialist emphasis on social ownership, making eco-socialism the best fit.',
+    explanation: 'This combines the green focus on ecological limits with the socialist focus on social ownership. Eco-socialism is the best fit.',
     evidenceIds: ['CAMBRIDGE-GREEN-POLITICS', 'SEP-SOCIALISM'],
   }, { blueprintBucket: 'green_ecological', difficulty: 'advanced', secondaryTags: ['eco-socialism', 'ecology', 'social-ownership'] }),
   asCandidate({
     id: 'C29', section: 'classify',
-    prompt: 'A movement treats ecological limits as central but seeks change through constitutional democracy, regulated markets and individual rights. Which broad family is most clearly present?',
+    prompt: 'A movement puts ecological limits first while supporting democracy, regulated markets and individual rights. Which family is most clearly present?',
     options: [
       { id: 'green-politics', label: 'Green politics' },
       { id: 'fascism', label: 'Fascism' },
@@ -182,33 +182,33 @@ const addedClassifyCandidates: readonly LiteracyQuestionRecord[] = [
       { id: 'populism', label: 'Populism' },
     ],
     acceptedAnswerSets: [['green-politics']],
-    explanation: 'Ecological limits remain the organizing concern. Green politics can combine with democratic institutions and market mechanisms and does not require one fixed ownership model.',
+    explanation: 'Ecological limits are the main clue. Green politics can use democratic government and markets and has no single ownership model.',
     evidenceIds: ['CAMBRIDGE-GREEN-POLITICS'],
   }, { blueprintBucket: 'green_ecological', difficulty: 'intermediate', secondaryTags: ['green-politics', 'regulated-markets', 'rights'] }),
   asCandidate({
     id: 'C30', section: 'classify',
-    prompt: 'A movement defines the nation mainly through shared citizenship and political institutions rather than ancestry, and supports national self-government. Which concept fits best?',
+    prompt: 'A movement defines the nation through shared citizenship, not ancestry, and supports national self-government. Which concept fits best?',
     options: [
       { id: 'civic-nationalism', label: 'Civic nationalism' },
-      { id: 'nativism', label: 'Nativism' },
+      { id: 'nativism', label: 'Ancestry-based nationalism' },
       { id: 'fascism', label: 'Fascism' },
       { id: 'cosmopolitanism', label: 'Cosmopolitanism' },
     ],
     acceptedAnswerSets: [['civic-nationalism']],
-    explanation: 'Civic nationalism ties national membership primarily to shared citizenship and political institutions rather than descent, while still valuing national self-government.',
+    explanation: 'Civic nationalism bases national membership mainly on shared citizenship rather than family background or ancestry.',
     evidenceIds: ['SEP-NATIONALISM', 'GLOBALCIT-BIRTHRIGHT'],
   }, { blueprintBucket: 'nationalism_populism', difficulty: 'advanced', secondaryTags: ['civic-nationalism', 'citizenship', 'self-government'] }),
   asCandidate({
     id: 'C31', section: 'classify',
-    prompt: 'A movement attacks a corrupt elite in the name of ordinary people and combines this with redistribution and worker protection. Which element is clearly populist?',
+    prompt: 'A movement supports workers and attacks a corrupt elite in the name of ordinary people. Which part is populist?',
     options: [
       { id: 'redistribution', label: 'Supporting redistribution' },
       { id: 'worker-protection', label: 'Supporting worker protection' },
-      { id: 'people-versus-elite', label: 'Framing politics as the people versus a corrupt elite' },
+      { id: 'people-versus-elite', label: 'Setting people against a corrupt elite' },
       { id: 'public-services', label: 'Supporting public services' },
     ],
     acceptedAnswerSets: [['people-versus-elite']],
-    explanation: 'The people-versus-corrupt-elite framing identifies populism. The economic policies describe its host program but do not define populism.',
+    explanation: 'The people-versus-elite claim is populist. Worker protection and redistribution can belong to several political programs.',
     evidenceIds: ['MUDDE-POPULISM', 'VDEM-POPULISM-AUTOCRATIZATION'],
   }, { blueprintBucket: 'nationalism_populism', difficulty: 'intermediate', secondaryTags: ['left-populism', 'host-ideology', 'people-elite'] }),
   asCandidate({
@@ -221,12 +221,12 @@ const addedClassifyCandidates: readonly LiteracyQuestionRecord[] = [
       { id: 'populism', label: 'Populism' },
     ],
     acceptedAnswerSets: [['extreme-right']],
-    explanation: 'Explicit rejection of democracy and elimination of opposition are key reasons to classify a far-right actor as extreme rather than merely radical right.',
+    explanation: 'Openly rejecting democracy and opposition is the key reason to classify this group as extreme right rather than radical right.',
     evidenceIds: ['PIRRO-FAR-RIGHT'],
   }, { blueprintBucket: 'radical_extreme_fascist', difficulty: 'intermediate', secondaryTags: ['extreme-right', 'democracy-rejection', 'opposition'] }),
   asCandidate({
     id: 'C33', section: 'classify',
-    prompt: 'A country holds multiparty elections, but rulers systematically block genuine competition, control media access and prevent voters from removing them. Which description fits best?',
+    prompt: 'A country holds elections, but rulers block real competition and prevent voters from removing them. Which description fits best?',
     options: [
       { id: 'liberal-democracy', label: 'Liberal democracy' },
       { id: 'electoral-authoritarianism', label: 'Electoral authoritarianism' },
@@ -234,25 +234,25 @@ const addedClassifyCandidates: readonly LiteracyQuestionRecord[] = [
       { id: 'federalism', label: 'Federalism' },
     ],
     acceptedAnswerSets: [['electoral-authoritarianism']],
-    explanation: 'Holding elections does not make a regime democratic when competition is not meaningful and rulers cannot realistically be removed through the vote.',
+    explanation: 'Elections are not democratic when the competition is controlled and voters cannot realistically remove the rulers.',
     evidenceIds: ['VDEM-REGIMES-OF-THE-WORLD', 'VDEM-LIBERAL-DEMOCRACY'],
   }, { blueprintBucket: 'democracy_authoritarianism', difficulty: 'advanced', secondaryTags: ['electoral-authoritarianism', 'competition', 'media'] }),
   asCandidate({
     id: 'C34', section: 'classify',
-    prompt: 'A system has free and fair elections and meaningful opposition, but civil liberties and constraints on the executive remain weak. Which description is most defensible?',
+    prompt: 'A system has fair elections but weak civil rights and weak checks on leaders. Which description fits best?',
     options: [
-      { id: 'electoral-democracy', label: 'Electoral democracy, but not fully liberal democracy' },
+      { id: 'electoral-democracy', label: 'Electoral democracy, but not full liberal democracy' },
       { id: 'liberal-democracy', label: 'Full liberal democracy by definition' },
       { id: 'totalitarianism', label: 'Totalitarianism' },
       { id: 'anarchism', label: 'Anarchism' },
     ],
     acceptedAnswerSets: [['electoral-democracy']],
-    explanation: 'Electoral democracy requires meaningful competition; liberal democracy additionally requires civil liberties, rule of law and checks on executive power.',
+    explanation: 'Electoral democracy requires real competition. Liberal democracy also requires civil rights, rule of law and checks on leaders.',
     evidenceIds: ['VDEM-LIBERAL-DEMOCRACY', 'VDEM-REGIMES-OF-THE-WORLD'],
   }, { blueprintBucket: 'democracy_authoritarianism', difficulty: 'advanced', secondaryTags: ['electoral-democracy', 'liberal-democracy', 'civil-liberties'] }),
   asCandidate({
     id: 'C35', section: 'classify',
-    prompt: 'A movement opposes both state rule and private domination at work, and favors decentralized worker associations and mutual aid. Which family fits best?',
+    prompt: 'A movement opposes state rule and bosses controlling workers. It favors worker-run groups and mutual aid. Which family fits best?',
     options: [
       { id: 'social-anarchism', label: 'Social anarchism' },
       { id: 'marxism-leninism', label: 'Marxism–Leninism' },
@@ -260,25 +260,25 @@ const addedClassifyCandidates: readonly LiteracyQuestionRecord[] = [
       { id: 'classical-liberalism', label: 'Classical liberalism' },
     ],
     acceptedAnswerSets: [['social-anarchism']],
-    explanation: 'Social anarchism joins the anarchist critique of centralized coercion with opposition to economic hierarchy and support for decentralized cooperation.',
+    explanation: 'Social anarchism opposes both central state power and unfair workplace hierarchy and favors voluntary, worker-run cooperation.',
     evidenceIds: ['SEP-ANARCHISM', 'SEP-SOCIALISM'],
   }, { blueprintBucket: 'anarchism_other', difficulty: 'advanced', secondaryTags: ['social-anarchism', 'workplace-hierarchy', 'mutual-aid'] }),
   asCandidate({
     id: 'C36', section: 'classify',
-    prompt: 'A thinker rejects state authority but strongly defends private property and voluntary market exchange. What is the safest classification?',
+    prompt: 'A thinker rejects state power but strongly supports private property and voluntary markets. Which classification fits best?',
     options: [
       { id: 'social-anarchism', label: 'Social anarchism' },
-      { id: 'market-anarchism', label: 'A market-oriented or individualist anarchist tradition' },
-      { id: 'social-democracy', label: 'Social democracy' },
+      { id: 'market-anarchism', label: 'Market-oriented anarchism' },
+      { id: 'social-democracy', label: 'Modern social democracy' },
       { id: 'christian-democracy', label: 'Christian democracy' },
     ],
     acceptedAnswerSets: [['market-anarchism']],
-    explanation: 'Anarchism includes divergent economic traditions. Rejecting state authority while defending property and markets points to a market-oriented or individualist form, not social anarchism.',
+    explanation: 'Anarchism includes different economic views. Supporting property and markets points to a market-oriented or individualist form.',
     evidenceIds: ['SEP-ANARCHISM', 'SEP-LIBERTARIANISM'],
   }, { blueprintBucket: 'anarchism_other', difficulty: 'advanced', secondaryTags: ['individualist-anarchism', 'markets', 'private-property'] }),
   asCandidate({
     id: 'C37', section: 'classify',
-    prompt: 'A party supports a social-market economy and generous family benefits but gives no evidence about religious inspiration or subsidiarity. Can it be confidently classified as Christian democratic?',
+    prompt: 'A party supports markets and family benefits but says nothing about Christian ideas or local decision-making. What can we conclude?',
     options: [
       { id: 'yes-welfare', label: 'Yes; welfare and markets are sufficient' },
       { id: 'yes-family', label: 'Yes; family benefits are sufficient' },
@@ -286,25 +286,25 @@ const addedClassifyCandidates: readonly LiteracyQuestionRecord[] = [
       { id: 'no-socialist', label: 'No; it must be socialist' },
     ],
     acceptedAnswerSets: [['no-insufficient']],
-    explanation: 'Markets plus welfare occur in several traditions. Christian inspiration and subsidiarity would provide more distinctive Christian-democratic evidence.',
+    explanation: 'Several traditions mix markets and welfare. Christian social ideas and subsidiarity would give stronger evidence for Christian democracy.',
     evidenceIds: ['CAMBRIDGE-CHRISTIAN-DEMOCRACY', 'CAMBRIDGE-CD-RELIGIOUS-INSPIRATION', 'CAMBRIDGE-CD-SUBSIDIARITY'],
   }, { blueprintBucket: 'cross_family', difficulty: 'advanced', secondaryTags: ['classification-evidence', 'christian-democracy', 'insufficient-information'] }),
   asCandidate({
     id: 'C38', section: 'classify',
-    prompt: 'A voter favors public ownership of railways, strict traditional social rules and strong national sovereignty. Which single tradition follows with confidence?',
+    prompt: 'A voter supports public railways, strict social rules and strong national self-government. Which single tradition clearly follows?',
     options: [
-      { id: 'socialism', label: 'Socialism' },
-      { id: 'conservatism', label: 'Conservatism' },
-      { id: 'nationalism', label: 'Nationalism' },
-      { id: 'insufficient', label: 'No single tradition follows from this mixed pattern' },
+      { id: 'socialism', label: 'This clearly shows socialism' },
+      { id: 'conservatism', label: 'This clearly shows conservatism' },
+      { id: 'nationalism', label: 'This clearly shows nationalism' },
+      { id: 'insufficient', label: 'No single tradition clearly follows' },
     ],
     acceptedAnswerSets: [['insufficient']],
-    explanation: 'Economic ownership, social authority and nationhood are separate dimensions. The mixed pattern can overlap several traditions and does not justify one label.',
+    explanation: 'Ownership, social rules and national power are separate questions. This mixed pattern does not justify one simple label.',
     evidenceIds: ['CHES-ECON-GALTAN', 'SEP-SOCIALISM', 'SEP-NATIONALISM'],
   }, { blueprintBucket: 'cross_family', difficulty: 'intermediate', secondaryTags: ['mixed-pattern', 'economic-left', 'cultural-right'] }),
   asCandidate({
     id: 'C39', section: 'classify',
-    prompt: 'A movement supports national self-determination, equal citizenship, civil liberties and constitutional limits. Which combined description is most plausible?',
+    prompt: 'A movement supports national self-government, equal citizenship, civil rights and limits on leaders. Which description fits best?',
     options: [
       { id: 'liberal-nationalism', label: 'Liberal nationalism' },
       { id: 'fascism', label: 'Fascism' },
@@ -312,20 +312,20 @@ const addedClassifyCandidates: readonly LiteracyQuestionRecord[] = [
       { id: 'totalitarianism', label: 'Totalitarianism' },
     ],
     acceptedAnswerSets: [['liberal-nationalism']],
-    explanation: 'National self-determination can combine with liberal commitments to equal citizenship, rights and constitutional limits; nationalism is not inherently illiberal.',
+    explanation: 'National self-government can combine with equal citizenship, rights and limits on leaders. Nationalism is not always illiberal.',
     evidenceIds: ['SEP-NATIONALISM', 'SEP-LIBERALISM'],
   }, { blueprintBucket: 'cross_family', difficulty: 'advanced', secondaryTags: ['liberal-nationalism', 'equal-citizenship', 'constitutionalism'] }),
   asCandidate({
     id: 'C40', section: 'classify',
-    prompt: 'A party promises lower taxes and says ordinary people must defeat a corrupt elite. Which conclusion is best supported?',
+    prompt: 'A party promises lower taxes and says ordinary people must defeat a corrupt elite. What can we conclude?',
     options: [
-      { id: 'libertarian', label: 'It is necessarily libertarian' },
-      { id: 'conservative', label: 'It is necessarily conservative' },
-      { id: 'populist-host-open', label: 'It uses populism, but its broader host ideology needs more evidence' },
-      { id: 'fascist', label: 'It is necessarily fascist' },
+      { id: 'libertarian', label: 'It must be libertarian because it lowers taxes' },
+      { id: 'conservative', label: 'It must be conservative because it lowers taxes' },
+      { id: 'populist-host-open', label: 'It is populist; its wider politics remain unclear' },
+      { id: 'fascist', label: 'It must be fascist because it attacks elites' },
     ],
     acceptedAnswerSets: [['populist-host-open']],
-    explanation: 'The people-versus-corrupt-elite claim is populist. A tax preference alone does not establish the movement’s complete host ideology.',
+    explanation: 'The people-versus-elite claim is populist. One tax policy does not reveal the party’s whole political outlook.',
     evidenceIds: ['MUDDE-POPULISM', 'VDEM-POPULISM-AUTOCRATIZATION'],
   }, { blueprintBucket: 'cross_family', difficulty: 'intermediate', secondaryTags: ['populism', 'host-ideology', 'taxation'] }),
 ] as const;
@@ -336,7 +336,7 @@ const addedUnderstandCandidates: readonly LiteracyQuestionRecord[] = [
     prompt: 'How should communism and Marxism–Leninism be distinguished?',
     options: [
       { id: 'u21-a', label: 'They are exact synonyms for every theory of social ownership.' },
-      { id: 'u21-b', label: 'Communism is a broader ideal and family; Marxism–Leninism is a specific doctrine of party-led revolutionary rule.' },
+      { id: 'u21-b', label: 'Communism is broader; Marxism–Leninism adds rule by a revolutionary party.' },
       { id: 'u21-c', label: 'Communism means welfare capitalism, while Marxism–Leninism means democratic socialism.' },
       { id: 'u21-d', label: 'Marxism–Leninism rejects communism’s goal of collective ownership.' },
     ],
@@ -349,7 +349,7 @@ const addedUnderstandCandidates: readonly LiteracyQuestionRecord[] = [
     prompt: 'What best distinguishes democratic socialism from modern social democracy?',
     options: [
       { id: 'u22-a', label: 'Democratic socialism rejects elections; social democracy accepts them.' },
-      { id: 'u22-b', label: 'Democratic socialism makes democratic social ownership a larger goal; modern social democracy usually reforms a mainly capitalist economy.' },
+      { id: 'u22-b', label: 'Democratic socialism seeks more social ownership; social democracy usually reforms capitalism.' },
       { id: 'u22-c', label: 'Only social democracy supports public services.' },
       { id: 'u22-d', label: 'The two always mean exactly the same thing in every country and period.' },
     ],
@@ -359,10 +359,10 @@ const addedUnderstandCandidates: readonly LiteracyQuestionRecord[] = [
   }, { blueprintBucket: 'adjacent_distinctions', difficulty: 'intermediate', secondaryTags: ['democratic-socialism', 'social-democracy', 'ownership'] }),
   asCandidate({
     id: 'U23', section: 'understand',
-    prompt: 'Which comparison of classical liberalism, social liberalism and libertarianism is most defensible?',
+    prompt: 'Which comparison of classical liberalism, social liberalism and libertarianism is most accurate?',
     options: [
       { id: 'u23-a', label: 'All three require the same minimal state and reject social provision.' },
-      { id: 'u23-b', label: 'They all value liberty, but differ over property, welfare and how much state action freedom may require.' },
+      { id: 'u23-b', label: 'All value freedom but disagree about property, welfare and government action.' },
       { id: 'u23-c', label: 'Social liberalism is socialist because it accepts welfare.' },
       { id: 'u23-d', label: 'Libertarianism values authority over individual choice.' },
     ],
@@ -375,7 +375,7 @@ const addedUnderstandCandidates: readonly LiteracyQuestionRecord[] = [
     prompt: 'What is the clearest difference between authoritarianism and totalitarianism?',
     options: [
       { id: 'u24-a', label: 'Authoritarianism is always right-wing, while totalitarianism is always left-wing.' },
-      { id: 'u24-b', label: 'Totalitarianism seeks more pervasive control of public and private life; authoritarianism may tolerate limited non-political autonomy.' },
+      { id: 'u24-b', label: 'Totalitarianism seeks control of private life as well as politics.' },
       { id: 'u24-c', label: 'Authoritarianism has no rulers, while totalitarianism has one ruler.' },
       { id: 'u24-d', label: 'There is no meaningful distinction in political science.' },
     ],
@@ -387,7 +387,7 @@ const addedUnderstandCandidates: readonly LiteracyQuestionRecord[] = [
     id: 'U25', section: 'understand',
     prompt: 'Why is authoritarianism not inherently a left- or right-wing economic ideology?',
     options: [
-      { id: 'u25-a', label: 'Because authoritarianism concerns how political power is constrained, while regimes can use different economic systems.' },
+      { id: 'u25-a', label: 'It describes political power, which can sit beside different economic systems.' },
       { id: 'u25-b', label: 'Because authoritarian regimes never make economic policy.' },
       { id: 'u25-c', label: 'Because every authoritarian regime uses an identical mixed economy.' },
       { id: 'u25-d', label: 'Because left and right refer only to foreign policy.' },
@@ -401,7 +401,7 @@ const addedUnderstandCandidates: readonly LiteracyQuestionRecord[] = [
     prompt: 'Can a regime be authoritarian while allowing some elections and private businesses?',
     options: [
       { id: 'u26-a', label: 'No; either feature automatically makes a country democratic.' },
-      { id: 'u26-b', label: 'Yes; elections can be non-competitive and private ownership does not guarantee accountable political power.' },
+      { id: 'u26-b', label: 'Yes; elections can be controlled and private business does not ensure democracy.' },
       { id: 'u26-c', label: 'No; authoritarianism requires abolishing all money and markets.' },
       { id: 'u26-d', label: 'Yes, but only when the country is formally federal.' },
     ],
@@ -413,7 +413,7 @@ const addedUnderstandCandidates: readonly LiteracyQuestionRecord[] = [
     id: 'U27', section: 'understand',
     prompt: 'What is the difference between negative and positive liberty in liberal thought?',
     options: [
-      { id: 'u27-a', label: 'Negative liberty concerns freedom from interference; positive liberty concerns effective agency or capacity to act.' },
+      { id: 'u27-a', label: 'One means freedom from interference; the other means real power to act.' },
       { id: 'u27-b', label: 'Negative liberty is illegal freedom; positive liberty is lawful freedom.' },
       { id: 'u27-c', label: 'Negative liberty concerns markets only; positive liberty concerns elections only.' },
       { id: 'u27-d', label: 'They are two names for exactly the same claim about government.' },
@@ -440,7 +440,7 @@ const addedUnderstandCandidates: readonly LiteracyQuestionRecord[] = [
     prompt: 'Why do checks and balances matter after a government wins an election?',
     options: [
       { id: 'u29-a', label: 'An election gives the winner unlimited authority until the next vote.' },
-      { id: 'u29-b', label: 'Checks help prevent elected power from overriding rights, law and the ability of opponents to compete later.' },
+      { id: 'u29-b', label: 'Checks protect rights, law and the ability of opponents to compete later.' },
       { id: 'u29-c', label: 'Checks exist mainly to prevent governments from changing tax rates.' },
       { id: 'u29-d', label: 'Checks matter only in countries without constitutions.' },
     ],
@@ -453,7 +453,7 @@ const addedUnderstandCandidates: readonly LiteracyQuestionRecord[] = [
     prompt: 'How are social ownership and state ownership related?',
     options: [
       { id: 'u30-a', label: 'They are always identical.' },
-      { id: 'u30-b', label: 'State ownership is one possible form; social ownership can also include cooperative, municipal or worker control.' },
+      { id: 'u30-b', label: 'State ownership is one form; cooperatives and worker control are others.' },
       { id: 'u30-c', label: 'Social ownership means private shareholders own all firms.' },
       { id: 'u30-d', label: 'State ownership refers only to welfare payments.' },
     ],
@@ -491,7 +491,7 @@ const addedUnderstandCandidates: readonly LiteracyQuestionRecord[] = [
     id: 'U33', section: 'understand',
     prompt: 'Why is a worker cooperative not the same thing as redistribution?',
     options: [
-      { id: 'u33-a', label: 'A cooperative changes ownership or control inside an enterprise; redistribution changes how income or wealth is allocated.' },
+      { id: 'u33-a', label: 'A cooperative changes business ownership; redistribution changes how income or wealth is shared.' },
       { id: 'u33-b', label: 'They are the same because both require identical tax rates.' },
       { id: 'u33-c', label: 'Redistribution changes voting rights inside firms, while cooperatives only change welfare benefits.' },
       { id: 'u33-d', label: 'Neither has any relation to economic institutions.' },
@@ -505,7 +505,7 @@ const addedUnderstandCandidates: readonly LiteracyQuestionRecord[] = [
     prompt: 'Why are elections alone not enough to establish liberal democracy?',
     options: [
       { id: 'u34-a', label: 'Because liberal democracy additionally requires one economic policy.' },
-      { id: 'u34-b', label: 'Because elections can occur without civil liberties, fair competition, rule of law or effective constraints on rulers.' },
+      { id: 'u34-b', label: 'Elections can exist without rights, fair competition or checks on rulers.' },
       { id: 'u34-c', label: 'Because liberal democracy does not use elections.' },
       { id: 'u34-d', label: 'Because only referendums are democratic.' },
     ],
@@ -517,7 +517,7 @@ const addedUnderstandCandidates: readonly LiteracyQuestionRecord[] = [
     id: 'U35', section: 'understand',
     prompt: 'Why should one policy position not determine a person’s entire political tradition?',
     options: [
-      { id: 'u35-a', label: 'Because traditions are patterns across several ideas, and different traditions can share one policy.' },
+      { id: 'u35-a', label: 'Traditions combine several ideas and can share the same policy.' },
       { id: 'u35-b', label: 'Because policy positions never contain political information.' },
       { id: 'u35-c', label: 'Because only party membership can reveal political beliefs.' },
       { id: 'u35-d', label: 'Because every political tradition agrees on all policies.' },
@@ -530,7 +530,7 @@ const addedUnderstandCandidates: readonly LiteracyQuestionRecord[] = [
     id: 'U36', section: 'understand',
     prompt: 'Why can “left” and “right” mean somewhat different things across countries and periods?',
     options: [
-      { id: 'u36-a', label: 'Because the labels organize changing coalitions and conflicts rather than naming one timeless list of policies.' },
+      { id: 'u36-a', label: 'The labels describe changing political conflicts, not one timeless policy list.' },
       { id: 'u36-b', label: 'Because the terms have no political meaning at all.' },
       { id: 'u36-c', label: 'Because left always means national sovereignty and right always means internationalism.' },
       { id: 'u36-d', label: 'Because economic questions never influence left-right placement.' },
@@ -543,7 +543,7 @@ const addedUnderstandCandidates: readonly LiteracyQuestionRecord[] = [
     id: 'U37', section: 'understand',
     prompt: 'Why should economic and social-cultural positions be measured separately?',
     options: [
-      { id: 'u37-a', label: 'Because people and parties can combine market or ownership views with different positions on authority, tradition and personal freedom.' },
+      { id: 'u37-a', label: 'People can combine economic views with different views on authority, tradition and personal freedom.' },
       { id: 'u37-b', label: 'Because economic views are objective while social views are not political.' },
       { id: 'u37-c', label: 'Because the two dimensions always move in opposite directions.' },
       { id: 'u37-d', label: 'Because only social-cultural issues matter in elections.' },
@@ -557,12 +557,12 @@ const addedUnderstandCandidates: readonly LiteracyQuestionRecord[] = [
     prompt: 'What should Politangle do when a person’s answers point toward different traditions on different dimensions?',
     options: [
       { id: 'u38-a', label: 'Discard the answers that conflict with the strongest score.' },
-      { id: 'u38-b', label: 'Show the mixed or cross-pressured pattern and explain the dimensions behind it.' },
+      { id: 'u38-b', label: 'Show the mixed pattern and explain its different parts.' },
       { id: 'u38-c', label: 'Force the person into the nearest party label.' },
       { id: 'u38-d', label: 'Average everything into one number and hide the differences.' },
     ],
     acceptedAnswerSets: [['u38-b']],
-    explanation: 'Cross-pressure is substantive information. A multidimensional model should display the combination instead of erasing it to produce a cleaner label.',
+    explanation: 'A mixed pattern is useful information. Politangle should show the combination instead of hiding it behind one cleaner label.',
     evidenceIds: ['CHES-2024', 'AAPOR-BEST-PRACTICES'],
   }, { blueprintBucket: 'multidimensional_patterns', difficulty: 'intermediate', secondaryTags: ['cross-pressure', 'mixed-pattern', 'interpretation'] }),
   asCandidate({
@@ -570,7 +570,7 @@ const addedUnderstandCandidates: readonly LiteracyQuestionRecord[] = [
     prompt: 'If two political attitudes are often correlated, what can a questionnaire safely conclude about one individual?',
     options: [
       { id: 'u39-a', label: 'The individual must hold both attitudes.' },
-      { id: 'u39-b', label: 'The attitudes should still be measured separately because a group-level relationship does not determine every person.' },
+      { id: 'u39-b', label: 'Measure them separately; a common pattern does not determine every person.' },
       { id: 'u39-c', label: 'Only the more common attitude needs to be measured.' },
       { id: 'u39-d', label: 'Correlation proves both attitudes have the same meaning.' },
     ],
@@ -582,7 +582,7 @@ const addedUnderstandCandidates: readonly LiteracyQuestionRecord[] = [
     id: 'U40', section: 'understand',
     prompt: 'Why can two people with the same average political score still have meaningfully different profiles?',
     options: [
-      { id: 'u40-a', label: 'An average can combine different high and low dimension scores into the same total.' },
+      { id: 'u40-a', label: 'Different high and low scores can produce the same average.' },
       { id: 'u40-b', label: 'They cannot; identical averages prove identical beliefs.' },
       { id: 'u40-c', label: 'Averages record party membership rather than answers.' },
       { id: 'u40-d', label: 'Only unanswered questions can produce equal averages.' },
@@ -601,4 +601,3 @@ export const literacyMasterBankCandidates: readonly LiteracyQuestionRecord[] = [
 
 export const classifyMasterBankCandidates = literacyMasterBankCandidates.filter((question) => question.section === 'classify');
 export const understandMasterBankCandidates = literacyMasterBankCandidates.filter((question) => question.section === 'understand');
-
