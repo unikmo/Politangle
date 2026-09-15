@@ -3,12 +3,13 @@
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
 import {
-  POPULISM_ANGLE_LABELS,
   POPULISM_QUIZ_ANGLES,
   POPULISM_QUIZ_SIZE,
   type PopulismQuizQuestion,
   selectPopulismQuiz,
 } from '../../lib/populism-quiz';
+import { LanguageSelector, useLocale } from '../LocaleProvider';
+import { localizedPopulismQuestion, nativeAngleLabels, populismUi } from './populism-native';
 
 type Run = {
   seed: number;
@@ -43,8 +44,14 @@ function orderedOptions(question: PopulismQuizQuestion, seed: number) {
 }
 
 export default function PopulismQuizClient() {
+  const { locale } = useLocale();
+  const c = populismUi(locale);
+  const angleLabels = nativeAngleLabels[locale];
   const [run, setRun] = useState<Run | null>(null);
-  const questions = useMemo(() => new Map(selectPopulismQuiz(run?.seed ?? 0).map((question) => [question.id, question])), [run?.seed]);
+  const questions = useMemo(() => new Map(selectPopulismQuiz(run?.seed ?? 0).map((question) => {
+    const localized = localizedPopulismQuestion(locale, question);
+    return [localized.id, localized] as const;
+  })), [locale, run?.seed]);
   const current = run ? questions.get(run.questionIds[run.index]) ?? null : null;
   const selectedId = run && current ? run.answers[current.id] : undefined;
   const selectedOption = current?.options.find((option) => option.id === selectedId);
@@ -79,17 +86,17 @@ export default function PopulismQuizClient() {
 
   if (!run) {
     return <main className="engine-page practice-page populism-page">
-      <header className="engine-header"><Link href="/" className="engine-brand">Politangle</Link><span>POPULISM QUIZ · ENGLISH</span><Link href="/learn#populism">Learn first</Link></header>
+      <header className="engine-header"><Link href="/" className="engine-brand">Politangle</Link><span>POPULISM QUIZ · {c.language}</span><div className="engine-header-actions"><LanguageSelector/><Link href="/learn#populism">{c.learnFirst}</Link></div></header>
       <section className="engine-shell populism-start">
-        <p className="engine-kicker">FREE · 12 QUESTIONS · ABOUT 5 MINUTES</p>
-        <h1>Can you recognize populism?</h1>
-        <p className="practice-lede">Spot the framing, the democratic warning signs and the false positives. This tests political literacy—it does not label your beliefs or discredit people for criticizing power.</p>
-        <div className="populism-principle"><strong>Criticism is not automatically populism.</strong><p>Wealthy donors can influence policy. Companies and individuals can avoid tax. Institutions can fail or become captured. Populism concerns the additional claim that one authentic people faces a uniformly corrupt enemy, often with only one movement presented as legitimate.</p></div>
-        <div className="populism-angle-list" aria-label="Quiz coverage">
-          {POPULISM_QUIZ_ANGLES.map((angle) => <span key={angle}>{POPULISM_ANGLE_LABELS[angle]}</span>)}
+        <p className="engine-kicker">{c.free}</p>
+        <h1>{c.title}</h1>
+        <p className="practice-lede">{c.lede}</p>
+        <div className="populism-principle"><strong>{c.principleTitle}</strong><p>{c.principle}</p></div>
+        <div className="populism-angle-list" aria-label={c.coverage}>
+          {POPULISM_QUIZ_ANGLES.map((angle) => <span key={angle}>{angleLabels[angle]}</span>)}
         </div>
-        <button className="engine-primary-link populism-start-button" type="button" onClick={start}>Start the quiz →</button>
-        <p className="populism-candidate-note">Candidate learning content. Free, private on this device and not part of certification yet.</p>
+        <button className="engine-primary-link populism-start-button" type="button" onClick={start}>{c.start}</button>
+        <p className="populism-candidate-note">{c.candidate}</p>
       </section>
     </main>;
   }
@@ -102,20 +109,20 @@ export default function PopulismQuizClient() {
       const angleQuestions = answeredQuestions.filter((question) => question.angle === angle);
       return { angle, score: angleQuestions.filter((question) => run.answers[question.id] === question.answerId).length };
     });
-    const resultTitle = correct >= 10 ? 'Strong recognition' : correct >= 7 ? 'Developing recognition' : 'Build the foundations';
+    const resultTitle = correct >= 10 ? c.strong : correct >= 7 ? c.developing : c.foundations;
     return <main className="engine-page practice-page populism-page">
-      <header className="engine-header"><Link href="/" className="engine-brand">Politangle</Link><span>POPULISM QUIZ · RESULT</span><Link href="/learn#populism">Review the term</Link></header>
+      <header className="engine-header"><Link href="/" className="engine-brand">Politangle</Link><span>{c.resultHeader}</span><div className="engine-header-actions"><LanguageSelector/><Link href="/learn#populism">{c.reviewTerm}</Link></div></header>
       <section className="engine-shell literacy-shell">
         <article className="engine-card literacy-result-card populism-result-card">
           <p className="engine-kicker">{resultTitle.toUpperCase()}</p>
           <h1>{correct} / {POPULISM_QUIZ_SIZE}</h1>
-          <p className="result-lede">This is a learning result, not a judgment about your political beliefs.</p>
+          <p className="result-lede">{c.resultLede}</p>
           <div className="populism-score-grid">
-            {angleScores.map(({ angle, score }) => <div key={angle}><span>{POPULISM_ANGLE_LABELS[angle]}</span><strong>{score}/2</strong></div>)}
+            {angleScores.map(({ angle, score }) => <div key={angle}><span>{angleLabels[angle]}</span><strong>{score}/2</strong></div>)}
           </div>
           <div className="engine-result-actions">
-            <button className="engine-primary-link" type="button" onClick={start}>Try a different set</button>
-            <Link className="engine-primary-link secondary" href="/learn#populism">Review populism</Link>
+            <button className="engine-primary-link" type="button" onClick={start}>{c.retry}</button>
+            <Link className="engine-primary-link secondary" href="/learn#populism">{c.review}</Link>
           </div>
         </article>
       </section>
@@ -126,28 +133,28 @@ export default function PopulismQuizClient() {
   const hintShown = run.hintShown.includes(current.id);
   const correctLabel = current.options.find((option) => option.id === current.answerId)?.label;
   return <main className="engine-page practice-page populism-page">
-    <header className="engine-header"><Link href="/" className="engine-brand">Politangle</Link><span>POPULISM QUIZ · ENGLISH</span><Link href="/learn#populism">Learn the term</Link></header>
+    <header className="engine-header"><Link href="/" className="engine-brand">Politangle</Link><span>{c.quizHeader}</span><div className="engine-header-actions"><LanguageSelector/><Link href="/learn#populism">{c.learnTerm}</Link></div></header>
     <section className="engine-shell literacy-shell">
       <div className="engine-progress-row">
-        <span>{correct} correct so far</span>
+        <span>{c.correctSoFar(correct)}</span>
         <div className="engine-progress" aria-label={`${run.index + 1} of ${run.questionIds.length}`}><span style={{ width: `${((run.index + 1) / run.questionIds.length) * 100}%` }} /></div>
-        <button type="button" className="engine-link-button" onClick={() => setRun(null)}>Exit quiz</button>
+        <button type="button" className="engine-link-button" onClick={() => setRun(null)}>{c.exit}</button>
       </div>
       <article className="engine-card literacy-card">
-        <div className="populism-question-meta"><p className="engine-kicker">QUESTION {run.index + 1} OF {run.questionIds.length}</p><span>{POPULISM_ANGLE_LABELS[current.angle]}</span></div>
+        <div className="populism-question-meta"><p className="engine-kicker">{c.question(run.index + 1, run.questionIds.length)}</p><span>{angleLabels[current.angle]}</span></div>
         <h1 className="literacy-prompt">{current.prompt}</h1>
-        {!checked && <div className="populism-hint"><button type="button" onClick={showHint} aria-expanded={hintShown}>{hintShown ? 'Hint' : 'Need a clue?'}</button>{hintShown && <p>{current.hint}</p>}</div>}
+        {!checked && <div className="populism-hint"><button type="button" onClick={showHint} aria-expanded={hintShown}>{hintShown ? c.hint : c.clue}</button>{hintShown && <p>{current.hint}</p>}</div>}
         <div className="deep-options literacy-options">
           {orderedOptions(current, run.seed).map((option) => <button type="button" disabled={checked} className={selectedId === option.id ? 'deep-option selected' : 'deep-option'} key={option.id} onClick={() => choose(option.id)}>{option.label}</button>)}
         </div>
         {checked && selectedOption && <div className="literacy-feedback" aria-live="polite">
-          <p className="engine-kicker">{selectedId === current.answerId ? 'CORRECT' : 'NOT QUITE'}</p>
+          <p className="engine-kicker">{selectedId === current.answerId ? c.correct : c.notQuite}</p>
           <p>{selectedOption.feedback}</p>
-          {selectedId !== current.answerId && <p><strong>Best answer:</strong> {correctLabel}</p>}
+          {selectedId !== current.answerId && <p><strong>{c.best}</strong> {correctLabel}</p>}
           <p>{current.explanation}</p>
         </div>}
       </article>
-      <div className="engine-nav literacy-nav"><span>{run.index + 1} / {run.questionIds.length}</span>{checked ? <button type="button" onClick={next}>{run.index === run.questionIds.length - 1 ? 'See result' : 'Next question'}</button> : <button type="button" onClick={check} disabled={!selectedId}>Check answer</button>}</div>
+      <div className="engine-nav literacy-nav"><span>{run.index + 1} / {run.questionIds.length}</span>{checked ? <button type="button" onClick={next}>{run.index === run.questionIds.length - 1 ? c.see : c.next}</button> : <button type="button" onClick={check} disabled={!selectedId}>{c.check}</button>}</div>
     </section>
   </main>;
 }
