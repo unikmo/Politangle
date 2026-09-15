@@ -37,6 +37,26 @@ test('every populism question is plain, single-answer and evidence-bound', () =>
   }
 });
 
+test('every hint uses short everyday language', () => {
+  const academicShorthand = [
+    'policy platform',
+    'central political story',
+    'exclusive representation',
+    'political legitimacy',
+    'political community',
+    'organized and constrained',
+    'decision-making procedure',
+  ];
+
+  for (const question of populismQuizBank) {
+    assert.ok(wordCount(question.hint) <= 22, `${question.id} hint is too long`);
+    const hint = question.hint.toLowerCase();
+    for (const phrase of academicShorthand) {
+      assert.ok(!hint.includes(phrase), `${question.id} hint contains academic shorthand: ${phrase}`);
+    }
+  }
+});
+
 test('each run draws twelve questions with two from every angle', () => {
   for (let seed = 0; seed < 50; seed += 1) {
     const selected = selectPopulismQuiz(seed);
@@ -52,4 +72,3 @@ test('balanced runs vary across seeds', () => {
   const runs = new Set(Array.from({ length: 50 }, (_, seed) => selectPopulismQuiz(seed).map((question) => question.id).sort().join(',')));
   assert.ok(runs.size >= 10, `only ${runs.size} distinct runs`);
 });
-

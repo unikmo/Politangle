@@ -47,7 +47,7 @@ export const populismQuizBank: readonly PopulismQuizQuestion[] = [
   candidate({
     id: 'P1', angle: 'core_framing',
     prompt: 'Which claim is the clearest example of populist framing?',
-    hint: 'Look for a moral conflict between two supposedly unified groups.',
+    hint: 'Look for a statement that divides society into good ordinary people and a corrupt elite.',
     options: [
       { id: 'a', label: 'Several groups disagree about how taxes should be spent.', feedback: 'Disagreement among groups accepts political diversity; it is not the core populist claim.' },
       { id: 'b', label: 'One pure people is betrayed by an entirely corrupt establishment.', feedback: 'This divides society morally into two supposedly unified groups—the central populist framing.' },
@@ -72,21 +72,21 @@ export const populismQuizBank: readonly PopulismQuizQuestion[] = [
   }),
   candidate({
     id: 'P3', angle: 'core_framing',
-    prompt: 'Why can populism combine with very different policy programs?',
-    hint: 'Separate its central political story from a complete policy platform.',
+    prompt: 'Why can populist parties support very different policies?',
+    hint: 'Ask whether populism gives a full list of policies, or mainly says who is against whom.',
     options: [
-      { id: 'a', label: 'It supplies a complete economic program that parties can copy.', feedback: 'Populism does not supply one complete economic program.' },
-      { id: 'b', label: 'It concerns only speaking style and contains no political claim.', feedback: 'Populism has a recurring political claim; it is more than tone or style.' },
-      { id: 'c', label: 'It requires every movement to adopt the same social policies.', feedback: 'Populist movements differ widely in their social and economic policies.' },
-      { id: 'd', label: 'Its people-versus-elite story can attach to other ideologies.', feedback: 'The core framing can combine with different economic, social and national programs.' },
+      { id: 'a', label: 'It gives every party the same economic program.', feedback: 'Populist parties can support very different economic policies.' },
+      { id: 'b', label: 'It is only a speaking style with no political idea.', feedback: 'Populism makes a political claim about ordinary people and elites.' },
+      { id: 'c', label: 'It requires every party to support the same social policies.', feedback: 'Populist parties can also differ widely on social policies.' },
+      { id: 'd', label: 'It says who is against whom but does not set every policy.', feedback: 'The people-versus-elite idea can be combined with different policies.' },
     ], answerId: 'd',
-    explanation: 'Populism supplies a people-versus-elite story, not a complete program for the economy and society.',
+    explanation: 'Populism says good ordinary people are against a corrupt elite. It does not decide every economic or social policy.',
     evidenceIds: ['MUDDE-POPULISM'],
   }),
   candidate({
     id: 'P4', angle: 'exclusive_representation',
     prompt: 'Which statement most clearly claims exclusive representation of “the real people”?',
-    hint: 'Look for a speaker denying that political opponents can represent legitimate citizens.',
+    hint: 'Look for a speaker saying that political opponents and their voters do not really count.',
     options: [
       { id: 'a', label: 'Our proposal has more public support than the government’s plan.', feedback: 'Claiming greater support is normal political competition.' },
       { id: 'b', label: 'Our opponents represent different interests and make the wrong choices.', feedback: 'Calling opponents wrong still recognizes them as political participants.' },
@@ -99,7 +99,7 @@ export const populismQuizBank: readonly PopulismQuizQuestion[] = [
   candidate({
     id: 'P5', angle: 'exclusive_representation',
     prompt: 'A leader loses an election and says genuine citizens could never reject him. What is the warning sign?',
-    hint: 'Consider who the leader permits to count as a genuine citizen.',
+    hint: 'Notice whether people who voted differently are still treated as real citizens.',
     options: [
       { id: 'a', label: 'He is asking for a recount under existing law.', feedback: 'A lawful recount request does not by itself deny the legitimacy of other voters.' },
       { id: 'b', label: 'He treats only his supporters as the authentic people.', feedback: 'The statement excludes opposing voters from the genuine public.' },
@@ -112,7 +112,7 @@ export const populismQuizBank: readonly PopulismQuizQuestion[] = [
   candidate({
     id: 'P6', angle: 'exclusive_representation',
     prompt: 'Which view best respects a politically diverse public?',
-    hint: 'Pluralism accepts that legitimate citizens may disagree deeply.',
+    hint: 'In a democracy, people can disagree strongly and still belong equally.',
     options: [
       { id: 'a', label: 'One party naturally expresses the people’s single authentic will.', feedback: 'This treats the public as having one authentic will represented by one party.' },
       { id: 'b', label: 'Citizens may support competing interests without becoming less legitimate.', feedback: 'This recognizes political disagreement without excluding citizens from the public.' },
@@ -151,7 +151,7 @@ export const populismQuizBank: readonly PopulismQuizQuestion[] = [
   candidate({
     id: 'P9', angle: 'opposition_pluralism',
     prompt: 'An elected government says winning gives it unlimited authority until the next vote. What is missing?',
-    hint: 'Elections are one part of democracy, not permission to remove every restraint.',
+    hint: 'Winning an election gives power to govern, but ask whether any limits still apply.',
     options: [
       { id: 'a', label: 'A promise to reduce the number of political parties.', feedback: 'Fewer parties would not solve the claim of unlimited power.' },
       { id: 'b', label: 'Rights, legal limits and fair competition between elections.', feedback: 'Democratic authority remains limited by rights, law and future political competition.' },
@@ -164,7 +164,7 @@ export const populismQuizBank: readonly PopulismQuizQuestion[] = [
   candidate({
     id: 'P10', angle: 'institutional_attacks',
     prompt: 'A court blocks an unlawful policy. Which response is the clearest democratic warning sign?',
-    hint: 'Distinguish appealing a decision from denying that independent courts may limit leaders.',
+    hint: 'One response uses the legal process. Another says courts should never limit elected leaders.',
     options: [
       { id: 'a', label: 'The government appeals using the normal legal process.', feedback: 'Using the appeal process accepts the court’s legitimate role.' },
       { id: 'b', label: 'The government publishes its legal disagreement with the judgment.', feedback: 'Public legal disagreement can occur within respect for judicial independence.' },
@@ -203,7 +203,7 @@ export const populismQuizBank: readonly PopulismQuizQuestion[] = [
   candidate({
     id: 'P13', angle: 'false_positives',
     prompt: 'Which claim is not enough by itself to identify populism?',
-    hint: 'Evidence of unequal influence can be true without claiming that one movement alone represents the real people.',
+    hint: 'A claim about unfair influence may be true. Ask whether it also says only one movement speaks for real people.',
     options: [
       { id: 'a', label: 'Claiming that only one movement represents genuine citizens.', feedback: 'Exclusive representation of genuine citizens is a central populist warning sign.' },
       { id: 'b', label: 'Describing all political opponents as servants of a corrupt elite.', feedback: 'This combines people-versus-elite framing with rejection of legitimate opposition.' },
@@ -216,7 +216,7 @@ export const populismQuizBank: readonly PopulismQuizQuestion[] = [
   candidate({
     id: 'P14', angle: 'false_positives',
     prompt: 'A politician is extremely popular and speaks emotionally. What can we conclude?',
-    hint: 'Popularity and style do not establish the movement’s underlying claim about political legitimacy.',
+    hint: 'Being popular or emotional does not show what a politician believes about people, elites or opponents.',
     options: [
       { id: 'a', label: 'The politician is necessarily populist.', feedback: 'Popularity and emotional speech are not sufficient to identify populism.' },
       { id: 'b', label: 'The politician cannot be populist while remaining popular.', feedback: 'Popularity neither proves nor excludes populism.' },
@@ -229,7 +229,7 @@ export const populismQuizBank: readonly PopulismQuizQuestion[] = [
   candidate({
     id: 'P15', angle: 'false_positives',
     prompt: 'Which criticism of elites can remain fully compatible with pluralist democracy?',
-    hint: 'Look for accountability that preserves evidence, opposition and equal citizenship.',
+    hint: 'Look for criticism based on evidence that still accepts courts, elections and political opponents.',
     options: [
       { id: 'a', label: 'Investigate specific abuses while accepting courts, evidence and legitimate opposition.', feedback: 'This demands accountability without claiming exclusive representation or rejecting pluralism.' },
       { id: 'b', label: 'Treat every institution as corrupt whenever it limits the government.', feedback: 'Outcome-dependent attacks on all restraints undermine democratic accountability.' },
@@ -242,7 +242,7 @@ export const populismQuizBank: readonly PopulismQuizQuestion[] = [
   candidate({
     id: 'P16', angle: 'adjacent_concepts',
     prompt: 'What is the clearest difference between populism and nationalism?',
-    hint: 'One contrast concerns power; the other concerns the political community.',
+    hint: 'Ask whether the statement is about ordinary people against elites, or about the nation.',
     options: [
       { id: 'a', label: 'Populism contrasts people with elites; nationalism centers the nation.', feedback: 'This correctly separates the core people–elite and nation-centered claims.' },
       { id: 'b', label: 'Populism is left-wing; nationalism is always right-wing.', feedback: 'Both can combine with different left- and right-wing programs.' },
@@ -255,7 +255,7 @@ export const populismQuizBank: readonly PopulismQuizQuestion[] = [
   candidate({
     id: 'P17', angle: 'adjacent_concepts',
     prompt: 'Why are populism and authoritarianism not the same thing?',
-    hint: 'Separate a political framing from the way power is organized and constrained.',
+    hint: 'Ask whether this describes a political message or a system that limits competition and concentrates power.',
     options: [
       { id: 'a', label: 'Populism concerns ownership; authoritarianism concerns taxation.', feedback: 'Neither concept is defined by this economic contrast.' },
       { id: 'b', label: 'Populism frames representation; authoritarianism restricts political competition and power.', feedback: 'This distinguishes a people–elite claim from a structure that limits competition and restraints.' },
@@ -268,7 +268,7 @@ export const populismQuizBank: readonly PopulismQuizQuestion[] = [
   candidate({
     id: 'P18', angle: 'adjacent_concepts',
     prompt: 'Why is a referendum not automatically populist?',
-    hint: 'A decision-making procedure is not the same as a claim about who counts as legitimate.',
+    hint: 'A referendum is a way to make a decision. Ask whether that alone says anything about people and elites.',
     options: [
       { id: 'a', label: 'Referendums are never used by populist movements.', feedback: 'Populist movements can support referendums, but they do not own the procedure.' },
       { id: 'b', label: 'Referendums always protect minorities and independent institutions.', feedback: 'Referendums do not automatically protect rights or institutions.' },
