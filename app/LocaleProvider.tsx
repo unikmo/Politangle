@@ -1,20 +1,22 @@
 'use client';
 
 import { createContext, useContext, useEffect, useState } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
 
 export type Locale = 'en' | 'de' | 'es' | 'fr';
 const LOCALE_KEY = 'politangle.locale';
 
 const LocaleContext = createContext<{ locale: Locale; setLocale: (locale: Locale) => void }>({ locale: 'en', setLocale: () => undefined });
 
-export function LocaleProvider({ children }: { children: React.ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>('en');
+export function LocaleProvider({ children, initialLocale = 'en' }: { children: React.ReactNode; initialLocale?: Locale }) {
+  const [locale, setLocaleState] = useState<Locale>(initialLocale);
   useEffect(() => {
+    if (initialLocale !== 'en') { localStorage.setItem(LOCALE_KEY, initialLocale); return; }
     const saved = localStorage.getItem(LOCALE_KEY);
     const browserLanguage = navigator.language.toLowerCase().slice(0, 2);
     const detected: Locale = browserLanguage === 'de' || browserLanguage === 'es' || browserLanguage === 'fr' ? browserLanguage : 'en';
     setLocaleState(saved === 'de' || saved === 'es' || saved === 'fr' || saved === 'en' ? saved : detected);
-  }, []);
+  }, [initialLocale]);
   function setLocale(next: Locale) {
     localStorage.setItem(LOCALE_KEY, next);
     document.documentElement.lang = next === 'en' ? 'en-US' : next;
@@ -28,6 +30,8 @@ export function useLocale() { return useContext(LocaleContext); }
 
 export function LanguageSelector() {
   const { locale, setLocale } = useLocale();
+  const pathname = usePathname();
+  const router = useRouter();
   const names: Record<Locale, string> = { en: 'English (US)', de: 'Deutsch', es: 'Español', fr: 'Français' };
   const aria = locale === 'de'
     ? 'Sprache auswählen'
@@ -44,7 +48,12 @@ export function LanguageSelector() {
         className="lang"
         aria-label={aria}
         value={locale}
-        onChange={(event) => setLocale(event.target.value as Locale)}
+        onChange={(event) => {
+          const selected = event.target.value as Locale;
+          setLocale(selected);
+          const unprefixed = pathname.replace(/^\/(en|de|es|fr)(?=\/|$)/, '') || '/';
+          router.push(`/${selected}${unprefixed === '/' ? '' : unprefixed}`);
+        }}
       >
         {(Object.keys(names) as Locale[]).map((code) => <option key={code} value={code}>{names[code]}</option>)}
       </select>

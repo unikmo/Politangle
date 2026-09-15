@@ -1,0 +1,8 @@
+.skip-link{position:fixed;z-index:10000;top:8px;left:8px;padding:12px 16px;border-radius:8px;background:#171715;color:#fff;transform:translateY(-150%)}
+.skip-link:focus{transform:translateY(0)}
+:where(a,button,input,select,summary,[tabindex]):focus-visible{outline:3px solid #176f88;outline-offset:3px}
+:where(button,input,select){font:inherit}
+:where(button,a,summary,select){touch-action:manipulation}
+.certification-page button,.certification-page input{min-height:44px}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+@media(forced-colors:active){:where(a,button,input,select,summary):focus-visible{outline:3px solid Highlight}.engine-progress>span,.engine-score-track>span,.school-bar-track>span,.school-score-track>span{forced-color-adjust:none}}

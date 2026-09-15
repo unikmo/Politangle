@@ -14,6 +14,9 @@ import './home-readability-fix.css';
 import './elite-engine-palette.css';
 import './results-interpretation.css';
 import './info.css';
+import './certification.css';
+import './accessibility.css';
+import './countries.css';
 import { LocaleProvider } from './LocaleProvider';
 
 export const metadata: Metadata = {
@@ -39,5 +42,5 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en-US" suppressHydrationWarning><body><LocaleProvider>{children}</LocaleProvider></body></html>;
+  return <html lang="en-US" suppressHydrationWarning><body><a className="skip-link" href="#main-content">Skip to main content</a><div id="main-content" tabIndex={-1}><LocaleProvider>{children}</LocaleProvider></div></body></html>;
 }

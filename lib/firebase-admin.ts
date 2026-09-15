@@ -1,4 +1,5 @@
-import { cert, getApps, initializeApp } from 'firebase-admin/app';
+import { cert, getApps, initializeApp, type App } from 'firebase-admin/app';
+import { getAuth } from 'firebase-admin/auth';
 import { getFirestore } from 'firebase-admin/firestore';
 
 function getCredentialConfig() {
@@ -15,16 +16,23 @@ function getCredentialConfig() {
   };
 }
 
-export function getAdminDb() {
+function getAdminApp(): App {
   const credentialConfig = getCredentialConfig();
   const projectId = credentialConfig.project_id ?? credentialConfig.projectId;
 
-  const app =
+  return (
     getApps()[0] ??
     initializeApp({
       credential: cert(credentialConfig),
       projectId,
-    });
+    })
+  );
+}
 
-  return getFirestore(app);
+export function getAdminDb() {
+  return getFirestore(getAdminApp());
+}
+
+export function getAdminAuth() {
+  return getAuth(getAdminApp());
 }
