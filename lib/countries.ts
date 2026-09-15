@@ -254,6 +254,246 @@ export const countryProfiles: readonly CountryProfile[] = [
       { title: 'The Constitution', publisher: 'Swedish Parliament', url: 'https://www.riksdagen.se/en/how-the-riksdag-works/democracy/the-constitution/', checkedAt },
     ],
   },
+  {
+    slug: 'spain', name: 'Spain', status: 'editorial-draft', updatedAt: checkedAt,
+    atAGlance: [['System', 'Decentralised parliamentary constitutional monarchy'], ['Head of state', 'Monarch'], ['Head of government', 'Prime Minister'], ['Legislature', 'Cortes Generales: Congress of Deputies and Senate'], ['Territorial structure', '17 autonomous communities and two autonomous cities']],
+    power: [
+      'The Congress of Deputies chooses the prime minister through an investiture vote and can remove a government only by electing a replacement.',
+      'Congress and Senate make national law, but Congress has the stronger role in forming government and resolving many legislative disagreements.',
+      'Autonomous communities govern important areas such as health and education. The Constitutional Court decides disputes about constitutional rights and the division of powers.',
+    ],
+    vocabulary: [
+      'Spanish politics cannot be understood through left and right alone. Parties also disagree over how much authority should belong to Spain, its regions and its historic nationalities.',
+      'Regional nationalism may be left-wing, centrist or conservative. Supporting Catalan or Basque autonomy does not by itself identify a complete economic or social ideology.',
+    ],
+    timeline: [
+      { year: '1936–1939', title: 'Civil War', text: 'Civil war ended with Francisco Franco’s dictatorship, which lasted until his death in 1975.' },
+      { year: '1978', title: 'Democratic Constitution', text: 'Voters approved a constitution establishing parliamentary democracy, rights, autonomous communities and a constitutional monarchy.' },
+      { year: '1986', title: 'European Community membership', text: 'Spain joined the European Communities, now the European Union.' },
+      { year: '2017', title: 'Catalan constitutional crisis', text: 'An unauthorised independence vote and the national response exposed deep disputes over sovereignty and territorial power.' },
+    ],
+    incomplete: ['Current office holders', 'Current parliamentary composition and party profiles', 'Latest national election and turnout', 'Comparable democracy, rights and civic-space measures', 'Long-term indicator trends'],
+    sources: [
+      { title: 'The Spanish Constitution', publisher: 'Congress of Deputies', url: 'https://www.congreso.es/constitucion/ficheros/c78/cons_ingl.pdf', checkedAt },
+      { title: 'The State organisation', publisher: 'La Moncloa, Government of Spain', url: 'https://www.lamoncloa.gob.es/lang/en/espana/Paginas/state-organization.aspx', checkedAt },
+    ],
+  },
+  {
+    slug: 'mexico', name: 'Mexico', status: 'editorial-draft', updatedAt: checkedAt,
+    atAGlance: [['System', 'Federal presidential republic'], ['Executive', 'President'], ['Legislature', 'Congress of the Union: Chamber of Deputies and Senate'], ['Courts', 'Supreme Court and federal judiciary'], ['Territorial structure', 'Federal: 31 states and Mexico City']],
+    power: [
+      'The president leads the executive separately from Congress and is elected for one six-year term without re-election.',
+      'Congress makes federal law, approves taxation and spending, and scrutinises government. Deputies and senators are chosen through a mixture of district and proportional seats.',
+      'States have their own constitutions and elected institutions. The Supreme Court conducts constitutional review, while autonomous electoral bodies administer and supervise elections.',
+    ],
+    vocabulary: [
+      'Mexico’s revolutionary and nationalist traditions mixed social reform, state leadership and business interests. Party names inherited from that history do not map neatly onto a European left–right line.',
+      'Criticism of corruption, tax privilege or concentrated influence is not automatically populism. Populism appears when politics is framed as one morally pure people against an entirely illegitimate elite.',
+    ],
+    timeline: [
+      { year: '1910–1917', title: 'Revolution and Constitution', text: 'Revolutionary conflict led to the 1917 Constitution, which included federal institutions and major social rights.' },
+      { year: '1929–2000', title: 'Long dominant-party era', text: 'One political organisation and its successors dominated the presidency for seven decades while elections and institutions gradually became more competitive.' },
+      { year: '1990–1996', title: 'Electoral institutions strengthened', text: 'Reforms created and then increased the independence of the national electoral authority.' },
+      { year: '2000', title: 'Presidential alternation', text: 'An opposition candidate won the presidency, ending seven decades of uninterrupted governing-party control.' },
+    ],
+    incomplete: ['Current office holders', 'Current Congress and party profiles', 'Latest federal election and turnout', 'Comparable democracy, rights, violence and civic-space measures', 'Long-term indicator trends'],
+    sources: [
+      { title: 'Political Constitution of the United Mexican States', publisher: 'Chamber of Deputies', url: 'https://www.diputados.gob.mx/LeyesBiblio/pdf/CPEUM.pdf', checkedAt },
+      { title: 'Mexican electoral system', publisher: 'Instituto Nacional Electoral', url: 'https://www.ine.mx/', checkedAt },
+    ],
+  },
+  {
+    slug: 'canada', name: 'Canada', status: 'editorial-draft', updatedAt: checkedAt,
+    atAGlance: [['System', 'Federal parliamentary constitutional monarchy'], ['Head of state', 'Monarch, represented federally by the Governor General'], ['Head of government', 'Prime Minister'], ['Legislature', 'Parliament: Crown, Senate and House of Commons'], ['Territorial structure', 'Federal: 10 provinces and three territories']],
+    power: [
+      'A government must retain the confidence of the elected House of Commons. The prime minister and cabinet exercise executive authority while remaining answerable to Parliament.',
+      'The appointed Senate reviews legislation and represents regions, but the House of Commons has the central democratic role and exclusive priority over taxation and spending bills.',
+      'The Constitution divides powers between federal and provincial governments. Courts may review legislation under the Constitution and the Canadian Charter of Rights and Freedoms.',
+    ],
+    vocabulary: [
+      'The Liberal Party is a specific centrist-to-centre-left organisation; “liberal” can also describe a broader tradition of rights, markets or social reform.',
+      'Canadian conservatism includes market-oriented, social-conservative, regional and older communitarian traditions. Quebec nationalism and Indigenous self-government add separate political dimensions.',
+    ],
+    timeline: [
+      { year: '1867', title: 'Confederation', text: 'The Constitution Act created the Canadian federation and its parliamentary institutions.' },
+      { year: '1931', title: 'Legislative independence', text: 'The Statute of Westminster confirmed Canada’s legislative autonomy from the United Kingdom.' },
+      { year: '1982', title: 'Constitution and Charter', text: 'Canada patriated its Constitution and added the Charter of Rights and Freedoms.' },
+      { year: '1999', title: 'Nunavut created', text: 'Nunavut became a territory following a major Indigenous land-claim agreement.' },
+    ],
+    incomplete: ['Current office holders', 'Current Parliament and party profiles', 'Latest federal election and turnout', 'Comparable democracy, Indigenous-rights and civic-space measures', 'Long-term indicator trends'],
+    sources: [
+      { title: 'How government works', publisher: 'Government of Canada', url: 'https://www.canada.ca/en/government/system/how-government-works.html', checkedAt },
+      { title: 'The Constitution Acts, 1867 to 1982', publisher: 'Department of Justice Canada', url: 'https://laws-lois.justice.gc.ca/eng/const/', checkedAt },
+    ],
+  },
+  {
+    slug: 'south-africa', name: 'South Africa', status: 'editorial-draft', updatedAt: checkedAt,
+    atAGlance: [['System', 'Constitutional parliamentary republic'], ['Head of state and government', 'President, elected by the National Assembly'], ['Legislature', 'Parliament: National Assembly and National Council of Provinces'], ['Courts', 'Constitutional Court and other independent courts'], ['Territorial structure', 'National, provincial and local spheres of government']],
+    power: [
+      'Voters elect the National Assembly, which elects the president. The Assembly can remove the president or cabinet through constitutionally defined votes.',
+      'The National Council of Provinces represents provincial interests. National, provincial and local governments have constitutionally assigned responsibilities and must cooperate.',
+      'The Constitution is supreme. Courts can invalidate laws or government conduct that conflicts with it, and independent institutions support constitutional democracy and accountability.',
+    ],
+    vocabulary: [
+      'The African National Congress grew from a liberation movement and contains labour, nationalist, social-democratic and other currents. Its history does not make every policy left-wing.',
+      'Economic arguments are shaped by apartheid’s lasting inequalities. Support for redistribution or stronger action against concentrated wealth is not, by itself, evidence of populism.',
+    ],
+    timeline: [
+      { year: '1910', title: 'Union of South Africa', text: 'The Union centralised white minority government while excluding most people from national political power.' },
+      { year: '1948', title: 'Apartheid formalised', text: 'The National Party government expanded systematic racial classification, segregation and disenfranchisement.' },
+      { year: '1994', title: 'First inclusive national election', text: 'South Africans voted in the first national election based on universal adult suffrage.' },
+      { year: '1996', title: 'Final Constitution', text: 'The democratic Constitution established enforceable rights, cooperative government and strong constitutional review.' },
+    ],
+    incomplete: ['Current office holders', 'Current Parliament and party profiles', 'Latest national election and turnout', 'Comparable democracy, rights, inequality and civic-space measures', 'Long-term indicator trends'],
+    sources: [
+      { title: 'Constitution of the Republic of South Africa', publisher: 'South African Government', url: 'https://www.gov.za/documents/constitution-republic-south-africa-1996', checkedAt },
+      { title: 'How Parliament is structured', publisher: 'Parliament of South Africa', url: 'https://www.parliament.gov.za/how-parliament-is-structured', checkedAt },
+    ],
+  },
+  {
+    slug: 'india', name: 'India', status: 'editorial-draft', updatedAt: checkedAt,
+    atAGlance: [['System', 'Federal parliamentary republic'], ['Head of state', 'President of India'], ['Head of government', 'Prime Minister'], ['Legislature', 'Parliament: President, Lok Sabha and Rajya Sabha'], ['Territorial structure', 'Federal union of states and union territories']],
+    power: [
+      'The prime minister leads a government that must retain the confidence of the directly elected Lok Sabha. The president normally acts on ministerial advice.',
+      'The Rajya Sabha represents the states, while the Lok Sabha has the decisive role in government confidence and greater authority over money bills.',
+      'The Constitution divides powers between the Union and the states but gives the Union important overriding and emergency powers. The Supreme Court can review laws and protect the Constitution’s basic structure.',
+    ],
+    vocabulary: [
+      'Indian secularism does not always mean a strict wall between religion and government. It often means equal respect, religious freedom and state intervention to protect rights or reform practices.',
+      'Hindu nationalism, economic liberalisation, welfare policy, caste representation and federal autonomy are separate dimensions. Combining them into a single left–right score would hide important differences.',
+    ],
+    timeline: [
+      { year: '1947', title: 'Independence and partition', text: 'British rule ended and the subcontinent was partitioned into India and Pakistan amid mass displacement and violence.' },
+      { year: '1950', title: 'Constitution in force', text: 'India became a republic under a detailed Constitution establishing rights, parliamentary government and federal institutions.' },
+      { year: '1975–1977', title: 'National Emergency', text: 'Emergency rule restricted civil liberties and political opposition before elections restored a change of government.' },
+      { year: '1992–1993', title: 'Local democracy strengthened', text: 'Constitutional amendments gave elected village and urban local bodies a stronger nationwide foundation.' },
+    ],
+    incomplete: ['Current office holders', 'Current Parliament, governing coalition and opposition profiles', 'Latest national election and turnout', 'Comparable democracy, minority-rights and civic-space measures', 'Long-term indicator trends'],
+    sources: [
+      { title: 'The Constitution of India', publisher: 'Legislative Department, Government of India', url: 'https://legislative.gov.in/constitution-of-india/', checkedAt },
+      { title: 'The Union Legislature', publisher: 'National Portal of India', url: 'https://knowindia.india.gov.in/profile/the-union/legislature.php', checkedAt },
+    ],
+  },
+  {
+    slug: 'nigeria', name: 'Nigeria', status: 'editorial-draft', updatedAt: checkedAt,
+    atAGlance: [['System', 'Federal presidential republic'], ['Executive', 'President'], ['Legislature', 'National Assembly: House of Representatives and Senate'], ['Courts', 'Supreme Court and federal and state courts'], ['Territorial structure', 'Federal: 36 states and the Federal Capital Territory']],
+    power: [
+      'The president leads the executive separately from the National Assembly. Federal law-making, taxation, spending and scrutiny are shared by two elected chambers.',
+      'Each state has an elected governor and legislature. The Constitution divides responsibilities, but oil revenue and national allocation make relations between federal, state and local government especially important.',
+      'Courts can review government action and election disputes. Independent commissions administer elections and perform other constitutional functions, although formal independence and practical capacity must be assessed separately.',
+    ],
+    vocabulary: [
+      'Nigeria’s largest parties are broad national coalitions rather than clean ideological blocs. Region, religion, ethnicity, patronage and candidate networks often cut across economic left and right.',
+      'Public anger about corruption, tax avoidance or capture by a small group can be factually justified. It becomes populist framing only when all legitimate disagreement is reduced to a pure people versus a wholly corrupt elite.',
+    ],
+    timeline: [
+      { year: '1960', title: 'Independence', text: 'Nigeria became independent with a federal parliamentary constitution.' },
+      { year: '1966–1970', title: 'Coups and civil war', text: 'Military coups were followed by the Biafran secession and a devastating civil war.' },
+      { year: '1999', title: 'Fourth Republic', text: 'Military rule ended and the present presidential constitutional order began.' },
+      { year: '2015', title: 'First opposition presidential victory', text: 'An incumbent president lost an election and transferred power to an opposition candidate for the first time.' },
+    ],
+    incomplete: ['Current office holders', 'Current National Assembly and party profiles', 'Latest national election, turnout and dispute outcomes', 'Comparable democracy, security, rights and civic-space measures', 'Long-term indicator trends'],
+    sources: [
+      { title: 'About the National Assembly', publisher: 'National Assembly of Nigeria', url: 'https://nass.gov.ng/', checkedAt },
+      { title: 'The electoral process', publisher: 'Independent National Electoral Commission', url: 'https://www.inecnigeria.org/', checkedAt },
+    ],
+  },
+  {
+    slug: 'philippines', name: 'Philippines', status: 'editorial-draft', updatedAt: checkedAt,
+    atAGlance: [['System', 'Unitary presidential republic'], ['Executive', 'President'], ['Legislature', 'Congress: House of Representatives and Senate'], ['Courts', 'Supreme Court and lower courts'], ['Territorial structure', 'Unitary state with elected local governments and an autonomous Bangsamoro region']],
+    power: [
+      'The president leads the executive separately from Congress and serves one six-year term without immediate or later presidential re-election.',
+      'Senators are elected nationally. The House combines geographical districts with party-list seats intended to broaden sectoral and group representation.',
+      'The Supreme Court reviews constitutional disputes. Independent constitutional commissions oversee elections, the civil service and public auditing, while local governments exercise powers granted by national law.',
+    ],
+    vocabulary: [
+      'Party labels are often less reliable guides than candidate alliances, regional networks and political families. A politician changing party does not necessarily signal an ideological conversion.',
+      'A leader’s direct, anti-establishment style may be populist, but popular policies or accurate criticism of oligarchic influence are not enough. The key question is whether pluralism and legitimate opposition are denied.',
+    ],
+    timeline: [
+      { year: '1946', title: 'Independence', text: 'The Philippines became an independent republic after colonial rule and wartime occupation.' },
+      { year: '1972', title: 'Martial law', text: 'President Ferdinand Marcos declared martial law, concentrating power and restricting opposition and civil liberties.' },
+      { year: '1986', title: 'People Power transition', text: 'Mass protest and a disputed election ended the Marcos presidency and restored competitive democratic government.' },
+      { year: '1987', title: 'Present Constitution', text: 'A new Constitution restored checks and balances, rights protections and presidential term limits.' },
+    ],
+    incomplete: ['Current office holders', 'Current Congress, party blocs and political-family context', 'Latest national election and turnout', 'Comparable democracy, media-freedom and civic-space measures', 'Long-term indicator trends'],
+    sources: [
+      { title: 'The 1987 Constitution of the Republic of the Philippines', publisher: 'Official Gazette', url: 'https://www.officialgazette.gov.ph/constitutions/1987-constitution/', checkedAt },
+      { title: 'Congressional structure and legislation', publisher: 'House of Representatives of the Philippines', url: 'https://www.congress.gov.ph/', checkedAt },
+    ],
+  },
+  {
+    slug: 'brazil', name: 'Brazil', status: 'editorial-draft', updatedAt: checkedAt,
+    atAGlance: [['System', 'Federal presidential republic'], ['Executive', 'President'], ['Legislature', 'National Congress: Chamber of Deputies and Federal Senate'], ['Courts', 'Federal Supreme Court and other federal and state courts'], ['Territorial structure', 'Federal: 26 states, municipalities and the Federal District']],
+    power: [
+      'The president leads the executive separately from Congress. Governing usually requires agreements among several parties represented in the two chambers.',
+      'Deputies are elected proportionally within states, while senators represent states and the Federal District equally. Congress legislates, controls the budget and investigates government.',
+      'The Constitution gives courts strong review powers and protects an independent public prosecution service. States and municipalities elect their own governments and deliver major public services.',
+    ],
+    vocabulary: [
+      'Brazilian party competition combines economic left and right with regional interests, religious movements, public-security politics and flexible congressional alliances.',
+      'Anti-corruption politics may rely on evidence and lawful accountability. It becomes populist when one leader claims exclusive moral authority and treats courts, media or opposition as enemies simply for disagreeing.',
+    ],
+    timeline: [
+      { year: '1822–1889', title: 'Independence and empire', text: 'Brazil became independent under a constitutional monarchy before a military-led movement established a republic.' },
+      { year: '1964–1985', title: 'Military dictatorship', text: 'Military governments restricted political competition, rights and civil society for more than two decades.' },
+      { year: '1988', title: 'Democratic Constitution', text: 'The present Constitution established extensive rights, federal democracy and strong public institutions.' },
+      { year: '1989', title: 'Direct presidential election restored', text: 'Brazil held its first direct presidential election since 1960.' },
+    ],
+    incomplete: ['Current office holders', 'Current Congress, coalitions and party profiles', 'Latest national election and turnout', 'Comparable democracy, rights, corruption-control and civic-space measures', 'Long-term indicator trends'],
+    sources: [
+      { title: 'Constitution of the Federative Republic of Brazil', publisher: 'Chamber of Deputies', url: 'https://www2.camara.leg.br/english/brazilian-constitution', checkedAt },
+      { title: 'Brazilian electoral system', publisher: 'Superior Electoral Court', url: 'https://international.tse.jus.br/en', checkedAt },
+    ],
+  },
+  {
+    slug: 'indonesia', name: 'Indonesia', status: 'editorial-draft', updatedAt: checkedAt,
+    atAGlance: [['System', 'Unitary presidential republic'], ['Executive', 'President'], ['National representation', 'People’s Consultative Assembly: House of Representatives and Regional Representative Council'], ['Courts', 'Supreme Court and Constitutional Court'], ['Territorial structure', 'Unitary state with extensive provincial and local decentralisation']],
+    power: [
+      'The president and vice-president are directly elected and do not depend on continuing parliamentary confidence. The president appoints the cabinet and leads the executive.',
+      'The House of Representatives makes laws and scrutinises government with the president. The Regional Representative Council represents provinces but has more limited legislative authority.',
+      'The Constitutional Court reviews statutes and election disputes. Since the democratic transition, substantial responsibilities and budgets have moved to elected provincial and local governments.',
+    ],
+    vocabulary: [
+      'Pancasila is the state philosophy built around belief in God, humanitarianism, national unity, deliberative democracy and social justice. It does not map onto one Western ideology.',
+      'Nationalism is shared across much of Indonesian politics. Religious pluralism, the role of Islam, decentralisation, welfare and economic development create separate political disagreements.',
+    ],
+    timeline: [
+      { year: '1945', title: 'Independence and Constitution', text: 'Independence was proclaimed and the 1945 Constitution established the republic’s foundational framework.' },
+      { year: '1965–1998', title: 'New Order', text: 'Suharto’s authoritarian government concentrated political power while overseeing major economic and social change.' },
+      { year: '1998–2002', title: 'Reformasi and constitutional change', text: 'Suharto’s fall was followed by competitive politics, decentralisation and four rounds of constitutional amendments.' },
+      { year: '2004', title: 'Direct presidential election', text: 'Citizens elected the president directly for the first time.' },
+    ],
+    incomplete: ['Current office holders', 'Current legislature, governing coalition and party profiles', 'Latest national election and turnout', 'Comparable democracy, religious-freedom and civic-space measures', 'Long-term indicator trends'],
+    sources: [
+      { title: 'The 1945 Constitution of the Republic of Indonesia', publisher: 'Constitutional Court of Indonesia', url: 'https://www.mkri.id/public/content/infoumum/regulation/pdf/uud45%20eng.pdf', checkedAt },
+      { title: 'Election information', publisher: 'General Elections Commission of Indonesia', url: 'https://www.kpu.go.id/', checkedAt },
+    ],
+  },
+  {
+    slug: 'japan', name: 'Japan', status: 'editorial-draft', updatedAt: checkedAt,
+    atAGlance: [['System', 'Unitary parliamentary constitutional monarchy'], ['Head of state', 'Emperor, constitutionally defined as the symbol of the state'], ['Head of government', 'Prime Minister'], ['Legislature', 'National Diet: House of Representatives and House of Councillors'], ['Territorial structure', 'Unitary state with 47 elected prefectural governments']],
+    power: [
+      'The Diet designates the prime minister, who must be a member of the legislature. The cabinet is collectively responsible to the House of Representatives.',
+      'Both chambers legislate, but the House of Representatives has priority in choosing the prime minister and stronger authority over budgets, treaties and some legislative disagreements.',
+      'The emperor performs only constitutional state functions and has no powers of government. Courts may review constitutionality, while prefectures and municipalities administer major services.',
+    ],
+    vocabulary: [
+      'The Liberal Democratic Party is generally conservative despite its name. “Liberal” in a party title therefore should not be read as the US meaning of centre-left.',
+      'Post-war politics also turns on pacifism, constitutional revision, the security alliance, administrative reform and the developmental state—not only taxes and social values.',
+    ],
+    timeline: [
+      { year: '1868', title: 'Meiji Restoration', text: 'Political authority was reorganised around the emperor and Japan began rapid state-building and industrialisation.' },
+      { year: '1945–1947', title: 'Defeat and democratic Constitution', text: 'After wartime defeat, a new Constitution established popular sovereignty, parliamentary government, rights and the emperor’s symbolic role.' },
+      { year: '1955', title: 'Long dominant-party system begins', text: 'Conservative parties united as the Liberal Democratic Party, which subsequently governed for most of the post-war period.' },
+      { year: '1994', title: 'Electoral system reformed', text: 'Japan replaced multi-member lower-house districts with a mixed system combining single-member and proportional seats.' },
+    ],
+    incomplete: ['Current office holders', 'Current Diet and party profiles', 'Latest national election and turnout', 'Comparable democracy, media, equality and civic-space measures', 'Long-term indicator trends'],
+    sources: [
+      { title: 'The Constitution of Japan', publisher: 'Prime Minister of Japan and His Cabinet', url: 'https://japan.kantei.go.jp/constitution_and_government_of_japan/constitution_e.html', checkedAt },
+      { title: 'Guide to the House of Representatives', publisher: 'House of Representatives, Japan', url: 'https://www.shugiin.go.jp/internet/itdb_english.nsf/html/statics/guide/index.htm', checkedAt },
+    ],
+  },
 ] as const;
 
 export const lockedCountryQueue: readonly string[] = [];
