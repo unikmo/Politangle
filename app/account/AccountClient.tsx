@@ -3,7 +3,8 @@
 import Link from 'next/link';
 import { FormEvent, useEffect, useState } from 'react';
 
-type Session = { authenticated: boolean; user?: { emailVerified: boolean; adultConfirmed: boolean } | null };
+type Certificate = { certificateId: string; status: 'VALID' | 'EXPIRED' | 'REVOKED'; issuedAt: string; expiresAt: string; classifyScore: number; understandScore: number };
+type Session = { authenticated: boolean; user?: { emailVerified: boolean; adultConfirmed: boolean; isAdmin?: boolean } | null };
 
 async function firebasePassword(endpoint: 'signUp' | 'signInWithPassword', email: string, password: string) {
   const key = process.env.NEXT_PUBLIC_FIREBASE_API_KEY;
@@ -29,8 +30,14 @@ export default function AccountClient() {
   const [session, setSession] = useState<Session | null>(null);
   const [message, setMessage] = useState('');
   const [busy, setBusy] = useState(false);
+  const [certificates, setCertificates] = useState<Certificate[]>([]);
 
-  useEffect(() => { fetch('/api/auth/session', { cache: 'no-store' }).then((response) => response.json()).then(setSession).catch(() => setSession({ authenticated: false })); }, []);
+  useEffect(() => { fetch('/api/auth/session', { cache: 'no-store' }).then((response) => response.json()).then((data) => { setSession(data); if (data.authenticated) loadSummary(); }).catch(() => setSession({ authenticated: false })); }, []);
+
+  async function loadSummary() {
+    const response = await fetch('/api/account/summary', { cache: 'no-store' });
+    if (response.ok) setCertificates((await response.json()).certificates ?? []);
+  }
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -46,7 +53,8 @@ export default function AccountClient() {
       const response = await fetch('/api/auth/session', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ idToken, adultConfirmed: true }) });
       const data = await response.json();
       if (!response.ok) throw new Error(data.error ?? 'Could not start a secure session.');
-      setSession({ authenticated: true, user: { emailVerified: data.emailVerified === true, adultConfirmed: true } });
+      setSession({ authenticated: true, user: { emailVerified: data.emailVerified === true, adultConfirmed: true, isAdmin: data.isAdmin === true } });
+      await loadSummary();
       setMessage(mode === 'create' ? 'Account created. Check your email and verify it before starting certification.' : 'Signed in securely.');
     } catch (error) {
       setMessage(error instanceof Error ? error.message : 'Authentication failed.');
@@ -58,6 +66,14 @@ export default function AccountClient() {
     setSession({ authenticated: false }); setMessage('Signed out.');
   }
 
+  async function resetPassword() {
+    const email = window.prompt('Enter the email address for your certification account:')?.trim();
+    if (!email) return;
+    setBusy(true);
+    await fetch('/api/auth/password-reset', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email }) });
+    setMessage('If an account exists for that address, Firebase has sent a password-reset email.'); setBusy(false);
+  }
+
   return <main className="engine-page certification-page">
     <header className="engine-header"><Link href="/" className="engine-brand">Politangle</Link><span>CERTIFICATION ACCOUNT · 18+</span><Link href="/certify">Certification</Link></header>
     <section className="engine-shell certification-shell">
@@ -67,7 +83,8 @@ export default function AccountClient() {
         {session?.authenticated ? <>
           <p>Your account session is active. Certification requires a verified email and your declaration that you are at least 18.</p>
           <div className="certification-status-list"><span>Email verified</span><strong>{session.user?.emailVerified ? 'Yes' : 'Not yet'}</strong><span>18+ confirmed</span><strong>{session.user?.adultConfirmed ? 'Yes' : 'No'}</strong></div>
-          <div className="engine-result-actions"><Link className="engine-primary-link" href="/certify">Continue to certification</Link><button className="engine-link-button" type="button" onClick={signOut}>Sign out</button></div>
+          <section className="account-certificates"><h2>Your certificates</h2>{certificates.length ? certificates.map((certificate) => <Link key={certificate.certificateId} href={`/certificate/${certificate.certificateId}`}><strong>{certificate.status}</strong><span>CLASSIFY {certificate.classifyScore}/25 · UNDERSTAND {certificate.understandScore}/25</span><small>Issued {new Date(certificate.issuedAt).toLocaleDateString()} · valid until {new Date(certificate.expiresAt).toLocaleDateString()}</small></Link>) : <p>No certificates have been issued to this account.</p>}</section>
+          <div className="engine-result-actions"><Link className="engine-primary-link" href="/certify">Continue to certification</Link>{session.user?.isAdmin && <Link href="/admin">Admin dashboard</Link>}<button className="engine-link-button" type="button" onClick={resetPassword}>Reset password</button><button className="engine-link-button" type="button" onClick={signOut}>Sign out</button></div>
         </> : <>
           <p>Practice remains free without an account. An account is required only for controlled certification attempts and certificates.</p>
           <form className="certification-form" onSubmit={submit}>
@@ -77,6 +94,7 @@ export default function AccountClient() {
             <button className="engine-primary-link" disabled={busy} type="submit">{busy ? 'Please wait…' : mode === 'create' ? 'Create account' : 'Sign in'}</button>
           </form>
           <button className="engine-link-button certification-mode" type="button" onClick={() => setMode(mode === 'create' ? 'sign-in' : 'create')}>{mode === 'create' ? 'Already have an account? Sign in' : 'Need an account? Create one'}</button>
+          {mode === 'sign-in' && <button className="engine-link-button certification-mode" disabled={busy} type="button" onClick={resetPassword}>Forgot password?</button>}
         </>}
         {message && <p className="certification-message" role="status">{message}</p>}
       </article>

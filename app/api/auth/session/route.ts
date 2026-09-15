@@ -7,7 +7,7 @@ const noStore = { 'Cache-Control': 'no-store' };
 
 export async function GET() {
   const user = await authenticatedCertificationUser();
-  return NextResponse.json({ authenticated: Boolean(user), user }, { headers: noStore });
+  return NextResponse.json({ authenticated: Boolean(user), user: user ? { emailVerified: user.emailVerified, adultConfirmed: user.adultConfirmed, isAdmin: user.isAdmin } : null }, { headers: noStore });
 }
 
 export async function POST(request: Request) {
@@ -35,7 +35,12 @@ export async function POST(request: Request) {
       path: '/',
       maxAge: AUTH_SESSION_MAX_AGE_SECONDS,
     });
-    return NextResponse.json({ authenticated: true, emailVerified: decoded.email_verified === true }, { headers: noStore });
+    const adminUids = new Set((process.env.POLITANGLE_ADMIN_UIDS ?? '').split(',').map((value) => value.trim()).filter(Boolean));
+    return NextResponse.json({
+      authenticated: true,
+      emailVerified: decoded.email_verified === true,
+      isAdmin: decoded.admin === true || adminUids.has(decoded.uid),
+    }, { headers: noStore });
   } catch {
     return NextResponse.json({ error: 'The sign-in token could not be verified.' }, { status: 401, headers: noStore });
   }

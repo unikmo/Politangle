@@ -110,8 +110,152 @@ export const countryProfiles: readonly CountryProfile[] = [
       { title: 'The Cabinet Manual', publisher: 'UK Government', url: 'https://www.gov.uk/government/publications/cabinet-manual', checkedAt },
     ],
   },
+  {
+    slug: 'netherlands', name: 'Netherlands', status: 'editorial-draft', updatedAt: checkedAt,
+    atAGlance: [['System', 'Unitary parliamentary constitutional monarchy'], ['Head of state', 'Monarch'], ['Head of government', 'Prime Minister'], ['Legislature', 'States General: House of Representatives and Senate'], ['Elections', 'Proportional representation produces multiparty coalition government']],
+    power: [
+      'The government needs the confidence of the directly elected House of Representatives. The House debates and amends bills and holds ministers to account.',
+      'The Senate is elected indirectly by provincial representatives. It cannot amend a bill: it accepts or rejects the text after the House has passed it.',
+      'The Council of State advises on legislation and hears important administrative-law cases. Dutch courts cannot set aside an Act of Parliament because it conflicts with the Constitution.',
+    ],
+    vocabulary: [
+      'Dutch liberal parties include both market-liberal and social-liberal traditions. “Liberal” therefore does not identify one fixed position on every issue.',
+      '“Polder model” describes negotiation and compromise among government, employers and unions. “Pillarisation” refers to the older organisation of society into religious and political communities.',
+    ],
+    timeline: [
+      { year: '1815', title: 'Kingdom established', text: 'The Kingdom of the Netherlands was created after the Napoleonic period.' },
+      { year: '1848', title: 'Parliamentary constitution', text: 'Constitutional reform made ministers responsible to Parliament and strengthened representative government.' },
+      { year: '1917–1919', title: 'Electoral settlement', text: 'Proportional representation and universal male suffrage were introduced; women gained full voting rights soon afterwards.' },
+      { year: '1983', title: 'Constitution revised', text: 'A broad constitutional revision modernised rights and the organisation of government.' },
+    ],
+    incomplete: ['Current office holders', 'Current parliamentary composition and party profiles', 'Latest election and turnout', 'Democracy, rights and civic-space dimensions', 'Long-term indicator trends'],
+    sources: [
+      { title: 'Constitution and democracy', publisher: 'Government of the Netherlands', url: 'https://www.government.nl/topics/constitution-and-democracy', checkedAt },
+      { title: 'How Parliament works', publisher: 'House of Representatives of the Netherlands', url: 'https://www.houseofrepresentatives.nl/how-parliament-works', checkedAt },
+    ],
+  },
+  {
+    slug: 'denmark', name: 'Denmark', status: 'editorial-draft', updatedAt: checkedAt,
+    atAGlance: [['System', 'Unitary parliamentary constitutional monarchy'], ['Head of state', 'Monarch'], ['Head of government', 'Prime Minister'], ['Legislature', 'Folketing: one elected chamber'], ['Realm', 'Denmark, the Faroe Islands and Greenland; both territories have extensive self-government']],
+    power: [
+      'A government may remain in office unless a majority in the Folketing opposes it. This negative parliamentarism makes minority governments common.',
+      'The Folketing passes laws, approves public finances and scrutinises ministers. Proportional elections usually require parties to negotiate support across blocs.',
+      'The monarch has formal constitutional duties, but elected ministers exercise political authority. The Faroe Islands and Greenland manage many of their own affairs.',
+    ],
+    vocabulary: [
+      'Denmark’s Venstre means “Left”, but today it is a liberal centre-right party. Historical party names can mislead readers who translate them literally.',
+      'Danish social democracy developed a broad welfare state, while liberal, conservative and nationalist parties disagree over its scale, conditions and membership.',
+    ],
+    timeline: [
+      { year: '1849', title: 'Constitutional monarchy', text: 'The first democratic constitution limited absolute monarchy and created representative institutions.' },
+      { year: '1901', title: 'Parliamentary government', text: 'The principle that a government could not govern against a parliamentary majority became established.' },
+      { year: '1953', title: 'Present constitutional framework', text: 'A new Constitutional Act created a single parliamentary chamber and changed succession rules.' },
+      { year: '1973', title: 'European Community membership', text: 'Denmark joined the European Communities after a referendum.' },
+    ],
+    incomplete: ['Current office holders', 'Current Folketing composition and party profiles', 'Latest election and turnout', 'Democracy, rights and civic-space dimensions', 'Long-term indicator trends'],
+    sources: [
+      { title: 'The Danish democracy', publisher: 'The Danish Parliament', url: 'https://www.thedanishparliament.dk/en/democracy/the-danish-democracy', checkedAt },
+      { title: 'The Constitutional Act of Denmark', publisher: 'The Danish Parliament', url: 'https://www.thedanishparliament.dk/en/democracy/the-constitutional-act-of-denmark', checkedAt },
+    ],
+  },
+  {
+    slug: 'finland', name: 'Finland', status: 'editorial-draft', updatedAt: checkedAt,
+    atAGlance: [['System', 'Unitary parliamentary republic'], ['Head of state', 'President of the Republic'], ['Head of government', 'Prime Minister'], ['Legislature', 'Eduskunta: one elected chamber'], ['Territorial structure', 'Unitary state; Åland has constitutionally protected autonomy']],
+    power: [
+      'Parliament elects the prime minister, passes laws, approves the budget and supervises the government. Coalition governments are the norm.',
+      'The president directs foreign policy together with the government and is commander-in-chief, while the prime minister leads domestic government and European Union policy.',
+      'Parliament’s Constitutional Law Committee reviews whether proposed laws comply with the Constitution. Courts may give the Constitution priority in a clear conflict.',
+    ],
+    vocabulary: [
+      'The Centre Party grew from an agrarian movement but is not confined to farming. It combines regional decentralisation with positions that vary across economic and social questions.',
+      'The National Coalition Party is liberal-conservative and centre-right; its name does not mean a temporary coalition of all parties.',
+    ],
+    timeline: [
+      { year: '1906', title: 'Parliamentary reform', text: 'Finland created a unicameral parliament and introduced universal and equal suffrage.' },
+      { year: '1917–1919', title: 'Independence and republic', text: 'Finland declared independence and then adopted a republican constitution.' },
+      { year: '1995', title: 'European Union membership', text: 'Finland joined the European Union after a consultative referendum.' },
+      { year: '2000', title: 'Unified Constitution', text: 'A new Constitution strengthened parliamentary government and brought earlier constitutional acts together.' },
+    ],
+    incomplete: ['Current office holders', 'Current Eduskunta composition and party profiles', 'Latest election and turnout', 'Democracy, rights and civic-space dimensions', 'Long-term indicator trends'],
+    sources: [
+      { title: 'Constitution of Finland', publisher: 'Finlex', url: 'https://www.finlex.fi/en/legislation/collection/1999/731', checkedAt },
+      { title: 'Duties of Parliament', publisher: 'Parliament of Finland', url: 'https://www.eduskunta.fi/EN/naineduskuntatoimii/eduskunnan_tehtavat/Pages/default.aspx', checkedAt },
+    ],
+  },
+  {
+    slug: 'iceland', name: 'Iceland', status: 'editorial-draft', updatedAt: checkedAt,
+    atAGlance: [['System', 'Unitary parliamentary republic'], ['Head of state', 'President of Iceland'], ['Head of government', 'Prime Minister'], ['Legislature', 'Althingi: one elected chamber'], ['Elections', 'Proportional representation in multi-member constituencies']],
+    power: [
+      'The government must retain the confidence of the Althingi. Coalition government is usual because proportional elections produce several parliamentary parties.',
+      'The president is head of state and normally acts on ministerial advice, but may refuse to sign a law and send it to a national vote.',
+      'The Althingi passes laws and controls public finances. Courts are independent and may review whether legislation is consistent with the Constitution.',
+    ],
+    vocabulary: [
+      'The Independence Party combines conservative and market-liberal traditions; its name refers to Icelandic history rather than a present campaign for separation.',
+      'Icelandic party competition also crosses older urban–rural, environmental, welfare and European-integration divisions, so one left–right line is incomplete.',
+    ],
+    timeline: [
+      { year: '930', title: 'Althing established', text: 'The Althing began as a national assembly and is among the world’s oldest parliamentary institutions.' },
+      { year: '1918', title: 'Sovereign kingdom', text: 'Iceland became a sovereign state in a personal union with Denmark.' },
+      { year: '1944', title: 'Republic founded', text: 'A referendum ended the union with Denmark and established the Republic of Iceland.' },
+      { year: '1994', title: 'European Economic Area', text: 'Iceland entered the European Economic Area while remaining outside the European Union.' },
+    ],
+    incomplete: ['Current office holders', 'Current Althingi composition and party profiles', 'Latest election and turnout', 'Democracy, rights and civic-space dimensions', 'Long-term indicator trends'],
+    sources: [
+      { title: 'Constitution', publisher: 'Government of Iceland', url: 'https://www.government.is/topics/governance-and-national-symbols/constitution/', checkedAt },
+      { title: 'About the Althingi', publisher: 'Althingi', url: 'https://www.althingi.is/english/', checkedAt },
+    ],
+  },
+  {
+    slug: 'norway', name: 'Norway', status: 'editorial-draft', updatedAt: checkedAt,
+    atAGlance: [['System', 'Unitary parliamentary constitutional monarchy'], ['Head of state', 'Monarch'], ['Head of government', 'Prime Minister'], ['Legislature', 'Storting: one elected chamber'], ['Elections', 'Proportional representation across electoral districts']],
+    power: [
+      'A government may remain in office unless a parliamentary majority votes it down. Minority and coalition governments are therefore both common.',
+      'The Storting passes laws, approves taxation and spending, and scrutinises the government. The monarch performs formal duties while ministers exercise political power.',
+      'Courts may review laws against the Constitution. Local government and the Sámi Parliament add important territorial and Indigenous dimensions to national institutions.',
+    ],
+    vocabulary: [
+      'Norway’s Centre Party grew from agrarian politics and now emphasises rural interests and decentralisation; “centre” does not mean neutral on every issue.',
+      'The Progress Party mixes lower-tax and market positions with restrictive immigration politics. These elements should be examined separately rather than treated as one ideology.',
+    ],
+    timeline: [
+      { year: '1814', title: 'Constitution adopted', text: 'Norway adopted its Constitution at Eidsvoll and entered a union with Sweden.' },
+      { year: '1884', title: 'Parliamentarism established', text: 'A political struggle established that governments depended on parliamentary support.' },
+      { year: '1905', title: 'Independent monarchy', text: 'The union with Sweden ended and Norway became fully independent.' },
+      { year: '1972 and 1994', title: 'European Union rejected', text: 'Norwegian voters rejected European Community or European Union membership in two referendums.' },
+    ],
+    incomplete: ['Current office holders', 'Current Storting composition and party profiles', 'Latest election and turnout', 'Democracy, rights and civic-space dimensions', 'Long-term indicator trends'],
+    sources: [
+      { title: 'About the Storting', publisher: 'Stortinget', url: 'https://www.stortinget.no/en/In-English/About-the-Storting/', checkedAt },
+      { title: 'The government at work', publisher: 'Government of Norway', url: 'https://www.regjeringen.no/en/the-government/the-government-at-work1/id2564958/', checkedAt },
+    ],
+  },
+  {
+    slug: 'sweden', name: 'Sweden', status: 'editorial-draft', updatedAt: checkedAt,
+    atAGlance: [['System', 'Unitary parliamentary constitutional monarchy'], ['Head of state', 'Monarch'], ['Head of government', 'Prime Minister'], ['Legislature', 'Riksdag: one elected chamber'], ['Territorial structure', 'Unitary state with powerful elected municipalities and regions']],
+    power: [
+      'The Speaker proposes a prime minister. The candidate is accepted unless a majority of all members of the Riksdag votes against them.',
+      'The monarch has ceremonial duties and no political power. The Riksdag passes laws and budgets, examines government, and can remove a minister through a no-confidence vote.',
+      'Public agencies are organisationally separate from ministries. Ministers may set general policy but may not direct an agency’s decision in an individual case.',
+    ],
+    vocabulary: [
+      'The Social Democrats shaped the “people’s home” welfare tradition, but Swedish welfare policy is debated and changed by parties across the political spectrum.',
+      'The Moderates are liberal-conservative. The Sweden Democrats combine nationalism and social conservatism; these should not be confused merely because both sit on the right.',
+    ],
+    timeline: [
+      { year: '1809', title: 'Constitutional settlement', text: 'A new Instrument of Government limited royal authority and divided public power.' },
+      { year: '1921', title: 'Equal national suffrage', text: 'Women and men voted on equal terms in a national parliamentary election.' },
+      { year: '1974–1975', title: 'Modern parliamentary constitution', text: 'A new Instrument of Government confirmed parliamentary democracy and the monarch’s ceremonial role.' },
+      { year: '1995', title: 'European Union membership', text: 'Sweden joined the European Union after a referendum.' },
+    ],
+    incomplete: ['Current office holders', 'Current Riksdag composition and party profiles', 'Latest election and turnout', 'Democracy, rights and civic-space dimensions', 'Long-term indicator trends'],
+    sources: [
+      { title: 'How Sweden is governed', publisher: 'Government Offices of Sweden', url: 'https://www.government.se/how-sweden-is-governed/', checkedAt },
+      { title: 'The Constitution', publisher: 'Swedish Parliament', url: 'https://www.riksdagen.se/en/how-the-riksdag-works/democracy/the-constitution/', checkedAt },
+    ],
+  },
 ] as const;
 
-export const lockedCountryQueue = ['Netherlands', 'Denmark', 'Finland', 'Iceland', 'Norway', 'Sweden'] as const;
+export const lockedCountryQueue: readonly string[] = [];
 
 export function countryBySlug(slug: string) { return countryProfiles.find((country) => country.slug === slug); }

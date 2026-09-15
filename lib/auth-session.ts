@@ -8,6 +8,7 @@ export type CertificationUser = {
   uid: string;
   emailVerified: boolean;
   adultConfirmed: boolean;
+  isAdmin: boolean;
 };
 
 export async function authenticatedCertificationUser(): Promise<CertificationUser | null> {
@@ -17,12 +18,19 @@ export async function authenticatedCertificationUser(): Promise<CertificationUse
   try {
     const decoded = await getAdminAuth().verifySessionCookie(session, true);
     const profile = await getAdminDb().collection('certificationUsers').doc(decoded.uid).get();
+    const adminUids = new Set((process.env.POLITANGLE_ADMIN_UIDS ?? '').split(',').map((value) => value.trim()).filter(Boolean));
     return {
       uid: decoded.uid,
       emailVerified: decoded.email_verified === true,
       adultConfirmed: profile.data()?.adultConfirmedAt != null,
+      isAdmin: decoded.admin === true || adminUids.has(decoded.uid),
     };
   } catch {
     return null;
   }
+}
+
+export async function authenticatedAdmin() {
+  const user = await authenticatedCertificationUser();
+  return user?.isAdmin ? user : null;
 }

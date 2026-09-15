@@ -17,6 +17,7 @@ import './info.css';
 import './certification.css';
 import './accessibility.css';
 import './countries.css';
+import './admin.css';
 import { LocaleProvider } from './LocaleProvider';
 
 export const metadata: Metadata = {
