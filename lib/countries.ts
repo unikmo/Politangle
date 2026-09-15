@@ -1,5 +1,26 @@
 export type CountrySource = { title: string; publisher: string; url: string; checkedAt: string };
 export type CountryTimelineEvent = { year: string; title: string; text: string };
+export type CountryCurrentSnapshot = {
+  asOf: string;
+  officeholders: readonly [string, string][];
+  election: {
+    title: string;
+    date: string;
+    turnout: string;
+    summary: string;
+    representation: readonly [string, string][];
+  };
+  rights: {
+    provider: string;
+    edition: string;
+    score: string;
+    status: string;
+    comparison: string;
+    note: string;
+    url: string;
+  };
+  trends: readonly string[];
+};
 export type CountryProfile = {
   slug: string;
   name: string;
@@ -9,6 +30,7 @@ export type CountryProfile = {
   power: readonly string[];
   vocabulary: readonly string[];
   timeline: readonly CountryTimelineEvent[];
+  current?: CountryCurrentSnapshot;
   incomplete: readonly string[];
   sources: readonly CountrySource[];
 };
@@ -272,10 +294,31 @@ export const countryProfiles: readonly CountryProfile[] = [
       { year: '1986', title: 'European Community membership', text: 'Spain joined the European Communities, now the European Union.' },
       { year: '2017', title: 'Catalan constitutional crisis', text: 'An unauthorised independence vote and the national response exposed deep disputes over sovereignty and territorial power.' },
     ],
-    incomplete: ['Current office holders', 'Current parliamentary composition and party profiles', 'Latest national election and turnout', 'Comparable democracy, rights and civic-space measures', 'Long-term indicator trends'],
+    current: {
+      asOf: checkedAt,
+      officeholders: [['Head of state', 'King Felipe VI'], ['Head of government', 'Pedro Sánchez, Spanish Socialist Workers’ Party (PSOE)']],
+      election: {
+        title: '2023 general election', date: '23 July 2023', turnout: '66.59% of registered voters',
+        summary: 'No party won a majority in the 350-seat Congress. The People’s Party won the most seats, but Pedro Sánchez secured parliamentary investiture for a coalition government led by PSOE.',
+        representation: [['People’s Party (PP)', '137 seats'], ['Spanish Socialist Workers’ Party (PSOE)', '121 seats'], ['Vox', '33 seats'], ['Sumar', '31 seats'], ['Regional and other parties', '28 seats']],
+      },
+      rights: {
+        provider: 'Freedom House', edition: 'Freedom in the World 2026', score: '91/100', status: 'Free', comparison: 'Up from 90/100 in the 2025 edition',
+        note: 'This is one organisation’s assessment, not Politangle’s verdict. It combines 40 political-rights points and 60 civil-liberties points.',
+        url: 'https://freedomhouse.org/country/spain/freedom-world/2026',
+      },
+      trends: [
+        'National politics remains fragmented: forming a government can depend on agreements with smaller regional parties as well as nationwide parties.',
+        'The 2026 Freedom House score rose by one point after progress in filling judicial vacancies, while its report continued to flag corruption and restrictions affecting expression and assembly.',
+      ],
+    },
+    incomplete: ['Independent editorial sign-off', 'Second-source review of current political facts', 'Spanish, German and French localization'],
     sources: [
       { title: 'The Spanish Constitution', publisher: 'Congress of Deputies', url: 'https://www.congreso.es/constitucion/ficheros/c78/cons_ingl.pdf', checkedAt },
       { title: 'The State organisation', publisher: 'La Moncloa, Government of Spain', url: 'https://www.lamoncloa.gob.es/lang/en/espana/Paginas/state-organization.aspx', checkedAt },
+      { title: 'Government of Spain', publisher: 'La Moncloa', url: 'https://www.lamoncloa.gob.es/lang/en/gobierno/Paginas/index.aspx', checkedAt },
+      { title: '2023 general election results', publisher: 'Ministry of the Interior', url: 'https://resultados.generales23j.es/es/inicio/0', checkedAt },
+      { title: 'Freedom in the World 2026: Spain', publisher: 'Freedom House', url: 'https://freedomhouse.org/country/spain/freedom-world/2026', checkedAt },
     ],
   },
   {
@@ -296,10 +339,32 @@ export const countryProfiles: readonly CountryProfile[] = [
       { year: '1990–1996', title: 'Electoral institutions strengthened', text: 'Reforms created and then increased the independence of the national electoral authority.' },
       { year: '2000', title: 'Presidential alternation', text: 'An opposition candidate won the presidency, ending seven decades of uninterrupted governing-party control.' },
     ],
-    incomplete: ['Current office holders', 'Current Congress and party profiles', 'Latest federal election and turnout', 'Comparable democracy, rights, violence and civic-space measures', 'Long-term indicator trends'],
+    current: {
+      asOf: checkedAt,
+      officeholders: [['President', 'Claudia Sheinbaum, National Regeneration Movement (Morena)'], ['Presidential term', '1 October 2024 to 30 September 2030; immediate re-election is prohibited']],
+      election: {
+        title: '2024 federal election', date: '2 June 2024', turnout: '61.05% in the presidential election',
+        summary: 'Claudia Sheinbaum won the presidency with about 59.8% of valid votes. Morena and its Green Party and Labour Party allies also won a large majority in the Chamber of Deputies.',
+        representation: [['Morena', '236 Chamber seats allocated after the election'], ['Ecologist Green Party (PVEM)', '77 seats'], ['Labour Party (PT)', '51 seats'], ['National Action Party (PAN)', '72 seats'], ['Institutional Revolutionary Party (PRI)', '35 seats'], ['Citizens’ Movement (MC)', '27 seats'], ['Other', '2 seats']],
+      },
+      rights: {
+        provider: 'Freedom House', edition: 'Freedom in the World 2026', score: '58/100', status: 'Partly Free', comparison: 'Down from 59/100 in the 2025 edition',
+        note: 'This is one organisation’s assessment, not Politangle’s verdict. Its 2026 report highlights competitive elections alongside serious rule-of-law, violence, corruption and impunity concerns.',
+        url: 'https://freedomhouse.org/country/mexico/freedom-world/2026',
+      },
+      trends: [
+        'The 2024 election strengthened Morena and its allies. Concentrated electoral power should be analysed separately from whether particular policies are popular or effective.',
+        'Freedom House reduced Mexico’s score by one point in 2026 and specifically linked the change to concerns about judicial independence following the new judicial-election system.',
+        'Criticising corruption, tax privilege, organised-crime influence or unequal access to power is not itself populist. The populist move is to claim that one morally pure people has a single will and that opponents are inherently illegitimate.',
+      ],
+    },
+    incomplete: ['Independent editorial sign-off', 'Second-source review of current political facts', 'Spanish, German and French localization'],
     sources: [
       { title: 'Political Constitution of the United Mexican States', publisher: 'Chamber of Deputies', url: 'https://www.diputados.gob.mx/LeyesBiblio/pdf/CPEUM.pdf', checkedAt },
       { title: 'Mexican electoral system', publisher: 'Instituto Nacional Electoral', url: 'https://www.ine.mx/', checkedAt },
+      { title: 'Presidency of Mexico', publisher: 'Government of Mexico', url: 'https://www.gob.mx/presidencia', checkedAt },
+      { title: '2024 district counts', publisher: 'Instituto Nacional Electoral', url: 'https://computos2024.ine.mx/presidencia/nacional/candidatura', checkedAt },
+      { title: 'Freedom in the World 2026: Mexico', publisher: 'Freedom House', url: 'https://freedomhouse.org/country/mexico/freedom-world/2026', checkedAt },
     ],
   },
   {
@@ -320,10 +385,33 @@ export const countryProfiles: readonly CountryProfile[] = [
       { year: '1982', title: 'Constitution and Charter', text: 'Canada patriated its Constitution and added the Charter of Rights and Freedoms.' },
       { year: '1999', title: 'Nunavut created', text: 'Nunavut became a territory following a major Indigenous land-claim agreement.' },
     ],
-    incomplete: ['Current office holders', 'Current Parliament and party profiles', 'Latest federal election and turnout', 'Comparable democracy, Indigenous-rights and civic-space measures', 'Long-term indicator trends'],
+    current: {
+      asOf: checkedAt,
+      officeholders: [['Head of state', 'King Charles III'], ['Governor General', 'Mary Simon'], ['Prime Minister', 'Mark Carney, Liberal Party']],
+      election: {
+        title: '2025 federal election', date: '28 April 2025', turnout: '69.5% of registered electors',
+        summary: 'The Liberal Party won the most seats but not a majority in the expanded 343-seat House of Commons, so Mark Carney continued as prime minister with a minority government.',
+        representation: [['Liberal Party', '169 seats in the validated general-election result'], ['Conservative Party', '144 seats'], ['Bloc Québécois', '22 seats'], ['New Democratic Party', '7 seats'], ['Green Party', '1 seat']],
+      },
+      rights: {
+        provider: 'Freedom House', edition: 'Freedom in the World 2026', score: '97/100', status: 'Free', comparison: 'Unchanged from the 2025 edition',
+        note: 'This is one organisation’s assessment, not Politangle’s verdict. Its report recognises strong rights protections while noting persistent discrimination and socioeconomic barriers affecting Indigenous and Black Canadians.',
+        url: 'https://freedomhouse.org/country/canada/freedom-world/2026',
+      },
+      trends: [
+        'The 2025 election produced a Liberal minority government and the highest federal turnout since 1993.',
+        'The two largest parties together received most votes and seats, while regional and smaller parties continued to matter in a Parliament where no party held a majority.',
+        'Canada’s aggregate Freedom House score stayed at 97, but a high score does not erase disputes over Indigenous rights, discrimination, transparency or provincial restrictions on religious symbols.',
+      ],
+    },
+    incomplete: ['Independent editorial sign-off', 'Second-source review of current political facts', 'German, Spanish and French localization'],
     sources: [
       { title: 'How government works', publisher: 'Government of Canada', url: 'https://www.canada.ca/en/government/system/how-government-works.html', checkedAt },
       { title: 'The Constitution Acts, 1867 to 1982', publisher: 'Department of Justice Canada', url: 'https://laws-lois.justice.gc.ca/eng/const/', checkedAt },
+      { title: 'Prime Minister of Canada', publisher: 'Government of Canada', url: 'https://www.pm.gc.ca/en', checkedAt },
+      { title: 'Governor General Mary Simon', publisher: 'Governor General of Canada', url: 'https://www.gg.ca/en/governor-general/governor-general-mary-simon', checkedAt },
+      { title: 'Official results of the 2025 federal election', publisher: 'Elections Canada', url: 'https://electionsanddemocracy.ca/geography-elections-0/map-official-results', checkedAt },
+      { title: 'Freedom in the World 2026: Canada', publisher: 'Freedom House', url: 'https://freedomhouse.org/country/canada/freedom-world/2026', checkedAt },
     ],
   },
   {
@@ -344,10 +432,32 @@ export const countryProfiles: readonly CountryProfile[] = [
       { year: '1994', title: 'First inclusive national election', text: 'South Africans voted in the first national election based on universal adult suffrage.' },
       { year: '1996', title: 'Final Constitution', text: 'The democratic Constitution established enforceable rights, cooperative government and strong constitutional review.' },
     ],
-    incomplete: ['Current office holders', 'Current Parliament and party profiles', 'Latest national election and turnout', 'Comparable democracy, rights, inequality and civic-space measures', 'Long-term indicator trends'],
+    current: {
+      asOf: checkedAt,
+      officeholders: [['President', 'Cyril Ramaphosa, African National Congress (ANC)'], ['Government', 'Multiparty Government of National Unity formed after the 2024 election']],
+      election: {
+        title: '2024 national and provincial elections', date: '29 May 2024', turnout: '58.64% of registered voters',
+        summary: 'The ANC remained the largest party but lost its National Assembly majority for the first time since 1994. Parliament re-elected Cyril Ramaphosa after parties formed a Government of National Unity.',
+        representation: [['African National Congress (ANC)', '159 seats'], ['Democratic Alliance (DA)', '87 seats'], ['uMkhonto weSizwe Party (MK)', '58 seats'], ['Economic Freedom Fighters (EFF)', '39 seats'], ['Inkatha Freedom Party (IFP)', '17 seats'], ['Other parties', '40 seats']],
+      },
+      rights: {
+        provider: 'Freedom House', edition: 'Freedom in the World 2026', score: '81/100', status: 'Free', comparison: 'Unchanged from the 2025 edition',
+        note: 'This is one organisation’s assessment, not Politangle’s verdict. Democracy scores measure rights and institutions; they do not measure whether inequality, unemployment or public services are acceptable.',
+        url: 'https://freedomhouse.org/country/south-africa/freedom-world/2026',
+      },
+      trends: [
+        'The loss of the ANC’s majority moved national government from single-party dominance to formal multiparty bargaining.',
+        'Official election reporting recorded turnout falling from 65.99% in 2019 to 58.64% in 2024.',
+        'Freedom House kept South Africa at 81/100. That institutional measure must be read alongside severe inequality, unemployment and uneven public services rather than treated as a complete national scorecard.',
+      ],
+    },
+    incomplete: ['Independent editorial sign-off', 'Second-source review of current political facts', 'German, Spanish and French localization'],
     sources: [
       { title: 'Constitution of the Republic of South Africa', publisher: 'South African Government', url: 'https://www.gov.za/documents/constitution-republic-south-africa-1996', checkedAt },
       { title: 'How Parliament is structured', publisher: 'Parliament of South Africa', url: 'https://www.parliament.gov.za/how-parliament-is-structured', checkedAt },
+      { title: 'President Cyril Ramaphosa', publisher: 'The Presidency of South Africa', url: 'https://www.thepresidency.gov.za/president-cyril-ramaphosa', checkedAt },
+      { title: '2024 national and provincial election report', publisher: 'Electoral Commission of South Africa', url: 'https://www.elections.org.za/pw/News-And-Media/News-List/News/News-Article/Electoral-Commission-presents-NPE-2024-Report-to-Parliament%2C-sets-sights-on-2026-Local-Government-Elections?a=AISDGvpz75ps1usOfX7oigs7Yh0VdwYy+pOUbF1N9lY%3D', checkedAt },
+      { title: 'Freedom in the World 2026: South Africa', publisher: 'Freedom House', url: 'https://freedomhouse.org/country/south-africa/freedom-world/2026', checkedAt },
     ],
   },
   {
