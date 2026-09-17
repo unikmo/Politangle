@@ -1,0 +1,11 @@
+[build]
+  command = "npm run verify:engine && npx next build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "22"
+  NEXT_PUBLIC_SITE_URL = "https://politangle.org"
+  CERTIFICATION_ENABLED = "false"
+  STRIPE_TAX_READY = "false"
+  CERTIFICATE_PRICE_STAGE = "launch"
+
