@@ -50,6 +50,15 @@ test('English locale is explicitly US English and the language control allows di
   assert.doesNotMatch(localeProvider, /setLocale\(next\)/);
 });
 
+test('primary navigation opens dedicated localized pages rather than homepage sections', () => {
+  for (const route of ['/method', '/learn', '/school', '/about']) {
+    assert.match(homepage, new RegExp(`href\\('${route.replace('/', '\\/')}'\\)`));
+  }
+  assert.doesNotMatch(homepage, /href="#(?:method|learn|schools)"/);
+  assert.match(localeProvider, /export function localePath/);
+  assert.match(infoShell, /localePath\(locale, path\)/);
+});
+
 test('Full keeps validated statement banks but localizes the surrounding experience', () => {
   assert.match(deepClient, /germanBeliefStatement/);
   assert.match(deepClient, /romanceBeliefStatement/);

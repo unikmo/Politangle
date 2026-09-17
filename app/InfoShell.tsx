@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { LanguageSelector, useLocale, type Locale } from './LocaleProvider';
+import { LanguageSelector, localePath, useLocale, type Locale } from './LocaleProvider';
 
 type ShellCopy = {
   method: string;
@@ -37,12 +37,13 @@ const shellCopy: Record<Locale, ShellCopy> = {
 export function InfoShell({ eyebrow, title, intro, children }: { eyebrow: string; title: string; intro: string; children: React.ReactNode }) {
   const { locale } = useLocale();
   const copy = shellCopy[locale];
+  const href = (path: string) => localePath(locale, path);
 
   return <main className="info-page">
-    <header className="info-nav"><Link href="/" className="info-brand">Politangle<small>politangle.org</small></Link><nav><Link href="/learn">{copy.learn}</Link><Link href="/method">{copy.method}</Link><Link href="/validation">{copy.validation}</Link><Link href="/school">{copy.schools}</Link></nav><LanguageSelector/><Link className="info-cta" href="/quiz">{copy.start} →</Link></header>
+    <header className="info-nav"><Link href={href('/')} className="info-brand">Politangle<small>politangle.org</small></Link><nav><Link href={href('/learn')}>{copy.learn}</Link><Link href={href('/method')}>{copy.method}</Link><Link href={href('/validation')}>{copy.validation}</Link><Link href={href('/school')}>{copy.schools}</Link></nav><LanguageSelector/><Link className="info-cta" href={href('/quiz')}>{copy.start} →</Link></header>
     <section className="info-hero"><div className="info-shell"><p>{eyebrow}</p><h1>{title}</h1><div>{intro}</div></div></section>
     <section className="info-shell info-content">{children}</section>
-    <footer className="info-footer info-shell"><Link href="/">Politangle</Link><div><Link href="/privacy">{copy.privacy}</Link><Link href="/imprint">{copy.imprint}</Link><Link href="/terms">{copy.terms}</Link><Link href="/contact">{copy.contact}</Link></div><small>© 2026 Politangle</small></footer>
+    <footer className="info-footer info-shell"><Link href={href('/')}>Politangle</Link><div><Link href={href('/privacy')}>{copy.privacy}</Link><Link href={href('/imprint')}>{copy.imprint}</Link><Link href={href('/terms')}>{copy.terms}</Link><Link href={href('/contact')}>{copy.contact}</Link></div><small>© 2026 Politangle</small></footer>
   </main>;
 }
 

@@ -10,6 +10,7 @@ import type { Locale } from './LocaleProvider';
 const es: Record<string, string> = {
   'Method':'Método',
   'Knowledge quizzes':'Conocimientos',
+  'Learn & quizzes':'Aprender y cuestionarios',
   'For schools':'Para centros educativos',
   'About':'Qué es Politangle',
   'Start Quick':'Empezar Quick',
@@ -140,6 +141,7 @@ const es: Record<string, string> = {
 const fr: Record<string, string> = {
   'Method':'Méthode',
   'Knowledge quizzes':'Connaissances',
+  'Learn & quizzes':'Apprendre et quiz',
   'For schools':'Pour les établissements',
   'About':'À propos de Politangle',
   'Start Quick':'Lancer Quick',

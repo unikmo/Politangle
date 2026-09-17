@@ -6,6 +6,11 @@ import { usePathname, useRouter } from 'next/navigation';
 export type Locale = 'en' | 'de' | 'es' | 'fr';
 const LOCALE_KEY = 'politangle.locale';
 
+export function localePath(locale: Locale, path: string) {
+  const normalized = path.startsWith('/') ? path : `/${path}`;
+  return `/${locale}${normalized === '/' ? '' : normalized}`;
+}
+
 const LocaleContext = createContext<{ locale: Locale; setLocale: (locale: Locale) => void }>({ locale: 'en', setLocale: () => undefined });
 
 export function LocaleProvider({ children, initialLocale = 'en' }: { children: React.ReactNode; initialLocale?: Locale }) {

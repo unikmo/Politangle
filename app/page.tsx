@@ -1,5 +1,5 @@
 'use client';
-import { LanguageSelector, useLocale } from './LocaleProvider';
+import { LanguageSelector, localePath, useLocale } from './LocaleProvider';
 import { translate } from './translations';
 
 const Arrow = () => <span aria-hidden="true">→</span>;
@@ -27,6 +27,7 @@ function ShapePreview({ axes, ariaLabel }: { axes: readonly (readonly [string, n
 export default function Home() {
  const { locale } = useLocale();
  const t = (en:string,de:string) => translate(locale, en, de);
+ const href = (path:string) => localePath(locale, path);
  const dimensions = [
   [t('Economic role','Rolle des Staates'),t('Public provision / redistribution ↔ Market / private responsibility','Öffentliche Absicherung / Umverteilung ↔ Markt / Eigenverantwortung'),'68'],
   [t('Ownership','Eigentum'),t('Social / worker ownership ↔ Private / shareholder ownership','Gemeinschafts- / Belegschaftseigentum ↔ Privat- / Anteilseigentum'),'72'],
@@ -39,10 +40,10 @@ export default function Home() {
  ];
  const heroShapeAxes = dimensions.map(([name,,score]) => [name, Number(score)] as const);
  return <main className="home">
-  <header className="p-nav"><a className="p-brand" href="/"><Mark/><span>Politangle</span></a><nav><a href="#method">{t('Method','Methode')}</a><a href="#learn">{t('Knowledge quizzes','Wissenschecks')}</a><a href="#schools">{t('For schools','Für Schulen')}</a><a href="/about">{t('About','Über Politangle')}</a></nav><div className="p-nav-actions"><LanguageSelector/><a className="p-button compact" href="/quiz">{t('Start Quick','Quick starten')} <Arrow/></a></div></header>
+  <header className="p-nav"><a className="p-brand" href={href('/')}><Mark/><span>Politangle</span></a><nav><a href={href('/method')}>{t('Method','Methode')}</a><a href={href('/learn')}>{t('Learn & quizzes','Lernen & Wissenschecks')}</a><a href={href('/school')}>{t('For schools','Für Schulen')}</a><a href={href('/about')}>{t('About','Über Politangle')}</a></nav><div className="p-nav-actions"><LanguageSelector/><a className="p-button compact" href={href('/quiz')}>{t('Start Quick','Quick starten')} <Arrow/></a></div></header>
 
   <section className="p-hero"><div className="p-orbit one"/><div className="p-orbit two"/><div className="p-shell p-hero-grid">
-   <div className="p-hero-copy"><p className="p-kicker">{t('POLITICS WITHOUT THE BOXES','POLITIK OHNE SCHUBLADEN')}</p><h1>{t('Your politics are not a line.','Politik passt nicht auf eine Links-rechts-Linie.')}</h1><p className="p-lead">{t('26 questions reveal how your views spread across eight political dimensions—without reducing you to one label.','26 kurze Fragen zeigen, wie du bei acht politischen Dimensionen stehst – ohne dich in eine Schublade zu stecken.')}</p><div className="p-actions"><a className="p-button light" href="/quiz">{t('Start the 3-minute Quick','Quick-Test in 3 Minuten')} <Arrow/></a><a className="p-text-link light" href="#method">{t('See how it works','So funktioniert’s')}</a></div><div className="p-trust"><span>✓ {t('Free','Kostenlos')}</span><span>✓ {t('No sign-up','Ohne Anmeldung')}</span><span>✓ {t('Private by default','Privat von Anfang an')}</span></div></div>
+   <div className="p-hero-copy"><p className="p-kicker">{t('POLITICS WITHOUT THE BOXES','POLITIK OHNE SCHUBLADEN')}</p><h1>{t('Your politics are not a line.','Politik passt nicht auf eine Links-rechts-Linie.')}</h1><p className="p-lead">{t('26 questions reveal how your views spread across eight political dimensions—without reducing you to one label.','26 kurze Fragen zeigen, wie du bei acht politischen Dimensionen stehst – ohne dich in eine Schublade zu stecken.')}</p><div className="p-actions"><a className="p-button light" href={href('/quiz')}>{t('Start the 3-minute Quick','Quick-Test in 3 Minuten')} <Arrow/></a><a className="p-text-link light" href={href('/method')}>{t('See how it works','So funktioniert’s')}</a></div><div className="p-trust"><span>✓ {t('Free','Kostenlos')}</span><span>✓ {t('No sign-up','Ohne Anmeldung')}</span><span>✓ {t('Private by default','Privat von Anfang an')}</span></div></div>
    <div className="p-hero-stage"><div className="p-hero-shape-hook"><ShapePreview axes={heroShapeAxes} ariaLabel={t('Example eight-axis Politangle shape','Beispiel für ein Politangle-Profil mit acht Achsen')}/></div></div>
   </div></section>
 
