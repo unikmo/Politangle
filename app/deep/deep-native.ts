@@ -45,6 +45,52 @@ const axes: Record<Locale, Record<string, AxisDisplay>> = {
   },
 };
 
+
+type AxisPlainDisplay = { question: string; low: string; high: string };
+
+const axisPlain: Record<Locale, Record<string, AxisPlainDisplay>> = {
+  en: {
+    'economic-role': { question: 'How much responsibility should government take for essential services and economic inequality?', low: 'more public provision and redistribution', high: 'more market and private responsibility' },
+    ownership: { question: 'Who should own and control major businesses?', low: 'more worker or public ownership', high: 'private and shareholder ownership' },
+    'social-values': { question: 'How much freedom should people have over personal and social choices?', low: 'personal autonomy and social change', high: 'tradition and moral continuity' },
+    authority: { question: 'When safety and liberty conflict, which should carry more weight?', low: 'liberty and procedural safeguards', high: 'order and preventive authority' },
+    pluralism: { question: 'How strongly should elected governments be constrained by courts, media and opposition?', low: 'independent checks on government', high: 'more room for elected majorities to act' },
+    world: { question: 'When problems cross borders, how much national discretion should countries give up?', low: 'binding international cooperation', high: 'national discretion' },
+    nationhood: { question: 'Who fully belongs to the nation?', low: 'equal civic belonging regardless of ancestry or religion', high: 'greater weight for inherited, cultural or parental ties' },
+    ecology: { question: 'When growth conflicts with ecological limits, which should take priority?', low: 'ecological limits even at some economic cost', high: 'growth with environmental improvement through technology and gradual policy' },
+  },
+  de: {
+    'economic-role': { question: 'Wie viel Verantwortung soll der Staat für wichtige Angebote und wirtschaftliche Ungleichheit übernehmen?', low: 'mehr öffentliche Absicherung und Umverteilung', high: 'mehr Markt und private Verantwortung' },
+    ownership: { question: 'Wer sollte große Unternehmen besitzen und kontrollieren?', low: 'mehr Eigentum und Mitbestimmung bei Beschäftigten oder Öffentlichkeit', high: 'private Eigentums- und Kontrollrechte der Anteilseigner' },
+    'social-values': { question: 'Wie viel Freiheit sollen Menschen bei persönlichen und gesellschaftlichen Entscheidungen haben?', low: 'persönliche Selbstbestimmung und gesellschaftlichen Wandel', high: 'Tradition und moralische Kontinuität' },
+    authority: { question: 'Wenn Sicherheit und Freiheit in Konflikt geraten, was soll stärker wiegen?', low: 'Freiheit und Verfahrensschutz', high: 'Ordnung und vorbeugende Eingriffe' },
+    pluralism: { question: 'Wie stark sollen gewählte Regierungen durch Gerichte, Medien und Opposition begrenzt werden?', low: 'unabhängige Kontrollen und Gegenmacht', high: 'mehr Handlungsspielraum für gewählte Mehrheiten' },
+    world: { question: 'Wie viel nationale Entscheidungshoheit sollen Länder bei grenzüberschreitenden Problemen abgeben?', low: 'verbindliche internationale Zusammenarbeit', high: 'nationale Entscheidungshoheit' },
+    nationhood: { question: 'Wer gehört vollständig zur Nation?', low: 'gleiche staatsbürgerliche Zugehörigkeit unabhängig von Herkunft oder Religion', high: 'mehr Gewicht für Herkunft, Kultur oder Elternstatus' },
+    ecology: { question: 'Wenn Wachstum und ökologische Grenzen kollidieren, was soll Vorrang haben?', low: 'ökologische Grenzen auch bei wirtschaftlichen Kosten', high: 'Wachstum mit Umweltverbesserung durch Technik und schrittweise Regulierung' },
+  },
+  es: {
+    'economic-role': { question: '¿Cuánta responsabilidad debe asumir el Estado por los servicios esenciales y la desigualdad económica?', low: 'más provisión pública y redistribución', high: 'más mercado y responsabilidad privada' },
+    ownership: { question: '¿Quién debería poseer y controlar las grandes empresas?', low: 'más propiedad de trabajadores o pública', high: 'propiedad privada y de accionistas' },
+    'social-values': { question: '¿Cuánta libertad deberían tener las personas sobre sus decisiones personales y sociales?', low: 'autonomía personal y cambio social', high: 'tradición y continuidad moral' },
+    authority: { question: 'Cuando seguridad y libertad entran en conflicto, ¿qué debería pesar más?', low: 'libertad y garantías de procedimiento', high: 'orden y autoridad preventiva' },
+    pluralism: { question: '¿Hasta qué punto deberían limitar a un gobierno elegido los tribunales, los medios y la oposición?', low: 'contrapesos independientes al gobierno', high: 'más margen para que actúen las mayorías elegidas' },
+    world: { question: 'Cuando los problemas cruzan fronteras, ¿cuánta autonomía nacional deberían ceder los países?', low: 'cooperación internacional vinculante', high: 'decisión nacional' },
+    nationhood: { question: '¿Quién pertenece plenamente a la nación?', low: 'pertenencia cívica igual sin importar origen o religión', high: 'más peso para vínculos heredados, culturales o familiares' },
+    ecology: { question: 'Cuando el crecimiento choca con los límites ecológicos, ¿qué debería tener prioridad?', low: 'límites ecológicos incluso con algún coste económico', high: 'crecimiento con mejoras ambientales mediante tecnología y políticas graduales' },
+  },
+  fr: {
+    'economic-role': { question: 'Quelle responsabilité l’État devrait-il assumer pour les services essentiels et les inégalités économiques ?', low: 'davantage de services publics et de redistribution', high: 'davantage de marché et de responsabilité privée' },
+    ownership: { question: 'Qui devrait posséder et contrôler les grandes entreprises ?', low: 'davantage de propriété salariale ou publique', high: 'la propriété privée et actionnariale' },
+    'social-values': { question: 'Quelle liberté les personnes devraient-elles avoir dans leurs choix personnels et sociaux ?', low: 'l’autonomie personnelle et le changement social', high: 'la tradition et la continuité morale' },
+    authority: { question: 'Quand sécurité et liberté entrent en conflit, laquelle devrait peser davantage ?', low: 'la liberté et les garanties procédurales', high: 'l’ordre et l’autorité préventive' },
+    pluralism: { question: 'Dans quelle mesure un gouvernement élu devrait-il être limité par les tribunaux, les médias et l’opposition ?', low: 'des contre-pouvoirs indépendants', high: 'davantage de marge pour les majorités élues' },
+    world: { question: 'Quand les problèmes dépassent les frontières, quelle marge de décision nationale les pays devraient-ils céder ?', low: 'une coopération internationale contraignante', high: 'la décision nationale' },
+    nationhood: { question: 'Qui appartient pleinement à la nation ?', low: 'une appartenance civique égale quelle que soit l’origine ou la religion', high: 'davantage de poids aux liens hérités, culturels ou familiaux' },
+    ecology: { question: 'Quand la croissance entre en conflit avec les limites écologiques, que faut-il privilégier ?', low: 'les limites écologiques même avec un certain coût économique', high: 'la croissance avec des progrès environnementaux par la technologie et des politiques graduelles' },
+  },
+};
+
 const families: Record<Locale, Record<string, { name: string; meaning: string }>> = {
   en: {
     liberalism: { name: 'Liberalism', meaning: 'liberty, personal autonomy and limits on concentrated power' },
@@ -107,6 +153,43 @@ export function deepAxis(locale: Locale, axis: { id: string; name: string; low: 
   return axes[locale][axis.id] ?? { name: axis.name, low: axis.low, high: axis.high };
 }
 
+export function deepAxisQuestion(locale: Locale, id: string) {
+  return axisPlain[locale][id]?.question ?? id.replaceAll('-', ' ');
+}
+
+export function deepAxisTakeaway(locale: Locale, id: string, score: number | null) {
+  const plain = axisPlain[locale][id];
+  if (!plain || score === null) {
+    return locale === 'de' ? 'Für dieses Thema fehlen noch Antworten.' : locale === 'es' ? 'Aún faltan respuestas para este tema.' : locale === 'fr' ? 'Il manque encore des réponses pour ce sujet.' : 'This topic needs more answers.';
+  }
+  if (locale === 'de') {
+    if (score <= 24) return `Deine Antworten sprechen deutlich für ${plain.low}.`;
+    if (score <= 39) return `Deine Antworten tendieren zu ${plain.low}.`;
+    if (score <= 60) return `Deine Antworten halten ${plain.low} und ${plain.high} relativ im Gleichgewicht.`;
+    if (score <= 74) return `Deine Antworten tendieren zu ${plain.high}.`;
+    return `Deine Antworten sprechen deutlich für ${plain.high}.`;
+  }
+  if (locale === 'es') {
+    if (score <= 24) return `Tus respuestas favorecen claramente ${plain.low}.`;
+    if (score <= 39) return `Tus respuestas se inclinan hacia ${plain.low}.`;
+    if (score <= 60) return `Tus respuestas equilibran bastante ${plain.low} y ${plain.high}.`;
+    if (score <= 74) return `Tus respuestas se inclinan hacia ${plain.high}.`;
+    return `Tus respuestas favorecen claramente ${plain.high}.`;
+  }
+  if (locale === 'fr') {
+    if (score <= 24) return `Tes réponses vont nettement vers ${plain.low}.`;
+    if (score <= 39) return `Tes réponses penchent vers ${plain.low}.`;
+    if (score <= 60) return `Tes réponses équilibrent assez bien ${plain.low} et ${plain.high}.`;
+    if (score <= 74) return `Tes réponses penchent vers ${plain.high}.`;
+    return `Tes réponses vont nettement vers ${plain.high}.`;
+  }
+  if (score <= 24) return `Your answers strongly favored ${plain.low}.`;
+  if (score <= 39) return `Your answers leaned toward ${plain.low}.`;
+  if (score <= 60) return `Your answers were relatively balanced between ${plain.low} and ${plain.high}.`;
+  if (score <= 74) return `Your answers leaned toward ${plain.high}.`;
+  return `Your answers strongly favored ${plain.high}.`;
+}
+
 export function deepFamily(locale: Locale, id: string, fallback: string) {
   return families[locale][id] ?? { name: fallback, meaning: locale === 'de' ? 'die Kerngedanken dieser Tradition' : locale === 'es' ? 'las ideas centrales de esta tradición' : locale === 'fr' ? 'les idées centrales de cette tradition' : 'the core ideas of that tradition' };
 }
@@ -120,10 +203,10 @@ export function deepUi(locale: Locale) {
     loading:'Full wird geladen…', quickFirst:'Erst Quick', quickFirstTitle:'Mach Politangle Quick, bevor du mit Full weitermachst.', startQuick:'Quick starten',
     fullLabel:'Dein Politangle · Full', homeAria:'Deine politische Einordnung', mainHome:'Stärkste Nähe', secondary:'Deutliche Nähe', tertiary:'Weiterer Einfluss',
     historical:'Historische Bezugspunkte', historicalNote:'Sie stehen für die Tradition – nicht für dein persönliches Profil.',
-    defines:'Was dein politisches Profil prägt', strongest:'Die deutlichsten Kanten deines Profils.', coherence:'Stimmigkeit der Antworten',
-    coherenceIntro:'Die Zahl ist nur die Zusammenfassung. Spannender ist, wo Grundsatz, Bauchgefühl und praktische Entscheidung auseinandergehen.',
+    defines:'Deine klarsten Positionen', strongest:'Wo deine Ansichten am klarsten sind', strongestIntro:'Das sind die Themen, bei denen deine Antworten am eindeutigsten in eine Richtung zeigen.', exampleFromAnswers:'Beispiel aus deinen Antworten', yourResponse:'Deine Antwort', dimensionLabel:'Politangle-Dimension', seeScoring:'Bewertung ansehen', coherence:'THINK · FEEL · ACT', differencesTitle:'Wo Denken, Bauchgefühl und konkrete Entscheidung auseinandergehen',
+    coherenceIntro:'Wir haben verwandte Fragen auf drei Arten gestellt. Hier siehst du die Themen, bei denen sich deine Antworten am stärksten verändert haben.',
     coherenceHelp:'Stimmigkeit ist kein Wissens-, Intelligenz-, Ehrlichkeits- oder Überzeugungswert. Unterschiede können echte Nuancen, Unsicherheit oder wechselnde Zielkonflikte zeigen.',
-    biggestShift:'Größte Verschiebung', anotherShift:'Weitere Verschiebung', spread:'Punkte Abstand', explain:'Was den Unterschied erklären könnte:',
+    biggestShift:'Größter Unterschied', anotherShift:'Weiterer Unterschied', spread:'Punkte Abstand', explain:'Was den Unterschied erklären könnte:', thinkMeaning:'Was du grundsätzlich für richtig hältst', feelMeaning:'Deine spontane Reaktion', actMeaning:'Was du konkret unterstützen würdest', whatThisShows:'Was das zeigt:',
     noLarge:'Keine großen Unterschiede zwischen Grundsatz, Gefühl und Entscheidung.', noLargeText:'THINK, FEEL und ACT liegen auf allen acht Dimensionen höchstens 20 Punkte auseinander.',
     allAxes:'Alle acht politischen Achsen ansehen', powerStyle:'Macht & politischer Stil', powerStyleTitle:'Muster, die nicht sauber auf eine einzelne Achse passen.',
     powerStyleLead:'Diese Muster zeigen, wie du über Repräsentation und politische Macht denkst. Sie ergänzen dein Politangle, sind aber kein eigenes politisches Zuhause.',
@@ -135,10 +218,10 @@ export function deepUi(locale: Locale) {
     loading:'Cargando Full…', quickFirst:'Primero Quick', quickFirstTitle:'Haz Politangle Quick antes de pasar a Full.', startQuick:'Empezar Quick',
     fullLabel:'Tu Politangle · Full', homeAria:'Tu encaje político', mainHome:'Coincidencia principal', secondary:'Cercanía importante', tertiary:'Otra influencia',
     historical:'Referencias históricas', historicalNote:'Representan la tradición, no tu perfil personal exacto.',
-    defines:'Qué define tu perfil político', strongest:'Los rasgos más marcados de tu perfil.', coherence:'Coherencia de las respuestas',
-    coherenceIntro:'La cifra es solo un resumen. Lo interesante es ver dónde se separan tus principios, tu reacción intuitiva y tu decisión práctica.',
+    defines:'Tus posiciones más claras', strongest:'Dónde tus opiniones son más claras', strongestIntro:'Estos son los temas en los que tus respuestas apuntaron con mayor consistencia en una dirección.', exampleFromAnswers:'Ejemplo de tus respuestas', yourResponse:'Tu respuesta', dimensionLabel:'Dimensión Politangle', seeScoring:'Ver puntuación', coherence:'THINK · FEEL · ACT', differencesTitle:'Dónde difieren lo que piensas, lo que sientes y lo que harías',
+    coherenceIntro:'Planteamos preguntas relacionadas de tres maneras. Aquí aparecen los temas en los que más cambiaron tus respuestas.',
     coherenceHelp:'La coherencia no mide conocimientos, inteligencia, sinceridad ni convicción. Las diferencias pueden reflejar matices reales, dudas o dilemas que cambian según el contexto.',
-    biggestShift:'Mayor cambio', anotherShift:'Otro cambio', spread:'puntos de diferencia', explain:'Qué puede explicar la diferencia:',
+    biggestShift:'Mayor diferencia', anotherShift:'Otra diferencia', spread:'puntos de diferencia', explain:'Qué puede explicar la diferencia:', thinkMeaning:'Lo que crees como principio', feelMeaning:'Tu reacción intuitiva', actMeaning:'Lo que apoyarías en la práctica', whatThisShows:'Qué muestra esto:',
     noLarge:'No aparecen grandes diferencias entre principio, intuición y elección.', noLargeText:'THINK, FEEL y ACT se mantienen a menos de 20 puntos entre sí en las ocho dimensiones.',
     allAxes:'Ver los ocho ejes políticos', powerStyle:'Poder & estilo político', powerStyleTitle:'Patrones que no caben del todo en un solo eje.',
     powerStyleLead:'Estos patrones describen cómo piensas sobre representación y poder político. Añaden contexto a tu Politangle, pero no son una familia política aparte.',
@@ -150,10 +233,10 @@ export function deepUi(locale: Locale) {
     loading:'Chargement de Full…', quickFirst:'Quick d’abord', quickFirstTitle:'Fais Politangle Quick avant de passer à Full.', startQuick:'Lancer Quick',
     fullLabel:'Ton Politangle · Full', homeAria:'Ton positionnement politique', mainHome:'Proximité principale', secondary:'Proximité importante', tertiary:'Autre influence',
     historical:'Repères historiques', historicalNote:'Ils illustrent la tradition, pas ton profil personnel exact.',
-    defines:'Ce qui structure ton profil politique', strongest:'Les traits les plus marqués de ton profil.', coherence:'Cohérence des réponses',
-    coherenceIntro:'Le chiffre n’est qu’un résumé. Le plus intéressant est de voir où principe, réaction intuitive et choix concret s’éloignent les uns des autres.',
+    defines:'Tes positions les plus claires', strongest:'Là où tes opinions sont les plus nettes', strongestIntro:'Ce sont les sujets sur lesquels tes réponses vont le plus régulièrement dans la même direction.', exampleFromAnswers:'Exemple tiré de tes réponses', yourResponse:'Ta réponse', dimensionLabel:'Dimension Politangle', seeScoring:'Voir le score', coherence:'THINK · FEEL · ACT', differencesTitle:'Là où pensée, instinct et choix concret diffèrent',
+    coherenceIntro:'Nous avons posé des questions proches de trois façons. Voici les sujets où tes réponses ont le plus changé.',
     coherenceHelp:'La cohérence ne mesure ni les connaissances, ni l’intelligence, ni l’honnêteté, ni la force des convictions. Les écarts peuvent refléter de vraies nuances, de l’incertitude ou des arbitrages différents selon le contexte.',
-    biggestShift:'Écart principal', anotherShift:'Autre écart', spread:'points d’écart', explain:'Ce qui peut expliquer l’écart :',
+    biggestShift:'Différence principale', anotherShift:'Autre différence', spread:'points d’écart', explain:'Ce qui peut expliquer l’écart :', thinkMeaning:'Ce que tu soutiens en principe', feelMeaning:'Ta réaction intuitive', actMeaning:'Ce que tu soutiendrais concrètement', whatThisShows:'Ce que cela montre :',
     noLarge:'Pas de grand écart entre principe, ressenti et choix concret.', noLargeText:'THINK, FEEL et ACT restent à moins de 20 points les uns des autres sur les huit dimensions.',
     allAxes:'Voir les huit axes politiques', powerStyle:'Pouvoir & style politique', powerStyleTitle:'Des schémas qui ne rentrent pas proprement dans un seul axe.',
     powerStyleLead:'Ces schémas décrivent ta manière de penser la représentation et le pouvoir politique. Ils ajoutent du contexte à ton Politangle, mais ne constituent pas une famille politique distincte.',
@@ -165,10 +248,10 @@ export function deepUi(locale: Locale) {
     loading:'Loading Full…', quickFirst:'Quick comes first', quickFirstTitle:'Complete Politangle Quick before Full.', startQuick:'Start Quick',
     fullLabel:'Your Politangle · Full', homeAria:'Your political home', mainHome:'Main home', secondary:'Significant leaning', tertiary:'Additional influence',
     historical:'Historical reference points', historicalNote:'They illustrate the tradition, not your exact personal profile.',
-    defines:'What defines your political home', strongest:'The strongest edges of your profile.', coherence:'Response coherence',
-    coherenceIntro:'The score is only the summary. The useful part is seeing where your principle, instinct and practical choice move apart.',
+    defines:'Your clearest positions', strongest:'Where your views are clearest', strongestIntro:'These are the issues where your answers pointed most consistently in one direction.', exampleFromAnswers:'Example from your answers', yourResponse:'Your response', dimensionLabel:'Politangle dimension', seeScoring:'See scoring', coherence:'THINK · FEEL · ACT', differencesTitle:'Where your thinking, instincts and choices differ',
+    coherenceIntro:'We asked related questions in three different ways. These are the issues where your answers changed the most.',
     coherenceHelp:'Coherence is not a knowledge, intelligence, honesty or conviction score. Differences can reflect genuine nuance, uncertainty or changing trade-offs.',
-    biggestShift:'Biggest shift', anotherShift:'Another shift', spread:'point spread', explain:'What may explain the gap:',
+    biggestShift:'Biggest difference', anotherShift:'Another difference', spread:'point spread', explain:'What may explain the gap:', thinkMeaning:'What you believe in principle', feelMeaning:'Your instinctive reaction', actMeaning:'What you would actually support', whatThisShows:'What this shows:',
     noLarge:'No large principle–instinct–choice shifts stand out.', noLargeText:'Your THINK, FEEL and ACT positions stay within 20 points of one another across the eight dimensions.',
     allAxes:'See all eight political axes', powerStyle:'Power & political style', powerStyleTitle:'Patterns that do not fit neatly into one axis.',
     powerStyleLead:'These patterns describe how you think about representation and political power. They add context to your main Politangle; they are not separate political homes.',
