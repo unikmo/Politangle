@@ -172,7 +172,7 @@ export default function AccountClient() {
           </section>
           <div className="account-actions">
             {returnPath && <a className="p-button account-button" href={returnPath}>{c.continue} →</a>}
-            <Link className="p-text-link" href={localePath(locale, '/certify')}>Certification</Link>
+            <Link className="p-text-link" href="/certify">Certification</Link>
             {session.user?.isAdmin && <Link className="p-text-link" href="/admin">Admin</Link>}
             <button className="account-link-button" type="button" onClick={resetPassword}>{c.forgot}</button>
             <button className="account-link-button" type="button" onClick={signOut}>{c.signOut}</button>
