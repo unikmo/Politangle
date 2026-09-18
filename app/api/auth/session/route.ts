@@ -26,7 +26,9 @@ export async function POST(request: Request) {
     const now = new Date().toISOString();
     const update: Record<string, unknown> = { updatedAt: now };
     if (input.adultConfirmed === true) update.adultConfirmedAt = now;
-    await getAdminDb().collection('certificationUsers').doc(decoded.uid).set(update, { merge: true });
+    const profileRef = getAdminDb().collection('certificationUsers').doc(decoded.uid);
+    await profileRef.set(update, { merge: true });
+    const profile = await profileRef.get();
     const store = await cookies();
     store.set(AUTH_SESSION_COOKIE, session, {
       httpOnly: true,
@@ -39,6 +41,7 @@ export async function POST(request: Request) {
     return NextResponse.json({
       authenticated: true,
       emailVerified: decoded.email_verified === true,
+      adultConfirmed: profile.data()?.adultConfirmedAt != null,
       isAdmin: decoded.admin === true || adminUids.has(decoded.uid),
     }, { headers: noStore });
   } catch {
