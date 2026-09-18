@@ -5,7 +5,7 @@
 .school-public-page{background:var(--paper,#f5f6f2)}
 .school-public-hero{position:relative;overflow:hidden;background:radial-gradient(circle at 80% 18%,rgba(255,255,255,.18),transparent 30%),linear-gradient(135deg,#ff7a3d,#f45a1f 58%,#c94412);color:#fff}
 .school-public-hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:70px;align-items:center;min-height:590px;padding:70px 0}
-.school-public-hero h1{max-width:740px;margin:0;font-size:clamp(48px,5.7vw,76px);font-weight:600;line-height:.99;letter-spacing:-.045em}
+.school-public-hero .p-kicker{color:#fff3eb}.school-public-hero h1{max-width:740px;margin:0;font-size:clamp(48px,5.7vw,76px);font-weight:600;line-height:.99;letter-spacing:-.045em}
 .school-public-lede{max-width:650px;margin:26px 0 0;color:#fff0e8;font-size:18px;line-height:1.65}
 .school-public-privacy-line{max-width:650px;margin:24px 0 0;padding:16px 18px;border:1px solid rgba(255,255,255,.28);border-radius:14px;background:rgba(255,255,255,.09);color:#fff0e8;font-size:12px;line-height:1.55}
 .school-public-privacy-line strong{color:#fff}
