@@ -10,6 +10,7 @@ const layout = readFileSync(join(root, 'app/layout.tsx'), 'utf8');
 const localeProvider = readFileSync(join(root, 'app/LocaleProvider.tsx'), 'utf8');
 const deepClient = readFileSync(join(root, 'app/deep/DeepClient.tsx'), 'utf8');
 const deepNative = readFileSync(join(root, 'app/deep/deep-native.ts'), 'utf8');
+const siteChrome = readFileSync(join(root, 'app/SiteChrome.tsx'), 'utf8');
 const schoolPage = readFileSync(join(root, 'app/school/page.tsx'), 'utf8');
 const infoShell = readFileSync(join(root, 'app/InfoShell.tsx'), 'utf8');
 const localizedInfo = readFileSync(join(root, 'app/LocalizedInfoPage.tsx'), 'utf8');
@@ -51,8 +52,9 @@ test('English locale is explicitly US English and the language control allows di
 });
 
 test('primary navigation opens dedicated localized pages rather than homepage sections', () => {
-  for (const route of ['/method', '/learn', '/school', '/about']) {
-    assert.match(homepage, new RegExp(`href\\('${route.replace('/', '\\/')}'\\)`));
+  assert.match(homepage, /<SiteHeader \/>/);
+  for (const route of ['/method', '/learn', '/quizzes', '/school', '/about']) {
+    assert.match(siteChrome, new RegExp(`href\\('${route.replace('/', '\\/')}'\\)`));
   }
   assert.doesNotMatch(homepage, /href="#(?:method|learn|schools)"/);
   assert.match(localeProvider, /export function localePath/);
