@@ -2,7 +2,7 @@ import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 import { authenticatedCertificationUser } from '../../../../../lib/auth-session';
 
-export const QUICK_COMPLETED_COOKIE = 'politangle_quick_completed';
+const QUICK_COMPLETED_COOKIE = 'politangle_quick_completed';
 
 function registrationAvailable() {
   const adminConfigured = Boolean(
