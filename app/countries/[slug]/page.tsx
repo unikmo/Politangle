@@ -62,12 +62,15 @@ export default async function CountryPage({ params }: { params: Promise<{ slug: 
 
         <section className="country-language">
           <div className="method-section-head">
-            <h2>Words that do not travel cleanly</h2>
-            <p>This is the part most likely to cause confusion when comparing countries.</p>
+            <h2>What familiar labels mean here</h2>
+            <p>Some political words change meaning across countries. These are the two distinctions worth knowing first.</p>
           </div>
           <div className="country-language-grid">
             {country.vocabulary.map((paragraph) => (
-              <article key={paragraph}><p>{paragraph}</p></article>
+              <article key={paragraph}>
+                <p>{firstSentence(paragraph)}</p>
+                {firstSentence(paragraph) !== paragraph && <details><summary>More context</summary><p>{paragraph}</p></details>}
+              </article>
             ))}
           </div>
         </section>
