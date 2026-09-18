@@ -14,7 +14,7 @@
 ### Founder decisions recorded 13 September 2026
 
 - School age bands remain **Junior 10–13** and **Youth 14–18**.
-- Certified tests and certificates launch for adults aged **18+** only. Under-18 users may use Learn and Practice.
+- Certified tests and certificates launch for users aged **16+**. Users under 16 may use Learn and Practice.
 - The certificate holder's name is **supplied by the holder**; Politangle does not independently verify legal identity.
 - Third-party verification works only through the exact high-entropy certificate ID / QR URL. There is no name search, public directory or indexable certificate catalogue.
 - Before issuance, the holder must clearly acknowledge that anyone given the certificate URL / QR code can see the verification record. This acknowledgement is mandatory and must not be hidden or pre-ticked.
