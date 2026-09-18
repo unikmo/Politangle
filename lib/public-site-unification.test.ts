@@ -18,6 +18,10 @@ const quickComplete = readFileSync(join(root, 'app/api/assessment/quick/complete
 const countriesHub = readFileSync(join(root, 'app/countries/page.tsx'), 'utf8');
 const countryPage = readFileSync(join(root, 'app/countries/[slug]/page.tsx'), 'utf8');
 const countriesData = readFileSync(join(root, 'lib/countries.ts'), 'utf8');
+const methodExplainer = readFileSync(join(root, 'app/MethodExplainer.tsx'), 'utf8');
+const infoCss = readFileSync(join(root, 'app/info.css'), 'utf8');
+const homeCss = readFileSync(join(root, 'app/home.css'), 'utf8');
+const schoolCss = readFileSync(join(root, 'app/school.css'), 'utf8');
 
 test('public pages use one homepage-style navigation and footer system', () => {
   assert.match(home, /<SiteHeader \/>/);
@@ -85,7 +89,28 @@ test('country perspectives are visible from the public site without pretending u
   assert.match(countriesHub, /countryProfiles\.length/);
   assert.match(countriesHub, /CURRENT SNAPSHOT/);
   assert.match(countriesHub, /FOUNDATIONAL PROFILE/);
-  assert.match(countryPage, /Coverage status/);
-  assert.match(countryPage, /does not present missing current information as if it were up to date/);
+  assert.match(countryPage, /Why this page exists/);
+  assert.match(countryPage, /Words that do not travel cleanly/);
+  assert.match(countryPage, /This page does not change your Politangle score/);
+  assert.match(countryPage, /Sources and update status/);
   assert.equal((countriesData.match(/slug: '/g) ?? []).length, 20);
+});
+
+
+test('Method explains why all eight axes exist in plain language', () => {
+  assert.match(infoPages, /Eight questions politics often mixes together/);
+  for (const axis of ['Economic role', 'Ownership', 'Social values', 'Authority', 'Pluralism', 'World', 'Nationhood', 'Ecology']) {
+    assert.match(methodExplainer, new RegExp(axis));
+  }
+  assert.match(methodExplainer, /Why eight axes\?/);
+  assert.match(methodExplainer, /Eight is Politangle’s model/);
+  assert.match(methodExplainer, /Why keep it separate\?/);
+  assert.match(methodExplainer, /How an answer becomes a result/);
+});
+
+test('secondary public page heroes use the Politangle orange system', () => {
+  for (const css of [infoCss, homeCss, schoolCss]) {
+    assert.match(css, /#f45a1f/);
+    assert.match(css, /#c94412/);
+  }
 });
