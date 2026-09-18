@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { InfoSection, InfoShell } from './InfoShell';
-import { useLocale, type Locale } from './LocaleProvider';
+import { localePath, useLocale, type Locale } from './LocaleProvider';
 
 export type InfoPageId = 'method' | 'validation' | 'privacy' | 'terms' | 'about' | 'contact' | 'imprint' | 'question-banks' | 'school-pilot';
 
@@ -606,7 +606,7 @@ export default function LocalizedInfoPage({ page }: { page: InfoPageId }) {
           {section.bullets && <ul>{section.bullets.map((item) => <li key={item}>{item}</li>)}</ul>}
           {section.table && <table className="info-table"><tbody>{section.table.map(([label, value]) => <tr key={label}><th>{label}</th><td>{value}</td></tr>)}</tbody></table>}
           {section.callout && <p className="info-callout"><strong>{section.callout}</strong></p>}
-          {section.link && <p><Link href={section.link.href}>{section.link.label}</Link></p>}
+          {section.link && <p><Link href={localePath(locale, section.link.href)}>{section.link.label}</Link></p>}
         </InfoSection>
       ))}
     </InfoShell>
