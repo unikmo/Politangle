@@ -10,6 +10,9 @@ const validationWorkflow = readFileSync(join(root, 'docs/literacy-validation-wor
 const certificationServer = readFileSync(join(root, 'lib/certification-server.ts'), 'utf8');
 const bankSchema = readFileSync(join(root, 'lib/literacy-bank-schema.ts'), 'utf8');
 const checkout = readFileSync(join(root, 'app/api/certificate/checkout/route.ts'), 'utf8');
+const countryLocalization = readFileSync(join(root, 'lib/country-localization.ts'), 'utf8');
+const localizedCountryRoute = readFileSync(join(root, 'app/[locale]/countries/[slug]/page.tsx'), 'utf8');
+const siteChrome = readFileSync(join(root, 'app/SiteChrome.tsx'), 'utf8');
 
 test('founder review covers the exact current bank without silently validating it', () => {
   assert.match(reviewApi, /literacyMasterBankCandidates/);
@@ -41,4 +44,15 @@ test('certificate checkout remains independently gated by tax readiness and elig
 test('validation workflow follows the 16+ certification policy', () => {
   assert.match(validationWorkflow, /English-speaking users aged 16\+/);
   assert.doesNotMatch(validationWorkflow, /English-speaking adults aged 18\+/);
+});
+
+
+test('first four country perspectives have native DE ES FR routes without machine fallback', () => {
+  for (const slug of ['united-states','germany','france','united-kingdom']) assert.match(countryLocalization, new RegExp(slug));
+  assert.match(countryLocalization, /Vereinigte Staaten/);
+  assert.match(countryLocalization, /Estados Unidos/);
+  assert.match(countryLocalization, /États-Unis/);
+  assert.match(localizedCountryRoute, /localizeCountryProfile/);
+  assert.match(localizedCountryRoute, /hreflang|languages:/);
+  assert.match(siteChrome, /href\('\\/countries'\)/);
 });
