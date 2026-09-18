@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { InfoSection, InfoShell } from './InfoShell';
+import MethodExplainer from './MethodExplainer';
 import { localePath, useLocale, type Locale } from './LocaleProvider';
 
 export type InfoPageId = 'method' | 'validation' | 'privacy' | 'terms' | 'about' | 'contact' | 'imprint' | 'question-banks' | 'school-pilot';
@@ -27,14 +28,9 @@ type PageCopy = {
 const en: Record<InfoPageId, PageCopy> = {
   method: {
     eyebrow: 'METHOD',
-    title: 'A map of patterns—not a verdict.',
-    intro: 'Politangle separates political questions into distinct dimensions, then shows how your answers combine without forcing every position onto one left–right line.',
-    sections: [
-      { title: 'What Quick measures', paragraphs: ['Quick uses 26 statements selected across the assessment constructs. Each screen presents one statement and a five-point agreement scale from −2 to +2, plus “Not sure”. Not-sure answers are excluded rather than treated as neutral.'] },
-      { title: 'The eight axes', bullets: ['Economic role', 'Ownership', 'Social values', 'Authority', 'Pluralism', 'World cooperation', 'Nationhood', 'Ecology'], paragraphs: ['Each axis stays visible so one position does not erase a different position elsewhere.'] },
-      { title: 'Quick and Full', paragraphs: ['Quick 26 gives a first reading. Full brings the adult assessment to 42 questions in total by adding 16 more. Youth and Junior forms are separately versioned and must be validated for their intended age groups.'] },
-      { title: 'Interpretation', paragraphs: ['Family matches describe resemblance to broad political traditions. They are not party recommendations, diagnoses or claims about identity. Read the detailed axes before any family label.'], callout: 'Politangle is an educational and exploratory tool. It does not tell you what to believe or how to vote.' },
-    ],
+    title: 'Eight questions politics often mixes together.',
+    intro: 'Politangle does not assume that one left–right line can describe every political view. It separates eight recurring trade-offs so you can see where your own combination is consistent, mixed or unusual.',
+    sections: [],
   },
   validation: {
     eyebrow: 'VALIDATION & LIMITATIONS',
@@ -119,14 +115,9 @@ const en: Record<InfoPageId, PageCopy> = {
 
 const de: Record<InfoPageId, PageCopy> = {
   method: {
-    eyebrow: 'METHODE', title: 'Mehrere Achsen statt einer politischen Schublade.',
-    intro: 'Politangle betrachtet politische Einstellungen getrennt voneinander. So bleibt sichtbar, wo deine Ansichten zusammenpassen – und wo eben nicht.',
-    sections: [
-      { title: 'Was Quick erfasst', paragraphs: ['Quick besteht aus 26 Aussagen zu unterschiedlichen politischen Themen. Pro Bildschirm siehst du genau eine Aussage. Du antwortest auf einer Skala von −2 bis +2 oder wählst „Unsicher“. Unsichere Antworten fließen nicht einfach als Mitte in die Wertung ein.'] },
-      { title: 'Die acht Achsen', bullets: ['Rolle des Staates', 'Eigentum', 'Gesellschaftliche Werte', 'Autorität', 'Pluralismus', 'Internationale Ordnung', 'Zugehörigkeit', 'Ökologie'], paragraphs: ['Jede Achse bleibt für sich sichtbar. Eine Position auf einem Thema soll deine Haltung zu einem anderen Thema nicht überdecken.'] },
-      { title: 'Quick und Full', paragraphs: ['Quick 26 gibt dir einen ersten Überblick. Full ergänzt 16 weitere Fragen und kommt damit auf insgesamt 42. Youth und Junior sind eigene Fassungen und müssen für ihre Altersgruppen separat geprüft werden.'] },
-      { title: 'So liest du das Ergebnis', paragraphs: ['Die Nähe zu politischen Traditionen beschreibt Ähnlichkeiten im Gesamtmuster. Sie ist keine Parteempfehlung, keine Diagnose und kein Etikett für deine Identität. Schau zuerst auf die einzelnen Achsen.'], callout: 'Politangle ist ein Bildungs- und Orientierungstool. Es sagt dir weder, was du glauben sollst, noch wen du wählen sollst.' },
-    ],
+    eyebrow: 'METHODE', title: 'Acht Fragen, die Politik oft miteinander vermischt.',
+    intro: 'Politangle geht nicht davon aus, dass eine einzige Links-rechts-Linie jede politische Haltung erklären kann. Acht wiederkehrende Zielkonflikte werden getrennt gezeigt – damit deine eigene Kombination sichtbar bleibt.',
+    sections: [],
   },
   validation: {
     eyebrow: 'VALIDIERUNG & GRENZEN', title: 'Klar benennen, was schon belegt ist – und was noch nicht.',
@@ -596,6 +587,14 @@ const copy: Record<Locale, Record<InfoPageId, PageCopy>> = { en, de, es, fr };
 export default function LocalizedInfoPage({ page }: { page: InfoPageId }) {
   const { locale } = useLocale();
   const c = copy[locale][page];
+
+  if (page === 'method') {
+    return (
+      <InfoShell eyebrow={c.eyebrow} title={c.title} intro={c.intro}>
+        <MethodExplainer locale={locale} />
+      </InfoShell>
+    );
+  }
 
   return (
     <InfoShell eyebrow={c.eyebrow} title={c.title} intro={c.intro}>
