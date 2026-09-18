@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
+import { localePath, useLocale } from '../LocaleProvider';
 
 type Question = { id: string; section: 'classify' | 'understand'; prompt: string; options: { id: string; label: string }[] };
 type Attempt = { attemptId: string; expiresAt: string; questions: Question[] };
@@ -9,6 +10,7 @@ type Status = { authenticated: boolean; emailVerified?: boolean; adultConfirmed?
 type Result = { result: { passed: boolean; classify: { correct: number; total: number }; understand: { correct: number; total: number } }; reviews: { id: string; correct: boolean; correctOptionIds?: string[]; explanation?: string }[]; certificateEligible: boolean };
 
 export default function CertifyClient({ renewCertificateId }: { renewCertificateId?: string }) {
+  const { locale } = useLocale();
   const [status, setStatus] = useState<Status | null>(null);
   const [attempt, setAttempt] = useState<Attempt | null>(null);
   const [index, setIndex] = useState(0);
@@ -71,7 +73,7 @@ export default function CertifyClient({ renewCertificateId }: { renewCertificate
       <p className="engine-kicker">FREE CERTIFIED ATTEMPT · ENGLISH · 18+</p><h1>Demonstrate political literacy.</h1>
       <p>Complete 25 CLASSIFY and 25 UNDERSTAND questions. You need at least 23 correct in each section. Attempts are free; a personalized certificate costs €9.90 only after you pass.</p>
       <div className="certification-status-list"><span>Signed in</span><strong>{status?.authenticated ? 'Yes' : 'No'}</strong><span>Email verified</span><strong>{status?.emailVerified ? 'Yes' : 'No'}</strong><span>Age requirement</span><strong>{status?.adultConfirmed ? '18+ confirmed' : 'Not confirmed'}</strong><span>Attempts remaining</span><strong>{status?.attempts?.remaining ?? '—'}</strong><span>Certified bank</span><strong>{status?.readiness.bankReady ? 'Ready' : 'Awaiting final approval'}</strong><span>Release gate</span><strong>{status?.readiness.enabled ? 'Open' : 'Closed'}</strong></div>
-      {!status?.authenticated ? <Link className="engine-primary-link" href="/account">Create account or sign in</Link> : <button className="engine-primary-link" type="button" disabled={!canStart || busy} onClick={start}>{busy ? 'Preparing…' : 'Start certified attempt'}</button>}
+      {!status?.authenticated ? <Link className="engine-primary-link" href={localePath(locale, `/account?return=${encodeURIComponent(localePath(locale, '/certify'))}&certification=1`)}>Create free account or sign in</Link> : !status.adultConfirmed ? <Link className="engine-primary-link" href={localePath(locale, `/account?return=${encodeURIComponent(localePath(locale, '/certify'))}&certification=1`)}>Confirm 18+ for certification</Link> : <button className="engine-primary-link" type="button" disabled={!canStart || busy} onClick={start}>{busy ? 'Preparing…' : 'Start certified attempt'}</button>}
       {!status?.readiness.enabled && <p className="certification-message">Certification infrastructure is installed, but public attempts remain closed until the English bank and launch controls are approved.</p>}
       {message && <p className="certification-message" role="status">{message}</p>}
     </article></section>
