@@ -93,6 +93,9 @@ test('country perspectives are visible from the public site without pretending u
   assert.match(countryPage, /What familiar labels mean here/);
   assert.match(countryPage, /This page does not change your Politangle score/);
   assert.match(countryPage, /Sources and update status/);
+  assert.doesNotMatch(countryPage, /<h2>How power works<\/h2>/);
+  assert.doesNotMatch(countryPage, /<h2>Latest national election<\/h2>/);
+  assert.doesNotMatch(countryPage, /<h2>Democracy and rights measure<\/h2>/);
   assert.equal((countriesData.match(/slug: '/g) ?? []).length, 20);
 });
 
