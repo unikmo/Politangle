@@ -90,7 +90,7 @@ test('country perspectives are visible from the public site without pretending u
   assert.match(countriesHub, /CURRENT SNAPSHOT/);
   assert.match(countriesHub, /FOUNDATIONAL PROFILE/);
   assert.match(countryPage, /Why this page exists/);
-  assert.match(countryPage, /Words that do not travel cleanly/);
+  assert.match(countryPage, /What familiar labels mean here/);
   assert.match(countryPage, /This page does not change your Politangle score/);
   assert.match(countryPage, /Sources and update status/);
   assert.equal((countriesData.match(/slug: '/g) ?? []).length, 20);
