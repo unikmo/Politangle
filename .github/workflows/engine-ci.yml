@@ -38,12 +38,12 @@ jobs:
 
       - name: Package source for Netlify release
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-        run: tar --exclude=.git --exclude=node_modules --exclude=.next -czf politangle-release-source.tgz .
+        run: tar --exclude=.git --exclude=node_modules --exclude=.next -czf "$RUNNER_TEMP/politangle-release-source.tgz" .
 
       - name: Upload Netlify release source
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         uses: actions/upload-artifact@v4
         with:
           name: politangle-release-source-${{ github.sha }}
-          path: politangle-release-source.tgz
+          path: ${{ runner.temp }}/politangle-release-source.tgz
           retention-days: 3
