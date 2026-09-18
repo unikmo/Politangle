@@ -54,5 +54,5 @@ test('first four country perspectives have native DE ES FR routes without machin
   assert.match(countryLocalization, /États-Unis/);
   assert.match(localizedCountryRoute, /localizeCountryProfile/);
   assert.match(localizedCountryRoute, /hreflang|languages:/);
-  assert.match(siteChrome, /href\('\\/countries'\)/);
+  assert.match(siteChrome, /href\('\/countries'\)/);
 });
