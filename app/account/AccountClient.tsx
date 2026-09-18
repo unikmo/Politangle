@@ -168,7 +168,7 @@ export default function AccountClient() {
           </>}
           <section className="account-certificates">
             <h3>{c.certificates}</h3>
-            {certificates.length ? certificates.map((certificate) => <Link key={certificate.certificateId} href={localePath(locale, `/certificate/${certificate.certificateId}`)}><strong>{certificate.status}</strong><span>CLASSIFY {certificate.classifyScore}/25 · UNDERSTAND {certificate.understandScore}/25</span><small>{new Date(certificate.issuedAt).toLocaleDateString()} → {new Date(certificate.expiresAt).toLocaleDateString()}</small></Link>) : <p>{c.noCertificates}</p>}
+            {certificates.length ? certificates.map((certificate) => <Link key={certificate.certificateId} href={`/certificate/${certificate.certificateId}`}><strong>{certificate.status}</strong><span>CLASSIFY {certificate.classifyScore}/25 · UNDERSTAND {certificate.understandScore}/25</span><small>{new Date(certificate.issuedAt).toLocaleDateString()} → {new Date(certificate.expiresAt).toLocaleDateString()}</small></Link>) : <p>{c.noCertificates}</p>}
           </section>
           <div className="account-actions">
             {returnPath && <a className="p-button account-button" href={returnPath}>{c.continue} →</a>}
