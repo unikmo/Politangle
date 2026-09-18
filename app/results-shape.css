@@ -3,3 +3,87 @@
 .result-shell{max-width:900px;padding-top:30px}.politangle-home-card{padding-bottom:34px}.politangle-home-card h1{max-width:820px;font-size:clamp(34px,4.7vw,52px)}.politangle-family-story{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:22px 0 10px}.politangle-family-story p{margin:0;padding:16px 17px;border:1px solid var(--line,rgba(23,23,21,.12));border-radius:14px;background:rgba(255,255,255,.42)}.politangle-family-story strong,.politangle-family-story span{display:block}.politangle-family-story strong{margin-bottom:7px;color:var(--ink,#171715);font-size:11px;line-height:1.4}.politangle-family-story span{color:var(--muted,#6c6861);font-size:11px;line-height:1.5}.home-reference{max-width:780px;margin:12px 0 0!important;padding:12px 0 0;border-top:1px solid var(--line,rgba(23,23,21,.12));font-size:11px!important;line-height:1.55!important}.compact-shape{max-width:580px;margin-top:18px}.compact-actions{margin-top:10px}.compact-result-card{padding-top:34px;padding-bottom:34px}.compact-result-card .result-insight-grid{margin-top:16px}.result-details-card{padding:22px 28px}.result-details-card>summary{cursor:pointer;font-size:13px;font-weight:700;list-style-position:outside}.compact-axis-results{gap:18px;margin-top:18px}.compact-axis-results .engine-dimension{padding-top:13px}.compact-axis-results .engine-dimension-head strong{font-size:14px}.additional-patterns{display:grid;gap:0;margin-top:15px}.additional-patterns p{display:grid;grid-template-columns:180px 1fr;gap:18px;margin:0;padding:12px 0;border-top:1px solid var(--line,rgba(23,23,21,.12));font-size:12px;line-height:1.5}.additional-patterns span{color:var(--muted,#6c6861)}
 
 @media(max-width:760px){.shape-wrap{margin-top:0}.shape-label{font-size:10px}.result-action-row{align-items:flex-start;flex-direction:column}.result-insight-grid,.family-cards,.politangle-family-story{grid-template-columns:1fr}.result-insight{min-height:auto}.consistency-quick,.consistency-hero{grid-template-columns:1fr;gap:12px}.consistency-hero>strong{font-size:54px}.family-card{padding:15px}.shape-caption{text-align:left!important}.politangle-home-card{padding-bottom:26px}.result-details-card{padding:20px}.additional-patterns p{grid-template-columns:1fr;gap:4px}}
+
+
+/* Concrete interpretation cards: lead with real-world questions and questionnaire evidence. */
+.result-section-intro{max-width:760px!important;margin-top:8px!important}
+.concrete-result-insight{
+  min-height:0;
+  padding:22px;
+  background:#fff;
+  box-shadow:0 8px 22px rgba(84,35,23,.035);
+}
+.concrete-result-insight .result-insight-question{
+  margin:0 0 10px;
+  color:var(--ink,#171715);
+  font-size:15px;
+  font-weight:750;
+  line-height:1.35;
+}
+.concrete-result-insight .result-insight-summary{
+  display:block;
+  margin:0;
+  color:var(--accent,#805331);
+  font-size:12px;
+  font-weight:700;
+  line-height:1.5;
+}
+.result-evidence-list{
+  display:grid;
+  gap:10px;
+  margin-top:17px;
+  padding-top:14px;
+  border-top:1px solid var(--line,rgba(23,23,21,.12));
+}
+.result-evidence-label{
+  color:var(--muted,#6c6861);
+  font-size:9px;
+  font-weight:800;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+}
+.result-evidence{
+  padding:11px 12px;
+  border-radius:12px;
+  background:var(--surface,#f3efe8);
+}
+.result-evidence-statement{
+  margin:0!important;
+  color:var(--ink,#171715)!important;
+  font-size:10.5px!important;
+  line-height:1.5!important;
+}
+.result-evidence-response{
+  display:block;
+  margin-top:7px;
+  color:var(--muted,#6c6861);
+  font-size:9.5px;
+  line-height:1.35;
+}
+.result-evidence-response b{color:var(--ink,#171715)}
+.result-metadata{
+  margin:14px 0 0!important;
+  color:#8a7468!important;
+  font-size:9px!important;
+  line-height:1.4!important;
+}
+.result-score-details{
+  margin-top:8px;
+  color:var(--muted,#6c6861);
+  font-size:9.5px;
+}
+.result-score-details summary{
+  cursor:pointer;
+  color:var(--accent,#805331);
+  font-weight:700;
+}
+.result-score-details p{
+  margin:7px 0 0!important;
+  color:var(--muted,#6c6861)!important;
+  font-size:9.5px!important;
+  line-height:1.45!important;
+}
+
+@media(max-width:760px){
+  .concrete-result-insight{padding:18px}
+}

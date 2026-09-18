@@ -18,7 +18,7 @@ import {
   lockedBeliefStatementsV3,
   type BeliefV2Session,
 } from '../../lib/belief-v2-session';
-import { collapseStatementAnswers } from '../../lib/belief-statements';
+import { canonicalizeStatementAnswer, collapseStatementAnswers, type BeliefStatement } from '../../lib/belief-statements';
 import { assessNuancesV2 } from '../../lib/nuance-model';
 import { describePolitangleHome } from '../../lib/politangle-home';
 import { agreementAnswerOptions, type AnswerValue } from '../../lib/questions';
@@ -27,7 +27,9 @@ import { romanceBeliefStatement } from '../../lib/romance-believe';
 import { useLocale, type Locale } from '../LocaleProvider';
 import {
   deepAxis,
+  deepAxisQuestion,
   deepAxisSentence,
+  deepAxisTakeaway,
   deepCoherence,
   deepConstruct,
   deepDirection,
@@ -74,6 +76,53 @@ function answerAria(locale: Locale, value: AnswerValue) {
     fr: { '-2':'Pas du tout d’accord', '-1':'Plutôt pas d’accord', '0':'Neutre / cela dépend', '1':'Plutôt d’accord', '2':'Tout à fait d’accord' },
   };
   return map[locale][String(value)];
+}
+
+
+type AxisResult = ReturnType<typeof calculatePolygonV2Canonical>[number];
+type AnswerEvidence = {
+  statement: string;
+  response: string;
+  canonicalScore: number | null;
+};
+
+function localizedBeliefCopy(locale: Locale, item: BeliefStatement) {
+  if (locale === 'de') return germanBeliefStatement(item.sourceItemId, item.polarity) ?? item.statement;
+  if (locale === 'es' || locale === 'fr') return romanceBeliefStatement(locale, item.sourceItemId, item.polarity) ?? item.statement;
+  return item.statement;
+}
+
+function evidenceForAxis(
+  session: BeliefV2Session,
+  locale: Locale,
+  axis: AxisResult,
+  mode?: 'think' | 'feel' | 'act',
+  targetScore: number | null = null,
+  limit = 1,
+): AnswerEvidence[] {
+  const ids = [...session.quickOrder, ...session.deepOrder];
+  const evidence = ids.flatMap((id) => {
+    const item = lockedBeliefStatementsV3.find((candidate) => candidate.id === id);
+    if (!item || !axis.constructs.includes(item.construct) || (mode && item.mode !== mode)) return [];
+    const answer = session.answers[id];
+    if (typeof answer !== 'number') return [];
+    const canonical = canonicalizeStatementAnswer(answer, item.polarity);
+    const canonicalScore = typeof canonical === 'number' ? Math.round(((canonical + 2) / 4) * 100) : null;
+    return [{
+      statement: localizedBeliefCopy(locale, item),
+      response: answerAria(locale, answer),
+      canonicalScore,
+    }];
+  });
+
+  return evidence
+    .sort((a, b) => {
+      if (targetScore !== null && a.canonicalScore !== null && b.canonicalScore !== null) {
+        return Math.abs(a.canonicalScore - targetScore) - Math.abs(b.canonicalScore - targetScore);
+      }
+      return Math.abs((b.canonicalScore ?? 50) - 50) - Math.abs((a.canonicalScore ?? 50) - 50);
+    })
+    .slice(0, limit);
 }
 
 function PoliticalShape({ axes, locale }: { axes: ReturnType<typeof calculatePolygonV2Canonical>; locale: Locale }) {
@@ -253,14 +302,31 @@ export default function DeepClient() {
         <article className="engine-card result-story-card compact-result-card" style={{ marginTop: 18 }}>
           <p className="engine-kicker">{ui.defines}</p>
           <h2>{ui.strongest}</h2>
+          <p className="result-lede result-section-intro">{ui.strongestIntro}</p>
           <div className="result-insight-grid">
             {home.strongestAxes.map((axis) => {
               const display = deepAxis(locale, axis);
+              const evidence = evidenceForAxis(beliefSession, locale, axis, undefined, axis.score, 2);
               return (
-                <section key={axis.id} className="result-insight">
-                  <strong>{display.name}</strong>
-                  <span>{axis.score} / 100</span>
-                  <p>{deepAxisSentence(locale, axis.score, display.low, display.high)}</p>
+                <section key={axis.id} className="result-insight concrete-result-insight">
+                  <p className="result-insight-question">{deepAxisQuestion(locale, axis.id)}</p>
+                  <strong className="result-insight-summary">{deepAxisTakeaway(locale, axis.id, axis.score)}</strong>
+                  {evidence.length > 0 && (
+                    <div className="result-evidence-list">
+                      <b className="result-evidence-label">{ui.exampleFromAnswers}</b>
+                      {evidence.map((example, exampleIndex) => (
+                        <div className="result-evidence" key={exampleIndex}>
+                          <p className="result-evidence-statement">“{example.statement}”</p>
+                          <span className="result-evidence-response">{ui.yourResponse}: <b>{example.response}</b></span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                  <p className="result-metadata">{ui.dimensionLabel}: {display.name}</p>
+                  <details className="result-score-details">
+                    <summary>{ui.seeScoring}</summary>
+                    <p>{axis.score ?? '—'} / 100 · {deepAxisSentence(locale, axis.score, display.low, display.high)}</p>
+                  </details>
                 </section>
               );
             })}
@@ -269,31 +335,54 @@ export default function DeepClient() {
 
         <article className="engine-card compact-result-card coherence-card" style={{ marginTop: 18 }}>
           <p className="engine-kicker">{ui.coherence}</p>
-          <div className="consistency-hero">
-            <strong>{output.coherence.score ?? '—'}<small>/100</small></strong>
-            <div>
-              <h2>{deepCoherence(locale, output.coherence.score)}</h2>
-              <p>{ui.coherenceIntro}</p>
-            </div>
-          </div>
+          <h2>{ui.differencesTitle}</h2>
+          <p className="result-lede coherence-intro">{ui.coherenceIntro}</p>
           <p className="engine-help">{ui.coherenceHelp}</p>
+          <details className="result-score-details coherence-overall-scoring">
+            <summary>{ui.seeScoring}</summary>
+            <p>{deepCoherence(locale, output.coherence.score)} · {output.coherence.score ?? '—'} / 100</p>
+          </details>
 
           {meaningfulGaps.length > 0 ? (
             <div className="coherence-gap-list">
               {meaningfulGaps.map((gap, gapIndex) => {
                 const display = deepAxis(locale, gap);
+                const modes = [
+                  { key: 'THINK', meaning: ui.thinkMeaning, mode: 'think' as const, score: gap.think },
+                  { key: 'FEEL', meaning: ui.feelMeaning, mode: 'feel' as const, score: gap.feel },
+                  { key: 'ACT', meaning: ui.actMeaning, mode: 'act' as const, score: gap.act },
+                ];
                 return (
                   <section className="coherence-gap-card" key={gap.id}>
                     <div className="coherence-gap-head">
-                      <strong>{gapIndex === 0 ? ui.biggestShift : ui.anotherShift} · {display.name}</strong>
-                      <span>{gap.gap}-{ui.spread}</span>
+                      <strong>{gapIndex === 0 ? ui.biggestShift : ui.anotherShift}</strong>
                     </div>
+                    <h3 className="coherence-axis-question">{deepAxisQuestion(locale, gap.id)}</h3>
                     <div className="coherence-mode-grid">
-                      <div><b>THINK</b><strong>{gap.think ?? '—'}</strong><span>{deepModeDirection(locale, gap.think, display.low, display.high)}</span></div>
-                      <div><b>FEEL</b><strong>{gap.feel ?? '—'}</strong><span>{deepModeDirection(locale, gap.feel, display.low, display.high)}</span></div>
-                      <div><b>ACT</b><strong>{gap.act ?? '—'}</strong><span>{deepModeDirection(locale, gap.act, display.low, display.high)}</span></div>
+                      {modes.map((mode) => {
+                        const evidence = evidenceForAxis(beliefSession, locale, gap, mode.mode, mode.score, 1)[0];
+                        return (
+                          <div key={mode.key}>
+                            <b>{mode.key}</b>
+                            <span className="coherence-mode-meaning">{mode.meaning}</span>
+                            {evidence ? (
+                              <>
+                                <p className="coherence-mode-statement">“{evidence.statement}”</p>
+                                <span className="coherence-mode-response">{ui.yourResponse}: <strong>{evidence.response}</strong></span>
+                              </>
+                            ) : (
+                              <span className="coherence-mode-response">{deepModeDirection(locale, mode.score, display.low, display.high)}</span>
+                            )}
+                          </div>
+                        );
+                      })}
                     </div>
-                    <p><b>{ui.explain}</b> {deepGap(locale, gap.think, gap.feel, gap.act)}</p>
+                    <p className="coherence-explanation"><b>{ui.whatThisShows}</b> {deepGap(locale, gap.think, gap.feel, gap.act)}</p>
+                    <p className="result-metadata">{ui.dimensionLabel}: {display.name}</p>
+                    <details className="result-score-details">
+                      <summary>{ui.seeScoring}</summary>
+                      <p>THINK {gap.think ?? '—'} · FEEL {gap.feel ?? '—'} · ACT {gap.act ?? '—'} · {gap.gap}-{ui.spread}</p>
+                    </details>
                   </section>
                 );
               })}
@@ -363,13 +452,7 @@ export default function DeepClient() {
 
   const fullProgress = beliefV2StageProgress(beliefSession, 'deep');
   const selected = currentBelief ? beliefSession.answers[currentBelief.id] : undefined;
-  const localizedStatement = currentBelief
-    ? locale === 'de'
-      ? germanBeliefStatement(currentBelief.sourceItemId, currentBelief.polarity)
-      : locale === 'es' || locale === 'fr'
-        ? romanceBeliefStatement(locale, currentBelief.sourceItemId, currentBelief.polarity)
-        : null
-    : null;
+  const localizedStatement = currentBelief ? localizedBeliefCopy(locale, currentBelief) : null;
 
   function chooseBelief(value: AnswerValue) {
     if (!currentBelief) return;
