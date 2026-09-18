@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { LanguageSelector, localePath, useLocale, type Locale } from './LocaleProvider';
 
 const Mark = () => <span className="p-mark" aria-hidden="true"><i/><i/><i/></span>;
@@ -70,7 +71,10 @@ export function SiteHeader() {
 }
 
 export function SiteFooter() {
-  const { locale } = useLocale();
+  const context = useLocale();
+  const pathname = usePathname();
+  const routeLocale = pathname.match(/^\/(en|de|es|fr)(?=\/|$)/)?.[1] as Locale | undefined;
+  const locale = routeLocale ?? context.locale;
   const c = copy[locale];
   const href = (path: string) => localePath(locale, path);
 
