@@ -75,7 +75,7 @@ export function SiteFooter() {
   const href = (path: string) => localePath(locale, path);
 
   return (
-    <footer className="home p-footer p-shell site-footer">
+    <footer className="p-footer p-shell site-footer">
       <Link className="p-brand" href={href('/')}><Mark/><span><b>Politangle</b><small>politangle.org</small></span></Link>
       <div>
         <Link href={href('/learn')}>{c.learn}</Link>
