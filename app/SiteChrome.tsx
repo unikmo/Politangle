@@ -59,7 +59,7 @@ export function SiteHeader() {
         <Link href={href('/method')}>{c.method}</Link>
         <Link href={href('/learn')}>{c.learn}</Link>
         <Link href={href('/quizzes')}>{c.quizzes}</Link>
-        <Link href="/countries">{c.countries}</Link>
+        <Link href={href('/countries')}>{c.countries}</Link>
         <Link href={href('/school')}>{c.schools}</Link>
         <Link href={href('/about')}>{c.about}</Link>
       </nav>
@@ -86,7 +86,7 @@ export function SiteFooter() {
       <div>
         <Link href={href('/learn')}>{c.learn}</Link>
         <Link href={href('/quizzes')}>{c.quizzes}</Link>
-        <Link href="/countries">{c.countries}</Link>
+        <Link href={href('/countries')}>{c.countries}</Link>
         <Link href={href('/practice')}>{c.practice}</Link>
         <Link href={href('/method')}>{c.method}</Link>
         <Link href={href('/validation')}>{c.validation}</Link>

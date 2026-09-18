@@ -25,6 +25,10 @@ type PageCopy = {
   sections: readonly SectionCopy[];
 };
 
+const verifiedContactEmail = process.env.NEXT_PUBLIC_CONTACT_EMAIL?.trim() ?? '';
+const contactValue = verifiedContactEmail || '[TO BE SUPPLIED — monitored email or equivalent direct channel]';
+const contactValueDe = verifiedContactEmail || '[NOCH ANZUGEBEN — überwachte E-Mail oder gleichwertiger direkter Kanal]';
+
 const en: Record<InfoPageId, PageCopy> = {
   method: {
     eyebrow: 'METHOD',
@@ -401,7 +405,7 @@ en.imprint = {
       ['Legal operator / provider', 'TSquare Ventures LLC'],
       ['Legal form', 'Limited Liability Company (LLC)'],
       ['Service address', '30 N Gould St Ste R, Sheridan, WY 82801, USA'],
-      ['Direct electronic contact', '[TO BE SUPPLIED — monitored email or equivalent direct channel]'],
+      ['Direct electronic contact', contactValue],
       ['Authorized representative', '[IF APPLICABLE]'],
       ['Commercial / association register and number', '[IF APPLICABLE]'],
       ['VAT identification / business tax identifier', '[IF APPLICABLE]'],
@@ -416,10 +420,10 @@ en.imprint = {
 en.contact = {
   eyebrow: 'CONTACT',
   title: 'Contact Politangle.',
-  intro: 'Use the appropriate channel for account support, privacy requests, school enquiries or legal notices. A monitored public contact address still has to be configured.',
+  intro: verifiedContactEmail ? `Use ${verifiedContactEmail} for account support, privacy requests, school enquiries or legal notices.` : 'Use the appropriate channel for account support, privacy requests, school enquiries or legal notices. A monitored public contact address still has to be configured.',
   sections: [
-    { title: 'Release status', status: 'REQUIRES VERIFIED CONTACT', callout: 'A monitored Politangle email or equivalent direct electronic contact has not yet been configured in the production environment. Do not publish an invented address.' },
-    { title: 'Operator and postal contact', paragraphs: ['Politangle is a project of TSquare Ventures LLC, 30 N Gould St Ste R, Sheridan, WY 82801, USA.', 'A dedicated monitored Politangle email still has to be configured. Never send passwords or authentication tokens.'] },
+    { title: 'Release status', status: verifiedContactEmail ? 'CONTACT CONFIGURED' : 'REQUIRES VERIFIED CONTACT', callout: verifiedContactEmail ? `Monitored public contact: ${verifiedContactEmail}. This does not replace qualified legal review of the final notices.` : 'A monitored Politangle email or equivalent direct electronic contact has not yet been configured in the production environment. Do not publish an invented address.' },
+    { title: 'Operator and postal contact', paragraphs: ['Politangle is a project of TSquare Ventures LLC, 30 N Gould St Ste R, Sheridan, WY 82801, USA.', verifiedContactEmail ? `Email: ${verifiedContactEmail}. Never send passwords or authentication tokens.` : 'A dedicated monitored Politangle email still has to be configured. Never send passwords or authentication tokens.'] },
     { title: 'Privacy and legal requests', paragraphs: ['The final privacy/legal contact must accept data-rights requests and formal notices. Identity verification may be required before account-specific information is disclosed or changed.'] },
     { title: 'Schools and pilots', paragraphs: ['School enquiries should use the dedicated pilot route. Do not send real student names, political answers, medical information or other unnecessary sensitive data through a general enquiry.'], link: { href: '/school/pilot', label: 'School pilot information →' } },
   ],
@@ -470,7 +474,7 @@ de.imprint = {
       ['Anbieter / Betreiber', 'TSquare Ventures LLC'],
       ['Rechtsform', 'Limited Liability Company (LLC)'],
       ['Ladungsfähige Anschrift', '30 N Gould St Ste R, Sheridan, WY 82801, USA'],
-      ['Direkter elektronischer Kontakt', '[NOCH ANZUGEBEN — überwachte E-Mail oder gleichwertiger direkter Kanal]'],
+      ['Direkter elektronischer Kontakt', contactValueDe],
       ['Vertretungsberechtigte Person', '[FALLS EINSCHLÄGIG]'],
       ['Register und Registernummer', '[FALLS EINSCHLÄGIG]'],
       ['USt-IdNr. / Wirtschafts-Identifikationsnummer', '[FALLS EINSCHLÄGIG]'],
@@ -485,10 +489,10 @@ de.imprint = {
 de.contact = {
   eyebrow: 'KONTAKT',
   title: 'Politangle kontaktieren.',
-  intro: 'Für Kontohilfe, Datenschutz, Schulen und rechtliche Mitteilungen sollen getrennte Anliegen sauber bearbeitet werden. Ein überwachter öffentlicher Kontakt muss noch eingerichtet werden.',
+  intro: verifiedContactEmail ? `Für Kontohilfe, Datenschutz, Schulen und rechtliche Mitteilungen: ${verifiedContactEmail}.` : 'Für Kontohilfe, Datenschutz, Schulen und rechtliche Mitteilungen sollen getrennte Anliegen sauber bearbeitet werden. Ein überwachter öffentlicher Kontakt muss noch eingerichtet werden.',
   sections: [
-    { title: 'Status', status: 'REQUIRES VERIFIED CONTACT', callout: 'Im Produktionssystem ist noch keine verifizierte, überwachte Politangle-Kontaktadresse hinterlegt. Es wird keine erfundene Adresse veröffentlicht.' },
-    { title: 'Betreiber und Postanschrift', paragraphs: ['Politangle ist ein Projekt der TSquare Ventures LLC, 30 N Gould St Ste R, Sheridan, WY 82801, USA.', 'Eine eigene überwachte Politangle-E-Mail-Adresse muss noch eingerichtet werden. Sende niemals Passwörter oder Authentifizierungs-Tokens.'] },
+    { title: 'Status', status: verifiedContactEmail ? 'KONTAKT KONFIGURIERT' : 'REQUIRES VERIFIED CONTACT', callout: verifiedContactEmail ? `Überwachter öffentlicher Kontakt: ${verifiedContactEmail}. Die qualifizierte rechtliche Prüfung der endgültigen Hinweise bleibt erforderlich.` : 'Im Produktionssystem ist noch keine verifizierte, überwachte Politangle-Kontaktadresse hinterlegt. Es wird keine erfundene Adresse veröffentlicht.' },
+    { title: 'Betreiber und Postanschrift', paragraphs: ['Politangle ist ein Projekt der TSquare Ventures LLC, 30 N Gould St Ste R, Sheridan, WY 82801, USA.', verifiedContactEmail ? `E-Mail: ${verifiedContactEmail}. Sende niemals Passwörter oder Authentifizierungs-Tokens.` : 'Eine eigene überwachte Politangle-E-Mail-Adresse muss noch eingerichtet werden. Sende niemals Passwörter oder Authentifizierungs-Tokens.'] },
     { title: 'Datenschutz und rechtliche Anliegen', paragraphs: ['Der endgültige Datenschutz-/Rechtskontakt muss Betroffenenanfragen und formelle Mitteilungen entgegennehmen können. Vor kontobezogenen Auskünften oder Änderungen kann eine Identitätsprüfung erforderlich sein.'] },
     { title: 'Schulen und Pilotprojekte', paragraphs: ['Schulanfragen laufen über die Pilotseite. Sende über allgemeine Anfragen keine echten Schülernamen, politischen Antworten, Gesundheitsdaten oder sonstige unnötige sensible Daten.'], link: { href: '/school/pilot', label: 'Informationen zum Schulpilot →' } },
   ],
@@ -520,7 +524,7 @@ es.imprint = {
   intro: 'Politangle es un proyecto de TSquare Ventures LLC. El operador y la dirección comercial usan la misma identidad jurídica y dirección publicadas para Tisonik.',
   sections: [
     { title: 'Estado', status: 'REQUIRES QUALIFIED LEGAL REVIEW', callout: 'El operador y la dirección ya están identificados. El contacto electrónico directo y cualquier dato registral, fiscal o de consumo aplicable todavía deben completarse a partir de documentos verificados y someterse a revisión jurídica cualificada.' },
-    { title: 'Datos pendientes', table: [['Operador / prestador','TSquare Ventures LLC'],['Forma jurídica','Limited Liability Company (LLC)'],['Dirección física de servicio','30 N Gould St Ste R, Sheridan, WY 82801, USA'],['Contacto electrónico directo','[PENDIENTE]'],['Representante autorizado','[SI PROCEDE]'],['Registro y número','[SI PROCEDE]'],['IVA / identificador empresarial','[SI PROCEDE]'],['Autoridad / reglas profesionales','[SI PROCEDE]'],['Resolución de litigios de consumo','[POR CONFIRMAR]']] },
+    { title: 'Datos pendientes', table: [['Operador / prestador','TSquare Ventures LLC'],['Forma jurídica','Limited Liability Company (LLC)'],['Dirección física de servicio','30 N Gould St Ste R, Sheridan, WY 82801, USA'],['Contacto electrónico directo', verifiedContactEmail || '[PENDIENTE]'],['Representante autorizado','[SI PROCEDE]'],['Registro y número','[SI PROCEDE]'],['IVA / identificador empresarial','[SI PROCEDE]'],['Autoridad / reglas profesionales','[SI PROCEDE]'],['Resolución de litigios de consumo','[POR CONFIRMAR]']] },
   ],
 };
 es.contact = {
@@ -559,7 +563,7 @@ fr.imprint = {
   intro: 'Politangle est un projet de TSquare Ventures LLC. L’opérateur et l’adresse professionnelle reprennent la même identité juridique et la même adresse que celles publiées pour Tisonik.',
   sections: [
     { title: 'Statut', status: 'REQUIRES QUALIFIED LEGAL REVIEW', callout: 'L’opérateur et l’adresse sont maintenant identifiés. Le contact électronique direct et les éventuelles mentions d’immatriculation, fiscales ou de règlement des litiges doivent encore être complétés à partir de documents vérifiés et faire l’objet d’une revue juridique qualifiée.' },
-    { title: 'Informations à compléter', table: [['Opérateur / prestataire','TSquare Ventures LLC'],['Forme juridique','Limited Liability Company (LLC)'],['Adresse physique de service','30 N Gould St Ste R, Sheridan, WY 82801, USA'],['Contact électronique direct','[À FOURNIR]'],['Représentant autorisé','[SI APPLICABLE]'],['Registre et numéro','[SI APPLICABLE]'],['TVA / identifiant d’entreprise','[SI APPLICABLE]'],['Autorité / règles professionnelles','[SI APPLICABLE]'],['Règlement des litiges de consommation','[À CONFIRMER]']] },
+    { title: 'Informations à compléter', table: [['Opérateur / prestataire','TSquare Ventures LLC'],['Forme juridique','Limited Liability Company (LLC)'],['Adresse physique de service','30 N Gould St Ste R, Sheridan, WY 82801, USA'],['Contact électronique direct', verifiedContactEmail || '[À FOURNIR]'],['Représentant autorisé','[SI APPLICABLE]'],['Registre et numéro','[SI APPLICABLE]'],['TVA / identifiant d’entreprise','[SI APPLICABLE]'],['Autorité / règles professionnelles','[SI APPLICABLE]'],['Règlement des litiges de consommation','[À CONFIRMER]']] },
   ],
 };
 fr.contact = {

@@ -9,7 +9,8 @@
     "school:provision-license-pack": "tsx scripts/provision-school-license-pack.ts",
     "prebuild": "npm run verify:engine && npm run verify:firebase",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "verify:release": "node scripts/release-smoke.mjs"
   },
   "dependencies": {
     "@types/node": "20.17.6",

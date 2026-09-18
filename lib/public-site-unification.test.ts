@@ -17,6 +17,7 @@ const quickAccess = readFileSync(join(root, 'app/api/assessment/quick/access/rou
 const quickComplete = readFileSync(join(root, 'app/api/assessment/quick/complete/route.ts'), 'utf8');
 const countriesHub = readFileSync(join(root, 'app/countries/page.tsx'), 'utf8');
 const countryPage = readFileSync(join(root, 'app/countries/[slug]/page.tsx'), 'utf8');
+const countryGuide = readFileSync(join(root, 'app/countries/CountryGuide.tsx'), 'utf8');
 const countriesData = readFileSync(join(root, 'lib/countries.ts'), 'utf8');
 const methodExplainer = readFileSync(join(root, 'app/MethodExplainer.tsx'), 'utf8');
 const infoCss = readFileSync(join(root, 'app/info.css'), 'utf8');
@@ -89,13 +90,13 @@ test('country perspectives are visible from the public site without pretending u
   assert.match(countriesHub, /Same political words\. Different country context\./);
   assert.match(countriesHub, /CONTEXT \+ CURRENT SNAPSHOT/);
   assert.match(countriesHub, /CONTEXT GUIDE/);
-  assert.match(countryPage, /Why this page exists/);
-  assert.match(countryPage, /What familiar labels mean here/);
-  assert.match(countryPage, /This page does not change your Politangle score/);
-  assert.match(countryPage, /Sources and update status/);
-  assert.doesNotMatch(countryPage, /<h2>How power works<\/h2>/);
-  assert.doesNotMatch(countryPage, /<h2>Latest national election<\/h2>/);
-  assert.doesNotMatch(countryPage, /<h2>Democracy and rights measure<\/h2>/);
+  assert.match(countryGuide, /Why this page exists/);
+  assert.match(countryGuide, /What familiar labels mean here/);
+  assert.match(countryGuide, /This page does not change your Politangle score/);
+  assert.match(countryGuide, /Sources and update status/);
+  assert.doesNotMatch(countryGuide, /<h2>How power works<\/h2>/);
+  assert.doesNotMatch(countryGuide, /<h2>Latest national election<\/h2>/);
+  assert.doesNotMatch(countryGuide, /<h2>Democracy and rights measure<\/h2>/);
   assert.equal((countriesData.match(/slug: '/g) ?? []).length, 20);
 });
 
