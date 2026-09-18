@@ -2,13 +2,54 @@
 
 import Link from 'next/link';
 import { FormEvent, useEffect, useState } from 'react';
+import { localePath, useLocale, type Locale } from '../LocaleProvider';
+import { SiteHeader } from '../SiteChrome';
 
 type Certificate = { certificateId: string; status: 'VALID' | 'EXPIRED' | 'REVOKED'; issuedAt: string; expiresAt: string; classifyScore: number; understandScore: number };
 type Session = { authenticated: boolean; user?: { emailVerified: boolean; adultConfirmed: boolean; isAdmin?: boolean } | null };
 
+type Copy = {
+  freeAccount: string; repeatTitle: string; repeatIntro: string; title: string; intro: string; secure: string;
+  signIn: string; create: string; email: string; password: string; createButton: string; signInButton: string;
+  noPayment: string; existing: string; need: string; forgot: string; signedOut: string; accountCreated: string; signedIn: string;
+  verified: string; adult: string; yes: string; notYet: string; certificates: string; noCertificates: string; continue: string;
+  certificationCheck: string; confirmAdult: string; certificationNote: string; signOut: string; resetSent: string; wait: string;
+};
+
+const copy: Record<Locale, Copy> = {
+  en: {
+    freeAccount:'FREE ACCOUNT', repeatTitle:'Create a free account to take Quick again.', repeatIntro:'Your first Quick can be taken without an account. From the second run onward, sign in or create a free account. Your BELIEVE answers still stay in your browser and are not added to your account.',
+    title:'Your Politangle account', intro:'Registration is free. Use one account for repeat assessments, literacy certification and certificates.', secure:'ACCOUNT',
+    signIn:'Sign in', create:'Create account', email:'Email', password:'Password', createButton:'Create free account', signInButton:'Sign in',
+    noPayment:'No payment is required to register. A certificate is a separate paid product after you pass the certified literacy test.', existing:'Already have an account? Sign in', need:'Need an account? Create one', forgot:'Forgot password?', signedOut:'Signed out.', accountCreated:'Account created. Check your email when convenient to verify it.', signedIn:'Signed in securely.',
+    verified:'Email verified', adult:'18+ certification', yes:'Yes', notYet:'Not yet', certificates:'Your certificates', noCertificates:'No certificates have been issued to this account.', continue:'Continue', certificationCheck:'I confirm that I am at least 18 years old for certification.', confirmAdult:'Confirm 18+ for certification', certificationNote:'The free account itself has no 18+ restriction. The age confirmation applies only to certification.', signOut:'Sign out', resetSent:'If an account exists for that address, a password-reset email has been sent.', wait:'Please wait…',
+  },
+  de: {
+    freeAccount:'KOSTENLOSES KONTO', repeatTitle:'Erstelle ein kostenloses Konto, um Quick erneut zu machen.', repeatIntro:'Den ersten Quick-Test kannst du ohne Konto machen. Ab dem zweiten Durchgang meldest du dich an oder erstellst kostenlos ein Konto. Deine BELIEVE-Antworten bleiben weiterhin im Browser und werden nicht deinem Konto zugeordnet.',
+    title:'Dein Politangle-Konto', intro:'Die Registrierung ist kostenlos. Dein Konto gilt für weitere Tests, die Wissenszertifizierung und Zertifikate.', secure:'KONTO',
+    signIn:'Anmelden', create:'Konto erstellen', email:'E-Mail', password:'Passwort', createButton:'Kostenloses Konto erstellen', signInButton:'Anmelden',
+    noPayment:'Für die Registrierung zahlst du nichts. Ein Zertifikat ist ein separates kostenpflichtiges Produkt, nachdem du den zertifizierten Wissenstest bestanden hast.', existing:'Du hast schon ein Konto? Anmelden', need:'Noch kein Konto? Konto erstellen', forgot:'Passwort vergessen?', signedOut:'Abgemeldet.', accountCreated:'Konto erstellt. Prüfe deine E-Mail, um die Adresse zu bestätigen.', signedIn:'Sicher angemeldet.',
+    verified:'E-Mail bestätigt', adult:'18+ Zertifizierung', yes:'Ja', notYet:'Noch nicht', certificates:'Deine Zertifikate', noCertificates:'Für dieses Konto wurden noch keine Zertifikate ausgestellt.', continue:'Weiter', certificationCheck:'Ich bestätige, dass ich für die Zertifizierung mindestens 18 Jahre alt bin.', confirmAdult:'18+ für Zertifizierung bestätigen', certificationNote:'Für das kostenlose Konto gibt es keine 18+-Voraussetzung. Die Altersbestätigung gilt nur für die Zertifizierung.', signOut:'Abmelden', resetSent:'Wenn ein Konto mit dieser Adresse existiert, wurde eine E-Mail zum Zurücksetzen des Passworts versendet.', wait:'Bitte warten…',
+  },
+  es: {
+    freeAccount:'CUENTA GRATUITA', repeatTitle:'Crea una cuenta gratuita para volver a hacer Quick.', repeatIntro:'Puedes hacer tu primer Quick sin cuenta. A partir del segundo, inicia sesión o crea una cuenta gratuita. Tus respuestas de BELIEVE siguen en tu navegador y no se añaden a tu cuenta.',
+    title:'Tu cuenta de Politangle', intro:'Registrarse es gratis. Usa una sola cuenta para repetir evaluaciones, la certificación de conocimientos y tus certificados.', secure:'CUENTA',
+    signIn:'Iniciar sesión', create:'Crear cuenta', email:'Correo electrónico', password:'Contraseña', createButton:'Crear cuenta gratuita', signInButton:'Iniciar sesión',
+    noPayment:'Registrarse no requiere pago. El certificado es un producto de pago separado después de aprobar la prueba certificada.', existing:'¿Ya tienes cuenta? Inicia sesión', need:'¿Necesitas una cuenta? Créala', forgot:'¿Olvidaste la contraseña?', signedOut:'Sesión cerrada.', accountCreated:'Cuenta creada. Revisa tu correo cuando puedas para verificarla.', signedIn:'Sesión iniciada.',
+    verified:'Correo verificado', adult:'Certificación 18+', yes:'Sí', notYet:'Aún no', certificates:'Tus certificados', noCertificates:'Todavía no hay certificados emitidos para esta cuenta.', continue:'Continuar', certificationCheck:'Confirmo que tengo al menos 18 años para la certificación.', confirmAdult:'Confirmar 18+ para certificación', certificationNote:'La cuenta gratuita no exige tener 18 años. La confirmación de edad solo se aplica a la certificación.', signOut:'Cerrar sesión', resetSent:'Si existe una cuenta con esa dirección, se ha enviado un correo para restablecer la contraseña.', wait:'Espera…',
+  },
+  fr: {
+    freeAccount:'COMPTE GRATUIT', repeatTitle:'Crée un compte gratuit pour refaire Quick.', repeatIntro:'Tu peux faire ton premier Quick sans compte. À partir du deuxième, connecte-toi ou crée un compte gratuit. Tes réponses BELIEVE restent dans ton navigateur et ne sont pas ajoutées à ton compte.',
+    title:'Ton compte Politangle', intro:'L’inscription est gratuite. Utilise un seul compte pour refaire les évaluations, passer la certification de connaissances et retrouver tes certificats.', secure:'COMPTE',
+    signIn:'Se connecter', create:'Créer un compte', email:'E-mail', password:'Mot de passe', createButton:'Créer un compte gratuit', signInButton:'Se connecter',
+    noPayment:'Aucun paiement n’est demandé pour l’inscription. Le certificat est un produit payant séparé après réussite du test certifié.', existing:'Tu as déjà un compte ? Connecte-toi', need:'Besoin d’un compte ? Crée-en un', forgot:'Mot de passe oublié ?', signedOut:'Déconnecté.', accountCreated:'Compte créé. Consulte ton e-mail pour le vérifier lorsque tu le souhaites.', signedIn:'Connexion réussie.',
+    verified:'E-mail vérifié', adult:'Certification 18+', yes:'Oui', notYet:'Pas encore', certificates:'Tes certificats', noCertificates:'Aucun certificat n’a encore été émis pour ce compte.', continue:'Continuer', certificationCheck:'Je confirme avoir au moins 18 ans pour la certification.', confirmAdult:'Confirmer 18+ pour la certification', certificationNote:'Le compte gratuit n’est pas réservé aux 18 ans et plus. La confirmation d’âge concerne uniquement la certification.', signOut:'Se déconnecter', resetSent:'Si un compte existe pour cette adresse, un e-mail de réinitialisation a été envoyé.', wait:'Patiente…',
+  },
+};
+
 async function firebasePassword(endpoint: 'signUp' | 'signInWithPassword', email: string, password: string) {
   const key = process.env.NEXT_PUBLIC_FIREBASE_API_KEY;
-  if (!key) throw new Error('Firebase sign-in is not configured on this deployment.');
+  if (!key) throw new Error('Registration is not configured on this deployment yet.');
   const response = await fetch(`https://identitytoolkit.googleapis.com/v1/accounts:${endpoint}?key=${encodeURIComponent(key)}`, {
     method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email, password, returnSecureToken: true }),
   });
@@ -26,13 +67,28 @@ async function sendVerificationEmail(idToken: string) {
 }
 
 export default function AccountClient() {
-  const [mode, setMode] = useState<'sign-in' | 'create'>('sign-in');
+  const { locale } = useLocale();
+  const c = copy[locale];
+  const [mode, setMode] = useState<'sign-in' | 'create'>('create');
   const [session, setSession] = useState<Session | null>(null);
   const [message, setMessage] = useState('');
   const [busy, setBusy] = useState(false);
   const [certificates, setCertificates] = useState<Certificate[]>([]);
+  const [returnPath, setReturnPath] = useState('');
+  const [repeatReason, setRepeatReason] = useState(false);
+  const [certificationMode, setCertificationMode] = useState(false);
 
-  useEffect(() => { fetch('/api/auth/session', { cache: 'no-store' }).then((response) => response.json()).then((data) => { setSession(data); if (data.authenticated) loadSummary(); }).catch(() => setSession({ authenticated: false })); }, []);
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const requested = params.get('return') ?? '';
+    if (requested.startsWith('/') && !requested.startsWith('//')) setReturnPath(requested);
+    setRepeatReason(params.get('reason') === 'repeat');
+    setCertificationMode(params.get('certification') === '1');
+    fetch('/api/auth/session', { cache: 'no-store' })
+      .then((response) => response.json())
+      .then((data) => { setSession(data); if (data.authenticated) loadSummary(); })
+      .catch(() => setSession({ authenticated: false }));
+  }, []);
 
   async function loadSummary() {
     const response = await fetch('/api/account/summary', { cache: 'no-store' });
@@ -47,15 +103,19 @@ export default function AccountClient() {
     const password = String(form.get('password') ?? '');
     const adultConfirmed = form.get('adult') === 'on';
     try {
-      if (!adultConfirmed) throw new Error('Certification accounts require confirmation that you are at least 18.');
+      if (certificationMode && !adultConfirmed) throw new Error(c.certificationCheck);
       const idToken = await firebasePassword(mode === 'create' ? 'signUp' : 'signInWithPassword', email, password);
       if (mode === 'create') await sendVerificationEmail(idToken);
-      const response = await fetch('/api/auth/session', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ idToken, adultConfirmed: true }) });
+      const response = await fetch('/api/auth/session', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ idToken, adultConfirmed: certificationMode && adultConfirmed }),
+      });
       const data = await response.json();
       if (!response.ok) throw new Error(data.error ?? 'Could not start a secure session.');
-      setSession({ authenticated: true, user: { emailVerified: data.emailVerified === true, adultConfirmed: true, isAdmin: data.isAdmin === true } });
+      setSession({ authenticated: true, user: { emailVerified: data.emailVerified === true, adultConfirmed: data.adultConfirmed === true, isAdmin: data.isAdmin === true } });
       await loadSummary();
-      setMessage(mode === 'create' ? 'Account created. Check your email and verify it before starting certification.' : 'Signed in securely.');
+      setMessage(mode === 'create' ? c.accountCreated : c.signedIn);
+      if (returnPath) window.location.assign(returnPath);
     } catch (error) {
       setMessage(error instanceof Error ? error.message : 'Authentication failed.');
     } finally { setBusy(false); }
@@ -63,40 +123,76 @@ export default function AccountClient() {
 
   async function signOut() {
     await fetch('/api/auth/session', { method: 'DELETE' });
-    setSession({ authenticated: false }); setMessage('Signed out.');
+    setSession({ authenticated: false }); setMessage(c.signedOut);
+  }
+
+  async function confirmAdult() {
+    setBusy(true); setMessage('');
+    const response = await fetch('/api/account/adult-confirmation', { method: 'POST' });
+    const data = await response.json();
+    if (response.ok) {
+      setSession((current) => current?.authenticated ? { ...current, user: { ...current.user!, adultConfirmed: true } } : current);
+      if (returnPath) window.location.assign(returnPath);
+    } else setMessage(data.error ?? 'Could not save the age confirmation.');
+    setBusy(false);
   }
 
   async function resetPassword() {
-    const email = window.prompt('Enter the email address for your certification account:')?.trim();
+    const email = window.prompt(`${c.email}:`)?.trim();
     if (!email) return;
     setBusy(true);
     await fetch('/api/auth/password-reset', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email }) });
-    setMessage('If an account exists for that address, Firebase has sent a password-reset email.'); setBusy(false);
+    setMessage(c.resetSent); setBusy(false);
   }
 
-  return <main className="engine-page certification-page">
-    <header className="engine-header"><Link href="/" className="engine-brand">Politangle</Link><span>CERTIFICATION ACCOUNT · 18+</span><Link href="/certify">Certification</Link></header>
-    <section className="engine-shell certification-shell">
-      <article className="engine-card certification-card">
-        <p className="engine-kicker">SECURE ACCOUNT</p>
-        <h1>{session?.authenticated ? 'Your certification account' : mode === 'create' ? 'Create your account' : 'Sign in'}</h1>
+  return <main className="home account-page">
+    <SiteHeader />
+    <section className="account-shell p-shell">
+      <div className="account-intro">
+        <p className="p-kicker">{c.freeAccount}</p>
+        <h1>{repeatReason ? c.repeatTitle : c.title}</h1>
+        <p>{repeatReason ? c.repeatIntro : c.intro}</p>
+      </div>
+
+      <article className="account-card">
+        <p className="p-kicker">{c.secure}</p>
         {session?.authenticated ? <>
-          <p>Your account session is active. Certification requires a verified email and your declaration that you are at least 18.</p>
-          <div className="certification-status-list"><span>Email verified</span><strong>{session.user?.emailVerified ? 'Yes' : 'Not yet'}</strong><span>18+ confirmed</span><strong>{session.user?.adultConfirmed ? 'Yes' : 'No'}</strong></div>
-          <section className="account-certificates"><h2>Your certificates</h2>{certificates.length ? certificates.map((certificate) => <Link key={certificate.certificateId} href={`/certificate/${certificate.certificateId}`}><strong>{certificate.status}</strong><span>CLASSIFY {certificate.classifyScore}/25 · UNDERSTAND {certificate.understandScore}/25</span><small>Issued {new Date(certificate.issuedAt).toLocaleDateString()} · valid until {new Date(certificate.expiresAt).toLocaleDateString()}</small></Link>) : <p>No certificates have been issued to this account.</p>}</section>
-          <div className="engine-result-actions"><Link className="engine-primary-link" href="/certify">Continue to certification</Link>{session.user?.isAdmin && <Link href="/admin">Admin dashboard</Link>}<button className="engine-link-button" type="button" onClick={resetPassword}>Reset password</button><button className="engine-link-button" type="button" onClick={signOut}>Sign out</button></div>
+          <h2>{c.title}</h2>
+          <div className="account-status">
+            <span>{c.verified}</span><strong>{session.user?.emailVerified ? c.yes : c.notYet}</strong>
+            <span>{c.adult}</span><strong>{session.user?.adultConfirmed ? c.yes : c.notYet}</strong>
+          </div>
+          {certificationMode && !session.user?.adultConfirmed && <>
+            <p className="account-note">{c.certificationNote}</p>
+            <button className="p-button account-button" disabled={busy} type="button" onClick={confirmAdult}>{busy ? c.wait : c.confirmAdult}</button>
+          </>}
+          <section className="account-certificates">
+            <h3>{c.certificates}</h3>
+            {certificates.length ? certificates.map((certificate) => <Link key={certificate.certificateId} href={localePath(locale, `/certificate/${certificate.certificateId}`)}><strong>{certificate.status}</strong><span>CLASSIFY {certificate.classifyScore}/25 · UNDERSTAND {certificate.understandScore}/25</span><small>{new Date(certificate.issuedAt).toLocaleDateString()} → {new Date(certificate.expiresAt).toLocaleDateString()}</small></Link>) : <p>{c.noCertificates}</p>}
+          </section>
+          <div className="account-actions">
+            {returnPath && <a className="p-button account-button" href={returnPath}>{c.continue} →</a>}
+            <Link className="p-text-link" href={localePath(locale, '/certify')}>Certification</Link>
+            {session.user?.isAdmin && <Link className="p-text-link" href="/admin">Admin</Link>}
+            <button className="account-link-button" type="button" onClick={resetPassword}>{c.forgot}</button>
+            <button className="account-link-button" type="button" onClick={signOut}>{c.signOut}</button>
+          </div>
         </> : <>
-          <p>Practice remains free without an account. An account is required only for controlled certification attempts and certificates.</p>
-          <form className="certification-form" onSubmit={submit}>
-            <label><span>Email</span><input required type="email" name="email" autoComplete="email" /></label>
-            <label><span>Password</span><input required minLength={8} type="password" name="password" autoComplete={mode === 'create' ? 'new-password' : 'current-password'} /></label>
-            <label className="certification-check"><input required type="checkbox" name="adult" /><span>I confirm that I am at least 18 years old.</span></label>
-            <button className="engine-primary-link" disabled={busy} type="submit">{busy ? 'Please wait…' : mode === 'create' ? 'Create account' : 'Sign in'}</button>
+          <div className="account-mode-tabs">
+            <button type="button" className={mode === 'create' ? 'active' : ''} onClick={() => setMode('create')}>{c.create}</button>
+            <button type="button" className={mode === 'sign-in' ? 'active' : ''} onClick={() => setMode('sign-in')}>{c.signIn}</button>
+          </div>
+          <form className="account-form" onSubmit={submit}>
+            <label><span>{c.email}</span><input required type="email" name="email" autoComplete="email" /></label>
+            <label><span>{c.password}</span><input required minLength={8} type="password" name="password" autoComplete={mode === 'create' ? 'new-password' : 'current-password'} /></label>
+            {certificationMode && <label className="account-check"><input required type="checkbox" name="adult" /><span>{c.certificationCheck}</span></label>}
+            <button className="p-button account-button" disabled={busy} type="submit">{busy ? c.wait : mode === 'create' ? c.createButton : c.signInButton}</button>
           </form>
-          <button className="engine-link-button certification-mode" type="button" onClick={() => setMode(mode === 'create' ? 'sign-in' : 'create')}>{mode === 'create' ? 'Already have an account? Sign in' : 'Need an account? Create one'}</button>
-          {mode === 'sign-in' && <button className="engine-link-button certification-mode" disabled={busy} type="button" onClick={resetPassword}>Forgot password?</button>}
+          <p className="account-note">{c.noPayment}</p>
+          <button className="account-link-button" type="button" onClick={() => setMode(mode === 'create' ? 'sign-in' : 'create')}>{mode === 'create' ? c.existing : c.need}</button>
+          {mode === 'sign-in' && <button className="account-link-button" disabled={busy} type="button" onClick={resetPassword}>{c.forgot}</button>}
         </>}
-        {message && <p className="certification-message" role="status">{message}</p>}
+        {message && <p className="account-message" role="status">{message}</p>}
       </article>
     </section>
   </main>;
