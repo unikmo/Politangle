@@ -14,7 +14,7 @@ export async function GET() {
     readiness: publicReadiness,
     authenticated: true,
     emailVerified: user.emailVerified,
-    adultConfirmed: user.adultConfirmed,
+    certificationAgeConfirmed: user.certificationAgeConfirmed,
     attempts: attemptAvailability(starts),
   }, { headers: { 'Cache-Control': 'no-store' } });
 }
