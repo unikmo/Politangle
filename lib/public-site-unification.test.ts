@@ -43,11 +43,12 @@ test('School public landing uses the homepage visual system rather than the engi
   assert.doesNotMatch(school, /<main className="engine-page school-page">/);
 });
 
-test('free registration is separate from paid certification and from the 18+ certification gate', () => {
+test('free registration is separate from paid certification and from the 16+ certification gate', () => {
   assert.match(account, /Registration is free|registration is free|No payment is required to register/i);
   assert.match(account, /certificate is a separate paid product/i);
-  assert.match(account, /free account itself has no 18\+ restriction/i);
-  assert.doesNotMatch(account, /Certification accounts require confirmation that you are at least 18/);
+  assert.match(account, /free account itself has no 16\+ restriction/i);
+  assert.match(account, /at least 16 years old for certification/i);
+  assert.doesNotMatch(account, /at least 18 years old for certification/i);
 });
 
 test('a completed first Quick requires sign-in before a new run when registration is configured', () => {
@@ -64,7 +65,9 @@ test('legal pages are substantive but remain blocked on verified operator detail
     assert.match(infoPages, new RegExp(page.replace('.', '\\.')));
   }
   assert.match(infoPages, /REQUIRES QUALIFIED LEGAL REVIEW/);
-  assert.match(infoPages, /\[TO BE SUPPLIED\]/);
+  assert.match(infoPages, /TSquare Ventures LLC/);
+  assert.match(infoPages, /30 N Gould St Ste R, Sheridan, WY 82801, USA/);
+  assert.match(infoPages, /REQUIRES VERIFIED CONTACT/);
   assert.match(infoPages, /Netlify/);
   assert.match(infoPages, /Google Firebase/);
   assert.match(infoPages, /Stripe/);
