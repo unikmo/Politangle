@@ -8,6 +8,7 @@ const reviewApi = readFileSync(join(root, 'app/api/admin/literacy-review/route.t
 const reviewUi = readFileSync(join(root, 'app/admin/review/LiteracyReviewClient.tsx'), 'utf8');
 const validationWorkflow = readFileSync(join(root, 'docs/literacy-validation-workflow-v1.md'), 'utf8');
 const certificationServer = readFileSync(join(root, 'lib/certification-server.ts'), 'utf8');
+const bankSchema = readFileSync(join(root, 'lib/literacy-bank-schema.ts'), 'utf8');
 const checkout = readFileSync(join(root, 'app/api/certificate/checkout/route.ts'), 'utf8');
 
 test('founder review covers the exact current bank without silently validating it', () => {
@@ -26,7 +27,9 @@ test('deferred pilots do not open paid certification', () => {
   assert.match(validationWorkflow, /Certified attempts remain closed/);
   assert.match(validationWorkflow, /No paid Political Literacy Certificate is issued/);
   assert.match(validationWorkflow, /CERTIFICATION_ENABLED.*remains false/);
-  assert.match(certificationServer, /question\.status === 'validated'/);
+  assert.match(certificationServer, /validateCertifiedMasterBank/);
+  assert.match(bankSchema, /question\.status === section/);
+  assert.match(bankSchema, /question\.status === 'validated'|status === 'validated'/);
 });
 
 test('certificate checkout remains independently gated by tax readiness and eligibility', () => {
