@@ -28,7 +28,7 @@ test('deferred pilots do not open paid certification', () => {
   assert.match(validationWorkflow, /No paid Political Literacy Certificate is issued/);
   assert.match(validationWorkflow, /CERTIFICATION_ENABLED.*remains false/);
   assert.match(certificationServer, /validateCertifiedMasterBank/);
-  assert.match(bankSchema, /question\.status === section/);
+  assert.match(bankSchema, /question\.section === section/);
   assert.match(bankSchema, /question\.status === 'validated'|status === 'validated'/);
 });
 
