@@ -1,9 +1,9 @@
 'use client';
-import { LanguageSelector, localePath, useLocale } from './LocaleProvider';
+import { localePath, useLocale } from './LocaleProvider';
+import { SiteHeader } from './SiteChrome';
 import { translate } from './translations';
 
 const Arrow = () => <span aria-hidden="true">→</span>;
-const Mark = () => <span className="p-mark" aria-hidden="true"><i/><i/><i/></span>;
 
 function ShapePreview({ axes, ariaLabel }: { axes: readonly (readonly [string, number])[]; ariaLabel: string }) {
  const cx = 180;
@@ -40,7 +40,7 @@ export default function Home() {
  ];
  const heroShapeAxes = dimensions.map(([name,,score]) => [name, Number(score)] as const);
  return <main className="home">
-  <header className="p-nav"><a className="p-brand" href={href('/')}><Mark/><span>Politangle</span></a><nav><a href={href('/method')}>{t('Method','Methode')}</a><a href={href('/learn')}>{t('Learn & quizzes','Lernen & Wissenschecks')}</a><a href={href('/school')}>{t('For schools','Für Schulen')}</a><a href={href('/about')}>{t('About','Über Politangle')}</a></nav><div className="p-nav-actions"><LanguageSelector/><a className="p-button compact" href={href('/quiz')}>{t('Start Quick','Quick starten')} <Arrow/></a></div></header>
+  <SiteHeader />
 
   <section className="p-hero"><div className="p-orbit one"/><div className="p-orbit two"/><div className="p-shell p-hero-grid">
    <div className="p-hero-copy"><p className="p-kicker">{t('POLITICS WITHOUT THE BOXES','POLITIK OHNE SCHUBLADEN')}</p><h1>{t('Your politics are not a line.','Politik passt nicht auf eine Links-rechts-Linie.')}</h1><p className="p-lead">{t('26 questions reveal how your views spread across eight political dimensions—without reducing you to one label.','26 kurze Fragen zeigen, wie du bei acht politischen Dimensionen stehst – ohne dich in eine Schublade zu stecken.')}</p><div className="p-actions"><a className="p-button light" href={href('/quiz')}>{t('Start the 3-minute Quick','Quick-Test in 3 Minuten')} <Arrow/></a><a className="p-text-link light" href={href('/method')}>{t('See how it works','So funktioniert’s')}</a></div><div className="p-trust"><span>✓ {t('Free','Kostenlos')}</span><span>✓ {t('No sign-up','Ohne Anmeldung')}</span><span>✓ {t('Private by default','Privat von Anfang an')}</span></div></div>
@@ -62,6 +62,5 @@ export default function Home() {
   <section className="p-section p-shell p-languages"><div><h2>{t('Quick and Full are available in English, Deutsch, Español and Français.','Quick und Full gibt es auf Englisch, Deutsch, Spanisch und Französisch.')}</h2><p>{t('The core Politangle assessment is available in all four languages. The new literacy glossary and 40+40 practice banks are English candidate content. Certification stays closed until every question passes review and validation.','Quick und Full kannst du in allen vier Sprachen machen. Das neue Glossar und die 40+40 Übungsfragen sind englische Kandidateninhalte. Die Zertifizierung bleibt geschlossen, bis jede Frage geprüft und validiert ist.')}</p></div><div className="p-language-list"><span><img src="/languages/us.webp" alt={t('Statue of Liberty illustration','Illustration der Freiheitsstatue')}/><small>English (US)</small></span><span><img src="/languages/de.webp" alt={t('Brandenburg Gate illustration','Illustration des Brandenburger Tors')}/><small>Deutsch</small></span><span><img src="/languages/es.webp" alt={t('Sagrada Família illustration','Illustration der Sagrada Família')}/><small>Español</small></span><span><img src="/languages/fr.webp" alt={t('Eiffel Tower illustration','Illustration des Eiffelturms')}/><small>Français</small></span></div><aside><i/>{t('SAME IDEAS. MORE VOICES.','EINE IDEE. MEHR STIMMEN.')}</aside></section>
 
   <section className="p-final p-shell"><div><h2>{t('Start with curiosity.','Neugierig, wo du wirklich stehst?')}</h2><p>{t('Take Politangle Quick and see a broader picture of your political thinking.','Mach den Quick-Test und sieh dein politisches Profil aus mehr als einer Richtung.')}</p><a className="p-button" href="/quiz">{t('Take Politangle Quick','Quick-Test starten')} <Arrow/></a></div><aside><i/>{t('DIFFERENT PEOPLE. A BRIGHTER COMMON GROUND.','ANDERE SICHTEN. MEHR GEMEINSAMKEIT.')}</aside></section>
-  <footer className="p-footer p-shell"><a className="p-brand" href="/"><Mark/><span><b>Politangle</b><small>politangle.org</small></span></a><div><a href="/learn">{t('Learn','Lernen')}</a><a href="/practice">{t('Practice','Üben')}</a><a href="/method">{t('Method','Methode')}</a><a href="/validation">{t('Validation','Validierung')}</a><a href="/privacy">{t('Privacy','Datenschutz')}</a><a href="/imprint">{t('Imprint','Impressum')}</a><a href="/terms">{t('Terms','Nutzungsbedingungen')}</a><a href="/contact">{t('Contact','Kontakt')}</a></div><small>© 2026 Politangle</small></footer>
  </main>;
 }
