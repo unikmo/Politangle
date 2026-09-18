@@ -66,10 +66,12 @@ export default function QuizzesPage() {
   return (
     <main className="home quizzes-page">
       <SiteHeader />
-      <section className="quizzes-hero p-shell">
-        <p className="p-kicker">{c.kicker}</p>
-        <h1>{c.title}</h1>
-        <p>{c.intro}</p>
+      <section className="quizzes-hero">
+        <div className="p-shell">
+          <p className="p-kicker">{c.kicker}</p>
+          <h1>{c.title}</h1>
+          <p>{c.intro}</p>
+        </div>
       </section>
       <section className="quiz-choice-grid p-shell" aria-label={c.title}>
         {c.cards.map((card) => (
