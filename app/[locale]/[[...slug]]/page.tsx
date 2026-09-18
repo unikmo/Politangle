@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 const locales = ['en', 'de', 'es', 'fr'] as const;
-const pageKeys = ['', 'about', 'account', 'certify', 'classify', 'contact', 'deep', 'imprint', 'learn', 'method', 'populism-quiz', 'practice', 'privacy', 'question-banks', 'quiz', 'quizzes', 'results', 'school', 'school/pilot', 'terms', 'understand', 'validation'] as const;
+const pageKeys = ['', 'about', 'account', 'classify', 'contact', 'deep', 'imprint', 'learn', 'method', 'populism-quiz', 'practice', 'privacy', 'question-banks', 'quiz', 'quizzes', 'results', 'school', 'school/pilot', 'terms', 'understand', 'validation'] as const;
 const titles: Record<string, string> = {
-  '': 'Politangle', about: 'About', account: 'Account', certify: 'Certification', classify: 'CLASSIFY', contact: 'Contact', deep: 'Politangle Full',
+  '': 'Politangle', about: 'About', account: 'Account', classify: 'CLASSIFY', contact: 'Contact', deep: 'Politangle Full',
   imprint: 'Imprint', learn: 'Learn political language', method: 'Method', 'populism-quiz': 'Spot populism',
   practice: 'Political literacy practice', privacy: 'Privacy', 'question-banks': 'Question banks', quizzes: 'Quizzes',
   quiz: 'Politangle Quick', results: 'Your result', school: 'For schools', 'school/pilot': 'School pilot',
@@ -44,7 +44,6 @@ async function loadPage(key: string): Promise<React.ComponentType> {
     case '': return (await import('../../page')).default;
     case 'about': return (await import('../../about/page')).default;
     case 'account': return (await import('../../account/page')).default;
-    case 'certify': return (await import('../../certify/page')).default;
     case 'classify': return (await import('../../classify/page')).default;
     case 'contact': return (await import('../../contact/page')).default;
     case 'deep': return (await import('../../deep/page')).default;
