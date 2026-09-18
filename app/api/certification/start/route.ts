@@ -11,7 +11,7 @@ export async function POST(request: Request) {
   const user = await authenticatedCertificationUser();
   if (!user) return NextResponse.json({ error: 'SIGN_IN_REQUIRED' }, { status: 401 });
   if (!user.emailVerified) return NextResponse.json({ error: 'EMAIL_VERIFICATION_REQUIRED' }, { status: 403 });
-  if (!user.adultConfirmed) return NextResponse.json({ error: 'ADULT_CONFIRMATION_REQUIRED' }, { status: 403 });
+  if (!user.certificationAgeConfirmed) return NextResponse.json({ error: 'CERTIFICATION_AGE_CONFIRMATION_REQUIRED' }, { status: 403 });
   const readiness = certificationReadiness();
   if (!readiness.enabled) return NextResponse.json({ error: 'CERTIFICATION_NOT_RELEASED' }, { status: 503 });
   if (!readiness.bankReady) return NextResponse.json({ error: 'CERTIFIED_BANK_NOT_READY' }, { status: 503 });
