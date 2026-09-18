@@ -194,14 +194,9 @@ const de: Record<InfoPageId, PageCopy> = {
 
 const es: Record<InfoPageId, PageCopy> = {
   method: {
-    eyebrow: 'MÉTODO', title: 'Un mapa de matices, no una etiqueta.',
-    intro: 'Politangle separa temas políticos distintos para que puedas ver tu combinación real de posiciones sin reducirla a una sola línea izquierda-derecha.',
-    sections: [
-      { title: 'Qué mide Quick', paragraphs: ['Quick plantea 26 afirmaciones sobre temas políticos diferentes. Ves una por pantalla y respondes de −2 a +2, con una opción aparte para “No estoy seguro”. La duda no se convierte automáticamente en una respuesta neutral.'] },
-      { title: 'Los ocho ejes', bullets: ['Papel del Estado', 'Propiedad', 'Valores sociales', 'Autoridad', 'Pluralismo', 'Ámbito internacional', 'Pertenencia nacional', 'Ecología'], paragraphs: ['Cada eje se mantiene separado para que una postura no borre otra que tengas en un tema distinto.'] },
-      { title: 'Quick y Full', paragraphs: ['Quick 26 te da una primera lectura. Full añade 16 preguntas y lleva el total a 42. Youth y Junior son versiones independientes que todavía deben validarse para sus edades.'] },
-      { title: 'Cómo leer el resultado', paragraphs: ['La cercanía a una tradición política describe parecidos en el conjunto de tus respuestas. No es una recomendación de partido, un diagnóstico ni una identidad asignada. Mira primero los ejes.'], callout: 'Politangle es una herramienta educativa y de exploración. No te dice qué pensar ni a quién votar.' },
-    ],
+    eyebrow: 'MÉTODO', title: 'Ocho preguntas que la política suele mezclar.',
+    intro: 'Politangle no presupone que una sola línea izquierda–derecha pueda describir todas las opiniones políticas. Separa ocho conflictos recurrentes para que puedas ver tu propia combinación.',
+    sections: [],
   },
   validation: {
     eyebrow: 'VALIDACIÓN & LÍMITES', title: 'Decir con claridad qué sabemos y qué todavía no.',
@@ -278,14 +273,9 @@ const es: Record<InfoPageId, PageCopy> = {
 
 const fr: Record<InfoPageId, PageCopy> = {
   method: {
-    eyebrow: 'MÉTHODE', title: 'Plusieurs axes pour garder les nuances.',
-    intro: 'Politangle sépare les grands sujets politiques afin de montrer ta combinaison réelle de positions sans tout ramener à un seul axe gauche-droite.',
-    sections: [
-      { title: 'Ce que mesure Quick', paragraphs: ['Quick te propose 26 affirmations sur des sujets politiques différents. Une seule apparaît à l’écran. Tu réponds de −2 à +2, avec une option « Je ne sais pas » à part. Le doute n’est pas transformé artificiellement en réponse neutre.'] },
-      { title: 'Les huit axes', bullets: ['Rôle de l’État', 'Propriété', 'Valeurs sociales', 'Autorité', 'Pluralisme', 'Rapport à l’international', 'Appartenance nationale', 'Écologie'], paragraphs: ['Chaque axe reste visible séparément, pour qu’une position n’efface pas ce que tu penses sur un autre sujet.'] },
-      { title: 'Quick et Full', paragraphs: ['Quick 26 donne une première lecture. Full ajoute 16 questions, soit 42 au total. Youth et Junior sont des versions distinctes qui doivent encore être validées pour leurs tranches d’âge.'] },
-      { title: 'Lire ton résultat', paragraphs: ['La proximité avec une tradition politique décrit des ressemblances dans l’ensemble de tes réponses. Ce n’est ni une recommandation de parti, ni un diagnostic, ni une identité qu’on te colle. Commence par regarder les axes.'], callout: 'Politangle est un outil éducatif et exploratoire. Il ne te dit ni quoi penser ni pour qui voter.' },
-    ],
+    eyebrow: 'MÉTHODE', title: 'Huit questions que la politique mélange souvent.',
+    intro: 'Politangle ne suppose pas qu’une seule ligne gauche–droite puisse décrire toutes les opinions politiques. Il sépare huit arbitrages récurrents afin de rendre visible ta propre combinaison.',
+    sections: [],
   },
   validation: {
     eyebrow: 'VALIDATION & LIMITES', title: 'Dire clairement ce qui est établi – et ce qui ne l’est pas encore.',
