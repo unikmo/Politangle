@@ -16,3 +16,11 @@
 .quiz-choice-card>small{margin-top:10px;color:var(--muted);font-size:12px;line-height:1.5}
 .quiz-choice-card>b{margin-top:auto;padding-top:30px;color:#267d76;font-size:11px}
 @media(max-width:760px){.quiz-choice-grid{grid-template-columns:1fr}.quizzes-hero{padding-top:62px}.quiz-choice-card{min-height:200px}}
+
+
+/* Country-perspective homepage gateway. */
+.p-countries-home{padding-top:86px;padding-bottom:86px}
+.p-country-sample-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin:34px 0 24px}
+.p-country-sample-grid span{padding:16px 18px;border:1px solid var(--line,#d9e3df);border-radius:14px;background:#fff;color:var(--ink,#0c2a34);font-size:11px;font-weight:750}
+@media(max-width:800px){.p-country-sample-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:500px){.p-country-sample-grid{grid-template-columns:1fr}}
