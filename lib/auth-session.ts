@@ -7,7 +7,7 @@ export const AUTH_SESSION_MAX_AGE_SECONDS = 60 * 60 * 24 * 5;
 export type CertificationUser = {
   uid: string;
   emailVerified: boolean;
-  adultConfirmed: boolean;
+  certificationAgeConfirmed: boolean;
   isAdmin: boolean;
 };
 
@@ -22,7 +22,7 @@ export async function authenticatedCertificationUser(): Promise<CertificationUse
     return {
       uid: decoded.uid,
       emailVerified: decoded.email_verified === true,
-      adultConfirmed: profile.data()?.adultConfirmedAt != null,
+      certificationAgeConfirmed: profile.data()?.certificationAgeConfirmedAt != null || profile.data()?.adultConfirmedAt != null,
       isAdmin: decoded.admin === true || adminUids.has(decoded.uid),
     };
   } catch {

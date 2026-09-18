@@ -2,7 +2,8 @@
 
 import Link from 'next/link';
 import { InfoSection, InfoShell } from './InfoShell';
-import { useLocale, type Locale } from './LocaleProvider';
+import MethodExplainer from './MethodExplainer';
+import { localePath, useLocale, type Locale } from './LocaleProvider';
 
 export type InfoPageId = 'method' | 'validation' | 'privacy' | 'terms' | 'about' | 'contact' | 'imprint' | 'question-banks' | 'school-pilot';
 
@@ -27,14 +28,9 @@ type PageCopy = {
 const en: Record<InfoPageId, PageCopy> = {
   method: {
     eyebrow: 'METHOD',
-    title: 'A map of patterns—not a verdict.',
-    intro: 'Politangle separates political questions into distinct dimensions, then shows how your answers combine without forcing every position onto one left–right line.',
-    sections: [
-      { title: 'What Quick measures', paragraphs: ['Quick uses 26 statements selected across the assessment constructs. Each screen presents one statement and a five-point agreement scale from −2 to +2, plus “Not sure”. Not-sure answers are excluded rather than treated as neutral.'] },
-      { title: 'The eight axes', bullets: ['Economic role', 'Ownership', 'Social values', 'Authority', 'Pluralism', 'World cooperation', 'Nationhood', 'Ecology'], paragraphs: ['Each axis stays visible so one position does not erase a different position elsewhere.'] },
-      { title: 'Quick and Full', paragraphs: ['Quick 26 gives a first reading. Full brings the adult assessment to 42 questions in total by adding 16 more. Youth and Junior forms are separately versioned and must be validated for their intended age groups.'] },
-      { title: 'Interpretation', paragraphs: ['Family matches describe resemblance to broad political traditions. They are not party recommendations, diagnoses or claims about identity. Read the detailed axes before any family label.'], callout: 'Politangle is an educational and exploratory tool. It does not tell you what to believe or how to vote.' },
-    ],
+    title: 'Eight questions politics often mixes together.',
+    intro: 'Politangle does not assume that one left–right line can describe every political view. It separates eight recurring trade-offs so you can see where your own combination is consistent, mixed or unusual.',
+    sections: [],
   },
   validation: {
     eyebrow: 'VALIDATION & LIMITATIONS',
@@ -119,14 +115,9 @@ const en: Record<InfoPageId, PageCopy> = {
 
 const de: Record<InfoPageId, PageCopy> = {
   method: {
-    eyebrow: 'METHODE', title: 'Mehrere Achsen statt einer politischen Schublade.',
-    intro: 'Politangle betrachtet politische Einstellungen getrennt voneinander. So bleibt sichtbar, wo deine Ansichten zusammenpassen – und wo eben nicht.',
-    sections: [
-      { title: 'Was Quick erfasst', paragraphs: ['Quick besteht aus 26 Aussagen zu unterschiedlichen politischen Themen. Pro Bildschirm siehst du genau eine Aussage. Du antwortest auf einer Skala von −2 bis +2 oder wählst „Unsicher“. Unsichere Antworten fließen nicht einfach als Mitte in die Wertung ein.'] },
-      { title: 'Die acht Achsen', bullets: ['Rolle des Staates', 'Eigentum', 'Gesellschaftliche Werte', 'Autorität', 'Pluralismus', 'Internationale Ordnung', 'Zugehörigkeit', 'Ökologie'], paragraphs: ['Jede Achse bleibt für sich sichtbar. Eine Position auf einem Thema soll deine Haltung zu einem anderen Thema nicht überdecken.'] },
-      { title: 'Quick und Full', paragraphs: ['Quick 26 gibt dir einen ersten Überblick. Full ergänzt 16 weitere Fragen und kommt damit auf insgesamt 42. Youth und Junior sind eigene Fassungen und müssen für ihre Altersgruppen separat geprüft werden.'] },
-      { title: 'So liest du das Ergebnis', paragraphs: ['Die Nähe zu politischen Traditionen beschreibt Ähnlichkeiten im Gesamtmuster. Sie ist keine Parteempfehlung, keine Diagnose und kein Etikett für deine Identität. Schau zuerst auf die einzelnen Achsen.'], callout: 'Politangle ist ein Bildungs- und Orientierungstool. Es sagt dir weder, was du glauben sollst, noch wen du wählen sollst.' },
-    ],
+    eyebrow: 'METHODE', title: 'Acht Fragen, die Politik oft miteinander vermischt.',
+    intro: 'Politangle geht nicht davon aus, dass eine einzige Links-rechts-Linie jede politische Haltung erklären kann. Acht wiederkehrende Zielkonflikte werden getrennt gezeigt – damit deine eigene Kombination sichtbar bleibt.',
+    sections: [],
   },
   validation: {
     eyebrow: 'VALIDIERUNG & GRENZEN', title: 'Klar benennen, was schon belegt ist – und was noch nicht.',
@@ -203,14 +194,9 @@ const de: Record<InfoPageId, PageCopy> = {
 
 const es: Record<InfoPageId, PageCopy> = {
   method: {
-    eyebrow: 'MÉTODO', title: 'Un mapa de matices, no una etiqueta.',
-    intro: 'Politangle separa temas políticos distintos para que puedas ver tu combinación real de posiciones sin reducirla a una sola línea izquierda-derecha.',
-    sections: [
-      { title: 'Qué mide Quick', paragraphs: ['Quick plantea 26 afirmaciones sobre temas políticos diferentes. Ves una por pantalla y respondes de −2 a +2, con una opción aparte para “No estoy seguro”. La duda no se convierte automáticamente en una respuesta neutral.'] },
-      { title: 'Los ocho ejes', bullets: ['Papel del Estado', 'Propiedad', 'Valores sociales', 'Autoridad', 'Pluralismo', 'Ámbito internacional', 'Pertenencia nacional', 'Ecología'], paragraphs: ['Cada eje se mantiene separado para que una postura no borre otra que tengas en un tema distinto.'] },
-      { title: 'Quick y Full', paragraphs: ['Quick 26 te da una primera lectura. Full añade 16 preguntas y lleva el total a 42. Youth y Junior son versiones independientes que todavía deben validarse para sus edades.'] },
-      { title: 'Cómo leer el resultado', paragraphs: ['La cercanía a una tradición política describe parecidos en el conjunto de tus respuestas. No es una recomendación de partido, un diagnóstico ni una identidad asignada. Mira primero los ejes.'], callout: 'Politangle es una herramienta educativa y de exploración. No te dice qué pensar ni a quién votar.' },
-    ],
+    eyebrow: 'MÉTODO', title: 'Ocho preguntas que la política suele mezclar.',
+    intro: 'Politangle no presupone que una sola línea izquierda–derecha pueda describir todas las opiniones políticas. Separa ocho conflictos recurrentes para que puedas ver tu propia combinación.',
+    sections: [],
   },
   validation: {
     eyebrow: 'VALIDACIÓN & LÍMITES', title: 'Decir con claridad qué sabemos y qué todavía no.',
@@ -287,14 +273,9 @@ const es: Record<InfoPageId, PageCopy> = {
 
 const fr: Record<InfoPageId, PageCopy> = {
   method: {
-    eyebrow: 'MÉTHODE', title: 'Plusieurs axes pour garder les nuances.',
-    intro: 'Politangle sépare les grands sujets politiques afin de montrer ta combinaison réelle de positions sans tout ramener à un seul axe gauche-droite.',
-    sections: [
-      { title: 'Ce que mesure Quick', paragraphs: ['Quick te propose 26 affirmations sur des sujets politiques différents. Une seule apparaît à l’écran. Tu réponds de −2 à +2, avec une option « Je ne sais pas » à part. Le doute n’est pas transformé artificiellement en réponse neutre.'] },
-      { title: 'Les huit axes', bullets: ['Rôle de l’État', 'Propriété', 'Valeurs sociales', 'Autorité', 'Pluralisme', 'Rapport à l’international', 'Appartenance nationale', 'Écologie'], paragraphs: ['Chaque axe reste visible séparément, pour qu’une position n’efface pas ce que tu penses sur un autre sujet.'] },
-      { title: 'Quick et Full', paragraphs: ['Quick 26 donne une première lecture. Full ajoute 16 questions, soit 42 au total. Youth et Junior sont des versions distinctes qui doivent encore être validées pour leurs tranches d’âge.'] },
-      { title: 'Lire ton résultat', paragraphs: ['La proximité avec une tradition politique décrit des ressemblances dans l’ensemble de tes réponses. Ce n’est ni une recommandation de parti, ni un diagnostic, ni une identité qu’on te colle. Commence par regarder les axes.'], callout: 'Politangle est un outil éducatif et exploratoire. Il ne te dit ni quoi penser ni pour qui voter.' },
-    ],
+    eyebrow: 'MÉTHODE', title: 'Huit questions que la politique mélange souvent.',
+    intro: 'Politangle ne suppose pas qu’une seule ligne gauche–droite puisse décrire toutes les opinions politiques. Il sépare huit arbitrages récurrents afin de rendre visible ta propre combinaison.',
+    sections: [],
   },
   validation: {
     eyebrow: 'VALIDATION & LIMITES', title: 'Dire clairement ce qui est établi – et ce qui ne l’est pas encore.',
@@ -369,11 +350,241 @@ const fr: Record<InfoPageId, PageCopy> = {
   },
 };
 
+
+/*
+ * Legal pages are intentionally substantive but remain release-gated until the
+ * operator identity, service address and monitored legal contact are supplied.
+ * Do not replace these omissions with invented details.
+ */
+en.privacy = {
+  eyebrow: 'PRIVACY',
+  title: 'Privacy by design, especially for political opinions.',
+  intro: 'Politangle is designed to collect as little personal data as practical. This notice explains the current product architecture and the information still required before the notice can be treated as final.',
+  sections: [
+    { title: 'Legal status', status: 'REQUIRES QUALIFIED LEGAL REVIEW', callout: 'Politangle is a project of TSquare Ventures LLC, 30 N Gould St Ste R, Sheridan, WY 82801, USA. A monitored Politangle privacy contact and the final hosting/transfer details still require confirmation and qualified legal review before public commercial release.' },
+    { title: 'BELIEVE / Quick and Full', paragraphs: ['Your political answers are used in your browser to calculate your result. The current public architecture does not deliberately attach BELIEVE answers or your political profile to your account.', 'After a completed first Quick run, a strictly necessary completion cookie can remember only that a first run was completed so that later independent runs can require sign-in. It does not contain your answers or result.'] },
+    { title: 'Account data', paragraphs: ['If you create a free account, the authentication service processes your email address, account identifier, verification state and security/session information. Politangle uses an HTTP-only session cookie to keep you signed in. The current session lifetime is up to five days.'] },
+    { title: 'Certification and certificates', paragraphs: ['For certification, Politangle processes the signed-in account identifier, age-confirmation status, attempt timestamps, served question IDs, submitted answers, scores and certificate records. Certification is available to users who confirm they are at least 16. Certificate purchase information will be processed only when payment is enabled.'] },
+    { title: 'School mode', paragraphs: ['Student classroom participation is designed around temporary identifiers rather than names, email addresses, usernames or roster IDs. Teachers receive class-level totals and distributions, not a student-to-answer map or individual political profile. Real-student use remains release-gated.'] },
+    { title: 'Service providers', bullets: ['Netlify — website hosting and deployment', 'Google Firebase — authentication and server-side account/certification records', 'Stripe — certificate payment processing only when checkout is enabled'], paragraphs: ['The final notice must identify the actual entities, processing locations, transfer mechanisms and processor terms used in production.'] },
+    { title: 'Cookies and tracking', paragraphs: ['Current code uses functional cookies for authenticated sessions and for remembering whether the first Quick run was completed. No advertising or analytics tracker is intentionally installed in the current repository. If that changes, this notice and any consent mechanism must be updated before activation.'] },
+    { title: 'Retention', paragraphs: ['The authentication session cookie currently expires after up to five days. The first-Quick completion cookie is currently set for up to one year. Final retention periods for account, certification, payment and support records must be documented before launch and should be no longer than necessary for their stated purpose and legal obligations.'] },
+    { title: 'Your rights and contact', paragraphs: ['Depending on the applicable law, you may have rights to access, correct, delete, restrict or object to processing, receive portable data, and complain to a supervisory authority. The operator is TSquare Ventures LLC at the address stated on the Imprint page. A monitored privacy contact must still be published before launch.'] },
+  ],
+};
+
+en.terms = {
+  eyebrow: 'TERMS',
+  title: 'Terms for using Politangle.',
+  intro: 'These terms describe the intended public product model: a free account, free assessment and learning activities, and a separately paid certificate after successful certification.',
+  sections: [
+    { title: 'Legal status', status: 'REQUIRES QUALIFIED LEGAL REVIEW', callout: 'The operator is TSquare Ventures LLC. Governing law, consumer-dispute information, direct electronic contact and final commercial details still require completion and qualified legal review before these terms are relied on for a public paid service.' },
+    { title: 'What Politangle provides', paragraphs: ['Politangle is an educational and self-exploration service. BELIEVE results describe patterns generated by the current model; they are not voting advice, a diagnosis, a guarantee of political identity or a professional assessment.'] },
+    { title: 'Free account and assessment access', paragraphs: ['You may take your first Quick assessment without an account. A free account is required before starting a new independent Quick run after that first completed run. Registration itself is free.', 'Under the current architecture, your BELIEVE answers and political profile are not deliberately attached to your account.'] },
+    { title: 'Learning, practice and certification', paragraphs: ['The glossary and practice activities are free. Certified attempts are also free, subject to the published attempt limits and release controls. Certification is available to users who confirm they are at least 16 and satisfy the applicable account requirements.'] },
+    { title: 'Paid certificate', paragraphs: ['A personalized certificate is a separate paid product available only after the required certification result has been achieved. The applicable price, taxes and material conditions must be shown before purchase. A successful test does not itself create a payment obligation. Users who are minors where they live may need permission from a parent or legal guardian to make the purchase where applicable law requires it.'] },
+    { title: 'Accounts and acceptable use', bullets: ['Provide accurate account information and keep credentials secure.', 'Do not impersonate another person, interfere with the service, automate abusive traffic, bypass attempt controls or misuse certificates.', 'Do not submit another person’s sensitive information without an appropriate basis and permission.'] },
+    { title: 'Availability and changes', paragraphs: ['Politangle may improve questions, explanations, scoring methods and features. Material assessment changes should be versioned so earlier results are not silently represented as identical to a materially different model. Temporary interruptions can occur for maintenance, security or technical reasons.'] },
+    { title: 'Intellectual property', paragraphs: ['The Politangle name, interface, original explanatory material, question-bank content and software are protected to the extent provided by applicable law. Personal, non-commercial use does not transfer ownership of that material.'] },
+    { title: 'Cancellation, digital delivery and refunds', paragraphs: ['Mandatory consumer rights remain unaffected. Where a paid digital certificate is supplied immediately, the checkout flow must obtain any consent and acknowledgment required by applicable consumer law before relying on an early expiry of a withdrawal right. The final refund policy must match the actual checkout and delivery process.'] },
+    { title: 'Liability and disputes', paragraphs: ['Nothing in these terms excludes liability or consumer rights that cannot legally be excluded. Final liability language, governing law, venue and any consumer-dispute information must be completed after the operator and launch markets are confirmed.'] },
+  ],
+};
+
+en.imprint = {
+  eyebrow: 'IMPRINT',
+  title: 'Provider information.',
+  intro: 'Politangle is a project of TSquare Ventures LLC. The operator and business address below use the same legal identity and address published for Tisonik.',
+  sections: [
+    { title: 'Release status', status: 'REQUIRES QUALIFIED LEGAL REVIEW', callout: 'Operator and service address are now identified. Direct electronic contact, any applicable registration/tax details and jurisdiction-specific disclosure requirements still require completion and qualified legal review.' },
+    { title: 'Required provider details', table: [
+      ['Legal operator / provider', 'TSquare Ventures LLC'],
+      ['Legal form', 'Limited Liability Company (LLC)'],
+      ['Service address', '30 N Gould St Ste R, Sheridan, WY 82801, USA'],
+      ['Direct electronic contact', '[TO BE SUPPLIED — monitored email or equivalent direct channel]'],
+      ['Authorized representative', '[IF APPLICABLE]'],
+      ['Commercial / association register and number', '[IF APPLICABLE]'],
+      ['VAT identification / business tax identifier', '[IF APPLICABLE]'],
+      ['Competent supervisory authority / professional rules', '[IF APPLICABLE]'],
+      ['Editorially responsible person', '[IF APPLICABLE]'],
+      ['Consumer dispute-resolution statement', '[TO BE CONFIRMED FOR THE OPERATOR]'],
+    ] },
+    { title: 'Before publication', paragraphs: ['Politangle is operated as a project of TSquare Ventures LLC at the address shown above. Remaining register, tax, representative, consumer-dispute and direct-contact fields must be completed only where applicable and from verified company records.'] },
+  ],
+};
+
+en.contact = {
+  eyebrow: 'CONTACT',
+  title: 'Contact Politangle.',
+  intro: 'Use the appropriate channel for account support, privacy requests, school enquiries or legal notices. A monitored public contact address still has to be configured.',
+  sections: [
+    { title: 'Release status', status: 'REQUIRES VERIFIED CONTACT', callout: 'A monitored Politangle email or equivalent direct electronic contact has not yet been configured in the production environment. Do not publish an invented address.' },
+    { title: 'Operator and postal contact', paragraphs: ['Politangle is a project of TSquare Ventures LLC, 30 N Gould St Ste R, Sheridan, WY 82801, USA.', 'A dedicated monitored Politangle email still has to be configured. Never send passwords or authentication tokens.'] },
+    { title: 'Privacy and legal requests', paragraphs: ['The final privacy/legal contact must accept data-rights requests and formal notices. Identity verification may be required before account-specific information is disclosed or changed.'] },
+    { title: 'Schools and pilots', paragraphs: ['School enquiries should use the dedicated pilot route. Do not send real student names, political answers, medical information or other unnecessary sensitive data through a general enquiry.'], link: { href: '/school/pilot', label: 'School pilot information →' } },
+  ],
+};
+
+de.privacy = {
+  eyebrow: 'DATENSCHUTZ',
+  title: 'Datenschutz von Anfang an – besonders bei politischen Ansichten.',
+  intro: 'Politangle ist darauf ausgelegt, so wenig personenbezogene Daten wie praktisch möglich zu verarbeiten. Diese Seite beschreibt die aktuelle Produktarchitektur und welche Angaben vor einer endgültigen Datenschutzerklärung noch fehlen.',
+  sections: [
+    { title: 'Rechtlicher Status', status: 'REQUIRES QUALIFIED LEGAL REVIEW', callout: 'Politangle ist ein Projekt der TSquare Ventures LLC, 30 N Gould St Ste R, Sheridan, WY 82801, USA. Ein überwachter Politangle-Datenschutzkontakt sowie die endgültigen Hosting- und Transferangaben müssen vor dem öffentlichen kommerziellen Start noch bestätigt und qualifiziert rechtlich geprüft werden.' },
+    { title: 'BELIEVE / Quick und Full', paragraphs: ['Deine politischen Antworten werden im Browser verwendet, um dein Ergebnis zu berechnen. Die aktuelle öffentliche Architektur ordnet BELIEVE-Antworten oder dein politisches Profil nicht gezielt deinem Benutzerkonto zu.', 'Nach dem ersten abgeschlossenen Quick kann ein technisch notwendiges Cookie ausschließlich speichern, dass ein erster Durchgang abgeschlossen wurde. Damit kann ein weiterer neuer Durchgang eine Anmeldung verlangen. Das Cookie enthält weder Antworten noch Ergebnis.'] },
+    { title: 'Kontodaten', paragraphs: ['Bei einem kostenlosen Konto verarbeitet der Authentifizierungsdienst insbesondere E-Mail-Adresse, Konto-ID, Verifizierungsstatus sowie Sicherheits- und Sitzungsdaten. Politangle verwendet ein HTTP-only-Sitzungscookie. Die aktuelle Sitzungslaufzeit beträgt bis zu fünf Tage.'] },
+    { title: 'Zertifizierung und Zertifikate', paragraphs: ['Für die Zertifizierung werden Konto-ID, Altersbestätigung, Zeitpunkte der Versuche, bereitgestellte Fragen, abgegebene Antworten, Ergebnisse und Zertifikatsdaten verarbeitet. Die Zertifizierung ist für Nutzer:innen verfügbar, die bestätigen, mindestens 16 Jahre alt zu sein. Zahlungsdaten zum Zertifikat werden erst verarbeitet, wenn die Bezahlfunktion tatsächlich aktiviert ist.'] },
+    { title: 'Schulmodus', paragraphs: ['Die Teilnahme im Klassenraum ist mit temporären Kennungen statt Namen, E-Mail-Adressen, Benutzernamen oder Klassenlisten konzipiert. Lehrkräfte sehen nur aggregierte Klassenwerte und Verteilungen – keine Zuordnung Schüler:in zu Antwort und kein individuelles politisches Profil. Der Einsatz mit echten Schüler:innen bleibt bis zur Freigabe gesperrt.'] },
+    { title: 'Dienstleister', bullets: ['Netlify — Hosting und Deployment der Website', 'Google Firebase — Authentifizierung sowie serverseitige Konto- und Zertifizierungsdaten', 'Stripe — Zahlungsabwicklung für Zertifikate erst nach Aktivierung des Checkouts'], paragraphs: ['Die endgültige Erklärung muss die tatsächlich eingesetzten Gesellschaften, Verarbeitungsorte, Übermittlungsmechanismen und Auftragsverarbeitungsbedingungen nennen.'] },
+    { title: 'Cookies und Tracking', paragraphs: ['Der aktuelle Code nutzt funktionale Cookies für angemeldete Sitzungen und um zu merken, ob der erste Quick abgeschlossen wurde. Im aktuellen Repository ist kein Werbe- oder Analyse-Tracker bewusst eingebaut. Wenn sich das ändert, müssen Erklärung und gegebenenfalls Einwilligungsmechanismus vor Aktivierung angepasst werden.'] },
+    { title: 'Speicherdauer', paragraphs: ['Das Authentifizierungs-Cookie läuft derzeit nach spätestens fünf Tagen ab. Das Cookie zum ersten Quick ist derzeit auf bis zu ein Jahr eingestellt. Für Konto-, Zertifizierungs-, Zahlungs- und Supportdaten müssen vor dem Start konkrete, zweckgebundene Löschfristen dokumentiert werden.'] },
+    { title: 'Deine Rechte und Kontakt', paragraphs: ['Je nach anwendbarem Recht bestehen insbesondere Rechte auf Auskunft, Berichtigung, Löschung, Einschränkung, Widerspruch, Datenübertragbarkeit und Beschwerde bei einer Aufsichtsbehörde. Verantwortlicher ist die TSquare Ventures LLC unter der im Impressum genannten Anschrift. Ein überwachter Datenschutzkontakt muss vor dem Start noch veröffentlicht werden.'] },
+  ],
+};
+
+de.terms = {
+  eyebrow: 'NUTZUNGSBEDINGUNGEN',
+  title: 'Bedingungen für die Nutzung von Politangle.',
+  intro: 'Das vorgesehene Modell: kostenloses Konto, kostenlose Assessments und Lernangebote sowie ein separat kostenpflichtiges Zertifikat nach bestandener Zertifizierung.',
+  sections: [
+    { title: 'Rechtlicher Status', status: 'REQUIRES QUALIFIED LEGAL REVIEW', callout: 'Betreiber ist die TSquare Ventures LLC. Anwendbares Recht, Verbraucherstreitbeilegung, direkter elektronischer Kontakt und endgültige kommerzielle Bedingungen müssen vor dem Einsatz als öffentliche Bezahlbedingungen noch ergänzt und qualifiziert rechtlich geprüft werden.' },
+    { title: 'Was Politangle ist', paragraphs: ['Politangle ist ein Bildungs- und Selbstreflexionsangebot. BELIEVE-Ergebnisse zeigen Muster des aktuellen Modells. Sie sind keine Wahlempfehlung, Diagnose, Garantie einer politischen Identität oder professionelle Begutachtung.'] },
+    { title: 'Kostenloses Konto und Zugang', paragraphs: ['Den ersten Quick kannst du ohne Konto machen. Vor einem neuen unabhängigen Quick-Durchgang nach dem ersten abgeschlossenen Test ist ein kostenloses Konto erforderlich. Die Registrierung selbst kostet nichts.', 'In der aktuellen Architektur werden BELIEVE-Antworten und dein politisches Profil nicht gezielt deinem Konto zugeordnet.'] },
+    { title: 'Lernen, Üben und Zertifizierung', paragraphs: ['Glossar und Übungsangebote sind kostenlos. Auch zertifizierte Prüfungsversuche sind – innerhalb der veröffentlichten Versuchslimits und Freigaben – kostenlos. Für die Zertifizierung musst du mindestens 16 Jahre alt sein und die jeweiligen Kontovoraussetzungen erfüllen.'] },
+    { title: 'Kostenpflichtiges Zertifikat', paragraphs: ['Ein personalisiertes Zertifikat ist ein separates kostenpflichtiges Produkt und erst nach dem erforderlichen Prüfungsergebnis verfügbar. Preis, Steuern und wesentliche Bedingungen müssen vor dem Kauf angezeigt werden. Das Bestehen des Tests löst noch keine Zahlungspflicht aus. Minderjährige benötigen für den Kauf gegebenenfalls die Zustimmung eines Elternteils oder gesetzlichen Vertreters, soweit das anwendbare Recht dies verlangt.'] },
+    { title: 'Konto und zulässige Nutzung', bullets: ['Kontodaten korrekt angeben und Zugangsdaten schützen.', 'Keine fremde Identität verwenden, keine Schutz- oder Versuchslimits umgehen und Zertifikate nicht missbräuchlich verwenden.', 'Keine sensiblen Daten anderer Personen ohne erforderliche Rechtsgrundlage oder Erlaubnis übermitteln.'] },
+    { title: 'Verfügbarkeit und Änderungen', paragraphs: ['Politangle kann Fragen, Erklärungen, Auswertungsmethoden und Funktionen verbessern. Wesentliche Änderungen am Assessment sollen versioniert werden, damit frühere Ergebnisse nicht stillschweigend als identisch mit einem materiell anderen Modell dargestellt werden. Wartung, Sicherheitsmaßnahmen oder technische Störungen können die Verfügbarkeit zeitweise einschränken.'] },
+    { title: 'Urheber- und Kennzeichenrechte', paragraphs: ['Name, Benutzeroberfläche, eigene Erklärungstexte, Frageninhalte und Software sind im Rahmen des anwendbaren Rechts geschützt. Die persönliche Nutzung überträgt keine Rechte an diesen Inhalten.'] },
+    { title: 'Widerruf, digitale Bereitstellung und Erstattung', paragraphs: ['Zwingende Verbraucherrechte bleiben unberührt. Wird ein kostenpflichtiges digitales Zertifikat sofort bereitgestellt, muss der Checkout alle nach anwendbarem Verbraucherrecht erforderlichen Zustimmungen und Bestätigungen einholen, bevor auf ein vorzeitiges Erlöschen eines Widerrufsrechts gestützt wird. Die endgültige Erstattungsregel muss dem tatsächlichen Checkout und der Bereitstellung entsprechen.'] },
+    { title: 'Haftung und Streitbeilegung', paragraphs: ['Zwingende Haftung und unabdingbare Verbraucherrechte werden nicht ausgeschlossen. Endgültige Haftungsregelung, Rechtswahl, Gerichtsstand und Angaben zur Verbraucherstreitbeilegung werden nach Festlegung des Betreibers und der Startmärkte ergänzt.'] },
+  ],
+};
+
+de.imprint = {
+  eyebrow: 'IMPRESSUM',
+  title: 'Anbieterkennzeichnung.',
+  intro: 'Politangle ist ein Projekt der TSquare Ventures LLC. Betreiber und Geschäftsanschrift entsprechen der für Tisonik veröffentlichten rechtlichen Identität und Anschrift.',
+  sections: [
+    { title: 'Status', status: 'REQUIRES QUALIFIED LEGAL REVIEW', callout: 'Betreiber und Anschrift sind nun benannt. Direkter elektronischer Kontakt sowie gegebenenfalls Register-, Steuer- und weitere Pflichtangaben müssen noch aus verifizierten Unterlagen ergänzt und qualifiziert rechtlich geprüft werden.' },
+    { title: 'Erforderliche Angaben', table: [
+      ['Anbieter / Betreiber', 'TSquare Ventures LLC'],
+      ['Rechtsform', 'Limited Liability Company (LLC)'],
+      ['Ladungsfähige Anschrift', '30 N Gould St Ste R, Sheridan, WY 82801, USA'],
+      ['Direkter elektronischer Kontakt', '[NOCH ANZUGEBEN — überwachte E-Mail oder gleichwertiger direkter Kanal]'],
+      ['Vertretungsberechtigte Person', '[FALLS EINSCHLÄGIG]'],
+      ['Register und Registernummer', '[FALLS EINSCHLÄGIG]'],
+      ['USt-IdNr. / Wirtschafts-Identifikationsnummer', '[FALLS EINSCHLÄGIG]'],
+      ['Aufsichtsbehörde / berufsrechtliche Angaben', '[FALLS EINSCHLÄGIG]'],
+      ['Inhaltlich verantwortliche Person', '[FALLS EINSCHLÄGIG]'],
+      ['Verbraucherstreitbeilegung', '[FÜR DEN BETREIBER ZU PRÜFEN]'],
+    ] },
+    { title: 'Vor Veröffentlichung', paragraphs: ['Politangle wird als Projekt der TSquare Ventures LLC unter der oben genannten Anschrift betrieben. Noch offene Register-, Steuer-, Vertretungs-, Streitbeilegungs- und Kontaktangaben werden nur ergänzt, soweit sie einschlägig und aus verifizierten Unternehmensdaten belegt sind.'] },
+  ],
+};
+
+de.contact = {
+  eyebrow: 'KONTAKT',
+  title: 'Politangle kontaktieren.',
+  intro: 'Für Kontohilfe, Datenschutz, Schulen und rechtliche Mitteilungen sollen getrennte Anliegen sauber bearbeitet werden. Ein überwachter öffentlicher Kontakt muss noch eingerichtet werden.',
+  sections: [
+    { title: 'Status', status: 'REQUIRES VERIFIED CONTACT', callout: 'Im Produktionssystem ist noch keine verifizierte, überwachte Politangle-Kontaktadresse hinterlegt. Es wird keine erfundene Adresse veröffentlicht.' },
+    { title: 'Betreiber und Postanschrift', paragraphs: ['Politangle ist ein Projekt der TSquare Ventures LLC, 30 N Gould St Ste R, Sheridan, WY 82801, USA.', 'Eine eigene überwachte Politangle-E-Mail-Adresse muss noch eingerichtet werden. Sende niemals Passwörter oder Authentifizierungs-Tokens.'] },
+    { title: 'Datenschutz und rechtliche Anliegen', paragraphs: ['Der endgültige Datenschutz-/Rechtskontakt muss Betroffenenanfragen und formelle Mitteilungen entgegennehmen können. Vor kontobezogenen Auskünften oder Änderungen kann eine Identitätsprüfung erforderlich sein.'] },
+    { title: 'Schulen und Pilotprojekte', paragraphs: ['Schulanfragen laufen über die Pilotseite. Sende über allgemeine Anfragen keine echten Schülernamen, politischen Antworten, Gesundheitsdaten oder sonstige unnötige sensible Daten.'], link: { href: '/school/pilot', label: 'Informationen zum Schulpilot →' } },
+  ],
+};
+
+es.privacy = {
+  eyebrow: 'PRIVACIDAD', title: 'Privacidad desde el diseño, especialmente para las opiniones políticas.',
+  intro: 'Politangle está diseñado para recopilar la menor cantidad de datos personales posible. Esta página explica la arquitectura actual y qué información falta antes de poder considerarla un aviso definitivo.',
+  sections: [
+    { title: 'Estado legal', status: 'REQUIRES QUALIFIED LEGAL REVIEW', callout: 'Politangle es un proyecto de TSquare Ventures LLC, 30 N Gould St Ste R, Sheridan, WY 82801, USA. Antes del lanzamiento comercial todavía deben confirmarse un contacto de privacidad de Politangle supervisado y los detalles definitivos de alojamiento y transferencias, con revisión jurídica cualificada.' },
+    { title: 'BELIEVE / Quick y Full', paragraphs: ['Tus respuestas políticas se utilizan en el navegador para calcular el resultado. La arquitectura pública actual no vincula deliberadamente las respuestas BELIEVE ni el perfil político a tu cuenta.', 'Tras completar el primer Quick, una cookie estrictamente funcional puede recordar únicamente que ya hubo un primer intento, para exigir inicio de sesión en un nuevo intento posterior. No contiene tus respuestas ni el resultado.'] },
+    { title: 'Cuenta', paragraphs: ['Al crear una cuenta gratuita se procesan el correo electrónico, el identificador de cuenta, el estado de verificación y datos de seguridad/sesión. La cookie de sesión HTTP-only dura actualmente hasta cinco días.'] },
+    { title: 'Certificación, escuela y proveedores', paragraphs: ['La certificación procesa los datos necesarios del intento y del certificado y está disponible para usuarios que confirmen tener al menos 16 años. El modo escolar está diseñado con identificadores temporales y resultados agregados. Los proveedores previstos son Netlify para alojamiento, Google Firebase para autenticación y registros de cuenta/certificación y Stripe únicamente cuando se active el pago de certificados. Los detalles jurídicos de cada proveedor y transferencia deben confirmarse antes del lanzamiento.'] },
+    { title: 'Cookies, conservación y derechos', paragraphs: ['Actualmente se usan cookies funcionales de sesión y de finalización del primer Quick; no se ha instalado deliberadamente un rastreador publicitario o analítico en el repositorio. La cookie de sesión dura hasta cinco días y la del primer Quick hasta un año. Deben fijarse los demás plazos de conservación y publicarse el responsable, el contacto y la autoridad de control antes del lanzamiento.'] },
+  ],
+};
+es.terms = {
+  eyebrow: 'CONDICIONES', title: 'Condiciones de uso de Politangle.',
+  intro: 'El modelo previsto combina cuenta gratuita, evaluaciones y aprendizaje gratuitos, y un certificado de pago separado después de aprobar la certificación.',
+  sections: [
+    { title: 'Estado legal', status: 'REQUIRES QUALIFIED LEGAL REVIEW', callout: 'El operador es TSquare Ventures LLC. La ley aplicable, la información sobre resolución de litigios, el contacto electrónico directo y las condiciones comerciales finales todavía deben completarse y someterse a revisión jurídica cualificada antes del servicio de pago.' },
+    { title: 'Acceso y cuenta', paragraphs: ['El primer Quick puede hacerse sin cuenta. Para iniciar un nuevo Quick independiente después del primero completado se requiere una cuenta gratuita. Las respuestas BELIEVE no se vinculan deliberadamente a la cuenta en la arquitectura actual.'] },
+    { title: 'Práctica, certificación y certificado', paragraphs: ['El glosario, la práctica y los intentos certificados son gratuitos dentro de los límites publicados. La certificación exige tener al menos 16 años. El certificado personalizado es un producto de pago separado después de aprobar; el precio y las condiciones deben mostrarse antes de comprar. Si la persona usuaria es menor de edad donde vive, puede ser necesario el consentimiento de un padre, madre o tutor legal cuando la ley aplicable lo exija.'] },
+    { title: 'Uso, cambios y derechos', paragraphs: ['No se permite suplantar identidades, eludir límites ni abusar del servicio o de los certificados. Politangle puede versionar y mejorar preguntas, explicaciones y métodos. Los derechos obligatorios del consumidor y las responsabilidades que no puedan excluirse permanecen intactos. Las reglas finales sobre entrega digital, desistimiento, reembolso, ley aplicable y litigios deben revisarse con el flujo de compra real.'] },
+  ],
+};
+es.imprint = {
+  eyebrow: 'AVISO LEGAL', title: 'Información del prestador.',
+  intro: 'Politangle es un proyecto de TSquare Ventures LLC. El operador y la dirección comercial usan la misma identidad jurídica y dirección publicadas para Tisonik.',
+  sections: [
+    { title: 'Estado', status: 'REQUIRES QUALIFIED LEGAL REVIEW', callout: 'El operador y la dirección ya están identificados. El contacto electrónico directo y cualquier dato registral, fiscal o de consumo aplicable todavía deben completarse a partir de documentos verificados y someterse a revisión jurídica cualificada.' },
+    { title: 'Datos pendientes', table: [['Operador / prestador','TSquare Ventures LLC'],['Forma jurídica','Limited Liability Company (LLC)'],['Dirección física de servicio','30 N Gould St Ste R, Sheridan, WY 82801, USA'],['Contacto electrónico directo','[PENDIENTE]'],['Representante autorizado','[SI PROCEDE]'],['Registro y número','[SI PROCEDE]'],['IVA / identificador empresarial','[SI PROCEDE]'],['Autoridad / reglas profesionales','[SI PROCEDE]'],['Resolución de litigios de consumo','[POR CONFIRMAR]']] },
+  ],
+};
+es.contact = {
+  eyebrow: 'CONTACTO', title: 'Contacta con Politangle.',
+  intro: 'Las consultas de cuenta, privacidad, escuelas y asuntos jurídicos deben dirigirse al canal adecuado. Todavía debe configurarse un contacto público supervisado.',
+  sections: [
+    { title: 'Estado', status: 'REQUIRES VERIFIED CONTACT', callout: 'Todavía no hay una dirección pública de Politangle verificada y supervisada en producción. No se publicará una dirección inventada.' },
+    { title: 'Operador y dirección postal', paragraphs: ['Politangle es un proyecto de TSquare Ventures LLC, 30 N Gould St Ste R, Sheridan, WY 82801, USA.', 'Todavía debe configurarse un correo de Politangle supervisado. Nunca envíes contraseñas ni tokens de autenticación.'] },
+    { title: 'Privacidad, asuntos legales y escuelas', paragraphs: ['El contacto final debe poder recibir solicitudes de derechos y avisos formales. Para escuelas usa la ruta del piloto y evita enviar nombres de alumnos, respuestas políticas u otros datos sensibles innecesarios.'], link: { href: '/school/pilot', label: 'Información del piloto escolar →' } },
+  ],
+};
+
+fr.privacy = {
+  eyebrow: 'VIE PRIVÉE', title: 'La confidentialité dès la conception, surtout pour les opinions politiques.',
+  intro: 'Politangle est conçu pour collecter aussi peu de données personnelles que possible. Cette page décrit l’architecture actuelle et les informations encore nécessaires avant qu’elle puisse devenir une notice définitive.',
+  sections: [
+    { title: 'Statut juridique', status: 'REQUIRES QUALIFIED LEGAL REVIEW', callout: 'Politangle est un projet de TSquare Ventures LLC, 30 N Gould St Ste R, Sheridan, WY 82801, USA. Un contact Politangle dédié à la vie privée ainsi que les détails définitifs d’hébergement et de transfert doivent encore être confirmés et faire l’objet d’une revue juridique qualifiée avant le lancement commercial.' },
+    { title: 'BELIEVE / Quick et Full', paragraphs: ['Tes réponses politiques sont utilisées dans le navigateur pour calculer ton résultat. L’architecture publique actuelle ne rattache pas volontairement les réponses BELIEVE ni ton profil politique à ton compte.', 'Après le premier Quick terminé, un cookie strictement fonctionnel peut uniquement mémoriser qu’un premier essai a été effectué afin d’exiger une connexion pour un nouvel essai ultérieur. Il ne contient ni tes réponses ni ton résultat.'] },
+    { title: 'Compte', paragraphs: ['La création d’un compte gratuit implique le traitement de l’adresse e-mail, de l’identifiant de compte, de l’état de vérification et des données de sécurité/session. Le cookie de session HTTP-only expire actuellement après cinq jours au maximum.'] },
+    { title: 'Certification, école et prestataires', paragraphs: ['La certification traite les données nécessaires à la tentative et au certificat et est accessible aux utilisateurs qui confirment avoir au moins 16 ans. Le mode School est conçu autour d’identifiants temporaires et de résultats agrégés. Les prestataires prévus sont Netlify pour l’hébergement, Google Firebase pour l’authentification et les données de compte/certification, et Stripe uniquement lorsque le paiement des certificats sera activé. Les détails juridiques des traitements et transferts doivent être confirmés avant lancement.'] },
+    { title: 'Cookies, conservation et droits', paragraphs: ['Les cookies actuels sont fonctionnels: session de connexion et mémorisation du premier Quick terminé. Aucun traqueur publicitaire ou analytique n’est volontairement installé dans le dépôt actuel. Le cookie de session dure au maximum cinq jours et celui du premier Quick jusqu’à un an. Les autres durées, l’identité du responsable, le contact et l’autorité de contrôle doivent être finalisés avant lancement.'] },
+  ],
+};
+fr.terms = {
+  eyebrow: 'CONDITIONS', title: 'Conditions d’utilisation de Politangle.',
+  intro: 'Le modèle prévu associe un compte gratuit, des évaluations et ressources gratuites, puis un certificat payant séparé après réussite de la certification.',
+  sections: [
+    { title: 'Statut juridique', status: 'REQUIRES QUALIFIED LEGAL REVIEW', callout: 'L’opérateur est TSquare Ventures LLC. Le droit applicable, les informations de règlement des litiges, le contact électronique direct et les conditions commerciales finales doivent encore être complétés et faire l’objet d’une revue juridique qualifiée avant le service payant.' },
+    { title: 'Accès et compte', paragraphs: ['Le premier Quick peut être fait sans compte. Pour lancer un nouveau Quick indépendant après le premier terminé, un compte gratuit est requis. L’architecture actuelle ne rattache pas volontairement les réponses BELIEVE au compte.'] },
+    { title: 'Entraînement, certification et certificat', paragraphs: ['Le glossaire, les exercices et les tentatives certifiées sont gratuits dans les limites publiées. La certification est accessible aux personnes d’au moins 16 ans. Le certificat personnalisé est un produit payant séparé après réussite; son prix et ses conditions doivent être affichés avant l’achat. Si l’utilisateur est mineur dans son pays de résidence, l’autorisation d’un parent ou représentant légal peut être nécessaire lorsque le droit applicable l’exige.'] },
+    { title: 'Utilisation, évolutions et droits', paragraphs: ['L’usurpation, le contournement des limites et l’usage abusif du service ou des certificats sont interdits. Politangle peut versionner et améliorer les questions, explications et méthodes. Les droits impératifs des consommateurs et les responsabilités qui ne peuvent être exclues restent applicables. Les règles finales sur la livraison numérique, la rétractation, les remboursements, le droit applicable et les litiges doivent être vérifiées avec le parcours de paiement réel.'] },
+  ],
+};
+fr.imprint = {
+  eyebrow: 'MENTIONS LÉGALES', title: 'Informations sur le prestataire.',
+  intro: 'Politangle est un projet de TSquare Ventures LLC. L’opérateur et l’adresse professionnelle reprennent la même identité juridique et la même adresse que celles publiées pour Tisonik.',
+  sections: [
+    { title: 'Statut', status: 'REQUIRES QUALIFIED LEGAL REVIEW', callout: 'L’opérateur et l’adresse sont maintenant identifiés. Le contact électronique direct et les éventuelles mentions d’immatriculation, fiscales ou de règlement des litiges doivent encore être complétés à partir de documents vérifiés et faire l’objet d’une revue juridique qualifiée.' },
+    { title: 'Informations à compléter', table: [['Opérateur / prestataire','TSquare Ventures LLC'],['Forme juridique','Limited Liability Company (LLC)'],['Adresse physique de service','30 N Gould St Ste R, Sheridan, WY 82801, USA'],['Contact électronique direct','[À FOURNIR]'],['Représentant autorisé','[SI APPLICABLE]'],['Registre et numéro','[SI APPLICABLE]'],['TVA / identifiant d’entreprise','[SI APPLICABLE]'],['Autorité / règles professionnelles','[SI APPLICABLE]'],['Règlement des litiges de consommation','[À CONFIRMER]']] },
+  ],
+};
+fr.contact = {
+  eyebrow: 'CONTACT', title: 'Contacter Politangle.',
+  intro: 'Les demandes concernant le compte, la vie privée, les écoles et les questions juridiques doivent suivre le bon canal. Un contact public suivi doit encore être configuré.',
+  sections: [
+    { title: 'Statut', status: 'REQUIRES VERIFIED CONTACT', callout: 'Aucune adresse publique Politangle vérifiée et suivie n’est encore configurée en production. Aucune adresse inventée ne sera publiée.' },
+    { title: 'Opérateur et adresse postale', paragraphs: ['Politangle est un projet de TSquare Ventures LLC, 30 N Gould St Ste R, Sheridan, WY 82801, USA.', 'Une adresse e-mail Politangle dédiée et suivie doit encore être configurée. N’envoie jamais de mot de passe ni de jeton d’authentification.'] },
+    { title: 'Vie privée, juridique et écoles', paragraphs: ['Le contact final devra pouvoir recevoir les demandes d’exercice de droits et les notifications formelles. Pour les écoles, utilise la page pilote et évite d’envoyer des noms d’élèves, réponses politiques ou autres données sensibles inutiles.'], link: { href: '/school/pilot', label: 'Informations sur le pilote School →' } },
+  ],
+};
+
 const copy: Record<Locale, Record<InfoPageId, PageCopy>> = { en, de, es, fr };
 
 export default function LocalizedInfoPage({ page }: { page: InfoPageId }) {
   const { locale } = useLocale();
   const c = copy[locale][page];
+
+  if (page === 'method') {
+    return (
+      <InfoShell eyebrow={c.eyebrow} title={c.title} intro={c.intro}>
+        <MethodExplainer locale={locale} />
+      </InfoShell>
+    );
+  }
 
   return (
     <InfoShell eyebrow={c.eyebrow} title={c.title} intro={c.intro}>
@@ -384,7 +595,7 @@ export default function LocalizedInfoPage({ page }: { page: InfoPageId }) {
           {section.bullets && <ul>{section.bullets.map((item) => <li key={item}>{item}</li>)}</ul>}
           {section.table && <table className="info-table"><tbody>{section.table.map(([label, value]) => <tr key={label}><th>{label}</th><td>{value}</td></tr>)}</tbody></table>}
           {section.callout && <p className="info-callout"><strong>{section.callout}</strong></p>}
-          {section.link && <p><Link href={section.link.href}>{section.link.label}</Link></p>}
+          {section.link && <p><Link href={localePath(locale, section.link.href)}>{section.link.label}</Link></p>}
         </InfoSection>
       ))}
     </InfoShell>

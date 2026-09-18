@@ -12,7 +12,7 @@ export const POLITANGLE_PRODUCT_DECISIONS = {
       maximum: 2,
       rollingWindowHours: 24,
     },
-    certificationMinimumAge: 18,
+    certificationMinimumAge: 16,
     initialCertificationLanguage: 'en',
     certificateValidityYears: 2,
     practiceIsFree: true,

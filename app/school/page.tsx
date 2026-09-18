@@ -1,7 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { LanguageSelector, useLocale, type Locale } from '../LocaleProvider';
+import { localePath, useLocale, type Locale } from '../LocaleProvider';
+import { SiteHeader } from '../SiteChrome';
 
 type SchoolCopy = {
   strap: string;
@@ -145,50 +146,87 @@ const copy: Record<Locale, SchoolCopy> = {
 export default function SchoolPage() {
   const { locale } = useLocale();
   const c = copy[locale];
+  const href = (path: string) => localePath(locale, path);
 
   return (
-    <main className="engine-page school-page">
-      <header className="engine-header">
-        <Link href="/" className="engine-brand">Politangle School</Link>
-        <span>{c.strap}</span><LanguageSelector />
-      </header>
-      <section className="engine-shell school-shell">
-        <article className="engine-card school-hero-card">
-          <p className="engine-kicker">{c.kicker}</p>
-          <h1>{c.title}</h1>
-          <p>{c.intro}</p>
-          <p className="engine-callout"><strong>{c.privacyLabel}</strong> {c.privacyText}</p>
-        </article>
+    <main className="home school-public-page">
+      <SiteHeader />
 
-        <div className="school-entry-grid">
-          <article className="engine-card school-entry-card">
-            <p className="engine-kicker">{c.privateKicker}</p>
-            <h2>{c.privateTitle}</h2>
-            <p>{c.privateText}</p>
-            <Link className="engine-primary-link" href="/school/private">{c.privateCta}</Link>
-          </article>
-          <article className="engine-card school-entry-card">
-            <p className="engine-kicker">{c.classroomKicker}</p>
-            <h2>{c.classroomTitle}</h2>
-            <p>{c.classroomText}</p>
-            <Link className="engine-primary-link" href="/school/student">{c.classroomCta}</Link>
-          </article>
-          <article className="engine-card school-entry-card">
-            <p className="engine-kicker">{c.teacherKicker}</p>
-            <h2>{c.teacherTitle}</h2>
-            <p>{c.teacherText}</p>
-            <Link className="engine-primary-link" href="/school/pilot">{c.teacherCta}</Link>
-          </article>
+      <section className="school-public-hero">
+        <div className="p-shell school-public-hero-grid">
+          <div>
+            <p className="p-kicker">{c.kicker}</p>
+            <h1>{c.title}</h1>
+            <p className="school-public-lede">{c.intro}</p>
+            <p className="school-public-privacy-line"><strong>{c.privacyLabel}</strong> {c.privacyText}</p>
+          </div>
+          <div className="school-public-visual" aria-hidden="true">
+            <span className="school-public-orbit one"/>
+            <span className="school-public-orbit two"/>
+            <div className="school-public-room">
+              <small>{locale === 'de' ? 'KLASSENBILD' : locale === 'es' ? 'VISTA DEL AULA' : locale === 'fr' ? 'VUE DE CLASSE' : 'CLASSROOM VIEW'}</small>
+              <strong>24</strong>
+              <span>{locale === 'de' ? 'Teilnehmende · nur aggregiert' : locale === 'es' ? 'participantes · solo agregado' : locale === 'fr' ? 'participants · agrégé uniquement' : 'participants · aggregate only'}</span>
+              <i/>
+              <i/>
+              <i/>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="p-section p-shell">
+        <div className="p-section-head">
+          <div>
+            <p className="p-kicker">{locale === 'de' ? 'DREI WEGE' : locale === 'es' ? 'TRES FORMAS' : locale === 'fr' ? 'TROIS PARCOURS' : 'THREE WAYS TO USE IT'}</p>
+            <h2>{locale === 'de' ? 'Privat lernen oder gemeinsam diskutieren.' : locale === 'es' ? 'Aprender en privado o conversar en grupo.' : locale === 'fr' ? 'Apprendre en privé ou discuter ensemble.' : 'Learn privately or discuss together.'}</h2>
+          </div>
+          <p>{c.privacyText}</p>
         </div>
 
-        <article className="engine-card school-visibility-card">
-          <p className="engine-kicker">{c.teacherCanSee}</p>
-          <div className="school-principle-grid">
-            <div className="school-visible"><strong>{c.visible}</strong><span>{c.visibleText}</span></div>
-            <div className="school-never"><strong>{c.never}</strong><span>{c.neverText}</span></div>
+        <div className="school-public-entry-grid">
+          <article>
+            <span>01</span>
+            <p className="p-kicker">{c.privateKicker}</p>
+            <h3>{c.privateTitle}</h3>
+            <p>{c.privateText}</p>
+            <Link className="p-text-link" href="/school/private">{c.privateCta} →</Link>
+          </article>
+          <article>
+            <span>02</span>
+            <p className="p-kicker">{c.classroomKicker}</p>
+            <h3>{c.classroomTitle}</h3>
+            <p>{c.classroomText}</p>
+            <Link className="p-text-link" href="/school/student">{c.classroomCta} →</Link>
+          </article>
+          <article>
+            <span>03</span>
+            <p className="p-kicker">{c.teacherKicker}</p>
+            <h3>{c.teacherTitle}</h3>
+            <p>{c.teacherText}</p>
+            <Link className="p-text-link" href={href('/school/pilot')}>{c.teacherCta} →</Link>
+          </article>
+        </div>
+      </section>
+
+      <section className="p-dark-section school-public-privacy">
+        <div className="p-shell">
+          <div className="school-public-privacy-head">
+            <p className="p-kicker light">{c.teacherCanSee}</p>
+            <h2>{locale === 'de' ? 'Die Klasse wird sichtbar. Einzelne Schüler:innen nicht.' : locale === 'es' ? 'El grupo se ve. Cada estudiante permanece privado.' : locale === 'fr' ? 'La classe est visible. Chaque élève reste privé.' : 'See the class. Keep every student private.'}</h2>
           </div>
-          <p className="engine-disclaimer"><strong>{c.pilotLabel}</strong> {c.pilotText}</p>
-        </article>
+          <div className="school-public-principles">
+            <div>
+              <small>{c.visible}</small>
+              <p>{c.visibleText}</p>
+            </div>
+            <div>
+              <small>{c.never}</small>
+              <p>{c.neverText}</p>
+            </div>
+          </div>
+          <p className="school-public-pilot"><strong>{c.pilotLabel}</strong> {c.pilotText}</p>
+        </div>
       </section>
     </main>
   );

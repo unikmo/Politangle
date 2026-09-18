@@ -9,7 +9,7 @@ test('consequential literacy and certification decisions remain locked', () => {
   assert.equal(literacy.servedQuestionsPerSection, 25);
   assert.equal(literacy.passingAnswersPerSection, 23);
   assert.deepEqual(literacy.certifiedAttempts, { maximum: 2, rollingWindowHours: 24 });
-  assert.equal(literacy.certificationMinimumAge, 18);
+  assert.equal(literacy.certificationMinimumAge, 16);
   assert.equal(literacy.initialCertificationLanguage, 'en');
   assert.equal(literacy.certificateValidityYears, 2);
   assert.equal(literacy.practiceIsFree, true);

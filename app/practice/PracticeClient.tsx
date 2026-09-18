@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { scoreLiteracyItem, type DeepSection } from '../../lib/deep-engine';
 import { LITERACY_MASTER_BANK_VERSION, type LiteracyQuestionRecord } from '../../lib/literacy-bank-schema';
 import { selectPracticeQuestionPlan } from '../../lib/literacy-certified-selector';
@@ -48,6 +48,11 @@ export default function PracticeClient() {
   const selected = run && current ? run.answers[current.id] : undefined;
   const checked = Boolean(run && current && run.revealed.includes(current.id));
   const result = current && selected && checked ? scoreLiteracyItem(current, [selected]) : null;
+
+  useEffect(() => {
+    const section = new URLSearchParams(window.location.search).get('section');
+    if (section === 'classify' || section === 'understand') start(section);
+  }, []);
 
   function start(section: DeepSection) {
     const seed = newSeed();

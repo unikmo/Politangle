@@ -7,7 +7,7 @@ const noStore = { 'Cache-Control': 'no-store' };
 
 export async function GET() {
   const user = await authenticatedCertificationUser();
-  return NextResponse.json({ authenticated: Boolean(user), user: user ? { emailVerified: user.emailVerified, adultConfirmed: user.adultConfirmed, isAdmin: user.isAdmin } : null }, { headers: noStore });
+  return NextResponse.json({ authenticated: Boolean(user), user: user ? { emailVerified: user.emailVerified, certificationAgeConfirmed: user.certificationAgeConfirmed, isAdmin: user.isAdmin } : null }, { headers: noStore });
 }
 
 export async function POST(request: Request) {
@@ -15,7 +15,7 @@ export async function POST(request: Request) {
   if (origin && origin !== new URL(request.url).origin) {
     return NextResponse.json({ error: 'Cross-site session creation is not allowed.' }, { status: 403, headers: noStore });
   }
-  const input = await request.json().catch(() => ({})) as { idToken?: unknown; adultConfirmed?: unknown };
+  const input = await request.json().catch(() => ({})) as { idToken?: unknown; certificationAgeConfirmed?: unknown };
   if (typeof input.idToken !== 'string' || input.idToken.length < 100) {
     return NextResponse.json({ error: 'A valid Firebase ID token is required.' }, { status: 400, headers: noStore });
   }
@@ -25,8 +25,10 @@ export async function POST(request: Request) {
     const session = await getAdminAuth().createSessionCookie(input.idToken, { expiresIn });
     const now = new Date().toISOString();
     const update: Record<string, unknown> = { updatedAt: now };
-    if (input.adultConfirmed === true) update.adultConfirmedAt = now;
-    await getAdminDb().collection('certificationUsers').doc(decoded.uid).set(update, { merge: true });
+    if (input.certificationAgeConfirmed === true) update.certificationAgeConfirmedAt = now;
+    const profileRef = getAdminDb().collection('certificationUsers').doc(decoded.uid);
+    await profileRef.set(update, { merge: true });
+    const profile = await profileRef.get();
     const store = await cookies();
     store.set(AUTH_SESSION_COOKIE, session, {
       httpOnly: true,
@@ -39,6 +41,7 @@ export async function POST(request: Request) {
     return NextResponse.json({
       authenticated: true,
       emailVerified: decoded.email_verified === true,
+      certificationAgeConfirmed: profile.data()?.certificationAgeConfirmedAt != null || profile.data()?.adultConfirmedAt != null,
       isAdmin: decoded.admin === true || adminUids.has(decoded.uid),
     }, { headers: noStore });
   } catch {

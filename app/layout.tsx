@@ -19,6 +19,7 @@ import './accessibility.css';
 import './countries.css';
 import './admin.css';
 import { LocaleProvider } from './LocaleProvider';
+import { SiteFooter } from './SiteChrome';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://politangle.org'),
@@ -43,5 +44,5 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en-US" suppressHydrationWarning><body><a className="skip-link" href="#main-content">Skip to main content</a><div id="main-content" tabIndex={-1}><LocaleProvider>{children}</LocaleProvider></div></body></html>;
+  return <html lang="en-US" suppressHydrationWarning><body><a className="skip-link" href="#main-content">Skip to main content</a><div id="main-content" tabIndex={-1}><LocaleProvider>{children}<SiteFooter /></LocaleProvider></div></body></html>;
 }

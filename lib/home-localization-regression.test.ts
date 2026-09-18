@@ -10,9 +10,11 @@ const layout = readFileSync(join(root, 'app/layout.tsx'), 'utf8');
 const localeProvider = readFileSync(join(root, 'app/LocaleProvider.tsx'), 'utf8');
 const deepClient = readFileSync(join(root, 'app/deep/DeepClient.tsx'), 'utf8');
 const deepNative = readFileSync(join(root, 'app/deep/deep-native.ts'), 'utf8');
+const siteChrome = readFileSync(join(root, 'app/SiteChrome.tsx'), 'utf8');
 const schoolPage = readFileSync(join(root, 'app/school/page.tsx'), 'utf8');
 const infoShell = readFileSync(join(root, 'app/InfoShell.tsx'), 'utf8');
 const localizedInfo = readFileSync(join(root, 'app/LocalizedInfoPage.tsx'), 'utf8');
+const methodExplainer = readFileSync(join(root, 'app/MethodExplainer.tsx'), 'utf8');
 const privateStudent = readFileSync(join(root, 'app/school/private/page.tsx'), 'utf8');
 const classroomStudent = readFileSync(join(root, 'app/school/student/student-native.ts'), 'utf8');
 const privateLiteracy = readFileSync(join(root, 'app/school/private/literacy/PrivateLiteracyClient.tsx'), 'utf8');
@@ -51,8 +53,9 @@ test('English locale is explicitly US English and the language control allows di
 });
 
 test('primary navigation opens dedicated localized pages rather than homepage sections', () => {
-  for (const route of ['/method', '/learn', '/school', '/about']) {
-    assert.match(homepage, new RegExp(`href\\('${route.replace('/', '\\/')}'\\)`));
+  assert.match(homepage, /<SiteHeader \/>/);
+  for (const route of ['/method', '/learn', '/quizzes', '/school', '/about']) {
+    assert.match(siteChrome, new RegExp(`href\\('${route.replace('/', '\\/')}'\\)`));
   }
   assert.doesNotMatch(homepage, /href="#(?:method|learn|schools)"/);
   assert.match(localeProvider, /export function localePath/);
@@ -94,23 +97,22 @@ test('School uses the locked 42-question total and native privacy copy', () => {
 
 test('trust and information pages are native multilingual pages, not English fallbacks', () => {
   assert.doesNotMatch(infoShell, /page.*only.*English|page.*in English|nur auf Englisch|sigue en inglés|encore en anglais/i);
-  assert.match(localizedInfo, /Mehrere Achsen statt einer politischen Schublade\./);
-  assert.match(localizedInfo, /Un mapa de matices, no una etiqueta\./);
-  assert.match(localizedInfo, /Plusieurs axes pour garder les nuances\./);
-  assert.match(localizedInfo, /Quick 26 te da una primera lectura/);
-  assert.match(localizedInfo, /Quick 26 donne une première lecture/);
+  assert.match(localizedInfo, /Acht Fragen, die Politik oft miteinander vermischt\./);
+  assert.match(localizedInfo, /Ocho preguntas que la política suele mezclar\./);
+  assert.match(localizedInfo, /Huit questions que la politique mélange souvent\./);
+  assert.match(methodExplainer, /Quick utiliza 26 afirmaciones/);
+  assert.match(methodExplainer, /Quick utilise 26 affirmations/);
 });
 
 test('native trust copy keeps informal address and the locked 42-question total', () => {
-  assert.match(localizedInfo, /du genau eine Aussage/);
-  assert.match(localizedInfo, /deine Ansichten/);
-  assert.doesNotMatch(localizedInfo, /(?:Ihre Politik|Ihre Ansichten|Ihre Antworten|Ihr Ergebnis|Ihr Profil|\bIhnen\b|Machen Sie|Starten Sie|Nehmen Sie|Sie können|Sie brauchen|Geben Sie)/);
-  assert.doesNotMatch(localizedInfo, /\b(?:vous|votre|vos)\b/i);
-  assert.doesNotMatch(localizedInfo, /\bustedes?\b/i);
-  assert.doesNotMatch(localizedInfo, /Full 84/);
-  assert.match(localizedInfo, /42 Fragen insgesamt/);
-  assert.match(localizedInfo, /42 preguntas en total/);
-  assert.match(localizedInfo, /42 questions au total/);
+  assert.match(methodExplainer, /Du beantwortest Aussagen/);
+  assert.match(localizedInfo, /deine eigene Kombination/);
+  assert.doesNotMatch(localizedInfo + methodExplainer, /(?:Ihre Politik|Ihre Ansichten|Ihre Antworten|Ihr Ergebnis|Ihr Profil|\bIhnen\b|Machen Sie|Starten Sie|Nehmen Sie|Sie können|Sie brauchen|Geben Sie)/);
+  assert.doesNotMatch(methodExplainer, /\b(?:vous|votre|vos)\b/i);
+  assert.doesNotMatch(methodExplainer, /\bustedes?\b/i);
+  assert.doesNotMatch(localizedInfo + methodExplainer, /Full 84/);
+  assert.match(methodExplainer, /42 in total/);
+  assert.match(methodExplainer, /42/);
 });
 
 test('Private Student Mode uses native informal copy instead of formal German', () => {

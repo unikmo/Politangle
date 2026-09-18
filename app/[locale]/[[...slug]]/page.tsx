@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 const locales = ['en', 'de', 'es', 'fr'] as const;
-const pageKeys = ['', 'about', 'classify', 'contact', 'deep', 'imprint', 'learn', 'method', 'populism-quiz', 'practice', 'privacy', 'question-banks', 'quiz', 'results', 'school', 'school/pilot', 'terms', 'understand', 'validation'] as const;
+const pageKeys = ['', 'about', 'account', 'classify', 'contact', 'deep', 'imprint', 'learn', 'method', 'populism-quiz', 'practice', 'privacy', 'question-banks', 'quiz', 'quizzes', 'results', 'school', 'school/pilot', 'terms', 'understand', 'validation'] as const;
 const titles: Record<string, string> = {
-  '': 'Politangle', about: 'About', classify: 'CLASSIFY', contact: 'Contact', deep: 'Politangle Full',
+  '': 'Politangle', about: 'About', account: 'Account', classify: 'CLASSIFY', contact: 'Contact', deep: 'Politangle Full',
   imprint: 'Imprint', learn: 'Learn political language', method: 'Method', 'populism-quiz': 'Spot populism',
-  practice: 'Political literacy practice', privacy: 'Privacy', 'question-banks': 'Question banks',
+  practice: 'Political literacy practice', privacy: 'Privacy', 'question-banks': 'Question banks', quizzes: 'Quizzes',
   quiz: 'Politangle Quick', results: 'Your result', school: 'For schools', 'school/pilot': 'School pilot',
   terms: 'Terms', understand: 'UNDERSTAND', validation: 'Validation',
 };
@@ -43,6 +43,7 @@ async function loadPage(key: string): Promise<React.ComponentType> {
   switch (key) {
     case '': return (await import('../../page')).default;
     case 'about': return (await import('../../about/page')).default;
+    case 'account': return (await import('../../account/page')).default;
     case 'classify': return (await import('../../classify/page')).default;
     case 'contact': return (await import('../../contact/page')).default;
     case 'deep': return (await import('../../deep/page')).default;
@@ -54,6 +55,7 @@ async function loadPage(key: string): Promise<React.ComponentType> {
     case 'privacy': return (await import('../../privacy/page')).default;
     case 'question-banks': return (await import('../../question-banks/page')).default;
     case 'quiz': return (await import('../../quiz/page')).default;
+    case 'quizzes': return (await import('../../quizzes/page')).default;
     case 'results': return (await import('../../results/page')).default;
     case 'school': return (await import('../../school/page')).default;
     case 'school/pilot': return (await import('../../school/pilot/page')).default;

@@ -1,10 +1,39 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { countryProfiles, lockedCountryQueue } from '../../lib/countries';
+import { SiteHeader } from '../SiteChrome';
+import { countryProfiles } from '../../lib/countries';
 
-export const metadata: Metadata = { title: 'Countries editorial preview', robots: { index: false, follow: false } };
+export const metadata: Metadata = {
+  title: 'Country perspectives | Politangle',
+  description: 'See how familiar political labels and institutions change meaning across countries.',
+};
 
 export default function CountriesPage() {
-  const currentCount = countryProfiles.filter((country) => country.current).length;
-  return <main className="info-page countries-page"><header className="info-nav"><Link href="/" className="info-brand">Politangle<small>politangle.org</small></Link><span>Countries · editorial workbench</span></header><section className="info-hero"><div className="info-shell"><p>POLITANGLE COUNTRIES · MVP2</p><h1>How political ideas work in real systems.</h1><div>These pages are source-backed editorial drafts, not published country guides. Time-sensitive facts carry a visible source-check date and remain subject to editorial sign-off.</div></div></section><section className="info-shell info-content"><p className="info-callout">All twenty agreed country drafts use the common structure. {currentCount} now include dated government, election, representation, rights-measure and trend snapshots. None is indexable or labelled reviewed before the final quality gate.</p><div className="country-card-grid">{countryProfiles.map((country) => <article className="country-card" key={country.slug}><span>{country.current ? `current snapshot · ${country.current.asOf}` : country.status.replace('-', ' ')}</span><h2>{country.name}</h2><p>{country.atAGlance[0][1]}</p><Link href={`/countries/${country.slug}`}>Inspect draft →</Link></article>)}</div><article className="info-section"><h2>Editorial status</h2><div><p>{lockedCountryQueue.length ? lockedCountryQueue.join(' · ') : 'The agreed twenty-country foundation is complete.'}</p><p>Spain, Mexico, Canada and South Africa have completed their first current-data pass. The remaining profiles still show their missing dynamic sections explicitly.</p></div></article></section></main>;
+  return (
+    <main className="home info-page countries-page">
+      <SiteHeader />
+      <section className="info-hero countries-hero">
+        <div className="info-shell">
+          <p>COUNTRY PERSPECTIVES</p>
+          <h1>Same political words. Different country context.</h1>
+          <div>Choose a country to see only the context you need before comparing political labels and institutions. Country pages explain context; they do not change your Politangle score.</div>
+        </div>
+      </section>
+
+      <section className="info-shell countries-content">
+        <div className="country-card-grid">
+          {countryProfiles.map((country) => (
+            <article className="country-card" key={country.slug}>
+              <span>{country.current ? `CONTEXT + CURRENT SNAPSHOT · ${country.current.asOf}` : 'CONTEXT GUIDE'}</span>
+              <h2>{country.name}</h2>
+              <p>See what is different here before comparing political labels across countries.</p>
+              <Link href={`/countries/${country.slug}`}>Open {country.name} →</Link>
+            </article>
+          ))}
+        </div>
+
+        <p className="countries-method-note">Current-data sections appear only where they have been source-checked. Background context remains available without presenting unfinished current information as up to date.</p>
+      </section>
+    </main>
+  );
 }

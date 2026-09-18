@@ -14,7 +14,7 @@ import {
 import { agreementAnswerOptions, type AnswerValue } from '../../lib/questions';
 import { germanBeliefStatement } from '../../lib/german-believe';
 import { romanceBeliefStatement } from '../../lib/romance-believe';
-import { useLocale } from '../LocaleProvider';
+import { localePath, useLocale } from '../LocaleProvider';
 
 export const BELIEF_SESSION_KEY = 'politangle.believe.v2.session';
 const LITERACY_SESSION_KEY = 'politangle.literacy.v2.session';
@@ -61,14 +61,33 @@ export default function QuizClient() {
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
-    const restored = parseBeliefV2Session(sessionStorage.getItem(BELIEF_SESSION_KEY));
-    const initial = restored ?? createBeliefV2Session(newSeed());
-    sessionStorage.setItem(BELIEF_SESSION_KEY, JSON.stringify(initial));
-    setSession(initial);
+    let active = true;
+    async function initialize() {
+      const restored = parseBeliefV2Session(sessionStorage.getItem(BELIEF_SESSION_KEY));
+      if (restored) {
+        if (!active) return;
+        setSession(restored);
+        const firstUnanswered = firstUnansweredIndex(restored, 'quick');
+        setIndex(firstUnanswered ?? restored.quickOrder.length - 1);
+        return;
+      }
 
-    const firstUnanswered = firstUnansweredIndex(initial, 'quick');
-    setIndex(firstUnanswered ?? initial.quickOrder.length - 1);
-  }, []);
+      const access = await fetch('/api/assessment/quick/access', { cache: 'no-store' }).then((response) => response.json()).catch(() => null);
+      if (access?.repeatRegistrationRequired) {
+        const returnPath = localePath(locale, '/quiz');
+        router.replace(localePath(locale, `/account?return=${encodeURIComponent(returnPath)}&reason=repeat`));
+        return;
+      }
+
+      const initial = createBeliefV2Session(newSeed());
+      sessionStorage.setItem(BELIEF_SESSION_KEY, JSON.stringify(initial));
+      if (!active) return;
+      setSession(initial);
+      setIndex(0);
+    }
+    initialize();
+    return () => { active = false; };
+  }, [locale, router]);
 
   const current = useMemo(() => {
     if (!session) return null;
@@ -106,12 +125,19 @@ export default function QuizClient() {
   }
 
   function choose(displayedValue: AnswerValue) {
+    if (progress.complete) return;
     const next = answerBeliefV2(session, current.id, displayedValue);
     save(next);
     if (index < next.quickOrder.length - 1) window.setTimeout(() => setIndex((value) => value + 1), 90);
   }
 
-  function restart() {
+  async function restart() {
+    const access = await fetch('/api/assessment/quick/access', { cache: 'no-store' }).then((response) => response.json()).catch(() => null);
+    if (access?.repeatRegistrationRequired) {
+      const returnPath = localePath(locale, '/quiz');
+      router.push(localePath(locale, `/account?return=${encodeURIComponent(returnPath)}&reason=repeat`));
+      return;
+    }
     const next = createBeliefV2Session(newSeed());
     sessionStorage.setItem(BELIEF_SESSION_KEY, JSON.stringify(next));
     sessionStorage.removeItem(LITERACY_SESSION_KEY);
@@ -119,9 +145,10 @@ export default function QuizClient() {
     setIndex(0);
   }
 
-  function finish() {
+  async function finish() {
     if (!progress.complete) return;
-    router.push('/results');
+    await fetch('/api/assessment/quick/complete', { method: 'POST' }).catch(() => null);
+    router.push(localePath(locale, '/results'));
   }
 
   return (
@@ -144,6 +171,7 @@ export default function QuizClient() {
               aria-label={ui.labels[agreementAnswerOptions.indexOf(option)]}
               className={selected === option.value ? 'quick-scale-answer selected' : 'quick-scale-answer'}
               key={String(option.value)}
+              disabled={progress.complete}
               onClick={() => choose(option.value)}
             >
               {option.value === 'unsure' ? '?' : option.value > 0 ? `+${option.value}` : String(option.value).replace('-', '−')}
