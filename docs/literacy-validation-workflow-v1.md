@@ -3,7 +3,7 @@
 **Status:** Implemented validation gate; internal editorial pass complete; founder review pending
 **Bank:** `literacy-master-2026.09-candidate-1`  
 **Review:** `literacy-editorial-review-2026.09-1`  
-**Audience:** English-speaking adults aged 18+  
+**Audience:** English-speaking users aged 16+  
 
 ## What this checkpoint establishes
 
@@ -93,7 +93,7 @@ Founder approval creates a separately versioned, immutable pilot bank. It does n
 
 ### 3. Pilot with ordinary adults
 
-Use English-speaking adults aged 18+ with varied education levels, political familiarity and political viewpoints. For every tested item, ask the participant to:
+Use English-speaking users aged 16+ with varied education levels, political familiarity and political viewpoints. For participants who are minors where the pilot is run, obtain the consent/assent required by the applicable research, school and privacy framework. For every tested item, ask the participant to:
 
 - answer without assistance;
 - explain the question in their own words;
@@ -138,6 +138,18 @@ It also requires a named approval record. A content-only checklist can no longer
 - The lifecycle is locked as founder review → pilot freeze → pilot → post-pilot review → final freeze.
 - Content changes after either review invalidate fingerprints and require a new version.
 - Candidate Practice remains available; certified selection still returns `BANK_NOT_READY`.
+
+## Certificate release rule while pilots are deferred
+
+Pilot testing may be deferred operationally, but deferral does **not** convert candidate questions into validated questions. While the pilot/evidence stages are deferred:
+
+- Learn and Practice may continue using candidate content with appropriate status language.
+- Certified attempts remain closed.
+- No paid Political Literacy Certificate is issued from the candidate bank.
+- `CERTIFICATION_ENABLED` remains false.
+- Opening certification requires either completion of the documented evidence chain or a separately approved replacement validation protocol that preserves independent review and does not silently relabel unvalidated items.
+
+This keeps the commercial certificate claim narrower than the evidence actually available.
 
 ## Next executable work
 
