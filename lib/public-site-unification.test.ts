@@ -15,6 +15,9 @@ const account = readFileSync(join(root, 'app/account/AccountClient.tsx'), 'utf8'
 const quick = readFileSync(join(root, 'app/quiz/QuizClient.tsx'), 'utf8');
 const quickAccess = readFileSync(join(root, 'app/api/assessment/quick/access/route.ts'), 'utf8');
 const quickComplete = readFileSync(join(root, 'app/api/assessment/quick/complete/route.ts'), 'utf8');
+const countriesHub = readFileSync(join(root, 'app/countries/page.tsx'), 'utf8');
+const countryPage = readFileSync(join(root, 'app/countries/[slug]/page.tsx'), 'utf8');
+const countriesData = readFileSync(join(root, 'lib/countries.ts'), 'utf8');
 
 test('public pages use one homepage-style navigation and footer system', () => {
   assert.match(home, /<SiteHeader \/>/);
@@ -22,7 +25,7 @@ test('public pages use one homepage-style navigation and footer system', () => {
   assert.match(layout, /<SiteFooter \/>/);
   assert.match(infoShell, /<SiteHeader \/>/);
   assert.match(school, /<SiteHeader \/>/);
-  for (const route of ['/learn', '/quizzes', '/school', '/about', '/privacy', '/imprint', '/terms', '/contact', '/account']) {
+  for (const route of ['/learn', '/quizzes', '/countries', '/school', '/about', '/privacy', '/imprint', '/terms', '/contact', '/account']) {
     assert.match(chrome, new RegExp(route.replace('/', '\\/')));
   }
 });
@@ -72,4 +75,17 @@ test('legal pages are substantive but remain blocked on verified operator detail
   assert.match(infoPages, /Google Firebase/);
   assert.match(infoPages, /Stripe/);
   assert.doesNotMatch(infoPages, /odr-platform|ec\.europa\.eu\/consumers\/odr/i);
+});
+
+
+test('country perspectives are visible from the public site without pretending unfinished current data is complete', () => {
+  assert.match(chrome, /countries: 'Countries'/);
+  assert.match(home, /COUNTRY PERSPECTIVES/);
+  assert.match(home, /href="\/countries"/);
+  assert.match(countriesHub, /countryProfiles\.length/);
+  assert.match(countriesHub, /CURRENT SNAPSHOT/);
+  assert.match(countriesHub, /FOUNDATIONAL PROFILE/);
+  assert.match(countryPage, /Coverage status/);
+  assert.match(countryPage, /does not present missing current information as if it were up to date/);
+  assert.equal((countriesData.match(/slug: '/g) ?? []).length, 20);
 });
