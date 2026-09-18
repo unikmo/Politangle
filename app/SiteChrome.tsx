@@ -13,6 +13,7 @@ type ChromeCopy = {
   quizzes: string;
   schools: string;
   about: string;
+  countries: string;
   account: string;
   start: string;
   practice: string;
@@ -25,22 +26,22 @@ type ChromeCopy = {
 
 const copy: Record<Locale, ChromeCopy> = {
   en: {
-    method: 'Method', learn: 'Learn', quizzes: 'Quizzes', schools: 'For schools', about: 'About',
+    method: 'Method', learn: 'Learn', quizzes: 'Quizzes', countries: 'Countries', schools: 'For schools', about: 'About',
     account: 'Sign in', start: 'Start Quick', practice: 'Practice', validation: 'Validation',
     privacy: 'Privacy', imprint: 'Imprint', terms: 'Terms', contact: 'Contact',
   },
   de: {
-    method: 'Methode', learn: 'Lernen', quizzes: 'Quizzes', schools: 'Für Schulen', about: 'Über Politangle',
+    method: 'Methode', learn: 'Lernen', quizzes: 'Quizzes', countries: 'Länder', schools: 'Für Schulen', about: 'Über Politangle',
     account: 'Anmelden', start: 'Quick starten', practice: 'Üben', validation: 'Validierung',
     privacy: 'Datenschutz', imprint: 'Impressum', terms: 'Nutzungsbedingungen', contact: 'Kontakt',
   },
   es: {
-    method: 'Método', learn: 'Aprender', quizzes: 'Quizzes', schools: 'Para centros', about: 'Acerca de',
+    method: 'Método', learn: 'Aprender', quizzes: 'Quizzes', countries: 'Países', schools: 'Para centros', about: 'Acerca de',
     account: 'Iniciar sesión', start: 'Empezar Quick', practice: 'Práctica', validation: 'Validación',
     privacy: 'Privacidad', imprint: 'Aviso legal', terms: 'Condiciones', contact: 'Contacto',
   },
   fr: {
-    method: 'Méthode', learn: 'Apprendre', quizzes: 'Quiz', schools: 'Pour les écoles', about: 'À propos',
+    method: 'Méthode', learn: 'Apprendre', quizzes: 'Quiz', countries: 'Pays', schools: 'Pour les écoles', about: 'À propos',
     account: 'Se connecter', start: 'Lancer Quick', practice: 'S’entraîner', validation: 'Validation',
     privacy: 'Vie privée', imprint: 'Mentions légales', terms: 'Conditions', contact: 'Contact',
   },
@@ -58,6 +59,7 @@ export function SiteHeader() {
         <Link href={href('/method')}>{c.method}</Link>
         <Link href={href('/learn')}>{c.learn}</Link>
         <Link href={href('/quizzes')}>{c.quizzes}</Link>
+        <Link href="/countries">{c.countries}</Link>
         <Link href={href('/school')}>{c.schools}</Link>
         <Link href={href('/about')}>{c.about}</Link>
       </nav>
@@ -84,6 +86,7 @@ export function SiteFooter() {
       <div>
         <Link href={href('/learn')}>{c.learn}</Link>
         <Link href={href('/quizzes')}>{c.quizzes}</Link>
+        <Link href="/countries">{c.countries}</Link>
         <Link href={href('/practice')}>{c.practice}</Link>
         <Link href={href('/method')}>{c.method}</Link>
         <Link href={href('/validation')}>{c.validation}</Link>
