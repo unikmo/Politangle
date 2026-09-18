@@ -3,14 +3,14 @@
 
 /* Public School landing page uses the same visual language as the homepage. */
 .school-public-page{background:var(--paper,#f5f6f2)}
-.school-public-hero{position:relative;overflow:hidden;background:radial-gradient(circle at 80% 18%,rgba(88,199,187,.22),transparent 30%),linear-gradient(135deg,#061a22,#082932 62%,#071d26);color:#fff}
+.school-public-hero{position:relative;overflow:hidden;background:radial-gradient(circle at 80% 18%,rgba(255,255,255,.18),transparent 30%),linear-gradient(135deg,#ff7a3d,#f45a1f 58%,#c94412);color:#fff}
 .school-public-hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:70px;align-items:center;min-height:590px;padding:70px 0}
 .school-public-hero h1{max-width:740px;margin:0;font-size:clamp(48px,5.7vw,76px);font-weight:600;line-height:.99;letter-spacing:-.045em}
-.school-public-lede{max-width:650px;margin:26px 0 0;color:#bdd0d4;font-size:18px;line-height:1.65}
-.school-public-privacy-line{max-width:650px;margin:24px 0 0;padding:16px 18px;border:1px solid rgba(132,216,207,.2);border-radius:14px;background:rgba(255,255,255,.04);color:#a9c5c7;font-size:12px;line-height:1.55}
-.school-public-privacy-line strong{color:#e9f7f5}
+.school-public-lede{max-width:650px;margin:26px 0 0;color:#fff0e8;font-size:18px;line-height:1.65}
+.school-public-privacy-line{max-width:650px;margin:24px 0 0;padding:16px 18px;border:1px solid rgba(255,255,255,.28);border-radius:14px;background:rgba(255,255,255,.09);color:#fff0e8;font-size:12px;line-height:1.55}
+.school-public-privacy-line strong{color:#fff}
 .school-public-visual{position:relative;min-height:420px;display:grid;place-items:center}
-.school-public-orbit{position:absolute;width:530px;height:180px;border:1px solid rgba(132,216,207,.16);border-radius:50%;transform:rotate(-7deg)}
+.school-public-orbit{position:absolute;width:530px;height:180px;border:1px solid rgba(255,255,255,.22);border-radius:50%;transform:rotate(-7deg)}
 .school-public-orbit.two{width:400px;height:135px;transform:rotate(12deg)}
 .school-public-room{position:relative;z-index:2;width:min(100%,370px);padding:32px;border:1px solid rgba(255,255,255,.2);border-radius:24px;background:#f7faf7;color:var(--ink,#0c2a34);box-shadow:0 38px 90px rgba(0,0,0,.38)}
 .school-public-room small{display:block;color:#64817d;font-size:8px;font-weight:800;letter-spacing:.14em}
