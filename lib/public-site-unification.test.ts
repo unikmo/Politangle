@@ -86,9 +86,9 @@ test('country perspectives are visible from the public site without pretending u
   assert.match(chrome, /countries: 'Countries'/);
   assert.match(home, /COUNTRY PERSPECTIVES/);
   assert.match(home, /href="\/countries"/);
-  assert.match(countriesHub, /countryProfiles\.length/);
-  assert.match(countriesHub, /CURRENT SNAPSHOT/);
-  assert.match(countriesHub, /FOUNDATIONAL PROFILE/);
+  assert.match(countriesHub, /Same political words\. Different country context\./);
+  assert.match(countriesHub, /CONTEXT \+ CURRENT SNAPSHOT/);
+  assert.match(countriesHub, /CONTEXT GUIDE/);
   assert.match(countryPage, /Why this page exists/);
   assert.match(countryPage, /What familiar labels mean here/);
   assert.match(countryPage, /This page does not change your Politangle score/);
