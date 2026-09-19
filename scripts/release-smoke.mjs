@@ -4,6 +4,8 @@ const requireFirebase = process.env.REQUIRE_FIREBASE === 'true';
 const countrySlugs = [
   'united-states','germany','france','united-kingdom','netherlands','denmark','finland','iceland','norway','sweden',
   'spain','mexico','canada','south-africa','india','nigeria','philippines','brazil','indonesia','japan',
+  'italy','poland','romania','portugal','belgium','switzerland','ireland','argentina','colombia','chile',
+  'peru','costa-rica','kenya','ghana','senegal','australia','new-zealand','south-korea','taiwan','malaysia',
 ];
 const locales = ['de','es','fr'];
 
@@ -23,9 +25,9 @@ const pages = [
   ['/de/method', 'Acht Fragen'],
   ['/es/method', 'Ocho preguntas'],
   ['/fr/method', 'Huit questions'],
-  ['/de/countries', '20 Länderperspektiven'],
-  ['/es/countries', '20 perspectivas'],
-  ['/fr/countries', '20 perspectives'],
+  ['/de/countries', '40 Länderperspektiven'],
+  ['/es/countries', '40 perspectivas'],
+  ['/fr/countries', '40 perspectives'],
 ];
 
 const failures = [];

@@ -1,3 +1,5 @@
+import { additionalCountryProfiles } from './countries-expansion';
+
 export type CountrySource = { title: string; publisher: string; url: string; checkedAt: string };
 export type CountryTimelineEvent = { year: string; title: string; text: string };
 export type CountryCurrentSnapshot = {
@@ -37,7 +39,7 @@ export type CountryProfile = {
 
 const checkedAt = '2026-09-15';
 
-export const countryProfiles: readonly CountryProfile[] = [
+const initialCountryProfiles: readonly CountryProfile[] = [
   {
     slug: 'united-states', name: 'United States', status: 'editorial-draft', updatedAt: checkedAt,
     atAGlance: [['System', 'Federal presidential constitutional republic'], ['Executive', 'President'], ['Legislature', 'Congress: House of Representatives and Senate'], ['Courts', 'Supreme Court and lower federal courts'], ['Territorial structure', 'Federal: power is divided between the federation and the states']],
@@ -605,6 +607,11 @@ export const countryProfiles: readonly CountryProfile[] = [
     ],
   },
 ] as const;
+
+export const countryProfiles: readonly CountryProfile[] = [
+  ...initialCountryProfiles,
+  ...additionalCountryProfiles,
+];
 
 export const lockedCountryQueue: readonly string[] = [];
 

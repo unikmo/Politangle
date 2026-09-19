@@ -6,9 +6,9 @@ import type { Locale } from '../app/LocaleProvider';
 
 const locales: Locale[] = ['de','es','fr'];
 
-test('all twenty country profiles have maintained native DE ES FR versions', () => {
-  assert.equal(countryProfiles.length, 20);
-  assert.equal(nativeCountrySlugs.length, 20);
+test('all forty country profiles have maintained native DE ES FR versions', () => {
+  assert.equal(countryProfiles.length, 40);
+  assert.equal(nativeCountrySlugs.length, 40);
   assert.deepEqual([...nativeCountrySlugs], countryProfiles.map((country) => country.slug));
 
   for (const locale of locales) {
