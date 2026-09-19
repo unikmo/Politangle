@@ -23,6 +23,9 @@ test('all twenty country profiles have maintained native DE ES FR versions', () 
       assert.ok(localized.name.trim().length > 0);
       assert.ok(localized.power.every((value) => value.trim().length > 20));
       assert.ok(localized.vocabulary.every((value) => value.trim().length > 20));
+      localized.power.forEach((value, index) => assert.notEqual(value, country.power[index], `${country.slug} power ${index + 1} fell back to English in ${locale}`));
+      localized.vocabulary.forEach((value, index) => assert.notEqual(value, country.vocabulary[index], `${country.slug} vocabulary ${index + 1} fell back to English in ${locale}`));
+      localized.timeline.forEach((event, index) => assert.notEqual(event.text, country.timeline[index].text, `${country.slug} timeline ${index + 1} fell back to English in ${locale}`));
     }
   }
 });
