@@ -2,6 +2,8 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { countryProfiles } from './countries';
+import { nativeCountrySlugs } from './country-localization';
 
 const root = process.cwd();
 const reviewApi = readFileSync(join(root, 'app/api/admin/literacy-review/route.ts'), 'utf8');
@@ -47,12 +49,18 @@ test('validation workflow follows the 16+ certification policy', () => {
 });
 
 
-test('all twenty country perspectives have native DE ES FR routes without machine fallback', () => {
-  for (const slug of ['united-states','germany','france','united-kingdom','netherlands','denmark','finland','iceland','norway','sweden','spain','mexico','canada','south-africa','india','nigeria','philippines','brazil','indonesia','japan']) assert.match(countryLocalization, new RegExp(slug));
+test('all forty country perspectives have native DE ES FR routes without machine fallback', () => {
+  assert.equal(countryProfiles.length, 40);
+  assert.equal(nativeCountrySlugs.length, 40);
+  assert.deepEqual([...nativeCountrySlugs], countryProfiles.map((country) => country.slug));
+  assert.match(countryLocalization, /deExpansion/);
+  assert.match(countryLocalization, /esExpansion/);
+  assert.match(countryLocalization, /frExpansion/);
   assert.match(countryLocalization, /Vereinigte Staaten/);
   assert.match(countryLocalization, /Estados Unidos/);
   assert.match(countryLocalization, /États-Unis/);
   assert.match(localizedCountryRoute, /localizeCountryProfile/);
   assert.match(localizedCountryRoute, /hreflang|languages:/);
   assert.match(siteChrome, /href\('\/countries'\)/);
+
 });
