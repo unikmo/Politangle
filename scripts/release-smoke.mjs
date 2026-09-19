@@ -1,15 +1,21 @@
 const baseUrl = (process.env.POLITANGLE_BASE_URL ?? 'http://localhost:3000').replace(/\/$/, '');
 const requireFirebase = process.env.REQUIRE_FIREBASE === 'true';
 
+const countrySlugs = [
+  'united-states','germany','france','united-kingdom','netherlands','denmark','finland','iceland','norway','sweden',
+  'spain','mexico','canada','south-africa','india','nigeria','philippines','brazil','indonesia','japan',
+];
+const locales = ['de','es','fr'];
+
 const pages = [
   ['/', 'Politangle'],
   ['/method', 'Eight questions'],
   ['/learn', 'Learn'],
   ['/quizzes', 'Choose a quiz'],
   ['/countries', 'Country'],
-  ['/countries/france', 'France'],
   ['/school', 'student'],
   ['/account', 'Politangle account'],
+  ['/certify', 'POLITICAL LITERACY CERTIFICATE'],
   ['/privacy', 'PRIVACY'],
   ['/imprint', 'TSquare Ventures LLC'],
   ['/terms', 'TERMS'],
@@ -17,19 +23,60 @@ const pages = [
   ['/de/method', 'Acht Fragen'],
   ['/es/method', 'Ocho preguntas'],
   ['/fr/method', 'Huit questions'],
+  ['/de/countries', '20 Länderperspektiven'],
+  ['/es/countries', '20 perspectivas'],
+  ['/fr/countries', '20 perspectives'],
 ];
 
 const failures = [];
+let checkedPages = 0;
+let slowest = { path: '', ms: 0 };
+
+async function fetchPage(path) {
+  const started = Date.now();
+  const response = await fetch(baseUrl + path, { redirect: 'follow' });
+  const body = await response.text();
+  const ms = Date.now() - started;
+  checkedPages += 1;
+  if (ms > slowest.ms) slowest = { path, ms };
+  return { response, body, ms };
+}
+
 for (const [path, expected] of pages) {
   try {
-    const response = await fetch(baseUrl + path, { redirect: 'follow' });
-    const body = await response.text();
+    const { response, body, ms } = await fetchPage(path);
     if (!response.ok) failures.push(`${path}: HTTP ${response.status}`);
     else if (!body.toLowerCase().includes(expected.toLowerCase())) failures.push(`${path}: missing expected text "${expected}"`);
-    else console.log(`PASS ${path} ${response.status}`);
+    else if (!body.includes('<main')) failures.push(`${path}: missing main landmark`);
+    else if (!body.includes('<h1')) failures.push(`${path}: missing h1`);
+    else console.log(`PASS ${path} ${response.status} ${ms}ms`);
   } catch (error) {
     failures.push(`${path}: ${error instanceof Error ? error.message : String(error)}`);
   }
+}
+
+for (const slug of countrySlugs) {
+  const paths = [`/countries/${slug}`, ...locales.map((locale) => `/${locale}/countries/${slug}`)];
+  for (const path of paths) {
+    try {
+      const { response, body, ms } = await fetchPage(path);
+      if (!response.ok) failures.push(`${path}: HTTP ${response.status}`);
+      else if (!body.includes('country-hero')) failures.push(`${path}: country hero missing`);
+      else if (!body.includes('<h1')) failures.push(`${path}: h1 missing`);
+      else if (path !== `/countries/${slug}` && !body.includes(`/${path.split('/')[1]}/countries/${slug}`)) failures.push(`${path}: localized canonical/hreflang path missing`);
+      else console.log(`PASS country ${path} ${response.status} ${ms}ms`);
+    } catch (error) {
+      failures.push(`${path}: ${error instanceof Error ? error.message : String(error)}`);
+    }
+  }
+}
+
+try {
+  const { response, body } = await fetchPage('/countries/france');
+  if (!response.ok) failures.push(`/countries/france: HTTP ${response.status}`);
+  else if (!/noindex/i.test(body)) failures.push('/countries/france: editorial draft should remain noindex');
+} catch (error) {
+  failures.push(`country robots check: ${error instanceof Error ? error.message : String(error)}`);
 }
 
 try {
@@ -42,6 +89,42 @@ try {
   failures.push(`quick access API: ${error instanceof Error ? error.message : String(error)}`);
 }
 
+for (const [path, body] of [
+  ['/api/assessment/quick/complete', undefined],
+  ['/api/auth/session', JSON.stringify({ idToken: 'x'.repeat(120) })],
+]) {
+  try {
+    const response = await fetch(baseUrl + path, {
+      method: 'POST',
+      headers: { Origin: 'https://cross-site.invalid', 'Content-Type': 'application/json' },
+      ...(body ? { body } : {}),
+    });
+    if (response.status !== 403) failures.push(`${path}: cross-site POST expected 403, got ${response.status}`);
+    else console.log(`PASS security ${path} cross-site blocked`);
+  } catch (error) {
+    failures.push(`${path} cross-site security: ${error instanceof Error ? error.message : String(error)}`);
+  }
+}
+
+try {
+  const response = await fetch(baseUrl + '/api/admin/overview', { cache: 'no-store' });
+  if (response.status !== 403) failures.push(`/api/admin/overview: unauthenticated request expected 403, got ${response.status}`);
+  else console.log('PASS admin overview protected');
+} catch (error) {
+  failures.push(`admin protection: ${error instanceof Error ? error.message : String(error)}`);
+}
+
+try {
+  const response = await fetch(baseUrl + '/api/certification/status', { cache: 'no-store' });
+  const data = await response.json();
+  if (!response.ok) failures.push(`/api/certification/status: HTTP ${response.status}`);
+  else if (data?.readiness?.enabled !== false) failures.push('/api/certification/status: certification must remain closed in ungated QA environment');
+  else if (data?.readiness?.bankReady !== false) failures.push('/api/certification/status: candidate bank must not report ready');
+  else console.log('PASS certification release gates closed');
+} catch (error) {
+  failures.push(`certification status: ${error instanceof Error ? error.message : String(error)}`);
+}
+
 try {
   const response = await fetch(baseUrl + '/api/firebase/health', { cache: 'no-store' });
   const data = await response.json().catch(() => ({}));
@@ -52,8 +135,8 @@ try {
 }
 
 if (failures.length) {
-  console.error('\nRelease smoke failures:');
+  console.error('\nRelease QA failures:');
   for (const failure of failures) console.error(`- ${failure}`);
   process.exit(1);
 }
-console.log('\nRelease smoke checks passed.');
+console.log(`\nRelease QA passed: ${checkedPages} pages checked. Slowest page: ${slowest.path} ${slowest.ms}ms.`);
