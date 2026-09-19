@@ -18,7 +18,7 @@ test('responsive layouts include tablet and mobile breakpoints for public and co
   assert.match(homeCss, /@media\(max-width:600px\)/);
   assert.match(infoCss, /@media\(max-width:900px\)/);
   assert.match(infoCss, /@media\(max-width:650px\)/);
-  assert.match(infoCss, /country-card-grid\{grid-template-columns:1fr/);
+  assert.match(infoCss, /country-card-grid[^}]*grid-template-columns:1fr/);
 });
 
 test('keyboard and reduced-motion accessibility protections are present', () => {
