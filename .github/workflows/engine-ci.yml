@@ -35,6 +35,14 @@ jobs:
       - name: Compile Next.js without environment-dependent prebuild
         run: npx next build
 
+      - name: Run built-app release QA
+        run: |
+          npm start -- -H 127.0.0.1 -p 3000 > /tmp/politangle-next.log 2>&1 &
+          APP_PID=$!
+          trap 'kill $APP_PID || true' EXIT
+          node -e "const u='http://127.0.0.1:3000';let n=0;(async()=>{while(n++<60){try{const r=await fetch(u);if(r.ok)process.exit(0)}catch{};await new Promise(r=>setTimeout(r,500))}process.exit(1)})()"
+          POLITANGLE_BASE_URL=http://127.0.0.1:3000 npm run verify:release
+
 
       - name: Package source for Netlify release
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
