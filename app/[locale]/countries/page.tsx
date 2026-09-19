@@ -7,9 +7,9 @@ import { localizeCountryProfile, nativeCountrySlugs } from '../../../lib/country
 import type { Locale } from '../../LocaleProvider';
 
 const copy = {
-  de: { eyebrow:'LÄNDERPERSPEKTIVEN', title:'Gleiche politische Begriffe. Anderer Länderkontext.', intro:'Alle 20 Länderperspektiven sind auf Deutsch verfügbar. Sie erklären nur den Kontext, der nötig ist, bevor politische Begriffe und Institutionen zwischen Ländern verglichen werden.', open:'Öffnen', note:'Aktuelle Momentaufnahmen erscheinen nur dort, wo die zugrunde liegenden Daten bereits quellengeprüft wurden.' },
-  es: { eyebrow:'PERSPECTIVAS NACIONALES', title:'Las mismas palabras políticas. Otro contexto nacional.', intro:'Las 20 perspectivas nacionales están disponibles en español. Explican solo el contexto necesario antes de comparar etiquetas e instituciones políticas entre países.', open:'Abrir', note:'Los panoramas políticos actuales aparecen solo cuando los datos de base ya han sido verificados con fuentes.' },
-  fr: { eyebrow:'PERSPECTIVES NATIONALES', title:'Les mêmes mots politiques. Un autre contexte national.', intro:'Les 20 perspectives nationales sont disponibles en français. Elles donnent uniquement le contexte nécessaire avant de comparer les étiquettes et institutions politiques entre pays.', open:'Ouvrir', note:'Les instantanés politiques actuels n’apparaissent que lorsque les données sous-jacentes ont déjà été vérifiées par des sources.' },
+  de: { eyebrow:'LÄNDERPERSPEKTIVEN', title:'Gleiche politische Begriffe. Anderer Länderkontext.', intro:'Alle 20 Länderperspektiven sind auf Deutsch verfügbar. Sie erklären nur den Kontext, der nötig ist, bevor politische Begriffe und Institutionen zwischen Ländern verglichen werden.', open:'Öffnen', note:'Aktuelle Momentaufnahmen erscheinen nur dort, wo die zugrunde liegenden Daten bereits quellengeprüft wurden.', metaTitle:'Länderperspektiven', metaDescription:'Politangle erklärt, wie politische Begriffe und Institutionen in 20 Ländern unterschiedlich funktionieren.' },
+  es: { eyebrow:'PERSPECTIVAS NACIONALES', title:'Las mismas palabras políticas. Otro contexto nacional.', intro:'Las 20 perspectivas nacionales están disponibles en español. Explican solo el contexto necesario antes de comparar etiquetas e instituciones políticas entre países.', open:'Abrir', note:'Los panoramas políticos actuales aparecen solo cuando los datos de base ya han sido verificados con fuentes.', metaTitle:'Perspectivas nacionales', metaDescription:'Politangle explica cómo cambian las etiquetas políticas y las instituciones en 20 países.' },
+  fr: { eyebrow:'PERSPECTIVES NATIONALES', title:'Les mêmes mots politiques. Un autre contexte national.', intro:'Les 20 perspectives nationales sont disponibles en français. Elles donnent uniquement le contexte nécessaire avant de comparer les étiquettes et institutions politiques entre pays.', open:'Ouvrir', note:'Les instantanés politiques actuels n’apparaissent que lorsque les données sous-jacentes ont déjà été vérifiées par des sources.', metaTitle:'Perspectives nationales', metaDescription:'Politangle explique comment les étiquettes politiques et les institutions diffèrent dans 20 pays.' },
 } as const;
 
 export const dynamicParams = false;
@@ -19,7 +19,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const { locale } = await params;
   if (!(locale in copy)) return {};
   return {
-    title: 'Country perspectives',
+    title: copy[locale as keyof typeof copy].metaTitle,
+    description: copy[locale as keyof typeof copy].metaDescription,
     alternates: {
       canonical: `/${locale}/countries`,
       languages: { 'en-US':'/countries', de:'/de/countries', es:'/es/countries', fr:'/fr/countries', 'x-default':'/countries' },
