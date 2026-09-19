@@ -1,5 +1,8 @@
 import type { CountryProfile, CountryTimelineEvent } from './countries';
 import { deExtra, esExtra, frExtra, type LocalizedCountryContent } from './country-localization-extra';
+import { deExpansion } from './country-localization-expansion-de';
+import { esExpansion } from './country-localization-expansion-es';
+import { frExpansion } from './country-localization-expansion-fr';
 import type { Locale } from '../app/LocaleProvider';
 
 const de: Record<string, LocalizedCountryContent> = {
@@ -142,12 +145,12 @@ const fr: Record<string, LocalizedCountryContent> = {
 };
 
 const tables: Partial<Record<Locale, Record<string, LocalizedCountryContent>>> = {
-  de: { ...de, ...deExtra },
-  es: { ...es, ...esExtra },
-  fr: { ...fr, ...frExtra },
+  de: { ...de, ...deExtra, ...deExpansion },
+  es: { ...es, ...esExtra, ...esExpansion },
+  fr: { ...fr, ...frExtra, ...frExpansion },
 };
 
-export const nativeCountrySlugs = ['united-states','germany','france','united-kingdom','netherlands','denmark','finland','iceland','norway','sweden','spain','mexico','canada','south-africa','india','nigeria','philippines','brazil','indonesia','japan'] as const;
+export const nativeCountrySlugs = ['united-states','germany','france','united-kingdom','netherlands','denmark','finland','iceland','norway','sweden','spain','mexico','canada','south-africa','india','nigeria','philippines','brazil','indonesia','japan','italy','poland','romania','portugal','belgium','switzerland','ireland','argentina','colombia','chile','peru','costa-rica','kenya','ghana','senegal','australia','new-zealand','south-korea','taiwan','malaysia'] as const;
 
 export function localizeCountryProfile(country: CountryProfile, locale: Locale): CountryProfile | null {
   if (locale === 'en') return country;
