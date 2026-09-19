@@ -158,7 +158,7 @@ export function CountryGuide({ country, locale, backHref }: { country: CountryPr
         <summary>{c.sources}</summary>
         <div>
           <ul className="country-sources">{country.sources.map((source) => <li key={source.url}><a href={source.url} rel="noreferrer">{source.title}</a><span>{source.publisher} · {source.checkedAt}</span></li>)}</ul>
-          {country.incomplete.length > 0 && <p className="country-method-note">{c.incomplete}: {country.incomplete.join(' · ')}</p>}
+          {country.incomplete.length > 0 && <p className="country-method-note">{locale === 'en' ? `${c.incomplete}: ${country.incomplete.join(' · ')}` : `${c.incomplete}.`}</p>}
         </div>
       </details>
 
