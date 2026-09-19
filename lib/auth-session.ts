@@ -1,5 +1,6 @@
 import { cookies } from 'next/headers';
 import { getAdminAuth, getAdminDb } from './firebase-admin';
+import { isConfiguredAdmin } from './admin-access';
 
 export const AUTH_SESSION_COOKIE = 'politangle_session';
 export const AUTH_SESSION_MAX_AGE_SECONDS = 60 * 60 * 24 * 5;
@@ -18,12 +19,11 @@ export async function authenticatedCertificationUser(): Promise<CertificationUse
   try {
     const decoded = await getAdminAuth().verifySessionCookie(session, true);
     const profile = await getAdminDb().collection('certificationUsers').doc(decoded.uid).get();
-    const adminUids = new Set((process.env.POLITANGLE_ADMIN_UIDS ?? '').split(',').map((value) => value.trim()).filter(Boolean));
     return {
       uid: decoded.uid,
       emailVerified: decoded.email_verified === true,
       certificationAgeConfirmed: profile.data()?.certificationAgeConfirmedAt != null || profile.data()?.adultConfirmedAt != null,
-      isAdmin: decoded.admin === true || adminUids.has(decoded.uid),
+      isAdmin: isConfiguredAdmin(decoded),
     };
   } catch {
     return null;
