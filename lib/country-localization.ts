@@ -1,7 +1,6 @@
 import type { CountryProfile, CountryTimelineEvent } from './countries';
+import { deExtra, esExtra, frExtra, type LocalizedCountryContent } from './country-localization-extra';
 import type { Locale } from '../app/LocaleProvider';
-
-type LocalizedCountryContent = Pick<CountryProfile, 'name' | 'atAGlance' | 'power' | 'vocabulary' | 'timeline'>;
 
 const de: Record<string, LocalizedCountryContent> = {
   'united-states': {
@@ -142,9 +141,13 @@ const fr: Record<string, LocalizedCountryContent> = {
   },
 };
 
-const tables: Partial<Record<Locale, Record<string, LocalizedCountryContent>>> = { de, es, fr };
+const tables: Partial<Record<Locale, Record<string, LocalizedCountryContent>>> = {
+  de: { ...de, ...deExtra },
+  es: { ...es, ...esExtra },
+  fr: { ...fr, ...frExtra },
+};
 
-export const nativeCountrySlugs = ['united-states','germany','france','united-kingdom'] as const;
+export const nativeCountrySlugs = ['united-states','germany','france','united-kingdom','netherlands','denmark','finland','iceland','norway','sweden','spain','mexico','canada','south-africa','india','nigeria','philippines','brazil','indonesia','japan'] as const;
 
 export function localizeCountryProfile(country: CountryProfile, locale: Locale): CountryProfile | null {
   if (locale === 'en') return country;
