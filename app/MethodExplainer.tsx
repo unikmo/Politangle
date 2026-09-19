@@ -67,6 +67,16 @@ const axes: Record<Locale, readonly AxisCopy[]> = {
     { name:'Appartenance nationale', question:'Qu’est-ce qui devrait compter le plus pour appartenir pleinement à une nation ?', left:'Appartenance civique et inclusive', right:'Continuité héritée / culturelle / de statut', why:'L’appartenance est séparée de l’économie, des valeurs sociales et de la politique migratoire.' },
     { name:'Écologie', question:'Quand limites écologiques et croissance économique s’opposent, que faut-il privilégier ?', left:'Limites écologiques et changement structurel', right:'Croissance et adaptation progressive', why:'Les arbitrages environnementaux ont leur propre axe au lieu d’être déduits des positions économiques.' },
   ],
+  'pt-br': [
+    { name:'Papel econômico do Estado', question:'Quanto o Estado deve oferecer diretamente e até que ponto deve reduzir desigualdades?', left:'Mais provisão pública e redistribuição', right:'Mais mercado e responsabilidade privada', why:'É possível defender serviços públicos fortes e, ao mesmo tempo, preferir empresas privadas. Por isso esta dimensão é separada de Propriedade.' },
+    { name:'Propriedade', question:'Quem deveria possuir e controlar as grandes empresas?', left:'Mais propriedade pública / de trabalhadores / cooperativa', right:'Mais propriedade privada / de acionistas', why:'Propriedade pergunta quem controla os ativos produtivos, não qual deve ser o tamanho do Estado social.' },
+    { name:'Valores sociais', question:'Quando autonomia pessoal e normas herdadas entram em conflito, o que deveria pesar mais?', left:'Mais autonomia pessoal e mudança social', right:'Mais tradição e continuidade moral', why:'Assim, questões culturais e morais não são deduzidas automaticamente de posições econômicas.' },
+    { name:'Autoridade', question:'Quando liberdade e ordem pública entram em tensão, o que deveria pesar mais?', left:'Mais liberdade e garantias legais', right:'Mais poder preventivo para manter a ordem', why:'Opiniões sobre segurança, poderes de emergência e garantias podem ser muito diferentes das posições econômicas.' },
+    { name:'Pluralismo', question:'Até que ponto maiorias eleitas deveriam ser limitadas por tribunais, oposição, imprensa e regras constitucionais?', left:'Mais controles e contrapesos', right:'Mais espaço para a maioria eleita agir', why:'Esta dimensão observa a concentração do poder político, não uma política específica de esquerda ou direita.' },
+    { name:'Relação internacional', question:'Quanta autonomia nacional um país deve ceder em troca de cooperação internacional vinculante?', left:'Mais cooperação internacional obrigatória', right:'Mais decisão final nacional', why:'Duas pessoas podem concordar sobre política interna e divergir muito sobre onde decisões transnacionais devem ser tomadas.' },
+    { name:'Pertencimento nacional', question:'O que deveria contar mais para pertencer plenamente a uma nação?', left:'Cidadania e pertencimento cívico inclusivo', right:'Origem, cultura ou vínculos herdados pesam mais', why:'Pertencimento é tratado separadamente de imigração, economia e valores sociais.' },
+    { name:'Ecologia', question:'Quando limites ecológicos entram em conflito com crescimento econômico, o que deveria ter prioridade?', left:'Aceitar mais mudança econômica para respeitar limites ecológicos', right:'Proteger crescimento e adaptar de forma mais gradual', why:'Conflitos ambientais merecem uma dimensão própria em vez de serem presumidos a partir de uma posição econômica.' },
+  ],
 };
 
 const copy: Record<Locale, MethodCopy> = {
@@ -145,7 +155,26 @@ const copy: Record<Locale, MethodCopy> = {
     readTitle:'Comment lire ton résultat',
     readBody:'Un score indique une position dans le modèle actuel de Politangle. Ce n’est ni une probabilité, ni un diagnostic, ni un test de connaissances, ni une indication de vote.',
     caution:'La méthode est transparente par conception, mais reste une évaluation candidate. La cohérence technique est testée ; la validation psychométrique et les normes de population constituent un travail séparé.',
+  },  'pt-br': {
+    whyTitle:'Por que oito dimensões?',
+    whyBody:'Porque o Politangle separa perguntas que rótulos políticos costumam misturar. Uma única escala esquerda–direita pode esconder combinações importantes: alguém pode defender serviços públicos fortes e propriedade privada, combinar autonomia pessoal com mais ordem pública ou preferir soberania nacional e regras ambientais rígidas ao mesmo tempo.',
+    notClaim:'Oito é o modelo do Politangle — não a afirmação de que a política possui exatamente oito dimensões naturais. O modelo pode ser revisto se as evidências mostrarem sobreposição excessiva, uma distinção importante ausente ou problemas de compreensão.',
+    axesTitle:'As oito perguntas por trás das oito dimensões',
+    axesIntro:'Cada dimensão representa um conflito político recorrente. Nenhum dos extremos é tratado como a resposta “certa”.',
+    endLabel:'Um extremo',
+    otherEndLabel:'Outro extremo',
+    whySeparate:'Por que manter separado?',
+    flowTitle:'Como uma resposta vira resultado',
+    flow:[
+      { n:'01', title:'Você responde a afirmações', text:'O Quick usa 26 afirmações. O Full acrescenta mais 16, totalizando 42. “Não tenho certeza” é uma resposta válida e não é transformada silenciosamente em posição neutra.' },
+      { n:'02', title:'Respostas relacionadas alimentam uma dimensão', text:'Cada pergunta está ligada a constructos específicos. O Politangle combina essas respostas nas oito dimensões visíveis em vez de gerar uma única nota geral escondida.' },
+      { n:'03', title:'Você vê o padrão', text:'O resultado mostra cada dimensão separadamente e depois compara o conjunto com tradições políticas amplas. O detalhe das dimensões importa mais do que qualquer rótulo único.' },
+    ],
+    readTitle:'Como ler seu resultado',
+    readBody:'Uma pontuação indica uma posição dentro do modelo atual do Politangle. Não é probabilidade, diagnóstico, medida de conhecimento político nem indicação de como você deveria votar.',
+    caution:'O método é transparente por escolha, mas continua sendo uma avaliação candidata. A consistência técnica é testada; validação psicométrica e normas populacionais são trabalhos separados.',
   },
+
 };
 
 export default function MethodExplainer({ locale }: { locale: Locale }) {

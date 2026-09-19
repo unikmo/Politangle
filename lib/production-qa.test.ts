@@ -30,7 +30,7 @@ test('keyboard and reduced-motion accessibility protections are present', () => 
 
 test('localized country pages publish canonical and hreflang alternates', () => {
   assert.match(localizedCountry, /canonical:/);
-  for (const locale of ['en-US','de','es','fr','x-default']) assert.match(localizedCountry, new RegExp(locale.replace('-', '\\-')));
+  for (const locale of ['en-US','de','es','fr','pt-BR','x-default']) assert.match(localizedCountry, new RegExp(locale.replace('-', '\\-')));
 });
 
 test('cross-site state-changing requests are rejected', () => {

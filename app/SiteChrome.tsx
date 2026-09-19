@@ -45,6 +45,11 @@ const copy: Record<Locale, ChromeCopy> = {
     account: 'Se connecter', start: 'Lancer Quick', practice: 'S’entraîner', validation: 'Validation',
     privacy: 'Vie privée', imprint: 'Mentions légales', terms: 'Conditions', contact: 'Contact',
   },
+  'pt-br': {
+    method: 'Método', learn: 'Aprender', quizzes: 'Quizzes', countries: 'Países', schools: 'Para escolas', about: 'Sobre',
+    account: 'Entrar', start: 'Começar Quick', practice: 'Praticar', validation: 'Validação',
+    privacy: 'Privacidade', imprint: 'Informações legais', terms: 'Termos', contact: 'Contato',
+  },
 };
 
 export function SiteHeader() {
@@ -75,7 +80,7 @@ export function SiteHeader() {
 export function SiteFooter() {
   const context = useLocale();
   const pathname = usePathname();
-  const routeLocale = pathname.match(/^\/(en|de|es|fr)(?=\/|$)/)?.[1] as Locale | undefined;
+  const routeLocale = pathname.match(/^\/(en|de|es|fr|pt-br)(?=\/|$)/)?.[1] as Locale | undefined;
   const locale = routeLocale ?? context.locale;
   const c = copy[locale];
   const href = (path: string) => localePath(locale, path);

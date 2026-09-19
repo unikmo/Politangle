@@ -6,8 +6,10 @@ const countrySlugs = [
   'spain','mexico','canada','south-africa','india','nigeria','philippines','brazil','indonesia','japan',
   'italy','poland','romania','portugal','belgium','switzerland','ireland','argentina','colombia','chile',
   'peru','costa-rica','kenya','ghana','senegal','australia','new-zealand','south-korea','taiwan','malaysia',
+  'austria','czechia','greece','hungary','ukraine','serbia','turkiye','israel','pakistan','bangladesh',
+  'thailand','sri-lanka','nepal','egypt','morocco','tanzania','uganda','cameroon','ecuador','dominican-republic',
 ];
-const locales = ['de','es','fr'];
+const locales = ['de','es','fr','pt-br'];
 
 const pages = [
   ['/', 'Politangle'],
@@ -25,9 +27,10 @@ const pages = [
   ['/de/method', 'Acht Fragen'],
   ['/es/method', 'Ocho preguntas'],
   ['/fr/method', 'Huit questions'],
-  ['/de/countries', '40 Länderperspektiven'],
-  ['/es/countries', '40 perspectivas'],
-  ['/fr/countries', '40 perspectives'],
+  ['/de/countries', '60 Länderperspektiven'],
+  ['/es/countries', '60 perspectivas'],
+  ['/fr/countries', '60 perspectives'],
+  ['/pt-br/countries', '60 perspectivas'],
 ];
 
 const failures = [];

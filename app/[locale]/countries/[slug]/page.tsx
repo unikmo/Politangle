@@ -6,16 +6,17 @@ import { countryBySlug } from '../../../../lib/countries';
 import { localizeCountryProfile, nativeCountrySlugs } from '../../../../lib/country-localization';
 import type { Locale } from '../../../LocaleProvider';
 
-const locales = new Set<Locale>(['de','es','fr']);
-const metadataDescription: Record<'de'|'es'|'fr', (name: string) => string> = {
+const locales = new Set<Locale>(['de','es','fr','pt-br']);
+const metadataDescription: Record<'de'|'es'|'fr'|'pt-br', (name: string) => string> = {
   de: (name) => `Politangle-Länderperspektive: politischer Kontext und Begriffe in ${name}.`,
   es: (name) => `Perspectiva nacional de Politangle: contexto político y vocabulario en ${name}.`,
   fr: (name) => `Perspective nationale Politangle : contexte politique et vocabulaire en ${name}.`,
+  'pt-br': (name) => `Perspectiva do Politangle: contexto político e vocabulário em ${name}.`,
 };
 
 export const dynamicParams = false;
 export function generateStaticParams() {
-  return (['de','es','fr'] as Locale[]).flatMap((locale) => nativeCountrySlugs.map((slug) => ({ locale, slug })));
+  return (['de','es','fr','pt-br'] as Locale[]).flatMap((locale) => nativeCountrySlugs.map((slug) => ({ locale, slug })));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string; slug: string }> }): Promise<Metadata> {
@@ -26,7 +27,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   if (!country) return {};
   return {
     title: `${country.name} · Politangle`,
-    description: metadataDescription[locale as 'de'|'es'|'fr'](country.name),
+    description: metadataDescription[locale as 'de'|'es'|'fr'|'pt-br'](country.name),
     alternates: {
       canonical: `/${locale}/countries/${slug}`,
       languages: {
@@ -34,6 +35,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
         de: `/de/countries/${slug}`,
         es: `/es/countries/${slug}`,
         fr: `/fr/countries/${slug}`,
+        'pt-BR': `/pt-br/countries/${slug}`,
         'x-default': `/countries/${slug}`,
       },
     },

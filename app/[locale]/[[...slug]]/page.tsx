@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-const locales = ['en', 'de', 'es', 'fr'] as const;
+const locales = ['en', 'de', 'es', 'fr', 'pt-br'] as const;
 const pageKeys = ['', 'about', 'account', 'classify', 'contact', 'deep', 'imprint', 'learn', 'method', 'populism-quiz', 'practice', 'privacy', 'question-banks', 'quiz', 'quizzes', 'results', 'school', 'school/pilot', 'terms', 'understand', 'validation'] as const;
 const titles: Record<string, string> = {
   '': 'Politangle', about: 'About', account: 'Account', classify: 'CLASSIFY', contact: 'Contact', deep: 'Politangle Full',
@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     title: titles[key],
     alternates: {
       canonical: `/${locale}${suffix}`,
-      languages: { 'en-US': `/en${suffix}`, de: `/de${suffix}`, es: `/es${suffix}`, fr: `/fr${suffix}`, 'x-default': `/en${suffix}` },
+      languages: { 'en-US': `/en${suffix}`, de: `/de${suffix}`, es: `/es${suffix}`, fr: `/fr${suffix}`, 'pt-BR': `/pt-br${suffix}`, 'x-default': `/en${suffix}` },
     },
     robots: key === 'results' ? { index: false, follow: false } : undefined,
   };

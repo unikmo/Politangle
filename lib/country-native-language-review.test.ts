@@ -15,6 +15,11 @@ const es = [
   readFileSync(join(root, 'lib/country-localization-extra.ts'), 'utf8'),
   readFileSync(join(root, 'lib/country-localization-expansion-es.ts'), 'utf8'),
 ].join('\n');
+const ptBr = [
+  readFileSync(join(root, 'lib/country-localization-ptbr-wave1.ts'), 'utf8'),
+  readFileSync(join(root, 'lib/country-localization-ptbr-wave2.ts'), 'utf8'),
+  readFileSync(join(root, 'lib/country-localization-ptbr-wave3.ts'), 'utf8'),
+].join('\n');
 const fr = [
   readFileSync(join(root, 'lib/country-localization.ts'), 'utf8'),
   readFileSync(join(root, 'lib/country-localization-extra.ts'), 'utf8'),
@@ -26,6 +31,8 @@ test('country language standard requires native composition rather than literal 
   assert.match(standard, /natural target-language prose/i);
   assert.match(standard, /cross-language factual-consistency checks/i);
   assert.match(standard, /not certification by an external human native-language editor/i);
+  assert.ok(ptBr.includes('Brasil'));
+  assert.ok(ptBr.includes('português') || ptBr.includes('portugu'));
 });
 
 test('reviewed German copy does not retain avoidable English institutional fallbacks', () => {
@@ -37,4 +44,14 @@ test('reviewed German copy does not retain avoidable English institutional fallb
 test('reviewed Spanish and French copy removes literal English editorial leftovers', () => {
   assert.doesNotMatch(es, /pillarisation|Transición de People Power/);
   assert.doesNotMatch(fr, /Transition People Power/);
+});
+
+
+test('third-wave German Spanish and French files are included in native editorial review', () => {
+  const deWave3 = readFileSync(join(root, 'lib/country-localization-wave3-de.ts'), 'utf8');
+  const esWave3 = readFileSync(join(root, 'lib/country-localization-wave3-es.ts'), 'utf8');
+  const frWave3 = readFileSync(join(root, 'lib/country-localization-wave3-fr.ts'), 'utf8');
+  assert.doesNotMatch(deWave3, /Supreme Court|Court of Appeal/);
+  assert.ok(esWave3.includes('Tanzania'));
+  assert.ok(frWave3.includes('Tanzanie'));
 });

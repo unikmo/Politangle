@@ -1,4 +1,5 @@
 import { additionalCountryProfiles } from './countries-expansion';
+import { thirdWaveCountryProfiles } from './countries-expansion-wave3';
 
 export type CountrySource = { title: string; publisher: string; url: string; checkedAt: string };
 export type CountryTimelineEvent = { year: string; title: string; text: string };
@@ -611,6 +612,7 @@ const initialCountryProfiles: readonly CountryProfile[] = [
 export const countryProfiles: readonly CountryProfile[] = [
   ...initialCountryProfiles,
   ...additionalCountryProfiles,
+  ...thirdWaveCountryProfiles,
 ];
 
 export const lockedCountryQueue: readonly string[] = [];
