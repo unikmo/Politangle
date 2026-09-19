@@ -8,7 +8,7 @@ import type { Locale } from '../app/LocaleProvider';
 const de: Record<string, LocalizedCountryContent> = {
   'united-states': {
     name: 'Vereinigte Staaten',
-    atAGlance: [['System','Föderale präsidentielle Verfassungsrepublik'],['Exekutive','Präsident'],['Legislative','Kongress: Repräsentantenhaus und Senat'],['Gerichte','Supreme Court und weitere Bundesgerichte'],['Territorialstruktur','Föderal: Macht ist zwischen Bund und Bundesstaaten verteilt']],
+    atAGlance: [['System','Föderale präsidentielle Verfassungsrepublik'],['Exekutive','Präsident'],['Legislative','Kongress: Repräsentantenhaus und Senat'],['Gerichte','Oberster Gerichtshof und weitere Bundesgerichte'],['Territorialstruktur','Föderal: Macht ist zwischen Bund und Bundesstaaten verteilt']],
     power: [
       'Die Verfassung verteilt die Bundesgewalt auf Legislative, Exekutive und Judikative. Jede dieser Gewalten kann die anderen begrenzen.',
       'Der Präsident führt die Exekutive, sitzt aber nicht im Kongress. Der Kongress beschließt Bundesgesetze und kontrolliert Steuern und Ausgaben; Bundesgerichte legen Gesetze aus und können sie für verfassungswidrig erklären.',
@@ -34,7 +34,7 @@ const de: Record<string, LocalizedCountryContent> = {
     ],
     vocabulary: [
       'Deutscher Liberalismus ist eng mit Bürgerrechten und in der Parteipolitik häufig auch mit Marktwirtschaft verbunden. „Liberal“ ist daher kein Synonym für das gesamte Mitte-links-Spektrum.',
-      'Christdemokratie verbindet eine gesellschaftlich konservative Tradition mit Sozialer Marktwirtschaft und sozialstaatlichen Elementen. Sie entspricht nicht einfach US-amerikanischem Small-Government-Konservatismus.',
+      'Christdemokratie verbindet eine gesellschaftlich konservative Tradition mit Sozialer Marktwirtschaft und sozialstaatlichen Elementen. Sie entspricht nicht einfach einem US-amerikanischen konservativen Leitbild eines möglichst kleinen Staates.',
     ],
     timeline: [
       { year:'1949', title:'Grundgesetz und zwei deutsche Staaten', text:'Die Bundesrepublik verabschiedete das Grundgesetz; in der sowjetischen Besatzungszone entstand die Deutsche Demokratische Republik.' },
@@ -63,10 +63,10 @@ const de: Record<string, LocalizedCountryContent> = {
   },
   'united-kingdom': {
     name: 'Vereinigtes Königreich',
-    atAGlance: [['System','Einheitsstaat mit Devolution; parlamentarische konstitutionelle Monarchie'],['Staatsoberhaupt','Monarch'],['Regierungschef','Premierminister'],['Legislative','UK-Parlament: House of Commons, House of Lords und Krone'],['Verfassung','Nicht in einem einzigen Dokument kodifiziert: Gesetze, Konventionen, Gerichtsentscheidungen und weitere Quellen']],
+    atAGlance: [['System','Einheitsstaat mit Devolution; parlamentarische konstitutionelle Monarchie'],['Staatsoberhaupt','Monarch'],['Regierungschef','Premierminister'],['Legislative','Parlament des Vereinigten Königreichs: Unterhaus (House of Commons), Oberhaus (House of Lords) und Krone'],['Verfassung','Nicht in einem einzigen Dokument kodifiziert: Gesetze, Konventionen, Gerichtsentscheidungen und weitere Quellen']],
     power: [
-      'Eine Regierung wird von der Person gebildet, die das Vertrauen des House of Commons besitzt – normalerweise vom Vorsitzenden der Partei mit einer Mehrheit im Unterhaus.',
-      'Das Parlament beschließt Gesetze, genehmigt Steuern und Ausgaben, debattiert öffentliche Fragen und kontrolliert die Regierung. Das ernannte House of Lords prüft Gesetze; die zentrale demokratische Rolle liegt beim gewählten House of Commons.',
+      'Eine Regierung wird von der Person gebildet, die das Vertrauen des Unterhauses (House of Commons) besitzt – normalerweise vom Vorsitzenden der Partei mit einer Mehrheit im Unterhaus.',
+      'Das Parlament beschließt Gesetze, genehmigt Steuern und Ausgaben, debattiert öffentliche Fragen und kontrolliert die Regierung. Das nicht direkt gewählte Oberhaus (House of Lords) prüft Gesetze; die zentrale demokratische Rolle liegt beim gewählten Unterhaus (House of Commons).',
       'Devolution gibt Schottland, Wales und Nordirland eigene Institutionen und Zuständigkeiten. Die parlamentarische Souveränität bleibt ein zentrales Rechtsprinzip.',
     ],
     vocabulary: [
