@@ -14,6 +14,7 @@ import {
 import { agreementAnswerOptions, type AnswerValue } from '../../lib/questions';
 import { germanBeliefStatement } from '../../lib/german-believe';
 import { romanceBeliefStatement } from '../../lib/romance-believe';
+import { portugueseBeliefStatement } from '../../lib/portuguese-believe';
 import { localePath, useLocale } from '../LocaleProvider';
 
 export const BELIEF_SESSION_KEY = 'politangle.believe.v2.session';
@@ -40,6 +41,9 @@ const germanConstructs: Record<string, string> = {
 };
 const spanishConstructs: Record<string, string> = {
   'public-provision':'Servicios esenciales', redistribution:'Ricos y pobres', ownership:'Empresas', 'social-change':'Cambio social', 'personal-autonomy':'Libertad personal', abortion:'Aborto', 'authority-order':'Seguridad y libertad', pluralism:'Control del gobierno', 'world-sovereignty':'Cooperación entre países', 'nationhood-membership':'Pertenencia', populism:'Influencia política', 'ecology-growth':'Ambiente y crecimiento', 'religion-public-role':'Religión y leyes', subsidiarity:'Local o nacional / regional',
+};
+const portugueseConstructs: Record<string, string> = {
+  'public-provision':'Serviços essenciais', redistribution:'Ricos e pobres', ownership:'Propriedade de empresas', 'social-change':'Mudança social', 'personal-autonomy':'Liberdade pessoal', abortion:'Aborto', 'authority-order':'Segurança e liberdade', pluralism:'Controles sobre o governo', 'world-sovereignty':'Cooperação entre países', 'nationhood-membership':'Pertencimento', populism:'Influência política', 'ecology-growth':'Meio ambiente e crescimento', 'religion-public-role':'Religião e leis', subsidiarity:'Local ou nacional / regional',
 };
 const frenchConstructs: Record<string, string> = {
   'public-provision':'Services essentiels', redistribution:'Riches et pauvres', ownership:'Entreprises', 'social-change':'Changement social', 'personal-autonomy':'Liberté personnelle', abortion:'Avortement', 'authority-order':'Sécurité et liberté', pluralism:'Contrôle du gouvernement', 'world-sovereignty':'Coopération entre pays', 'nationhood-membership':'Appartenance', populism:'Influence politique', 'ecology-growth':'Environnement et croissance', 'religion-public-role':'Religion et lois', subsidiarity:'Local ou national / régional',
@@ -109,6 +113,9 @@ export default function QuizClient() {
   } : locale === 'fr' ? {
     topicPrefix: 'EN PRATIQUE · ', restart: 'Recommencer', previous: 'Précédent', next: 'Suivant', result: 'Voir le résultat Quick', missing: 'Répondre à la question manquante', none: 'Aucune réponse incertaine', marked: 'marquées comme incertaines',
     labels: ['Pas du tout d’accord','Pas d’accord','Ni d’accord ni pas d’accord / cela dépend','D’accord','Tout à fait d’accord','Je ne sais pas ou je ne comprends pas'], key: ['Pas du tout d’accord','Neutre / cela dépend','Tout à fait d’accord','Je ne sais pas'],
+  } : locale === 'pt-br' ? {
+    topicPrefix: 'NA PRÁTICA · ', restart: 'Recomeçar', previous: 'Anterior', next: 'Próxima', result: 'Ver resultado do Quick', missing: 'Responder pergunta pendente', none: 'Nenhuma resposta marcada como dúvida', marked: 'marcadas como dúvida',
+    labels: ['Discordo totalmente','Discordo','Nem concordo nem discordo / depende','Concordo','Concordo totalmente','Não tenho certeza ou não entendi'], key: ['Discordo totalmente','Neutro / depende','Concordo totalmente','Não tenho certeza'],
   } : {
     topicPrefix: 'IN PRACTICE · ', restart: 'Restart', previous: 'Previous', next: 'Next', result: 'See Quick result', missing: 'Answer missing question', none: 'No unsure responses so far', marked: 'marked not sure',
     labels: agreementAnswerOptions.map((option) => option.label), key: ['Strongly disagree','Neither / depends','Strongly agree','Not sure'],
@@ -117,7 +124,9 @@ export default function QuizClient() {
     ? germanBeliefStatement(current.sourceItemId, current.polarity)
     : locale === 'es' || locale === 'fr'
       ? romanceBeliefStatement(locale, current.sourceItemId, current.polarity)
-      : null;
+      : locale === 'pt-br'
+        ? portugueseBeliefStatement(current.sourceItemId, current.polarity)
+        : null;
 
   function save(next: BeliefV2Session) {
     sessionStorage.setItem(BELIEF_SESSION_KEY, JSON.stringify(next));
@@ -160,7 +169,7 @@ export default function QuizClient() {
       </div>
 
       <article className="engine-card">
-        <p className="engine-kicker quick-topic">{current.mode === 'act' ? ui.topicPrefix : ''}{(locale === 'de' ? germanConstructs : locale === 'es' ? spanishConstructs : locale === 'fr' ? frenchConstructs : simpleTopics)[current.construct] ?? constructLabel(current.construct)}</p>
+        <p className="engine-kicker quick-topic">{current.mode === 'act' ? ui.topicPrefix : ''}{(locale === 'de' ? germanConstructs : locale === 'es' ? spanishConstructs : locale === 'fr' ? frenchConstructs : locale === 'pt-br' ? portugueseConstructs : simpleTopics)[current.construct] ?? constructLabel(current.construct)}</p>
         <div className="engine-statement"><p>{localizedStatement ?? current.statement}</p></div>
         <div className="quick-scale" role="radiogroup" aria-label="Response">
           {agreementAnswerOptions.map((option) => (
