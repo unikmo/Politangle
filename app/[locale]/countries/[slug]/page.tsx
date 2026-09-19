@@ -7,6 +7,11 @@ import { localizeCountryProfile, nativeCountrySlugs } from '../../../../lib/coun
 import type { Locale } from '../../../LocaleProvider';
 
 const locales = new Set<Locale>(['de','es','fr']);
+const metadataDescription: Record<'de'|'es'|'fr', (name: string) => string> = {
+  de: (name) => `Politangle-Länderperspektive: politischer Kontext und Begriffe in ${name}.`,
+  es: (name) => `Perspectiva nacional de Politangle: contexto político y vocabulario en ${name}.`,
+  fr: (name) => `Perspective nationale Politangle : contexte politique et vocabulaire en ${name}.`,
+};
 
 export const dynamicParams = false;
 export function generateStaticParams() {
@@ -21,7 +26,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   if (!country) return {};
   return {
     title: `${country.name} · Politangle`,
-    description: `Politangle country context: ${country.name}.`,
+    description: metadataDescription[locale as 'de'|'es'|'fr'](country.name),
     alternates: {
       canonical: `/${locale}/countries/${slug}`,
       languages: {
