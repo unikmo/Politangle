@@ -47,8 +47,8 @@ test('validation workflow follows the 16+ certification policy', () => {
 });
 
 
-test('first four country perspectives have native DE ES FR routes without machine fallback', () => {
-  for (const slug of ['united-states','germany','france','united-kingdom']) assert.match(countryLocalization, new RegExp(slug));
+test('all twenty country perspectives have native DE ES FR routes without machine fallback', () => {
+  for (const slug of ['united-states','germany','france','united-kingdom','netherlands','denmark','finland','iceland','norway','sweden','spain','mexico','canada','south-africa','india','nigeria','philippines','brazil','indonesia','japan']) assert.match(countryLocalization, new RegExp(slug));
   assert.match(countryLocalization, /Vereinigte Staaten/);
   assert.match(countryLocalization, /Estados Unidos/);
   assert.match(countryLocalization, /États-Unis/);
