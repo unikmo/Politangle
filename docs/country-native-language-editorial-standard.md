@@ -1,7 +1,7 @@
 # Politangle country-language editorial standard
 
 **Status:** enforced editorial standard for country perspectives  
-**Applies to:** German, Spanish and French country-language versions
+**Applies to:** German, Spanish, French and Brazilian Portuguese country-language versions
 
 Politangle country-language versions are **not sentence-by-sentence translations of English**.
 
