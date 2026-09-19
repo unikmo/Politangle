@@ -2,6 +2,7 @@ import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 import { AUTH_SESSION_COOKIE, AUTH_SESSION_MAX_AGE_SECONDS, authenticatedCertificationUser } from '../../../../lib/auth-session';
 import { getAdminAuth, getAdminDb } from '../../../../lib/firebase-admin';
+import { isConfiguredAdmin } from '../../../../lib/admin-access';
 
 const noStore = { 'Cache-Control': 'no-store' };
 
@@ -37,12 +38,11 @@ export async function POST(request: Request) {
       path: '/',
       maxAge: AUTH_SESSION_MAX_AGE_SECONDS,
     });
-    const adminUids = new Set((process.env.POLITANGLE_ADMIN_UIDS ?? '').split(',').map((value) => value.trim()).filter(Boolean));
     return NextResponse.json({
       authenticated: true,
       emailVerified: decoded.email_verified === true,
       certificationAgeConfirmed: profile.data()?.certificationAgeConfirmedAt != null || profile.data()?.adultConfirmedAt != null,
-      isAdmin: decoded.admin === true || adminUids.has(decoded.uid),
+      isAdmin: isConfiguredAdmin(decoded),
     }, { headers: noStore });
   } catch {
     return NextResponse.json({ error: 'The sign-in token could not be verified.' }, { status: 401, headers: noStore });

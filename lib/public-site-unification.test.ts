@@ -14,6 +14,7 @@ const quizzes = readFileSync(join(root, 'app/quizzes/page.tsx'), 'utf8');
 const account = readFileSync(join(root, 'app/account/AccountClient.tsx'), 'utf8');
 const quick = readFileSync(join(root, 'app/quiz/QuizClient.tsx'), 'utf8');
 const quickAccess = readFileSync(join(root, 'app/api/assessment/quick/access/route.ts'), 'utf8');
+const quickRegistration = readFileSync(join(root, 'lib/quick-registration.ts'), 'utf8');
 const quickComplete = readFileSync(join(root, 'app/api/assessment/quick/complete/route.ts'), 'utf8');
 const countriesHub = readFileSync(join(root, 'app/countries/page.tsx'), 'utf8');
 const countryPage = readFileSync(join(root, 'app/countries/[slug]/page.tsx'), 'utf8');
@@ -60,8 +61,9 @@ test('free registration is separate from paid certification and from the 16+ cer
 });
 
 test('a completed first Quick requires sign-in before a new run when registration is configured', () => {
-  assert.match(quickAccess, /repeatRegistrationRequired/);
-  assert.match(quickAccess, /completedBefore && !user && available/);
+  assert.match(quickAccess, /quickAccessDecision/);
+  assert.match(quickRegistration, /repeatRegistrationRequired/);
+  assert.match(quickRegistration, /completedBefore && !input\.authenticated && input\.registrationAvailable/);
   assert.match(quickComplete, /politangle_quick_completed/);
   assert.match(quick, /\/api\/assessment\/quick\/access/);
   assert.match(quick, /reason=repeat/);
