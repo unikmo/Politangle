@@ -56,6 +56,10 @@ test('all sixty country perspectives have native DE ES FR and pt-BR routes witho
   assert.match(countryLocalization, /deExpansion/);
   assert.match(countryLocalization, /esExpansion/);
   assert.match(countryLocalization, /frExpansion/);
+  assert.match(countryLocalization, /ptBrWave3/);
+  assert.match(countryLocalization, /deWave3/);
+  assert.match(countryLocalization, /esWave3/);
+  assert.match(countryLocalization, /frWave3/);
   assert.match(countryLocalization, /Vereinigte Staaten/);
   assert.match(countryLocalization, /Estados Unidos/);
   assert.match(countryLocalization, /États-Unis/);
