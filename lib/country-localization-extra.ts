@@ -1,6 +1,7 @@
 import type { CountryCurrentSnapshot, CountryProfile } from './countries';
 
 export type LocalizedCountryContent = Pick<CountryProfile, 'name' | 'atAGlance' | 'power' | 'vocabulary' | 'timeline'> & {
+  globalLabels?: CountryProfile['globalLabels'];
   current?: CountryCurrentSnapshot;
 };
 

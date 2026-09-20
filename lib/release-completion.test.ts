@@ -15,6 +15,7 @@ const checkout = readFileSync(join(root, 'app/api/certificate/checkout/route.ts'
 const countryLocalization = readFileSync(join(root, 'lib/country-localization.ts'), 'utf8');
 const localizedCountryRoute = readFileSync(join(root, 'app/[locale]/countries/[slug]/page.tsx'), 'utf8');
 const siteChrome = readFileSync(join(root, 'app/SiteChrome.tsx'), 'utf8');
+const countryGuide = readFileSync(join(root, 'app/countries/CountryGuide.tsx'), 'utf8');
 
 test('founder review covers the exact current bank without silently validating it', () => {
   assert.match(reviewApi, /literacyMasterBankCandidates/);
@@ -49,9 +50,9 @@ test('validation workflow follows the 16+ certification policy', () => {
 });
 
 
-test('all sixty country perspectives have native DE ES FR and pt-BR routes without machine fallback', () => {
-  assert.equal(countryProfiles.length, 60);
-  assert.equal(nativeCountrySlugs.length, 60);
+test('all eighty country perspectives have native DE ES FR and pt-BR routes without machine fallback', () => {
+  assert.equal(countryProfiles.length, 80);
+  assert.equal(nativeCountrySlugs.length, 80);
   assert.deepEqual([...nativeCountrySlugs], countryProfiles.map((country) => country.slug));
   assert.match(countryLocalization, /deExpansion/);
   assert.match(countryLocalization, /esExpansion/);
@@ -60,6 +61,10 @@ test('all sixty country perspectives have native DE ES FR and pt-BR routes witho
   assert.match(countryLocalization, /deWave3/);
   assert.match(countryLocalization, /esWave3/);
   assert.match(countryLocalization, /frWave3/);
+  assert.match(countryLocalization, /ptBrWave4/);
+  assert.match(countryLocalization, /deWave4/);
+  assert.match(countryLocalization, /esWave4/);
+  assert.match(countryLocalization, /frWave4/);
   assert.match(countryLocalization, /Vereinigte Staaten/);
   assert.match(countryLocalization, /Estados Unidos/);
   assert.match(countryLocalization, /États-Unis/);

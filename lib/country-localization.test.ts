@@ -6,9 +6,9 @@ import type { Locale } from '../app/LocaleProvider';
 
 const locales: Locale[] = ['de','es','fr','pt-br'];
 
-test('all sixty country profiles have maintained native DE ES FR and pt-BR versions', () => {
-  assert.equal(countryProfiles.length, 60);
-  assert.equal(nativeCountrySlugs.length, 60);
+test('all eighty country profiles have maintained native DE ES FR and pt-BR versions', () => {
+  assert.equal(countryProfiles.length, 80);
+  assert.equal(nativeCountrySlugs.length, 80);
   assert.deepEqual([...nativeCountrySlugs], countryProfiles.map((country) => country.slug));
 
   for (const locale of locales) {
@@ -65,19 +65,18 @@ test('country localization does not fabricate current snapshots for contextual-o
 });
 
 
-test('country expansion stops at the agreed sixty profiles', () => {
+test('countries 41-60 remain locked in their agreed order', () => {
   const expectedFinalBatch = [
     'austria','czechia','greece','hungary','ukraine','turkiye','israel','uruguay','ecuador','dominican-republic',
     'panama','cameroon','zambia','bangladesh','pakistan','thailand','egypt','ethiopia','democratic-republic-congo','serbia',
   ];
-  assert.deepEqual(countryProfiles.slice(40).map((country) => country.slug), expectedFinalBatch);
-  assert.deepEqual([...nativeCountrySlugs].slice(40), expectedFinalBatch);
-  assert.equal(new Set(countryProfiles.map((country) => country.slug)).size, 60);
+  assert.deepEqual(countryProfiles.slice(40, 60).map((country) => country.slug), expectedFinalBatch);
+  assert.deepEqual([...nativeCountrySlugs].slice(40, 60), expectedFinalBatch);
 });
 
 
-test('final twenty are substantive country pages rather than generic scaffolds', () => {
-  const finalTwenty = countryProfiles.slice(40);
+test('countries 41-60 remain substantive country pages rather than generic scaffolds', () => {
+  const finalTwenty = countryProfiles.slice(40, 60);
   assert.equal(finalTwenty.length, 20);
 
   for (const country of finalTwenty) {
@@ -113,4 +112,84 @@ test('final twenty are substantive country pages rather than generic scaffolds',
   assert.match(bySlug.ethiopia.power.join(' '), /House of the Federation/i);
   assert.match(bySlug['democratic-republic-congo'].vocabulary.join(' '), /Congolité/i);
   assert.match(bySlug.serbia.vocabulary.join(' '), /Kosovo/i);
+});
+
+
+test('country expansion reaches the agreed eighty profiles in the exact 61-80 order', () => {
+  const expectedWave4 = [
+    'vietnam','morocco','algeria','tanzania','uganda','cote-divoire','angola','mozambique','sri-lanka','nepal',
+    'iraq','guatemala','bolivia','paraguay','venezuela','honduras','el-salvador','singapore','tunisia','georgia',
+  ];
+  assert.deepEqual(countryProfiles.slice(60).map((country) => country.slug), expectedWave4);
+  assert.deepEqual([...nativeCountrySlugs].slice(60), expectedWave4);
+  assert.equal(countryProfiles.length, 80);
+  assert.equal(nativeCountrySlugs.length, 80);
+  assert.equal(new Set(countryProfiles.map((country) => country.slug)).size, 80);
+});
+
+test('countries 61-80 carry substantive local politics plus explicit global-label fit', () => {
+  const wave4 = countryProfiles.slice(60);
+  assert.equal(wave4.length, 20);
+
+  for (const country of wave4) {
+    assert.ok(country.atAGlance.length >= 5, `${country.slug} needs a real institutional overview`);
+    assert.equal(country.power.length, 3, `${country.slug} needs three country-specific power explanations`);
+    assert.equal(country.vocabulary.length, 2, `${country.slug} needs two country-specific political vocabulary entries`);
+    assert.ok(country.globalLabels, `${country.slug} needs explicit global-label fit guidance`);
+    assert.match(country.globalLabels!.fit, /^(strong|partial|limited)$/);
+    assert.ok(country.globalLabels!.summary.length > 60, `${country.slug} needs a meaningful global-label explanation`);
+    assert.ok(country.globalLabels!.localDimensions.length >= 4, `${country.slug} needs local political dimensions`);
+    assert.ok(country.timeline.length >= 4, `${country.slug} needs a substantive political timeline`);
+    assert.ok(country.sources.length >= 2, `${country.slug} needs at least two primary or institutional sources`);
+
+    const combined = [
+      ...country.power,
+      ...country.vocabulary,
+      country.globalLabels!.summary,
+      ...country.globalLabels!.localDimensions,
+      ...country.timeline.map((event) => event.text),
+    ].join(' ');
+    assert.doesNotMatch(combined, /political labels in .* have their own national histories/i);
+    assert.doesNotMatch(combined, /constitutional framework distributes national authority/i);
+  }
+
+  const bySlug = Object.fromEntries(wave4.map((country) => [country.slug, country]));
+  assert.equal(bySlug.vietnam.globalLabels!.fit, 'limited');
+  assert.match(bySlug.vietnam.vocabulary.join(' '), /Đổi Mới/i);
+  assert.match(bySlug.morocco.globalLabels!.localDimensions.join(' '), /monarchy/i);
+  assert.match(bySlug.algeria.vocabulary.join(' '), /Hirak/i);
+  assert.match(bySlug.tanzania.globalLabels!.localDimensions.join(' '), /Zanzibar/i);
+  assert.match(bySlug.uganda.vocabulary.join(' '), /Movement/i);
+  assert.match(bySlug['cote-divoire'].vocabulary.join(' '), /Ivoirité/i);
+  assert.match(bySlug.angola.vocabulary.join(' '), /MPLA|UNITA/i);
+  assert.match(bySlug.mozambique.vocabulary.join(' '), /FRELIMO|RENAMO/i);
+  assert.match(bySlug['sri-lanka'].vocabulary.join(' '), /devolution/i);
+  assert.match(bySlug.nepal.vocabulary.join(' '), /Madhesi/i);
+  assert.equal(bySlug.iraq.globalLabels!.fit, 'limited');
+  assert.match(bySlug.iraq.vocabulary.join(' '), /Muhasasa/i);
+  assert.match(bySlug.guatemala.globalLabels!.localDimensions.join(' '), /Indigenous/i);
+  assert.match(bySlug.bolivia.vocabulary.join(' '), /Plurinational|MAS/i);
+  assert.match(bySlug.paraguay.timeline.map((event) => event.text).join(' '), /Stroessner|Colorado/i);
+  assert.match(bySlug.venezuela.vocabulary.join(' '), /Chavismo/i);
+  assert.ok(bySlug.honduras.timeline.some((event) => event.year === '2009'));
+  assert.match(bySlug['el-salvador'].vocabulary.join(' '), /ARENA|FMLN|Nuevas Ideas/i);
+  assert.equal(bySlug.singapore.globalLabels!.fit, 'limited');
+  assert.match(bySlug.singapore.vocabulary.join(' '), /presiden|President|reserves/i);
+  assert.ok(bySlug.tunisia.timeline.some((event) => event.year === '2022'));
+  assert.match(bySlug.georgia.globalLabels!.localDimensions.join(' '), /EU|NATO|Russia/i);
+});
+
+test('wave 4 global-label guidance is localized rather than silently falling back to English', () => {
+  for (const locale of locales) {
+    for (const country of countryProfiles.slice(60)) {
+      const localized = localizeCountryProfile(country, locale)!;
+      assert.ok(localized.globalLabels, `${country.slug} missing localized global-label guidance in ${locale}`);
+      assert.equal(localized.globalLabels!.fit, country.globalLabels!.fit);
+      assert.notEqual(localized.globalLabels!.summary, country.globalLabels!.summary, `${country.slug} global-label summary fell back to English in ${locale}`);
+      assert.equal(localized.globalLabels!.localDimensions.length, country.globalLabels!.localDimensions.length);
+      localized.globalLabels!.localDimensions.forEach((value, index) =>
+        assert.notEqual(value, country.globalLabels!.localDimensions[index], `${country.slug} local dimension ${index + 1} fell back to English in ${locale}`)
+      );
+    }
+  }
 });

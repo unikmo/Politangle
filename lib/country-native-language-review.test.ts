@@ -10,23 +10,27 @@ const de = [
   readFileSync(join(root, 'lib/country-localization-extra.ts'), 'utf8'),
   readFileSync(join(root, 'lib/country-localization-expansion-de.ts'), 'utf8'),
   readFileSync(join(root, 'lib/country-localization-wave3-de.ts'), 'utf8'),
+  readFileSync(join(root, 'lib/country-localization-wave4-de.ts'), 'utf8'),
 ].join('\n');
 const es = [
   readFileSync(join(root, 'lib/country-localization.ts'), 'utf8'),
   readFileSync(join(root, 'lib/country-localization-extra.ts'), 'utf8'),
   readFileSync(join(root, 'lib/country-localization-expansion-es.ts'), 'utf8'),
   readFileSync(join(root, 'lib/country-localization-wave3-es.ts'), 'utf8'),
+  readFileSync(join(root, 'lib/country-localization-wave4-es.ts'), 'utf8'),
 ].join('\n');
 const ptBr = [
   readFileSync(join(root, 'lib/country-localization-ptbr-wave1.ts'), 'utf8'),
   readFileSync(join(root, 'lib/country-localization-ptbr-wave2.ts'), 'utf8'),
   readFileSync(join(root, 'lib/country-localization-wave3-ptbr.ts'), 'utf8'),
+  readFileSync(join(root, 'lib/country-localization-wave4-ptbr.ts'), 'utf8'),
 ].join('\n');
 const fr = [
   readFileSync(join(root, 'lib/country-localization.ts'), 'utf8'),
   readFileSync(join(root, 'lib/country-localization-extra.ts'), 'utf8'),
   readFileSync(join(root, 'lib/country-localization-expansion-fr.ts'), 'utf8'),
   readFileSync(join(root, 'lib/country-localization-wave3-fr.ts'), 'utf8'),
+  readFileSync(join(root, 'lib/country-localization-wave4-fr.ts'), 'utf8'),
 ].join('\n');
 
 test('country language standard requires native composition rather than literal translation', () => {
@@ -60,4 +64,21 @@ test('final country batch native copy contains nationally specific concepts', ()
   assert.match(ptBr, /Batllismo/);
   assert.match(ptBr, /caretaker government/i);
   assert.match(ptBr, /Kosovo/);
+});
+
+
+test('countries 61-80 native copy preserves country-specific political distinctions', () => {
+  assert.match(de, /Đổi Mới/);
+  assert.match(de, /Union–Sansibar|Zanzibar/);
+  assert.match(de, /Muhasasa/);
+  assert.match(es, /Ivoirité/);
+  assert.match(es, /Madhesi/);
+  assert.match(es, /Chavismo/);
+  assert.match(fr, /Ivoirité/);
+  assert.match(fr, /Muhasasa/);
+  assert.match(fr, /Nuevas Ideas/);
+  assert.match(ptBr, /Đổi Mới/);
+  assert.match(ptBr, /Zanzibar/);
+  assert.match(ptBr, /Chavismo/);
+  assert.match(ptBr, /Abecásia|Ossétia/);
 });
