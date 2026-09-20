@@ -28,7 +28,6 @@ const systems: Record<WaveLocale, Record<string, string>> = {
     'Parliamentary democracy under Basic Laws':'Parlamentarische Demokratie auf Grundlage der Grundgesetze',
     'Unitary parliamentary constitutional monarchy':'Einheitsstaatliche parlamentarische konstitutionelle Monarchie',
     'Unitary republic with a president, prime minister and bicameral legislature':'Einheitsstaatliche Republik mit Präsident, Premierminister und Zweikammerparlament',
-    'Federal parliamentary republic':'Föderale parlamentarische Republik',
     'Semi-presidential republic with constitutionally decentralised provinces':'Semipräsidentielle Republik mit verfassungsrechtlich dezentralisierten Provinzen',
   },
   es: {
