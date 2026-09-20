@@ -3,6 +3,7 @@ import test from 'node:test';
 import { countryProfiles } from './countries';
 import { localizeCountryProfile, nativeCountrySlugs } from './country-localization';
 import type { Locale } from '../app/LocaleProvider';
+import { countrySpecificityAnchors } from './country-specificity-anchors';
 
 const locales: Locale[] = ['de','es','fr','pt-br'];
 
@@ -185,6 +186,56 @@ test('wave 4 global-label guidance is localized rather than silently falling bac
       const localized = localizeCountryProfile(country, locale)!;
       assert.ok(localized.globalLabels, `${country.slug} missing localized global-label guidance in ${locale}`);
       assert.equal(localized.globalLabels!.fit, country.globalLabels!.fit);
+      assert.notEqual(localized.globalLabels!.summary, country.globalLabels!.summary, `${country.slug} global-label summary fell back to English in ${locale}`);
+      assert.equal(localized.globalLabels!.localDimensions.length, country.globalLabels!.localDimensions.length);
+      localized.globalLabels!.localDimensions.forEach((value, index) =>
+        assert.notEqual(value, country.globalLabels!.localDimensions[index], `${country.slug} local dimension ${index + 1} fell back to English in ${locale}`)
+      );
+    }
+  }
+});
+
+
+test('all eighty countries follow the same substantive country-perspective pattern', () => {
+  assert.equal(countryProfiles.length, 80);
+  for (const country of countryProfiles) {
+    assert.ok(country.atAGlance.length >= 5, `${country.slug} needs at least five institutional facts`);
+    assert.equal(country.power.length, 3, `${country.slug} needs exactly three power explanations`);
+    assert.equal(country.vocabulary.length, 2, `${country.slug} needs exactly two local vocabulary explanations`);
+    assert.ok(country.globalLabels, `${country.slug} needs global-label fit guidance`);
+    assert.match(country.globalLabels!.fit, /^(strong|partial|limited)$/);
+    assert.ok(country.globalLabels!.summary.trim().length >= 80, `${country.slug} global-label summary is too thin`);
+    assert.ok(country.globalLabels!.localDimensions.length >= 4, `${country.slug} needs at least four local dimensions`);
+    assert.ok(country.timeline.length >= 4, `${country.slug} needs at least four turning points`);
+    assert.ok(country.sources.length >= 2, `${country.slug} needs at least two sources`);
+  }
+});
+
+test('all eighty canonical pages retain nationally specific political substance', () => {
+  assert.deepEqual(Object.keys(countrySpecificityAnchors).sort(), countryProfiles.map((country) => country.slug).sort());
+
+  for (const country of countryProfiles) {
+    const anchor = countrySpecificityAnchors[country.slug];
+    assert.ok(anchor, `${country.slug} has no specificity anchor`);
+    const combined = [
+      ...country.power,
+      ...country.vocabulary,
+      ...(country.globalLabels?.localDimensions ?? []),
+      ...country.timeline.flatMap((event) => [event.title, event.text]),
+    ].join(' ');
+    assert.match(combined, anchor, `${country.slug} lost its country-specific political anchor`);
+    assert.doesNotMatch(combined, /political labels in .* have their own national histories/i);
+    assert.doesNotMatch(combined, /constitutional framework distributes national authority/i);
+    assert.doesNotMatch(combined, /balance among executive authority, legislative scrutiny, territorial government and constitutional oversight/i);
+  }
+});
+
+test('global-label guidance is native in every maintained locale for all eighty countries', () => {
+  for (const locale of locales) {
+    for (const country of countryProfiles) {
+      const localized = localizeCountryProfile(country, locale)!;
+      assert.ok(localized.globalLabels, `${country.slug} missing global-label guidance in ${locale}`);
+      assert.equal(localized.globalLabels!.fit, country.globalLabels!.fit, `${country.slug} changed fit classification in ${locale}`);
       assert.notEqual(localized.globalLabels!.summary, country.globalLabels!.summary, `${country.slug} global-label summary fell back to English in ${locale}`);
       assert.equal(localized.globalLabels!.localDimensions.length, country.globalLabels!.localDimensions.length);
       localized.globalLabels!.localDimensions.forEach((value, index) =>
