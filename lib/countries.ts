@@ -1,6 +1,7 @@
 import { additionalCountryProfiles } from './countries-expansion';
 import { wave3CountryProfiles } from './countries-wave3';
 import { wave4CountryProfiles } from './countries-wave4';
+import { legacyGlobalLabels } from './country-global-labels-legacy';
 
 export type CountrySource = { title: string; publisher: string; url: string; checkedAt: string };
 export type CountryTimelineEvent = { year: string; title: string; text: string };
@@ -63,12 +64,14 @@ const initialCountryProfiles: readonly CountryProfile[] = [
     timeline: [
       { year: '1787–1789', title: 'Constitutional founding', text: 'The Constitution was drafted, ratified and brought into operation, creating the present federal framework.' },
       { year: '1865–1870', title: 'Reconstruction amendments', text: 'The 13th, 14th and 15th Amendments abolished slavery, defined national citizenship and prohibited racial discrimination in voting rights.' },
+      { year: '1920', title: 'Nineteenth Amendment', text: 'Ratification of the Nineteenth Amendment prohibited denial of the right to vote on account of sex, although discriminatory laws continued to exclude many women in practice.' },
       { year: '1964–1965', title: 'Civil-rights legislation', text: 'Federal civil-rights and voting-rights laws strengthened legal protection against racial exclusion.' },
     ],
     incomplete: ['Current office holders', 'Current Congress and party representation', 'Latest federal election and turnout', 'Democracy, rights and civic-space dimensions', 'Long-term indicator trends'],
     sources: [
       { title: 'Branches of the U.S. government', publisher: 'USAGov', url: 'https://www.usa.gov/branches-of-government', checkedAt },
       { title: 'The Constitution of the United States', publisher: 'U.S. National Archives', url: 'https://www.archives.gov/founding-docs/constitution', checkedAt },
+      { title: '19th Amendment to the U.S. Constitution: Women’s Right to Vote', publisher: 'U.S. National Archives', url: 'https://www.archives.gov/milestone-documents/19th-amendment', checkedAt },
     ],
   },
   {
@@ -86,12 +89,14 @@ const initialCountryProfiles: readonly CountryProfile[] = [
     timeline: [
       { year: '1949', title: 'Basic Law and two German states', text: 'The Federal Republic adopted the Basic Law; a separate German Democratic Republic was established in the Soviet occupation zone.' },
       { year: '1989–1990', title: 'Peaceful revolution and reunification', text: 'The East German regime collapsed after mass protest and border opening; German unity followed in October 1990.' },
+      { year: '2006', title: 'Federalism reform', text: 'A major constitutional reform reallocated legislative responsibilities between the federation and the Länder and reduced the number of federal laws requiring Bundesrat consent.' },
       { year: '2023', title: 'Electoral-law reform', text: 'A reform changed the mechanism and fixed the Bundestag at 630 seats; its application and constitutional review require precise treatment in the election section.' },
     ],
     incomplete: ['Current office holders', 'Current Bundestag composition and party profiles', 'Latest federal election and turnout', 'Democracy, rights and civic-space dimensions', 'Long-term indicator trends'],
     sources: [
       { title: 'Function and role of Parliament', publisher: 'German Bundestag', url: 'https://www.bundestag.de/en/parliament/function', checkedAt },
       { title: 'Basic Law for the Federal Republic of Germany', publisher: 'Federal Ministry of Justice', url: 'https://www.gesetze-im-internet.de/englisch_gg/', checkedAt },
+      { title: 'Föderalismusreform', publisher: 'German Bundestag', url: 'https://www.bundestag.de/services/glossar/foederalismusreform-855896', checkedAt },
     ],
   },
   {
@@ -616,12 +621,17 @@ const initialCountryProfiles: readonly CountryProfile[] = [
   },
 ] as const;
 
-export const countryProfiles: readonly CountryProfile[] = [
+const canonicalCountryProfiles: readonly CountryProfile[] = [
   ...initialCountryProfiles,
   ...additionalCountryProfiles,
   ...wave3CountryProfiles,
   ...wave4CountryProfiles,
 ];
+
+export const countryProfiles: readonly CountryProfile[] = canonicalCountryProfiles.map((country) => ({
+  ...country,
+  globalLabels: country.globalLabels ?? legacyGlobalLabels[country.slug],
+}));
 
 export const lockedCountryQueue: readonly string[] = [];
 

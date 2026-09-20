@@ -8,6 +8,7 @@ import { ptBrWave2 } from './country-localization-ptbr-wave2';
 import { deWave3, esWave3, frWave3, ptBrWave3 } from './country-localization-wave3';
 import { deWave4, esWave4, frWave4, ptBrWave4 } from './country-localization-wave4';
 import type { Locale } from '../app/LocaleProvider';
+import { localizeLegacyGlobalLabels } from './country-global-labels-localized';
 
 const de: Record<string, LocalizedCountryContent> = {
   'united-states': {
@@ -25,6 +26,7 @@ const de: Record<string, LocalizedCountryContent> = {
     timeline: [
       { year:'1787–1789', title:'Verfassungsgründung', text:'Die Verfassung wurde ausgearbeitet, ratifiziert und in Kraft gesetzt; damit entstand der bis heute bestehende föderale Rahmen.' },
       { year:'1865–1870', title:'Reconstruction-Verfassungszusätze', text:'Der 13., 14. und 15. Verfassungszusatz schafften die Sklaverei ab, definierten die nationale Staatsbürgerschaft und verboten rassistische Diskriminierung beim Wahlrecht.' },
+      { year:'1920', title:'19. Verfassungszusatz', text:'Mit der Ratifizierung des 19. Verfassungszusatzes durfte das Wahlrecht nicht mehr wegen des Geschlechts verweigert werden; diskriminierende Wahlregeln schlossen dennoch weiterhin viele Frauen praktisch aus.' },
       { year:'1964–1965', title:'Bürgerrechtsgesetzgebung', text:'Bundesgesetze zu Bürger- und Wahlrechten verstärkten den rechtlichen Schutz vor rassistischer Ausgrenzung.' },
     ],
   },
@@ -43,6 +45,7 @@ const de: Record<string, LocalizedCountryContent> = {
     timeline: [
       { year:'1949', title:'Grundgesetz und zwei deutsche Staaten', text:'Die Bundesrepublik verabschiedete das Grundgesetz; in der sowjetischen Besatzungszone entstand die Deutsche Demokratische Republik.' },
       { year:'1989–1990', title:'Friedliche Revolution und Wiedervereinigung', text:'Nach Massenprotesten und der Öffnung der Grenzen brach das DDR-Regime zusammen; im Oktober 1990 folgte die deutsche Einheit.' },
+      { year:'2006', title:'Föderalismusreform', text:'Eine umfassende Grundgesetzreform ordnete Gesetzgebungszuständigkeiten zwischen Bund und Ländern neu und verringerte die Zahl der Bundesgesetze, die der Zustimmung des Bundesrates bedürfen.' },
       { year:'2023', title:'Wahlrechtsreform', text:'Eine Reform änderte den Mechanismus zur Sitzverteilung und legte die Größe des Bundestags auf 630 Sitze fest.' },
     ],
   },
@@ -92,14 +95,14 @@ const es: Record<string, LocalizedCountryContent> = {
     atAGlance:[['Sistema','República constitucional presidencial federal'],['Ejecutivo','Presidente'],['Legislativo','Congreso: Cámara de Representantes y Senado'],['Tribunales','Tribunal Supremo y tribunales federales inferiores'],['Estructura territorial','Federal: el poder se divide entre la federación y los estados']],
     power:['La Constitución divide la autoridad federal entre los poderes legislativo, ejecutivo y judicial. Cada uno puede limitar las actuaciones de los demás.','El presidente dirige el ejecutivo pero no forma parte del Congreso. El Congreso aprueba leyes federales y controla los impuestos y el gasto; los tribunales federales interpretan las leyes y pueden declararlas inconstitucionales.','El federalismo importa tanto como la división en tres poderes: los estados conservan amplias competencias legislativas y administrativas, entre ellas responsabilidades importantes sobre las elecciones.'],
     vocabulary:['En el debate estadounidense, “liberal” suele significar centroizquierda o progresista. En gran parte de Europa, los partidos liberales pueden ser económicamente favorables al mercado y políticamente centristas.','“Conservative” suele combinar tradicionalismo social, impuestos más bajos, derechos sobre armas y una identidad nacional fuerte. Esos elementos no siempre van juntos en otros países.'],
-    timeline:[{year:'1787–1789',title:'Fundación constitucional',text:'La Constitución fue redactada, ratificada y puesta en vigor, creando el marco federal actual.'},{year:'1865–1870',title:'Enmiendas de la Reconstrucción',text:'Las enmiendas 13, 14 y 15 abolieron la esclavitud, definieron la ciudadanía nacional y prohibieron la discriminación racial en el derecho de voto.'},{year:'1964–1965',title:'Legislación de derechos civiles',text:'Las leyes federales de derechos civiles y electorales reforzaron la protección jurídica frente a la exclusión racial.'}],
+    timeline:[{year:'1787–1789',title:'Fundación constitucional',text:'La Constitución fue redactada, ratificada y puesta en vigor, creando el marco federal actual.'},{year:'1865–1870',title:'Enmiendas de la Reconstrucción',text:'Las enmiendas 13, 14 y 15 abolieron la esclavitud, definieron la ciudadanía nacional y prohibieron la discriminación racial en el derecho de voto.'},{year:'1920',title:'Decimonovena Enmienda',text:'Su ratificación prohibió negar el derecho de voto por razón de sexo, aunque normas discriminatorias siguieron excluyendo en la práctica a muchas mujeres.'},{year:'1964–1965',title:'Legislación de derechos civiles',text:'Las leyes federales de derechos civiles y electorales reforzaron la protección jurídica frente a la exclusión racial.'}],
   },
   germany: {
     name:'Alemania',
     atAGlance:[['Sistema','República parlamentaria federal'],['Jefatura del Estado','Presidente Federal'],['Jefatura del Gobierno','Canciller Federal'],['Legislativo','Bundestag; los Länder participan en la legislación federal a través del Bundesrat'],['Estructura territorial','Federal: 16 Länder']],
     power:['El Bundestag elige al canciller federal y controla al gobierno federal. Un canciller solo puede ser destituido si el Bundestag elige al mismo tiempo a su sustituto.','El Bundesrat representa a los Länder. Su consentimiento es necesario para determinadas leyes federales que afectan especialmente a competencias de los Länder.','El Tribunal Constitucional Federal puede revisar la actuación pública conforme a la Ley Fundamental. El federalismo, los gobiernos de coalición y el control constitucional reparten el poder entre varias instituciones.'],
     vocabulary:['El liberalismo alemán se asocia estrechamente con las libertades civiles y, en la política de partidos, a menudo con la economía de mercado. No equivale a todo el espacio de centroizquierda.','La democracia cristiana combina una herencia socialmente conservadora con la economía social de mercado y compromisos de bienestar; no es simplemente conservadurismo estadounidense de gobierno mínimo.'],
-    timeline:[{year:'1949',title:'Ley Fundamental y dos Estados alemanes',text:'La República Federal adoptó la Ley Fundamental y se creó una República Democrática Alemana separada en la zona de ocupación soviética.'},{year:'1989–1990',title:'Revolución pacífica y reunificación',text:'El régimen de Alemania Oriental se derrumbó tras protestas masivas y la apertura de las fronteras; la unidad alemana siguió en octubre de 1990.'},{year:'2023',title:'Reforma electoral',text:'Una reforma modificó el mecanismo electoral y fijó el Bundestag en 630 escaños.'}],
+    timeline:[{year:'1949',title:'Ley Fundamental y dos Estados alemanes',text:'La República Federal adoptó la Ley Fundamental y se creó una República Democrática Alemana separada en la zona de ocupación soviética.'},{year:'1989–1990',title:'Revolución pacífica y reunificación',text:'El régimen de Alemania Oriental se derrumbó tras protestas masivas y la apertura de las fronteras; la unidad alemana siguió en octubre de 1990.'},{year:'2006',title:'Reforma del federalismo',text:'Una amplia reforma constitucional redistribuyó competencias legislativas entre la Federación y los Länder y redujo el número de leyes federales que requieren consentimiento del Bundesrat.'},{year:'2023',title:'Reforma electoral',text:'Una reforma modificó el mecanismo electoral y fijó el Bundestag en 630 escaños.'}],
   },
   france: {
     name:'Francia',
@@ -123,14 +126,14 @@ const fr: Record<string, LocalizedCountryContent> = {
     atAGlance:[['Système','République constitutionnelle fédérale à régime présidentiel'],['Exécutif','Président'],['Législatif','Congrès : Chambre des représentants et Sénat'],['Juridictions','Cour suprême et juridictions fédérales inférieures'],['Structure territoriale','Fédérale : le pouvoir est partagé entre la fédération et les États']],
     power:['La Constitution répartit l’autorité fédérale entre les pouvoirs législatif, exécutif et judiciaire. Chacun peut limiter les actions des autres.','Le président dirige l’exécutif mais ne siège pas au Congrès. Le Congrès adopte les lois fédérales et contrôle la fiscalité et les dépenses ; les juridictions fédérales interprètent les lois et peuvent les juger inconstitutionnelles.','Le fédéralisme compte autant que la séparation en trois pouvoirs : les États conservent d’importantes compétences législatives et administratives, notamment en matière électorale.'],
     vocabulary:['Dans le débat américain, « liberal » signifie généralement centre gauche ou progressiste. Dans une grande partie de l’Europe, les partis libéraux peuvent être économiquement favorables au marché et politiquement centristes.','« Conservative » associe souvent traditionalisme social, baisse des impôts, droits liés aux armes à feu et forte identité nationale. Ces éléments ne vont pas nécessairement ensemble ailleurs.'],
-    timeline:[{year:'1787–1789',title:'Fondation constitutionnelle',text:'La Constitution est rédigée, ratifiée puis mise en application, créant le cadre fédéral actuel.'},{year:'1865–1870',title:'Amendements de la Reconstruction',text:'Les 13e, 14e et 15e amendements abolissent l’esclavage, définissent la citoyenneté nationale et interdisent la discrimination raciale en matière de droit de vote.'},{year:'1964–1965',title:'Législation sur les droits civiques',text:'Les lois fédérales sur les droits civiques et le droit de vote renforcent la protection juridique contre l’exclusion raciale.'}],
+    timeline:[{year:'1787–1789',title:'Fondation constitutionnelle',text:'La Constitution est rédigée, ratifiée puis mise en application, créant le cadre fédéral actuel.'},{year:'1865–1870',title:'Amendements de la Reconstruction',text:'Les 13e, 14e et 15e amendements abolissent l’esclavage, définissent la citoyenneté nationale et interdisent la discrimination raciale en matière de droit de vote.'},{year:'1920',title:'Dix-neuvième amendement',text:'Sa ratification interdit de refuser le droit de vote en raison du sexe, même si des règles discriminatoires continuent encore à exclure de nombreuses femmes en pratique.'},{year:'1964–1965',title:'Législation sur les droits civiques',text:'Les lois fédérales sur les droits civiques et le droit de vote renforcent la protection juridique contre l’exclusion raciale.'}],
   },
   germany: {
     name:'Allemagne',
     atAGlance:[['Système','République parlementaire fédérale'],['Chef de l’État','Président fédéral'],['Chef du gouvernement','Chancelier fédéral'],['Législatif','Bundestag ; les Länder participent à la législation fédérale par le Bundesrat'],['Structure territoriale','Fédérale : 16 Länder']],
     power:['Le Bundestag élit le chancelier fédéral et contrôle le gouvernement fédéral. Un chancelier ne peut être renversé que si le Bundestag élit en même temps son successeur.','Le Bundesrat représente les Länder. Son consentement est nécessaire pour certaines catégories de lois fédérales qui touchent particulièrement aux compétences des Länder.','La Cour constitutionnelle fédérale peut contrôler l’action publique au regard de la Loi fondamentale. Fédéralisme, gouvernements de coalition et contrôle constitutionnel répartissent le pouvoir entre plusieurs institutions.'],
     vocabulary:['Le libéralisme allemand est fortement associé aux libertés civiles et, dans la politique partisane, souvent à l’économie de marché. Il ne désigne donc pas l’ensemble du centre gauche.','La démocratie chrétienne associe un héritage socialement conservateur à l’économie sociale de marché et à des engagements de protection sociale ; elle ne correspond pas simplement au conservatisme américain de petit État.'],
-    timeline:[{year:'1949',title:'Loi fondamentale et deux États allemands',text:'La République fédérale adopte la Loi fondamentale ; une République démocratique allemande distincte est créée dans la zone d’occupation soviétique.'},{year:'1989–1990',title:'Révolution pacifique et réunification',text:'Le régime est-allemand s’effondre après des manifestations massives et l’ouverture des frontières ; l’unité allemande suit en octobre 1990.'},{year:'2023',title:'Réforme électorale',text:'Une réforme modifie le mécanisme électoral et fixe le Bundestag à 630 sièges.'}],
+    timeline:[{year:'1949',title:'Loi fondamentale et deux États allemands',text:'La République fédérale adopte la Loi fondamentale ; une République démocratique allemande distincte est créée dans la zone d’occupation soviétique.'},{year:'1989–1990',title:'Révolution pacifique et réunification',text:'Le régime est-allemand s’effondre après des manifestations massives et l’ouverture des frontières ; l’unité allemande suit en octobre 1990.'},{year:'2006',title:'Réforme du fédéralisme',text:'Une vaste réforme constitutionnelle redistribue les compétences législatives entre la Fédération et les Länder et réduit le nombre de lois fédérales nécessitant l’accord du Bundesrat.'},{year:'2023',title:'Réforme électorale',text:'Une réforme modifie le mécanisme électoral et fixe le Bundestag à 630 sièges.'}],
   },
   france: {
     name:'France',
@@ -161,5 +164,11 @@ export function localizeCountryProfile(country: CountryProfile, locale: Locale):
   if (locale === 'en') return country;
   const localized = tables[locale]?.[country.slug];
   if (!localized) return null;
-  return { ...country, ...localized, timeline: localized.timeline as readonly CountryTimelineEvent[] };
+  const globalLabels = localized.globalLabels ?? localizeLegacyGlobalLabels(country.slug, locale, country.globalLabels);
+  return {
+    ...country,
+    ...localized,
+    globalLabels,
+    timeline: localized.timeline as readonly CountryTimelineEvent[],
+  };
 }
