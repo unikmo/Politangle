@@ -5,6 +5,7 @@ import { classroomActivityOptions, getClassroomQuestion } from '../../../lib/sch
 import { schoolLessons } from '../../../lib/school-lessons';
 import { germanBeliefStatement } from '../../../lib/german-believe';
 import { romanceBeliefStatement } from '../../../lib/romance-believe';
+import { portugueseBrBeliefStatement } from '../../../lib/portuguese-br-believe';
 import { germanLiteracyExplanation, germanLiteracyOption, germanLiteracyPrompt } from '../../../lib/german-literacy';
 import { deepAxis, deepConstruct, deepFamily } from '../../deep/deep-native';
 import { useLocale, type Locale } from '../../LocaleProvider';
@@ -63,6 +64,7 @@ function beliefLabel(locale: Locale, id: string, fallback: string) {
     de: { '-2':'Stimme gar nicht zu', '-1':'Stimme eher nicht zu', '0':'Teils teils / kommt darauf an', '1':'Stimme eher zu', '2':'Stimme völlig zu', unsure:'Unsicher' },
     es: { '-2':'Totalmente en desacuerdo', '-1':'Más bien en desacuerdo', '0':'Neutral / depende', '1':'Más bien de acuerdo', '2':'Totalmente de acuerdo', unsure:'No estoy seguro' },
     fr: { '-2':'Pas du tout d’accord', '-1':'Plutôt pas d’accord', '0':'Neutre / cela dépend', '1':'Plutôt d’accord', '2':'Tout à fait d’accord', unsure:'Je ne sais pas' },
+    'pt-br': { '-2':'Discordo totalmente', '-1':'Discordo', '0':'Nem concordo nem discordo / depende', '1':'Concordo', '2':'Concordo totalmente', unsure:'Não tenho certeza' },
   };
   return labels[locale][id] ?? fallback;
 }
@@ -162,7 +164,7 @@ export default function TeacherSchoolClient() {
   const currentQuestionIds = summary?.activity.questionIds ?? [];
   const currentQuestion = summary?.currentQuestion;
   const currentQuestionStatement = currentQuestion?.kind === 'believe' && currentQuestion.sourceItemId && currentQuestion.polarity
-    ? (locale === 'de' ? germanBeliefStatement(currentQuestion.sourceItemId, currentQuestion.polarity) : locale === 'es' || locale === 'fr' ? romanceBeliefStatement(locale, currentQuestion.sourceItemId, currentQuestion.polarity) : currentQuestion.statement) ?? currentQuestion.statement
+    ? (locale === 'de' ? germanBeliefStatement(currentQuestion.sourceItemId, currentQuestion.polarity) : locale === 'es' || locale === 'fr' ? romanceBeliefStatement(locale, currentQuestion.sourceItemId, currentQuestion.polarity) : locale === 'pt-br' ? portugueseBrBeliefStatement(currentQuestion.sourceItemId, currentQuestion.polarity) : currentQuestion.statement) ?? currentQuestion.statement
     : currentQuestion?.statement;
   const currentQuestionPrompt = currentQuestion?.kind === 'literacy'
     ? (locale === 'de' ? germanLiteracyPrompt(currentQuestion.id) ?? currentQuestion.prompt : currentQuestion.prompt)
