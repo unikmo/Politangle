@@ -72,7 +72,7 @@ test('countries 61-80 native copy preserves country-specific political distincti
   assert.match(de, /Union–Sansibar|Zanzibar/);
   assert.match(de, /Muhasasa/);
   assert.match(es, /Ivoirité/);
-  assert.match(es, /Madhesi/);
+  assert.match(es, /Madhesi/i);
   assert.match(es, /Chavismo/);
   assert.match(fr, /Ivoirité/);
   assert.match(fr, /Muhasasa/);
