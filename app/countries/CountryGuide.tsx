@@ -14,6 +14,10 @@ type UiCopy = {
   whyMatters: string;
   labelsTitle: string;
   labelsIntro: string;
+  globalLabelsTitle: string;
+  globalLabelsIntro: string;
+  globalFit: Record<'strong'|'partial'|'limited', string>;
+  localDimensions: string;
   moreContext: string;
   systemTitle: string;
   systemIntro: string;
@@ -35,7 +39,7 @@ const ui: Record<Locale, UiCopy> = {
     why1:'Political words do not travel perfectly. “Liberal”, “conservative”, “left”, “right”, “national” or “federal” can point to different coalitions and institutions in different countries.',
     why2:'This page does not change your Politangle score. It helps you understand the local context behind the vocabulary.',
     threeTitle:'Three things to know first', threeIntro:'The shortest useful version of how power works here.', whyMatters:'Why this matters',
-    labelsTitle:'What familiar labels mean here', labelsIntro:'Some political words change meaning across countries. These are the distinctions worth knowing first.', moreContext:'More context',
+    labelsTitle:'What familiar labels mean here', labelsIntro:'Some political words change meaning across countries. These are the distinctions worth knowing first.', globalLabelsTitle:'How well do global labels travel?', globalLabelsIntro:'Politangle uses shared dimensions for comparison, but it does not force local politics into a left–right box when that would mislead.', globalFit:{strong:'Strong fit',partial:'Partial fit',limited:'Limited fit'}, localDimensions:'What the global labels miss', moreContext:'More context',
     systemTitle:'The system in 30 seconds', systemIntro:'Enough structure to make the rest of the page intelligible.',
     historyTitle:'Turning points worth knowing', historyIntro:'Only the events that help explain how today’s system got here.',
     current:'Current political snapshot', sources:'Sources and update status', incomplete:'Current-data work still open', sourceLink:'Source', back:'All country perspectives',
@@ -48,7 +52,7 @@ const ui: Record<Locale, UiCopy> = {
     why1:'Politische Begriffe bedeuten nicht überall dasselbe. „Liberal“, „konservativ“, „links“, „rechts“, „national“ oder „föderal“ können je nach Land andere Bündnisse und Institutionen meinen.',
     why2:'Diese Seite verändert deinen Politangle-Wert nicht. Sie erklärt den lokalen Kontext hinter den Begriffen.',
     threeTitle:'Drei Dinge zuerst', threeIntro:'Die kürzeste sinnvolle Erklärung dafür, wie politische Macht hier funktioniert.', whyMatters:'Warum das wichtig ist',
-    labelsTitle:'Was bekannte politische Begriffe hier bedeuten', labelsIntro:'Einige politische Begriffe verändern ihre Bedeutung von Land zu Land. Diese Unterschiede solltest du zuerst kennen.', moreContext:'Mehr Kontext',
+    labelsTitle:'Was bekannte politische Begriffe hier bedeuten', labelsIntro:'Einige politische Begriffe verändern ihre Bedeutung von Land zu Land. Diese Unterschiede solltest du zuerst kennen.', globalLabelsTitle:'Wie gut funktionieren globale Kategorien?', globalLabelsIntro:'Politangle nutzt gemeinsame Dimensionen zum Vergleich, zwingt lokale Politik aber nicht in ein Links-rechts-Schema, wenn das irreführend wäre.', globalFit:{strong:'Gute Passung',partial:'Teilweise passend',limited:'Nur begrenzt passend'}, localDimensions:'Was globale Kategorien nicht erfassen', moreContext:'Mehr Kontext',
     systemTitle:'Das System in 30 Sekunden', systemIntro:'Genug Struktur, um den Rest der Seite einordnen zu können.',
     historyTitle:'Wendepunkte, die man kennen sollte', historyIntro:'Nur Ereignisse, die erklären, wie das heutige System entstanden ist.',
     current:'Aktuelle politische Momentaufnahme', sources:'Quellen und Aktualisierungsstand', incomplete:'Noch offene aktuelle Daten', sourceLink:'Quelle', back:'Alle Länderperspektiven',
@@ -61,7 +65,7 @@ const ui: Record<Locale, UiCopy> = {
     why1:'Las palabras políticas no viajan perfectamente. “Liberal”, “conservador”, “izquierda”, “derecha”, “nacional” o “federal” pueden señalar coaliciones e instituciones distintas según el país.',
     why2:'Esta página no cambia tu puntuación de Politangle. Te ayuda a entender el contexto local detrás del vocabulario.',
     threeTitle:'Tres cosas que conviene saber primero', threeIntro:'La versión más breve y útil de cómo funciona el poder aquí.', whyMatters:'Por qué importa',
-    labelsTitle:'Qué significan aquí las etiquetas conocidas', labelsIntro:'Algunas palabras políticas cambian de significado entre países. Estas son las diferencias que conviene conocer primero.', moreContext:'Más contexto',
+    labelsTitle:'Qué significan aquí las etiquetas conocidas', labelsIntro:'Algunas palabras políticas cambian de significado entre países. Estas son las diferencias que conviene conocer primero.', globalLabelsTitle:'¿Qué tan bien funcionan las etiquetas globales?', globalLabelsIntro:'Politangle usa dimensiones comunes para comparar, pero no fuerza la política local dentro de un eje izquierda–derecha cuando eso sería engañoso.', globalFit:{strong:'Encaje alto',partial:'Encaje parcial',limited:'Encaje limitado'}, localDimensions:'Lo que las etiquetas globales no captan', moreContext:'Más contexto',
     systemTitle:'El sistema en 30 segundos', systemIntro:'La estructura suficiente para entender el resto de la página.',
     historyTitle:'Puntos de inflexión que conviene conocer', historyIntro:'Solo los hechos que ayudan a explicar cómo se llegó al sistema actual.',
     current:'Panorama político actual', sources:'Fuentes y estado de actualización', incomplete:'Datos actuales aún pendientes', sourceLink:'Fuente', back:'Todas las perspectivas nacionales',
@@ -74,7 +78,7 @@ const ui: Record<Locale, UiCopy> = {
     why1:'Les mots politiques ne voyagent pas parfaitement. « Libéral », « conservateur », « gauche », « droite », « national » ou « fédéral » peuvent désigner des coalitions et des institutions différentes selon les pays.',
     why2:'Cette page ne modifie pas ton score Politangle. Elle aide à comprendre le contexte local derrière le vocabulaire.',
     threeTitle:'Trois choses à savoir d’abord', threeIntro:'La version la plus courte et utile du fonctionnement du pouvoir ici.', whyMatters:'Pourquoi c’est important',
-    labelsTitle:'Ce que les étiquettes familières veulent dire ici', labelsIntro:'Certains mots politiques changent de sens selon les pays. Voici les différences à connaître en premier.', moreContext:'Plus de contexte',
+    labelsTitle:'Ce que les étiquettes familières veulent dire ici', labelsIntro:'Certains mots politiques changent de sens selon les pays. Voici les différences à connaître en premier.', globalLabelsTitle:'Dans quelle mesure les étiquettes globales fonctionnent-elles ?', globalLabelsIntro:'Politangle utilise des dimensions communes pour comparer, mais ne force pas la politique locale dans un axe gauche–droite lorsque cela serait trompeur.', globalFit:{strong:'Bonne correspondance',partial:'Correspondance partielle',limited:'Correspondance limitée'}, localDimensions:'Ce que les étiquettes globales ne saisissent pas', moreContext:'Plus de contexte',
     systemTitle:'Le système en 30 secondes', systemIntro:'Juste assez de structure pour comprendre le reste de la page.',
     historyTitle:'Les tournants à connaître', historyIntro:'Uniquement les événements qui aident à expliquer la formation du système actuel.',
     current:'Instantané politique actuel', sources:'Sources et état de mise à jour', incomplete:'Données actuelles encore à compléter', sourceLink:'Source', back:'Toutes les perspectives nationales',
@@ -87,7 +91,7 @@ const ui: Record<Locale, UiCopy> = {
     why1:'Palavras políticas não significam exatamente a mesma coisa em todo lugar. “Liberal”, “conservador”, “esquerda”, “direita”, “nacional” ou “federal” podem apontar para coalizões e instituições diferentes em cada país.',
     why2:'Esta página não altera sua pontuação no Politangle. Ela ajuda a entender o contexto local por trás do vocabulário.',
     threeTitle:'Três coisas para saber primeiro', threeIntro:'A versão mais curta e útil de como o poder funciona aqui.', whyMatters:'Por que isso importa',
-    labelsTitle:'O que rótulos conhecidos significam aqui', labelsIntro:'Algumas palavras políticas mudam de sentido entre países. Estas são as diferenças que vale entender primeiro.', moreContext:'Mais contexto',
+    labelsTitle:'O que rótulos conhecidos significam aqui', labelsIntro:'Algumas palavras políticas mudam de sentido entre países. Estas são as diferenças que vale entender primeiro.', globalLabelsTitle:'Até que ponto os rótulos globais funcionam?', globalLabelsIntro:'O Politangle usa dimensões comuns para comparação, mas não força a política local em um eixo esquerda–direita quando isso seria enganoso.', globalFit:{strong:'Boa correspondência',partial:'Correspondência parcial',limited:'Correspondência limitada'}, localDimensions:'O que os rótulos globais não captam', moreContext:'Mais contexto',
     systemTitle:'O sistema em 30 segundos', systemIntro:'Estrutura suficiente para entender o restante da página.',
     historyTitle:'Pontos de virada que vale conhecer', historyIntro:'Somente os acontecimentos que ajudam a explicar como o sistema atual chegou até aqui.',
     current:'Panorama político atual', sources:'Fontes e status de atualização', incomplete:'Dados atuais ainda pendentes', sourceLink:'Fonte', back:'Todas as perspectivas por país',
@@ -129,6 +133,15 @@ export function CountryGuide({ country, locale, backHref }: { country: CountryPr
           ))}
         </div>
       </section>
+
+      {country.globalLabels && <section className="country-language">
+        <div className="method-section-head"><h2>{c.globalLabelsTitle}</h2><p>{c.globalLabelsIntro}</p></div>
+        <aside className="country-purpose">
+          <strong>{c.globalFit[country.globalLabels.fit]}</strong>
+          <p>{country.globalLabels.summary}</p>
+          <p><b>{c.localDimensions}:</b> {country.globalLabels.localDimensions.join(' · ')}</p>
+        </aside>
+      </section>}
 
       <section className="country-language">
         <div className="method-section-head"><h2>{c.labelsTitle}</h2><p>{c.labelsIntro}</p></div>
