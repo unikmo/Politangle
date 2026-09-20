@@ -32,6 +32,12 @@ function copy(locale: Locale) {
     license:'Licence enseignant', use:'Utiliser la licence', privacy:'Cet accès ne demande ni ton nom, ni liste d’élèves, ni comptes élèves. La licence reste uniquement comme identifiant sécurisé pendant cette session du navigateur.',
     licensed:'accès enseignant sous licence', another:'Utiliser une autre licence', dashboardNotice:null as string | null,
   };
+  if (locale === 'pt-br') return {
+    verifyFailed:'Não foi possível verificar a licença do professor.', checking:'Verificando a licença do professor…', active:'A licença do professor está ativa nesta sessão do navegador.', removed:'A licença do professor foi removida desta sessão do navegador.',
+    access:'Acesso do professor', title:'Digite sua licença de professor', pack:'O Politangle fornece licenças piloto apenas para testes autorizados. Sua licença permite criar salas; os estudantes continuam entrando anonimamente com o código temporário que você gerar.',
+    license:'Licença do professor', use:'Usar licença', privacy:'Para este acesso, não precisamos do seu nome, de uma lista de estudantes nem de contas dos estudantes. A licença fica apenas como credencial segura durante esta sessão do navegador.',
+    licensed:'acesso licenciado do professor', another:'Usar outra licença', dashboardNotice:null as string | null,
+  };
   return {
     verifyFailed:'Teacher license could not be verified.', checking:'Checking teacher license…', active:'Teacher license active for this browser session.', removed:'Teacher license removed from this browser session.',
     access:'Teacher access', title:'Enter your school teacher license', pack:'Politangle provides pilot licenses only for approved testing. Your license unlocks classroom creation; students still join anonymously with the temporary session code you generate.',
