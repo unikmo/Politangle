@@ -32,3 +32,14 @@ test('Technical scores remain available only as secondary disclosure in the rewr
   assert.match(deepNative, /seeScoring:'See scoring'/);
   assert.match(deepClient, /Politangle dimension|dimensionLabel/);
 });
+
+
+test('Full result interpretation has native pt-BR copy instead of English fallbacks', () => {
+  assert.match(deepNative, /Ainda não há respostas comparáveis suficientes/);
+  assert.match(deepNative, /Influência política & representação/);
+  assert.match(deepNative, /Poder eleito & controles democráticos/);
+  assert.match(deepNative, /Tendência socialista democrática/);
+  assert.match(deepNative, /Padrão de triagem: direita radical populista/);
+  assert.match(deepNative, /Seu perfil político continua misto/);
+  assert.match(deepNative, /Nenhuma tradição política domina claramente suas respostas/);
+});
