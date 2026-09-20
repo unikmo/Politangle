@@ -56,6 +56,18 @@ const copy: Record<Locale, Copy> = {
       { label: 'QUIZ CIBLÉ', title: 'Sais-tu reconnaître le populisme ?', meta: '12 questions · avec explications', href: '/populism-quiz' },
     ],
   },
+  'pt-br': {
+    kicker: 'DISPONÍVEIS AGORA',
+    title: 'Escolha um quiz.',
+    intro: 'Aqui aparecem apenas os quizzes que você pode fazer agora.',
+    start: 'Começar',
+    cards: [
+      { label: 'BELIEVE', title: 'Politangle Quick', meta: '26 perguntas · seu perfil político', href: '/quiz' },
+      { label: 'CLASSIFY', title: 'Reconheça tradições políticas', meta: '25 perguntas · com explicações', href: '/practice?section=classify' },
+      { label: 'UNDERSTAND', title: 'Diferencie ideias que costumam ser confundidas', meta: '25 perguntas · com explicações', href: '/practice?section=understand' },
+      { label: 'QUIZ TEMÁTICO', title: 'Você reconhece o populismo?', meta: '12 perguntas · com explicações', href: '/populism-quiz' },
+    ],
+  },
 };
 
 export default function QuizzesPage() {
