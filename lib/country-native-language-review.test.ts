@@ -9,20 +9,24 @@ const de = [
   readFileSync(join(root, 'lib/country-localization.ts'), 'utf8'),
   readFileSync(join(root, 'lib/country-localization-extra.ts'), 'utf8'),
   readFileSync(join(root, 'lib/country-localization-expansion-de.ts'), 'utf8'),
+  readFileSync(join(root, 'lib/country-localization-wave3.ts'), 'utf8'),
 ].join('\n');
 const es = [
   readFileSync(join(root, 'lib/country-localization.ts'), 'utf8'),
   readFileSync(join(root, 'lib/country-localization-extra.ts'), 'utf8'),
   readFileSync(join(root, 'lib/country-localization-expansion-es.ts'), 'utf8'),
+  readFileSync(join(root, 'lib/country-localization-wave3.ts'), 'utf8'),
 ].join('\n');
 const ptBr = [
   readFileSync(join(root, 'lib/country-localization-ptbr-wave1.ts'), 'utf8'),
   readFileSync(join(root, 'lib/country-localization-ptbr-wave2.ts'), 'utf8'),
+  readFileSync(join(root, 'lib/country-localization-wave3.ts'), 'utf8'),
 ].join('\n');
 const fr = [
   readFileSync(join(root, 'lib/country-localization.ts'), 'utf8'),
   readFileSync(join(root, 'lib/country-localization-extra.ts'), 'utf8'),
   readFileSync(join(root, 'lib/country-localization-expansion-fr.ts'), 'utf8'),
+  readFileSync(join(root, 'lib/country-localization-wave3.ts'), 'utf8'),
 ].join('\n');
 
 test('country language standard requires native composition rather than literal translation', () => {
