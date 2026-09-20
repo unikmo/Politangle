@@ -467,6 +467,7 @@ export const nativeAngleLabels: Record<Locale, Record<PopulismQuizAngle, string>
   de: { core_framing: 'Grundmuster', exclusive_representation: 'Wer vertritt das Volk?', opposition_pluralism: 'Berechtigte Opposition', institutional_attacks: 'Demokratische Schutzregeln', false_positives: 'Was ist nicht automatisch populistisch?', adjacent_concepts: 'Ähnliche, aber andere Ideen' },
   es: { core_framing: 'Idea central', exclusive_representation: '¿Quién representa al pueblo?', opposition_pluralism: 'Oposición legítima', institutional_attacks: 'Garantías democráticas', false_positives: '¿Qué no es automáticamente populista?', adjacent_concepts: 'Ideas parecidas pero distintas' },
   fr: { core_framing: 'Idée centrale', exclusive_representation: 'Qui représente le peuple ?', opposition_pluralism: 'Opposition légitime', institutional_attacks: 'Protections démocratiques', false_positives: 'Qu’est-ce qui n’est pas automatiquement populiste ?', adjacent_concepts: 'Idées proches mais différentes' },
+  'pt-br': { core_framing: 'Enquadramento central', exclusive_representation: 'Quem representa o povo?', opposition_pluralism: 'Oposição legítima', institutional_attacks: 'Proteções democráticas', false_positives: 'O que não é automaticamente populismo?', adjacent_concepts: 'Ideias próximas, mas diferentes' },
 };
 
 export function populismUi(locale: Locale) {
@@ -493,6 +494,14 @@ export function populismUi(locale: Locale) {
     coverage: 'Contenu du quiz', start: 'Commencer le quiz →', candidate: 'Contenu candidat pour apprendre. Gratuit, privé sur cet appareil et pas encore intégré à la certification.',
     resultHeader: 'QUIZ SUR LE POPULISME · RÉSULTAT', reviewTerm: 'Revoir le terme', strong: 'Très bonne reconnaissance', developing: 'Reconnaissance en progrès', foundations: 'Renforce les bases', resultLede: 'C’est un résultat d’apprentissage, pas un jugement sur tes convictions politiques.', retry: 'Essayer une autre sélection', review: 'Revoir le populisme',
     quizHeader: 'QUIZ SUR LE POPULISME · FRANÇAIS', learnTerm: 'Apprendre le terme', correctSoFar: (n: number) => `${n} bonnes réponses`, exit: 'Quitter le quiz', question: (n: number, total: number) => `QUESTION ${n} SUR ${total}`, hint: 'Indice', clue: 'Besoin d’un indice ?', correct: 'BONNE RÉPONSE', notQuite: 'PAS TOUT À FAIT', best: 'Meilleure réponse :', see: 'Voir le résultat', next: 'Question suivante', check: 'Vérifier la réponse',
+  };
+  if (locale === 'pt-br') return {
+    language: 'PORTUGUÊS (BR)', learnFirst: 'Aprender primeiro', free: 'GRÁTIS · 12 PERGUNTAS · CERCA DE 5 MINUTOS', title: 'Você reconhece o populismo?',
+    lede: 'Identifique o enquadramento, os sinais democráticos de alerta e as falsas acusações. Este teste mede conhecimento político — não rotula suas crenças nem desqualifica críticas ao poder.',
+    principleTitle: 'Crítica não é automaticamente populismo.', principle: 'Doadores ricos podem influenciar políticas. Empresas e pessoas podem evitar impostos. Instituições podem falhar ou ser capturadas. O populismo acrescenta a ideia de que um único povo autêntico enfrenta um inimigo inteiramente corrupto, muitas vezes com apenas um movimento apresentado como representante legítimo.',
+    coverage: 'Conteúdo do quiz', start: 'Começar o quiz →', candidate: 'Conteúdo candidato para aprendizagem. Grátis, privado neste dispositivo e ainda fora da certificação.',
+    resultHeader: 'QUIZ DE POPULISMO · RESULTADO', reviewTerm: 'Revisar o conceito', strong: 'Reconhecimento sólido', developing: 'Reconhecimento em desenvolvimento', foundations: 'Reforce os fundamentos', resultLede: 'Este é um resultado de aprendizagem, não um julgamento sobre suas crenças políticas.', retry: 'Tentar outro conjunto', review: 'Revisar populismo',
+    quizHeader: 'QUIZ DE POPULISMO · PORTUGUÊS (BR)', learnTerm: 'Aprender o conceito', correctSoFar: (n: number) => `${n} acertos até agora`, exit: 'Sair do quiz', question: (n: number, total: number) => `PERGUNTA ${n} DE ${total}`, hint: 'Dica', clue: 'Precisa de uma dica?', correct: 'CORRETO', notQuite: 'NÃO EXATAMENTE', best: 'Melhor resposta:', see: 'Ver resultado', next: 'Próxima pergunta', check: 'Verificar resposta',
   };
   return {
     language: 'ENGLISH', learnFirst: 'Learn first', free: 'FREE · 12 QUESTIONS · ABOUT 5 MINUTES', title: 'Can you recognize populism?',
