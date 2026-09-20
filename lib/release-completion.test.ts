@@ -15,6 +15,7 @@ const checkout = readFileSync(join(root, 'app/api/certificate/checkout/route.ts'
 const countryLocalization = readFileSync(join(root, 'lib/country-localization.ts'), 'utf8');
 const localizedCountryRoute = readFileSync(join(root, 'app/[locale]/countries/[slug]/page.tsx'), 'utf8');
 const siteChrome = readFileSync(join(root, 'app/SiteChrome.tsx'), 'utf8');
+const countryGuide = readFileSync(join(root, 'app/countries/CountryGuide.tsx'), 'utf8');
 
 test('founder review covers the exact current bank without silently validating it', () => {
   assert.match(reviewApi, /literacyMasterBankCandidates/);
