@@ -246,3 +246,40 @@ test('global-label guidance is native in every maintained locale for all eighty 
     }
   }
 });
+
+
+test('canonical country explanations are not cloned templates with renamed institutions', () => {
+  const stopWords = new Set([
+    'the','and','that','with','from','this','have','their','they','them','into','while','where','which',
+    'government','political','politics','party','parties','state','system','constitution','power','national',
+    'president','parliament','elected','country','federal','public','policy',
+  ]);
+
+  const tokens = (text: string) => new Set(
+    text.toLowerCase()
+      .replace(/[^\p{L}\p{N}\s-]/gu, ' ')
+      .split(/\s+/)
+      .filter((word) => word.length > 3 && !stopWords.has(word)),
+  );
+
+  const similarity = (a: Set<string>, b: Set<string>) => {
+    let intersection = 0;
+    for (const value of a) if (b.has(value)) intersection += 1;
+    return intersection / (a.size + b.size - intersection || 1);
+  };
+
+  const profiles = countryProfiles.map((country) => ({
+    slug: country.slug,
+    tokens: tokens([...country.power, ...country.vocabulary].join(' ')),
+  }));
+
+  for (let i = 0; i < profiles.length; i += 1) {
+    for (let j = i + 1; j < profiles.length; j += 1) {
+      const score = similarity(profiles[i].tokens, profiles[j].tokens);
+      assert.ok(
+        score < 0.36,
+        `${profiles[i].slug} and ${profiles[j].slug} are too textually similar (${score.toFixed(3)}); review for generic/template copy`,
+      );
+    }
+  }
+});
