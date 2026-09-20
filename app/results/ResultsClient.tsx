@@ -44,6 +44,16 @@ const axisCopy: Record<Locale, Record<string, { name: string; low: string; high:
     nationhood: { name: 'Pertenencia nacional', low: 'Pertenencia cívica / inclusiva', high: 'Continuidad heredada / de estatus' },
     ecology: { name: 'Ecología', low: 'Límites ecológicos / cambio estructural', high: 'Crecimiento / adaptación gradual' },
   },
+  'pt-br': {
+    'economic-role': { name: 'Papel econômico do Estado', low: 'Serviços públicos / redistribuição', high: 'Mercado / responsabilidade privada' },
+    ownership: { name: 'Propriedade', low: 'Propriedade social / dos trabalhadores', high: 'Propriedade privada / de acionistas' },
+    'social-values': { name: 'Valores sociais', low: 'Autonomia pessoal / mudança', high: 'Tradição / continuidade moral' },
+    authority: { name: 'Autoridade', low: 'Liberdade / garantias', high: 'Ordem / autoridade preventiva' },
+    pluralism: { name: 'Pluralismo', low: 'Freios e contrapesos / instituições independentes', high: 'Concentração majoritária' },
+    world: { name: 'Relação com o mundo', low: 'Cooperação internacional', high: 'Autonomia nacional' },
+    nationhood: { name: 'Pertencimento nacional', low: 'Pertencimento cívico / inclusivo', high: 'Continuidade herdada / baseada em status' },
+    ecology: { name: 'Ecologia', low: 'Limites ecológicos / mudança estrutural', high: 'Crescimento / adaptação gradual' },
+  },
   fr: {
     'economic-role': { name: 'Rôle de l’État', low: 'Services publics / redistribution', high: 'Marché / responsabilité individuelle' },
     ownership: { name: 'Propriété', low: 'Propriété sociale / des salariés', high: 'Propriété privée / des actionnaires' },
@@ -78,6 +88,13 @@ const familyCopy: Record<Locale, Record<string, { name: string; meaning: string 
     socialism: { name: 'Socialismo', meaning: 'propiedad social y una crítica más fuerte al control privado de la producción' },
     'green-politics': { name: 'Política verde', meaning: 'límites ecológicos, sostenibilidad, pluralismo y cooperación política' },
   },
+  'pt-br': {
+    liberalism: { name: 'Liberalismo', meaning: 'liberdade, autonomia pessoal e limites ao poder concentrado' },
+    conservatism: { name: 'Conservadorismo', meaning: 'continuidade, ordem, propriedade privada e mudança social cautelosa' },
+    'social-democracy': { name: 'Social-democracia', meaning: 'proteção social, redistribuição e instituições democráticas pluralistas' },
+    socialism: { name: 'Socialismo', meaning: 'propriedade social e maior contestação ao controle privado da produção' },
+    'green-politics': { name: 'Política verde', meaning: 'limites ecológicos, sustentabilidade, pluralismo e cooperação política' },
+  },
   fr: {
     liberalism: { name: 'Libéralisme', meaning: 'liberté, autonomie personnelle et limites au pouvoir concentré' },
     conservatism: { name: 'Conservatisme', meaning: 'continuité, ordre, propriété privée et changement social prudent' },
@@ -92,7 +109,7 @@ function axisDisplay(locale: Locale, axis: AxisLike) {
 }
 
 function familyDisplay(locale: Locale, id: string, fallback: string) {
-  return familyCopy[locale][id] ?? { name: fallback, meaning: locale === 'de' ? 'die Kerngedanken dieser Tradition' : locale === 'es' ? 'las ideas centrales de esta tradición' : locale === 'fr' ? 'les idées centrales de cette tradition' : 'the core ideas of that tradition' };
+  return familyCopy[locale][id] ?? { name: fallback, meaning: locale === 'de' ? 'die Kerngedanken dieser Tradition' : locale === 'es' ? 'las ideas centrales de esta tradición' : locale === 'fr' ? 'les idées centrales de cette tradition' : locale === 'pt-br' ? 'as ideias centrais dessa tradição' : 'the core ideas of that tradition' };
 }
 
 function directionLabel(locale: Locale, score: number | null, low: string, high: string) {
@@ -111,6 +128,14 @@ function directionLabel(locale: Locale, score: number | null, low: string, high:
     if (score <= 60) return 'Mixto / equilibrado';
     if (score <= 74) return `Se inclina hacia ${high}`;
     return `Muy cerca de ${high}`;
+  }
+  if (locale === 'pt-br') {
+    if (score === null) return 'Ainda há pouca informação';
+    if (score <= 24) return `Bem próximo de ${low}`;
+    if (score <= 39) return `Inclinação para ${low}`;
+    if (score <= 60) return 'Misto / equilibrado';
+    if (score <= 74) return `Inclinação para ${high}`;
+    return `Bem próximo de ${high}`;
   }
   if (locale === 'fr') {
     if (score === null) return 'Pas encore assez d’informations';
@@ -132,6 +157,7 @@ function coherenceBand(locale: Locale, score: number | null) {
   if (locale === 'de') return score === null ? 'Noch zu wenig Informationen' : score >= 80 ? 'Sehr stimmig' : score >= 65 ? 'Weitgehend stimmig' : score >= 45 ? 'Kontextabhängig' : 'Stark gemischt';
   if (locale === 'es') return score === null ? 'Aún falta información' : score >= 80 ? 'Muy coherente' : score >= 65 ? 'Bastante coherente' : score >= 45 ? 'Depende del contexto' : 'Muy mixto';
   if (locale === 'fr') return score === null ? 'Pas encore assez d’informations' : score >= 80 ? 'Très cohérent' : score >= 65 ? 'Plutôt cohérent' : score >= 45 ? 'Dépend du contexte' : 'Très mixte';
+  if (locale === 'pt-br') return score === null ? 'Ainda há pouca informação' : score >= 80 ? 'Muito coerente' : score >= 65 ? 'Bastante coerente' : score >= 45 ? 'Depende do contexto' : 'Bem misto';
   if (score === null) return 'Not enough information';
   if (score >= 80) return 'Highly coherent';
   if (score >= 65) return 'Mostly coherent';
@@ -155,6 +181,14 @@ function axisSentence(locale: Locale, score: number | null, low: string, high: s
     if (score <= 60) return `Mantienes bastante equilibrio entre ${low} y ${high}.`;
     if (score <= 74) return `Te inclinas hacia ${high}, aunque no de forma absoluta.`;
     return `${high} es una de las tendencias más claras de tus respuestas.`;
+  }
+  if (locale === 'pt-br') {
+    if (score === null) return 'Ainda faltam respostas para este eixo.';
+    if (score <= 24) return `${low} é uma das tendências mais claras das suas respostas.`;
+    if (score <= 39) return `Você se inclina para ${low}, mas sem uma posição totalmente definida.`;
+    if (score <= 60) return `Você mantém um equilíbrio considerável entre ${low} e ${high}.`;
+    if (score <= 74) return `Você se inclina para ${high}, mas sem uma posição totalmente definida.`;
+    return `${high} é uma das tendências mais claras das suas respostas.`;
   }
   if (locale === 'fr') {
     if (score === null) return 'Il manque encore des réponses pour cet axe.';
@@ -196,6 +230,12 @@ function localizedHome(locale: Locale, home: ReturnType<typeof describePolitangl
     else if (p && pScore !== null && s && sScore !== null && pScore >= 55 && sScore >= 50) headline = `Tu perfil encaja sobre todo con ${p.name}, con una cercanía clara a ${s.name}.`;
     else if (p && pScore !== null && pScore >= 55) headline = `Tu perfil encaja sobre todo con ${p.name}.`;
     else if (p && pScore !== null) headline = 'Ninguna tradición política domina claramente tus respuestas.';
+  } else if (locale === 'pt-br') {
+    headline = 'Seu perfil político continua misto.';
+    if (p && pScore !== null && s && sScore !== null && pScore >= 55 && sScore >= 55 && gap !== null && gap <= 4) headline = `Seu perfil fica entre ${p.name} e ${s.name}.`;
+    else if (p && pScore !== null && s && sScore !== null && pScore >= 55 && sScore >= 50) headline = `Seu perfil se aproxima principalmente de ${p.name}, com uma proximidade clara de ${s.name}.`;
+    else if (p && pScore !== null && pScore >= 55) headline = `Seu perfil se aproxima principalmente de ${p.name}.`;
+    else if (p && pScore !== null) headline = 'Nenhuma tradição política domina claramente suas respostas.';
   } else if (locale === 'fr') {
     headline = 'Ton profil politique reste mixte.';
     if (p && pScore !== null && s && sScore !== null && pScore >= 55 && sScore >= 55 && gap !== null && gap <= 4) headline = `Ton profil se situe entre ${p.name} et ${s.name}.`;
@@ -209,23 +249,27 @@ function localizedHome(locale: Locale, home: ReturnType<typeof describePolitangl
     if (locale === 'de') parts.push(`Am stärksten passt ${p.name} (${pScore}/100) zu deinem Gesamtmuster. Dabei geht es hier vor allem um ${p.meaning}.`);
     else if (locale === 'es') parts.push(`La coincidencia más fuerte es con ${p.name} (${pScore}/100). En este perfil representa sobre todo ${p.meaning}.`);
     else if (locale === 'fr') parts.push(`La proximité la plus forte est avec ${p.name} (${pScore}/100). Ici, cela renvoie surtout à ${p.meaning}.`);
+    else if (locale === 'pt-br') parts.push(`A maior proximidade é com ${p.name} (${pScore}/100). Neste perfil, isso representa principalmente ${p.meaning}.`);
     else parts.push(`Your strongest family match is ${p.name} ${pScore}/100, reflecting ${p.meaning}.`);
   }
   if (s && sScore !== null && (pScore === null || sScore >= 45)) {
     if (locale === 'de') parts.push(`Auch ${s.name} spielt mit ${sScore}/100 eine erkennbare Rolle. Ein einziges Etikett wäre deshalb zu grob.`);
     else if (locale === 'es') parts.push(`${s.name} también pesa con ${sScore}/100. Por eso una sola etiqueta se quedaría corta.`);
     else if (locale === 'fr') parts.push(`${s.name} compte aussi, avec ${sScore}/100. Une seule étiquette serait donc trop réductrice.`);
+    else if (locale === 'pt-br') parts.push(`${s.name} também aparece com ${sScore}/100. Por isso, um único rótulo seria simplificador demais.`);
     else parts.push(`${s.name} also matters at ${sScore}/100, so a one-word label would leave out a meaningful part of your profile.`);
   }
   if (t && tertiary?.overall !== null && tertiary?.overall !== undefined && tertiary.overall >= 60) {
     if (locale === 'de') parts.push(`${t.name} ist mit ${tertiary.overall}/100 ebenfalls ein klarer Einfluss.`);
     else if (locale === 'es') parts.push(`${t.name} también aparece con fuerza: ${tertiary.overall}/100.`);
     else if (locale === 'fr') parts.push(`${t.name} apparaît aussi nettement, avec ${tertiary.overall}/100.`);
+    else if (locale === 'pt-br') parts.push(`${t.name} também aparece como influência clara, com ${tertiary.overall}/100.`);
     else parts.push(`${t.name} is another clear influence at ${tertiary.overall}/100.`);
   }
   if (locale === 'de') parts.push('Quick ist eine erste Einordnung. Full prüft dieselben Themen mit zusätzlichen THINK-, FEEL- und ACT-Perspektiven.');
   else if (locale === 'es') parts.push('Quick es una primera lectura. Full vuelve sobre los mismos temas desde ángulos adicionales de THINK, FEEL y ACT.');
   else if (locale === 'fr') parts.push('Quick donne une première lecture. Full reprend les mêmes thèmes avec des angles THINK, FEEL et ACT supplémentaires.');
+  else if (locale === 'pt-br') parts.push('Quick oferece uma primeira leitura. Full revisita os mesmos temas com perspectivas adicionais de THINK, FEEL e ACT.');
   else parts.push('Quick is a first reading; Full checks the same political themes from additional THINK, FEEL and ACT angles.');
 
   return { headline, summary: parts.join(' ') };
@@ -255,7 +299,7 @@ function PoliticalShape({ axes, locale }: { axes: ReturnType<typeof calculatePol
   };
   const polygon = known.map((value, index) => point(index, value)).map(([x, y]) => `${x},${y}`).join(' ');
   const rings = [25, 50, 75, 100].map((level) => axes.map((_, index) => point(index, level)).map(([x, y]) => `${x},${y}`).join(' '));
-  const aria = locale === 'de' ? 'Dein politisches Profil mit acht Achsen' : locale === 'es' ? 'Tu perfil político de ocho ejes' : locale === 'fr' ? 'Ton profil politique à huit axes' : 'Your eight-axis political shape';
+  const aria = locale === 'de' ? 'Dein politisches Profil mit acht Achsen' : locale === 'es' ? 'Tu perfil político de ocho ejes' : locale === 'fr' ? 'Ton profil politique à huit axes' : locale === 'pt-br' ? 'Seu perfil político em oito eixos' : 'Your eight-axis political shape';
 
   return (
     <div className="shape-wrap compact-shape">
@@ -283,7 +327,7 @@ function PoliticalShape({ axes, locale }: { axes: ReturnType<typeof calculatePol
           return <circle key={axes[index].id} className="shape-dot" cx={x} cy={y} r="5" />;
         })}
       </svg>
-      <p className="shape-scale-note">{locale === 'de' ? 'Jede Speiche steht für eine politische Dimension. Entscheidend ist das Gesamtmuster – nicht einfach die längste Speiche.' : locale === 'es' ? 'Cada radio representa una dimensión política. Lo importante es el conjunto del perfil, no simplemente el radio más largo.' : locale === 'fr' ? 'Chaque branche représente une dimension politique. Ce qui compte, c’est le profil d’ensemble, pas simplement la branche la plus longue.' : 'Each spoke is one political dimension. Your political home comes from the overall pattern—not simply from whichever spoke happens to be longest.'}</p>
+      <p className="shape-scale-note">{locale === 'de' ? 'Jede Speiche steht für eine politische Dimension. Entscheidend ist das Gesamtmuster – nicht einfach die längste Speiche.' : locale === 'es' ? 'Cada radio representa una dimensión política. Lo importante es el conjunto del perfil, no simplemente el radio más largo.' : locale === 'fr' ? 'Chaque branche représente une dimension politique. Ce qui compte, c’est le profil d’ensemble, pas simplement la branche la plus longue.' : locale === 'pt-br' ? 'Cada raio representa uma dimensão política. O que importa é o desenho do conjunto, não apenas o raio mais longo.' : 'Each spoke is one political dimension. Your political home comes from the overall pattern—not simply from whichever spoke happens to be longest.'}</p>
     </div>
   );
 }
