@@ -708,15 +708,15 @@ export const wave3CountryProfiles: readonly CountryProfile[] = [
     ],
     "sources": [
       {
-        "title": "National Assembly of Cameroon",
-        "publisher": "National Assembly of Cameroon",
-        "url": "https://www.assnat.cm/",
+        "title": "Constitution of Cameroon",
+        "publisher": "Presidency of the Republic of Cameroon",
+        "url": "https://www.prc.cm/en/cameroon/constitution",
         "checkedAt": "2026-09-20"
       },
       {
-        "title": "Presidency of the Republic of Cameroon",
-        "publisher": "Presidency of Cameroon",
-        "url": "https://www.prc.cm/en/",
+        "title": "Institutions of Cameroon",
+        "publisher": "Presidency of the Republic of Cameroon",
+        "url": "https://prc.cm/en/cameroon/institutions",
         "checkedAt": "2026-09-20"
       }
     ]
@@ -1008,15 +1008,15 @@ export const wave3CountryProfiles: readonly CountryProfile[] = [
     ],
     "sources": [
       {
-        "title": "Constitution and state information",
+        "title": "Constitution of Egypt",
         "publisher": "Presidency of Egypt",
-        "url": "https://www.presidency.eg/en/",
+        "url": "https://www.presidency.eg/ar/%D9%85%D8%B5%D8%B1/%D8%A7%D9%84%D8%AF%D8%B3%D8%AA%D9%88%D8%B1/",
         "checkedAt": "2026-09-20"
       },
       {
-        "title": "Parliament of Egypt",
-        "publisher": "Parliament of Egypt",
-        "url": "https://www.parliament.gov.eg/",
+        "title": "Parliamentary record on the Senate framework",
+        "publisher": "House of Representatives of Egypt",
+        "url": "https://www.parliament.gov.eg/News_Show.aspx?frm=3881",
         "checkedAt": "2026-09-20"
       }
     ]
@@ -1134,9 +1134,9 @@ export const wave3CountryProfiles: readonly CountryProfile[] = [
         "checkedAt": "2026-09-20"
       },
       {
-        "title": "Senate",
+        "title": "Constitution of the Democratic Republic of the Congo",
         "publisher": "Senate of the Democratic Republic of the Congo",
-        "url": "https://www.senat.cd/",
+        "url": "https://www.senat.cd/docs/JOS.05.02.2011.pdf",
         "checkedAt": "2026-09-20"
       }
     ]
