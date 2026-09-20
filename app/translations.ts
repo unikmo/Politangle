@@ -1,4 +1,5 @@
 import type { Locale } from './LocaleProvider';
+import { ptBr } from './translations-pt-br';
 
 /*
  * Marketing/UI localization is intentionally written as native copy, not as a
@@ -281,5 +282,6 @@ export function translate(locale: Locale, english: string, german: string) {
   if (locale === 'de') return german;
   if (locale === 'es') return es[english] ?? english;
   if (locale === 'fr') return fr[english] ?? english;
+  if (locale === 'pt-br') return ptBr[english] ?? english;
   return english;
 }

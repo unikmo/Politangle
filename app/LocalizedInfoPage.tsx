@@ -4,11 +4,12 @@ import Link from 'next/link';
 import { InfoSection, InfoShell } from './InfoShell';
 import MethodExplainer from './MethodExplainer';
 import { localePath, useLocale, type Locale } from './LocaleProvider';
+import { ptBrInfoPages } from './localized-info-pt-br';
 
 export type InfoPageId = 'method' | 'validation' | 'privacy' | 'terms' | 'about' | 'contact' | 'imprint' | 'question-banks' | 'school-pilot';
 
 type TableRow = readonly [string, string];
-type SectionCopy = {
+export type SectionCopy = {
   title: string;
   paragraphs?: readonly string[];
   bullets?: readonly string[];
@@ -18,7 +19,7 @@ type SectionCopy = {
   link?: { href: string; label: string };
 };
 
-type PageCopy = {
+export type PageCopy = {
   eyebrow: string;
   title: string;
   intro: string;
@@ -576,7 +577,7 @@ fr.contact = {
   ],
 };
 
-const copy: Record<Locale, Record<InfoPageId, PageCopy>> = { en, de, es, fr };
+const copy: Record<Locale, Record<InfoPageId, PageCopy>> = { en, de, es, fr, 'pt-br': ptBrInfoPages };
 
 export default function LocalizedInfoPage({ page }: { page: InfoPageId }) {
   const { locale } = useLocale();

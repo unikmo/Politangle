@@ -15,6 +15,10 @@ const es = [
   readFileSync(join(root, 'lib/country-localization-extra.ts'), 'utf8'),
   readFileSync(join(root, 'lib/country-localization-expansion-es.ts'), 'utf8'),
 ].join('\n');
+const ptBr = [
+  readFileSync(join(root, 'lib/country-localization-ptbr-wave1.ts'), 'utf8'),
+  readFileSync(join(root, 'lib/country-localization-ptbr-wave2.ts'), 'utf8'),
+].join('\n');
 const fr = [
   readFileSync(join(root, 'lib/country-localization.ts'), 'utf8'),
   readFileSync(join(root, 'lib/country-localization-extra.ts'), 'utf8'),
@@ -26,6 +30,8 @@ test('country language standard requires native composition rather than literal 
   assert.match(standard, /natural target-language prose/i);
   assert.match(standard, /cross-language factual-consistency checks/i);
   assert.match(standard, /not certification by an external human native-language editor/i);
+  assert.ok(ptBr.includes('Brasil'));
+  assert.ok(ptBr.includes('português') || ptBr.includes('portugu'));
 });
 
 test('reviewed German copy does not retain avoidable English institutional fallbacks', () => {

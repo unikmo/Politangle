@@ -5,28 +5,32 @@ import { LanguageSelector, useLocale } from './LocaleProvider';
 
 export type AssessmentHeaderKind = 'quick' | 'quick-result' | 'full' | 'classify' | 'understand';
 
-function label(kind: AssessmentHeaderKind, locale: 'en' | 'de' | 'es' | 'fr') {
+function label(kind: AssessmentHeaderKind, locale: 'en' | 'de' | 'es' | 'fr' | 'pt-br') {
   if (kind === 'quick') {
     if (locale === 'de') return 'Quick · 26 Fragen';
     if (locale === 'es') return 'Quick · 26 preguntas';
     if (locale === 'fr') return 'Quick · 26 questions';
+    if (locale === 'pt-br') return 'Quick · 26 perguntas';
     return 'Quick · 26 questions';
   }
   if (kind === 'quick-result') {
     if (locale === 'de') return 'Quick-Ergebnis';
     if (locale === 'es') return 'Resultado Quick';
     if (locale === 'fr') return 'Résultat Quick';
+    if (locale === 'pt-br') return 'Resultado do Quick';
     return 'Quick result';
   }
   if (kind === 'full') {
     if (locale === 'de') return 'Full · 16 weitere Fragen';
     if (locale === 'es') return 'Full · 16 preguntas más';
     if (locale === 'fr') return 'Full · 16 questions de plus';
+    if (locale === 'pt-br') return 'Full · mais 16 perguntas';
     return 'Full · 16 more questions';
   }
   const name = kind === 'classify' ? 'CLASSIFY' : 'UNDERSTAND';
   if (locale === 'de') return `${name} · 20 Fragen`;
   if (locale === 'es') return `${name} · 20 preguntas`;
+  if (locale === 'pt-br') return `${name} · 20 perguntas`;
   return `${name} · 20 questions`;
 }
 

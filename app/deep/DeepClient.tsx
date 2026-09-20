@@ -24,6 +24,7 @@ import { describePolitangleHome } from '../../lib/politangle-home';
 import { agreementAnswerOptions, type AnswerValue } from '../../lib/questions';
 import { germanBeliefStatement } from '../../lib/german-believe';
 import { romanceBeliefStatement } from '../../lib/romance-believe';
+import { portugueseBrBeliefStatement } from '../../lib/portuguese-br-believe';
 import { useLocale, type Locale } from '../LocaleProvider';
 import {
   deepAxis,
@@ -68,12 +69,13 @@ function referencePeople(familyId: string) {
 }
 
 function answerAria(locale: Locale, value: AnswerValue) {
-  if (value === 'unsure') return locale === 'de' ? 'Unsicher' : locale === 'es' ? 'No estoy seguro' : locale === 'fr' ? 'Je ne sais pas' : 'Not sure';
+  if (value === 'unsure') return locale === 'de' ? 'Unsicher' : locale === 'es' ? 'No estoy seguro' : locale === 'fr' ? 'Je ne sais pas' : locale === 'pt-br' ? 'Não tenho certeza' : 'Not sure';
   const map: Record<Locale, Record<string, string>> = {
     en: { '-2':'Strongly disagree', '-1':'Disagree', '0':'Neither / depends', '1':'Agree', '2':'Strongly agree' },
     de: { '-2':'Stimme gar nicht zu', '-1':'Stimme eher nicht zu', '0':'Teils teils / kommt darauf an', '1':'Stimme eher zu', '2':'Stimme völlig zu' },
     es: { '-2':'Totalmente en desacuerdo', '-1':'Más bien en desacuerdo', '0':'Neutral / depende', '1':'Más bien de acuerdo', '2':'Totalmente de acuerdo' },
     fr: { '-2':'Pas du tout d’accord', '-1':'Plutôt pas d’accord', '0':'Neutre / cela dépend', '1':'Plutôt d’accord', '2':'Tout à fait d’accord' },
+    'pt-br': { '-2':'Discordo totalmente', '-1':'Discordo', '0':'Neutro / depende', '1':'Concordo', '2':'Concordo totalmente' },
   };
   return map[locale][String(value)];
 }
@@ -89,6 +91,7 @@ type AnswerEvidence = {
 function localizedBeliefCopy(locale: Locale, item: BeliefStatement) {
   if (locale === 'de') return germanBeliefStatement(item.sourceItemId, item.polarity) ?? item.statement;
   if (locale === 'es' || locale === 'fr') return romanceBeliefStatement(locale, item.sourceItemId, item.polarity) ?? item.statement;
+  if (locale === 'pt-br') return portugueseBrBeliefStatement(item.sourceItemId, item.polarity) ?? item.statement;
   return item.statement;
 }
 
@@ -138,7 +141,7 @@ function PoliticalShape({ axes, locale }: { axes: ReturnType<typeof calculatePol
   };
   const polygon = known.map((value, index) => point(index, value)).map(([x, y]) => `${x},${y}`).join(' ');
   const rings = [25, 50, 75, 100].map((level) => axes.map((_, index) => point(index, level)).map(([x, y]) => `${x},${y}`).join(' '));
-  const shapeAria = locale === 'de' ? 'Dein vollständiges politisches Profil mit acht Achsen' : locale === 'es' ? 'Tu perfil político completo de ocho ejes' : locale === 'fr' ? 'Ton profil politique complet à huit axes' : 'Your completed eight-axis political shape';
+  const shapeAria = locale === 'de' ? 'Dein vollständiges politisches Profil mit acht Achsen' : locale === 'es' ? 'Tu perfil político completo de ocho ejes' : locale === 'fr' ? 'Ton profil politique complet à huit axes' : locale === 'pt-br' ? 'Seu perfil político completo em oito eixos' : 'Your completed eight-axis political shape';
   const ui = deepUi(locale);
 
   return (
@@ -472,8 +475,8 @@ export default function DeepClient() {
   if (!currentBelief) return null;
 
   const unsureStatus = fullProgress.unsure ? `${fullProgress.unsure} ${ui.marked}` : ui.noUnsure;
-  const progressAria = locale === 'de' ? `${fullProgress.percent}% abgeschlossen` : locale === 'es' ? `${fullProgress.percent}% completado` : locale === 'fr' ? `${fullProgress.percent}% terminé` : `${fullProgress.percent}% complete`;
-  const beliefAria = locale === 'de' ? 'Antwort auf die politische Aussage' : locale === 'es' ? 'Respuesta a la afirmación política' : locale === 'fr' ? 'Réponse à l’affirmation politique' : 'Belief response';
+  const progressAria = locale === 'de' ? `${fullProgress.percent}% abgeschlossen` : locale === 'es' ? `${fullProgress.percent}% completado` : locale === 'fr' ? `${fullProgress.percent}% terminé` : locale === 'pt-br' ? `${fullProgress.percent}% concluído` : `${fullProgress.percent}% complete`;
+  const beliefAria = locale === 'de' ? 'Antwort auf die politische Aussage' : locale === 'es' ? 'Respuesta a la afirmación política' : locale === 'fr' ? 'Réponse à l’affirmation politique' : locale === 'pt-br' ? 'Resposta à afirmação política' : 'Belief response';
 
   return (
     <section className="engine-shell">

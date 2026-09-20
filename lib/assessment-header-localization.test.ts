@@ -13,7 +13,7 @@ const wrappers = [
   'app/understand/page.tsx',
 ].map((path) => readFileSync(join(root, path), 'utf8')).join('\n');
 
-test('assessment headers expose native DE ES FR route labels', () => {
+test('assessment headers expose native DE ES FR and pt-BR route labels', () => {
   assert.match(header, /Quick · 26 Fragen/);
   assert.match(header, /Quick · 26 preguntas/);
   assert.match(header, /Quick-Ergebnis/);
@@ -24,6 +24,10 @@ test('assessment headers expose native DE ES FR route labels', () => {
   assert.match(header, /Full · 16 questions de plus/);
   assert.match(header, /20 Fragen/);
   assert.match(header, /20 preguntas/);
+  assert.match(header, /Quick · 26 perguntas/);
+  assert.match(header, /Resultado do Quick/);
+  assert.match(header, /Full · mais 16 perguntas/);
+  assert.match(header, /20 perguntas/);
 });
 
 test('assessment route wrappers use the shared locale-aware header instead of hard-coded English chrome', () => {

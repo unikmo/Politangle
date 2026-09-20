@@ -102,6 +102,8 @@ test('trust and information pages are native multilingual pages, not English fal
   assert.match(localizedInfo, /Huit questions que la politique mélange souvent\./);
   assert.match(methodExplainer, /Quick utiliza 26 afirmaciones/);
   assert.match(methodExplainer, /Quick utilise 26 affirmations/);
+  assert.match(localizedInfo, /ptBrInfoPages/);
+  assert.match(methodExplainer, /O Quick usa 26 afirmações/);
 });
 
 test('native trust copy keeps informal address and the locked 42-question total', () => {

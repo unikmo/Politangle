@@ -19,9 +19,9 @@ export function InfoShell({ eyebrow, title, intro, children }: { eyebrow: string
     </section>
     <section className="info-shell info-content">{children}</section>
     <div className="info-bottom-nav info-shell">
-      <Link href={href('/learn')}>{locale === 'de' ? 'Glossar' : locale === 'es' ? 'Glosario' : locale === 'fr' ? 'Glossaire' : 'Glossary'}</Link>
-      <Link href={href('/quizzes')}>{locale === 'fr' ? 'Quiz' : 'Quizzes'}</Link>
-      <Link href={href('/method')}>{locale === 'de' ? 'Methode' : locale === 'es' ? 'Método' : locale === 'fr' ? 'Méthode' : 'Method'}</Link>
+      <Link href={href('/learn')}>{locale === 'de' ? 'Glossar' : locale === 'es' ? 'Glosario' : locale === 'fr' ? 'Glossaire' : locale === 'pt-br' ? 'Glossário' : 'Glossary'}</Link>
+      <Link href={href('/quizzes')}>{locale === 'fr' ? 'Quiz' : locale === 'pt-br' ? 'Quizzes' : 'Quizzes'}</Link>
+      <Link href={href('/method')}>{locale === 'de' ? 'Methode' : locale === 'es' ? 'Método' : locale === 'fr' ? 'Méthode' : locale === 'pt-br' ? 'Método' : 'Method'}</Link>
     </div>
   </main>;
 }

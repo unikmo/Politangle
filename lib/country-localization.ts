@@ -3,6 +3,8 @@ import { deExtra, esExtra, frExtra, type LocalizedCountryContent } from './count
 import { deExpansion } from './country-localization-expansion-de';
 import { esExpansion } from './country-localization-expansion-es';
 import { frExpansion } from './country-localization-expansion-fr';
+import { ptBrWave1 } from './country-localization-ptbr-wave1';
+import { ptBrWave2 } from './country-localization-ptbr-wave2';
 import type { Locale } from '../app/LocaleProvider';
 
 const de: Record<string, LocalizedCountryContent> = {
@@ -148,6 +150,7 @@ const tables: Partial<Record<Locale, Record<string, LocalizedCountryContent>>> =
   de: { ...de, ...deExtra, ...deExpansion },
   es: { ...es, ...esExtra, ...esExpansion },
   fr: { ...fr, ...frExtra, ...frExpansion },
+  'pt-br': { ...ptBrWave1, ...ptBrWave2 },
 };
 
 export const nativeCountrySlugs = ['united-states','germany','france','united-kingdom','netherlands','denmark','finland','iceland','norway','sweden','spain','mexico','canada','south-africa','india','nigeria','philippines','brazil','indonesia','japan','italy','poland','romania','portugal','belgium','switzerland','ireland','argentina','colombia','chile','peru','costa-rica','kenya','ghana','senegal','australia','new-zealand','south-korea','taiwan','malaysia'] as const;
