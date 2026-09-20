@@ -74,3 +74,43 @@ test('country expansion stops at the agreed sixty profiles', () => {
   assert.deepEqual([...nativeCountrySlugs].slice(40), expectedFinalBatch);
   assert.equal(new Set(countryProfiles.map((country) => country.slug)).size, 60);
 });
+
+
+test('final twenty are substantive country pages rather than generic scaffolds', () => {
+  const finalTwenty = countryProfiles.slice(40);
+  assert.equal(finalTwenty.length, 20);
+
+  for (const country of finalTwenty) {
+    assert.ok(country.atAGlance.length >= 5, `${country.slug} needs a real institutional overview`);
+    assert.equal(country.power.length, 3, `${country.slug} needs three country-specific power explanations`);
+    assert.equal(country.vocabulary.length, 2, `${country.slug} needs two country-specific political vocabulary entries`);
+    assert.ok(country.timeline.length >= 4, `${country.slug} needs a substantive political timeline`);
+    assert.ok(country.sources.length >= 2, `${country.slug} needs at least two official or primary institutional sources`);
+    const combined = [...country.power, ...country.vocabulary, ...country.timeline.map((event) => event.text)].join(' ');
+    assert.doesNotMatch(combined, /constitutional framework distributes national authority among the institutions identified above/i);
+    assert.doesNotMatch(combined, /political labels in .* have their own national histories/i);
+    assert.doesNotMatch(combined, /balance among executive authority, legislative scrutiny, territorial government and constitutional oversight/i);
+  }
+
+  const bySlug = Object.fromEntries(finalTwenty.map((country) => [country.slug, country]));
+  assert.match(bySlug.austria.vocabulary.join(' '), /social partnership|Proporz/i);
+  assert.match(bySlug.greece.vocabulary.join(' '), /Metapolitefsi/i);
+  assert.match(bySlug.hungary.power.join(' '), /cardinal laws/i);
+  assert.match(bySlug.ukraine.power.join(' '), /martial law/i);
+  assert.match(bySlug.turkiye.vocabulary.join(' '), /Laiklik|Kemalism/i);
+  assert.match(bySlug.israel.power.join(' '), /Basic Laws/i);
+  assert.match(bySlug.uruguay.vocabulary.join(' '), /Batllismo/i);
+  assert.match(bySlug.ecuador.power.join(' '), /muerte cruzada/i);
+  assert.match(bySlug['dominican-republic'].timeline.map((event) => event.text).join(' '), /2024/);
+  assert.match(bySlug.panama.vocabulary.join(' '), /Canal|comarca/i);
+  assert.match(bySlug.cameroon.vocabulary.join(' '), /Anglophone|Francophone/i);
+  assert.ok(bySlug.zambia.timeline.some((event) => event.year === '2025'));
+  assert.match(bySlug.bangladesh.vocabulary.join(' '), /caretaker/i);
+  assert.ok(bySlug.pakistan.timeline.some((event) => event.year === '2025'));
+  assert.match(bySlug.pakistan.power.join(' '), /Federal Constitutional Court/i);
+  assert.match(bySlug.thailand.vocabulary.join(' '), /People.?s Constitution/i);
+  assert.match(bySlug.egypt.vocabulary.join(' '), /1952 Revolution/i);
+  assert.match(bySlug.ethiopia.power.join(' '), /House of the Federation/i);
+  assert.match(bySlug['democratic-republic-congo'].vocabulary.join(' '), /Congolité/i);
+  assert.match(bySlug.serbia.vocabulary.join(' '), /Kosovo/i);
+});
