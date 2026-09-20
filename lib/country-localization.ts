@@ -8,6 +8,7 @@ import { ptBrWave2 } from './country-localization-ptbr-wave2';
 import { deWave3, esWave3, frWave3, ptBrWave3 } from './country-localization-wave3';
 import { deWave4, esWave4, frWave4, ptBrWave4 } from './country-localization-wave4';
 import type { Locale } from '../app/LocaleProvider';
+import { localizeLegacyGlobalLabels } from './country-global-labels-localized';
 
 const de: Record<string, LocalizedCountryContent> = {
   'united-states': {
@@ -163,5 +164,11 @@ export function localizeCountryProfile(country: CountryProfile, locale: Locale):
   if (locale === 'en') return country;
   const localized = tables[locale]?.[country.slug];
   if (!localized) return null;
-  return { ...country, ...localized, timeline: localized.timeline as readonly CountryTimelineEvent[] };
+  const globalLabels = localized.globalLabels ?? localizeLegacyGlobalLabels(country.slug, locale, country.globalLabels);
+  return {
+    ...country,
+    ...localized,
+    globalLabels,
+    timeline: localized.timeline as readonly CountryTimelineEvent[],
+  };
 }
