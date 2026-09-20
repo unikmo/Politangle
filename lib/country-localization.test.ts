@@ -106,7 +106,8 @@ test('final twenty are substantive country pages rather than generic scaffolds',
   assert.match(bySlug.cameroon.vocabulary.join(' '), /Anglophone|Francophone/i);
   assert.ok(bySlug.zambia.timeline.some((event) => event.year === '2025'));
   assert.match(bySlug.bangladesh.vocabulary.join(' '), /caretaker/i);
-  assert.match(bySlug.pakistan.timeline.map((event) => event.text).join(' '), /Twenty-Seventh|2025/i);
+  assert.ok(bySlug.pakistan.timeline.some((event) => event.year === '2025'));
+  assert.match(bySlug.pakistan.power.join(' '), /Federal Constitutional Court/i);
   assert.match(bySlug.thailand.vocabulary.join(' '), /People.?s Constitution/i);
   assert.match(bySlug.egypt.vocabulary.join(' '), /1952 Revolution/i);
   assert.match(bySlug.ethiopia.power.join(' '), /House of the Federation/i);
