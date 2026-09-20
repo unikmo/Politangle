@@ -114,6 +114,33 @@ const copy: Record<Locale, SchoolCopy> = {
     pilotLabel: 'PILOTO CONTROLADO — NO AUTORIZADO PARA USO CON ALUMNADO REAL.',
     pilotText: 'Siguen siendo obligatorias una revisión jurídica, de accesibilidad y educativa cualificada.',
   },
+  'pt-br': {
+    strap: 'Jovens · sala de aula + privado',
+    kicker: 'Educação política para jovens',
+    title: 'Entenda a política. Veja a turma. Preserve a privacidade de cada estudante.',
+    intro: 'O Politangle School foi pensado para o ensino médio. Estudantes podem explorar de forma privada ou participar anonimamente de uma sala conduzida pelo professor. O professor vê apenas totais e distribuições da turma.',
+    privacyLabel: 'Privacidade em sala:',
+    privacyText: 'o professor vê o conjunto da turma, nunca qual estudante deu qual resposta.',
+    privateKicker: 'Estudantes · privado',
+    privateTitle: 'Explore no seu próprio dispositivo',
+    privateText: 'Faça o Quick 26, continue com o Full até 42 perguntas no total ou pratique conhecimentos políticos. Seu resultado individual não é enviado ao professor.',
+    privateCta: 'Modo privado do estudante',
+    classroomKicker: 'Estudantes · sala de aula',
+    classroomTitle: 'Entre em uma sala anônima',
+    classroomText: 'Digite o código de seis caracteres fornecido pelo professor. Não é necessário informar nome, e-mail, usuário ou número de estudante.',
+    classroomCta: 'Entrar na sala',
+    teacherKicker: 'Professores',
+    teacherTitle: 'Conheça o piloto controlado',
+    teacherText: 'Educadores podem examinar o sistema de sala de aula. O uso com estudantes reais e as licenças pagas continuam bloqueados até a conclusão das validações jurídica, de acessibilidade e por faixa etária.',
+    teacherCta: 'Informações sobre o piloto escolar',
+    teacherCanSee: 'O que o professor pode ver',
+    visible: 'VISÍVEL',
+    visibleText: 'Número de participantes, totais de respostas, distribuições ao vivo da turma, perfil político agregado, padrões de conhecimento e resumo da aula.',
+    never: 'NUNCA VISÍVEL',
+    neverText: 'Nomes de estudantes, quem escolheu cada resposta, perfil político individual, polígono individual ou pontuação individual de conhecimentos.',
+    pilotLabel: 'PILOTO CONTROLADO — NÃO AUTORIZADO PARA USO COM ESTUDANTES REAIS.',
+    pilotText: 'Revisões qualificadas jurídica, de acessibilidade e educacional continuam obrigatórias.',
+  },
   fr: {
     strap: 'Jeunes · classe + privé',
     kicker: 'Culture politique pour les jeunes',
@@ -164,9 +191,9 @@ export default function SchoolPage() {
             <span className="school-public-orbit one"/>
             <span className="school-public-orbit two"/>
             <div className="school-public-room">
-              <small>{locale === 'de' ? 'KLASSENBILD' : locale === 'es' ? 'VISTA DEL AULA' : locale === 'fr' ? 'VUE DE CLASSE' : 'CLASSROOM VIEW'}</small>
+              <small>{locale === 'de' ? 'KLASSENBILD' : locale === 'es' ? 'VISTA DEL AULA' : locale === 'fr' ? 'VUE DE CLASSE' : locale === 'pt-br' ? 'VISÃO DA TURMA' : 'CLASSROOM VIEW'}</small>
               <strong>24</strong>
-              <span>{locale === 'de' ? 'Teilnehmende · nur aggregiert' : locale === 'es' ? 'participantes · solo agregado' : locale === 'fr' ? 'participants · agrégé uniquement' : 'participants · aggregate only'}</span>
+              <span>{locale === 'de' ? 'Teilnehmende · nur aggregiert' : locale === 'es' ? 'participantes · solo agregado' : locale === 'fr' ? 'participants · agrégé uniquement' : locale === 'pt-br' ? 'participantes · apenas agregado' : 'participants · aggregate only'}</span>
               <i/>
               <i/>
               <i/>
@@ -178,8 +205,8 @@ export default function SchoolPage() {
       <section className="p-section p-shell">
         <div className="p-section-head">
           <div>
-            <p className="p-kicker">{locale === 'de' ? 'DREI WEGE' : locale === 'es' ? 'TRES FORMAS' : locale === 'fr' ? 'TROIS PARCOURS' : 'THREE WAYS TO USE IT'}</p>
-            <h2>{locale === 'de' ? 'Privat lernen oder gemeinsam diskutieren.' : locale === 'es' ? 'Aprender en privado o conversar en grupo.' : locale === 'fr' ? 'Apprendre en privé ou discuter ensemble.' : 'Learn privately or discuss together.'}</h2>
+            <p className="p-kicker">{locale === 'de' ? 'DREI WEGE' : locale === 'es' ? 'TRES FORMAS' : locale === 'fr' ? 'TROIS PARCOURS' : locale === 'pt-br' ? 'TRÊS FORMAS DE USAR' : 'THREE WAYS TO USE IT'}</p>
+            <h2>{locale === 'de' ? 'Privat lernen oder gemeinsam diskutieren.' : locale === 'es' ? 'Aprender en privado o conversar en grupo.' : locale === 'fr' ? 'Apprendre en privé ou discuter ensemble.' : locale === 'pt-br' ? 'Aprenda em particular ou discuta em grupo.' : 'Learn privately or discuss together.'}</h2>
           </div>
           <p>{c.privacyText}</p>
         </div>
@@ -213,7 +240,7 @@ export default function SchoolPage() {
         <div className="p-shell">
           <div className="school-public-privacy-head">
             <p className="p-kicker light">{c.teacherCanSee}</p>
-            <h2>{locale === 'de' ? 'Die Klasse wird sichtbar. Einzelne Schüler:innen nicht.' : locale === 'es' ? 'El grupo se ve. Cada estudiante permanece privado.' : locale === 'fr' ? 'La classe est visible. Chaque élève reste privé.' : 'See the class. Keep every student private.'}</h2>
+            <h2>{locale === 'de' ? 'Die Klasse wird sichtbar. Einzelne Schüler:innen nicht.' : locale === 'es' ? 'El grupo se ve. Cada estudiante permanece privado.' : locale === 'fr' ? 'La classe est visible. Chaque élève reste privé.' : locale === 'pt-br' ? 'Veja a turma. Preserve a privacidade de cada estudante.' : 'See the class. Keep every student private.'}</h2>
           </div>
           <div className="school-public-principles">
             <div>
