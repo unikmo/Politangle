@@ -36,6 +36,15 @@ const copy: Record<Locale, Copy> = {
     understandText:'Distingue conceptos políticos, sus límites y confusiones habituales.', understandCta:'Empezar UNDERSTAND',
     literacyNotice:'La interfaz está en español, pero CLASSIFY y UNDERSTAND todavía usan su banco validado en inglés mientras se prepara una versión española revisada.',
   },
+  'pt-br': {
+    mode:'Modo privado do estudante', kicker:'Seu dispositivo · seu resultado', title:'Explore a política com privacidade.',
+    intro:'Nenhum código de sala é necessário. Essas atividades não enviam seu perfil político individual ao professor.',
+    quickText:'Comece com 26 afirmações e veja como suas opiniões se distribuem entre várias dimensões políticas.', quickCta:'Começar Quick 26',
+    fullText:'Depois do Quick, o Full acrescenta 16 perguntas diferentes e leva a avaliação a 42 perguntas no total.', fullCta:'Começar Quick → Full',
+    literacy:'Conhecimento político', classifyText:'Relacione descrições políticas às tradições que melhor correspondem a elas.', classifyCta:'Começar CLASSIFY',
+    understandText:'Diferencie conceitos políticos, seus limites e confusões comuns.', understandCta:'Começar UNDERSTAND',
+    literacyNotice:'A interface está em português do Brasil, mas CLASSIFY e UNDERSTAND ainda usam o banco validado em inglês enquanto uma versão em português revisada é preparada.',
+  },
   fr: {
     mode:'Mode privé', kicker:'Ton appareil · ton résultat', title:'Explore la politique de ton côté.',
     intro:'Aucun code de classe n’est nécessaire. Ces activités n’envoient pas ton profil politique individuel à l’enseignant.',
