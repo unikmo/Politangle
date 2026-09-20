@@ -1,9 +1,9 @@
 # Politangle country-language editorial standard
 
 **Status:** enforced editorial standard for country perspectives  
-**Applies to:** German, Spanish and French country-language versions
+**Applies to:** German, Spanish, French and Brazilian Portuguese country-language versions
 
-Politangle country-language versions are **not sentence-by-sentence translations of English**.
+Politangle country-language versions are **not sentence-by-sentence translations of English explanatory prose**. Factual labels, institution names and chronological timeline facts may necessarily stay structurally close to the canonical profile; explanatory power, vocabulary and global-label-fit prose should read as native editorial copy.
 
 Each language version must:
 
@@ -14,7 +14,8 @@ Each language version must:
 5. explain terms such as liberal, republican, conservative, federalism, devolution, populism and party-family labels in their country-specific meaning rather than assuming a one-to-one translation;
 6. allow sentence order and explanatory emphasis to differ from English when that improves clarity;
 7. preserve source provenance and not introduce new current political facts during language editing;
-8. receive cross-language factual-consistency checks after editorial rewriting.
+8. receive cross-language factual-consistency checks after editorial rewriting;
+9. preserve the same country-specific political anchors and the same global-label-fit classification without importing English wording where a natural target-language formulation exists.
 
 ## Review status
 
