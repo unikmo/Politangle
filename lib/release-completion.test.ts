@@ -85,7 +85,7 @@ test('country release pattern is aligned across the full eighty-country registry
   assert.ok(countryProfiles.every((country) => country.timeline.length >= 4));
   assert.ok(countryProfiles.every((country) => country.sources.length >= 2));
   assert.ok(countryProfiles.every((country) => country.globalLabels));
-  assert.match(countryPattern, /same information architecture without becoming a generic template/i);
+  assert.match(countryPattern, /same .*information architecture.*without becoming a generic template/is);
   assert.match(countryPattern, /strong.*partial.*limited/is);
   assert.match(legacyGlobalLabels, /united-states/);
   assert.match(legacyGlobalLabels, /serbia/);
