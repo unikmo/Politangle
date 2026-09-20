@@ -54,6 +54,15 @@ function copy(locale: Locale, section: DeepSection) {
     previous:'Anterior', next:'Siguiente', check:'Comprobar respuesta', see:`Ver resultado de ${title}`, complete:(percent:number) => `${percent}% completado`,
     notice:'El banco de preguntas de CLASSIFY y UNDERSTAND todavía no tiene una versión española validada. La interfaz está en español, pero las preguntas permanecen en inglés hasta completar esa validación.',
   };
+  if (locale === 'pt-br') return {
+    title,
+    loading:'Carregando…',
+    description: section === 'classify' ? 'Relacione cada descrição política à tradição que melhor corresponde a ela.' : 'Diferencie conceitos políticos, seus limites e confusões comuns.',
+    result:'Resultado', retake:`Refazer ${title}`, back:'Voltar ao Politangle', correctOf:(correct:number,total:number) => `${correct} de ${total} corretas.`,
+    restart:'Recomeçar', question:(index:number,total:number) => `Pergunta ${index} de ${total}`, correct:'Correto', notQuite:'Não exatamente', best:'Melhor resposta:',
+    previous:'Anterior', next:'Próxima', check:'Verificar resposta', see:`Ver resultado de ${title}`, complete:(percent:number) => `${percent}% concluído`,
+    notice:'O banco de perguntas de CLASSIFY e UNDERSTAND ainda não tem uma versão validada em português do Brasil. A interface está em português, mas as perguntas continuam em inglês até essa validação ser concluída.',
+  };
   if (locale === 'fr') return {
     title,
     loading:'Chargement…',
