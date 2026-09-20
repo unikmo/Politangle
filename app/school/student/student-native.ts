@@ -46,6 +46,21 @@ export function studentUi(locale: Locale) {
     scale:['Pas du tout d’accord','Neutre / cela dépend','Tout à fait d’accord','Je ne sais pas'],
     literacyNotice:'Cette activité de culture politique utilise encore les questions en anglais pendant la validation de la version française.',
   };
+  if (locale === 'pt-br') return {
+    header:'Estudante', joinKicker:'Entrar na sala', joinTitle:'Digite o código da sala.', joinHelp:'Não é necessário informar nome, e-mail, usuário ou número de estudante. O professor vê como a turma responde, não qual resposta veio de você.',
+    codeAria:'Código da sala', join:'Entrar anonimamente', joining:'Entrando anonimamente…', badCode:'Digite o código de seis caracteres da sala.', notFound:'Sala não encontrada ou indisponível.', closed:'Esta sala está encerrada.', joinFailed:'Não foi possível entrar nesta sala.', joined:'Você entrou anonimamente. O professor vê totais e distribuições da turma, não qual resposta é a sua.',
+    privacyDisclaimer:'Suas respostas entram apenas nas estatísticas agregadas da turma. O sistema foi projetado para não guardar uma relação entre participante e resposta. O uso real com menores ainda exige revisão jurídica e de privacidade qualificada.',
+    loading:'Carregando a sala…', joinedCount:(n:number)=>`${n} participantes`, classLabel:(code:string)=>`Turma ${code}`,
+    responseFailed:'Não foi possível enviar a resposta.', received:'Resposta recebida. Ela foi adicionada ao total da turma sem guardar uma relação entre você e essa resposta.',
+    sessionEnded:'Sessão encerrada', closedTitle:'Esta sala está encerrada.', closedText:'Suas atividades pessoais do Politangle continuam disponíveis no modo privado.',
+    complete:'Atividade concluída', completeTitle:(n:number)=>`Todas as ${n} respostas foram enviadas.`, completeText:'O professor recebe a distribuição da turma, não um relatório individual sobre você.',
+    liveQuestion:(n:number)=>`Pergunta ao vivo ${n}`, questionOf:(n:number,total:number)=>`Pergunta ${n} de ${total}`,
+    submit:'Enviar anonimamente', submitting:'Enviando…', submitted:'Resposta recebida.', waitingClass:'Aguardando a turma / o professor.', waitingOpen:'Aguarde o professor abrir esta pergunta.',
+    roomAnswers:'Respostas da turma', explanation:'Explicação', previous:'Anterior', next:'Próxima', submittedCount:(n:number,total:number)=>`${n}/${total} enviadas`,
+    lobby:'Sala anônima', inTitle:'Você entrou.', inText:'Aguarde o professor iniciar a próxima pergunta.',
+    scale:['Discordo totalmente','Nem concordo nem discordo / depende','Concordo totalmente','Não tenho certeza'],
+    literacyNotice:'Esta atividade de conhecimento político ainda usa perguntas em inglês enquanto a versão em português do Brasil é revisada e validada.',
+  };
   return {
     header:'Student', joinKicker:'Join classroom', joinTitle:'Enter the room code.', joinHelp:'No name, email, username or student ID is required. Your teacher sees how the room answers, not which answer came from you.',
     codeAria:'Classroom code', join:'Join anonymously', joining:'Joining anonymously…', badCode:'Enter the six-character classroom code.', notFound:'Classroom not found or unavailable.', closed:'This classroom is closed.', joinFailed:'Could not join this classroom.', joined:'You joined anonymously. Your teacher sees class totals and distributions, not which answer is yours.',
