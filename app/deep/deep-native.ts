@@ -33,6 +33,16 @@ const axes: Record<Locale, Record<string, AxisDisplay>> = {
     nationhood: { name: 'Pertenencia nacional', low: 'Pertenencia cívica / inclusiva', high: 'Continuidad heredada / de estatus' },
     ecology: { name: 'Ecología', low: 'Límites ecológicos / cambio estructural', high: 'Crecimiento / adaptación gradual' },
   },
+  'pt-br': {
+    'economic-role': { name: 'Papel econômico do Estado', low: 'Serviços públicos / redistribuição', high: 'Mercado / responsabilidade privada' },
+    ownership: { name: 'Propriedade', low: 'Propriedade social / dos trabalhadores', high: 'Propriedade privada / de acionistas' },
+    'social-values': { name: 'Valores sociais', low: 'Autonomia pessoal / mudança', high: 'Tradição / continuidade moral' },
+    authority: { name: 'Autoridade', low: 'Liberdade / garantias', high: 'Ordem / autoridade preventiva' },
+    pluralism: { name: 'Pluralismo', low: 'Freios e contrapesos / instituições independentes', high: 'Concentração majoritária' },
+    world: { name: 'Relação com o mundo', low: 'Cooperação internacional', high: 'Autonomia nacional' },
+    nationhood: { name: 'Pertencimento nacional', low: 'Pertencimento cívico / inclusivo', high: 'Continuidade herdada / baseada em status' },
+    ecology: { name: 'Ecologia', low: 'Limites ecológicos / mudança estrutural', high: 'Crescimento / adaptação gradual' },
+  },
   fr: {
     'economic-role': { name: 'Rôle de l’État', low: 'Services publics / redistribution', high: 'Marché / responsabilité individuelle' },
     ownership: { name: 'Propriété', low: 'Propriété sociale / des salariés', high: 'Propriété privée / des actionnaires' },
@@ -79,6 +89,16 @@ const axisPlain: Record<Locale, Record<string, AxisPlainDisplay>> = {
     nationhood: { question: '¿Quién pertenece plenamente a la nación?', low: 'pertenencia cívica igual sin importar origen o religión', high: 'más peso para vínculos heredados, culturales o familiares' },
     ecology: { question: 'Cuando el crecimiento choca con los límites ecológicos, ¿qué debería tener prioridad?', low: 'límites ecológicos incluso con algún coste económico', high: 'crecimiento con mejoras ambientales mediante tecnología y políticas graduales' },
   },
+  'pt-br': {
+    'economic-role': { question: 'Quanta responsabilidade o poder público deve assumir por serviços essenciais e desigualdade econômica?', low: 'mais serviços públicos e redistribuição', high: 'mais mercado e responsabilidade privada' },
+    ownership: { question: 'Quem deveria possuir e controlar as grandes empresas?', low: 'mais propriedade dos trabalhadores ou pública', high: 'propriedade privada e de acionistas' },
+    'social-values': { question: 'Quanta liberdade as pessoas devem ter em escolhas pessoais e sociais?', low: 'autonomia pessoal e mudança social', high: 'tradição e continuidade moral' },
+    authority: { question: 'Quando segurança e liberdade entram em conflito, o que deve pesar mais?', low: 'liberdade e garantias de procedimento', high: 'ordem e autoridade preventiva' },
+    pluralism: { question: 'Até que ponto governos eleitos devem ser limitados por tribunais, imprensa e oposição?', low: 'freios independentes ao governo', high: 'mais espaço para maiorias eleitas agirem' },
+    world: { question: 'Quando problemas cruzam fronteiras, quanta autonomia nacional os países devem abrir mão?', low: 'cooperação internacional obrigatória', high: 'decisão nacional' },
+    nationhood: { question: 'Quem pertence plenamente à nação?', low: 'pertencimento cívico igual, independentemente de origem ou religião', high: 'mais peso para vínculos herdados, culturais ou familiares' },
+    ecology: { question: 'Quando crescimento entra em conflito com limites ecológicos, o que deve ter prioridade?', low: 'limites ecológicos mesmo com algum custo econômico', high: 'crescimento com melhora ambiental por tecnologia e políticas graduais' },
+  },
   fr: {
     'economic-role': { question: 'Quelle responsabilité l’État devrait-il assumer pour les services essentiels et les inégalités économiques ?', low: 'davantage de services publics et de redistribution', high: 'davantage de marché et de responsabilité privée' },
     ownership: { question: 'Qui devrait posséder et contrôler les grandes entreprises ?', low: 'davantage de propriété salariale ou publique', high: 'la propriété privée et actionnariale' },
@@ -113,6 +133,13 @@ const families: Record<Locale, Record<string, { name: string; meaning: string }>
     socialism: { name: 'Socialismo', meaning: 'propiedad social y una crítica más fuerte al control privado de la producción' },
     'green-politics': { name: 'Política verde', meaning: 'límites ecológicos, sostenibilidad, pluralismo y cooperación política' },
   },
+  'pt-br': {
+    liberalism: { name: 'Liberalismo', meaning: 'liberdade, autonomia pessoal e limites ao poder concentrado' },
+    conservatism: { name: 'Conservadorismo', meaning: 'continuidade, ordem, propriedade privada e mudança social cautelosa' },
+    'social-democracy': { name: 'Social-democracia', meaning: 'proteção social, redistribuição e instituições democráticas pluralistas' },
+    socialism: { name: 'Socialismo', meaning: 'propriedade social e uma contestação mais forte ao controle privado da produção' },
+    'green-politics': { name: 'Política verde', meaning: 'limites ecológicos, sustentabilidade, pluralismo e cooperação política' },
+  },
   fr: {
     liberalism: { name: 'Libéralisme', meaning: 'liberté, autonomie personnelle et limites au pouvoir concentré' },
     conservatism: { name: 'Conservatisme', meaning: 'continuité, ordre, propriété privée et changement social prudent' },
@@ -141,6 +168,12 @@ const constructs: Record<Locale, Record<string, string>> = {
     'world-sovereignty':'Cooperación entre países', 'nationhood-membership':'Pertenencia', populism:'Influencia política',
     'ecology-growth':'Medio ambiente y crecimiento', 'religion-public-role':'Religión y leyes', subsidiarity:'Decisiones locales o centrales',
   },
+  'pt-br': {
+    'public-provision':'Serviços essenciais', redistribution:'Desigualdade econômica', ownership:'Propriedade das empresas', 'social-change':'Mudança social',
+    'personal-autonomy':'Liberdade pessoal', abortion:'Aborto', 'authority-order':'Segurança e liberdade', pluralism:'Freios ao governo',
+    'world-sovereignty':'Cooperação entre países', 'nationhood-membership':'Pertencimento', populism:'Influência política',
+    'ecology-growth':'Meio ambiente e crescimento', 'religion-public-role':'Religião e leis', subsidiarity:'Decisões locais ou centrais',
+  },
   fr: {
     'public-provision':'Services essentiels', redistribution:'Inégalités économiques', ownership:'Propriété des entreprises', 'social-change':'Changement social',
     'personal-autonomy':'Liberté personnelle', abortion:'Avortement', 'authority-order':'Sécurité et liberté', pluralism:'Contre-pouvoirs',
@@ -160,7 +193,7 @@ export function deepAxisQuestion(locale: Locale, id: string) {
 export function deepAxisTakeaway(locale: Locale, id: string, score: number | null) {
   const plain = axisPlain[locale][id];
   if (!plain || score === null) {
-    return locale === 'de' ? 'Für dieses Thema fehlen noch Antworten.' : locale === 'es' ? 'Aún faltan respuestas para este tema.' : locale === 'fr' ? 'Il manque encore des réponses pour ce sujet.' : 'This topic needs more answers.';
+    return locale === 'de' ? 'Für dieses Thema fehlen noch Antworten.' : locale === 'es' ? 'Aún faltan respuestas para este tema.' : locale === 'fr' ? 'Il manque encore des réponses pour ce sujet.' : locale === 'pt-br' ? 'Ainda faltam respostas para este tema.' : 'This topic needs more answers.';
   }
   if (locale === 'de') {
     if (score <= 24) return `Deine Antworten sprechen deutlich für ${plain.low}.`;
@@ -175,6 +208,13 @@ export function deepAxisTakeaway(locale: Locale, id: string, score: number | nul
     if (score <= 60) return `Tus respuestas equilibran bastante ${plain.low} y ${plain.high}.`;
     if (score <= 74) return `Tus respuestas se inclinan hacia ${plain.high}.`;
     return `Tus respuestas favorecen claramente ${plain.high}.`;
+  }
+  if (locale === 'pt-br') {
+    if (score <= 24) return `${axisPlain[locale][id]?.low ?? 'este lado'} aparece como uma tendência clara no seu perfil.`;
+    if (score <= 39) return `Você se inclina para ${axisPlain[locale][id]?.low ?? 'este lado'}, mas sem uma posição totalmente definida.`;
+    if (score <= 60) return 'Suas respostas ficam relativamente equilibradas entre os dois lados deste eixo.';
+    if (score <= 74) return `Você se inclina para ${axisPlain[locale][id]?.high ?? 'o outro lado'}, mas sem uma posição totalmente definida.`;
+    return `${axisPlain[locale][id]?.high ?? 'este lado'} aparece como uma tendência clara no seu perfil.`;
   }
   if (locale === 'fr') {
     if (score <= 24) return `Tes réponses vont nettement vers ${plain.low}.`;
@@ -191,7 +231,7 @@ export function deepAxisTakeaway(locale: Locale, id: string, score: number | nul
 }
 
 export function deepFamily(locale: Locale, id: string, fallback: string) {
-  return families[locale][id] ?? { name: fallback, meaning: locale === 'de' ? 'die Kerngedanken dieser Tradition' : locale === 'es' ? 'las ideas centrales de esta tradición' : locale === 'fr' ? 'les idées centrales de cette tradition' : 'the core ideas of that tradition' };
+  return families[locale][id] ?? { name: fallback, meaning: locale === 'de' ? 'die Kerngedanken dieser Tradition' : locale === 'es' ? 'las ideas centrales de esta tradición' : locale === 'fr' ? 'les idées centrales de cette tradition' : locale === 'pt-br' ? 'as ideias centrais dessa tradição' : 'the core ideas of that tradition' };
 }
 
 export function deepConstruct(locale: Locale, id: string) {
@@ -229,6 +269,9 @@ export function deepUi(locale: Locale) {
     restart:'Reiniciar Full', previous:'Anterior', next:'Siguiente', result:'Ver resultado Full', noUnsure:'Ninguna respuesta insegura hasta ahora', marked:'marcadas como inseguras',
     noCorrect:'No hay una respuesta política correcta.', shapeNote:'Cada radio representa una dimensión política. Lo importante es el conjunto del perfil, no simplemente el radio más largo.',
   };
+  if (locale === 'pt-br') return {
+    loading:'Carregando avaliação…', noQuick:'Você precisa concluir o Quick antes de abrir o Full.', backQuick:'Voltar para o Quick', fullKicker:'POLITANGLE FULL', fullTitle:'Aprofunde seu perfil com mais 16 perguntas.', fullIntro:'O Full revisita os mesmos temas com perguntas adicionais de THINK, FEEL e ACT. A ideia é mostrar não só o que você pensa, mas também como princípio, intuição e escolha prática podem se aproximar ou se afastar.', restart:'Recomeçar Full', previous:'Anterior', next:'Próxima', result:'Ver resultado completo', shapeNote:'Cada eixo mostra uma dimensão política. O que importa é o desenho do conjunto — não apenas o eixo mais alto.', resultKicker:'SEU POLITANGLE · FULL', resultTitle:'Uma visão mais completa do seu padrão político.', resultIntro:'Full combina Quick e as 16 perguntas adicionais. O resultado continua sendo uma leitura do modelo atual do Politangle, não um diagnóstico nem uma orientação de voto.', politicalHome:'Leitura política', closestTraditions:'Tradições mais próximas', historicalReferences:'Referências históricas', shape:'Seu perfil em oito eixos', whyResult:'Por que este é o seu resultado?', strongestAxes:'As posições que mais moldam seu perfil', coherence:'Coerência entre respostas', whatThisShows:'O que isso mostra:', thinkFeelAct:'THINK, FEEL e ACT', think:'THINK', feel:'FEEL', act:'ACT', allAxes:'Ver os oito eixos políticos', tendencies:'Tendências adicionais', nuances:'Nuances', notLabel:'Esses resultados descrevem padrões de resposta dentro do modelo. Eles não determinam em quem você deve votar nem obrigam você a aceitar um rótulo.', completeQuick:'Concluir Quick',
+  };
   if (locale === 'fr') return {
     loading:'Chargement de Full…', quickFirst:'Quick d’abord', quickFirstTitle:'Fais Politangle Quick avant de passer à Full.', startQuick:'Lancer Quick',
     fullLabel:'Ton Politangle · Full', homeAria:'Ton positionnement politique', mainHome:'Proximité principale', secondary:'Proximité importante', tertiary:'Autre influence',
@@ -265,14 +308,16 @@ export function deepCoherence(locale: Locale, score: number | null) {
   if (locale === 'de') return score === null ? 'Noch zu wenig Informationen' : score >= 80 ? 'Sehr stimmig' : score >= 65 ? 'Weitgehend stimmig' : score >= 45 ? 'Kontextabhängig' : 'Stark gemischt';
   if (locale === 'es') return score === null ? 'Aún falta información' : score >= 80 ? 'Muy coherente' : score >= 65 ? 'Bastante coherente' : score >= 45 ? 'Depende del contexto' : 'Muy mixto';
   if (locale === 'fr') return score === null ? 'Pas encore assez d’informations' : score >= 80 ? 'Très cohérent' : score >= 65 ? 'Plutôt cohérent' : score >= 45 ? 'Dépend du contexte' : 'Très mixte';
+  if (locale === 'pt-br') return score === null ? 'Ainda há pouca informação' : score >= 80 ? 'Muito coerente' : score >= 65 ? 'Bastante coerente' : score >= 45 ? 'Depende do contexto' : 'Bem misto';
   return score === null ? 'Not enough information' : score >= 80 ? 'Highly coherent' : score >= 65 ? 'Mostly coherent' : score >= 45 ? 'Context-sensitive' : 'Strongly mixed';
 }
 
 export function deepDirection(locale: Locale, score: number | null, low: string, high: string) {
-  if (score === null) return locale === 'de' ? 'Noch zu wenig Informationen' : locale === 'es' ? 'Aún falta información' : locale === 'fr' ? 'Pas encore assez d’informations' : 'Not enough information';
+  if (score === null) return locale === 'de' ? 'Noch zu wenig Informationen' : locale === 'es' ? 'Aún falta información' : locale === 'fr' ? 'Pas encore assez d’informations' : locale === 'pt-br' ? 'Ainda há pouca informação' : 'Not enough information';
   if (locale === 'de') return score <= 24 ? `Deutlich Richtung ${low}` : score <= 39 ? `Eher ${low}` : score <= 60 ? 'Gemischt / ausgewogen' : score <= 74 ? `Eher ${high}` : `Deutlich Richtung ${high}`;
   if (locale === 'es') return score <= 24 ? `Muy cerca de ${low}` : score <= 39 ? `Se inclina hacia ${low}` : score <= 60 ? 'Mixto / equilibrado' : score <= 74 ? `Se inclina hacia ${high}` : `Muy cerca de ${high}`;
   if (locale === 'fr') return score <= 24 ? `Très nettement vers ${low}` : score <= 39 ? `Plutôt vers ${low}` : score <= 60 ? 'Mixte / équilibré' : score <= 74 ? `Plutôt vers ${high}` : `Très nettement vers ${high}`;
+  if (locale === 'pt-br') return score <= 24 ? `Bem próximo de ${low}` : score <= 39 ? `Inclinação para ${low}` : score <= 60 ? 'Misto / equilibrado' : score <= 74 ? `Inclinação para ${high}` : `Bem próximo de ${high}`;
   return score <= 24 ? `Strongly toward ${low.toLowerCase()}` : score <= 39 ? `Leans toward ${low.toLowerCase()}` : score <= 60 ? 'Mixed / balanced' : score <= 74 ? `Leans toward ${high.toLowerCase()}` : `Strongly toward ${high.toLowerCase()}`;
 }
 
@@ -281,6 +326,7 @@ export function deepModeDirection(locale: Locale, score: number | null, low: str
   if (locale === 'de') return score <= 24 ? `Klar ${low}` : score <= 39 ? `Eher ${low}` : score <= 60 ? 'Zwischen beiden Polen' : score <= 74 ? `Eher ${high}` : `Klar ${high}`;
   if (locale === 'es') return score <= 24 ? `Claramente ${low}` : score <= 39 ? `Más cerca de ${low}` : score <= 60 ? 'Entre ambos polos' : score <= 74 ? `Más cerca de ${high}` : `Claramente ${high}`;
   if (locale === 'fr') return score <= 24 ? `Nettement ${low}` : score <= 39 ? `Plutôt ${low}` : score <= 60 ? 'Entre les deux pôles' : score <= 74 ? `Plutôt ${high}` : `Nettement ${high}`;
+  if (locale === 'pt-br') return score <= 24 ? `Claramente ${low}` : score <= 39 ? `Mais perto de ${low}` : score <= 60 ? 'Entre os dois polos' : score <= 74 ? `Mais perto de ${high}` : `Claramente ${high}`;
   return score <= 24 ? `Strongly ${low.toLowerCase()}` : score <= 39 ? `Leans ${low.toLowerCase()}` : score <= 60 ? 'Between both poles' : score <= 74 ? `Leans ${high.toLowerCase()}` : `Strongly ${high.toLowerCase()}`;
 }
 
@@ -288,6 +334,7 @@ export function deepAxisSentence(locale: Locale, score: number | null, low: stri
   if (locale === 'de') return score === null ? 'Für diese Achse fehlen noch Antworten.' : score <= 24 ? `${low} ist eine der deutlichsten Tendenzen in deinem Profil.` : score <= 39 ? `Du tendierst zu ${low}, ohne ganz eindeutig zu sein.` : score <= 60 ? `Du hältst ${low} und ${high} vergleichsweise gut in Balance.` : score <= 74 ? `Du tendierst zu ${high}, ohne ganz eindeutig zu sein.` : `${high} ist eine der deutlichsten Tendenzen in deinem Profil.`;
   if (locale === 'es') return score === null ? 'Aún faltan respuestas para este eje.' : score <= 24 ? `${low} es una de las tendencias más claras de tu perfil.` : score <= 39 ? `Te inclinas hacia ${low}, aunque no de forma absoluta.` : score <= 60 ? `Mantienes bastante equilibrio entre ${low} y ${high}.` : score <= 74 ? `Te inclinas hacia ${high}, aunque no de forma absoluta.` : `${high} es una de las tendencias más claras de tu perfil.`;
   if (locale === 'fr') return score === null ? 'Il manque encore des réponses pour cet axe.' : score <= 24 ? `${low} est l’une des tendances les plus nettes de ton profil.` : score <= 39 ? `Tu penches vers ${low}, sans être complètement tranché.` : score <= 60 ? `Tu gardes un équilibre assez marqué entre ${low} et ${high}.` : score <= 74 ? `Tu penches vers ${high}, sans être complètement tranché.` : `${high} est l’une des tendances les plus nettes de ton profil.`;
+  if (locale === 'pt-br') return score === null ? 'Ainda faltam respostas para este eixo.' : score <= 24 ? `${low} é uma das tendências mais claras do seu perfil.` : score <= 39 ? `Você se inclina para ${low}, sem uma posição totalmente definida.` : score <= 60 ? `Você mantém um equilíbrio considerável entre ${low} e ${high}.` : score <= 74 ? `Você se inclina para ${high}, sem uma posição totalmente definida.` : `${high} é uma das tendências mais claras do seu perfil.`;
   return score === null ? 'This part of your profile needs more information.' : score <= 24 ? `${low} is one of the strongest features of your political profile.` : score <= 39 ? `You lean toward ${low.toLowerCase()} while retaining some balance.` : score <= 60 ? `You are comparatively balanced between ${low.toLowerCase()} and ${high.toLowerCase()}.` : score <= 74 ? `You lean toward ${high.toLowerCase()} while retaining some balance.` : `${high} is one of the strongest features of your political profile.`;
 }
 
