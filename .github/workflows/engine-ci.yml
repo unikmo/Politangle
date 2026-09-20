@@ -7,7 +7,6 @@ on:
       - engine/v1
       - school/v1
       - school/age-bands-v2
-      - countries/61-80
   pull_request:
     branches:
       - main
