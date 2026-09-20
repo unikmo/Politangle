@@ -426,24 +426,33 @@ export function deepHome(locale: Locale, home: { headline: string; primary: any;
     else if (p && ps !== null && s && ss !== null && ps >= 55 && ss >= 50) headline = `Ton profil se rapproche surtout de ${p.name}, avec aussi une forte proximité avec ${s.name}.`;
     else if (p && ps !== null && ps >= 55) headline = `Ton profil se rapproche surtout de ${p.name}.`;
     else if (p && ps !== null) headline = 'Aucune tradition politique ne domine clairement tes réponses.';
+  } else if (locale === 'pt-br') {
+    headline = complete ? 'Seu perfil político continua misto.' : 'Seu perfil político provisório continua misto.';
+    if (p && ps !== null && s && ss !== null && ps >= 55 && ss >= 55 && gap !== null && gap <= 4) headline = `Seu perfil fica entre ${p.name} e ${s.name}.`;
+    else if (p && ps !== null && s && ss !== null && ps >= 55 && ss >= 50) headline = `Seu perfil se aproxima mais de ${p.name}, com proximidade clara de ${s.name}.`;
+    else if (p && ps !== null && ps >= 55) headline = `Seu perfil se aproxima mais de ${p.name}.`;
+    else if (p && ps !== null) headline = 'Nenhuma tradição política domina claramente suas respostas.';
   }
   const parts: string[] = [];
   if (p && ps !== null) {
     if (locale === 'de') parts.push(`Am stärksten passt ${p.name} (${ps}/100) zu deinem Gesamtmuster. Dabei geht es hier vor allem um ${p.meaning}.`);
     else if (locale === 'es') parts.push(`La coincidencia más fuerte es con ${p.name} (${ps}/100). En este perfil representa sobre todo ${p.meaning}.`);
     else if (locale === 'fr') parts.push(`La proximité la plus forte est avec ${p.name} (${ps}/100). Ici, cela renvoie surtout à ${p.meaning}.`);
+    else if (locale === 'pt-br') parts.push(`A maior proximidade é com ${p.name} (${ps}/100). Neste perfil, isso representa principalmente ${p.meaning}.`);
     else parts.push(`Your strongest family match is ${p.name} ${ps}/100, reflecting ${p.meaning}.`);
   }
   if (s && ss !== null && (ps === null || ss >= 45)) {
     if (locale === 'de') parts.push(`Auch ${s.name} spielt mit ${ss}/100 eine erkennbare Rolle. Ein einziges Etikett wäre deshalb zu grob.`);
     else if (locale === 'es') parts.push(`${s.name} también pesa con ${ss}/100. Por eso una sola etiqueta se quedaría corta.`);
     else if (locale === 'fr') parts.push(`${s.name} compte aussi, avec ${ss}/100. Une seule étiquette serait donc trop réductrice.`);
+    else if (locale === 'pt-br') parts.push(`${s.name} também tem peso, com ${ss}/100. Por isso, um único rótulo deixaria de fora uma parte importante do seu perfil.`);
     else parts.push(`${s.name} also matters at ${ss}/100, so a one-word label would leave out a meaningful part of your profile.`);
   }
   if (t && tertiary?.overall !== null && tertiary?.overall !== undefined && tertiary.overall >= 60) {
     if (locale === 'de') parts.push(`${t.name} ist mit ${tertiary.overall}/100 ebenfalls ein klarer Einfluss.`);
     else if (locale === 'es') parts.push(`${t.name} también aparece con fuerza: ${tertiary.overall}/100.`);
     else if (locale === 'fr') parts.push(`${t.name} apparaît aussi nettement, avec ${tertiary.overall}/100.`);
+    else if (locale === 'pt-br') parts.push(`${t.name} também aparece como influência clara: ${tertiary.overall}/100.`);
     else parts.push(`${t.name} is another clear influence at ${tertiary.overall}/100.`);
   }
   return { headline, summary: parts.join(' ') };
