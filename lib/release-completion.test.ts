@@ -49,9 +49,9 @@ test('validation workflow follows the 16+ certification policy', () => {
 });
 
 
-test('all forty country perspectives have native DE ES FR routes without machine fallback', () => {
-  assert.equal(countryProfiles.length, 40);
-  assert.equal(nativeCountrySlugs.length, 40);
+test('all sixty country perspectives have native DE ES FR and pt-BR routes without machine fallback', () => {
+  assert.equal(countryProfiles.length, 60);
+  assert.equal(nativeCountrySlugs.length, 60);
   assert.deepEqual([...nativeCountrySlugs], countryProfiles.map((country) => country.slug));
   assert.match(countryLocalization, /deExpansion/);
   assert.match(countryLocalization, /esExpansion/);
