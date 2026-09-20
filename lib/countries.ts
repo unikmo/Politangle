@@ -3,6 +3,11 @@ import { wave3CountryProfiles } from './countries-wave3';
 
 export type CountrySource = { title: string; publisher: string; url: string; checkedAt: string };
 export type CountryTimelineEvent = { year: string; title: string; text: string };
+export type GlobalLabelFit = {
+  fit: 'strong' | 'partial' | 'limited';
+  summary: string;
+  localDimensions: readonly string[];
+};
 export type CountryCurrentSnapshot = {
   asOf: string;
   officeholders: readonly [string, string][];
@@ -32,6 +37,7 @@ export type CountryProfile = {
   atAGlance: readonly [string, string][];
   power: readonly string[];
   vocabulary: readonly string[];
+  globalLabels?: GlobalLabelFit;
   timeline: readonly CountryTimelineEvent[];
   current?: CountryCurrentSnapshot;
   incomplete: readonly string[];
