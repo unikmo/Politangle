@@ -16,6 +16,8 @@ const countryLocalization = readFileSync(join(root, 'lib/country-localization.ts
 const localizedCountryRoute = readFileSync(join(root, 'app/[locale]/countries/[slug]/page.tsx'), 'utf8');
 const siteChrome = readFileSync(join(root, 'app/SiteChrome.tsx'), 'utf8');
 const countryGuide = readFileSync(join(root, 'app/countries/CountryGuide.tsx'), 'utf8');
+const countryPattern = readFileSync(join(root, 'docs/country-perspective-pattern-v2.md'), 'utf8');
+const legacyGlobalLabels = readFileSync(join(root, 'lib/country-global-labels-legacy.ts'), 'utf8');
 
 test('founder review covers the exact current bank without silently validating it', () => {
   assert.match(reviewApi, /literacyMasterBankCandidates/);
@@ -72,4 +74,19 @@ test('all eighty country perspectives have native DE ES FR and pt-BR routes with
   assert.match(localizedCountryRoute, /hreflang|languages:/);
   assert.match(siteChrome, /href\('\/countries'\)/);
 
+});
+
+
+test('country release pattern is aligned across the full eighty-country registry', () => {
+  assert.equal(countryProfiles.length, 80);
+  assert.ok(countryProfiles.every((country) => country.atAGlance.length >= 5));
+  assert.ok(countryProfiles.every((country) => country.power.length === 3));
+  assert.ok(countryProfiles.every((country) => country.vocabulary.length === 2));
+  assert.ok(countryProfiles.every((country) => country.timeline.length >= 4));
+  assert.ok(countryProfiles.every((country) => country.sources.length >= 2));
+  assert.ok(countryProfiles.every((country) => country.globalLabels));
+  assert.match(countryPattern, /same information architecture without becoming a generic template/i);
+  assert.match(countryPattern, /strong.*partial.*limited/is);
+  assert.match(legacyGlobalLabels, /united-states/);
+  assert.match(legacyGlobalLabels, /serbia/);
 });
