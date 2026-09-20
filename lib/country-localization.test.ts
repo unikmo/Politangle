@@ -4,9 +4,9 @@ import { countryProfiles } from './countries';
 import { localizeCountryProfile, nativeCountrySlugs } from './country-localization';
 import type { Locale } from '../app/LocaleProvider';
 
-const locales: Locale[] = ['de','es','fr'];
+const locales: Locale[] = ['de','es','fr','pt-br'];
 
-test('all forty country profiles have maintained native DE ES FR versions', () => {
+test('all forty country profiles have maintained native DE ES FR and pt-BR versions', () => {
   assert.equal(countryProfiles.length, 40);
   assert.equal(nativeCountrySlugs.length, 40);
   assert.deepEqual([...nativeCountrySlugs], countryProfiles.map((country) => country.slug));
