@@ -6,9 +6,9 @@ import type { Locale } from '../app/LocaleProvider';
 
 const locales: Locale[] = ['de','es','fr','pt-br'];
 
-test('all forty country profiles have maintained native DE ES FR and pt-BR versions', () => {
-  assert.equal(countryProfiles.length, 40);
-  assert.equal(nativeCountrySlugs.length, 40);
+test('all sixty country profiles have maintained native DE ES FR and pt-BR versions', () => {
+  assert.equal(countryProfiles.length, 60);
+  assert.equal(nativeCountrySlugs.length, 60);
   assert.deepEqual([...nativeCountrySlugs], countryProfiles.map((country) => country.slug));
 
   for (const locale of locales) {
@@ -62,4 +62,15 @@ test('country localization does not fabricate current snapshots for contextual-o
       assert.equal(localizeCountryProfile(country, locale)!.current, undefined);
     }
   }
+});
+
+
+test('country expansion stops at the agreed sixty profiles', () => {
+  const expectedFinalBatch = [
+    'austria','czechia','greece','hungary','ukraine','turkiye','israel','uruguay','ecuador','dominican-republic',
+    'panama','cameroon','zambia','bangladesh','pakistan','thailand','egypt','ethiopia','democratic-republic-congo','serbia',
+  ];
+  assert.deepEqual(countryProfiles.slice(40).map((country) => country.slug), expectedFinalBatch);
+  assert.deepEqual([...nativeCountrySlugs].slice(40), expectedFinalBatch);
+  assert.equal(new Set(countryProfiles.map((country) => country.slug)).size, 60);
 });
