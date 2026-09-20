@@ -3,7 +3,7 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 
-export type Locale = 'en' | 'de' | 'es' | 'fr';
+export type Locale = 'en' | 'de' | 'es' | 'fr' | 'pt-br';
 const LOCALE_KEY = 'politangle.locale';
 
 export function localePath(locale: Locale, path: string) {
@@ -19,15 +19,15 @@ export function LocaleProvider({ children, initialLocale = 'en' }: { children: R
     if (initialLocale !== 'en') { localStorage.setItem(LOCALE_KEY, initialLocale); return; }
     const saved = localStorage.getItem(LOCALE_KEY);
     const browserLanguage = navigator.language.toLowerCase().slice(0, 2);
-    const detected: Locale = browserLanguage === 'de' || browserLanguage === 'es' || browserLanguage === 'fr' ? browserLanguage : 'en';
-    setLocaleState(saved === 'de' || saved === 'es' || saved === 'fr' || saved === 'en' ? saved : detected);
+    const detected: Locale = browserLanguage === 'de' || browserLanguage === 'es' || browserLanguage === 'fr' ? browserLanguage : browserLanguage === 'pt' ? 'pt-br' : 'en';
+    setLocaleState(saved === 'de' || saved === 'es' || saved === 'fr' || saved === 'pt-br' || saved === 'en' ? saved : detected);
   }, [initialLocale]);
   function setLocale(next: Locale) {
     localStorage.setItem(LOCALE_KEY, next);
-    document.documentElement.lang = next === 'en' ? 'en-US' : next;
+    document.documentElement.lang = next === 'en' ? 'en-US' : next === 'pt-br' ? 'pt-BR' : next;
     setLocaleState(next);
   }
-  useEffect(() => { document.documentElement.lang = locale === 'en' ? 'en-US' : locale; }, [locale]);
+  useEffect(() => { document.documentElement.lang = locale === 'en' ? 'en-US' : locale === 'pt-br' ? 'pt-BR' : locale; }, [locale]);
   return <LocaleContext.Provider value={{ locale, setLocale }}>{children}</LocaleContext.Provider>;
 }
 
@@ -37,14 +37,16 @@ export function LanguageSelector() {
   const { locale, setLocale } = useLocale();
   const pathname = usePathname();
   const router = useRouter();
-  const names: Record<Locale, string> = { en: 'English (US)', de: 'Deutsch', es: 'Español', fr: 'Français' };
+  const names: Record<Locale, string> = { en: 'English (US)', de: 'Deutsch', es: 'Español', fr: 'Français', 'pt-br': 'Português (Brasil)' };
   const aria = locale === 'de'
     ? 'Sprache auswählen'
     : locale === 'es'
       ? 'Elegir idioma'
       : locale === 'fr'
         ? 'Choisir la langue'
-        : 'Choose language';
+        : locale === 'pt-br'
+          ? 'Escolher idioma'
+          : 'Choose language';
 
   return (
     <label className="p-language-picker">
@@ -56,7 +58,7 @@ export function LanguageSelector() {
         onChange={(event) => {
           const selected = event.target.value as Locale;
           setLocale(selected);
-          const unprefixed = pathname.replace(/^\/(en|de|es|fr)(?=\/|$)/, '') || '/';
+          const unprefixed = pathname.replace(/^\/(en|de|es|fr|pt-br)(?=\/|$)/, '') || '/';
           router.push(`/${selected}${unprefixed === '/' ? '' : unprefixed}`);
         }}
       >
