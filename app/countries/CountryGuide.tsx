@@ -79,6 +79,19 @@ const ui: Record<Locale, UiCopy> = {
     historyTitle:'Les tournants à connaître', historyIntro:'Uniquement les événements qui aident à expliquer la formation du système actuel.',
     current:'Instantané politique actuel', sources:'Sources et état de mise à jour', incomplete:'Données actuelles encore à compléter', sourceLink:'Source', back:'Toutes les perspectives nationales',
   },
+  'pt-br': {
+    eyebrow:'PERSPECTIVA POR PAÍS',
+    hero:(name)=>`${name}, em contexto.`,
+    intro:(name)=>`O que muda quando ideias políticas são lidas em ${name}? Esta página traz o contexto mínimo necessário antes de comparar rótulos entre países.`,
+    whyTitle:'Por que esta página existe',
+    why1:'Palavras políticas não significam exatamente a mesma coisa em todo lugar. “Liberal”, “conservador”, “esquerda”, “direita”, “nacional” ou “federal” podem apontar para coalizões e instituições diferentes em cada país.',
+    why2:'Esta página não altera sua pontuação no Politangle. Ela ajuda a entender o contexto local por trás do vocabulário.',
+    threeTitle:'Três coisas para saber primeiro', threeIntro:'A versão mais curta e útil de como o poder funciona aqui.', whyMatters:'Por que isso importa',
+    labelsTitle:'O que rótulos conhecidos significam aqui', labelsIntro:'Algumas palavras políticas mudam de sentido entre países. Estas são as diferenças que vale entender primeiro.', moreContext:'Mais contexto',
+    systemTitle:'O sistema em 30 segundos', systemIntro:'Estrutura suficiente para entender o restante da página.',
+    historyTitle:'Pontos de virada que vale conhecer', historyIntro:'Somente os acontecimentos que ajudam a explicar como o sistema atual chegou até aqui.',
+    current:'Panorama político atual', sources:'Fontes e status de atualização', incomplete:'Dados atuais ainda pendentes', sourceLink:'Fonte', back:'Todas as perspectivas por país',
+  },
 };
 
 function firstSentence(text: string) {
