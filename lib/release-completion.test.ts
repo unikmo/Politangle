@@ -49,9 +49,9 @@ test('validation workflow follows the 16+ certification policy', () => {
 });
 
 
-test('all sixty country perspectives have native DE ES FR and pt-BR routes without machine fallback', () => {
-  assert.equal(countryProfiles.length, 60);
-  assert.equal(nativeCountrySlugs.length, 60);
+test('all eighty country perspectives have native DE ES FR and pt-BR routes without machine fallback', () => {
+  assert.equal(countryProfiles.length, 80);
+  assert.equal(nativeCountrySlugs.length, 80);
   assert.deepEqual([...nativeCountrySlugs], countryProfiles.map((country) => country.slug));
   assert.match(countryLocalization, /deExpansion/);
   assert.match(countryLocalization, /esExpansion/);
@@ -60,6 +60,10 @@ test('all sixty country perspectives have native DE ES FR and pt-BR routes witho
   assert.match(countryLocalization, /deWave3/);
   assert.match(countryLocalization, /esWave3/);
   assert.match(countryLocalization, /frWave3/);
+  assert.match(countryLocalization, /ptBrWave4/);
+  assert.match(countryLocalization, /deWave4/);
+  assert.match(countryLocalization, /esWave4/);
+  assert.match(countryLocalization, /frWave4/);
   assert.match(countryLocalization, /Vereinigte Staaten/);
   assert.match(countryLocalization, /Estados Unidos/);
   assert.match(countryLocalization, /États-Unis/);
