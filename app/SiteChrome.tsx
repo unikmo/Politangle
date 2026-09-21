@@ -14,6 +14,7 @@ type ChromeCopy = {
   schools: string;
   about: string;
   countries: string;
+  guides: string;
   account: string;
   start: string;
   practice: string;
@@ -26,27 +27,27 @@ type ChromeCopy = {
 
 const copy: Record<Locale, ChromeCopy> = {
   en: {
-    method: 'Method', learn: 'Learn', quizzes: 'Quizzes', countries: 'Countries', schools: 'For schools', about: 'About',
+    method: 'Method', learn: 'Learn', guides: 'Guides', quizzes: 'Quizzes', countries: 'Countries', schools: 'For schools', about: 'About',
     account: 'Sign in', start: 'Start Quick', practice: 'Practice', validation: 'Validation',
     privacy: 'Privacy', imprint: 'Imprint', terms: 'Terms', contact: 'Contact',
   },
   de: {
-    method: 'Methode', learn: 'Lernen', quizzes: 'Quizzes', countries: 'Länder', schools: 'Für Schulen', about: 'Über Politangle',
+    method: 'Methode', learn: 'Lernen', guides: 'Leitfäden', quizzes: 'Quizzes', countries: 'Länder', schools: 'Für Schulen', about: 'Über Politangle',
     account: 'Anmelden', start: 'Quick starten', practice: 'Üben', validation: 'Validierung',
     privacy: 'Datenschutz', imprint: 'Impressum', terms: 'Nutzungsbedingungen', contact: 'Kontakt',
   },
   es: {
-    method: 'Método', learn: 'Aprender', quizzes: 'Quizzes', countries: 'Países', schools: 'Para centros', about: 'Acerca de',
+    method: 'Método', learn: 'Aprender', guides: 'Guías', quizzes: 'Quizzes', countries: 'Países', schools: 'Para centros', about: 'Acerca de',
     account: 'Iniciar sesión', start: 'Empezar Quick', practice: 'Práctica', validation: 'Validación',
     privacy: 'Privacidad', imprint: 'Aviso legal', terms: 'Condiciones', contact: 'Contacto',
   },
   fr: {
-    method: 'Méthode', learn: 'Apprendre', quizzes: 'Quiz', countries: 'Pays', schools: 'Pour les écoles', about: 'À propos',
+    method: 'Méthode', learn: 'Apprendre', guides: 'Guides', quizzes: 'Quiz', countries: 'Pays', schools: 'Pour les écoles', about: 'À propos',
     account: 'Se connecter', start: 'Lancer Quick', practice: 'S’entraîner', validation: 'Validation',
     privacy: 'Vie privée', imprint: 'Mentions légales', terms: 'Conditions', contact: 'Contact',
   },
   'pt-br': {
-    method: 'Método', learn: 'Aprender', quizzes: 'Quizzes', countries: 'Países', schools: 'Para escolas', about: 'Sobre',
+    method: 'Método', learn: 'Aprender', guides: 'Guias', quizzes: 'Quizzes', countries: 'Países', schools: 'Para escolas', about: 'Sobre',
     account: 'Entrar', start: 'Começar Quick', practice: 'Praticar', validation: 'Validação',
     privacy: 'Privacidade', imprint: 'Informações legais', terms: 'Termos', contact: 'Contato',
   },
@@ -63,6 +64,7 @@ export function SiteHeader() {
       <nav aria-label="Primary navigation">
         <Link href={href('/method')}>{c.method}</Link>
         <Link href={href('/learn')}>{c.learn}</Link>
+        <Link href={href('/guides')}>{c.guides}</Link>
         <Link href={href('/quizzes')}>{c.quizzes}</Link>
         <Link href={href('/countries')}>{c.countries}</Link>
         <Link href={href('/school')}>{c.schools}</Link>
@@ -90,6 +92,7 @@ export function SiteFooter() {
       <Link className="p-brand" href={href('/')}><Mark/><span><b>Politangle</b><small>politangle.org</small></span></Link>
       <div>
         <Link href={href('/learn')}>{c.learn}</Link>
+        <Link href={href('/guides')}>{c.guides}</Link>
         <Link href={href('/quizzes')}>{c.quizzes}</Link>
         <Link href={href('/countries')}>{c.countries}</Link>
         <Link href={href('/practice')}>{c.practice}</Link>
