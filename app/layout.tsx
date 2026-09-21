@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { headers } from 'next/headers';
 import './globals.css';
 import './engine.css';
 import './literacy.css';
@@ -43,6 +44,20 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en-US" suppressHydrationWarning><body><a className="skip-link" href="#main-content">Skip to main content</a><div id="main-content" tabIndex={-1}><LocaleProvider>{children}<SiteFooter /></LocaleProvider></div></body></html>;
+const htmlLanguage: Record<string, string> = { en: 'en-US', de: 'de', es: 'es', fr: 'fr', 'pt-br': 'pt-BR' };
+const skipLabel: Record<string, string> = {
+  en: 'Skip to main content',
+  de: 'Zum Hauptinhalt springen',
+  es: 'Ir al contenido principal',
+  fr: 'Aller au contenu principal',
+  'pt-br': 'Ir para o conteúdo principal',
+};
+
+export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  const requestHeaders = await headers();
+  const locale = requestHeaders.get('x-politangle-locale') ?? 'en';
+  const lang = htmlLanguage[locale] ?? 'en-US';
+  const skip = skipLabel[locale] ?? skipLabel.en;
+
+  return <html lang={lang} suppressHydrationWarning><body><a className="skip-link" href="#main-content">{skip}</a><div id="main-content" tabIndex={-1}><LocaleProvider>{children}<SiteFooter /></LocaleProvider></div></body></html>;
 }
