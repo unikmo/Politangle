@@ -59,5 +59,24 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
   const lang = htmlLanguage[locale] ?? 'en-US';
   const skip = skipLabel[locale] ?? skipLabel.en;
 
-  return <html lang={lang} suppressHydrationWarning><body><a className="skip-link" href="#main-content">{skip}</a><div id="main-content" tabIndex={-1}><LocaleProvider>{children}<SiteFooter /></LocaleProvider></div></body></html>;
+  const websiteJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Politangle',
+    url: 'https://politangle.org',
+    inLanguage: ['en-US', 'de', 'es', 'fr', 'pt-BR'],
+  };
+  const organizationJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'Politangle',
+    url: 'https://politangle.org',
+  };
+
+  return <html lang={lang} suppressHydrationWarning><body>
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }} />
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }} />
+    <a className="skip-link" href="#main-content">{skip}</a>
+    <div id="main-content" tabIndex={-1}><LocaleProvider>{children}<SiteFooter /></LocaleProvider></div>
+  </body></html>;
 }
