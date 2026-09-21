@@ -45,7 +45,8 @@ test('Spanish marketing localization stays on informal tú copy and avoids usted
 });
 
 test('English locale is explicitly US English and the language control allows direct choice', () => {
-  assert.match(layout, /<html lang="en-US"/);
+  assert.match(layout, /en: 'en-US'/);
+  assert.match(layout, /<html lang=\{lang\}/);
   assert.match(localeProvider, /en: 'English \(US\)'/);
   assert.match(localeProvider, /<select/);
   assert.match(localeProvider, /Choose language/);
