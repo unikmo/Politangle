@@ -1,15 +1,8 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import { hreflangForPath, seoCopy, type SeoLocale } from '../../../lib/seo-locales';
 const locales = ['en', 'de', 'es', 'fr', 'pt-br'] as const;
 const pageKeys = ['', 'about', 'account', 'classify', 'contact', 'deep', 'imprint', 'learn', 'method', 'populism-quiz', 'practice', 'privacy', 'question-banks', 'quiz', 'quizzes', 'results', 'school', 'school/pilot', 'terms', 'understand', 'validation'] as const;
-const titles: Record<string, string> = {
-  '': 'Politangle', about: 'About', account: 'Account', classify: 'CLASSIFY', contact: 'Contact', deep: 'Politangle Full',
-  imprint: 'Imprint', learn: 'Learn political language', method: 'Method', 'populism-quiz': 'Spot populism',
-  practice: 'Political literacy practice', privacy: 'Privacy', 'question-banks': 'Question banks', quizzes: 'Quizzes',
-  quiz: 'Politangle Quick', results: 'Your result', school: 'For schools', 'school/pilot': 'School pilot',
-  terms: 'Terms', understand: 'UNDERSTAND', validation: 'Validation',
-};
-
 function routeKey(slug?: string[]) { return slug?.join('/') ?? ''; }
 
 export function generateStaticParams() {
@@ -21,13 +14,33 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const key = routeKey(slug);
   if (!locales.includes(locale as typeof locales[number]) || !pageKeys.includes(key as typeof pageKeys[number])) return {};
   const suffix = key ? `/${key}` : '';
+  const activeLocale = locale as SeoLocale;
+  const seo = seoCopy[activeLocale]?.[key] ?? seoCopy.en[key];
+  const noIndex = new Set(['account', 'results', 'contact', 'imprint']);
+  const canonical = `/${locale}${suffix}`;
+  const ogLocale: Record<SeoLocale, string> = { en: 'en_US', de: 'de_DE', es: 'es_ES', fr: 'fr_FR', 'pt-br': 'pt_BR' };
+
   return {
-    title: titles[key],
+    title: seo.title,
+    description: seo.description,
     alternates: {
-      canonical: `/${locale}${suffix}`,
-      languages: { 'en-US': `/en${suffix}`, de: `/de${suffix}`, es: `/es${suffix}`, fr: `/fr${suffix}`, 'pt-BR': `/pt-br${suffix}`, 'x-default': `/en${suffix}` },
+      canonical,
+      languages: hreflangForPath(suffix),
     },
-    robots: key === 'results' ? { index: false, follow: false } : undefined,
+    robots: noIndex.has(key) ? { index: false, follow: true } : { index: true, follow: true },
+    openGraph: {
+      type: 'website',
+      siteName: 'Politangle',
+      title: seo.title,
+      description: seo.description,
+      url: canonical,
+      locale: ogLocale[activeLocale],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: seo.title,
+      description: seo.description,
+    },
   };
 }
 
