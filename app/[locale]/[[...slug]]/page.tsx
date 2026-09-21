@@ -1,8 +1,9 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { hreflangForPath, seoCopy, type SeoLocale } from '../../../lib/seo-locales';
+import { getSeoTopic, seoTopicSlugs, type SeoTopicSlug } from '../../../lib/seo-topics';
 const locales = ['en', 'de', 'es', 'fr', 'pt-br'] as const;
-const pageKeys = ['', 'about', 'account', 'classify', 'contact', 'deep', 'imprint', 'learn', 'method', 'populism-quiz', 'practice', 'privacy', 'question-banks', 'quiz', 'quizzes', 'results', 'school', 'school/pilot', 'terms', 'understand', 'validation'] as const;
+const pageKeys = ['', 'about', 'account', 'classify', 'contact', 'deep', 'guides', 'imprint', 'learn', 'method', 'political-spectrum', 'left-vs-right-politics', 'political-ideologies', 'political-test', 'political-literacy', 'populism-quiz', 'practice', 'privacy', 'question-banks', 'quiz', 'quizzes', 'results', 'school', 'school/pilot', 'terms', 'understand', 'validation'] as const;
 function routeKey(slug?: string[]) { return slug?.join('/') ?? ''; }
 
 export function generateStaticParams() {
@@ -15,7 +16,20 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   if (!locales.includes(locale as typeof locales[number]) || !pageKeys.includes(key as typeof pageKeys[number])) return {};
   const suffix = key ? `/${key}` : '';
   const activeLocale = locale as SeoLocale;
-  const seo = seoCopy[activeLocale]?.[key] ?? seoCopy.en[key];
+  const isSeoTopic = seoTopicSlugs.includes(key as SeoTopicSlug);
+  const topicSeo = isSeoTopic ? getSeoTopic(activeLocale, key as SeoTopicSlug) : null;
+  const guideSeo = key === 'guides'
+    ? {
+        en: { title:'Political guides', description:'Neutral guides to political spectra, left and right, political ideologies, political tests and political literacy.' },
+        de: { title:'Politische Leitfäden', description:'Neutrale Leitfäden zu politischem Spektrum, links und rechts, Ideologien, politischen Tests und politischer Bildung.' },
+        es: { title:'Guías políticas', description:'Guías neutrales sobre espectro político, izquierda y derecha, ideologías, tests políticos y cultura política.' },
+        fr: { title:'Guides politiques', description:'Guides neutres sur le spectre politique, la gauche et la droite, les idéologies, les tests politiques et la culture politique.' },
+        'pt-br': { title:'Guias políticos', description:'Guias neutros sobre espectro político, esquerda e direita, ideologias, testes políticos e educação política.' },
+      }[activeLocale]
+    : null;
+  const seo = topicSeo
+    ? { title: topicSeo.metaTitle, description: topicSeo.metaDescription }
+    : guideSeo ?? seoCopy[activeLocale]?.[key] ?? seoCopy.en[key];
   const noIndex = new Set(['account', 'results', 'contact', 'imprint']);
   const canonical = `/${locale}${suffix}`;
   const ogLocale: Record<SeoLocale, string> = { en: 'en_US', de: 'de_DE', es: 'es_ES', fr: 'fr_FR', 'pt-br': 'pt_BR' };
@@ -60,6 +74,12 @@ async function loadPage(key: string): Promise<React.ComponentType> {
     case 'classify': return (await import('../../classify/page')).default;
     case 'contact': return (await import('../../contact/page')).default;
     case 'deep': return (await import('../../deep/page')).default;
+    case 'guides': return (await import('../../guides/page')).default;
+    case 'political-spectrum': return (await import('../../political-spectrum/page')).default;
+    case 'left-vs-right-politics': return (await import('../../left-vs-right-politics/page')).default;
+    case 'political-ideologies': return (await import('../../political-ideologies/page')).default;
+    case 'political-test': return (await import('../../political-test/page')).default;
+    case 'political-literacy': return (await import('../../political-literacy/page')).default;
     case 'imprint': return (await import('../../imprint/page')).default;
     case 'learn': return (await import('../../learn/page')).default;
     case 'method': return (await import('../../method/page')).default;
