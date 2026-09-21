@@ -81,7 +81,7 @@ const en: Record<InfoPageId, PageCopy> = {
   contact: {
     eyebrow: 'CONTACT',
     title: 'Contact Politangle.',
-    intro: 'School, privacy and legal enquiries should use the appropriate verified channel once it is published.'
+    intro: 'School, privacy and legal enquiries should use the appropriate verified channel once it is published.',
     sections: [
       { title: 'School pilots', paragraphs: ['Controlled school pilots will open only after privacy, legal and educational validation gates are satisfied. The current pilot route records interest; it does not authorize real-student use.'] },
       { title: 'Contact availability', callout: 'A monitored public email address is not yet published. No unverified address is shown.' },
