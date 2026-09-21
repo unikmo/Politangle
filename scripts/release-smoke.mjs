@@ -6,6 +6,10 @@ const countrySlugs = [
   'spain','mexico','canada','south-africa','india','nigeria','philippines','brazil','indonesia','japan',
   'italy','poland','romania','portugal','belgium','switzerland','ireland','argentina','colombia','chile',
   'peru','costa-rica','kenya','ghana','senegal','australia','new-zealand','south-korea','taiwan','malaysia',
+  'austria','czechia','greece','hungary','ukraine','turkiye','israel','uruguay','ecuador','dominican-republic',
+  'panama','cameroon','zambia','bangladesh','pakistan','thailand','egypt','ethiopia','democratic-republic-congo','serbia',
+  'vietnam','morocco','algeria','tanzania','uganda','cote-divoire','angola','mozambique','sri-lanka','nepal',
+  'iraq','guatemala','bolivia','paraguay','venezuela','honduras','el-salvador','singapore','tunisia','georgia',
 ];
 const locales = ['de','es','fr','pt-br'];
 
