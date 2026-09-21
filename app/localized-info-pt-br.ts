@@ -1,7 +1,7 @@
 import type { InfoPageId, PageCopy } from './LocalizedInfoPage';
 
 const verifiedContactEmail = process.env.NEXT_PUBLIC_CONTACT_EMAIL?.trim() ?? '';
-const contactValue = verifiedContactEmail || '[A INFORMAR — e-mail monitorado ou canal direto equivalente]';
+const contactValue = verifiedContactEmail || 'Ainda não publicado';
 
 export const ptBrInfoPages: Record<InfoPageId, PageCopy> = {
   method: {
@@ -13,12 +13,12 @@ export const ptBrInfoPages: Record<InfoPageId, PageCopy> = {
   validation: {
     eyebrow:'VALIDAÇÃO E LIMITES',
     title:'Clareza sobre o que já foi demonstrado — e o que ainda não foi.',
-    intro:'O software e a lógica de pontuação passam por testes técnicos. Validação científica, cognitiva e em sala de aula são etapas separadas e não são comprovadas por uma compilação bem-sucedida.',
+    intro:'A lógica de pontuação é testada quanto à consistência técnica. Validade psicométrica, equivalência entre idiomas e adequação para sala de aula exigem evidências separadas.',
     sections:[
-      { title:'Situação atual', status:'AVALIAÇÃO CANDIDATA', paragraphs:['Testes automatizados verificam pontuação, quantidade de perguntas, geração de resultados e limites de privacidade em sala de aula. Isso demonstra consistência de implementação, não validade psicométrica.'] },
+      { title:'Situação atual', status:'VERSÃO EM VALIDAÇÃO', paragraphs:['O sistema atual verifica consistência da pontuação, quantidade de perguntas, geração de resultados e regras de privacidade em sala de aula. Isso demonstra consistência de implementação, não validade psicométrica.'] },
       { title:'Ainda não estabelecido', bullets:['Normas representativas de população','Confiabilidade teste–reteste','Equivalência dos construtos entre idiomas e faixas etárias','Compreensão cognitiva com os públicos Junior e Youth','Validade preditiva para voto ou comportamento político'] },
       { title:'Não leia demais no resultado', paragraphs:['As pontuações são indicadores gerados pelo modelo atual. Um valor como 61/100 não significa uma probabilidade científica de alguém “ser” uma ideologia. Referências históricas ajudam a ilustrar tradições; não representam endosso nem equivalência.'] },
-      { title:'Barreira de liberação escolar', callout:'O uso em escolas reais com menores ainda não está autorizado. Exige revisão jurídica qualificada, testes de acessibilidade e validação de conteúdo adequada à idade.' },
+      { title:'Uso em escolas', callout:'O uso com estudantes reais menores de idade exige revisão jurídica qualificada, testes de acessibilidade e validação de conteúdo adequada à idade antes de ser habilitado.' },
     ],
   },
   privacy: {
@@ -79,8 +79,8 @@ export const ptBrInfoPages: Record<InfoPageId, PageCopy> = {
     intro:'Mudar o idioma não altera silenciosamente o contexto de país, os construtos de pontuação nem a avaliação adulta. Mudanças materiais recebem uma nova versão.',
     sections:[
       { title:'Adulto', table:[['Quick','26 perguntas'],['Full','42 perguntas no total'],['Status','A avaliação adulta continua sendo um formulário próprio']] },
-      { title:'Youth 14–18', paragraphs:['Uma versão candidata em linguagem mais simples cobre os mesmos construtos centrais. Adequação à idade e equivalência dos construtos ainda exigem validação.'] },
-      { title:'Junior 10–13', paragraphs:['Um banco candidato separado usa frases mais curtas e simples para sala de aula. Ele precisa ser testado com usuários da faixa etária antes do uso real em escolas.'] },
+      { title:'Youth 14–18', paragraphs:['Uma versão Youth em linguagem mais simples cobre os mesmos construtos centrais. Adequação à idade e equivalência dos construtos ainda exigem validação.'] },
+      { title:'Junior 10–13', paragraphs:['Um banco Junior separado usa frases mais curtas e simples para sala de aula. Ele precisa ser testado com usuários da faixa etária antes do uso real em escolas.'] },
       { title:'Idiomas', paragraphs:['Inglês, alemão, espanhol, francês e português do Brasil são camadas de idioma — não perfis de país. Exemplos específicos de países, eleições, partidos ou campanhas exigem versões editoriais próprias.'] },
     ],
   },
@@ -91,7 +91,7 @@ export const ptBrInfoPages: Record<InfoPageId, PageCopy> = {
     sections:[
       { title:'O que será testado', bullets:['Clareza das instruções e perguntas','Adequação por faixa etária','Compreensão das explicações','Fluxo do professor e do projetor','Privacidade e utilidade dos resultados agregados'] },
       { title:'Proteção do estudante', paragraphs:['O desenho evita listas de nomes e mapas entre estudante e resposta. Mesmo assim, uso real com menores exige revisão jurídica qualificada, acessibilidade e validação educacional antes da liberação.'] },
-      { title:'Situação atual', status:'PILOTO AINDA NÃO ABERTO', callout:'Manifestar interesse não autoriza uso com estudantes reais. A equipe deve liberar explicitamente o piloto após o cumprimento das barreiras de privacidade, jurídico e validação.' },
+      { title:'Situação atual', status:'PILOTO EM PREPARAÇÃO', callout:'Manifestar interesse não autoriza uso com estudantes reais. A equipe deve liberar explicitamente o piloto após o cumprimento das barreiras de privacidade, jurídico e validação.' },
     ],
   },
 };
