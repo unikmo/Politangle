@@ -90,7 +90,7 @@ const en: Record<InfoPageId, PageCopy> = {
   imprint: {
     eyebrow: 'IMPRINT',
     title: 'Provider information.',
-    intro: 'Politangle is operated as a project of TSquare Ventures LLC. Only verified provider details are published.'
+    intro: 'Politangle is operated as a project of TSquare Ventures LLC. Only verified provider details are published.',
     sections: [
       { title: 'Verification note', callout: 'Electronic contact and any applicable registration, tax, representation or consumer-dispute information will be added only when verified.' },
     ],
