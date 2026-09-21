@@ -30,7 +30,7 @@ test('keyboard and reduced-motion accessibility protections are present', () => 
 
 test('localized country pages publish canonical and hreflang alternates', () => {
   assert.match(localizedCountry, /canonical:/);
-  for (const locale of ['en-US','de','es','fr','x-default']) assert.match(localizedCountry, new RegExp(locale.replace('-', '\\-')));
+  for (const locale of ['en-US','de','es','fr','pt-BR','x-default']) assert.match(localizedCountry, new RegExp(locale.replace('-', '\\-')));
 });
 
 test('cross-site state-changing requests are rejected', () => {
@@ -42,7 +42,9 @@ test('cross-site state-changing requests are rejected', () => {
 
 test('built-app QA checks all country routes, admin protection and certification gates', () => {
   assert.match(smoke, /countrySlugs/);
-  assert.match(smoke, /locales = \['de','es','fr'\]/);
+  assert.match(smoke, /'georgia'/);
+  assert.match(smoke, /\/pt-br\/political-spectrum/);
+  assert.match(smoke, /locales = \['de','es','fr','pt-br'\]/);
   assert.match(smoke, /api\/admin\/overview/);
   assert.match(smoke, /certification must remain closed/);
   assert.match(smoke, /cross-site POST expected 403/);

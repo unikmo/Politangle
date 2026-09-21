@@ -5,7 +5,10 @@ import { countryProfiles } from '../../lib/countries';
 
 export const metadata: Metadata = {
   title: 'Country perspectives | Politangle',
-  description: 'See how familiar political labels and institutions change meaning across countries.',
+  description: 'Compare how political institutions, labels and local political dimensions work across 80 countries.',
+  alternates: { canonical:'/countries', languages:{ 'en-US':'/countries', de:'/de/countries', es:'/es/countries', fr:'/fr/countries', 'pt-BR':'/pt-br/countries', 'x-default':'/countries' } },
+  robots: { index:true, follow:true },
+  openGraph: { type:'website', siteName:'Politangle', title:'Country perspectives | Politangle', description:'Compare how political institutions, labels and local political dimensions work across 80 countries.', url:'/countries' },
 };
 
 export default function CountriesPage() {

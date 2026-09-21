@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { headers } from 'next/headers';
 import './globals.css';
 import './engine.css';
 import './literacy.css';
@@ -43,6 +44,39 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en-US" suppressHydrationWarning><body><a className="skip-link" href="#main-content">Skip to main content</a><div id="main-content" tabIndex={-1}><LocaleProvider>{children}<SiteFooter /></LocaleProvider></div></body></html>;
+const htmlLanguage: Record<string, string> = { en: 'en-US', de: 'de', es: 'es', fr: 'fr', 'pt-br': 'pt-BR' };
+const skipLabel: Record<string, string> = {
+  en: 'Skip to main content',
+  de: 'Zum Hauptinhalt springen',
+  es: 'Ir al contenido principal',
+  fr: 'Aller au contenu principal',
+  'pt-br': 'Ir para o conteúdo principal',
+};
+
+export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  const requestHeaders = await headers();
+  const locale = requestHeaders.get('x-politangle-locale') ?? 'en';
+  const lang = htmlLanguage[locale] ?? 'en-US';
+  const skip = skipLabel[locale] ?? skipLabel.en;
+
+  const websiteJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Politangle',
+    url: 'https://politangle.org',
+    inLanguage: ['en-US', 'de', 'es', 'fr', 'pt-BR'],
+  };
+  const organizationJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'Politangle',
+    url: 'https://politangle.org',
+  };
+
+  return <html lang={lang} suppressHydrationWarning><body>
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }} />
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }} />
+    <a className="skip-link" href="#main-content">{skip}</a>
+    <div id="main-content" tabIndex={-1}><LocaleProvider>{children}<SiteFooter /></LocaleProvider></div>
+  </body></html>;
 }

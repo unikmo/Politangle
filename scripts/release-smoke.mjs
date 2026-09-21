@@ -6,8 +6,12 @@ const countrySlugs = [
   'spain','mexico','canada','south-africa','india','nigeria','philippines','brazil','indonesia','japan',
   'italy','poland','romania','portugal','belgium','switzerland','ireland','argentina','colombia','chile',
   'peru','costa-rica','kenya','ghana','senegal','australia','new-zealand','south-korea','taiwan','malaysia',
+  'austria','czechia','greece','hungary','ukraine','turkiye','israel','uruguay','ecuador','dominican-republic',
+  'panama','cameroon','zambia','bangladesh','pakistan','thailand','egypt','ethiopia','democratic-republic-congo','serbia',
+  'vietnam','morocco','algeria','tanzania','uganda','cote-divoire','angola','mozambique','sri-lanka','nepal',
+  'iraq','guatemala','bolivia','paraguay','venezuela','honduras','el-salvador','singapore','tunisia','georgia',
 ];
-const locales = ['de','es','fr'];
+const locales = ['de','es','fr','pt-br'];
 
 const pages = [
   ['/', 'Politangle'],
@@ -25,9 +29,21 @@ const pages = [
   ['/de/method', 'Acht Fragen'],
   ['/es/method', 'Ocho preguntas'],
   ['/fr/method', 'Huit questions'],
-  ['/de/countries', '40 Länderperspektiven'],
-  ['/es/countries', '40 perspectivas'],
-  ['/fr/countries', '40 perspectives'],
+  ['/pt-br/method', 'Oito perguntas'],
+  ['/guides', 'Political guides'],
+  ['/de/guides', 'Politische Leitfäden'],
+  ['/es/guides', 'Guías políticas'],
+  ['/fr/guides', 'Guides politiques'],
+  ['/pt-br/guides', 'Guias políticos'],
+  ['/political-spectrum', 'What is a political spectrum'],
+  ['/de/political-spectrum', 'Was ist ein politisches Spektrum'],
+  ['/es/political-spectrum', 'Qué es un espectro político'],
+  ['/fr/political-spectrum', 'Qu’est-ce qu’un spectre politique'],
+  ['/pt-br/political-spectrum', 'O que é um espectro político'],
+  ['/de/countries', '80 Länderperspektiven'],
+  ['/es/countries', '80 perspectivas'],
+  ['/fr/countries', '80 perspectives'],
+  ['/pt-br/countries', '80 perspectivas'],
 ];
 
 const failures = [];
@@ -76,7 +92,7 @@ for (const slug of countrySlugs) {
 try {
   const { response, body } = await fetchPage('/countries/france');
   if (!response.ok) failures.push(`/countries/france: HTTP ${response.status}`);
-  else if (!/noindex/i.test(body)) failures.push('/countries/france: editorial draft should remain noindex');
+  else if (/noindex/i.test(body)) failures.push('/countries/france: substantive country page should be indexable');
 } catch (error) {
   failures.push(`country robots check: ${error instanceof Error ? error.message : String(error)}`);
 }

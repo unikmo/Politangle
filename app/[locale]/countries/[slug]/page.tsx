@@ -39,7 +39,9 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
         'x-default': `/countries/${slug}`,
       },
     },
-    robots: base?.status === 'reviewed' ? { index: true, follow: true } : { index: false, follow: true },
+    robots: { index: true, follow: true },
+    openGraph: { type:'article', siteName:'Politangle', title:`${country.name} · Politangle`, description: metadataDescription[locale as 'de'|'es'|'fr'|'pt-br'](country.name), url:`/${locale}/countries/${slug}` },
+    twitter: { card:'summary_large_image', title:`${country.name} · Politangle`, description: metadataDescription[locale as 'de'|'es'|'fr'|'pt-br'](country.name) },
   };
 }
 
