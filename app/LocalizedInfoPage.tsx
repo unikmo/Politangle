@@ -51,12 +51,12 @@ const en: Record<InfoPageId, PageCopy> = {
   privacy: {
     eyebrow: 'PRIVACY',
     title: 'Collect less. Explain clearly. Protect political opinions.',
-    intro: 'This page describes the current privacy design. Formal controller details and a legally reviewed notice still have to be completed before commercial or real-school release.',
+    intro: 'This page describes the current privacy design. Some controller, hosting, transfer and retention details still require final legal review before paid or real-school use.',
     sections: [
-      { title: 'Release status', callout: 'Preview notice: this is not the final legally reviewed privacy notice. Do not use the School pilot with real students until the release gate is complete.' },
+      { title: 'Current privacy status', callout: 'This notice describes the current design and has not yet completed final legal review. Real-student use remains disabled until the required privacy, legal and educational checks are complete.' },
       { title: 'Public assessment', paragraphs: ['No account is required. The public assessment currently keeps answers in the browser session to create the result. Restarting the assessment should remove that local assessment state.'] },
       { title: 'Classroom design', paragraphs: ['Students join with temporary identifiers and without a name, email address, username or roster. Teachers receive class totals and distributions—not a student-to-answer map and not individual political profiles.'] },
-      { title: 'Required before launch', bullets: ['Controller identity and contact', 'Purposes and lawful bases', 'Hosting, recipients and international transfers', 'Retention and deletion periods', 'Data-subject rights and supervisory authority', 'School controller/processor roles and a DPIA decision'] },
+      { title: 'Still to be finalized', bullets: ['Controller identity and verified contact', 'Purposes and lawful bases', 'Hosting, recipients and international transfers', 'Retention and deletion periods', 'Data-subject rights and supervisory authority', 'School controller/processor roles and a DPIA decision'] },
     ],
   },
   terms: {
