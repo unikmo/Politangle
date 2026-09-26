@@ -7,6 +7,7 @@ const root = process.cwd();
 const infoCss = readFileSync(join(root, 'app/info.css'), 'utf8');
 const homeCss = readFileSync(join(root, 'app/home.css'), 'utf8');
 const homeEditorialCss = readFileSync(join(root, 'app/home-orange-hero.css'), 'utf8');
+const homeReadabilityCss = readFileSync(join(root, 'app/home-readability-fix.css'), 'utf8');
 const accessibilityCss = readFileSync(join(root, 'app/accessibility.css'), 'utf8');
 const layout = readFileSync(join(root, 'app/layout.tsx'), 'utf8');
 const localizedCountry = readFileSync(join(root, 'app/[locale]/countries/[slug]/page.tsx'), 'utf8');
@@ -31,6 +32,7 @@ test('homepage editorial transition stays open and its closing paper card contai
 
 test('homepage presents all five language monuments in one desktop row', () => {
   assert.match(homeEditorialCss, /grid-template-columns:repeat\(5,minmax\(0,1fr\)\)/);
+  assert.match(homeReadabilityCss, /grid-template-columns:repeat\(5,minmax\(0,1fr\)\)/);
   assert.match(homepage, /src="\/languages\/br\.webp"/);
   assert.match(homepage, /Christ the Redeemer illustration/);
 });
