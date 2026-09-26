@@ -13,6 +13,7 @@ const localizedCountry = readFileSync(join(root, 'app/[locale]/countries/[slug]/
 const quickComplete = readFileSync(join(root, 'app/api/assessment/quick/complete/route.ts'), 'utf8');
 const authSession = readFileSync(join(root, 'app/api/auth/session/route.ts'), 'utf8');
 const smoke = readFileSync(join(root, 'scripts/release-smoke.mjs'), 'utf8');
+const homepage = readFileSync(join(root, 'app/page.tsx'), 'utf8');
 
 test('responsive layouts include tablet and mobile breakpoints for public and country surfaces', () => {
   assert.match(homeCss, /@media\(max-width:900px\)/);
@@ -26,6 +27,12 @@ test('homepage editorial transition stays open and its closing paper card contai
   assert.match(homeEditorialCss, /\.p-how \+ \.p-transparency\{border-top:0\}/);
   assert.match(homeEditorialCss, /grid-template-columns:136px 136px 150px/);
   assert.match(homeEditorialCss, /\.p-paper-scene>aside\{[^}]*min-height:190px[^}]*background:#fffdf9/);
+});
+
+test('homepage presents all five language monuments in one desktop row', () => {
+  assert.match(homeEditorialCss, /grid-template-columns:repeat\(5,minmax\(0,1fr\)\)/);
+  assert.match(homepage, /src="\/languages\/br\.webp"/);
+  assert.match(homepage, /Christ the Redeemer illustration/);
 });
 
 test('keyboard and reduced-motion accessibility protections are present', () => {

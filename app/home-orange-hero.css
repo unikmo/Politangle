@@ -269,7 +269,7 @@
 .home .p-age-bands small{margin-top:auto;color:#806d64;font-size:9px;font-weight:600;line-height:1.45}
 
 .home .p-languages{border-top:1px solid #eee4dd}
-.home .p-language-list{display:grid;grid-template-columns:repeat(4,1fr);border-block:1px solid #e7d9d0}
+.home .p-language-list{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));border-block:1px solid #e7d9d0}
 .home .p-language-list span{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:132px;border-right:1px solid #e7d9d0;color:var(--brand-orange-deep);font-size:23px;font-weight:800;letter-spacing:.08em}
 .home .p-language-list span:last-child{border-right:0}
 .home .p-language-list small{margin-top:10px;color:#74645c;font-size:10px;font-weight:650;letter-spacing:0}
@@ -386,7 +386,7 @@
  .home .p-how .p-steps{grid-template-columns:1fr}.home .p-how .p-steps article,.home .p-how .p-steps article+article{padding:22px 0;border-right:0;border-bottom:1px solid #e9ddd5}
  .home .p-paper-scene{grid-template-columns:1fr 1fr}.home .p-paper-scene>aside{display:none}
  .home .p-schools .p-school-proof{grid-template-columns:1fr}
- .home .p-language-list{grid-template-columns:1fr 1fr}.home .p-language-list span:nth-child(2){border-right:0}.home .p-language-list span:nth-child(-n+2){border-bottom:1px solid #ddd4cc}
+ .home .p-language-list{grid-template-columns:1fr 1fr}.home .p-language-list span{border-bottom:1px solid #ddd4cc}.home .p-language-list span:nth-child(even){border-right:0}.home .p-language-list span:last-child{grid-column:1/-1;border-right:0;border-bottom:0}
  .home .p-final{width:calc(100% - 32px);padding:34px 28px}.home .p-final>aside{display:none}
  .home .p-footer.p-shell{padding:28px 16px}
 }
