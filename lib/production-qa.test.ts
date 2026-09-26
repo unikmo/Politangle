@@ -6,6 +6,7 @@ import { join } from 'node:path';
 const root = process.cwd();
 const infoCss = readFileSync(join(root, 'app/info.css'), 'utf8');
 const homeCss = readFileSync(join(root, 'app/home.css'), 'utf8');
+const homeEditorialCss = readFileSync(join(root, 'app/home-orange-hero.css'), 'utf8');
 const accessibilityCss = readFileSync(join(root, 'app/accessibility.css'), 'utf8');
 const layout = readFileSync(join(root, 'app/layout.tsx'), 'utf8');
 const localizedCountry = readFileSync(join(root, 'app/[locale]/countries/[slug]/page.tsx'), 'utf8');
@@ -19,6 +20,12 @@ test('responsive layouts include tablet and mobile breakpoints for public and co
   assert.match(infoCss, /@media\(max-width:900px\)/);
   assert.match(infoCss, /@media\(max-width:650px\)/);
   assert.match(infoCss, /country-card-grid[^}]*grid-template-columns:1fr/);
+});
+
+test('homepage editorial transition stays open and its closing paper card contains the copy', () => {
+  assert.match(homeEditorialCss, /\.p-how \+ \.p-transparency\{border-top:0\}/);
+  assert.match(homeEditorialCss, /grid-template-columns:136px 136px 150px/);
+  assert.match(homeEditorialCss, /\.p-paper-scene>aside\{[^}]*min-height:190px[^}]*background:#fffdf9/);
 });
 
 test('keyboard and reduced-motion accessibility protections are present', () => {
