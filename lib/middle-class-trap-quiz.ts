@@ -1,5 +1,6 @@
-export const MIDDLE_CLASS_TRAP_VERSION = 'middle-class-trap-2026.09-candidate-2' as const;
+export const MIDDLE_CLASS_TRAP_VERSION = 'middle-class-trap-2026.09-candidate-3' as const;
 export const MIDDLE_CLASS_TRAP_SIZE = 20;
+export const MIDDLE_CLASS_TRAP_BLOCK_SIZE = 10;
 
 export const MIDDLE_CLASS_TRAP_ANGLES = [
   'economic_position',
@@ -28,8 +29,9 @@ export const MIDDLE_CLASS_TRAP_ANGLE_MEANINGS: Readonly<Record<MiddleClassTrapAn
 };
 
 export type MiddleClassTrapOption = { id: string; label: string; feedback: string };
-export type MiddleClassTrapQuestion = {
+export type MiddleClassTrapUnderstandingQuestion = {
   id: string;
+  kind: 'understanding';
   angle: MiddleClassTrapAngle;
   prompt: string;
   hint: string;
@@ -40,11 +42,25 @@ export type MiddleClassTrapQuestion = {
   status: 'candidate';
 };
 
-function candidate(question: Omit<MiddleClassTrapQuestion, 'status'>): MiddleClassTrapQuestion {
-  return { ...question, status: 'candidate' };
+export type MiddleClassTrapSolidarityOption = MiddleClassTrapOption & { solidarity: -2 | -1 | 1 | 2 };
+export type MiddleClassTrapSolidarityQuestion = {
+  id: string;
+  kind: 'solidarity';
+  prompt: string;
+  hint: string;
+  options: readonly MiddleClassTrapSolidarityOption[];
+  explanation: string;
+  evidenceIds: readonly string[];
+  status: 'candidate';
+};
+
+export type MiddleClassTrapQuestion = MiddleClassTrapUnderstandingQuestion | MiddleClassTrapSolidarityQuestion;
+
+function candidate(question: Omit<MiddleClassTrapUnderstandingQuestion, 'kind' | 'status'>): MiddleClassTrapUnderstandingQuestion {
+  return { ...question, kind: 'understanding', status: 'candidate' };
 }
 
-export const middleClassTrapQuiz: readonly MiddleClassTrapQuestion[] = [
+const middleClassTrapUnderstandingBank: readonly MiddleClassTrapUnderstandingQuestion[] = [
   candidate({
     id:'M1', angle:'economic_position',
     prompt:'Mara earns €80,000 but rents and has little savings. Lea earns €35,000 and owns two debt-free flats. Who is more secure?',
@@ -310,6 +326,146 @@ export const middleClassTrapQuiz: readonly MiddleClassTrapQuestion[] = [
     evidenceIds:['HERRMANN-MIDDLE-CLASS-TRAP','OECD-TAX-EXPENDITURES','IMF-TAX-INCLUSIVE-GROWTH'],
   }),
 ] as const;
+
+const selectedUnderstandingIds = new Set(['M1','M4','M5','M6','M9','M10','M13','M16','M18','M20']);
+
+export const middleClassTrapSolidarityQuestions: readonly MiddleClassTrapSolidarityQuestion[] = [
+  {
+    id:'S1', kind:'solidarity', status:'candidate',
+    prompt:'When inheritance-tax relief mainly benefits very large estates, which principle matters most to you?',
+    hint:'Choose the principle you would protect when family continuity and equal opportunity conflict.',
+    options:[
+      {id:'a',label:'Keep very large family estates intact whenever possible',feedback:'This places the strongest weight on preserving accumulated family ownership.',solidarity:-2},
+      {id:'b',label:'Protect active family firms, even with generous relief',feedback:'This gives substantial priority to ownership continuity, with some economic conditions.',solidarity:-1},
+      {id:'c',label:'Protect ordinary homes but tax wealth above a high threshold',feedback:'This protects normal family security while asking the largest estates to contribute more.',solidarity:1},
+      {id:'d',label:'Tax the largest inheritances to widen opportunity for others',feedback:'This gives the strongest priority to broader opportunity over preserving very large estates.',solidarity:2},
+    ],
+    explanation:'This choice maps whether your first solidarity lies with preserving large inherited ownership or widening security and opportunity below it.',
+    evidenceIds:['HERRMANN-MIDDLE-CLASS-TRAP','IMF-TAX-INCLUSIVE-GROWTH'],
+  },
+  {
+    id:'S2', kind:'solidarity', status:'candidate',
+    prompt:'Government must reduce either taxes on large investment gains or payroll contributions on ordinary wages. Which comes first?',
+    hint:'Both may affect investment or work. Choose whose immediate burden you would reduce first.',
+    options:[
+      {id:'a',label:'Large investment gains, to protect capital formation first',feedback:'This prioritises owners of substantial financial assets.',solidarity:-2},
+      {id:'b',label:'Mostly investment gains, with a smaller wage reduction',feedback:'This leans toward capital owners while sharing part of the relief.',solidarity:-1},
+      {id:'c',label:'Mostly ordinary wages, with limited investment relief',feedback:'This leans toward wage-dependent households while retaining some investment relief.',solidarity:1},
+      {id:'d',label:'Ordinary wages, because work supports most households',feedback:'This gives the strongest priority to wage-dependent households.',solidarity:2},
+    ],
+    explanation:'The trade-off reveals whether you instinctively protect income from large-scale ownership or income from work.',
+    evidenceIds:['HERRMANN-MIDDLE-CLASS-TRAP','IMF-TAX-INCLUSIVE-GROWTH'],
+  },
+  {
+    id:'S3', kind:'solidarity', status:'candidate',
+    prompt:'A budget gap can be closed through a fixed household fee or a charge that rises with resources. Which feels fairer?',
+    hint:'The fixed fee is equal in euros; the rising charge asks more from households with greater capacity.',
+    options:[
+      {id:'a',label:'Use the same fixed fee for every household',feedback:'This protects higher-resource households from paying a larger amount.',solidarity:-2},
+      {id:'b',label:'Use mainly fixed fees with a narrow hardship exemption',feedback:'This leans toward equal cash payments while protecting the poorest cases.',solidarity:-1},
+      {id:'c',label:'Let the charge rise moderately with household resources',feedback:'This asks more from stronger households while limiting the difference.',solidarity:1},
+      {id:'d',label:'Make the charge clearly progressive by ability to pay',feedback:'This gives the strongest protection to households with fewer resources.',solidarity:2},
+    ],
+    explanation:'This choice contrasts equal cash payments with equal sacrifice across unequal household resources.',
+    evidenceIds:['IMF-TAX-INCLUSIVE-GROWTH','OECD-INCOME-CONSUMPTION-WEALTH'],
+  },
+  {
+    id:'S4', kind:'solidarity', status:'candidate',
+    prompt:'Unemployment insurance contributions must rise or benefits must fall. Whose risk should policy absorb first?',
+    hint:'Employers and secure workers finance protection that becomes valuable when employment disappears.',
+    options:[
+      {id:'a',label:'Protect contributors from higher costs, even with much lower benefits',feedback:'This places the strongest priority on current contributors and employers.',solidarity:-2},
+      {id:'b',label:'Limit contributions and reduce benefits somewhat',feedback:'This leans toward current contributors while preserving partial protection.',solidarity:-1},
+      {id:'c',label:'Accept a modest increase to keep meaningful protection',feedback:'This leans toward shared insurance for people facing job loss.',solidarity:1},
+      {id:'d',label:'Protect displaced workers first, funded by broad contributions',feedback:'This gives the strongest priority to people carrying the immediate employment risk.',solidarity:2},
+    ],
+    explanation:'The choice tests whether solidarity centres on limiting current contributions or pooling risk for households that lose wages.',
+    evidenceIds:['HERRMANN-MIDDLE-CLASS-TRAP','IMF-FISCAL-INEQUALITY'],
+  },
+  {
+    id:'S5', kind:'solidarity', status:'candidate',
+    prompt:'Housing supply is scarce. Which group should receive the strongest protection during reform?',
+    hint:'Consider the conflict between property returns, small landlords and secure access to housing.',
+    options:[
+      {id:'a',label:'Large property investors and the value of their portfolios',feedback:'This places the strongest weight on large-scale property ownership.',solidarity:-2},
+      {id:'b',label:'Small landlords, even if tenant protection weakens',feedback:'This leans toward small ownership while accepting more tenant risk.',solidarity:-1},
+      {id:'c',label:'Balance small landlords with stronger tenant security',feedback:'This leans toward housing security while recognising small-owner costs.',solidarity:1},
+      {id:'d',label:'Low- and middle-income tenants facing displacement',feedback:'This gives the strongest priority to households whose housing is least secure.',solidarity:2},
+    ],
+    explanation:'This scenario maps whether scarce housing makes you identify first with ownership returns or housing security.',
+    evidenceIds:['HERRMANN-MIDDLE-CLASS-TRAP','OECD-INCOME-CONSUMPTION-WEALTH'],
+  },
+  {
+    id:'S6', kind:'solidarity', status:'candidate',
+    prompt:'Enforcement funds are limited. Where should investigators concentrate first?',
+    hint:'Choose between many visible small cases and fewer cases with potentially much larger sums.',
+    options:[
+      {id:'a',label:'Benefit fraud first, regardless of the amount recovered',feedback:'This directs scrutiny most strongly toward lower-income recipients.',solidarity:-2},
+      {id:'b',label:'Mostly benefit fraud because individual misuse feels direct',feedback:'This leans downward while allowing some scrutiny of larger financial losses.',solidarity:-1},
+      {id:'c',label:'Allocate investigators according to expected public loss',feedback:'This leans toward equal scrutiny based on scale rather than social position.',solidarity:1},
+      {id:'d',label:'Prioritise large-scale avoidance with the greatest expected loss',feedback:'This directs the strongest additional scrutiny toward actors with more resources and complex access.',solidarity:2},
+    ],
+    explanation:'The choice reveals whether suspicion is directed more readily downward or whether scrutiny follows financial scale upward.',
+    evidenceIds:['HERRMANN-MIDDLE-CLASS-TRAP','OECD-TAX-EXPENDITURES'],
+  },
+  {
+    id:'S7', kind:'solidarity', status:'candidate',
+    prompt:'A tax cut requires higher private spending on schools and healthcare. Which priority should guide the decision?',
+    hint:'Compare freedom to buy privately with the security of services available regardless of income.',
+    options:[
+      {id:'a',label:'Maximise tax freedom for households that can buy privately',feedback:'This gives the strongest priority to households able to replace services themselves.',solidarity:-2},
+      {id:'b',label:'Prefer lower taxes, with a basic public safety net',feedback:'This leans toward private purchasing power while retaining limited collective protection.',solidarity:-1},
+      {id:'c',label:'Preserve reliable public services with moderate taxes',feedback:'This leans toward shared provision while limiting the contribution burden.',solidarity:1},
+      {id:'d',label:'Guarantee strong universal services before cutting taxes',feedback:'This gives the strongest priority to security independent of private purchasing power.',solidarity:2},
+    ],
+    explanation:'The trade-off maps solidarity with private purchasing power versus shared access to essential services.',
+    evidenceIds:['OECD-PUBLIC-SERVICES-DISTRIBUTION','HERRMANN-MIDDLE-CLASS-TRAP'],
+  },
+  {
+    id:'S8', kind:'solidarity', status:'candidate',
+    prompt:'A new wealth tax would fund childcare but slightly reduce returns on very large fortunes. Which concern weighs more?',
+    hint:'Both ownership rights and access to childcare have real value. Choose your priority in this conflict.',
+    options:[
+      {id:'a',label:'Protect large fortunes from any new recurring tax',feedback:'This places the strongest priority on preserving very large private holdings.',solidarity:-2},
+      {id:'b',label:'Keep the tax very low, even if childcare funding remains limited',feedback:'This leans toward protecting large holdings while allowing a small contribution.',solidarity:-1},
+      {id:'c',label:'Use a moderate tax with a high exemption threshold',feedback:'This leans toward childcare access while limiting the policy to very large fortunes.',solidarity:1},
+      {id:'d',label:'Fund broad childcare access from the largest fortunes',feedback:'This gives the strongest priority to shared family support over preserving maximum returns.',solidarity:2},
+    ],
+    explanation:'This choice contrasts solidarity with concentrated ownership against solidarity with families relying on shared childcare.',
+    evidenceIds:['HERRMANN-MIDDLE-CLASS-TRAP','IMF-FISCAL-INEQUALITY'],
+  },
+  {
+    id:'S9', kind:'solidarity', status:'candidate',
+    prompt:'Company profits rise strongly while ordinary wages stagnate. Which claim deserves first consideration?',
+    hint:'Consider who created the gains, who carried the risk and who has bargaining power.',
+    options:[
+      {id:'a',label:'Owners should receive nearly all gains because capital came first',feedback:'This places the strongest priority on ownership claims.',solidarity:-2},
+      {id:'b',label:'Owners should receive most gains, with small employee bonuses',feedback:'This leans toward owners while recognising a limited worker claim.',solidarity:-1},
+      {id:'c',label:'Employees should share meaningfully in gains they helped create',feedback:'This leans toward wage earners while preserving a return to ownership.',solidarity:1},
+      {id:'d',label:'Raise ordinary wages before increasing owner distributions',feedback:'This gives the strongest priority to employees whose pay has not shared the growth.',solidarity:2},
+    ],
+    explanation:'The response maps how you divide solidarity between ownership claims and the people supplying everyday work.',
+    evidenceIds:['HERRMANN-MIDDLE-CLASS-TRAP','OECD-INCOME-CONSUMPTION-WEALTH'],
+  },
+  {
+    id:'S10', kind:'solidarity', status:'candidate',
+    prompt:'When affluent and low-income groups both seek public support, what should normally decide priority?',
+    hint:'Choose whether equal access, economic influence or vulnerability should carry the most weight.',
+    options:[
+      {id:'a',label:'Protect the affluent group because it contributes more money',feedback:'This places the strongest priority on higher contributors and economic status.',solidarity:-2},
+      {id:'b',label:'Give somewhat more weight to contributors with greater assets',feedback:'This leans upward while retaining some support for vulnerability.',solidarity:-1},
+      {id:'c',label:'Balance contribution, need and the public effect',feedback:'This leans toward need while still considering contribution and wider outcomes.',solidarity:1},
+      {id:'d',label:'Protect the group facing the greatest material harm first',feedback:'This gives the strongest priority to vulnerability and limited alternatives.',solidarity:2},
+    ],
+    explanation:'This final choice directly measures whether solidarity follows economic status upward or material vulnerability downward.',
+    evidenceIds:['HERRMANN-MIDDLE-CLASS-TRAP','IMF-FISCAL-INEQUALITY'],
+  },
+] as const;
+
+export const middleClassTrapQuiz: readonly MiddleClassTrapQuestion[] = [
+  ...middleClassTrapUnderstandingBank.filter((question) => selectedUnderstandingIds.has(question.id)),
+  ...middleClassTrapSolidarityQuestions,
+];
 
 export function selectMiddleClassTrapQuiz() {
   return [...middleClassTrapQuiz];
