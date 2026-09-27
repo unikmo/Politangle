@@ -18,6 +18,7 @@ const copy: Record<Locale, Copy> = {
       { label: 'CLASSIFY', title: 'Recognize political traditions', meta: '25-question practice set · explanations included', href: '/practice?section=classify' },
       { label: 'UNDERSTAND', title: 'Separate ideas that are often confused', meta: '25-question practice set · explanations included', href: '/practice?section=understand' },
       { label: 'FOCUSED QUIZ', title: 'Can you recognize populism?', meta: '12 questions · explanations included', href: '/populism-quiz' },
+      { label: 'FOCUSED QUIZ', title: 'The Middle Class Trap', meta: '20 questions · taxes, services, wealth and influence', href: '/middle-class-trap' },
     ],
   },
   de: {

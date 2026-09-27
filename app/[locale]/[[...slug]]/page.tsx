@@ -4,16 +4,21 @@ import { hreflangForPath, seoCopy, type SeoLocale } from '../../../lib/seo-local
 import { getSeoTopic, seoTopicSlugs, type SeoTopicSlug } from '../../../lib/seo-topics';
 const locales = ['en', 'de', 'es', 'fr', 'pt-br'] as const;
 const pageKeys = ['', 'about', 'account', 'classify', 'contact', 'deep', 'guides', 'imprint', 'learn', 'method', 'political-spectrum', 'left-vs-right-politics', 'political-ideologies', 'political-test', 'political-literacy', 'populism-quiz', 'practice', 'privacy', 'question-banks', 'quiz', 'quizzes', 'results', 'school', 'school/pilot', 'terms', 'understand', 'validation'] as const;
+const englishOnlyPageKeys = ['middle-class-trap'] as const;
 function routeKey(slug?: string[]) { return slug?.join('/') ?? ''; }
 
+function supportsPage(locale:string,key:string) {
+  return pageKeys.includes(key as typeof pageKeys[number]) || (locale === 'en' && englishOnlyPageKeys.includes(key as typeof englishOnlyPageKeys[number]));
+}
+
 export function generateStaticParams() {
-  return locales.flatMap((locale) => pageKeys.map((key) => ({ locale, slug: key ? key.split('/') : [] })));
+  return locales.flatMap((locale) => [...pageKeys, ...(locale === 'en' ? englishOnlyPageKeys : [])].map((key) => ({ locale, slug: key ? key.split('/') : [] })));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string; slug?: string[] }> }): Promise<Metadata> {
   const { locale, slug } = await params;
   const key = routeKey(slug);
-  if (!locales.includes(locale as typeof locales[number]) || !pageKeys.includes(key as typeof pageKeys[number])) return {};
+  if (!locales.includes(locale as typeof locales[number]) || !supportsPage(locale,key)) return {};
   const suffix = key ? `/${key}` : '';
   const activeLocale = locale as SeoLocale;
   const isSeoTopic = seoTopicSlugs.includes(key as SeoTopicSlug);
@@ -61,7 +66,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
 export default async function LocalizedPage({ params }: { params: Promise<{ locale: string; slug?: string[] }> }) {
   const { locale, slug } = await params;
   const key = routeKey(slug);
-  if (!locales.includes(locale as typeof locales[number]) || !pageKeys.includes(key as typeof pageKeys[number])) notFound();
+  if (!locales.includes(locale as typeof locales[number]) || !supportsPage(locale,key)) notFound();
   const Page = await loadPage(key);
   return <Page />;
 }
@@ -83,6 +88,7 @@ async function loadPage(key: string): Promise<React.ComponentType> {
     case 'imprint': return (await import('../../imprint/page')).default;
     case 'learn': return (await import('../../learn/page')).default;
     case 'method': return (await import('../../method/page')).default;
+    case 'middle-class-trap': return (await import('../../middle-class-trap/page')).default;
     case 'populism-quiz': return (await import('../../populism-quiz/page')).default;
     case 'practice': return (await import('../../practice/page')).default;
     case 'privacy': return (await import('../../privacy/page')).default;

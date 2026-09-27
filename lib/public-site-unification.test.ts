@@ -43,6 +43,7 @@ test('Learn stays visible and quizzes directory contains only runnable quiz choi
   assert.match(quizzes, /section=classify/);
   assert.match(quizzes, /section=understand/);
   assert.match(quizzes, /populism-quiz/);
+  assert.match(quizzes, /middle-class-trap/);
   assert.doesNotMatch(quizzes, /question-banks|validation|certificate.*price/i);
 });
 

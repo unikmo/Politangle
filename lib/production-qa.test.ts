@@ -35,6 +35,8 @@ test('homepage presents all five language monuments in one desktop row', () => {
   assert.match(homeReadabilityCss, /grid-template-columns:repeat\(5,minmax\(0,1fr\)\)/);
   assert.match(homepage, /src="\/languages\/br\.webp"/);
   assert.match(homepage, /Christ the Redeemer illustration/);
+  for (const locale of ['en', 'de', 'es', 'fr', 'pt-br']) assert.match(homepage, new RegExp(`href="\\/${locale}"`));
+  assert.match(homepage, /<nav className="p-language-list"/);
 });
 
 test('keyboard and reduced-motion accessibility protections are present', () => {

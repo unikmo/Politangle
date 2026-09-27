@@ -4,6 +4,7 @@ import { countryProfiles } from '../lib/countries';
 const origin = 'https://politangle.org';
 const locales = ['en', 'de', 'es', 'fr', 'pt-br'] as const;
 const publicRoutes = ['', '/learn', '/guides', '/political-spectrum', '/left-vs-right-politics', '/political-ideologies', '/political-test', '/political-literacy', '/practice', '/populism-quiz', '/method', '/validation', '/question-banks', '/about', '/privacy', '/terms', '/school', '/quizzes', '/quiz', '/deep'];
+const englishOnlyRoutes = ['/middle-class-trap'];
 const languageCode = { en:'en-US', de:'de', es:'es', fr:'fr', 'pt-br':'pt-BR' } as const;
 
 function localizedAlternates(route: string) {
@@ -18,6 +19,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: route === '' ? 1 : route === '/school' ? .8 : route === '/guides' ? .8 : route.startsWith('/political-') || route === '/left-vs-right-politics' ? .78 : .65,
     alternates: { languages: { ...localizedAlternates(route), 'x-default': `${origin}/en${route}` } },
   })));
+  const englishOnlyPages = englishOnlyRoutes.map((route) => ({
+    url:`${origin}/en${route}`,
+    lastModified:new Date(),
+    changeFrequency:'monthly' as const,
+    priority:.7,
+  }));
 
   const countryHubLanguages = {
     'en-US': `${origin}/countries`,
@@ -65,5 +72,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }));
   });
 
-  return [...staticPages, ...countryHubs, ...countryPages];
+  return [...staticPages, ...englishOnlyPages, ...countryHubs, ...countryPages];
 }
