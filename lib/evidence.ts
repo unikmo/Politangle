@@ -392,6 +392,18 @@ export const evidenceSources: readonly EvidenceSource[] = [
     accessed: '2026-09-07',
   },
   {
+    id: 'HERRMANN-MIDDLE-CLASS-TRAP',
+    title: 'Hurra, wir dürfen zahlen: Der Selbstbetrug der Mittelschicht',
+    publisher: 'Piper Verlag / Ulrike Herrmann',
+    url: 'https://www.piper.de/buecher/hurra-wir-duerfen-zahlen-isbn-978-3-492-60167-2-ebook',
+    authority: 'academic-reference',
+    supports: [
+      'The book argues that middle-income voters can misread their economic position, identify upward and support tax or social-policy choices that privilege much wealthier groups.',
+      'Its central self-deception combines fear of downward mobility, distance from poorer groups and limited visibility into concentrated wealth.',
+    ],
+    accessed: '2026-09-27',
+  },
+  {
     id: 'OECD-TAX-INCIDENCE',
     title: 'Legal tax liability, legal remittance responsibility and tax incidence',
     publisher: 'OECD',

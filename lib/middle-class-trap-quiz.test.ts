@@ -1,14 +1,17 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { evidenceById } from './evidence';
-import { MIDDLE_CLASS_TRAP_ANGLES, MIDDLE_CLASS_TRAP_SIZE, middleClassTrapQuiz, selectMiddleClassTrapQuiz } from './middle-class-trap-quiz';
+import { MIDDLE_CLASS_TRAP_ANGLES, MIDDLE_CLASS_TRAP_ANGLE_MEANINGS, MIDDLE_CLASS_TRAP_SIZE, middleClassTrapQuiz, selectMiddleClassTrapQuiz } from './middle-class-trap-quiz';
 
 function words(value:string) { return value.trim().split(/\s+/).filter(Boolean).length; }
 
 test('middle class trap contains twenty balanced candidate questions', () => {
   assert.equal(middleClassTrapQuiz.length, MIDDLE_CLASS_TRAP_SIZE);
   assert.equal(new Set(middleClassTrapQuiz.map((question) => question.id)).size, MIDDLE_CLASS_TRAP_SIZE);
-  for (const angle of MIDDLE_CLASS_TRAP_ANGLES) assert.equal(middleClassTrapQuiz.filter((question) => question.angle === angle).length, 4, angle);
+  for (const angle of MIDDLE_CLASS_TRAP_ANGLES) {
+    assert.equal(middleClassTrapQuiz.filter((question) => question.angle === angle).length, 4, angle);
+    assert.ok(MIDDLE_CLASS_TRAP_ANGLE_MEANINGS[angle].length > 40, `${angle} needs a useful result explanation`);
+  }
   assert.deepEqual(selectMiddleClassTrapQuiz().map((question) => question.id), middleClassTrapQuiz.map((question) => question.id));
 });
 

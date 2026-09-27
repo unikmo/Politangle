@@ -5,6 +5,7 @@ import { useMemo, useState } from 'react';
 import {
   MIDDLE_CLASS_TRAP_ANGLES,
   MIDDLE_CLASS_TRAP_ANGLE_LABELS,
+  MIDDLE_CLASS_TRAP_ANGLE_MEANINGS,
   MIDDLE_CLASS_TRAP_SIZE,
   selectMiddleClassTrapQuiz,
   type MiddleClassTrapQuestion,
@@ -92,13 +93,20 @@ export default function MiddleClassTrapClient() {
       angle,
       score: answered.filter((question) => question.angle === angle && run.answers[question.id] === question.answerId).length,
     }));
-    const resultTitle = correct >= 17 ? 'Strong policy reading' : correct >= 13 ? 'Developing policy reading' : 'Build the foundations';
+    const missed = answered.filter((question) => run.answers[question.id] !== question.answerId);
+    const resultTitle = correct >= 17 ? 'You usually see the trap' : correct >= 13 ? 'You see much of the trap' : 'Some familiar stories still hide the balance';
+    const resultSummary = correct >= 17
+      ? `You recognised ${correct} of ${MIDDLE_CLASS_TRAP_SIZE} patterns that can make middle-income households misread who gains, who pays and where their own security comes from.`
+      : correct >= 13
+        ? `You recognised ${correct} of ${MIDDLE_CLASS_TRAP_SIZE} patterns. Your category scores show where a familiar political story can still hide the household balance.`
+        : `You recognised ${correct} of ${MIDDLE_CLASS_TRAP_SIZE} patterns. Review the missed scenarios to see where labels or downward blame may have hidden the distribution.`;
     return <main className="engine-page practice-page populism-page middle-class-trap-page middle-class-result-state">
       <header className="engine-header"><Link href="/en" className="engine-brand">Politangle</Link><span>MIDDLE CLASS TRAP · RESULT</span><div className="engine-header-actions"><Link href="/en/quizzes">All quizzes</Link></div></header>
       <section className="engine-shell literacy-shell"><article className="engine-card literacy-result-card populism-result-card">
         <p className="engine-kicker">{resultTitle.toUpperCase()}</p><h1>{correct} / {MIDDLE_CLASS_TRAP_SIZE}</h1>
-        <p className="result-lede">This measures policy literacy, not your income, class identity or political worth.</p>
-        <div className="populism-score-grid">{angleScores.map(({angle,score}) => <div key={angle}><span>{MIDDLE_CLASS_TRAP_ANGLE_LABELS[angle]}</span><strong>{score}/4</strong></div>)}</div>
+        <div className="mct-result-intro"><strong>What your score means</strong><p>{resultSummary}</p><p>It does not identify your social class, political ideology or how you should vote.</p></div>
+        <div className="populism-score-grid">{angleScores.map(({angle,score}) => <div key={angle}><span><b>{MIDDLE_CLASS_TRAP_ANGLE_LABELS[angle]}</b><small>{MIDDLE_CLASS_TRAP_ANGLE_MEANINGS[angle]}</small></span><strong>{score}/4</strong></div>)}</div>
+        {missed.length > 0 && <section className="mct-missed-review"><h2>What to review</h2>{missed.map((question) => <article key={question.id}><strong>{question.prompt}</strong><p>{question.explanation}</p></article>)}</section>}
         <div className="engine-result-actions"><button className="engine-primary-link" type="button" onClick={start}>Try again</button><Link className="engine-primary-link secondary" href="/en/quizzes">Choose another quiz</Link></div>
       </article></section>
     </main>;
