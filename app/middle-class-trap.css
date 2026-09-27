@@ -151,6 +151,9 @@ main.middle-class-start-state .populism-candidate-note{
 }
 
 /* Question screen */
+main.middle-class-play-state .engine-shell{
+  padding-top:52px!important;
+}
 main.middle-class-play-state .engine-progress-row{
   margin:0 0 18px;
   color:var(--mct-muted)!important;
@@ -287,6 +290,7 @@ main.middle-class-result-state .populism-score-grid span{
   main.middle-class-trap-page .engine-header>span{display:none}
   main.middle-class-trap-page .engine-header-actions>a{font-size:13px!important}
   main.middle-class-trap-page .engine-shell{padding:22px 0 48px!important}
+  main.middle-class-play-state .engine-shell{padding-top:32px!important}
   main.middle-class-start-state .middle-class-start{border-radius:20px}
   main.middle-class-start-state .middle-class-start>.practice-lede{font-size:16px}
   main.middle-class-trap-page .literacy-card{padding:26px 20px!important;border-radius:20px!important}
