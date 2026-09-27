@@ -242,7 +242,7 @@ main.middle-class-trap-page .literacy-nav button{
 
 /* Result */
 main.middle-class-result-state .literacy-result-card{
-  max-width:760px;
+  max-width:940px;
 }
 main.middle-class-result-state .result-lede{
   font-size:17px!important;
@@ -317,6 +317,120 @@ main.middle-class-result-state .mct-missed-review article p{
   font-size:14px;
   line-height:1.55;
 }
+main.middle-class-result-state .mct-theory,
+main.middle-class-result-state .mct-evidence,
+main.middle-class-result-state .mct-reading{
+  margin:38px 0 0;
+  padding-top:32px;
+  border-top:1px solid var(--mct-line);
+}
+main.middle-class-result-state .mct-theory h2,
+main.middle-class-result-state .mct-evidence h2,
+main.middle-class-result-state .mct-reading h2{
+  margin:6px 0 14px;
+  color:var(--mct-ink);
+  font-size:clamp(26px,3vw,34px);
+  letter-spacing:-.035em;
+}
+main.middle-class-result-state .mct-theory-lede{
+  max-width:760px;
+  margin:0 0 12px;
+  color:var(--mct-muted);
+  font-size:16px;
+  line-height:1.65;
+}
+main.middle-class-result-state .mct-mechanism-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+  margin-top:22px;
+}
+main.middle-class-result-state .mct-mechanism-grid article{
+  display:flex;
+  gap:14px;
+  padding:18px;
+  border:1px solid var(--mct-line);
+  border-radius:14px;
+  background:#fffaf7;
+}
+main.middle-class-result-state .mct-mechanism-grid article>span{
+  color:var(--mct-orange-dark);
+  font-size:13px;
+  font-weight:800;
+}
+main.middle-class-result-state .mct-mechanism-grid h3,
+main.middle-class-result-state .mct-evidence-list h3{
+  margin:0;
+  color:var(--mct-ink);
+  font-size:16px;
+  line-height:1.35;
+}
+main.middle-class-result-state .mct-mechanism-grid p,
+main.middle-class-result-state .mct-evidence-list p{
+  margin:7px 0 0;
+  color:var(--mct-muted);
+  font-size:14px;
+  line-height:1.55;
+}
+main.middle-class-result-state .mct-evidence-boundary{
+  max-width:780px;
+  margin:0 0 22px;
+  padding:16px 18px;
+  border-radius:12px;
+  background:var(--mct-soft);
+  color:var(--mct-muted);
+  font-size:14px;
+  line-height:1.55;
+}
+main.middle-class-result-state .mct-evidence-boundary strong{color:var(--mct-ink)}
+main.middle-class-result-state .mct-evidence-list{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:22px 28px;
+}
+main.middle-class-result-state .mct-evidence-list article{
+  padding-left:16px;
+  border-left:3px solid var(--mct-orange);
+}
+main.middle-class-result-state .mct-evidence-list a{
+  display:inline-block;
+  margin-top:10px;
+  color:var(--mct-orange-dark);
+  font-size:12px;
+  font-weight:750;
+  text-decoration:none;
+}
+main.middle-class-result-state .mct-evidence-list a:hover{text-decoration:underline}
+main.middle-class-result-state .mct-reading-list{
+  display:grid;
+  gap:10px;
+}
+main.middle-class-result-state .mct-reading-list>a{
+  position:relative;
+  display:grid;
+  grid-template-columns:minmax(220px,.8fr) 1.25fr 20px;
+  gap:20px;
+  align-items:center;
+  padding:16px 18px;
+  border:1px solid var(--mct-line);
+  border-radius:12px;
+  color:inherit;
+  text-decoration:none;
+  transition:border-color .16s ease,transform .16s ease;
+}
+main.middle-class-result-state .mct-reading-list>a:hover{
+  transform:translateY(-1px);
+  border-color:var(--mct-orange);
+}
+main.middle-class-result-state .mct-reading-list span{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+main.middle-class-result-state .mct-reading-list strong{color:var(--mct-ink);font-size:14px;line-height:1.35}
+main.middle-class-result-state .mct-reading-list small{color:var(--mct-orange-dark);font-size:12px;font-weight:750}
+main.middle-class-result-state .mct-reading-list p{margin:0;color:var(--mct-muted);font-size:13px;line-height:1.5}
+main.middle-class-result-state .mct-reading-list>a>b{color:var(--mct-orange-dark);font-size:16px}
 
 @media(max-width:820px){
   main.middle-class-trap-page .engine-header,
@@ -339,6 +453,11 @@ main.middle-class-result-state .mct-missed-review article p{
     margin:4px 0 28px;
   }
   main.middle-class-start-state .middle-class-start>h1{font-size:clamp(42px,13vw,60px)}
+  main.middle-class-result-state .mct-mechanism-grid,
+  main.middle-class-result-state .mct-evidence-list{grid-template-columns:1fr}
+  main.middle-class-result-state .mct-reading-list>a{grid-template-columns:1fr 20px;gap:8px 12px}
+  main.middle-class-result-state .mct-reading-list>a p{grid-column:1}
+  main.middle-class-result-state .mct-reading-list>a>b{grid-column:2;grid-row:1}
 }
 
 @media(max-width:560px){
