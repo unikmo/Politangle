@@ -1,0 +1,297 @@
+/* The Middle Class Trap: a calm civic-workbook treatment within Politangle's orange system. */
+main.middle-class-trap-page{
+  --mct-orange:#f45a1f;
+  --mct-orange-dark:#c94412;
+  --mct-ink:#3b251d;
+  --mct-muted:#6d5b53;
+  --mct-canvas:#f6f2ee;
+  --mct-soft:#fff6f0;
+  --mct-line:#e5d7ce;
+  background:linear-gradient(180deg,var(--mct-orange) 0 112px,var(--mct-canvas) 112px 100%)!important;
+}
+main.middle-class-trap-page::before{
+  height:112px!important;
+  opacity:.34!important;
+}
+main.middle-class-trap-page .engine-header{
+  height:72px!important;
+}
+main.middle-class-trap-page .engine-header-actions>a{
+  color:#fff!important;
+  font-size:14px!important;
+  font-weight:650;
+  text-underline-offset:4px;
+}
+main.middle-class-trap-page .engine-shell{
+  width:min(1040px,calc(100% - 48px))!important;
+  padding:34px 0 72px!important;
+}
+
+/* Start screen */
+main.middle-class-start-state .middle-class-start{
+  display:grid;
+  grid-template-columns:minmax(0,1.18fr) minmax(290px,.82fr);
+  column-gap:56px;
+  row-gap:0;
+  max-width:none;
+  padding:clamp(34px,4.8vw,58px)!important;
+  border:1px solid rgba(84,35,23,.1);
+  border-radius:28px;
+  background:#fff;
+  box-shadow:0 24px 64px rgba(102,43,17,.11);
+}
+main.middle-class-start-state .middle-class-start>.engine-kicker,
+main.middle-class-start-state .middle-class-start>h1,
+main.middle-class-start-state .middle-class-start>.practice-lede,
+main.middle-class-start-state .middle-class-start>.populism-principle,
+main.middle-class-start-state .middle-class-start>.populism-start-button,
+main.middle-class-start-state .middle-class-start>.populism-candidate-note{
+  grid-column:1;
+}
+main.middle-class-start-state .middle-class-start>.engine-kicker{
+  margin:0 0 18px;
+  color:var(--mct-orange-dark)!important;
+  font-size:12px!important;
+  font-weight:800;
+  letter-spacing:.16em!important;
+}
+main.middle-class-start-state .middle-class-start>h1{
+  max-width:620px;
+  margin:0 0 20px;
+  color:var(--mct-ink);
+  font-size:clamp(46px,5.5vw,72px);
+  font-weight:450;
+  letter-spacing:-.055em;
+  line-height:.98;
+}
+main.middle-class-start-state .middle-class-start>.practice-lede{
+  max-width:620px;
+  color:var(--mct-muted);
+  font-size:17px;
+  line-height:1.62;
+}
+main.middle-class-start-state .middle-class-start>.populism-principle{
+  max-width:620px;
+  margin:30px 0 28px;
+  padding:20px 22px;
+  border:1px solid #f1d5c5;
+  border-left:4px solid var(--mct-orange);
+  border-radius:12px;
+  background:var(--mct-soft);
+}
+main.middle-class-start-state .populism-principle strong{
+  color:var(--mct-ink);
+  font-size:16px;
+  line-height:1.4;
+}
+main.middle-class-start-state .populism-principle p{
+  margin:8px 0 0;
+  color:var(--mct-muted);
+  font-size:15px;
+  line-height:1.6;
+}
+main.middle-class-start-state .populism-angle-list{
+  grid-column:2;
+  grid-row:1 / 7;
+  align-self:center;
+  display:flex;
+  flex-direction:column;
+  gap:0;
+  margin:0;
+  padding:10px 0;
+  counter-reset:mct-angle;
+  border-top:1px solid var(--mct-line);
+  border-bottom:1px solid var(--mct-line);
+}
+main.middle-class-start-state .populism-angle-list::before{
+  content:"WHAT THIS QUIZ COVERS";
+  padding:10px 0 16px;
+  color:var(--mct-orange-dark);
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:.13em;
+}
+main.middle-class-start-state .populism-angle-list span{
+  counter-increment:mct-angle;
+  display:grid;
+  grid-template-columns:32px 1fr;
+  align-items:center;
+  gap:12px;
+  min-height:57px;
+  padding:10px 0;
+  border:0;
+  border-top:1px solid #eee3dc;
+  border-radius:0;
+  background:transparent;
+  color:var(--mct-ink);
+  font-size:15px;
+  font-weight:580;
+  line-height:1.35;
+}
+main.middle-class-start-state .populism-angle-list span::before{
+  content:counter(mct-angle,decimal-leading-zero);
+  color:var(--mct-orange-dark);
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:.08em;
+}
+main.middle-class-start-state .populism-start-button{
+  justify-self:start;
+  min-height:50px!important;
+  padding:0 24px!important;
+  font-size:14px!important;
+  box-shadow:none!important;
+}
+main.middle-class-start-state .populism-candidate-note{
+  max-width:620px;
+  margin:16px 0 0;
+  color:var(--mct-muted);
+  font-size:13px;
+  line-height:1.5;
+}
+
+/* Question screen */
+main.middle-class-play-state .engine-progress-row{
+  margin:0 0 18px;
+  color:var(--mct-muted)!important;
+  font-size:13px!important;
+}
+main.middle-class-play-state .engine-progress{
+  height:5px!important;
+  background:#e5d8cf!important;
+}
+main.middle-class-play-state .engine-progress>span{background:var(--mct-orange)!important}
+main.middle-class-play-state .engine-progress-row .engine-link-button{
+  color:var(--mct-orange-dark)!important;
+  font-size:13px!important;
+}
+main.middle-class-trap-page .literacy-card{
+  max-width:900px;
+  margin:0 auto;
+  padding:clamp(30px,4vw,48px)!important;
+  border-radius:24px!important;
+  box-shadow:0 20px 56px rgba(102,43,17,.09)!important;
+}
+main.middle-class-trap-page .populism-question-meta{
+  margin-bottom:20px;
+  align-items:center;
+}
+main.middle-class-trap-page .populism-question-meta .engine-kicker{
+  margin:0;
+  font-size:12px!important;
+}
+main.middle-class-trap-page .populism-question-meta>span{
+  color:var(--mct-muted);
+  font-size:13px;
+  font-weight:600;
+}
+main.middle-class-trap-page .literacy-card .literacy-prompt{
+  max-width:800px!important;
+  margin-bottom:22px!important;
+  font-size:clamp(30px,3.2vw,40px)!important;
+  line-height:1.12!important;
+}
+main.middle-class-trap-page .populism-hint{
+  min-height:44px;
+  margin:0 0 18px;
+}
+main.middle-class-trap-page .populism-hint button{
+  color:var(--mct-orange-dark);
+  font-size:14px;
+  font-weight:700;
+}
+main.middle-class-trap-page .populism-hint p{
+  max-width:720px;
+  margin:8px 0 0;
+  color:var(--mct-muted);
+  font-size:15px;
+  line-height:1.55;
+}
+main.middle-class-trap-page .literacy-options{
+  gap:12px;
+}
+main.middle-class-trap-page .literacy-options .deep-option{
+  min-height:64px;
+  padding:15px 17px;
+  border-radius:12px;
+  color:var(--mct-ink);
+  font-size:16px;
+  line-height:1.45;
+}
+main.middle-class-trap-page .literacy-feedback p{
+  color:var(--mct-muted);
+  font-size:15px;
+  line-height:1.6;
+}
+main.middle-class-trap-page .literacy-nav{
+  max-width:900px;
+  margin:18px auto 0;
+}
+main.middle-class-trap-page .literacy-nav>span{
+  color:var(--mct-muted)!important;
+  font-size:13px;
+}
+main.middle-class-trap-page .literacy-nav button{
+  min-height:48px!important;
+  padding:0 24px!important;
+  font-size:14px!important;
+}
+
+/* Result */
+main.middle-class-result-state .literacy-result-card{
+  max-width:760px;
+}
+main.middle-class-result-state .result-lede{
+  font-size:17px!important;
+  line-height:1.6;
+}
+main.middle-class-result-state .populism-score-grid div{
+  min-height:58px;
+  border-color:var(--mct-line);
+  background:#fffaf7;
+}
+main.middle-class-result-state .populism-score-grid span{
+  color:var(--mct-muted);
+  font-size:14px;
+}
+
+@media(max-width:820px){
+  main.middle-class-trap-page .engine-header,
+  main.middle-class-trap-page .engine-shell{width:calc(100% - 32px)!important}
+  main.middle-class-start-state .middle-class-start{
+    grid-template-columns:1fr;
+    padding:30px 24px!important;
+  }
+  main.middle-class-start-state .middle-class-start>.engine-kicker,
+  main.middle-class-start-state .middle-class-start>h1,
+  main.middle-class-start-state .middle-class-start>.practice-lede,
+  main.middle-class-start-state .middle-class-start>.populism-principle,
+  main.middle-class-start-state .middle-class-start>.populism-start-button,
+  main.middle-class-start-state .middle-class-start>.populism-candidate-note,
+  main.middle-class-start-state .populism-angle-list{
+    grid-column:1;
+  }
+  main.middle-class-start-state .populism-angle-list{
+    grid-row:auto;
+    margin:4px 0 28px;
+  }
+  main.middle-class-start-state .middle-class-start>h1{font-size:clamp(42px,13vw,60px)}
+}
+
+@media(max-width:560px){
+  main.middle-class-trap-page{
+    background:linear-gradient(180deg,var(--mct-orange) 0 88px,var(--mct-canvas) 88px 100%)!important;
+  }
+  main.middle-class-trap-page::before{height:88px!important}
+  main.middle-class-trap-page .engine-header{height:62px!important}
+  main.middle-class-trap-page .engine-header>span{display:none}
+  main.middle-class-trap-page .engine-header-actions>a{font-size:13px!important}
+  main.middle-class-trap-page .engine-shell{padding:22px 0 48px!important}
+  main.middle-class-start-state .middle-class-start{border-radius:20px}
+  main.middle-class-start-state .middle-class-start>.practice-lede{font-size:16px}
+  main.middle-class-trap-page .literacy-card{padding:26px 20px!important;border-radius:20px!important}
+  main.middle-class-trap-page .literacy-card .literacy-prompt{font-size:28px!important}
+  main.middle-class-trap-page .literacy-options{grid-template-columns:1fr}
+  main.middle-class-trap-page .populism-question-meta{display:block}
+  main.middle-class-trap-page .populism-question-meta>span{display:block;margin:8px 0 0}
+}

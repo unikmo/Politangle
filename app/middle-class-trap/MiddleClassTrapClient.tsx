@@ -72,9 +72,9 @@ export default function MiddleClassTrapClient() {
     setRun({ ...run, hintShown:[...run.hintShown,current.id] });
   }
 
-  if (!run) return <main className="engine-page practice-page populism-page middle-class-trap-page">
+  if (!run) return <main className="engine-page practice-page populism-page middle-class-trap-page middle-class-start-state">
     <header className="engine-header"><Link href="/en" className="engine-brand">Politangle</Link><span>MIDDLE CLASS TRAP · ENGLISH</span><div className="engine-header-actions"><Link href="/en/quizzes">All quizzes</Link></div></header>
-    <section className="engine-shell populism-start">
+    <section className="engine-shell populism-start middle-class-start">
       <p className="engine-kicker">FREE · 20 QUESTIONS · ABOUT 8 MINUTES</p>
       <h1>The Middle Class Trap</h1>
       <p className="practice-lede">See how taxes, public services, wealth and political stories interact—without assuming that every wealthy person is corrupt or every public benefit is waste.</p>
@@ -93,7 +93,7 @@ export default function MiddleClassTrapClient() {
       score: answered.filter((question) => question.angle === angle && run.answers[question.id] === question.answerId).length,
     }));
     const resultTitle = correct >= 17 ? 'Strong policy reading' : correct >= 13 ? 'Developing policy reading' : 'Build the foundations';
-    return <main className="engine-page practice-page populism-page middle-class-trap-page">
+    return <main className="engine-page practice-page populism-page middle-class-trap-page middle-class-result-state">
       <header className="engine-header"><Link href="/en" className="engine-brand">Politangle</Link><span>MIDDLE CLASS TRAP · RESULT</span><div className="engine-header-actions"><Link href="/en/quizzes">All quizzes</Link></div></header>
       <section className="engine-shell literacy-shell"><article className="engine-card literacy-result-card populism-result-card">
         <p className="engine-kicker">{resultTitle.toUpperCase()}</p><h1>{correct} / {MIDDLE_CLASS_TRAP_SIZE}</h1>
@@ -107,7 +107,7 @@ export default function MiddleClassTrapClient() {
   if (!current) return null;
   const hintShown = run.hintShown.includes(current.id);
   const correctLabel = current.options.find((option) => option.id === current.answerId)?.label;
-  return <main className="engine-page practice-page populism-page middle-class-trap-page">
+  return <main className="engine-page practice-page populism-page middle-class-trap-page middle-class-play-state">
     <header className="engine-header"><Link href="/en" className="engine-brand">Politangle</Link><span>MIDDLE CLASS TRAP · ENGLISH</span><div className="engine-header-actions"><Link href="/en/quizzes">Exit quiz</Link></div></header>
     <section className="engine-shell literacy-shell">
       <div className="engine-progress-row"><span>{correct} correct so far</span><div className="engine-progress" aria-label={`${run.index + 1} of ${questions.length}`}><span style={{width:`${((run.index + 1) / questions.length) * 100}%`}}/></div><button type="button" className="engine-link-button" onClick={() => setRun(null)}>Start over</button></div>

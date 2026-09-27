@@ -17,6 +17,7 @@ import './results-interpretation.css';
 import './info.css';
 import './certification.css';
 import './accessibility.css';
+import './middle-class-trap.css';
 import './countries.css';
 import './admin.css';
 import { LocaleProvider } from './LocaleProvider';
