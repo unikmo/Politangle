@@ -39,15 +39,15 @@ function candidate(question: Omit<MiddleClassTrapQuestion, 'status'>): MiddleCla
 export const middleClassTrapQuiz: readonly MiddleClassTrapQuestion[] = [
   candidate({
     id:'M1', angle:'who_bears_costs',
-    prompt:'A company must legally send a payroll tax to government. Who necessarily bears its full economic cost?',
-    hint:'The person sending the payment and the person losing purchasing power may differ.',
+    prompt:'A company sends a payroll tax payment to government. Does that prove the company carries the whole cost?',
+    hint:'The person sending the payment may not be the only person left with less money.',
     options:[
-      {id:'a',label:'The company alone',feedback:'The company remits the tax, but wages, prices or returns may also adjust.'},
-      {id:'b',label:'Workers alone',feedback:'Workers may bear part through wages, but that is not automatic or always complete.'},
-      {id:'c',label:'Customers alone',feedback:'Some cost may reach prices, but market conditions determine how much.'},
-      {id:'d',label:'No one necessarily bears all of it',feedback:'Economic incidence may be shared among workers, owners and customers.'},
-    ],answerId:'d',
-    explanation:'Legal payment tells us who sends the money. Economic incidence asks whose income, return or purchasing power falls.',
+      {id:'a',label:'Yes, because the company sends the payment',feedback:'Sending the payment does not prove that the company carries every later effect.'},
+      {id:'b',label:'Yes, because workers cannot be affected',feedback:'Wages or hiring may change, although workers do not automatically carry the whole cost.'},
+      {id:'c',label:'No, wages, prices or profits may also change',feedback:'Correct. The cost may be shared through changes in wages, prices and profits.'},
+      {id:'d',label:'No, because payroll taxes cost nobody anything',feedback:'The tax has a cost; the question is how that cost is divided.'},
+    ],answerId:'c',
+    explanation:'The company sends the payment, but wages, prices and profits can change. Follow who ends up with less money.',
     evidenceIds:['OECD-TAX-INCIDENCE'],
   }),
   candidate({
