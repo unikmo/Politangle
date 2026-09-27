@@ -6,6 +6,7 @@ import {
   MIDDLE_CLASS_TRAP_ANGLES,
   MIDDLE_CLASS_TRAP_ANGLE_LABELS,
   MIDDLE_CLASS_TRAP_ANGLE_MEANINGS,
+  MIDDLE_CLASS_TRAP_BLOCK_SIZE,
   MIDDLE_CLASS_TRAP_SIZE,
   selectMiddleClassTrapQuiz,
   type MiddleClassTrapQuestion,
@@ -129,7 +130,13 @@ export default function MiddleClassTrapClient() {
   const selectedOption = current?.options.find((option) => option.id === selectedId);
   const checked = Boolean(run && current && run.revealed.includes(current.id));
   const answered = run ? run.revealed.map((id) => questions.find((question) => question.id === id)).filter((question): question is MiddleClassTrapQuestion => Boolean(question)) : [];
-  const correct = run ? answered.filter((question) => run.answers[question.id] === question.answerId).length : 0;
+  const understandingAnswered = answered.filter((question) => question.kind === 'understanding');
+  const correct = run ? understandingAnswered.filter((question) => run.answers[question.id] === question.answerId).length : 0;
+  const solidarityAnswered = answered.filter((question) => question.kind === 'solidarity');
+  const solidarityScore = run ? solidarityAnswered.reduce((sum,question) => {
+    const option = question.options.find((candidate) => candidate.id === run.answers[question.id]);
+    return sum + (option?.solidarity ?? 0);
+  },0) : 0;
 
   function start() {
     setRun({ seed:newSeed(), index:0, answers:{}, revealed:[], hintShown:[], finished:false });
@@ -159,8 +166,9 @@ export default function MiddleClassTrapClient() {
       <h1>The Middle Class Trap</h1>
       <p className="practice-lede">See how taxes, public services, wealth and political stories interact—without assuming that every wealthy person is corrupt or every public benefit is waste.</p>
       <div className="populism-principle"><strong>This quiz does not tell you how to vote.</strong><p>It helps you test who really bears a cost, what a household gains or loses overall, and when blame is being redirected instead of power being examined.</p></div>
-      <div className="populism-angle-list" aria-label="Quiz coverage">
-        {MIDDLE_CLASS_TRAP_ANGLES.map((angle) => <span key={angle}>{MIDDLE_CLASS_TRAP_ANGLE_LABELS[angle]}</span>)}
+      <div className="mct-block-overview" aria-label="Quiz structure">
+        <article><span>01 · 10 QUESTIONS</span><strong>Understanding the trap</strong><p>Can you identify who gains, who pays and which costs or protections a political story leaves out?</p></article>
+        <article><span>02 · 10 CHOICES</span><strong>Where your solidarity goes</strong><p>When interests conflict, do you instinctively protect high-wealth ownership, greater vulnerability, or balance both?</p></article>
       </div>
       <button className="engine-primary-link populism-start-button" type="button" onClick={start}>Start the quiz →</button>
       <p className="populism-candidate-note">English candidate for founder review. Free, private on this device and outside certification.</p>
@@ -170,21 +178,46 @@ export default function MiddleClassTrapClient() {
   if (run.finished) {
     const angleScores = MIDDLE_CLASS_TRAP_ANGLES.map((angle) => ({
       angle,
-      score: answered.filter((question) => question.angle === angle && run.answers[question.id] === question.answerId).length,
+      score: understandingAnswered.filter((question) => question.angle === angle && run.answers[question.id] === question.answerId).length,
     }));
-    const missed = answered.filter((question) => run.answers[question.id] !== question.answerId);
-    const resultTitle = correct >= 17 ? 'You usually see the trap' : correct >= 13 ? 'You see much of the trap' : 'Some familiar stories still hide the balance';
-    const resultSummary = correct >= 17
-      ? `You recognised ${correct} of ${MIDDLE_CLASS_TRAP_SIZE} patterns that can make middle-income households misread who gains, who pays and where their own security comes from.`
-      : correct >= 13
-        ? `You recognised ${correct} of ${MIDDLE_CLASS_TRAP_SIZE} patterns. Your category scores show where a familiar political story can still hide the household balance.`
-        : `You recognised ${correct} of ${MIDDLE_CLASS_TRAP_SIZE} patterns. Review the missed scenarios to see where labels or downward blame may have hidden the distribution.`;
+    const missed = understandingAnswered.filter((question) => run.answers[question.id] !== question.answerId);
+    const resultTitle = correct >= 9 ? 'Clear understanding' : correct >= 7 ? 'Good understanding' : 'Developing understanding';
+    const resultSummary = correct >= 9
+      ? `You correctly identified ${correct} of ${MIDDLE_CLASS_TRAP_BLOCK_SIZE} mechanisms behind the middle-class trap.`
+      : correct >= 7
+        ? `You correctly identified ${correct} of ${MIDDLE_CLASS_TRAP_BLOCK_SIZE} mechanisms. The missed scenarios show where a familiar label can still hide the distribution.`
+        : `You correctly identified ${correct} of ${MIDDLE_CLASS_TRAP_BLOCK_SIZE} mechanisms. Review the missed scenarios before drawing conclusions from the solidarity result.`;
+    const solidarityLabel = solidarityScore >= 8
+      ? 'Solidarity mainly with greater vulnerability'
+      : solidarityScore <= -8
+        ? 'Solidarity mainly with high-wealth ownership'
+        : 'Mixed or conditional solidarity';
+    const solidarityText = solidarityScore >= 8
+      ? 'When interests conflicted, you usually prioritised wage-dependent, lower-resource or less-secure households.'
+      : solidarityScore <= -8
+        ? 'When interests conflicted, you usually prioritised ownership continuity, investment returns or limits on contributions from wealth.'
+        : 'Your choices changed with the issue. You did not consistently place either high-wealth ownership or greater material vulnerability first.';
+    const combinedReading = correct >= 7
+      ? solidarityScore >= 8
+        ? 'You generally understand the trap and your choices usually resist upward identification by prioritising security lower in the distribution.'
+        : solidarityScore <= -8
+          ? 'You generally understand the trap but still prefer stronger protection of ownership and wealth. That is a value choice, not a failure to understand the theory.'
+          : 'You generally understand the trap, while your solidarity remains conditional on the policy and the trade-off.'
+      : solidarityScore >= 8
+        ? 'You tend to side with households facing greater vulnerability, but some policy mechanisms remain unclear. Solidarity and policy understanding are not the same thing.'
+        : solidarityScore <= -8
+          ? 'You tend to protect high-wealth ownership, while some policy mechanisms remain unclear. The quiz cannot tell whether those choices would change with fuller information.'
+          : 'Your policy understanding is still developing and your solidarity is mixed. Review the missed mechanisms before interpreting this as a stable political position.';
     return <main className="engine-page practice-page populism-page middle-class-trap-page middle-class-result-state">
       <header className="engine-header"><Link href="/en" className="engine-brand">Politangle</Link><span>MIDDLE CLASS TRAP · RESULT</span><div className="engine-header-actions"><Link href="/en/quizzes">All quizzes</Link></div></header>
       <section className="engine-shell literacy-shell"><article className="engine-card literacy-result-card populism-result-card">
-        <p className="engine-kicker">{resultTitle.toUpperCase()}</p><h1>{correct} / {MIDDLE_CLASS_TRAP_SIZE}</h1>
-        <div className="mct-result-intro"><strong>What your score means</strong><p>{resultSummary}</p><p><b>In practical terms:</b> you applied this framework correctly to {correct} short scenarios. It does not prove how you act in real elections, calculate your personal finances or define your political beliefs.</p></div>
-        <div className="populism-score-grid">{angleScores.map(({angle,score}) => <div key={angle}><span><b>{MIDDLE_CLASS_TRAP_ANGLE_LABELS[angle]}</b><small>{MIDDLE_CLASS_TRAP_ANGLE_MEANINGS[angle]}</small></span><strong>{score}/4</strong></div>)}</div>
+        <p className="engine-kicker">YOUR TWO-PART RESULT</p><h1>{resultTitle}</h1>
+        <div className="mct-two-results">
+          <article><span>01 · UNDERSTANDING</span><strong>{correct} / {MIDDLE_CLASS_TRAP_BLOCK_SIZE}</strong><h2>{resultTitle}</h2><p>{resultSummary}</p></article>
+          <article><span>02 · SOLIDARITY</span><strong>{solidarityScore > 0 ? '+' : ''}{solidarityScore}</strong><h2>{solidarityLabel}</h2><p>{solidarityText}</p><div className="mct-solidarity-scale"><span>High-wealth ownership</span><i><b style={{left:`${((solidarityScore + 20) / 40) * 100}%`}}/></i><span>Greater vulnerability</span></div></article>
+        </div>
+        <div className="mct-result-intro"><strong>How the two results fit together</strong><p>{combinedReading}</p><p>This describes your answers to these scenarios. It does not determine your class, morality, ideology or how you should vote.</p></div>
+        <div className="populism-score-grid">{angleScores.map(({angle,score}) => <div key={angle}><span><b>{MIDDLE_CLASS_TRAP_ANGLE_LABELS[angle]}</b><small>{MIDDLE_CLASS_TRAP_ANGLE_MEANINGS[angle]}</small></span><strong>{score}/2</strong></div>)}</div>
         {missed.length > 0 && <section className="mct-missed-review"><h2>What to review</h2>{missed.map((question) => <article key={question.id}><strong>{question.prompt}</strong><p>{question.explanation}</p></article>)}</section>}
         <section className="mct-theory" aria-labelledby="mct-theory-title">
           <p className="engine-kicker">THE IDEA BEHIND THE QUIZ</p>
@@ -211,19 +244,19 @@ export default function MiddleClassTrapClient() {
 
   if (!current) return null;
   const hintShown = run.hintShown.includes(current.id);
-  const correctLabel = current.options.find((option) => option.id === current.answerId)?.label;
+  const correctLabel = current.kind === 'understanding' ? current.options.find((option) => option.id === current.answerId)?.label : undefined;
   return <main className="engine-page practice-page populism-page middle-class-trap-page middle-class-play-state">
     <header className="engine-header"><Link href="/en" className="engine-brand">Politangle</Link><span>MIDDLE CLASS TRAP · ENGLISH</span><div className="engine-header-actions"><Link href="/en/quizzes">Exit quiz</Link></div></header>
     <section className="engine-shell literacy-shell">
-      <div className="engine-progress-row"><span>{correct} correct so far</span><div className="engine-progress" aria-label={`${run.index + 1} of ${questions.length}`}><span style={{width:`${((run.index + 1) / questions.length) * 100}%`}}/></div><button type="button" className="engine-link-button" onClick={() => setRun(null)}>Start over</button></div>
+      <div className="engine-progress-row"><span>{current.kind === 'understanding' ? `${correct} correct so far` : 'Your choices are not graded'}</span><div className="engine-progress" aria-label={`${run.index + 1} of ${questions.length}`}><span style={{width:`${((run.index + 1) / questions.length) * 100}%`}}/></div><button type="button" className="engine-link-button" onClick={() => setRun(null)}>Start over</button></div>
       <article className="engine-card literacy-card">
-        <div className="populism-question-meta"><p className="engine-kicker">QUESTION {run.index + 1} OF {questions.length}</p><span>{MIDDLE_CLASS_TRAP_ANGLE_LABELS[current.angle]}</span></div>
+        <div className="populism-question-meta"><p className="engine-kicker">{current.kind === 'understanding' ? `UNDERSTANDING ${run.index + 1} OF ${MIDDLE_CLASS_TRAP_BLOCK_SIZE}` : `SOLIDARITY ${run.index + 1 - MIDDLE_CLASS_TRAP_BLOCK_SIZE} OF ${MIDDLE_CLASS_TRAP_BLOCK_SIZE}`}</p><span>{current.kind === 'understanding' ? MIDDLE_CLASS_TRAP_ANGLE_LABELS[current.angle] : 'No correct answer'}</span></div>
         <h1 className="literacy-prompt">{current.prompt}</h1>
         {!checked && <div className="populism-hint"><button type="button" onClick={showHint} aria-expanded={hintShown}>{hintShown ? 'Hint' : 'Need a clue?'}</button>{hintShown && <p>{current.hint}</p>}</div>}
         <div className="deep-options literacy-options">{orderedOptions(current,run.seed).map((option) => <button type="button" disabled={checked} className={selectedId === option.id ? 'deep-option selected' : 'deep-option'} key={option.id} onClick={() => choose(option.id)}>{option.label}</button>)}</div>
-        {checked && selectedOption && <div className="literacy-feedback" aria-live="polite"><p className="engine-kicker">{selectedId === current.answerId ? 'CORRECT' : 'NOT QUITE'}</p><p>{selectedOption.feedback}</p>{selectedId !== current.answerId && <p><strong>Best answer:</strong> {correctLabel}</p>}<p>{current.explanation}</p></div>}
+        {checked && selectedOption && <div className="literacy-feedback" aria-live="polite"><p className="engine-kicker">{current.kind === 'solidarity' ? 'WHAT THIS CHOICE SHOWS' : selectedId === current.answerId ? 'CORRECT' : 'NOT QUITE'}</p><p>{selectedOption.feedback}</p>{current.kind === 'understanding' && selectedId !== current.answerId && <p><strong>Best answer:</strong> {correctLabel}</p>}<p>{current.explanation}</p></div>}
       </article>
-      <div className="engine-nav literacy-nav"><span>{run.index + 1} / {questions.length}</span>{checked ? <button type="button" onClick={next}>{run.index === questions.length - 1 ? 'See result' : 'Next question'}</button> : <button type="button" onClick={check} disabled={!selectedId}>Check answer</button>}</div>
+      <div className="engine-nav literacy-nav"><span>{run.index + 1} / {questions.length}</span>{checked ? <button type="button" onClick={next}>{run.index === questions.length - 1 ? 'See result' : 'Next question'}</button> : <button type="button" onClick={check} disabled={!selectedId}>{current.kind === 'understanding' ? 'Check answer' : 'Record choice'}</button>}</div>
     </section>
   </main>;
 }
