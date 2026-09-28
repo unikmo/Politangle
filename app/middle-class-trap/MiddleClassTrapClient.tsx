@@ -168,7 +168,7 @@ export default function MiddleClassTrapClient() {
       <div className="populism-principle"><strong>This quiz does not tell you how to vote.</strong><p>It helps you test who really bears a cost, what a household gains or loses overall, and when blame is being redirected instead of power being examined.</p></div>
       <div className="mct-block-overview" aria-label="Quiz structure">
         <article><span>01 · 10 QUESTIONS</span><strong>Understanding the trap</strong><p>Can you identify who gains, who pays and which costs or protections a political story leaves out?</p></article>
-        <article><span>02 · 10 CHOICES</span><strong>Where your solidarity goes</strong><p>When interests conflict, do you instinctively protect high-wealth ownership, greater vulnerability, or balance both?</p></article>
+        <article><span>02 · 10 CHOICES</span><strong>Who you protect first</strong><p>When not everyone can be protected equally, do you first protect ownership, people with less security, or balance both?</p></article>
       </div>
       <button className="engine-primary-link populism-start-button" type="button" onClick={start}>Start the quiz →</button>
       <p className="populism-candidate-note">English candidate for founder review. Free, private on this device and outside certification.</p>
@@ -185,28 +185,28 @@ export default function MiddleClassTrapClient() {
     const resultSummary = correct >= 9
       ? `You correctly identified ${correct} of ${MIDDLE_CLASS_TRAP_BLOCK_SIZE} mechanisms behind the middle-class trap.`
       : correct >= 7
-        ? `You correctly identified ${correct} of ${MIDDLE_CLASS_TRAP_BLOCK_SIZE} mechanisms. The missed scenarios show where a familiar label can still hide the distribution.`
+        ? `You correctly answered ${correct} of ${MIDDLE_CLASS_TRAP_BLOCK_SIZE}. The missed examples show where a friendly policy name can hide who receives most of the money.`
         : `You correctly identified ${correct} of ${MIDDLE_CLASS_TRAP_BLOCK_SIZE} mechanisms. Review the missed scenarios before drawing conclusions from the solidarity result.`;
     const solidarityLabel = solidarityScore >= 8
-      ? 'Solidarity mainly with greater vulnerability'
+      ? 'You usually protect less-secure households first'
       : solidarityScore <= -8
-        ? 'Solidarity mainly with high-wealth ownership'
-        : 'Mixed or conditional solidarity';
+        ? 'You usually protect ownership first'
+        : 'Your priority depends on the issue';
     const solidarityText = solidarityScore >= 8
-      ? 'When interests conflicted, you usually prioritised wage-dependent, lower-resource or less-secure households.'
+      ? 'When interests conflicted, you usually chose workers, tenants or households with less money and fewer alternatives.'
       : solidarityScore <= -8
-        ? 'When interests conflicted, you usually prioritised ownership continuity, investment returns or limits on contributions from wealth.'
-        : 'Your choices changed with the issue. You did not consistently place either high-wealth ownership or greater material vulnerability first.';
+        ? 'When interests conflicted, you usually chose property rights, investment returns or lower charges on owners first.'
+        : 'Your choices changed with the situation. You did not consistently put either ownership or less-secure households first.';
     const combinedReading = correct >= 7
       ? solidarityScore >= 8
-        ? 'You generally understand the trap and your choices usually resist upward identification by prioritising security lower in the distribution.'
+        ? 'You usually spotted who really gains and pays. When forced to choose, you also tended to protect people with less financial security first.'
         : solidarityScore <= -8
-          ? 'You generally understand the trap but still prefer stronger protection of ownership and wealth. That is a value choice, not a failure to understand the theory.'
-          : 'You generally understand the trap, while your solidarity remains conditional on the policy and the trade-off.'
+          ? 'You usually spotted who really gains and pays, but still preferred stronger protection of ownership. That is a value choice, not a wrong answer.'
+          : 'You usually spotted who really gains and pays. Who you protect first changes with the situation.'
       : solidarityScore >= 8
         ? 'You tend to side with households facing greater vulnerability, but some policy mechanisms remain unclear. Solidarity and policy understanding are not the same thing.'
         : solidarityScore <= -8
-          ? 'You tend to protect high-wealth ownership, while some policy mechanisms remain unclear. The quiz cannot tell whether those choices would change with fuller information.'
+          ? 'You tend to protect ownership first, while some of the money flows remain unclear. The quiz cannot tell whether more information would change those choices.'
           : 'Your policy understanding is still developing and your solidarity is mixed. Review the missed mechanisms before interpreting this as a stable political position.';
     return <main className="engine-page practice-page populism-page middle-class-trap-page middle-class-result-state">
       <header className="engine-header"><Link href="/en" className="engine-brand">Politangle</Link><span>MIDDLE CLASS TRAP · RESULT</span><div className="engine-header-actions"><Link href="/en/quizzes">All quizzes</Link></div></header>
@@ -214,7 +214,7 @@ export default function MiddleClassTrapClient() {
         <p className="engine-kicker">YOUR TWO-PART RESULT</p><h1>{resultTitle}</h1>
         <div className="mct-two-results">
           <article><span>01 · UNDERSTANDING</span><strong>{correct} / {MIDDLE_CLASS_TRAP_BLOCK_SIZE}</strong><h2>{resultTitle}</h2><p>{resultSummary}</p></article>
-          <article><span>02 · SOLIDARITY</span><strong>{solidarityScore > 0 ? '+' : ''}{solidarityScore}</strong><h2>{solidarityLabel}</h2><p>{solidarityText}</p><div className="mct-solidarity-scale"><span>High-wealth ownership</span><i><b style={{left:`${((solidarityScore + 20) / 40) * 100}%`}}/></i><span>Greater vulnerability</span></div></article>
+          <article><span>02 · WHO YOU PROTECT FIRST</span><strong>{solidarityScore > 0 ? '+' : ''}{solidarityScore}</strong><h2>{solidarityLabel}</h2><p>{solidarityText}</p><div className="mct-solidarity-scale"><span>Ownership first</span><i><b style={{left:`${((solidarityScore + 20) / 40) * 100}%`}}/></i><span>Less-secure households first</span></div></article>
         </div>
         <div className="mct-result-intro"><strong>How the two results fit together</strong><p>{combinedReading}</p><p>This describes your answers to these scenarios. It does not determine your class, morality, ideology or how you should vote.</p></div>
         <div className="populism-score-grid">{angleScores.map(({angle,score}) => <div key={angle}><span><b>{MIDDLE_CLASS_TRAP_ANGLE_LABELS[angle]}</b><small>{MIDDLE_CLASS_TRAP_ANGLE_MEANINGS[angle]}</small></span><strong>{score}/2</strong></div>)}</div>
