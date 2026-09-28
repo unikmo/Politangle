@@ -63,13 +63,13 @@ function candidate(question: Omit<MiddleClassTrapUnderstandingQuestion, 'kind' |
 const middleClassTrapUnderstandingBank: readonly MiddleClassTrapUnderstandingQuestion[] = [
   candidate({
     id:'M1', angle:'economic_position',
-    prompt:'Nina earns €5,000 monthly but has no savings. Amir earns €3,000 and owns his home. If both lose work, who is safer?',
+    prompt:'Nina earns €5,000, rents and has no savings. Amir earns €3,000 and owns his home debt-free. Both lose work. Who has more protection?',
     hint:'Look beyond this month’s pay. What remains after wages stop?',
     options:[
-      {id:'a',label:'Nina, because her monthly pay was higher',feedback:'Her higher pay disappears if the job disappears.'},
+      {id:'a',label:'Nina, because her previous pay was higher',feedback:'Her previous pay disappears when the job ends, and she has no savings.'},
       {id:'b',label:'Amir, because his debt-free home remains',feedback:'The home reduces his costs and remains valuable when wages stop.'},
       {id:'c',label:'Both, because neither now receives wages',feedback:'They both lose wages, but only Amir still has the debt-free home.'},
-      {id:'d',label:'Nina, because housing does not affect security',feedback:'Owning a debt-free home reduces a major household risk.'},
+      {id:'d',label:'Nina, because renting gives greater security',feedback:'Rent remains due, while Amir already owns his home debt-free.'},
     ], answerId:'b',
     explanation:'A high salary is not the same as wealth. Savings and property can protect a household when wages stop.',
     evidenceIds:['HERRMANN-MIDDLE-CLASS-TRAP','OECD-INCOME-CONSUMPTION-WEALTH'],
