@@ -1,6 +1,8 @@
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import test from 'node:test';
 import { evidenceById } from './evidence';
+import { MIDDLE_CLASS_TRAP_READING } from './middle-class-trap-reading';
 import { MIDDLE_CLASS_TRAP_ANGLES, MIDDLE_CLASS_TRAP_ANGLE_MEANINGS, MIDDLE_CLASS_TRAP_BLOCK_SIZE, MIDDLE_CLASS_TRAP_SIZE, middleClassTrapQuiz, selectMiddleClassTrapQuiz } from './middle-class-trap-quiz';
 
 function words(value:string) { return value.trim().split(/\s+/).filter(Boolean).length; }
@@ -60,4 +62,24 @@ test('reader-facing questions avoid academic policy language', () => {
   for (const question of understanding) {
     assert.match(question.prompt, /€|tax|salary|wages|home|family|state|campaign|company/i, `${question.id} needs a familiar anchor`);
   }
+});
+
+test('recommended reading gives every title a substantial introduction and destination', () => {
+  assert.equal(MIDDLE_CLASS_TRAP_READING.length, 5);
+  for (const item of MIDDLE_CLASS_TRAP_READING) {
+    assert.equal(item.introduction.length, 6, `${item.title} needs six introductory sentences`);
+    assert.ok(item.introduction.every((sentence) => sentence.trim().length >= 40), `${item.title} has an underdeveloped sentence`);
+    assert.match(item.href, /^https:\/\//, `${item.title} needs a link`);
+    assert.match(item.linkLabel, /buy|read/i, `${item.title} needs a clear link label`);
+  }
+});
+
+test('quiz play withholds answers and scores until the final result', () => {
+  const client = readFileSync(new URL('../app/middle-class-trap/MiddleClassTrapClient.tsx', import.meta.url), 'utf8');
+  for (const oldCue of ['correct so far', 'Check answer', 'Record choice', 'NOT QUITE', '`SOLIDARITY ${']) {
+    assert.ok(!client.includes(oldCue), `play flow still exposes ${oldCue}`);
+  }
+  assert.ok(client.includes('Choose one answer to continue.'));
+  assert.ok(client.includes('COMPLETE ANSWER REVIEW'));
+  assert.ok(client.includes('POLICY PRIORITY'));
 });
