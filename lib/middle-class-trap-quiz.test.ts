@@ -43,3 +43,21 @@ test('quiz avoids directing votes or treating wealth and poverty as moral identi
   const copy = JSON.stringify(middleClassTrapQuiz).toLowerCase();
   for (const phrase of ['vote for', 'vote against', 'rich people are', 'poor people are', 'the elite always', 'the poor always']) assert.ok(!copy.includes(phrase), phrase);
 });
+
+test('reader-facing questions avoid academic policy language', () => {
+  const copy = JSON.stringify(middleClassTrapQuiz).toLowerCase();
+  for (const phrase of [
+    'capital income',
+    'distributional',
+    'progressive by ability',
+    'upward identification',
+    'material vulnerability',
+    'private replacement costs',
+    'economic position',
+  ]) assert.ok(!copy.includes(phrase), phrase);
+
+  const understanding = middleClassTrapQuiz.filter((question) => question.kind === 'understanding');
+  for (const question of understanding) {
+    assert.match(question.prompt, /€|tax|salary|wages|home|family|state|campaign|company/i, `${question.id} needs a familiar anchor`);
+  }
+});
