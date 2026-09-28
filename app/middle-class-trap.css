@@ -308,16 +308,19 @@ main.middle-class-result-state .mct-two-results>article>span{
 }
 main.middle-class-result-state .mct-two-results>article>strong{
   display:block;
-  margin:10px 0 3px;
+  margin:12px 0 0;
   color:var(--mct-ink);
   font-size:34px;
   font-weight:500;
   letter-spacing:-.04em;
+  line-height:1.05;
 }
 main.middle-class-result-state .mct-two-results h2{
-  margin:0;
+  margin:10px 0 0!important;
   color:var(--mct-ink);
   font-size:17px;
+  font-weight:700;
+  letter-spacing:-.01em;
   line-height:1.35;
 }
 main.middle-class-result-state .mct-two-results p{
