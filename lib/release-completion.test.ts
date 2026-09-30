@@ -18,6 +18,10 @@ const siteChrome = readFileSync(join(root, 'app/SiteChrome.tsx'), 'utf8');
 const countryGuide = readFileSync(join(root, 'app/countries/CountryGuide.tsx'), 'utf8');
 const countryPattern = readFileSync(join(root, 'docs/country-perspective-pattern-v2.md'), 'utf8');
 const legacyGlobalLabels = readFileSync(join(root, 'lib/country-global-labels-legacy.ts'), 'utf8');
+const contactForm = readFileSync(join(root, 'app/ContactForm.tsx'), 'utf8');
+const contactSkeleton = readFileSync(join(root, 'public/__forms.html'), 'utf8');
+const adminOverview = readFileSync(join(root, 'app/admin/AdminClient.tsx'), 'utf8');
+const launchReadiness = readFileSync(join(root, 'lib/launch-readiness.ts'), 'utf8');
 
 test('founder review covers the exact current bank without silently validating it', () => {
   assert.match(reviewApi, /literacyMasterBankCandidates/);
@@ -46,9 +50,29 @@ test('certificate checkout remains independently gated by tax readiness and elig
   assert.match(checkout, /VERIFICATION_ACKNOWLEDGEMENT_REQUIRED/);
 });
 
-test('validation workflow follows the 16+ certification policy', () => {
-  assert.match(validationWorkflow, /English-speaking users aged 16\+/);
-  assert.doesNotMatch(validationWorkflow, /English-speaking adults aged 18\+/);
+test('validation workflow follows the 18+ certification policy', () => {
+  assert.match(validationWorkflow, /English-speaking users aged 18\+/);
+  assert.doesNotMatch(validationWorkflow, /aged 16\+/);
+});
+
+test('localized contact form is detectable by Netlify and includes consent and spam controls', () => {
+  assert.match(contactForm, /politangle-contact/);
+  assert.match(contactForm, /\/__forms\.html/);
+  assert.match(contactForm, /privacy-acknowledged/);
+  assert.match(contactForm, /bot-field/);
+  assert.match(contactSkeleton, /data-netlify="true"/);
+  for (const field of ['locale', 'name', 'email', 'subject', 'message', 'privacy-acknowledged', 'bot-field']) {
+    assert.match(contactSkeleton, new RegExp(`name="${field}"`));
+  }
+});
+
+test('admin dashboard reports every non-payment release gate without weakening it', () => {
+  for (const gate of ['firebase-server', 'firebase-client', 'admin-access', 'contact-email', 'legal-review', 'accessibility-audit', 'school-release', 'certification-bank', 'certification-switch']) {
+    assert.match(launchReadiness, new RegExp(gate));
+  }
+  assert.match(adminOverview, /NON-PAYMENT LAUNCH READINESS/);
+  assert.match(launchReadiness, /certificationReadiness/);
+  assert.doesNotMatch(launchReadiness, /STRIPE/);
 });
 
 

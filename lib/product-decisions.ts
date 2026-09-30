@@ -1,5 +1,5 @@
 export const POLITANGLE_PRODUCT_DECISIONS = {
-  version: '2026-09-14.1',
+  version: '2026-09-30.1',
   schoolAgeBands: {
     junior: { min: 10, max: 13 },
     youth: { min: 14, max: 18 },
@@ -12,7 +12,7 @@ export const POLITANGLE_PRODUCT_DECISIONS = {
       maximum: 2,
       rollingWindowHours: 24,
     },
-    certificationMinimumAge: 16,
+    certificationMinimumAge: 18,
     initialCertificationLanguage: 'en',
     certificateValidityYears: 2,
     practiceIsFree: true,

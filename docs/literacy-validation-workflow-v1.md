@@ -3,7 +3,7 @@
 **Status:** Implemented validation gate; internal editorial pass complete; founder review pending
 **Bank:** `literacy-master-2026.09-candidate-1`  
 **Review:** `literacy-editorial-review-2026.09-1`  
-**Audience:** English-speaking users aged 16+  
+**Audience:** English-speaking users aged 18+
 
 ## What this checkpoint establishes
 
@@ -93,7 +93,7 @@ Founder approval creates a separately versioned, immutable pilot bank. It does n
 
 ### 3. Pilot with ordinary adults
 
-Use English-speaking users aged 16+ with varied education levels, political familiarity and political viewpoints. For participants who are minors where the pilot is run, obtain the consent/assent required by the applicable research, school and privacy framework. For every tested item, ask the participant to:
+Use English-speaking adults aged 18+ with varied education levels, political familiarity and political viewpoints. For every tested item, ask the participant to:
 
 - answer without assistance;
 - explain the question in their own words;

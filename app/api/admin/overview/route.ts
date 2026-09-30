@@ -4,6 +4,7 @@ import { certificationReadiness } from '../../../../lib/certification-server';
 import { countryProfiles, lockedCountryQueue } from '../../../../lib/countries';
 import { getAdminDb } from '../../../../lib/firebase-admin';
 import { literacyMasterBankCandidates } from '../../../../lib/literacy-master-bank';
+import { launchReadiness } from '../../../../lib/launch-readiness';
 
 export async function GET() {
   if (!await authenticatedAdmin()) return NextResponse.json({ error: 'ADMIN_REQUIRED' }, { status: 403 });
@@ -16,6 +17,7 @@ export async function GET() {
   const readiness = certificationReadiness();
   const byStatus = literacyMasterBankCandidates.reduce<Record<string, number>>((totals, question) => { totals[question.status] = (totals[question.status] ?? 0) + 1; return totals; }, {});
   return NextResponse.json({
+    launch: launchReadiness(),
     release: { enabled: readiness.enabled, bankReady: readiness.bankReady, bankVersion: readiness.bankVersion, blockers: readiness.blockers },
     counts: { users: users.data().count, attempts: attempts.data().count, passed: passed.data().count, failed: failed.data().count, certificates: certificates.data().count, awaitingPurchase: eligibilities.data().count },
     questions: { total: literacyMasterBankCandidates.length, byStatus },
