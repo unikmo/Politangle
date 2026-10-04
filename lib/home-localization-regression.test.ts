@@ -27,8 +27,8 @@ test('homepage uses the locked eight-axis names instead of the former four-axis 
 });
 
 test('German homepage copy stays informal and avoids literal formal-address calques', () => {
-  assert.match(homepage, /Politik ist mehr als links oder rechts\./);
-  assert.match(homepage, /26 Fragen zeigen, welche politischen Werte dir wichtig sind/);
+  assert.match(homepage, /Politik ist mehr als links, rechts oder Mitte\./);
+  assert.match(homepage, /26 Fragen zeigen dir, welche politischen Werte dir wichtig sind/);
   assert.match(homepage, /Deine Antworten bleiben privat/);
   assert.doesNotMatch(homepage, /Erster Quick ohne Anmeldung/);
   assert.match(homepage, /Politische Begriffe verstehen/);
