@@ -55,14 +55,14 @@ const axisCopy: Record<Locale, Record<string, { name: string; low: string; high:
     ecology: { name: 'Ecologia', low: 'Limites ecológicos / mudança estrutural', high: 'Crescimento / adaptação gradual' },
   },
   fr: {
-    'economic-role': { name: 'Rôle de l’État', low: 'Services publics / redistribution', high: 'Marché / responsabilité individuelle' },
-    ownership: { name: 'Propriété', low: 'Propriété sociale / des salariés', high: 'Propriété privée / des actionnaires' },
-    'social-values': { name: 'Valeurs sociales', low: 'Autonomie personnelle / changement', high: 'Tradition / continuité morale' },
-    authority: { name: 'Autorité', low: 'Liberté / garanties', high: 'Ordre / autorité préventive' },
-    pluralism: { name: 'Pluralisme', low: 'Contre-pouvoirs / institutions indépendantes', high: 'Concentration majoritaire' },
-    world: { name: 'Rapport à l’international', low: 'Coopération internationale', high: 'Décision nationale' },
-    nationhood: { name: 'Appartenance nationale', low: 'Appartenance civique / inclusive', high: 'Continuité héritée / liée au statut' },
-    ecology: { name: 'Écologie', low: 'Limites écologiques / changement structurel', high: 'Croissance / adaptation progressive' },
+    'economic-role': { name: 'État et marché', low: 'Davantage de services publics et de redistribution', high: 'Davantage de marché et de responsabilité individuelle' },
+    ownership: { name: 'Propriété', low: 'Davantage de propriété publique ou détenue par les salariés', high: 'Davantage de propriété et de contrôle privés' },
+    'social-values': { name: 'Société et valeurs', low: 'Liberté personnelle et changement social', high: 'Tradition et continuité' },
+    authority: { name: 'Liberté et ordre', low: 'Libertés et protections juridiques', high: 'Pouvoirs renforcés pour maintenir l’ordre' },
+    pluralism: { name: 'Contre-pouvoirs démocratiques', low: 'Davantage de contrôle et de partage du pouvoir', high: 'Davantage de liberté d’action pour la majorité' },
+    world: { name: 'Coopération internationale', low: 'Davantage de décisions communes', high: 'Davantage de décisions nationales' },
+    nationhood: { name: 'Nation et appartenance', low: 'Citoyenneté et appartenance égale', high: 'Origines, culture et traditions' },
+    ecology: { name: 'Écologie et économie', low: 'Priorité aux limites écologiques', high: 'Priorité à la croissance et adaptation progressive' },
   },
 };
 

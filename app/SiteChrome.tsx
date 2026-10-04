@@ -42,8 +42,8 @@ const copy: Record<Locale, ChromeCopy> = {
     privacy: 'Privacidad', imprint: 'Aviso legal', terms: 'Condiciones', contact: 'Contacto',
   },
   fr: {
-    method: 'Méthode', learn: 'Apprendre', guides: 'Guides', quizzes: 'Quiz', countries: 'Pays', schools: 'Pour les écoles', about: 'À propos',
-    account: 'Se connecter', start: 'Lancer Quick', practice: 'S’entraîner', validation: 'Validation',
+    method: 'Comment ça marche', learn: 'Comprendre', guides: 'Guides', quizzes: 'Quiz', countries: 'Pays', schools: 'Écoles', about: 'À propos',
+    account: 'Se connecter', start: 'Commencer le test', practice: 'S’entraîner', validation: 'Qualité et limites',
     privacy: 'Vie privée', imprint: 'Mentions légales', terms: 'Conditions', contact: 'Contact',
   },
   'pt-br': {

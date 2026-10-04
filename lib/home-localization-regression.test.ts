@@ -36,8 +36,10 @@ test('German homepage copy stays informal and avoids literal formal-address calq
 });
 
 test('French marketing localization uses tu rather than vous', () => {
-  assert.match(translations, /Tes idées politiques ne tiennent pas sur un seul axe gauche-droite\./);
-  assert.match(translations, /sans te coller une étiquette/);
+  assert.match(translations, /La politique ne se résume pas à la gauche, à la droite ou au centre\./);
+  assert.match(translations, /quelles valeurs politiques comptent pour toi/);
+  assert.match(translations, /Tes réponses restent privées/);
+  assert.doesNotMatch(translations, /en anglais clair/);
   assert.doesNotMatch(translations, /\b(?:vous|votre|vos)\b/i);
 });
 
@@ -103,9 +105,9 @@ test('trust and information pages are native multilingual pages, not English fal
   assert.doesNotMatch(infoShell, /page.*only.*English|page.*in English|nur auf Englisch|sigue en inglés|encore en anglais/i);
   assert.match(localizedInfo, /Ein politisches Profil aus acht Bereichen\./);
   assert.match(localizedInfo, /Ocho preguntas que la política suele mezclar\./);
-  assert.match(localizedInfo, /Huit questions que la politique mélange souvent\./);
+  assert.match(localizedInfo, /Un profil politique en huit dimensions\./);
   assert.match(methodExplainer, /Quick utiliza 26 afirmaciones/);
-  assert.match(methodExplainer, /Quick utilise 26 affirmations/);
+  assert.match(methodExplainer, /Le test rapide contient 26 affirmations/);
   assert.match(localizedInfo, /ptBrInfoPages/);
   assert.match(methodExplainer, /O Quick usa 26 afirmações/);
 });
