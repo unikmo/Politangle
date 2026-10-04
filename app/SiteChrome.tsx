@@ -32,8 +32,8 @@ const copy: Record<Locale, ChromeCopy> = {
     privacy: 'Privacy', imprint: 'Imprint', terms: 'Terms', contact: 'Contact',
   },
   de: {
-    method: 'Methode', learn: 'Lernen', guides: 'Leitfäden', quizzes: 'Quizzes', countries: 'Länder', schools: 'Für Schulen', about: 'Über Politangle',
-    account: 'Anmelden', start: 'Quick starten', practice: 'Üben', validation: 'Validierung',
+    method: 'So funktioniert’s', learn: 'Wissen', guides: 'Themen', quizzes: 'Quizze', countries: 'Länder', schools: 'Für Schulen', about: 'Über Politangle',
+    account: 'Anmelden', start: 'Test starten', practice: 'Wissen testen', validation: 'Qualität und Grenzen',
     privacy: 'Datenschutz', imprint: 'Impressum', terms: 'Nutzungsbedingungen', contact: 'Kontakt',
   },
   es: {

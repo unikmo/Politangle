@@ -23,13 +23,13 @@ const copy: Record<Locale, Copy> = {
   },
   de: {
     kicker: 'JETZT VERFÜGBAR',
-    title: 'Wähle einen Quiz.',
-    intro: 'Hier stehen nur Tests, die du jetzt direkt machen kannst.',
+    title: 'Wähle ein Quiz.',
+    intro: 'Hier findest du alle Tests, die du sofort und kostenlos machen kannst.',
     start: 'Starten',
     cards: [
       { label: 'BELIEVE', title: 'Politangle Quick', meta: '26 Fragen · dein politisches Profil', href: '/quiz' },
-      { label: 'CLASSIFY', title: 'Politische Traditionen erkennen', meta: '25 Fragen · mit Erklärungen', href: '/practice?section=classify' },
-      { label: 'UNDERSTAND', title: 'Oft verwechselte Ideen unterscheiden', meta: '25 Fragen · mit Erklärungen', href: '/practice?section=understand' },
+      { label: 'CLASSIFY', title: 'Politische Strömungen erkennen', meta: '25 Fragen · mit Erklärungen', href: '/practice?section=classify' },
+      { label: 'UNDERSTAND', title: 'Ähnliche politische Ideen unterscheiden', meta: '25 Fragen · mit Erklärungen', href: '/practice?section=understand' },
       { label: 'FOKUS-QUIZ', title: 'Erkennst du Populismus?', meta: '12 Fragen · mit Erklärungen', href: '/populism-quiz' },
     ],
   },

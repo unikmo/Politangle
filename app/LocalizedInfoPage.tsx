@@ -121,50 +121,50 @@ const en: Record<InfoPageId, PageCopy> = {
 
 const de: Record<InfoPageId, PageCopy> = {
   method: {
-    eyebrow: 'METHODE', title: 'Acht Fragen, die Politik oft miteinander vermischt.',
-    intro: 'Politangle geht nicht davon aus, dass eine einzige Links-rechts-Linie jede politische Haltung erklären kann. Acht wiederkehrende Zielkonflikte werden getrennt gezeigt – damit deine eigene Kombination sichtbar bleibt.',
+    eyebrow: 'SO FUNKTIONIERT POLITANGLE', title: 'Ein politisches Profil aus acht Bereichen.',
+    intro: 'Links oder rechts allein sagt wenig darüber aus, was einem Menschen politisch wichtig ist. Politangle betrachtet acht Themen getrennt und fügt sie anschließend zu einem Gesamtbild zusammen.',
     sections: [],
   },
   validation: {
-    eyebrow: 'VALIDIERUNG & GRENZEN', title: 'Klar benennen, was schon belegt ist – und was noch nicht.',
-    intro: 'Software und Rechenlogik sind technisch getestet. Wissenschaftliche Validität, Verständlichkeit und Einsatz im Unterricht sind davon getrennte Prüfungen.',
+    eyebrow: 'QUALITÄT UND GRENZEN', title: 'Was Politangle schon leisten kann – und was noch nicht.',
+    intro: 'Die Software und ihre Berechnungen sind technisch geprüft. Ob der Test wissenschaftlich zuverlässig misst, in allen Sprachen dasselbe bedeutet und für den Unterricht geeignet ist, muss gesondert untersucht werden.',
     sections: [
-      { title: 'Aktueller Stand', status: 'FASSUNG IN VALIDIERUNG', paragraphs: ['Automatisierte Tests prüfen unter anderem Wertung, Fragenanzahl, Ergebnislogik und Datenschutzgrenzen im Klassenraum. Das zeigt, dass die Implementierung konsistent arbeitet – nicht, dass das Instrument schon psychometrisch validiert ist.'] },
-      { title: 'Noch nicht nachgewiesen', bullets: ['Repräsentative Vergleichswerte', 'Test-Retest-Zuverlässigkeit', 'Vergleichbarkeit der Konstrukte zwischen Sprachen und Altersgruppen', 'Verständlichkeit für die vorgesehenen Junior- und Youth-Gruppen', 'Vorhersagekraft für Wahlverhalten oder anderes politisches Verhalten'] },
-      { title: 'Zahlen nicht überinterpretieren', paragraphs: ['Ein Wert wie 61/100 ist ein Modellwert. Er bedeutet nicht, dass jemand mit 61-prozentiger Wahrscheinlichkeit einer Ideologie „ist“. Historische Personen dienen nur als Orientierung für politische Traditionen.'] },
+      { title: 'Aktueller Stand', status: 'NOCH IN PRÜFUNG', paragraphs: ['Automatisierte Tests prüfen die Berechnung, die Zahl der Fragen, die Ergebnisanzeige und die Datenschutzregeln für Klassen. Damit wissen wir, dass die Software wie vorgesehen arbeitet. Eine wissenschaftliche Bestätigung des Tests ist das noch nicht.'] },
+      { title: 'Noch nicht nachgewiesen', bullets: ['Repräsentative Vergleichswerte für die Bevölkerung', 'Stabile Ergebnisse bei einer späteren Wiederholung', 'Gleiche Bedeutung in allen Sprachen und Altersgruppen', 'Gute Verständlichkeit für 10- bis 13-Jährige und 14- bis 18-Jährige', 'Aussagekraft über tatsächliches Wahlverhalten'] },
+      { title: 'Zahlen richtig einordnen', paragraphs: ['Ein Wert wie 61 von 100 zeigt nur, wo deine Antworten im aktuellen Politangle-Modell liegen. Er bedeutet nicht, dass du mit 61 Prozent Wahrscheinlichkeit einer politischen Strömung angehörst. Historische Personen veranschaulichen eine Tradition, sind aber kein Vergleich mit deiner Person.'] },
       { title: 'Freigabe für Schulen', callout: 'Der Einsatz mit echten Minderjährigen ist noch nicht freigegeben. Dafür braucht es qualifizierte Rechtsprüfung, Barrierefreiheitstests und eine altersgerechte inhaltliche Validierung.' },
     ],
   },
   privacy: {
-    eyebrow: 'DATENSCHUTZ', title: 'Weniger sammeln. Klar erklären. Politische Ansichten besonders schützen.',
-    intro: 'Hier steht, wie der aktuelle Produktentwurf mit Daten umgeht. Vor einem öffentlichen oder echten Schuleinsatz fehlen noch die endgültigen Verantwortlichenangaben und eine rechtlich geprüfte Datenschutzerklärung.',
+    eyebrow: 'DATENSCHUTZ', title: 'So wenig Daten wie möglich.',
+    intro: 'Politische Ansichten sind besonders sensible Daten. Deshalb soll Politangle nur speichern, was für die jeweilige Funktion wirklich nötig ist. Vor dem Einsatz an echten Schulen braucht dieses Konzept eine abschließende rechtliche Prüfung.',
     sections: [
-      { title: 'Status dieser Seite', callout: 'Hinweis zur Vorschau: Das ist noch nicht die endgültige, rechtlich geprüfte Datenschutzerklärung. Nutze den Schulpilot nicht mit echten Schüler:innen, bevor die Freigaben abgeschlossen sind.' },
-      { title: 'Öffentlicher Test', paragraphs: ['Für Quick brauchst du kein Konto. Deine Antworten bleiben derzeit in der Browser-Sitzung, damit das Ergebnis berechnet werden kann. Bei einem Neustart soll dieser lokale Teststand entfernt werden.'] },
+      { title: 'Status dieser Seite', callout: 'Diese Seite beschreibt den aktuellen Stand, ist aber noch keine abschließend rechtlich geprüfte Datenschutzerklärung. Der Schulpilot darf deshalb noch nicht mit echten Schüler:innen genutzt werden.' },
+      { title: 'Öffentlicher Test', paragraphs: ['Für den ersten Quick-Test brauchst du kein Konto. Deine Antworten werden während des Tests im Browser gespeichert, damit dein Ergebnis berechnet werden kann. Wenn du den Test neu startest, wird dieser lokale Teststand ersetzt.'] },
       { title: 'Klassenraum', paragraphs: ['Schüler:innen treten mit temporären Kennungen bei – ohne Namen, E-Mail-Adresse, Benutzerkonto oder Klassenliste. Die Lehrkraft sieht Summen und Verteilungen der Klasse, aber keine Zuordnung von Person zu Antwort und kein individuelles politisches Profil.'] },
       { title: 'Vor dem Start noch erforderlich', bullets: ['Verantwortliche Stelle und Kontakt', 'Zwecke und Rechtsgrundlagen', 'Hosting, Empfänger und internationale Übermittlungen', 'Speicher- und Löschfristen', 'Betroffenenrechte und Aufsichtsbehörde', 'Rollen von Schule und Anbieter sowie Entscheidung zur Datenschutz-Folgenabschätzung'] },
     ],
   },
   terms: {
-    eyebrow: 'NUTZUNGSBEDINGUNGEN', title: 'Die Bedingungen für den Pilot sind noch nicht final.',
-    intro: 'Quick steht derzeit zur Erprobung bereit. Schullizenzen und der Einsatz mit echten Schüler:innen gehören noch nicht zum freigegebenen Umfang.',
+    eyebrow: 'NUTZUNGSBEDINGUNGEN', title: 'Die endgültigen Nutzungsbedingungen stehen noch aus.',
+    intro: 'Der Quick-Test kann bereits ausprobiert werden. Bezahlte Schullizenzen und der Einsatz mit echten Schüler:innen sind noch nicht freigegeben.',
     sections: [
       { title: 'Aktueller Rahmen', paragraphs: ['Politangle dient der politischen Bildung und Selbstreflexion. Es ist keine Wahlempfehlung, keine professionelle Beratung und keine Garantie für eine „richtige“ politische Einordnung.'] },
       { title: 'Vor einem kommerziellen Start', callout: 'Die finalen Bedingungen müssen den Betreiber eindeutig nennen und unter anderem Verfügbarkeit, erlaubte Nutzung, Pflichten von Schulen, Preise, Kündigung, Haftung, geistiges Eigentum und anwendbares Recht korrekt regeln.' },
     ],
   },
   about: {
-    eyebrow: 'ÜBER POLITANGLE', title: 'Politik verstehen, ohne Menschen in eine Schublade zu stecken.',
-    intro: 'Politangle macht politische Zielkonflikte sichtbar, trennt persönliche Überzeugungen von Wissen und ermöglicht Diskussionen, ohne individuelle Schülerprofile offenzulegen.',
+    eyebrow: 'ÜBER POLITANGLE', title: 'Politik ist komplexer als ein Etikett.',
+    intro: 'Politangle zeigt, welche Werte und politischen Abwägungen hinter deinen Ansichten stehen. Wissenstests werden klar von persönlichen Überzeugungen getrennt. Im Unterricht bleiben individuelle politische Profile privat.',
     sections: [
-      { title: 'Das Problem', paragraphs: ['Politische Begriffe pressen komplexe Kombinationen von Ansichten oft in ein einziges Etikett. Dabei verschwinden Unterschiede, die für ein echtes Verständnis wichtig wären.'] },
-      { title: 'Unser Ansatz', paragraphs: ['Politangle zeigt mehrere Dimensionen nebeneinander. BELIEVE, CLASSIFY und UNDERSTAND bleiben getrennt. Auch Unsicherheit ist eine legitime Antwort und kein Fehler.'] },
-      { title: 'Unser Anspruch', paragraphs: ['Neutralität entsteht nicht allein dadurch, dass mehrere Sichtweisen vorkommen. Fragen, Auswertung, Sprachfassungen und Unterrichtseinsatz müssen kritisierbar, testbar und veränderbar bleiben.'] },
+      { title: 'Das Problem', paragraphs: ['Begriffe wie „links“, „rechts“, „liberal“ oder „konservativ“ verdecken oft wichtige Unterschiede. Zwei Menschen können dasselbe Etikett verwenden und in zentralen Fragen völlig anders denken.'] },
+      { title: 'Unser Ansatz', paragraphs: ['Politangle betrachtet mehrere politische Bereiche getrennt. Der Persönlichkeitstest und die Wissenstests bleiben voneinander unabhängig. „Unsicher“ ist eine ehrliche Antwort und kein Fehler.'] },
+      { title: 'Unser Anspruch', paragraphs: ['Mehrere Sichtweisen zu zeigen reicht nicht aus, um neutral zu sein. Fragen, Auswertung, Sprachfassungen und Unterrichtsmaterialien müssen offen geprüft, kritisiert und verbessert werden können.'] },
     ],
   },
   contact: {
-    eyebrow: 'KONTAKT', title: 'Politangle kontaktieren.',
-    intro: 'Anfragen zu Konto, Datenschutz, Schulen und rechtlichen Themen sollen über einen verifizierten öffentlichen Kontakt laufen.',
+    eyebrow: 'KONTAKT', title: 'So erreichst du Politangle.',
+    intro: 'Für Fragen zu deinem Konto, zum Datenschutz, zum Schulpilot oder zu rechtlichen Themen wird ein geprüfter öffentlicher Kontakt eingerichtet.',
     sections: [
       { title: 'Schulpiloten', paragraphs: ['Kontrollierte Piloten mit Schulen starten erst, wenn Datenschutz, Recht und pädagogische Validierung freigegeben sind. Die aktuelle Pilotseite sammelt Interesse; sie erlaubt noch keinen Einsatz mit echten Schüler:innen.'] },
       { title: 'Kontaktverfügbarkeit', callout: 'Eine überwachte öffentliche E-Mail-Adresse ist noch nicht veröffentlicht. Es wird keine unbestätigte Adresse angezeigt.' },
@@ -178,22 +178,22 @@ const de: Record<InfoPageId, PageCopy> = {
     ],
   },
   'question-banks': {
-    eyebrow: 'FRAGENKATALOGE', title: 'Unterschiedliche Zielgruppen brauchen klar getrennte Fassungen.',
-    intro: 'Eine andere Sprache ändert nicht heimlich Landeskontext, Messkonstrukte oder die Erwachsenenfassung. Größere Änderungen bekommen eine eigene Version.',
+    eyebrow: 'DIE FRAGEN', title: 'Eigene Fassungen für verschiedene Altersgruppen.',
+    intro: 'Die Fragen für Erwachsene, Jugendliche und Kinder werden getrennt entwickelt und versioniert. Eine Übersetzung ändert weder heimlich den Länderkontext noch die Grundlage der Auswertung.',
     sections: [
       { title: 'Erwachsene', table: [['Quick', '26 Fragen'], ['Full', '42 Fragen insgesamt'], ['Status', 'Eigenständige Erwachsenenfassung']] },
-      { title: 'Youth 14–18', paragraphs: ['Eine sprachlich vereinfachte Youth-Fassung deckt dieselben Grundkonstrukte ab. Altersangemessenheit und Vergleichbarkeit müssen noch validiert werden.'] },
-      { title: 'Junior 10–13', paragraphs: ['Eine separat versionierte Junior-Fassung arbeitet mit kürzeren und einfacheren Unterrichtsimpulsen. Vor dem echten Schuleinsatz muss sie mit der Zielgruppe getestet werden.'] },
+      { title: 'Jugendliche von 14 bis 18 Jahren', paragraphs: ['Die Jugendfassung behandelt dieselben politischen Grundfragen in einer leichter verständlichen Sprache. Ob sie altersgerecht und mit der Erwachsenenfassung vergleichbar ist, muss noch geprüft werden.'] },
+      { title: 'Kinder von 10 bis 13 Jahren', paragraphs: ['Die Junior-Fassung arbeitet mit kürzeren, einfacheren Fragen für den Unterricht. Bevor sie an Schulen eingesetzt wird, muss sie mit Kindern dieser Altersgruppe erprobt werden.'] },
       { title: 'Sprachen', paragraphs: ['Englisch, Deutsch, Spanisch, Französisch und Portugiesisch (Brasilien) sind Sprachfassungen – keine Länderprofile. Beispiele zu Parteien, Wahlen oder nationalem Kontext wären eigene spätere Ebenen.'] },
     ],
   },
   'school-pilot': {
-    eyebrow: 'KONTROLLIERTER SCHULPILOT', title: 'Du willst Politangle mit Lehrkräften testen?',
-    intro: 'Hier geht es um Interesse und Design-Partnerschaften. Die aktuelle Fassung ist noch nicht für den Einsatz mit echten Schüler:innen freigegeben.',
+    eyebrow: 'SCHULPILOT', title: 'Du möchtest Politangle im Unterricht erproben?',
+    intro: 'Hier können Lehrkräfte und Fachleute ihr Interesse an einer späteren Pilotphase anmelden. Die aktuelle Fassung ist noch nicht für den Einsatz mit echten Schüler:innen freigegeben.',
     sections: [
-      { title: 'Für wen gedacht', paragraphs: ['Für Lehrkräfte an weiterführenden Schulen, Fachleute der politischen Bildung und Forschungsteams, die an anonymen Klassendiskussionen, altersgerechter politischer Bildung und rein aggregierten Erkenntnissen interessiert sind.'] },
-      { title: 'Aktuelle Freigabegrenze', callout: 'Ein Pilot mit echten Schüler:innen braucht qualifizierte Rechtsprüfung, Schutz- und Barrierefreiheitschecks, eine freigegebene Schulvereinbarung und validierte Inhalte für die jeweilige Altersgruppe.' },
-      { title: 'System ansehen', paragraphs: ['Lehrkräfte können die nicht-produktive Oberfläche und Materialien prüfen, ohne echte Schülerdaten einzugeben.'], link: { href: '/school', label: 'School-Modus ansehen →' } },
+      { title: 'Für wen ist das gedacht?', paragraphs: ['Für Lehrkräfte an weiterführenden Schulen, Fachleute der politischen Bildung und Forschungsteams, die politische Diskussionen anonym und altersgerecht begleiten möchten.'] },
+      { title: 'Was vor einer Pilotphase noch fehlt', callout: 'Vor einem Test mit echten Schüler:innen brauchen wir eine qualifizierte Rechtsprüfung, einen Barrierefreiheitscheck, eine Schulvereinbarung und geprüfte Inhalte für die jeweilige Altersgruppe.' },
+      { title: 'System ansehen', paragraphs: ['Lehrkräfte können die Demo und Unterrichtsmaterialien ansehen, ohne Daten echter Schüler:innen einzugeben.'], link: { href: '/school', label: 'Schulbereich ansehen →' } },
     ],
   },
 };

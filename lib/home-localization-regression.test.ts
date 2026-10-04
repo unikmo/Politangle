@@ -27,8 +27,11 @@ test('homepage uses the locked eight-axis names instead of the former four-axis 
 });
 
 test('German homepage copy stays informal and avoids literal formal-address calques', () => {
-  assert.match(homepage, /Politik passt nicht auf eine Links-rechts-Linie\./);
-  assert.match(homepage, /du bei acht politischen Dimensionen/);
+  assert.match(homepage, /Politik ist mehr als links oder rechts\./);
+  assert.match(homepage, /26 Fragen zeigen, welche politischen Werte dir wichtig sind/);
+  assert.match(homepage, /Deine Antworten bleiben privat/);
+  assert.doesNotMatch(homepage, /Erster Quick ohne Anmeldung/);
+  assert.match(homepage, /Politische Begriffe verstehen/);
   assert.doesNotMatch(homepage, /\b(?:Sie|Ihnen|Ihre|Ihrem|Ihren|Ihrer)\b/);
 });
 
@@ -98,7 +101,7 @@ test('School uses the locked 42-question total and native privacy copy', () => {
 
 test('trust and information pages are native multilingual pages, not English fallbacks', () => {
   assert.doesNotMatch(infoShell, /page.*only.*English|page.*in English|nur auf Englisch|sigue en inglés|encore en anglais/i);
-  assert.match(localizedInfo, /Acht Fragen, die Politik oft miteinander vermischt\./);
+  assert.match(localizedInfo, /Ein politisches Profil aus acht Bereichen\./);
   assert.match(localizedInfo, /Ocho preguntas que la política suele mezclar\./);
   assert.match(localizedInfo, /Huit questions que la politique mélange souvent\./);
   assert.match(methodExplainer, /Quick utiliza 26 afirmaciones/);
@@ -109,7 +112,7 @@ test('trust and information pages are native multilingual pages, not English fal
 
 test('native trust copy keeps informal address and the locked 42-question total', () => {
   assert.match(methodExplainer, /Du beantwortest Aussagen/);
-  assert.match(localizedInfo, /deine eigene Kombination/);
+  assert.match(localizedInfo, /deinen Ansichten/);
   assert.doesNotMatch(localizedInfo + methodExplainer, /(?:Ihre Politik|Ihre Ansichten|Ihre Antworten|Ihr Ergebnis|Ihr Profil|\bIhnen\b|Machen Sie|Starten Sie|Nehmen Sie|Sie können|Sie brauchen|Geben Sie)/);
   assert.doesNotMatch(methodExplainer, /\b(?:vous|votre|vos)\b/i);
   assert.doesNotMatch(methodExplainer, /\bustedes?\b/i);

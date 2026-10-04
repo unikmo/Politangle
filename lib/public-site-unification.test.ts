@@ -89,7 +89,7 @@ test('legal pages are substantive but remain blocked on verified operator detail
 test('country perspectives are visible from the public site without pretending unfinished current data is complete', () => {
   assert.match(chrome, /countries: 'Countries'/);
   assert.match(home, /COUNTRY PERSPECTIVES/);
-  assert.match(home, /href="\/countries"/);
+  assert.match(home, /href=\{href\('\/countries'\)\}/);
   assert.match(countriesHub, /Same political words\. Different country context\./);
   assert.match(countriesHub, /CONTEXT \+ CURRENT SNAPSHOT/);
   assert.match(countriesHub, /CONTEXT GUIDE/);
