@@ -13,6 +13,19 @@ async function check(page,route,width){
  const box=s=>{const e=document.querySelector(s);if(!e)return null;const r=e.getBoundingClientRect();return {left:r.left,right:r.right,width:r.width,height:r.height}};
  return {viewport:innerWidth,visual:visualViewport?.width,client:document.documentElement.clientWidth,screen:screen.width,doc:Math.max(document.body.scrollWidth,document.documentElement.scrollWidth),menu:box('.p-mobile-nav-toggle'),lang:box('.p-nav select.lang'),header:box('header.p-nav')};
  });
+ if (Math.abs(d.viewport-width)>2) {
+  const offenders = await page.evaluate((deviceWidth) => ({
+    meta: document.querySelector('meta[name="viewport"]')?.getAttribute('content') || 'MISSING',
+    visualWidth: visualViewport?.width, deviceScreenWidth: screen.width, viewportWidth: innerWidth,
+    elements: Array.from(document.querySelectorAll('body *')).map(el => {
+      const r=el.getBoundingClientRect(),s=getComputedStyle(el);
+      return {tag:el.tagName,cl:String(el.className?.baseVal||el.className||'').slice(0,90),
+        left:Math.round(r.left),right:Math.round(r.right),width:Math.round(r.width),
+        minWidth:s.minWidth,grid:s.gridTemplateColumns?.slice(0,100),whiteSpace:s.whiteSpace};
+    }).filter(x=>x.left>=0&&x.right>deviceWidth+20&&x.width>40).slice(0,45)
+  }),width);
+  console.error('TABLET VIEWPORT DEBUG',JSON.stringify(offenders,null,2));
+ }
  assert(Math.abs(d.viewport-width)<=2,route+' viewport scaled unexpectedly: '+d.viewport+' vs '+width);
  assert(d.client<=width+2,route+' client area extends beyond '+width+': '+d.client);
  assert(d.doc<=width+2,route+' horizontal overflow '+d.doc+' > '+width);
