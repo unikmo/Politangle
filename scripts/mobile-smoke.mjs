@@ -14,7 +14,7 @@ async function check(page,route,width){
  const box=s=>{const e=document.querySelector(s);if(!e)return null;const r=e.getBoundingClientRect();return {left:r.left,right:r.right,width:r.width,height:r.height}};
  return {viewport:innerWidth,visual:visualViewport?.width,client:document.documentElement.clientWidth,screen:screen.width,doc:Math.max(document.body.scrollWidth,document.documentElement.scrollWidth),menu:box('.p-mobile-nav-toggle'),lang:box('.p-nav select.lang'),header:box('header.p-nav')};
  });
- if (Math.abs(d.viewport-width)>2) {
+ if (Math.abs(d.viewport-width)>2 || d.doc>width+2) {
   const offenders = await page.evaluate((deviceWidth) => ({
     meta: document.querySelector('meta[name="viewport"]')?.getAttribute('content') || 'MISSING',
     visualWidth: visualViewport?.width, deviceScreenWidth: screen.width, viewportWidth: innerWidth,
