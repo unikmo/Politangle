@@ -31,6 +31,10 @@ export const metadata: Metadata = {
   },
   description: 'Explore 26 political questions across eight dimensions—without being reduced to one label.',
   alternates: { canonical: '/' },
+  icons: {
+    icon: [{ url: '/favicon.ico', type: 'image/x-icon', sizes: '16x16 32x32' }],
+    shortcut: '/favicon.ico',
+  },
   openGraph: {
     type: 'website',
     siteName: 'Politangle',
