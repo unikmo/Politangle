@@ -20,6 +20,7 @@ import './accessibility.css';
 import './middle-class-trap.css';
 import './countries.css';
 import './admin.css';
+import './brand-logo.css';
 import { LocaleProvider } from './LocaleProvider';
 import { SiteFooter } from './SiteChrome';
 

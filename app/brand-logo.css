@@ -1,0 +1,4 @@
+/* The approved Politangle P replaces the previous CSS-drawn geometric mark. */
+.p-brand .p-mark.p-mark-logo{flex:0 0 44px;display:block;width:44px;height:44px;border:0;border-radius:0;background:transparent;overflow:visible}
+.p-brand .p-mark.p-mark-logo img{display:block;width:100%;height:100%;object-fit:contain}
+@media(max-width:600px){.p-brand .p-mark.p-mark-logo{flex-basis:40px;width:40px;height:40px}}

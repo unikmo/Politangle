@@ -1,10 +1,11 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { LanguageSelector, localePath, useLocale, type Locale } from './LocaleProvider';
 
-const Mark = () => <span className="p-mark" aria-hidden="true"><i/><i/><i/></span>;
+const Mark = () => <span className="p-mark p-mark-logo" aria-hidden="true"><Image src="/images/politangle-mark.webp" alt="" width={44} height={44} unoptimized /></span>;
 const Arrow = () => <span aria-hidden="true">→</span>;
 
 type ChromeCopy = {
