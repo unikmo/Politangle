@@ -64,7 +64,7 @@ try{
       await page.waitForTimeout(180);
       assert(/\b1\s*\/\s*26\b/.test(await page.locator('.engine-progress-row').innerText()),'Quick answer not recorded');
      }
-     if(['/school','/countries','/quiz'].includes(route))await page.screenshot({path:out+'/'+route.slice(1)+'-390.png',fullPage:true});
+     if(['/school','/countries','/quiz'].includes(route))await page.screenshot({path:out+'/'+route.slice(1)+'-390.png',fullPage:route!=='/countries'});
     }
    }
    console.log('PASS interactive mobile '+width);
