@@ -26,9 +26,9 @@ const pages = [
   ['/imprint', 'TSquare Ventures LLC'],
   ['/terms', 'TERMS'],
   ['/contact', 'TSquare Ventures LLC'],
-  ['/de/method', 'Acht Fragen'],
+  ['/de/method', 'Ein politisches Profil aus acht Bereichen'],
   ['/es/method', 'Ocho preguntas'],
-  ['/fr/method', 'Huit questions'],
+  ['/fr/method', 'Un profil politique en huit dimensions'],
   ['/pt-br/method', 'Oito perguntas'],
   ['/guides', 'Political guides'],
   ['/de/guides', 'Politische Leitfäden'],
@@ -40,9 +40,9 @@ const pages = [
   ['/es/political-spectrum', 'Qué es un espectro político'],
   ['/fr/political-spectrum', 'Qu’est-ce qu’un spectre politique'],
   ['/pt-br/political-spectrum', 'O que é um espectro político'],
-  ['/de/countries', '80 Länderperspektiven'],
+  ['/de/countries', '80 Länderporträts'],
   ['/es/countries', '80 perspectivas'],
-  ['/fr/countries', '80 perspectives'],
+  ['/fr/countries', 'Nos 80 guides'],
   ['/pt-br/countries', '80 perspectivas'],
 ];
 
