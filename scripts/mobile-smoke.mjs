@@ -1,9 +1,10 @@
 import assert from 'node:assert/strict';
 import { mkdirSync } from 'node:fs';
-import { chromium } from 'playwright';
+import { chromium, webkit } from 'playwright';
 const base=(process.env.POLITANGLE_BASE_URL||'http://127.0.0.1:3000').replace(/\/$/,'');
-const out='mobile-qa/screenshots';mkdirSync(out,{recursive:true});
-const browser=await chromium.launch({headless:true,args:['--no-sandbox']});
+const engine=process.env.MOBILE_BROWSER==='webkit'?'webkit':'chromium';
+const out='mobile-qa/screenshots/'+engine;mkdirSync(out,{recursive:true});
+const browser=await (engine==='webkit'?webkit:chromium).launch({headless:true,args:engine==='chromium'?['--no-sandbox']:[]});
 const failures=[];
 async function check(page,route,width){
  const r=await page.goto(base+route,{waitUntil:'domcontentloaded',timeout:30000});
@@ -37,7 +38,7 @@ async function check(page,route,width){
  console.log('PASS '+width+'px '+route);
 }
 try{
- for(const width of [320,375,390,430,768]){
+ for(const width of [320,375,390,430,768,900]){
   const ctx=await browser.newContext({viewport:{width,height:812},isMobile:true,hasTouch:true,deviceScaleFactor:2,locale:'en-US'});
   const page=await ctx.newPage();
   try{
