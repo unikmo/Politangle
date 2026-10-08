@@ -46,3 +46,11 @@
   .p-nav .p-nav-actions>.p-account-link,
   .p-nav .p-nav-actions>.p-button.compact{display:none}
 }
+
+/* Footer is rendered outside <main class="home">, so homepage-scoped
+   wrapping rules never reached it and expanded the 768px layout to 900px. */
+@media(max-width:900px){
+  .p-footer.site-footer{display:flex;flex-wrap:wrap;align-items:flex-start;gap:22px;padding-top:26px;padding-bottom:26px}
+  .p-footer.site-footer>div{display:flex;flex:1 1 360px;min-width:0;flex-wrap:wrap;gap:14px 18px;justify-content:flex-start}
+  .p-footer.site-footer>small{flex:0 0 100%}
+}
