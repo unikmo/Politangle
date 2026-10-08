@@ -296,3 +296,13 @@ main.engine-page:not(.school-page):not(.school-projector-page) .result-action-ro
   main.engine-page:not(.school-page):not(.school-projector-page) .engine-card{padding:26px 20px;border-radius:22px}
   main.engine-page:not(.school-page):not(.school-projector-page) .engine-statement{padding:22px 20px}
 }
+
+/* On narrow phones, preserve the assessment title for screen readers without
+   forcing three flex items to exceed the viewport in WebKit/Safari. */
+@media(max-width:600px){
+  main.engine-page:not(.school-page):not(.school-projector-page) .engine-header>span{
+    position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+    overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0
+  }
+  main.engine-page:not(.school-page):not(.school-projector-page) .engine-header{gap:12px;min-width:0}
+}

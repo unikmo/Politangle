@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useState } from 'react';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { LanguageSelector, localePath, useLocale, type Locale } from './LocaleProvider';
@@ -58,11 +59,17 @@ export function SiteHeader() {
   const { locale } = useLocale();
   const c = copy[locale];
   const href = (path: string) => localePath(locale, path);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const menuLabels: Record<Locale, [string, string]> = {
+    en: ['Open menu', 'Close menu'], de: ['Menü öffnen', 'Menü schließen'],
+    es: ['Abrir menú', 'Cerrar menú'], fr: ['Ouvrir le menu', 'Fermer le menu'],
+    'pt-br': ['Abrir menu', 'Fechar menu'],
+  };
 
   return (
     <header className="p-nav">
       <Link className="p-brand" href={href('/')}><Mark/><span>Politangle</span></Link>
-      <nav aria-label="Primary navigation">
+      <nav id="politangle-primary-nav" className={mobileMenuOpen ? 'p-nav-main is-open' : 'p-nav-main'} aria-label="Primary navigation" onClick={() => setMobileMenuOpen(false)} onKeyDown={(event) => { if (event.key === 'Escape') setMobileMenuOpen(false); }}>
         <Link href={href('/method')}>{c.method}</Link>
         <Link href={href('/learn')}>{c.learn}</Link>
         <Link href={href('/guides')}>{c.guides}</Link>
@@ -70,9 +77,12 @@ export function SiteHeader() {
         <Link href={href('/countries')}>{c.countries}</Link>
         <Link href={href('/school')}>{c.schools}</Link>
         <Link href={href('/about')}>{c.about}</Link>
+        <Link className="p-mobile-nav-link" href={href('/account')}>{c.account}</Link>
+        <Link className="p-mobile-nav-link p-mobile-nav-start" href={href('/quiz')}>{c.start} →</Link>
       </nav>
       <div className="p-nav-actions">
         <LanguageSelector/>
+        <button type="button" className="p-mobile-nav-toggle" aria-controls="politangle-primary-nav" aria-expanded={mobileMenuOpen} aria-label={mobileMenuOpen ? menuLabels[locale][1] : menuLabels[locale][0]} onClick={() => setMobileMenuOpen((open) => !open)}><span aria-hidden="true">{mobileMenuOpen ? '×' : '☰'}</span></button>
         <Link className="p-account-link" href={href('/account')}>{c.account}</Link>
         <Link className="p-button compact" href={href('/quiz')}>{c.start} <Arrow/></Link>
       </div>
