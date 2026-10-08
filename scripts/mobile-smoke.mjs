@@ -11,9 +11,11 @@ async function check(page,route,width){
  await page.locator('main').first().waitFor({state:'visible',timeout:15000});
  const d=await page.evaluate(()=>{
  const box=s=>{const e=document.querySelector(s);if(!e)return null;const r=e.getBoundingClientRect();return {left:r.left,right:r.right,width:r.width,height:r.height}};
- return {viewport:innerWidth,doc:Math.max(document.body.scrollWidth,document.documentElement.scrollWidth),menu:box('.p-mobile-nav-toggle'),lang:box('.p-nav select.lang'),header:box('header.p-nav')};
+ return {viewport:innerWidth,visual:visualViewport?.width,client:document.documentElement.clientWidth,screen:screen.width,doc:Math.max(document.body.scrollWidth,document.documentElement.scrollWidth),menu:box('.p-mobile-nav-toggle'),lang:box('.p-nav select.lang'),header:box('header.p-nav')};
  });
- assert(d.doc<=d.viewport+2,route+' horizontal overflow '+d.doc+' > '+d.viewport);
+ assert(Math.abs(d.viewport-width)<=2,route+' viewport scaled unexpectedly: '+d.viewport+' vs '+width);
+ assert(d.client<=width+2,route+' client area extends beyond '+width+': '+d.client);
+ assert(d.doc<=width+2,route+' horizontal overflow '+d.doc+' > '+width);
  if(d.header){
   assert(d.menu&&d.menu.width>=40&&d.menu.height>=44,route+' menu touch target');
   assert(d.menu.left>=-1&&d.menu.right<=width+1,route+' menu outside viewport');
