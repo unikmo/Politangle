@@ -87,11 +87,11 @@ export const ptBrInfoPages: Record<InfoPageId, PageCopy> = {
   'school-pilot': {
     eyebrow:'PILOTO ESCOLAR CONTROLADO',
     title:'Quer testar o Politangle com educadores?',
-    intro:'O piloto escolar é uma etapa controlada de pesquisa e validação, não uma liberação geral para uso com estudantes reais.',
+    intro:'Uma via de interesse e parceria de design. Não autoriza o uso da avaliação escolar com estudantes reais.',
     sections:[
-      { title:'O que será testado', bullets:['Clareza das instruções e perguntas','Adequação por faixa etária','Compreensão das explicações','Fluxo do professor e do projetor','Privacidade e utilidade dos resultados agregados'] },
-      { title:'Proteção do estudante', paragraphs:['O desenho evita listas de nomes e mapas entre estudante e resposta. Mesmo assim, uso real com menores exige revisão jurídica qualificada, acessibilidade e validação educacional antes da liberação.'] },
-      { title:'Situação atual', status:'PILOTO EM PREPARAÇÃO', callout:'Manifestar interesse não autoriza uso com estudantes reais. A equipe deve liberar explicitamente o piloto após o cumprimento das barreiras de privacidade, jurídico e validação.' },
+      { title:'Para quem é', paragraphs:['Educadores do ensino médio, especialistas em educação política e pesquisadores.'] },
+      { title:'Limite atual', callout:'Pilotos com estudantes reais exigem revisão jurídica, proteção e acessibilidade, acordo escolar e validação de conteúdo por idade.' },
+      { title:'Conheça o sistema', paragraphs:['Veja a demo e os materiais do professor, sem dados de estudantes reais.'], link:{ href:'/school', label:'Ver o modo School →' } },
     ],
   },
 };

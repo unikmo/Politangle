@@ -110,11 +110,11 @@ const en: Record<InfoPageId, PageCopy> = {
   'school-pilot': {
     eyebrow: 'CONTROLLED SCHOOL PILOT',
     title: 'Interested in testing Politangle with educators?',
-    intro: 'This is an interest and design-partner pathway—not authorization to use the current school assessment with real students.',
+    intro: 'An interest and design-partner pathway. Not authorization to use the school assessment with real students.',
     sections: [
-      { title: 'Who it is for', paragraphs: ['Secondary-school educators, political-education specialists and researchers interested in anonymous classroom discussion, age-appropriate political literacy and aggregate-only insights.'] },
-      { title: 'Current gate', callout: 'Real-student pilots require qualified legal review, safeguarding and accessibility checks, an approved school agreement and age-band content validation.' },
-      { title: 'Preview the system', paragraphs: ['Educators may inspect the demonstration interface and teacher materials without entering real student information.'], link: { href: '/school', label: 'Explore School mode →' } },
+      { title: 'Who it is for', paragraphs: ['Secondary-school educators, political-education specialists and researchers.'] },
+      { title: 'Current gate', callout: 'Real-student pilots need legal review, safeguarding and accessibility checks, a school agreement and age-appropriate content validation.' },
+      { title: 'Preview the system', paragraphs: ['Inspect the demo and teacher materials. No real student data.'], link: { href: '/school', label: 'Explore School mode →' } },
     ],
   },
 };
@@ -189,11 +189,11 @@ const de: Record<InfoPageId, PageCopy> = {
   },
   'school-pilot': {
     eyebrow: 'SCHULPILOT', title: 'Du möchtest Politangle im Unterricht erproben?',
-    intro: 'Hier können Lehrkräfte und Fachleute ihr Interesse an einer späteren Pilotphase anmelden. Die aktuelle Fassung ist noch nicht für den Einsatz mit echten Schüler:innen freigegeben.',
+    intro: 'Interesse an einer späteren Pilotphase anmelden. Noch nicht für echte Schüler:innen freigegeben.',
     sections: [
-      { title: 'Für wen ist das gedacht?', paragraphs: ['Für Lehrkräfte an weiterführenden Schulen, Fachleute der politischen Bildung und Forschungsteams, die politische Diskussionen anonym und altersgerecht begleiten möchten.'] },
-      { title: 'Was vor einer Pilotphase noch fehlt', callout: 'Vor einem Test mit echten Schüler:innen brauchen wir eine qualifizierte Rechtsprüfung, einen Barrierefreiheitscheck, eine Schulvereinbarung und geprüfte Inhalte für die jeweilige Altersgruppe.' },
-      { title: 'System ansehen', paragraphs: ['Lehrkräfte können die Demo und Unterrichtsmaterialien ansehen, ohne Daten echter Schüler:innen einzugeben.'], link: { href: '/school', label: 'Schulbereich ansehen →' } },
+      { title: 'Für wen ist das gedacht?', paragraphs: ['Lehrkräfte an weiterführenden Schulen, Fachleute der politischen Bildung und Forschungsteams.'] },
+      { title: 'Was vor einer Pilotphase noch fehlt', callout: 'Vor einem Test mit echten Schüler:innen brauchen wir Rechtsprüfung, Barrierefreiheitscheck, Schulvereinbarung und geprüfte Inhalte für die Altersgruppe.' },
+      { title: 'System ansehen', paragraphs: ['Demo und Unterrichtsmaterialien ansehen, ohne Daten echter Schüler:innen.'], link: { href: '/school', label: 'Schulbereich ansehen →' } },
     ],
   },
 };
@@ -268,11 +268,11 @@ const es: Record<InfoPageId, PageCopy> = {
   },
   'school-pilot': {
     eyebrow: 'PILOTO ESCOLAR CONTROLADO', title: '¿Te interesa probar Politangle con docentes?',
-    intro: 'Esta vía sirve para mostrar interés y colaborar en el diseño. No autoriza a usar la evaluación escolar actual con alumnado real.',
+    intro: 'Una vía para mostrar interés y colaborar en el diseño. No autoriza a usar la evaluación escolar con alumnado real.',
     sections: [
-      { title: 'A quién va dirigido', paragraphs: ['A docentes de secundaria, especialistas en educación política y equipos de investigación interesados en debate anónimo, alfabetización política por edades y datos exclusivamente agregados.'] },
-      { title: 'Límite actual', callout: 'Un piloto con alumnado real exige revisión jurídica cualificada, salvaguarda y accesibilidad, un acuerdo escolar aprobado y validación de contenidos por edad.' },
-      { title: 'Ver el sistema', paragraphs: ['Los docentes pueden revisar la interfaz no productiva y los materiales sin introducir datos de alumnado real.'], link: { href: '/school', label: 'Ver el modo School →' } },
+      { title: 'A quién va dirigido', paragraphs: ['Docentes de secundaria, especialistas en educación política y equipos de investigación.'] },
+      { title: 'Límite actual', callout: 'Un piloto con alumnado real exige revisión jurídica, salvaguarda y accesibilidad, un acuerdo escolar y validación de contenidos por edad.' },
+      { title: 'Ver el sistema', paragraphs: ['Revisa la demo y los materiales para docentes. Sin datos de alumnado real.'], link: { href: '/school', label: 'Ver el modo School →' } },
     ],
   },
 };
@@ -347,11 +347,11 @@ const fr: Record<InfoPageId, PageCopy> = {
   },
   'school-pilot': {
     eyebrow: 'PILOTE SCOLAIRE', title: 'Tu souhaites essayer Politangle en classe ?',
-    intro: 'Cette page permet aux enseignants et aux spécialistes de signaler leur intérêt pour une future phase pilote. La version actuelle n’est pas encore autorisée avec de vrais élèves.',
+    intro: 'Signale ton intérêt pour une future phase pilote. Pas encore autorisé avec de vrais élèves.',
     sections: [
-      { title: 'Pour qui', paragraphs: ['Pour les enseignants du secondaire, spécialistes de l’éducation politique et équipes de recherche intéressés par le débat anonyme, la culture politique adaptée à l’âge et des données uniquement agrégées.'] },
-      { title: 'Limite actuelle', callout: 'Un pilote avec de vrais élèves exige une revue juridique qualifiée, des contrôles de protection et d’accessibilité, un accord scolaire approuvé et une validation des contenus par âge.' },
-      { title: 'Découvrir le système', paragraphs: ['Les enseignants peuvent consulter la démonstration et les supports sans saisir les données de vrais élèves.'], link: { href: '/school', label: 'Découvrir l’espace École →' } },
+      { title: 'Pour qui', paragraphs: ['Enseignants du secondaire, spécialistes de l’éducation politique et équipes de recherche.'] },
+      { title: 'Limite actuelle', callout: 'Un pilote avec de vrais élèves exige une revue juridique, des contrôles de protection et d’accessibilité, un accord scolaire et une validation des contenus par âge.' },
+      { title: 'Découvrir le système', paragraphs: ['Consulte la démo et les supports, sans données de vrais élèves.'], link: { href: '/school', label: 'Découvrir l’espace École →' } },
     ],
   },
 };
