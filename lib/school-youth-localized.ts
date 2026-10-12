@@ -1,7 +1,9 @@
 // Plain-language Youth wording for the school screens in German, Spanish, French and Brazilian Portuguese.
 // DRAFT: not reviewed by native speakers. Both sides of all 42 items; direction, construct and mode
-// follow the English Youth bank in school-believe.ts. Native editorial review and cognitive testing
-// with young readers are still required before real-school use.
+// follow the English Youth bank in school-believe.ts. Spanish, French and Portuguese also carry the
+// 16 Junior 10-13 items (J01-J16); the German Junior set lives in german-believe.ts.
+// Native editorial review and cognitive testing with young readers are still required before
+// real-school use.
 
 export type SchoolYouthLocale = 'de' | 'es' | 'fr' | 'pt-br';
 type Polarity = 'negative' | 'positive';
@@ -348,6 +350,70 @@ const bank: Record<SchoolYouthLocale, Record<string, [string, string]>> = {
       'Me da confianza que el Gobierno nacional o regional fije el mismo estándar mínimo para los servicios importantes en todas partes.',
       'Me siento tranquilo cuando las autoridades locales, como el ayuntamiento, conservan el control en lugar de pasar las decisiones al Gobierno regional o nacional.',
     ],
+    J01: [
+      'El Gobierno debería asegurarse de que todas las familias puedan usar escuelas y médicos.',
+      'Las familias deberían tomar más decisiones por su cuenta, con menos ayuda del Gobierno.',
+    ],
+    J02: [
+      'Los impuestos deberían ayudar a reducir la distancia entre ricos y pobres.',
+      'Las personas deberían quedarse con más de lo que ganan, aunque la distancia siga siendo grande.',
+    ],
+    J03: [
+      'Los trabajadores o el público deberían ser dueños de más partes de las empresas más grandes.',
+      'Las empresas más grandes deberían pertenecer sobre todo a dueños privados.',
+    ],
+    J04: [
+      'Las reglas públicas deberían cambiar cuando cambia la opinión de la mayoría.',
+      'Las reglas antiguas deberían cambiar despacio, después de que la gente lleve mucho tiempo de acuerdo.',
+    ],
+    J05: [
+      'Los adultos deberían ser libres de tomar decisiones privadas si nadie sale perjudicado.',
+      'Algunas decisiones privadas pueden limitarse para proteger valores que comparten muchas personas.',
+    ],
+    J06: [
+      'Los líderes solo deberían limitar la libertad cuando haya un peligro claro y grave.',
+      'Los líderes pueden limitar algo de libertad pronto para evitar problemas graves.',
+    ],
+    J07: [
+      'Los tribunales, las leyes, otros partidos y los medios de comunicación deberían vigilar a los líderes elegidos.',
+      'Quienes ganan unas elecciones deberían tener mucha libertad para hacer lo que eligieron los votantes.',
+    ],
+    J08: [
+      'Los países deberían seguir normas comunes para los problemas que cruzan fronteras.',
+      'Cada país debería tener la última palabra, aunque los problemas compartidos sean más difíciles de resolver.',
+    ],
+    J09: [
+      'Quien se hace ciudadano pertenece al país tanto como quien lo fue desde el nacimiento.',
+      'Ser ciudadano desde el nacimiento debería contar más para decidir quién pertenece plenamente.',
+    ],
+    J10: [
+      'En la política suele haber muchos grupos con necesidades e ideas distintas.',
+      'Las decisiones políticas pueden dar demasiada influencia a los grupos con buenos contactos y muy poca a los votantes normales.',
+    ],
+    J11: [
+      'Proteger la naturaleza debería ir a veces antes que hacer crecer la economía.',
+      'Hacer crecer la economía debería ir normalmente primero, mientras también protegemos la naturaleza.',
+    ],
+    J12: [
+      'La religión no debería usarse para hacer leyes para personas que no la comparten.',
+      'La religión puede ser una razón justa para las leyes, aunque no todos la compartan.',
+    ],
+    J13: [
+      'El Gobierno nacional o regional debería encargarse de los servicios clave cuando sea necesario para garantizar el mismo nivel mínimo.',
+      'Las comunidades locales deberían encargarse de los servicios clave siempre que puedan ofrecerlos bien.',
+    ],
+    J14: [
+      'Si estallara la violencia, mantendría límites estrictos al poder de la policía.',
+      'Si estallara la violencia, daría más poder a la policía por poco tiempo.',
+    ],
+    J15: [
+      'Si un tribunal frenara una política popular, aun así protegería la independencia del tribunal.',
+      'Si los tribunales frenaran a menudo políticas legales elegidas por los votantes, daría más libertad a los líderes elegidos.',
+    ],
+    J16: [
+      'Escucharía a un candidato que explica las necesidades de los distintos grupos, aunque la respuesta sea complicada.',
+      'Prefiero un candidato que diga que los grupos con buenos contactos tienen demasiada influencia y que los votantes normales necesitan más voz.',
+    ],
   },
   fr: {
     T01: [
@@ -518,6 +584,70 @@ const bank: Record<SchoolYouthLocale, Record<string, [string, string]>> = {
       'Je me sens en confiance quand l’État ou la région fixe partout le même niveau minimum pour les services importants.',
       'Je me sens en confiance quand les autorités locales, comme la mairie, gardent le contrôle au lieu de laisser les décisions à la région ou à l’État.',
     ],
+    J01: [
+      'L’État devrait s’assurer que chaque famille puisse utiliser les écoles et les médecins.',
+      'Les familles devraient faire plus de choix par elles-mêmes, avec moins d’aide de l’État.',
+    ],
+    J02: [
+      'Les impôts devraient aider à réduire l’écart entre riches et pauvres.',
+      'Les gens devraient garder plus de ce qu’ils gagnent, même si l’écart reste grand.',
+    ],
+    J03: [
+      'Les salariés ou la population devraient posséder davantage des plus grandes entreprises.',
+      'Les plus grandes entreprises devraient surtout appartenir à des propriétaires privés.',
+    ],
+    J04: [
+      'Les règles publiques devraient changer quand les opinions de la plupart des gens changent.',
+      'Les anciennes règles devraient changer lentement, après que les gens soient d’accord depuis longtemps.',
+    ],
+    J05: [
+      'Les adultes devraient être libres de faire des choix privés si personne n’est blessé.',
+      'Certains choix privés peuvent être limités pour protéger des valeurs que beaucoup de gens partagent.',
+    ],
+    J06: [
+      'Les dirigeants devraient limiter la liberté seulement quand il y a un danger clair et grave.',
+      'Les dirigeants peuvent limiter un peu de liberté tôt pour éviter de graves problèmes.',
+    ],
+    J07: [
+      'Les tribunaux, les lois, les autres partis et les médias devraient contrôler les dirigeants élus.',
+      'Les gagnants d’une élection devraient avoir une grande liberté pour faire ce que les électeurs ont choisi.',
+    ],
+    J08: [
+      'Les pays devraient suivre des règles communes pour les problèmes qui dépassent les frontières.',
+      'Chaque pays devrait garder le dernier mot, même si les problèmes communs sont plus difficiles à résoudre.',
+    ],
+    J09: [
+      'Une personne qui devient citoyenne appartient au pays autant qu’une personne citoyenne de naissance.',
+      'Être citoyen depuis la naissance devrait compter davantage pour décider qui appartient pleinement au pays.',
+    ],
+    J10: [
+      'En politique, il y a souvent beaucoup de groupes avec des besoins et des idées différents.',
+      'Les décisions politiques peuvent donner trop d’influence aux groupes bien introduits et trop peu aux électeurs ordinaires.',
+    ],
+    J11: [
+      'Protéger la nature devrait parfois passer avant de faire grandir l’économie.',
+      'Faire grandir l’économie devrait en général passer en premier, tout en protégeant aussi la nature.',
+    ],
+    J12: [
+      'La religion ne devrait pas servir à faire des lois pour des personnes qui ne la partagent pas.',
+      'La religion peut être une raison juste pour des lois, même si tout le monde ne la partage pas.',
+    ],
+    J13: [
+      'L’État ou la région devrait gérer les services clés quand c’est nécessaire pour garantir le même niveau minimum.',
+      'Les communautés locales devraient gérer les services clés dès qu’elles peuvent bien les assurer.',
+    ],
+    J14: [
+      'Si la violence éclatait, je garderais des limites strictes aux pouvoirs de la police.',
+      'Si la violence éclatait, je donnerais plus de pouvoir à la police pour un court moment.',
+    ],
+    J15: [
+      'Si un tribunal bloquait une politique populaire, je protégerais quand même l’indépendance du tribunal.',
+      'Si les tribunaux bloquaient souvent des politiques légales choisies par les électeurs, je donnerais plus de liberté aux dirigeants élus.',
+    ],
+    J16: [
+      'J’écouterais un candidat qui explique les besoins de différents groupes, même si la réponse est compliquée.',
+      'Je préfère un candidat qui dit que les groupes bien introduits pèsent trop et que les électeurs ordinaires doivent compter plus.',
+    ],
   },
   'pt-br': {
     T01: [
@@ -687,6 +817,70 @@ const bank: Record<SchoolYouthLocale, Record<string, [string, string]>> = {
     F14: [
       'Me sinto confiante quando o governo nacional ou estadual define o mesmo padrão mínimo para serviços importantes em todo lugar.',
       'Me sinto confiante quando as autoridades locais, como a prefeitura, mantêm o controle em vez de passar as decisões ao governo estadual ou federal.',
+    ],
+    J01: [
+      'O governo deveria garantir que toda família possa usar escolas e médicos.',
+      'As famílias deveriam fazer mais escolhas por conta própria, com menos ajuda do governo.',
+    ],
+    J02: [
+      'Os impostos deveriam ajudar a diminuir a distância entre ricos e pobres.',
+      'As pessoas deveriam ficar com mais do que ganham, mesmo que a distância continue grande.',
+    ],
+    J03: [
+      'Os trabalhadores ou o público deveriam ser donos de mais partes das maiores empresas.',
+      'As maiores empresas deveriam pertencer principalmente a donos privados.',
+    ],
+    J04: [
+      'As regras públicas deveriam mudar quando a opinião da maioria muda.',
+      'As regras antigas deveriam mudar devagar, depois que as pessoas concordarem há muito tempo.',
+    ],
+    J05: [
+      'Os adultos deveriam ser livres para fazer escolhas privadas se ninguém se machuca.',
+      'Algumas escolhas privadas podem ser limitadas para proteger valores que muitas pessoas compartilham.',
+    ],
+    J06: [
+      'Os líderes só deveriam limitar a liberdade quando houver um perigo claro e grave.',
+      'Os líderes podem limitar um pouco de liberdade cedo para evitar problemas graves.',
+    ],
+    J07: [
+      'Os tribunais, as leis, outros partidos e os meios de comunicação deveriam fiscalizar os líderes eleitos.',
+      'Quem ganha uma eleição deveria ter muita liberdade para fazer o que os eleitores escolheram.',
+    ],
+    J08: [
+      'Os países deveriam seguir regras comuns para problemas que atravessam fronteiras.',
+      'Cada país deveria ter a palavra final, mesmo que os problemas compartilhados sejam mais difíceis de resolver.',
+    ],
+    J09: [
+      'Quem se torna cidadão pertence ao país tanto quanto quem é cidadão desde o nascimento.',
+      'Ser cidadão desde o nascimento deveria contar mais para decidir quem pertence plenamente.',
+    ],
+    J10: [
+      'Na política costuma haver muitos grupos com necessidades e ideias diferentes.',
+      'As decisões políticas podem dar influência demais a grupos com bons contatos e de menos a eleitores comuns.',
+    ],
+    J11: [
+      'Proteger a natureza deveria às vezes vir antes de fazer a economia crescer.',
+      'Fazer a economia crescer deveria normalmente vir primeiro, enquanto também protegemos a natureza.',
+    ],
+    J12: [
+      'A religião não deveria ser usada para fazer leis para pessoas que não a compartilham.',
+      'A religião pode ser uma razão justa para leis, mesmo que nem todos a compartilhem.',
+    ],
+    J13: [
+      'O governo nacional ou estadual deveria cuidar dos serviços essenciais quando for preciso para garantir o mesmo padrão mínimo.',
+      'As comunidades locais deveriam cuidar dos serviços essenciais sempre que puderem oferecê-los bem.',
+    ],
+    J14: [
+      'Se a violência explodisse, eu manteria limites rígidos aos poderes da polícia.',
+      'Se a violência explodisse, eu daria mais poder à polícia por pouco tempo.',
+    ],
+    J15: [
+      'Se um tribunal barrasse uma política popular, eu ainda protegeria a independência do tribunal.',
+      'Se os tribunais barrassem com frequência políticas legais escolhidas pelos eleitores, eu daria mais liberdade aos líderes eleitos.',
+    ],
+    J16: [
+      'Eu ouviria um candidato que explica as necessidades de diferentes grupos, mesmo que a resposta seja complicada.',
+      'Prefiro um candidato que diz que grupos com bons contatos têm influência demais e que os eleitores comuns precisam de mais voz.',
     ],
   },
 };

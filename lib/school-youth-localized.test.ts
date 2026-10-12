@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { schoolYouthBeliefItems } from './school-believe';
+import { schoolJuniorBeliefItems, schoolYouthBeliefItems } from './school-believe';
 import { schoolYouthStatement, schoolYouthLocalizedIds } from './school-youth-localized';
 import { schoolStatement } from './school-statement';
 import { germanBeliefStatement } from './german-believe';
@@ -24,6 +24,21 @@ test('localized Youth bank covers every item and both sides in four languages', 
   }
 });
 
+test('Junior 10-13 set has both sides in all four languages', () => {
+  const junior = schoolJuniorBeliefItems;
+  assert.equal(junior.length, 16);
+  for (const item of junior) {
+    for (const locale of ['de', 'es', 'fr', 'pt-br'] as const) {
+      const negative = schoolStatement(locale, item.id, 'negative', item.negative);
+      const positive = schoolStatement(locale, item.id, 'positive', item.positive);
+      assert.notEqual(negative, item.negative, `${locale}/${item.id}: negative still English`);
+      assert.notEqual(positive, item.positive, `${locale}/${item.id}: positive still English`);
+      assert.notEqual(negative, positive, `${locale}/${item.id}: both sides identical`);
+      assert.ok(words(negative) <= 24 && words(positive) <= 24, `${locale}/${item.id}: too long for a 10-year-old`);
+    }
+  }
+});
+
 test('localized Youth wording is not a copy of the adult wording', () => {
   let same = 0;
   for (const item of schoolYouthBeliefItems) {
@@ -38,6 +53,6 @@ test('school screens use Youth wording first, then adult wording, then the Engli
   assert.equal(schoolStatement('en', 'T01', 'negative', 'English text'), 'English text');
   assert.equal(schoolStatement('de', 'T01', 'negative', 'English text'), schoolYouthStatement('de', 'T01', 'negative'));
   assert.equal(schoolStatement('de', 'ZZ99', 'negative', 'English text'), 'English text');
-  // Junior items are not in the Youth bank, so they keep their existing adult-bank lookup.
+  // German Junior wording lives in german-believe.ts, so the Youth lookup has no J items for German.
   assert.equal(schoolYouthStatement('de', 'J01', 'negative'), undefined);
 });
