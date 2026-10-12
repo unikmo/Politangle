@@ -76,12 +76,11 @@ export const ptBrInfoPages: Record<InfoPageId, PageCopy> = {
   'question-banks': {
     eyebrow:'VERSÕES DOS BANCOS DE PERGUNTAS',
     title:'Públicos diferentes. Formas separadas e rastreáveis.',
-    intro:'Mudar o idioma não altera silenciosamente o contexto de país, os construtos de pontuação nem a avaliação adulta. Mudanças materiais recebem uma nova versão.',
+    intro:'Mudar o idioma não altera o contexto de país, a pontuação nem a avaliação adulta. Mudanças materiais recebem uma nova versão.',
     sections:[
-      { title:'Adulto', table:[['Quick','26 perguntas'],['Full','42 perguntas no total'],['Status','A avaliação adulta continua sendo um formulário próprio']] },
-      { title:'Youth 14–18', paragraphs:['Uma versão Youth em linguagem mais simples cobre os mesmos construtos centrais. Adequação à idade e equivalência dos construtos ainda exigem validação.'] },
-      { title:'Junior 10–13', paragraphs:['Um banco Junior separado usa frases mais curtas e simples para sala de aula. Ele precisa ser testado com usuários da faixa etária antes do uso real em escolas.'] },
-      { title:'Idiomas', paragraphs:['Inglês, alemão, espanhol, francês e português do Brasil são camadas de idioma — não perfis de país. Exemplos específicos de países, eleições, partidos ou campanhas exigem versões editoriais próprias.'] },
+      { title:'Adulto 18+', table:[['Quick','26 perguntas'],['Full','42 perguntas no total']] },
+      { title:'Jovens de 10 a 17 anos', paragraphs:['Os mesmos construtos em linguagem mais simples, com uma seleção mais curta para 10 a 13 anos. Adequação à idade e equivalência ainda exigem validação.'] },
+      { title:'Idiomas', paragraphs:['Inglês, alemão, espanhol, francês e português do Brasil são camadas de idioma, não perfis de país.'] },
     ],
   },
   'school-pilot': {

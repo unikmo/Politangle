@@ -99,12 +99,11 @@ const en: Record<InfoPageId, PageCopy> = {
   'question-banks': {
     eyebrow: 'QUESTION-BANK VERSIONS',
     title: 'Different audiences. Separate, traceable forms.',
-    intro: 'Changing language does not silently change country context, scoring constructs or the adult assessment. Material revisions receive their own version.',
+    intro: 'Changing language does not change country context, scoring or the adult assessment. Material revisions get their own version.',
     sections: [
-      { title: 'Adult', table: [['Quick', '26 questions'], ['Full', '42 questions in total'], ['Status', 'Adult assessment remains its own form']] },
-      { title: 'Youth 14–18', paragraphs: ['A plain-language youth form covers the same underlying constructs. Its age suitability and construct equivalence still require validation.'] },
-      { title: 'Junior 10–13', paragraphs: ['A separately versioned junior bank uses shorter, simpler classroom prompts. It must be tested with intended users before real-school release.'] },
-      { title: 'Languages', paragraphs: ['English, German, Spanish, French and Brazilian Portuguese are language layers—not country profiles. Country-specific examples, elections, parties and campaign context are maintained separately from language.'] },
+      { title: 'Adult 18+', table: [['Quick', '26 questions'], ['Full', '42 questions in total']] },
+      { title: 'Youth 10–17', paragraphs: ['A plain-language form for the same constructs, with a shorter set for ages 10–13. Age suitability and equivalence still require validation.'] },
+      { title: 'Languages', paragraphs: ['English, German, Spanish, French and Brazilian Portuguese are language layers, not country profiles.'] },
     ],
   },
   'school-pilot': {
@@ -179,12 +178,11 @@ const de: Record<InfoPageId, PageCopy> = {
   },
   'question-banks': {
     eyebrow: 'DIE FRAGEN', title: 'Eigene Fassungen für verschiedene Altersgruppen.',
-    intro: 'Die Fragen für Erwachsene, Jugendliche und Kinder werden getrennt entwickelt und versioniert. Eine Übersetzung ändert weder heimlich den Länderkontext noch die Grundlage der Auswertung.',
+    intro: 'Die Fragen für Erwachsene und Jugendliche werden getrennt entwickelt und versioniert. Eine Übersetzung ändert weder den Länderkontext noch die Auswertung.',
     sections: [
-      { title: 'Erwachsene', table: [['Quick', '26 Fragen'], ['Full', '42 Fragen insgesamt'], ['Status', 'Eigenständige Erwachsenenfassung']] },
-      { title: 'Jugendliche von 14 bis 18 Jahren', paragraphs: ['Die Jugendfassung behandelt dieselben politischen Grundfragen in einer leichter verständlichen Sprache. Ob sie altersgerecht und mit der Erwachsenenfassung vergleichbar ist, muss noch geprüft werden.'] },
-      { title: 'Kinder von 10 bis 13 Jahren', paragraphs: ['Die Junior-Fassung arbeitet mit kürzeren, einfacheren Fragen für den Unterricht. Bevor sie an Schulen eingesetzt wird, muss sie mit Kindern dieser Altersgruppe erprobt werden.'] },
-      { title: 'Sprachen', paragraphs: ['Englisch, Deutsch, Spanisch, Französisch und Portugiesisch (Brasilien) sind Sprachfassungen – keine Länderprofile. Beispiele zu Parteien, Wahlen oder nationalem Kontext wären eigene spätere Ebenen.'] },
+      { title: 'Erwachsene ab 18', table: [['Quick', '26 Fragen'], ['Full', '42 Fragen insgesamt']] },
+      { title: 'Jugendliche von 10 bis 17 Jahren', paragraphs: ['Dieselben Grundfragen in leichterer Sprache, mit einer kürzeren Auswahl für 10- bis 13-Jährige. Altersgerechtheit und Vergleichbarkeit müssen noch geprüft werden.'] },
+      { title: 'Sprachen', paragraphs: ['Englisch, Deutsch, Spanisch, Französisch und Portugiesisch (Brasilien) sind Sprachfassungen, keine Länderprofile.'] },
     ],
   },
   'school-pilot': {
@@ -258,12 +256,11 @@ const es: Record<InfoPageId, PageCopy> = {
   },
   'question-banks': {
     eyebrow: 'VERSIONES DE PREGUNTAS', title: 'Públicos distintos. Versiones separadas y trazables.',
-    intro: 'Cambiar de idioma no cambia a escondidas el contexto nacional, los constructos de puntuación ni la evaluación para adultos. Los cambios importantes reciben una versión propia.',
+    intro: 'Cambiar de idioma no cambia el contexto nacional, la puntuación ni la evaluación para adultos. Los cambios importantes reciben una versión propia.',
     sections: [
-      { title: 'Adultos', table: [['Quick', '26 preguntas'], ['Full', '42 preguntas en total'], ['Estado', 'La evaluación adulta sigue siendo una versión propia']] },
-      { title: 'Youth 14–18', paragraphs: ['Una versión juvenil en lenguaje más accesible cubre los mismos constructos de fondo. La adecuación por edad y la equivalencia todavía deben validarse.'] },
-      { title: 'Junior 10–13', paragraphs: ['Una versión Junior independiente utiliza preguntas más breves y sencillas para el aula. Debe probarse con su público antes de utilizarse en centros reales.'] },
-      { title: 'Idiomas', paragraphs: ['Inglés, alemán, español, francés y portugués de Brasil son capas lingüísticas, no perfiles nacionales. Ejemplos sobre partidos, elecciones o contexto local necesitarían versiones futuras separadas.'] },
+      { title: 'Adultos (18+)', table: [['Quick', '26 preguntas'], ['Full', '42 preguntas en total']] },
+      { title: 'Jóvenes de 10 a 17 años', paragraphs: ['Los mismos constructos en lenguaje más claro, con una selección más corta para 10 a 13 años. La adecuación por edad y la equivalencia aún deben validarse.'] },
+      { title: 'Idiomas', paragraphs: ['Inglés, alemán, español, francés y portugués de Brasil son capas lingüísticas, no perfiles nacionales.'] },
     ],
   },
   'school-pilot': {
@@ -337,12 +334,11 @@ const fr: Record<InfoPageId, PageCopy> = {
   },
   'question-banks': {
     eyebrow: 'LES QUESTIONS', title: 'Des versions distinctes selon l’âge et la langue.',
-    intro: 'Les questions destinées aux adultes, aux adolescents et aux enfants sont développées et suivies séparément. Une traduction ne change ni le contexte national ni les principes de calcul du résultat.',
+    intro: 'Les questions pour adultes et pour jeunes sont développées et suivies séparément. Une traduction ne change ni le contexte national ni le calcul du résultat.',
     sections: [
-      { title: 'Adultes', table: [['Quick', '26 questions'], ['Full', '42 questions au total'], ['État', 'L’évaluation adulte reste une version distincte']] },
-      { title: 'Adolescents de 14 à 18 ans', paragraphs: ['Cette version traite les mêmes grandes questions politiques dans une langue plus accessible. Son adéquation à l’âge et sa comparabilité avec la version adulte doivent encore être vérifiées.'] },
-      { title: 'Enfants de 10 à 13 ans', paragraphs: ['Cette version utilise des formulations plus courtes et plus simples pour la classe. Elle doit être testée avec des enfants de cet âge avant toute utilisation réelle dans une école.'] },
-      { title: 'Langues', paragraphs: ['L’anglais, l’allemand, l’espagnol, le français et le portugais du Brésil sont des versions linguistiques, pas des profils de pays. Les partis, les élections et les exemples nationaux sont traités séparément.'] },
+      { title: 'Adultes (18 ans et +)', table: [['Quick', '26 questions'], ['Full', '42 questions au total']] },
+      { title: 'Jeunes de 10 à 17 ans', paragraphs: ['Les mêmes grandes questions dans une langue plus claire, avec une sélection plus courte pour les 10–13 ans. L’adéquation à l’âge et la comparabilité doivent encore être vérifiées.'] },
+      { title: 'Langues', paragraphs: ['L’anglais, l’allemand, l’espagnol, le français et le portugais du Brésil sont des versions linguistiques, pas des profils de pays.'] },
     ],
   },
   'school-pilot': {
