@@ -15,7 +15,7 @@ Status: **implemented candidate forms; non-production pending cognitive and empi
 ### Youth 14-18
 
 - Youth Quick 26 and Youth Full 42.
-- Plain-language parallel wording for every adult BELIEVE item.
+- Plain-language parallel wording for every adult BELIEVE item. Version `school-youth-believe-2026.10-candidate-v5-plain`: both sides of all 42 items follow the October candidate adult meaning, including the court wording for A08 and F08. English only; DE/ES/FR/PT classroom and private screens still show the adult-bank wording.
 - One statement is shown per screen. The opposite direction is a randomized alternate form, never a second question displayed beside it.
 - IDs, constructs, THINK/FEEL/ACT mode, scoring direction, stage and evidence references remain aligned with the adult bank.
 - The adult bank is unchanged.
