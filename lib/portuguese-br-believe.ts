@@ -1,6 +1,6 @@
 import type { BeliefPolarity } from './belief-statements';
 
-export const PORTUGUESE_BR_BELIEVE_VERSION = 'pt-br-believe-2026.09-candidate-v1' as const;
+export const PORTUGUESE_BR_BELIEVE_VERSION = 'pt-br-believe-2026.10-editorial-v2' as const;
 
 type Pair = readonly [string, string];
 
