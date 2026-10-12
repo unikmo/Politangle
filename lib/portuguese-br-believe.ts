@@ -5,19 +5,19 @@ export const PORTUGUESE_BR_BELIEVE_VERSION = 'pt-br-believe-2026.10-editorial-v2
 type Pair = readonly [string, string];
 
 const ptBr: Record<string, Pair> = {
-  T01: ['O Estado deve garantir que todas as pessoas tenham acesso a serviços essenciais, como saúde e educação.', 'O Estado deve interferir menos e deixar mais espaço para opções privadas nos serviços essenciais.'],
-  T02: ['O Estado deve usar impostos e benefícios para reduzir grandes diferenças entre ricos e pobres.', 'O Estado deve interferir menos nas diferenças de renda, mesmo que a distância entre ricos e pobres continue grande.'],
-  T03: ['Trabalhadores, cooperativas ou o Estado deveriam ter uma participação maior na propriedade das grandes empresas.', 'As grandes empresas deveriam pertencer principalmente a proprietários privados, com leis que protejam os trabalhadores.'],
+  T01: ["O Estado deve garantir que todos tenham acesso à escola e ao atendimento médico.", "Na educação e na saúde, o Estado deve dar mais espaço a prestadores privados."],
+  T02: ["O Estado deve usar impostos e benefícios sociais para reduzir grandes diferenças de renda.", "O Estado deve aceitar grandes diferenças de renda em vez de tentar corrigi-las com impostos mais altos."],
+  T03: ["Trabalhadores, cooperativas e o Estado devem ter participação maior na propriedade das grandes empresas.", "As grandes empresas devem pertencer principalmente a donos privados, com direitos trabalhistas protegidos por lei."],
   T04: ["As leis devem ser atualizadas logo quando uma mudança social tem amplo apoio.", "Leis consolidadas só devem mudar depois de um longo debate, mesmo que muita gente já apoie a reforma."],
   T05: ["Relações consensuais entre adultos devem ser permitidas mesmo quando outras pessoas as consideram imorais.", "O Estado pode restringir legalmente certas relações consensuais entre adultos por motivos morais."],
   T06: ['O aborto deve ser legal de forma ampla, porque a decisão principal deve caber à pessoa grávida.', 'O aborto deve ter limites legais mais rígidos para proteger a vida antes do nascimento.'],
-  T07: ['O Estado só deve restringir a liberdade diante de um perigo claro e grave.', 'O Estado pode restringir certas liberdades mais cedo quando houver risco real de distúrbios graves.'],
+  T07: ["As liberdades só devem ser restringidas diante de um perigo concreto e grave.", "Diante do risco de distúrbios graves, o Estado pode restringir algumas liberdades preventivamente."],
   T08: ["Tribunais independentes devem poder verificar se as leis do governo respeitam a Constituição.", "Um governo eleito deve poder executar seus planos mesmo quando tribunais independentes apresentam objeções."],
   T09: ['Os países devem aceitar regras internacionais obrigatórias quando um problema ultrapassa fronteiras.', 'Cada país deve manter a palavra final, mesmo que isso enfraqueça soluções conjuntas.'],
   T10: ["Ser naturalizado ou cidadão desde o nascimento não deveria mudar o pertencimento de alguém ao país.", "Ter cidadania desde o nascimento deveria ter mais peso no sentimento de pertencimento ao país."],
   T11: ["Conflitos políticos geralmente surgem porque grupos diferentes têm interesses legítimos distintos.", "Grupos com bons contatos costumam ter mais influência política que eleitores comuns."],
   T12: ['Proteger a natureza deve, às vezes, ter prioridade sobre o crescimento econômico.', 'O crescimento econômico deve ter prioridade e a proteção ambiental deve limitá-lo o mínimo possível.'],
-  T13: ['A religião não deve ser usada para justificar leis que valem para pessoas de todas as religiões.', 'Valores religiosos podem justificar leis mesmo quando nem todas as pessoas compartilham daquela religião.'],
+  T13: ["O Estado não deve justificar leis que valem para todos apenas com crenças religiosas.", "Crenças religiosas podem ser razões legítimas para leis, mesmo que nem todos compartilhem delas."],
   T14: ["Governos estaduais ou nacionais devem definir padrões mínimos comuns para escolas e hospitais.", "Os municípios devem poder organizar suas escolas e hospitais quando conseguem fazer isso bem."],
 
   F01: ["Me preocupa quando alguém deixa de receber atendimento médico porque não consegue pagar.", "Me preocupa quando as pessoas têm poucas opções porque serviços essenciais ficam sob controle do Estado."],
@@ -35,9 +35,9 @@ const ptBr: Record<string, Pair> = {
   F13: ["Me incomoda quando políticos justificam leis para todos principalmente com base na própria religião.", "Me incomoda quando argumentos religiosos são excluídos de um debate apenas por serem religiosos."],
   F14: ["Me sinto mais seguro quando o Estado garante escolas e hospitais de qualidade semelhante em todo o país.", "Me sinto mais seguro quando os municípios decidem como organizar suas escolas e hospitais."],
 
-  A01: ['Se uma clínica local corresse risco de fechar, eu apoiaria recursos públicos para mantê-la aberta a todos.', 'Se uma clínica local corresse risco de fechar, eu procuraria primeiro uma solução privada antes de colocar mais recursos públicos.'],
-  A02: ['Eu pagaria um pouco mais de impostos se isso ajudasse famílias de renda muito baixa.', 'Eu escolheria impostos menores mesmo que sobrasse menos dinheiro para apoiar famílias de renda muito baixa.'],
-  A03: ['Em uma grande empresa, eu daria aos trabalhadores uma participação na propriedade e voz em decisões importantes.', 'Em uma grande empresa, eu deixaria a propriedade e as decisões importantes principalmente nas mãos de investidores privados.'],
+  A01: ["Se um hospital da região estivesse prestes a fechar, eu apoiaria recursos públicos para mantê-lo aberto.", "Se um hospital da região estivesse prestes a fechar, eu procuraria primeiro uma empresa privada para administrá-lo."],
+  A02: ["Eu aceitaria impostos um pouco maiores para apoiar diretamente famílias de baixa renda.", "Eu votaria por impostos menores, mesmo que sobrasse menos dinheiro para famílias de baixa renda."],
+  A03: ["Eu apoiaria trabalhadores que quisessem comprar uma parte de uma grande empresa.", "Se uma grande empresa estivesse indo bem, eu manteria a propriedade principalmente com investidores privados."],
   A04: ["Eu apoiaria o reconhecimento legal de novas formas de família quando houvesse uma clara maioria favorável.", "Eu só mudaria leis sobre família depois de um apoio amplo e duradouro à mudança."],
   A05: ["Mesmo desaprovando uma relação entre adultos, eu não apoiaria proibi-la se ela não prejudicasse ninguém.", "Eu apoiaria limites legais a relações consensuais se contrariassem valores morais compartilhados."],
   A06: ['Em uma votação, eu apoiaria um acesso legal mais amplo ao aborto.', 'Em uma votação, eu apoiaria limites legais mais rígidos ao aborto.'],
@@ -47,7 +47,7 @@ const ptBr: Record<string, Pair> = {
   A10: ["Pessoas naturalizadas devem ter as mesmas chances de ocupar altos cargos eletivos que cidadãos desde o nascimento.", "Para alguns dos cargos políticos mais altos, eu daria preferência a cidadãos desde o nascimento."],
   A11: ["Prefiro candidatos que explicam abertamente os compromissos políticos, mesmo quando a mensagem agrada menos.", "Prefiro candidatos que reduzam a influência de grupos bem conectados e deem mais voz aos eleitores."],
   A12: ['Eu aceitaria preços um pouco mais altos se um produto causasse dano ambiental grave.', 'Eu evitaria regras que elevassem preços e confiaria mais em tecnologia limpa para proteger o meio ambiente.'],
-  A13: ['Eu rejeitaria políticos que justificassem leis para todos principalmente com base na própria religião.', 'Eu aceitaria que políticos justificassem leis para todos com base em valores religiosos.'],
+  A13: ["Eu rejeitaria leis para todos que fossem justificadas apenas por argumentos religiosos.", "Eu apoiaria leis cujos defensores também apresentassem motivos religiosos para justificá-las."],
   A14: ["Se a qualidade das escolas variasse muito, eu apoiaria padrões mínimos comuns definidos pelo governo estadual.", "Se um município administrasse bem suas escolas, eu preferiria pouca interferência estadual ou nacional."],
 };
 
