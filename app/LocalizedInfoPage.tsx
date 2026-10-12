@@ -343,7 +343,7 @@ const fr: Record<InfoPageId, PageCopy> = {
   },
   'school-pilot': {
     eyebrow: 'PILOTE SCOLAIRE', title: 'Tu souhaites essayer Politangle en classe ?',
-    intro: 'Signale ton intérêt pour une future phase pilote. Pas encore autorisé avec de vrais élèves.',
+    intro: 'Signale ton intérêt pour une future phase pilote. Pas encore autorisé pour de vrais élèves.',
     sections: [
       { title: 'Pour qui', paragraphs: ['Enseignants du secondaire, spécialistes de l’éducation politique et équipes de recherche.'] },
       { title: 'Limite actuelle', callout: 'Un pilote avec de vrais élèves exige une revue juridique, des contrôles de protection et d’accessibilité, un accord scolaire et une validation des contenus par âge.' },

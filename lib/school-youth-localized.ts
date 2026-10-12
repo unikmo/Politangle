@@ -13,7 +13,7 @@ export const SCHOOL_YOUTH_LOCALIZED_VERSION = 'school-youth-localized-2026.10-dr
 const bank: Record<SchoolYouthLocale, Record<string, [string, string]>> = {
   de: {
     T01: [
-      'Der Staat soll dafür sorgen, dass alle Dinge wie Schulen und Ärzte nutzen können.',
+      'Der Staat soll dafür sorgen, dass alle Menschen Dinge wie Schulen und Ärzte nutzen können.',
       'Der Staat soll sich bei Dingen wie Schulen und Ärzten weniger einmischen. Mehr davon sollen private Firmen anbieten, und die Menschen sollen selbst wählen.',
     ],
     T02: [
@@ -22,7 +22,7 @@ const bank: Record<SchoolYouthLocale, Record<string, [string, string]>> = {
     ],
     T03: [
       'Beschäftigte oder die Allgemeinheit sollen einen größeren Anteil an großen Firmen besitzen.',
-      'Große Firmen sollen meistens privaten Besitzern gehören und nicht dem Staat. Das Gesetz soll die Arbeitnehmer trotzdem schützen.',
+      'Große Firmen sollen meistens privaten Besitzern gehören und nicht dem Staat. Das Gesetz soll die Beschäftigten trotzdem schützen.',
     ],
     T04: [
       'Wenn die meisten Menschen eine neue Lebensweise akzeptieren, sollen sich die Gesetze ziemlich schnell anpassen.',
@@ -30,10 +30,10 @@ const bank: Record<SchoolYouthLocale, Record<string, [string, string]>> = {
     ],
     T05: [
       'Das Gesetz soll Erwachsene bei privaten Entscheidungen in Ruhe lassen, wenn niemand sonst verletzt wird.',
-      'Das Gesetz darf manche private Dinge verbieten, die Erwachsene freiwillig tun, wenn die meisten sie moralisch falsch finden, auch wenn niemand verletzt wird.',
+      'Das Gesetz darf manches verbieten, was Erwachsene privat und freiwillig tun, wenn die meisten Menschen es moralisch falsch finden – auch wenn niemand verletzt wird.',
     ],
     T06: [
-      'Abtreibung (eine Schwangerschaft beenden) soll meistens erlaubt sein, weil die schwangere Person die wichtigste Entscheidung treffen soll.',
+      'Abtreibung (das Beenden einer Schwangerschaft) soll meistens erlaubt sein, weil die schwangere Person die wichtigste Entscheidung treffen soll.',
       'Für Abtreibung soll es strengere gesetzliche Grenzen geben, weil ungeborenes Leben mehr Schutz bekommen soll.',
     ],
     T07: [
@@ -41,7 +41,7 @@ const bank: Record<SchoolYouthLocale, Record<string, [string, string]>> = {
       'Der Staat darf manche Freiheiten früh einschränken, bevor etwas Schlimmes passiert, wenn es eine echte Gefahr für schwere Gewalt oder Chaos gibt.',
     ],
     T08: [
-      'Auch wenn eine Regierung eine Wahl gewonnen hat, sollen Gerichte, die Verfassung (die wichtigsten Regeln des Landes) und die Opposition sie weiter kontrollieren.',
+      'Auch wenn eine Regierung eine Wahl gewonnen hat, sollen Gerichte, die Verfassung (die wichtigsten Regeln des Landes) und die Opposition ihrer Macht weiter Grenzen setzen.',
       'Eine gewählte Regierung soll ihre rechtmäßigen Pläne umsetzen dürfen, auch wenn Gerichte und andere unabhängige Gruppen stark widersprechen.',
     ],
     T09: [
@@ -53,23 +53,23 @@ const bank: Record<SchoolYouthLocale, Record<string, [string, string]>> = {
       'Von Geburt an Staatsbürger zu sein ist ein wichtiger Teil der Zugehörigkeit zu einem Land, mehr als die rechtliche Staatsbürgerschaft allein.',
     ],
     T11: [
-      'Politischer Streit ist meistens ein echter Zusammenstoß verschiedener Interessen und Werte, nicht der Verrat einer Seite an den normalen Wählern.',
-      'Politiker hören oft zu sehr auf Gruppen mit guten Verbindungen und zu wenig auf normale Wählerinnen und Wähler.',
+      'Politischer Streit ist meistens ein echter Zusammenstoß verschiedener Interessen und Werte, nicht der Verrat einer Seite an den normalen Wählerinnen und Wählern.',
+      'Politiker hören oft zu sehr auf Gruppen mit guten Verbindungen und zu wenig auf gewöhnliche Wählerinnen und Wähler.',
     ],
     T12: [
       'Wenn Naturschutz und Wirtschaftswachstum klar im Streit sind, soll manchmal die Natur zuerst kommen, auch wenn die Wirtschaft dadurch langsamer wächst.',
-      'Wenn beides im Streit steht, soll meistens das Wirtschaftswachstum zuerst kommen, und Schäden für die Natur sollen auf andere Weise verringert werden.',
+      'Wenn Naturschutz und Wirtschaftswachstum im Streit stehen, soll meistens das Wirtschaftswachstum zuerst kommen, und Schäden für die Natur sollen auf andere Weise verringert werden.',
     ],
     T13: [
       'Religiöse Überzeugungen allein sollen nicht ausreichen, um Gesetze für Menschen zu begründen, die diese Religion nicht teilen.',
       'Gesetze dürfen auf religiösen Werten beruhen, auch wenn nicht alle im Land diese Religion haben.',
     ],
     T14: [
-      'Der Bund oder die Länder sollen wichtige Dinge wie Schulen und Krankenhäuser verantworten, wenn so alle den gleichen Zugang und die gleiche Qualität bekommen.',
-      'Wichtige Dinge wie Schulen und Krankenhäuser sollen meistens bei der Gemeinde oder bei Gruppen vor Ort bleiben, wenn diese sie gut führen können.',
+      'Der Bund oder die Länder sollen wichtige Angebote wie Schulen und Krankenhäuser verantworten, wenn so alle den gleichen Zugang und die gleiche Qualität bekommen.',
+      'Wichtige Angebote wie Schulen und Krankenhäuser sollen meistens bei der Gemeinde oder bei Gruppen vor Ort bleiben, wenn diese sie gut führen können.',
     ],
     A01: [
-      'Wenn ein Krankenhaus vor Ort schließen müsste, würde ich staatliches Geld unterstützen, damit es für alle geöffnet bleibt.',
+      'Wenn ein Krankenhaus vor Ort schließen müsste, würde ich es unterstützen, staatliches Geld einzusetzen, damit es für alle geöffnet bleibt.',
       'Wenn ein Krankenhaus vor Ort auf beide Arten gut laufen würde, würde ich eine private Firma wählen, statt mehr Geld vom Staat zu geben.',
     ],
     A02: [
@@ -77,20 +77,20 @@ const bank: Record<SchoolYouthLocale, Record<string, [string, string]>> = {
       'Angenommen, ich verdiene Geld und zahle Steuern. Ich würde niedrigere Steuern wählen, auch wenn der Abstand zwischen Arm und Reich sehr groß bliebe.',
     ],
     A03: [
-      'Wenn eine große Firma ihren Beschäftigten einen echten Anteil anböte, auch wenn Anteilseigner von außen Einfluss verlieren, würde ich das unterstützen.',
-      'Wenn eine große Firma gut läuft, würde ich sie bei privaten Anteilseignern (Menschen, denen Teile der Firma gehören) lassen und nicht einen großen Teil an Beschäftigte oder die Allgemeinheit geben.',
+      'Wenn eine große Firma ihren Beschäftigten einen echten Anteil anböte und Anteilseigner von außen dadurch Einfluss verlören, würde ich das unterstützen.',
+      'Wenn eine große Firma gut läuft, würde ich sie überwiegend bei privaten Anteilseignern (Menschen, denen Teile der Firma gehören) lassen, statt Beschäftigten oder der Allgemeinheit einen großen Teil zu geben.',
     ],
     A04: [
       'Wenn eine alte Schulregel nicht mehr zum Leben der meisten Schülerinnen und Schüler passt, würde ich sie bald ändern.',
       'Ich würde eine alte Schulregel behalten, bis viele Menschen sie schon lange ändern wollten.',
     ],
     A05: [
-      'Wenn Erwachsene sich freiwillig für eine Beziehung oder Lebensweise entscheiden, die ich nicht gut finde, wäre ich gegen ein Gesetz, das sie verbietet, außer jemand wird dadurch direkt geschädigt.',
+      'Wenn Erwachsene sich freiwillig für eine Beziehung oder Lebensweise entscheiden, die ich nicht gut finde, wäre ich gegen ein Gesetz, das sie verbietet, es sei denn, jemand wird dadurch direkt geschädigt.',
       'Wenn eine Entscheidung von Erwachsenen stark gegen Werte verstößt, die die meisten Menschen teilen, könnte ich einige gesetzliche Grenzen unterstützen, auch wenn niemand verletzt wird.',
     ],
     A06: [
       'Wenn die Menschen über das Abtreibungsrecht abstimmen würden, würde ich für einen breiteren gesetzlichen Zugang stimmen.',
-      'Wenn die Menschen über das Abtreibungsrecht abstimmen würden, würde ich für strengere Grenzen stimmen.',
+      'Wenn die Menschen über das Abtreibungsrecht abstimmen würden, würde ich für strengere gesetzliche Grenzen stimmen.',
     ],
     A07: [
       'Bei schwerer Gewalt auf den Straßen würde ich starke rechtliche Schutzregeln behalten, auch wenn die Reaktion langsamer wäre.',
@@ -102,15 +102,15 @@ const bank: Record<SchoolYouthLocale, Record<string, [string, string]>> = {
     ],
     A09: [
       'Ich würde ein Abkommen unterstützen, an das sich alle Länder halten müssen, wenn es ein gemeinsames Problem löst, auch wenn es einige Entscheidungen meines Landes einschränkt.',
-      'Ich würde Entscheidungen im eigenen Land lassen, auch wenn Länder dadurch schlechter zusammen handeln können.',
+      'Ich würde Entscheidungen im eigenen Land lassen, auch wenn Länder dadurch schlechter gemeinsam handeln können.',
     ],
     A10: [
-      'Ich finde, wer später Staatsbürger geworden ist, soll dieselben hohen Wahlämter bekommen können, etwa an der Spitze des Landes, wie jemand, der als Staatsbürger geboren wurde.',
+      'Ich würde es unterstützen, wenn Menschen, die später Staatsbürger geworden sind, dieselben hohen Wahlämter übernehmen dürften (zum Beispiel an der Spitze des Landes) wie Menschen, die von Geburt an Staatsbürger sind.',
       'Ich würde es unterstützen, einige oberste Wahlämter, etwa an der Spitze des Landes, für Menschen zu reservieren, die von Geburt an Staatsbürger sind.',
     ],
     A11: [
-      'Ich mag Kandidaten lieber, die offen erklären, dass politische Entscheidungen schwierig sind, auch wenn ihre Botschaft weniger spannend ist.',
-      'Ich mag Kandidaten lieber, die versprechen, die Macht von Gruppen mit guten Verbindungen zu verringern und normalen Wählern mehr Mitsprache zu geben.',
+      'Ich bevorzuge Kandidaten, die offen erklären, dass politische Entscheidungen schwierig sind, auch wenn ihre Botschaft weniger spannend ist.',
+      'Ich bevorzuge Kandidaten, die versprechen, die Macht von Gruppen mit guten Verbindungen zu verringern und gewöhnlichen Wählerinnen und Wählern mehr Mitsprache zu geben.',
     ],
     A12: [
       'Ich würde Gesetze gut finden, die Firmen zum Umweltschutz zwingen, auch wenn die Wirtschaft dadurch etwas langsamer wächst.',
@@ -149,7 +149,7 @@ const bank: Record<SchoolYouthLocale, Record<string, [string, string]>> = {
       'Ein breiter Zugang zu Abtreibung macht mir Sorgen, weil ich glaube, dass ungeborenes Leben mehr Schutz verdient.',
     ],
     F07: [
-      'In einer Krise macht es mir Sorgen, wenn der Staat mehr Macht benutzt, als nötig ist.',
+      'In einer Krise macht es mir Sorgen, wenn der Staat mehr Macht einsetzt, als nötig ist.',
       'In einer Krise macht es mir Sorgen, wenn die Behörden zu wenig Macht haben, um die Menschen zu schützen.',
     ],
     F08: [
@@ -161,12 +161,12 @@ const bank: Record<SchoolYouthLocale, Record<string, [string, string]>> = {
       'Es ist mir unangenehm, wenn internationale Versprechen mein Land daran hindern, bei einer wichtigen Frage selbst zu entscheiden.',
     ],
     F10: [
-      'Ich fühle mich Staatsbürgern, die später dazugekommen sind und am Gemeinschaftsleben teilnehmen, genauso zugehörig wie Menschen, die von Geburt an Staatsbürger waren.',
+      'Ich fühle mich mit Staatsbürgern, die später dazugekommen sind und am Gemeinschaftsleben teilnehmen, genauso verbunden wie mit Menschen, die von Geburt an Staatsbürger waren.',
       'Für mein Gefühl, zu einem Land zu gehören, ist es wichtig, dass meine Familie schon lange dort lebt.',
     ],
     F11: [
       'Wenn mich Politik enttäuscht, denke ich meistens: Die Entscheidungen sind schwierig, und verschiedene Gruppen wollen verschiedene Dinge.',
-      'Wenn mich Politik enttäuscht, vermute ich oft, dass Gruppen mit guten Verbindungen mehr Gehör finden als normale Wähler.',
+      'Wenn mich Politik enttäuscht, vermute ich oft, dass Gruppen mit guten Verbindungen mehr Gehör finden als gewöhnliche Wählerinnen und Wähler.',
     ],
     F12: [
       'Schwere Schäden für die Natur machen mir Sorgen, auch wenn ihre Verhinderung die Wirtschaft bremsen könnte.',
@@ -187,7 +187,7 @@ const bank: Record<SchoolYouthLocale, Record<string, [string, string]>> = {
       'El Gobierno debería hacer menos en cosas como las escuelas y los médicos. Más servicios deberían estar en manos de empresas privadas y cada persona debería elegir.',
     ],
     T02: [
-      'El Gobierno debería usar impuestos y ayudas de dinero para que la distancia entre personas muy ricas y personas pobres sea menor.',
+      'El Gobierno debería usar impuestos y ayudas económicas para que la distancia entre las personas muy ricas y las pobres sea menor.',
       'El Gobierno debería intervenir menos en las diferencias de dinero entre las personas, aunque las distancias se hagan muy grandes.',
     ],
     T03: [
@@ -215,7 +215,7 @@ const bank: Record<SchoolYouthLocale, Record<string, [string, string]>> = {
       'Un Gobierno elegido debería poder llevar a cabo sus planes legales, aunque los tribunales y otros grupos independientes se opongan con fuerza.',
     ],
     T09: [
-      'Los países deberían seguir normas internacionales comunes cuando un problema es demasiado grande para resolverlo un solo país.',
+      'Los países deberían seguir normas internacionales comunes cuando un problema es demasiado grande para que lo resuelva un solo país.',
       'Cada país debería tener la última palabra sobre sus decisiones, aunque eso haga más difícil resolver juntos los problemas compartidos.',
     ],
     T10: [
@@ -228,7 +228,7 @@ const bank: Record<SchoolYouthLocale, Record<string, [string, string]>> = {
     ],
     T12: [
       'Cuando proteger la naturaleza y hacer crecer la economía chocan claramente, a veces la naturaleza debería ir primero, aunque la economía crezca más despacio.',
-      'Cuando chocan, el crecimiento económico debería ir normalmente primero, y el daño a la naturaleza debería reducirse de otras maneras.',
+      'Cuando proteger la naturaleza y hacer crecer la economía chocan, el crecimiento económico debería ir normalmente primero, y el daño a la naturaleza debería reducirse de otras maneras.',
     ],
     T13: [
       'Las creencias religiosas no deberían bastar, por sí solas, para justificar leyes para personas que no comparten esa religión.',
@@ -239,23 +239,23 @@ const bank: Record<SchoolYouthLocale, Record<string, [string, string]>> = {
       'Los servicios importantes, como escuelas y hospitales, deberían quedarse normalmente en manos del gobierno local o de grupos de la comunidad si pueden gestionarlos bien.',
     ],
     A01: [
-      'Si un hospital local pudiera cerrar, apoyaría usar dinero público para mantenerlo abierto para todos.',
+      'Si un hospital local estuviera a punto de cerrar, apoyaría usar dinero público para mantenerlo abierto para todos.',
       'Si un hospital local funcionara bien de las dos maneras, elegiría que lo dirigiera una empresa privada en vez de darle más dinero público.',
     ],
     A02: [
-      'Imaginemos que trabajo y pago impuestos. Aceptaría pagar un poco más si así la distancia entre ricos y pobres fuera mucho menor.',
-      'Imaginemos que trabajo y pago impuestos. Elegiría impuestos más bajos, aunque la distancia entre ricos y pobres siguiera siendo muy grande.',
+      'Si trabajara y pagara impuestos, aceptaría pagar un poco más si así la distancia entre ricos y pobres fuera mucho menor.',
+      'Si trabajara y pagara impuestos, elegiría impuestos más bajos, aunque la distancia entre ricos y pobres siguiera siendo muy grande.',
     ],
     A03: [
       'Si una gran empresa diera a sus trabajadores una parte real de la propiedad, aunque los accionistas externos perdieran algo de control, lo apoyaría.',
-      'Si una gran empresa fuera bien, la dejaría sobre todo en manos de accionistas privados (personas dueñas de partes de la empresa), en lugar de dar una parte grande a los trabajadores o al Estado.',
+      'Si una gran empresa funcionara bien, la dejaría sobre todo en manos de accionistas privados (personas dueñas de partes de la empresa), en lugar de dar una parte grande a los trabajadores o al Estado.',
     ],
     A04: [
       'Si una regla antigua de la escuela ya no coincidiera con la vida de la mayoría del alumnado, la cambiaría bastante pronto.',
       'Mantendría una regla antigua de la escuela hasta que mucha gente llevara mucho tiempo queriendo cambiarla.',
     ],
     A05: [
-      'Si personas adultas eligieran libremente una relación o forma de vida con la que no estoy de acuerdo, me opondría a una ley que la prohíba, salvo que perjudique directamente a alguien.',
+      'Si personas adultas eligieran libremente una relación o forma de vida con la que yo no estuviera de acuerdo, me opondría a una ley que la prohibiera, salvo que perjudicara directamente a alguien.',
       'Si una decisión de adultos fuera muy contraria a los valores que comparte la mayoría, podría apoyar algunos límites legales, aunque nadie saliera perjudicado.',
     ],
     A06: [
@@ -275,11 +275,11 @@ const bank: Record<SchoolYouthLocale, Record<string, [string, string]>> = {
       'Dejaría las decisiones en manos de mi país, aunque eso hiciera más difícil que los países actúen juntos.',
     ],
     A10: [
-      'Apoyaría que las personas que se hicieron ciudadanas más tarde puedan tener los mismos cargos altos elegidos por voto, como dirigir el país, que quienes nacieron siendo ciudadanas.',
+      'Apoyaría que las personas que se hicieron ciudadanas más tarde pudieran ocupar los mismos altos cargos electos, como dirigir el país, que quienes nacieron siendo ciudadanas.',
       'Apoyaría reservar algunos de los máximos cargos electos, como dirigir el país, a personas que fueron ciudadanas desde el nacimiento.',
     ],
     A11: [
-      'Prefiero candidatos que explican abiertamente que las decisiones políticas son difíciles, aunque su mensaje resulte menos emocionante.',
+      'Prefiero candidatos que expliquen abiertamente que las decisiones políticas son difíciles, aunque su mensaje resulte menos emocionante.',
       'Prefiero candidatos que prometan quitar poder a los grupos con buenos contactos y dar más voz a los votantes normales.',
     ],
     A12: [
@@ -288,7 +288,7 @@ const bank: Record<SchoolYouthLocale, Record<string, [string, string]>> = {
     ],
     A13: [
       'Preferiría que los políticos no se apoyaran sobre todo en valores religiosos para explicar leyes que se aplican a todos.',
-      'Aceptaría que los políticos den valores religiosos como una buena razón para leyes que valen para todos.',
+      'Aceptaría que los políticos dieran valores religiosos como una buena razón para leyes que se aplican a todos.',
     ],
     A14: [
       'Si servicios como las escuelas fueran mucho mejores en unas zonas que en otras, apoyaría normas nacionales o regionales, aunque cada zona decidiera menos.',
@@ -311,7 +311,7 @@ const bank: Record<SchoolYouthLocale, Record<string, [string, string]>> = {
       'Me incomoda que se cambien reglas antiguas antes de que la mayoría acepte una nueva forma de vivir.',
     ],
     F05: [
-      'Me incomoda que el Gobierno prohíba a los adultos decisiones privadas que no hacen daño a nadie.',
+      'Me incomoda que el Gobierno prohíba a los adultos tomar decisiones privadas que no hacen daño a nadie.',
       'Me incomoda que la ley no preste atención a los valores que comparte la mayoría, ni siquiera en la vida privada de los adultos.',
     ],
     F06: [
@@ -331,7 +331,7 @@ const bank: Record<SchoolYouthLocale, Record<string, [string, string]>> = {
       'Me incomoda que las promesas internacionales impidan a mi país tomar su propia decisión final sobre un tema importante.',
     ],
     F10: [
-      'Siento el mismo sentimiento de pertenencia hacia los ciudadanos que llegaron más tarde y participan en la vida de la comunidad que hacia quienes lo fueron desde el nacimiento.',
+      'Tengo el mismo sentimiento de pertenencia hacia los ciudadanos que llegaron más tarde y participan en la vida de la comunidad que hacia quienes lo son desde el nacimiento.',
       'Para sentir que pertenezco a un país, me importa que mi familia lleve mucho tiempo viviendo allí.',
     ],
     F11: [
@@ -343,12 +343,12 @@ const bank: Record<SchoolYouthLocale, Record<string, [string, string]>> = {
       'Me preocupa que se pierdan empleos y bajen los niveles de vida cuando las reglas ambientales frenan mucho la economía.',
     ],
     F13: [
-      'Me siento incómodo cuando se usan valores religiosos para justificar leyes para personas que no comparten esa fe.',
-      'Me siento incómodo cuando los valores religiosos se dejan de lado en el debate público solo por ser religiosos.',
+      'Me incomoda que se usen valores religiosos para justificar leyes para personas que no comparten esa fe.',
+      'Me incomoda que los valores religiosos se dejen de lado en el debate público solo por ser religiosos.',
     ],
     F14: [
       'Me da confianza que el Gobierno nacional o regional fije el mismo estándar mínimo para los servicios importantes en todas partes.',
-      'Me siento tranquilo cuando las autoridades locales, como el ayuntamiento, conservan el control en lugar de pasar las decisiones al Gobierno regional o nacional.',
+      'Me da tranquilidad que las autoridades locales, como el ayuntamiento, conserven el control en lugar de pasar las decisiones al Gobierno regional o nacional.',
     ],
     J01: [
       'El Gobierno debería asegurarse de que todas las familias puedan usar escuelas y médicos.',
@@ -359,7 +359,7 @@ const bank: Record<SchoolYouthLocale, Record<string, [string, string]>> = {
       'Las personas deberían quedarse con más de lo que ganan, aunque la distancia siga siendo grande.',
     ],
     J03: [
-      'Los trabajadores o el público deberían ser dueños de más partes de las empresas más grandes.',
+      'Los trabajadores o el público deberían ser dueños de una parte mayor de las empresas más grandes.',
       'Las empresas más grandes deberían pertenecer sobre todo a dueños privados.',
     ],
     J04: [
@@ -383,7 +383,7 @@ const bank: Record<SchoolYouthLocale, Record<string, [string, string]>> = {
       'Cada país debería tener la última palabra, aunque los problemas compartidos sean más difíciles de resolver.',
     ],
     J09: [
-      'Quien se hace ciudadano pertenece al país tanto como quien lo fue desde el nacimiento.',
+      'Quien se hace ciudadano pertenece al país tanto como quien lo es desde el nacimiento.',
       'Ser ciudadano desde el nacimiento debería contar más para decidir quién pertenece plenamente.',
     ],
     J10: [
@@ -411,18 +411,18 @@ const bank: Record<SchoolYouthLocale, Record<string, [string, string]>> = {
       'Si los tribunales frenaran a menudo políticas legales elegidas por los votantes, daría más libertad a los líderes elegidos.',
     ],
     J16: [
-      'Escucharía a un candidato que explica las necesidades de los distintos grupos, aunque la respuesta sea complicada.',
+      'Escucharía a un candidato que explique las necesidades de los distintos grupos, aunque la respuesta sea complicada.',
       'Prefiero un candidato que diga que los grupos con buenos contactos tienen demasiada influencia y que los votantes normales necesitan más voz.',
     ],
   },
   fr: {
     T01: [
-      'L’État devrait s’assurer que tout le monde puisse utiliser des choses comme les écoles et les médecins.',
-      'L’État devrait en faire moins pour des choses comme les écoles et les médecins. Plus de services devraient être gérés par des entreprises privées, et chacun devrait choisir.',
+      'L’État devrait s’assurer que tout le monde puisse utiliser des services comme les écoles et les médecins.',
+      'L’État devrait en faire moins pour des services comme les écoles et les médecins. Plus de services devraient être gérés par des entreprises privées, et chacun devrait choisir.',
     ],
     T02: [
-      'L’État devrait utiliser les impôts et des aides en argent pour réduire l’écart entre les personnes très riches et les personnes pauvres.',
-      'L’État devrait moins intervenir dans les différences d’argent entre les gens, même quand les écarts deviennent très grands.',
+      'L’État devrait utiliser les impôts et des aides financières pour réduire l’écart entre les personnes très riches et les personnes pauvres.',
+      'L’État devrait moins intervenir dans les différences de revenus entre les gens, même quand les écarts deviennent très grands.',
     ],
     T03: [
       'Les salariés ou la population devraient posséder une plus grande part des grandes entreprises.',
@@ -434,7 +434,7 @@ const bank: Record<SchoolYouthLocale, Record<string, [string, string]>> = {
     ],
     T05: [
       'La loi devrait laisser les adultes tranquilles dans leurs choix privés quand personne d’autre n’est blessé.',
-      'La loi peut interdire certaines choses privées que des adultes choisissent de faire, si la plupart des gens les jugent moralement mauvaises, même si personne n’est blessé.',
+      'La loi peut interdire certaines choses que des adultes choisissent de faire en privé, si la plupart des gens les jugent moralement mauvaises, même si personne n’est blessé.',
     ],
     T06: [
       'L’avortement (mettre fin à une grossesse) devrait en général rester légal, parce que la personne enceinte devrait prendre la décision principale.',
@@ -462,34 +462,34 @@ const bank: Record<SchoolYouthLocale, Record<string, [string, string]>> = {
     ],
     T12: [
       'Quand protéger la nature et faire grandir l’économie s’opposent clairement, la nature devrait parfois passer en premier, même si l’économie grandit moins vite.',
-      'Quand ils s’opposent, la croissance de l’économie devrait en général passer en premier, et les dégâts pour la nature devraient être réduits autrement.',
+      'Quand la protection de la nature et la croissance de l’économie s’opposent, la croissance devrait en général passer en premier, et les dégâts pour la nature devraient être réduits autrement.',
     ],
     T13: [
       'Les convictions religieuses ne devraient pas suffire, à elles seules, à justifier des lois pour des personnes qui n’ont pas cette religion.',
       'Les lois peuvent s’appuyer sur des valeurs religieuses, même si certaines personnes du pays n’ont pas cette religion.',
     ],
     T14: [
-      'L’État ou les régions devraient s’occuper des services importants, comme les écoles et les hôpitaux, si c’est la meilleure façon que tout le monde y ait accès avec la même qualité.',
+      'L’État ou les régions devraient s’occuper des services importants, comme les écoles et les hôpitaux, si c’est la meilleure façon de garantir à tous le même accès et la même qualité.',
       'Les services importants, comme les écoles et les hôpitaux, devraient en général rester à la commune ou à des groupes locaux quand ils peuvent bien les gérer.',
     ],
     A01: [
-      'Si un hôpital local risquait de fermer, je soutiendrais de l’argent public pour le garder ouvert pour tout le monde.',
+      'Si un hôpital local risquait de fermer, je soutiendrais l’usage d’argent public pour le garder ouvert à tous.',
       'Si un hôpital local pouvait bien fonctionner des deux façons, je choisirais une entreprise privée pour le gérer plutôt que de donner plus d’argent public.',
     ],
     A02: [
-      'Imaginons que je travaille et que je paie des impôts. J’accepterais de payer un peu plus d’impôts si cela réduisait beaucoup l’écart entre les riches et les pauvres.',
-      'Imaginons que je travaille et que je paie des impôts. Je choisirais des impôts plus bas, même si l’écart entre riches et pauvres restait très grand.',
+      'Si je travaillais et payais des impôts, j’accepterais de payer un peu plus d’impôts si cela réduisait beaucoup l’écart entre les riches et les pauvres.',
+      'Si je travaillais et payais des impôts, je choisirais des impôts plus bas, même si l’écart entre riches et pauvres restait très grand.',
     ],
     A03: [
-      'Si une grande entreprise donnait à ses salariés une vraie part de propriété, même si les actionnaires extérieurs perdaient un peu de contrôle, je soutiendrais cela.',
-      'Si une grande entreprise marchait bien, je la laisserais surtout à des actionnaires privés (des personnes qui possèdent des parts de l’entreprise), plutôt que de donner une grande part aux salariés ou à l’État.',
+      'Si une grande entreprise donnait à ses salariés une vraie part de propriété, même si les actionnaires extérieurs perdaient un peu de contrôle, je soutiendrais ce changement.',
+      'Si une grande entreprise fonctionnait bien, je la laisserais surtout à des actionnaires privés (des personnes qui possèdent des parts de l’entreprise), plutôt que de donner une grande part aux salariés ou à l’État.',
     ],
     A04: [
       'Si une ancienne règle de l’école ne correspondait plus à la vie de la plupart des élèves, je la changerais assez vite.',
-      'Je garderais une ancienne règle de l’école jusqu’à ce que beaucoup de gens veuillent la changer depuis longtemps.',
+      'Je garderais une ancienne règle de l’école jusqu’à ce que beaucoup de gens aient voulu la changer pendant longtemps.',
     ],
     A05: [
-      'Si des adultes choisissaient librement une relation ou un mode de vie que je n’approuve pas, je m’opposerais à une loi qui l’interdit, sauf si cela fait du mal directement à quelqu’un.',
+      'Si des adultes choisissaient librement une relation ou un mode de vie que je n’approuve pas, je m’opposerais à une loi qui l’interdirait, sauf si cela nuisait directement à quelqu’un.',
       'Si un choix d’adultes allait fortement contre les valeurs que la plupart des gens partagent, je pourrais soutenir certaines limites légales, même si personne n’était blessé.',
     ],
     A06: [
@@ -509,7 +509,7 @@ const bank: Record<SchoolYouthLocale, Record<string, [string, string]>> = {
       'Je laisserais les décisions à mon pays, même si les pays avaient plus de mal à agir ensemble.',
     ],
     A10: [
-      'Je soutiendrais que les personnes devenues citoyennes plus tard puissent occuper les mêmes hautes fonctions élues, comme diriger le pays, que les personnes nées citoyennes.',
+      'Je soutiendrais que les personnes devenues citoyennes plus tard puissent occuper les mêmes hautes fonctions élues, comme diriger le pays, que les personnes citoyennes de naissance.',
       'Je soutiendrais de réserver certaines des plus hautes fonctions élues, comme diriger le pays, aux personnes citoyennes depuis la naissance.',
     ],
     A11: [
@@ -521,8 +521,8 @@ const bank: Record<SchoolYouthLocale, Record<string, [string, string]>> = {
       'Je m’opposerais à des règles environnementales qui ralentissent volontairement la croissance, et je préférerais des moyens de protéger la nature qui gardent l’économie en croissance.',
     ],
     A13: [
-      'Je préférerais que les responsables politiques ne s’appuient pas surtout sur des valeurs religieuses pour expliquer des lois qui valent pour tous.',
-      'J’accepterais que des responsables politiques donnent des valeurs religieuses comme bonne raison pour des lois qui valent pour tous.',
+      'Je préférerais que les responsables politiques ne s’appuient pas surtout sur des valeurs religieuses pour expliquer des lois qui s’appliquent à tous.',
+      'J’accepterais que des responsables politiques donnent des valeurs religieuses comme bonne raison pour des lois qui s’appliquent à tous.',
     ],
     A14: [
       'Si des services comme les écoles étaient bien meilleurs dans certaines régions que dans d’autres, je soutiendrais des normes nationales ou régionales, même si chaque endroit décidait moins.',
@@ -545,7 +545,7 @@ const bank: Record<SchoolYouthLocale, Record<string, [string, string]>> = {
       'Cela me met mal à l’aise quand de vieilles règles changent avant que la plupart des gens aient accepté une nouvelle façon de vivre.',
     ],
     F05: [
-      'Cela me met mal à l’aise quand l’État interdit à des adultes des choix privés qui ne font de mal à personne.',
+      'Cela me met mal à l’aise quand l’État interdit à des adultes de faire des choix privés qui ne font de mal à personne.',
       'Cela me met mal à l’aise quand la loi ne tient aucun compte des valeurs que la plupart des gens partagent, même dans la vie privée des adultes.',
     ],
     F06: [
@@ -565,7 +565,7 @@ const bank: Record<SchoolYouthLocale, Record<string, [string, string]>> = {
       'Cela me met mal à l’aise quand des promesses internationales empêchent mon pays de prendre sa propre décision finale sur un sujet important.',
     ],
     F10: [
-      'Je ressens la même appartenance envers les citoyens arrivés plus tard qui participent à la vie de la communauté qu’envers les citoyens depuis la naissance.',
+      'Je ressens le même sentiment d’appartenance envers les citoyens arrivés plus tard qui participent à la vie de la communauté qu’envers ceux qui sont citoyens depuis la naissance.',
       'Pour mon sentiment d’appartenir à un pays, il compte que ma famille y vive depuis longtemps.',
     ],
     F11: [
@@ -593,12 +593,12 @@ const bank: Record<SchoolYouthLocale, Record<string, [string, string]>> = {
       'Les gens devraient garder plus de ce qu’ils gagnent, même si l’écart reste grand.',
     ],
     J03: [
-      'Les salariés ou la population devraient posséder davantage des plus grandes entreprises.',
+      'Les salariés ou la population devraient posséder une plus grande part des plus grandes entreprises.',
       'Les plus grandes entreprises devraient surtout appartenir à des propriétaires privés.',
     ],
     J04: [
       'Les règles publiques devraient changer quand les opinions de la plupart des gens changent.',
-      'Les anciennes règles devraient changer lentement, après que les gens soient d’accord depuis longtemps.',
+      'Les anciennes règles devraient changer lentement, une fois que les gens sont d’accord depuis longtemps.',
     ],
     J05: [
       'Les adultes devraient être libres de faire des choix privés si personne n’est blessé.',
@@ -625,7 +625,7 @@ const bank: Record<SchoolYouthLocale, Record<string, [string, string]>> = {
       'Les décisions politiques peuvent donner trop d’influence aux groupes bien introduits et trop peu aux électeurs ordinaires.',
     ],
     J11: [
-      'Protéger la nature devrait parfois passer avant de faire grandir l’économie.',
+      'Protéger la nature devrait parfois passer avant la croissance de l’économie.',
       'Faire grandir l’économie devrait en général passer en premier, tout en protégeant aussi la nature.',
     ],
     J12: [
@@ -633,7 +633,7 @@ const bank: Record<SchoolYouthLocale, Record<string, [string, string]>> = {
       'La religion peut être une raison juste pour des lois, même si tout le monde ne la partage pas.',
     ],
     J13: [
-      'L’État ou la région devrait gérer les services clés quand c’est nécessaire pour garantir le même niveau minimum.',
+      'L’État ou la région devraient gérer les services clés quand c’est nécessaire pour garantir le même niveau minimum.',
       'Les communautés locales devraient gérer les services clés dès qu’elles peuvent bien les assurer.',
     ],
     J14: [
@@ -655,8 +655,8 @@ const bank: Record<SchoolYouthLocale, Record<string, [string, string]>> = {
       'O governo deveria fazer menos em coisas como escolas e atendimento médico. Mais serviços deveriam ser feitos por empresas privadas, e cada pessoa deveria escolher.',
     ],
     T02: [
-      'O governo deveria usar impostos e ajuda em dinheiro para diminuir a distância entre pessoas muito ricas e pessoas pobres.',
-      'O governo deveria interferir menos nas diferenças de dinheiro entre as pessoas, mesmo quando as distâncias ficam muito grandes.',
+      'O governo deveria usar impostos e ajuda financeira para diminuir a distância entre pessoas muito ricas e pessoas pobres.',
+      'O governo deveria interferir menos nas diferenças de renda entre as pessoas, mesmo quando as distâncias ficam muito grandes.',
     ],
     T03: [
       'Os trabalhadores ou o público deveriam ser donos de uma parte maior das grandes empresas.',
@@ -664,11 +664,11 @@ const bank: Record<SchoolYouthLocale, Record<string, [string, string]>> = {
     ],
     T04: [
       'Quando a maioria das pessoas passa a aceitar uma nova forma de viver, as leis deveriam mudar bem rápido.',
-      'As regras antigas deveriam mudar só depois que a maioria aceitar há muito tempo uma nova forma de viver.',
+      'As regras antigas deveriam mudar só quando a maioria já aceitar uma nova forma de viver há muito tempo.',
     ],
     T05: [
-      'A lei deveria deixar os adultos em paz nas suas escolhas privadas quando ninguém mais se machuca.',
-      'A lei pode proibir algumas coisas privadas que adultos fazem por vontade própria, se a maioria acha que são moralmente erradas, mesmo que ninguém se machuque.',
+      'A lei deveria deixar os adultos em paz nas suas escolhas privadas quando ninguém mais sai prejudicado.',
+      'A lei pode proibir algumas coisas privadas que adultos fazem por vontade própria, se a maioria acha que são moralmente erradas, mesmo que ninguém saia prejudicado.',
     ],
     T06: [
       'O aborto (terminar uma gravidez) deveria ser legal na maioria dos casos, porque a pessoa grávida deveria tomar a decisão principal.',
@@ -696,7 +696,7 @@ const bank: Record<SchoolYouthLocale, Record<string, [string, string]>> = {
     ],
     T12: [
       'Quando proteger a natureza e fazer a economia crescer entram claramente em conflito, a natureza deveria às vezes vir primeiro, mesmo que a economia cresça mais devagar.',
-      'Quando entram em conflito, o crescimento da economia deveria normalmente vir primeiro, e os danos à natureza deveriam ser reduzidos de outras formas.',
+      'Quando proteger a natureza e fazer a economia crescer entram em conflito, o crescimento da economia deveria normalmente vir primeiro, e os danos à natureza deveriam ser reduzidos de outras formas.',
     ],
     T13: [
       'Crenças religiosas não deveriam bastar, sozinhas, para justificar leis para pessoas que não têm essa religião.',
@@ -707,12 +707,12 @@ const bank: Record<SchoolYouthLocale, Record<string, [string, string]>> = {
       'Serviços importantes, como escolas e hospitais, deveriam normalmente ficar com o governo local ou com grupos da comunidade quando conseguem administrá-los bem.',
     ],
     A01: [
-      'Se um hospital da região estivesse prestes a fechar, eu apoiaria dinheiro público para mantê-lo aberto para todos.',
+      'Se um hospital da região estivesse prestes a fechar, eu apoiaria usar dinheiro público para mantê-lo aberto para todos.',
       'Se um hospital da região funcionasse bem de qualquer jeito, eu escolheria uma empresa privada para administrá-lo em vez de dar mais dinheiro público.',
     ],
     A02: [
-      'Imagine que eu trabalhe e pague impostos. Eu aceitaria pagar um pouco mais de imposto se isso diminuísse muito a distância entre ricos e pobres.',
-      'Imagine que eu trabalhe e pague impostos. Eu escolheria impostos mais baixos, mesmo que a distância entre ricos e pobres continuasse muito grande.',
+      'Se eu trabalhasse e pagasse impostos, aceitaria pagar um pouco mais de imposto se isso diminuísse muito a distância entre ricos e pobres.',
+      'Se eu trabalhasse e pagasse impostos, escolheria impostos mais baixos, mesmo que a distância entre ricos e pobres continuasse muito grande.',
     ],
     A03: [
       'Se uma grande empresa desse aos trabalhadores uma parte real da propriedade, mesmo que acionistas de fora perdessem um pouco de controle, eu apoiaria.',
@@ -720,11 +720,11 @@ const bank: Record<SchoolYouthLocale, Record<string, [string, string]>> = {
     ],
     A04: [
       'Se uma regra antiga da escola não combinasse mais com a vida da maioria dos estudantes, eu a mudaria logo.',
-      'Eu manteria uma regra antiga da escola até que muita gente quisesse mudá-la há muito tempo.',
+      'Eu manteria uma regra antiga da escola até que muita gente passasse muito tempo querendo mudá-la.',
     ],
     A05: [
-      'Se adultos escolhessem livremente uma relação ou um jeito de viver com o qual eu não concordo, eu seria contra uma lei que proíba isso, a menos que prejudique alguém diretamente.',
-      'Se uma escolha de adultos fosse muito contra os valores que a maioria compartilha, eu poderia apoiar alguns limites legais, mesmo que ninguém se machucasse.',
+      'Se adultos escolhessem livremente uma relação ou um jeito de viver com o qual eu não concordasse, eu seria contra uma lei que proibisse isso, a menos que prejudicasse alguém diretamente.',
+      'Se uma escolha de adultos fosse muito contra os valores que a maioria compartilha, eu poderia apoiar alguns limites legais, mesmo que ninguém saísse prejudicado.',
     ],
     A06: [
       'Se as pessoas votassem sobre as leis do aborto, eu votaria por um acesso legal mais amplo.',
@@ -740,14 +740,14 @@ const bank: Record<SchoolYouthLocale, Record<string, [string, string]>> = {
     ],
     A09: [
       'Eu apoiaria um acordo que todos os países tivessem de cumprir, se ele resolvesse um problema compartilhado, mesmo que limitasse algumas escolhas do meu país.',
-      'Eu deixaria as decisões nas mãos do meu país, mesmo que isso dificultasse os países agirem juntos.',
+      'Eu deixaria as decisões nas mãos do meu país, mesmo que isso dificultasse que os países agissem juntos.',
     ],
     A10: [
-      'Eu apoiaria que pessoas que se tornaram cidadãs mais tarde possam ocupar os mesmos cargos altos eleitos por voto, como governar o país, que pessoas que nasceram cidadãs.',
+      'Eu apoiaria que pessoas que se tornaram cidadãs mais tarde pudessem ocupar os mesmos cargos eletivos mais altos, como governar o país, que pessoas que nasceram cidadãs.',
       'Eu apoiaria reservar alguns dos cargos eletivos mais altos, como governar o país, para pessoas que são cidadãs desde o nascimento.',
     ],
     A11: [
-      'Prefiro candidatos que explicam abertamente que as escolhas políticas são difíceis, mesmo que a mensagem seja menos empolgante.',
+      'Prefiro candidatos que expliquem abertamente que as escolhas políticas são difíceis, mesmo que a mensagem seja menos empolgante.',
       'Prefiro candidatos que prometam diminuir o poder de grupos com bons contatos e dar mais voz aos eleitores comuns.',
     ],
     A12: [
@@ -755,8 +755,8 @@ const bank: Record<SchoolYouthLocale, Record<string, [string, string]>> = {
       'Eu me oporia a regras ambientais que freiam o crescimento de propósito e preferiria formas de proteger a natureza que mantenham a economia crescendo.',
     ],
     A13: [
-      'Eu preferiria que os políticos não se apoiassem principalmente em valores religiosos para explicar leis que valem para todos.',
-      'Eu aceitaria que políticos apresentassem valores religiosos como uma boa razão para leis que valem para todos.',
+      'Eu preferiria que os políticos não se apoiassem principalmente em valores religiosos para explicar leis que se aplicam a todos.',
+      'Eu aceitaria que políticos apresentassem valores religiosos como uma boa razão para leis que se aplicam a todos.',
     ],
     A14: [
       'Se serviços como as escolas fossem muito melhores em algumas regiões do que em outras, eu apoiaria padrões nacionais ou estaduais, mesmo que cada lugar decidisse menos.',
@@ -799,7 +799,7 @@ const bank: Record<SchoolYouthLocale, Record<string, [string, string]>> = {
       'Me incomoda quando promessas internacionais impedem meu país de tomar sua própria decisão final sobre um assunto importante.',
     ],
     F10: [
-      'Sinto o mesmo pertencimento em relação a cidadãos que chegaram depois e participam da vida da comunidade e em relação a quem é cidadão desde o nascimento.',
+      'Sinto tanto pertencimento em relação a cidadãos que chegaram depois e participam da vida da comunidade quanto em relação a quem é cidadão desde o nascimento.',
       'Para o meu sentimento de pertencer a um país, importa que minha família more lá há muito tempo.',
     ],
     F11: [
@@ -827,15 +827,15 @@ const bank: Record<SchoolYouthLocale, Record<string, [string, string]>> = {
       'As pessoas deveriam ficar com mais do que ganham, mesmo que a distância continue grande.',
     ],
     J03: [
-      'Os trabalhadores ou o público deveriam ser donos de mais partes das maiores empresas.',
+      'Os trabalhadores ou o público deveriam ser donos de uma parte maior das maiores empresas.',
       'As maiores empresas deveriam pertencer principalmente a donos privados.',
     ],
     J04: [
       'As regras públicas deveriam mudar quando a opinião da maioria muda.',
-      'As regras antigas deveriam mudar devagar, depois que as pessoas concordarem há muito tempo.',
+      'As regras antigas deveriam mudar devagar, depois de as pessoas concordarem por muito tempo.',
     ],
     J05: [
-      'Os adultos deveriam ser livres para fazer escolhas privadas se ninguém se machuca.',
+      'Os adultos deveriam ser livres para fazer escolhas privadas se ninguém sai prejudicado.',
       'Algumas escolhas privadas podem ser limitadas para proteger valores que muitas pessoas compartilham.',
     ],
     J06: [
@@ -879,8 +879,8 @@ const bank: Record<SchoolYouthLocale, Record<string, [string, string]>> = {
       'Se os tribunais barrassem com frequência políticas legais escolhidas pelos eleitores, eu daria mais liberdade aos líderes eleitos.',
     ],
     J16: [
-      'Eu ouviria um candidato que explica as necessidades de diferentes grupos, mesmo que a resposta seja complicada.',
-      'Prefiro um candidato que diz que grupos com bons contatos têm influência demais e que os eleitores comuns precisam de mais voz.',
+      'Eu ouviria um candidato que explique as necessidades de diferentes grupos, mesmo que a resposta seja complicada.',
+      'Prefiro um candidato que diga que grupos com bons contatos têm influência demais e que os eleitores comuns precisam de mais voz.',
     ],
   },
 };

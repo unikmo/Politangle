@@ -88,7 +88,7 @@ export const ptBrInfoPages: Record<InfoPageId, PageCopy> = {
     title:'Quer testar o Politangle com educadores?',
     intro:'Uma via de interesse e parceria de design. Não autoriza o uso da avaliação escolar com estudantes reais.',
     sections:[
-      { title:'Para quem é', paragraphs:['Educadores do ensino médio, especialistas em educação política e pesquisadores.'] },
+      { title:'Para quem é', paragraphs:['Educadores do ensino fundamental II e médio, especialistas em educação política e pesquisadores.'] },
       { title:'Limite atual', callout:'Pilotos com estudantes reais exigem revisão jurídica, proteção e acessibilidade, acordo escolar e validação de conteúdo por idade.' },
       { title:'Conheça o sistema', paragraphs:['Veja a demo e os materiais do professor, sem dados de estudantes reais.'], link:{ href:'/school', label:'Ver o modo School →' } },
     ],

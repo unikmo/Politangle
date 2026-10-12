@@ -19,7 +19,7 @@ const youthPairs: Record<BeliefConstruct, ModePairs> = {
     act: ['If a local hospital might close, I would support public money to keep it open for everyone.', 'If a local hospital would work well either way, I would choose a private company to run it instead of giving it more public money.'],
   },
   redistribution: {
-    think: ['The government should use taxes and money help to shrink very big gaps between rich and poor people.', 'The government should step in less on money differences between people, even when the gaps get very big.'],
+    think: ['The government should use taxes and financial help to shrink very big gaps between rich and poor people.', 'The government should step in less on differences in how much money people have, even when the gaps get very big.'],
     feel: ['Very big gaps between rich and poor bother me enough that I think some people should pay higher taxes.', 'High taxes worry me, even when the aim is to make the gap between rich and poor smaller.'],
     act: ['Suppose I earn a salary and pay taxes. I would accept paying a bit more tax if it made the gap between rich and poor much smaller.', 'Suppose I earn a salary and pay taxes. I would choose lower taxes, even if the gap between rich and poor stayed very big.'],
   },
@@ -69,7 +69,7 @@ const youthPairs: Record<BeliefConstruct, ModePairs> = {
     act: ['I prefer candidates who explain openly that political choices are hard, even when their message is less exciting.', 'I prefer candidates who promise to reduce the power of well-connected groups and give ordinary voters more say.'],
   },
   'ecology-growth': {
-    think: ['When protecting nature and growing the economy clearly clash, nature should sometimes come first, even if the economy grows more slowly.', 'When they clash, growing the economy should usually come first, and harm to nature should be reduced in other ways.'],
+    think: ['When protecting nature and growing the economy clearly clash, nature should sometimes come first, even if the economy grows more slowly.', 'When protecting nature and growing the economy clash, growing the economy should usually come first, and harm to nature should be reduced in other ways.'],
     feel: ['Serious damage to nature worries me, even when stopping it could slow down the economy.', 'I worry about lost jobs and lower living standards when environmental rules slow down the economy a lot.'],
     act: ['I would support laws that force companies to protect the environment, even if the economy grew a little more slowly.', 'I would oppose environmental rules that slow growth on purpose, and prefer ways to protect nature that keep the economy growing.'],
   },
