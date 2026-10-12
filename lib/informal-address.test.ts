@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import test from 'node:test';
 
-// Politangle speaks to readers informally everywhere: German "du", Spanish "tú", French "tu".
+// Politangle speaks to readers informally everywhere: German "du", Spanish "tú", French "tu", Brazilian Portuguese "você" (never "o senhor").
 // This scans every source file (not just a few), so new copy cannot slip in with formal address.
 
 const root = path.resolve(__dirname, '..');
@@ -22,6 +22,7 @@ const files = [...sourceFiles(path.join(root, 'app')), ...sourceFiles(path.join(
 const germanFormal = /[a-zäöüß,;] (?:Sie|Ihnen|Ihre[mnrs]?|Ihr)\b|\b(?:Wählen|Geben|Klicken|Starten|Nutzen|Beginnen|Lesen|Prüfen|Melden|Senden|Haben|Können|Möchten|Wollen|Sollten|Dürfen|Schreiben|Laden|Öffnen|Teilen|Bestätigen|Kontaktieren|Nehmen|Bitte) Sie\b/;
 const spanishFormal = /\busted(?:es)?\b/i;
 const frenchFormal = /\b(?:vous|votre|vos|veuillez)\b/i;
+const portugueseFormal = /\b(?:o senhor|a senhora|os senhores|as senhoras|queira|queiram)\b/i;
 const germanCapitalisedDu = /[a-zäöüß,;] (?:Du|Dein|Deine[mnrs]?|Dir|Dich)\b/;
 
 test('no formal address in German, Spanish or French copy', () => {
@@ -30,7 +31,7 @@ test('no formal address in German, Spanish or French copy', () => {
   for (const file of files) {
     const lines = fs.readFileSync(file, 'utf8').split(/\r?\n/);
     lines.forEach((line, index) => {
-      const hit = [germanFormal, spanishFormal, frenchFormal, germanCapitalisedDu].find((pattern) => pattern.test(line));
+      const hit = [germanFormal, spanishFormal, frenchFormal, portugueseFormal, germanCapitalisedDu].find((pattern) => pattern.test(line));
       if (hit) offences.push(`${path.relative(root, file)}:${index + 1} ${line.trim().slice(0, 90)}`);
     });
   }
