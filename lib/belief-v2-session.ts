@@ -19,8 +19,8 @@ const publicBeliefItems = lockedBeliefItemsV2.map((item) => {
   if (item.id === 'A08') {
     return {
       ...item,
-      negative: 'If an independent court, applying clear constitutional rules, struck down a policy I strongly supported, I would still defend the court’s authority to make that ruling.',
-      positive: 'If courts acting within their formal powers repeatedly stopped legal policies voters chose, I could support changing those powers so elected government had more room to act.',
+      negative: 'If an independent court struck down a law I supported, I would still respect its decision.',
+      positive: 'If independent courts repeatedly overturned laws passed by parliament, I would consider limiting some of their powers.',
     };
   }
   return item;
