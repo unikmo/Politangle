@@ -1,6 +1,6 @@
 import type { BeliefPolarity } from './belief-statements';
 
-export const GERMAN_BELIEVE_VERSION = 'de-believe-2026.09-candidate-v2' as const;
+export const GERMAN_BELIEVE_VERSION = 'de-believe-2026.10-editorial-v3' as const;
 
 const dePairs: Record<string, readonly [string, string]> = {
   T01: ['Der Staat sollte dafür sorgen, dass alle Menschen wichtige Angebote wie Schulen und Ärzte nutzen können.', 'Der Staat sollte sich weniger einmischen. Menschen sollten bei wichtigen Angeboten mehr private Möglichkeiten nutzen.'],
