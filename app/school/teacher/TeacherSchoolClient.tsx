@@ -3,9 +3,7 @@
 import { useEffect, useState } from 'react';
 import { classroomActivityOptions, getClassroomQuestion } from '../../../lib/school-classroom';
 import { schoolLessons } from '../../../lib/school-lessons';
-import { germanBeliefStatement } from '../../../lib/german-believe';
-import { romanceBeliefStatement } from '../../../lib/romance-believe';
-import { portugueseBrBeliefStatement } from '../../../lib/portuguese-br-believe';
+import { schoolStatement } from '../../../lib/school-statement';
 import { germanLiteracyExplanation, germanLiteracyOption, germanLiteracyPrompt } from '../../../lib/german-literacy';
 import { deepAxis, deepConstruct, deepFamily } from '../../deep/deep-native';
 import { useLocale, type Locale } from '../../LocaleProvider';
@@ -164,7 +162,7 @@ export default function TeacherSchoolClient() {
   const currentQuestionIds = summary?.activity.questionIds ?? [];
   const currentQuestion = summary?.currentQuestion;
   const currentQuestionStatement = currentQuestion?.kind === 'believe' && currentQuestion.sourceItemId && currentQuestion.polarity
-    ? (locale === 'de' ? germanBeliefStatement(currentQuestion.sourceItemId, currentQuestion.polarity) : locale === 'es' || locale === 'fr' ? romanceBeliefStatement(locale, currentQuestion.sourceItemId, currentQuestion.polarity) : locale === 'pt-br' ? portugueseBrBeliefStatement(currentQuestion.sourceItemId, currentQuestion.polarity) : currentQuestion.statement) ?? currentQuestion.statement
+    ? schoolStatement(locale, currentQuestion.sourceItemId, currentQuestion.polarity, currentQuestion.statement)
     : currentQuestion?.statement;
   const currentQuestionPrompt = currentQuestion?.kind === 'literacy'
     ? (locale === 'de' ? germanLiteracyPrompt(currentQuestion.id) ?? currentQuestion.prompt : currentQuestion.prompt)

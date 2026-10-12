@@ -1,9 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
-import { germanBeliefStatement } from '../../../lib/german-believe';
-import { romanceBeliefStatement } from '../../../lib/romance-believe';
-import { portugueseBrBeliefStatement } from '../../../lib/portuguese-br-believe';
+import { schoolStatement } from '../../../lib/school-statement';
 import { germanLiteracyExplanation, germanLiteracyOption, germanLiteracyPrompt } from '../../../lib/german-literacy';
 import { useLocale, type Locale } from '../../LocaleProvider';
 import { studentUi } from './student-native';
@@ -225,7 +223,7 @@ export default function StudentSchoolClient({ initialCode }: { initialCode: stri
         <article className="engine-card school-question-card">
           <p className="engine-kicker">{room.activity.pacing === 'teacher' ? ui.liveQuestion(room.currentIndex + 1) : ui.questionOf(studentIndex + 1, room.activity.questionIds.length)} · {localizedQuestionTitle}</p>
           {question.kind === 'believe' ? (
-            <div className="engine-statement"><p>{question.sourceItemId && question.polarity ? (locale === 'de' ? germanBeliefStatement(question.sourceItemId, question.polarity) : locale === 'es' || locale === 'fr' ? romanceBeliefStatement(locale, question.sourceItemId, question.polarity) : locale === 'pt-br' ? portugueseBrBeliefStatement(question.sourceItemId, question.polarity) : question.statement) ?? question.statement : question.statement}</p></div>
+            <div className="engine-statement"><p>{question.sourceItemId && question.polarity ? schoolStatement(locale, question.sourceItemId, question.polarity, question.statement) : question.statement}</p></div>
           ) : <><h1>{locale === 'de' ? germanLiteracyPrompt(question.id) ?? question.prompt : question.prompt}</h1>{ui.literacyNotice && <p className="engine-help">{ui.literacyNotice}</p>}</>}
 
           {!alreadySubmitted && (room.activity.pacing === 'student' || room.questionOpen) ? (
