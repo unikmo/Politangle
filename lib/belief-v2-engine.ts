@@ -128,7 +128,7 @@ const phase1ValidatedPairs: Record<BeliefConstruct, CanonicalModePairs> = {
     ],
     feel: [
       'It concerns me when an elected majority weakens independent checks on government power.',
-      'It concerns me when independent bodies repeatedly block an elected government from carrying out policies that are legal and constitutional.',
+      'I worry when independent courts repeatedly overturn laws passed by an elected parliament.',
     ],
     act: [
       'If a court blocked a policy I strongly supported, I would still defend the court’s independence.',
@@ -165,16 +165,16 @@ const phase1ValidatedPairs: Record<BeliefConstruct, CanonicalModePairs> = {
   },
   populism: {
     think: [
-      'Political disagreements usually reflect real conflicts among interests and values, not one side simply betraying ordinary voters.',
-      'Political decisions often give too much influence to well-connected groups and too little to ordinary voters.',
+      'Political disagreement usually involves several legitimate groups with different goals, not just one group representing the real people.',
+      'Major political conflicts often pit a single common will of the people against an elite that deliberately ignores it.',
     ],
     feel: [
-      'When politics disappoints me, I usually think difficult trade-offs and competing interests are the main reason.',
-      'When politics disappoints me, I often suspect that well-connected groups are being heard more than ordinary voters.',
+      'I feel uneasy when a politician claims only their supporters are the real people.',
+      'I often feel that a political elite deliberately ignores what the people collectively want.',
     ],
     act: [
-      'I prefer candidates who explain political trade-offs openly, even when their message is less dramatic or popular.',
-      'I prefer candidates who promise to reduce the influence of well-connected groups and give ordinary voters more direct influence.',
+      'I would distrust a candidate who says only their supporters represent the real people.',
+      'I would support a candidate who says only they can deliver the true will of the people against a political elite.',
     ],
   },
   'ecology-growth': {
