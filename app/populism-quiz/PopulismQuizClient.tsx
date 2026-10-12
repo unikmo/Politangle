@@ -85,7 +85,7 @@ export default function PopulismQuizClient() {
   }
 
   if (!run) {
-    return <main className="engine-page practice-page populism-page">
+    return <main className="engine-page practice-page populism-page practice-start-state">
       <header className="engine-header"><Link href="/" className="engine-brand">Politangle</Link><span>POPULISM QUIZ · {c.language}</span><div className="engine-header-actions"><LanguageSelector/><Link href="/learn#populism">{c.learnFirst}</Link></div></header>
       <section className="engine-shell populism-start">
         <p className="engine-kicker">{c.free}</p>

@@ -43,7 +43,7 @@ function copy(locale: Locale, section: DeepSection) {
     result:'Ergebnis', retake:`${title} neu starten`, back:'Zurück zu Politangle', correctOf:(correct:number,total:number) => `${correct} von ${total} richtig.`,
     restart:'Neu starten', question:(index:number,total:number) => `Frage ${index} von ${total}`, correct:'Richtig', notQuite:'Nicht ganz', best:'Beste Antwort:',
     previous:'Zurück', next:'Weiter', check:'Antwort prüfen', see:`${title}-Ergebnis ansehen`, complete:(percent:number) => `${percent}% abgeschlossen`,
-    notice:null as string | null,
+    notice:'Nur ein Teil der CLASSIFY- und UNDERSTAND-Fragen ist bisher ins Deutsche übersetzt. Die übrigen Fragen bleiben auf Englisch.' as string | null,
   };
   if (locale === 'es') return {
     title,

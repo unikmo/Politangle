@@ -15,13 +15,16 @@ const LocaleContext = createContext<{ locale: Locale; setLocale: (locale: Locale
 
 export function LocaleProvider({ children, initialLocale = 'en' }: { children: React.ReactNode; initialLocale?: Locale }) {
   const [locale, setLocaleState] = useState<Locale>(initialLocale);
+  const pathname = usePathname();
+  // A URL that names its language (/en/, /de/ ...) always wins over a remembered or detected preference.
+  const explicitLocale = /^\/(en|de|es|fr|pt-br)(?=\/|$)/.test(pathname || '');
   useEffect(() => {
-    if (initialLocale !== 'en') { localStorage.setItem(LOCALE_KEY, initialLocale); return; }
+    if (initialLocale !== 'en' || explicitLocale) { localStorage.setItem(LOCALE_KEY, initialLocale); return; }
     const saved = localStorage.getItem(LOCALE_KEY);
     const browserLanguage = navigator.language.toLowerCase().slice(0, 2);
     const detected: Locale = browserLanguage === 'de' || browserLanguage === 'es' || browserLanguage === 'fr' ? browserLanguage : browserLanguage === 'pt' ? 'pt-br' : 'en';
     setLocaleState(saved === 'de' || saved === 'es' || saved === 'fr' || saved === 'pt-br' || saved === 'en' ? saved : detected);
-  }, [initialLocale]);
+  }, [initialLocale, explicitLocale]);
   function setLocale(next: Locale) {
     localStorage.setItem(LOCALE_KEY, next);
     document.documentElement.lang = next === 'en' ? 'en-US' : next === 'pt-br' ? 'pt-BR' : next;
