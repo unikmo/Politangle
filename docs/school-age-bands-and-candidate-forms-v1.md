@@ -12,7 +12,7 @@ Status: **implemented candidate forms; non-production pending cognitive and empi
 - No individual ideology label and no claim of a validated political profile.
 - Aggregate distributions are classroom discussion prompts only.
 
-### Youth 14-18
+### Youth 14-17
 
 - Youth Quick 26 and Youth Full 42.
 - Plain-language parallel wording for every adult BELIEVE item. Version `school-youth-believe-2026.10-candidate-v5-plain`: both sides of all 42 items follow the October candidate adult meaning, including the court wording for A08 and F08. English only; DE/ES/FR/PT classroom and private screens still show the adult-bank wording.
@@ -26,7 +26,7 @@ Automated tests establish structural equivalence, reading-load constraints and b
 
 Before real-school use:
 
-1. cognitive interviews with diverse 10-13 and 14-18 year olds;
+1. cognitive interviews with diverse 10-13 and 14-17 year olds;
 2. teacher review for neutrality, safeguarding and curricular fit;
 3. comprehension and completion-time testing;
 4. item non-response and `unsure` analysis;

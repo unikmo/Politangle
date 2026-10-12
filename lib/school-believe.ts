@@ -11,7 +11,7 @@ type ModePairs = { think: readonly [string, string]; feel: readonly [string, str
 
 // Plain-language parallel form. IDs, constructs, modes, direction and scoring metadata
 // deliberately remain aligned with the adult bank. Wording equivalence still requires
-// cognitive interviews and empirical testing with 14-18 year olds.
+// cognitive interviews and empirical testing with 14-17 year olds.
 const youthPairs: Record<BeliefConstruct, ModePairs> = {
   'public-provision': {
     think: ['The government should make sure everyone can use things like schools and doctors.', 'The government should do less when it comes to things like schools and doctors. More of these should be run by private companies, and people should choose for themselves.'],

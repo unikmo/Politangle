@@ -29,7 +29,7 @@ Narrower concepts remain contextual or conditional rather than expanding the hea
 
 ## Audience
 
-Primary product bands are **Junior 10–13** and **Youth 14–18** in upper-primary and secondary education.
+Primary product bands are **Junior 10–13** and **Youth 14–17** in upper-primary and secondary education.
 
 Junior uses a separately versioned 16-question candidate bank and guided social-media/political-literacy lessons. Youth uses a plain-language parallel form of all 42 BELIEVE items. The adult form remains unchanged. Neither new form should be described as age-validated until cognitive and empirical testing is complete.
 
@@ -425,7 +425,7 @@ The PDF is for teaching reflection and curriculum documentation, not student ass
 ## Validation boundary
 
 This guide defines the teaching architecture. It does not prove that:
-- all current questions are equally understandable to ages 14–18;
+- all current questions are equally understandable to ages 14–17;
 - the post-test is psychometrically equivalent to baseline;
 - classroom aggregate political measures are appropriate for every jurisdiction;
 - current privacy settings are legally sufficient for minors.

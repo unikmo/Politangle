@@ -13,7 +13,7 @@
 
 ### Founder decisions recorded 13 September 2026
 
-- School age bands remain **Junior 10–13** and **Youth 14–18**.
+- School age bands remain **Junior 10–13** and **Youth 14–17**.
 - Certified tests and certificates launch for users aged **18+**. Users under 18 may use Learn and Practice.
 - The certificate holder's name is **supplied by the holder**; Politangle does not independently verify legal identity.
 - Third-party verification works only through the exact high-entropy certificate ID / QR URL. There is no name search, public directory or indexable certificate catalogue.

@@ -56,7 +56,7 @@ export const schoolLessons: readonly SchoolLesson[] = [
   {
     id: 'room-stand',
     title: 'Where does our room stand?',
-    ageBand: '14–18',
+    ageBand: '14–17',
     duration: '45 min',
     goals: ['Experience anonymous disagreement without turning it into personal conflict.', 'Distinguish a class distribution from an individual political identity.', 'Practise explaining why reasonable people may prioritize different values.'],
     questionIds: ['T01', 'T03', 'T04', 'T07', 'T08', 'T09', 'T12'],
@@ -72,7 +72,7 @@ export const schoolLessons: readonly SchoolLesson[] = [
   {
     id: 'families-without-stereotypes',
     title: 'Political families without stereotypes',
-    ageBand: '14–18',
+    ageBand: '14–17',
     duration: '60 min',
     goals: ['Distinguish Liberalism, Conservatism, Social democracy, Socialism and Green politics.', 'Separate broad political families from cross-cutting concepts such as Nationalism and Populism.', 'Avoid treating welfare, patriotism or one policy position as a complete ideology label.'],
     questionIds: ['C1', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7', 'C8', 'C9', 'U1', 'U2', 'U5', 'U6'],
@@ -88,7 +88,7 @@ export const schoolLessons: readonly SchoolLesson[] = [
   {
     id: 'think-feel-act',
     title: 'Think, Feel, Act',
-    ageBand: '14–18',
+    ageBand: '14–17',
     duration: '60 min',
     goals: ['Understand the difference between stated belief, emotional reaction and intended choice.', 'Recognize tension without treating it as hypocrisy.', 'Compare the same political construct across THINK, FEEL and ACT.'],
     questionIds: ['T03', 'F03', 'A03', 'T07', 'F07', 'A07', 'T08', 'F08', 'A08', 'T12', 'F12', 'A12'],
@@ -104,7 +104,7 @@ export const schoolLessons: readonly SchoolLesson[] = [
   {
     id: 'quick26-lab',
     title: 'Quick 26 classroom lab',
-    ageBand: '14–18',
+    ageBand: '14–17',
     duration: '60–75 min',
     goals: ['Explore a multidimensional political landscape without forcing one party label.', 'Read distributions as well as averages.', 'Identify where the room has consensus and where it is genuinely divided.'],
     questionIds: [],
@@ -120,7 +120,7 @@ export const schoolLessons: readonly SchoolLesson[] = [
   {
     id: 'full42-lab',
     title: 'Full 42 profile lab',
-    ageBand: '14–18',
+    ageBand: '14–17',
     duration: '60–75 min',
     goals: ['Complete all 14 constructs across THINK, FEEL and ACT.', 'Compare the room’s multidimensional political shape with its five broad family compatibilities.', 'Use class-level tension as a discussion tool rather than an individual diagnosis.'],
     questionIds: [],
@@ -136,7 +136,7 @@ export const schoolLessons: readonly SchoolLesson[] = [
   {
     id: 'democracy-pluralism-populism',
     title: 'Democracy, pluralism and populism',
-    ageBand: '14–18',
+    ageBand: '14–17',
     duration: '45–60 min',
     goals: ['Distinguish elections from the wider idea of liberal-democratic constraints.', 'Distinguish populism from authoritarianism.', 'Understand why disagreement among legitimate interests matters to pluralism.'],
     questionIds: ['T08', 'F08', 'A08', 'T11', 'F11', 'A11', 'U1', 'U3', 'U4'],
