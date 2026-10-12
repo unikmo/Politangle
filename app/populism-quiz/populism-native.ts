@@ -13,10 +13,10 @@ const de: Record<string, NativeQuestion> = {
     d: { label: 'Kommunen sollten mehr öffentliche Aufgaben übernehmen.', feedback: 'Mehr örtliche Zuständigkeit ist nicht automatisch populistisch.' },
   }, explanation: 'Populismus beschreibt Politik als moralischen Kampf zwischen einem angeblich einheitlichen, anständigen Volk und einer völlig korrupten Elite.' },
   P2: { prompt: 'Eine Partei verfolgt linke Wirtschaftspolitik. Was würde ihre Botschaft populistisch machen?', hint: 'Wirtschaftspolitik allein macht eine Aussage nicht populistisch.', options: {
-    a: { label: 'Sie will sehr hohe Einkommen stärker besteuern.', feedback: 'Umverteilung gibt es auch in vielen nicht populistischen Programmen.' },
-    b: { label: 'Sie will Gewerkschaften rechtlich besser schützen.', feedback: 'Arbeitnehmerschutz ist für sich genommen nicht populistisch.' },
-    c: { label: 'Sie behauptet, nur ihre Bewegung vertrete das anständige Volk gegen alle korrupten Gegner.', feedback: 'Der Anspruch, allein das Volk zu vertreten, und alle Gegner abzuwerten, macht die Aussage populistisch.' },
-    d: { label: 'Sie will Krankenhäuser und Schulen öffentlich finanzieren.', feedback: 'Öffentliche Dienstleistungen bestimmen nicht, ob eine Bewegung populistisch ist.' },
+    a: { label: 'Sie will sehr hohe Einkommen stärker besteuern, um öffentliche Programme zu finanzieren.', feedback: 'Umverteilung gibt es auch in vielen nicht populistischen Programmen.' },
+    b: { label: 'Sie will Gewerkschaften und ihre Mitglieder rechtlich besser schützen.', feedback: 'Arbeitnehmerschutz ist für sich genommen nicht populistisch.' },
+    c: { label: 'Sie behauptet, nur ihre Bewegung spreche für das anständige Volk gegen korrupte Gegner.', feedback: 'Der Anspruch, allein das Volk zu vertreten, und die Abwertung aller Gegner machen die Aussage populistisch.' },
+    d: { label: 'Sie will Krankenhäuser, Schulen und den Nahverkehr öffentlich finanzieren.', feedback: 'Öffentliche Dienstleistungen bestimmen nicht, ob eine Bewegung populistisch ist.' },
   }, explanation: 'Populismus kann sich mit linken, rechten oder anderen Programmen verbinden. Entscheidend ist die Gegenüberstellung von Volk und Elite.' },
   P3: { prompt: 'Warum können populistische Parteien sehr unterschiedliche politische Ziele vertreten?', hint: 'Frage dich, ob Populismus alle politischen Ziele festlegt oder vor allem sagt, wer gegen wen steht.', options: {
     a: { label: 'Er gibt jeder Partei dasselbe Wirtschaftsprogramm vor.', feedback: 'Populistische Parteien können sehr unterschiedliche Wirtschaftspolitik verfolgen.' },
@@ -91,10 +91,10 @@ const de: Record<string, NativeQuestion> = {
     d: { label: 'Der Politiker muss Volksabstimmungen unterstützen.', feedback: 'Emotionale Sprache verrät keine Haltung zu Volksabstimmungen.' },
   }, explanation: 'Populismus ist kein anderes Wort für Beliebtheit, einfache Sprache, Ausstrahlung oder einen gefühlvollen Wahlkampf.' },
   P15: { prompt: 'Welche Elitenkritik kann vollständig mit einer vielfältigen Demokratie vereinbar sein?', hint: 'Suche nach belegter Kritik, die Gerichte, Wahlen und politische Gegner weiterhin anerkennt.', options: {
-    a: { label: 'Konkrete Verstöße untersuchen und dabei Gerichte, Belege und Opposition anerkennen.', feedback: 'Das verlangt Verantwortung, ohne alleinige Vertretung zu beanspruchen oder Vielfalt abzulehnen.' },
-    b: { label: 'Jede Institution als korrupt bezeichnen, sobald sie die Regierung begrenzt.', feedback: 'Alle Grenzen je nach Ergebnis anzugreifen, schwächt demokratische Kontrolle.' },
-    c: { label: 'Gegner und ihre Wähler zu unechten Bürgern erklären.', feedback: 'Das schließt politische Gegner aus der berechtigten Öffentlichkeit aus.' },
-    d: { label: 'Annehmen, dass eine Führung den einzigen Volkswillen direkt ausdrückt.', feedback: 'Das löscht berechtigte Unterschiede zwischen Bürgern aus.' },
+    a: { label: 'Konkrete Missstände untersuchen und dabei Gerichte, Belege und Opposition respektieren.', feedback: 'Das verlangt Verantwortung, ohne alleinige Vertretung zu beanspruchen oder Vielfalt abzulehnen.' },
+    b: { label: 'Jede Institution als korrupt bezeichnen, sobald sie die Pläne der Regierung begrenzt.', feedback: 'Alle Grenzen je nach Ergebnis anzugreifen, schwächt demokratische Kontrolle.' },
+    c: { label: 'Politische Gegner und ihre Wähler zu unechten Bürgern erklären.', feedback: 'Das schließt politische Gegner aus der berechtigten Öffentlichkeit aus.' },
+    d: { label: 'Annehmen, dass eine Führung direkt den einen gemeinsamen Volkswillen ausdrückt.', feedback: 'Das löscht berechtigte Unterschiede zwischen Bürgern aus.' },
   }, explanation: 'Demokratie braucht die Kontrolle mächtiger Gruppen. Belegte Kritik muss weder Vielfalt noch unabhängige Schutzvorkehrungen ablehnen.' },
   P16: { prompt: 'Was ist der deutlichste Unterschied zwischen Populismus und Nationalismus?', hint: 'Frage dich, ob es um normale Menschen gegen Eliten oder um die Nation geht.', options: {
     a: { label: 'Populismus stellt Volk und Elite gegenüber; Nationalismus stellt die Nation in den Mittelpunkt.', feedback: 'Das trennt die Gegenüberstellung von Volk und Elite vom besonderen Gewicht der Nation.' },
@@ -103,10 +103,10 @@ const de: Record<string, NativeQuestion> = {
     d: { label: 'Populismus betrifft Steuern; Nationalismus nur Einwanderung.', feedback: 'Keiner der Begriffe wird durch ein einziges Politikfeld bestimmt.' },
   }, explanation: 'Populismus ordnet Politik als Volk gegen Elite. Nationalismus gibt der Nation besonderes politisches Gewicht. Beides kann zusammenkommen.' },
   P17: { prompt: 'Warum sind Populismus und autoritäre Herrschaft nicht dasselbe?', hint: 'Frage dich, ob eine politische Botschaft oder ein System mit konzentrierter Macht beschrieben wird.', options: {
-    a: { label: 'Populismus betrifft Eigentum; autoritäre Herrschaft betrifft Steuern.', feedback: 'Keiner der Begriffe wird durch diesen wirtschaftlichen Gegensatz bestimmt.' },
-    b: { label: 'Populismus beschreibt Vertretung; autoritäre Herrschaft beschränkt Wettbewerb und verteilt Macht einseitig.', feedback: 'Das trennt eine Aussage über Volk und Elite von einem System mit begrenztem Wettbewerb.' },
+    a: { label: 'Populismus betrifft, wem Unternehmen gehören; autoritäre Herrschaft betrifft Steuersätze.', feedback: 'Keiner der Begriffe wird durch diesen wirtschaftlichen Gegensatz bestimmt.' },
+    b: { label: 'Populismus ist eine Aussage über Vertretung; autoritäre Herrschaft schränkt Wettbewerb ein.', feedback: 'Das trennt eine Aussage über Volk und Elite von einem System mit begrenztem Wettbewerb.' },
     c: { label: 'Populismus ist demokratisch; autoritäre Staaten führen niemals Wahlen durch.', feedback: 'Populismus kann Vielfalt angreifen, und autoritäre Staaten können kontrollierte Wahlen abhalten.' },
-    d: { label: 'Zwischen beiden Begriffen gibt es keinen wichtigen Unterschied.', feedback: 'Die Begriffe können sich überschneiden, beschreiben aber unterschiedliche Dinge.' },
+    d: { label: 'Zwischen Populismus und autoritärer Herrschaft gibt es keinen wichtigen Unterschied.', feedback: 'Die Begriffe können sich überschneiden, beschreiben aber unterschiedliche Dinge.' },
   }, explanation: 'Populismus macht eine Aussage darüber, wer das Volk vertritt. Autoritäre Herrschaft bedeutet konzentrierte Macht und eingeschränkten politischen Wettbewerb.' },
   P18: { prompt: 'Warum ist eine Volksabstimmung nicht automatisch populistisch?', hint: 'Eine Volksabstimmung ist eine Art, eine Entscheidung zu treffen. Sagt das allein schon etwas über Volk und Eliten?', options: {
     a: { label: 'Populistische Bewegungen nutzen niemals Volksabstimmungen.', feedback: 'Populistische Bewegungen können Volksabstimmungen unterstützen, besitzen dieses Verfahren aber nicht.' },
@@ -117,24 +117,24 @@ const de: Record<string, NativeQuestion> = {
 };
 
 const es: Record<string, NativeQuestion> = {
-  P1: { prompt: '¿Qué afirmación es el ejemplo más claro de un enfoque populista?', hint: 'Busca una frase que divida la sociedad entre gente común buena y una élite corrupta.', options: {
+  P1: { prompt: '¿Qué afirmación es el ejemplo más claro de un enfoque populista?', hint: 'Busca una frase que divida la sociedad entre gente común honrada y una élite corrupta.', options: {
     a: { label: 'Varios grupos discrepan sobre cómo gastar los impuestos.', feedback: 'Reconocer distintos grupos e intereses no es el núcleo del populismo.' },
     b: { label: 'Un pueblo honrado es traicionado por una élite totalmente corrupta.', feedback: 'La sociedad queda dividida moralmente en dos grupos supuestamente unidos.' },
     c: { label: 'El Parlamento debería publicar mejor sus gastos.', feedback: 'Pedir transparencia puede ser control democrático normal.' },
     d: { label: 'Los municipios deberían gestionar más servicios públicos.', feedback: 'Dar más poder local no es necesariamente populismo.' },
   }, explanation: 'El populismo presenta la política como una lucha moral entre un pueblo supuestamente unido y honrado y una élite totalmente corrupta.' },
   P2: { prompt: 'Un partido tiene políticas económicas de izquierda. ¿Qué haría populista su mensaje?', hint: 'La política económica por sí sola no define el populismo.', options: {
-    a: { label: 'Propone subir los impuestos a las rentas muy altas.', feedback: 'La redistribución aparece también en muchos programas no populistas.' },
-    b: { label: 'Propone mayor protección legal para los sindicatos.', feedback: 'Proteger a los trabajadores no es por sí solo una idea populista.' },
-    c: { label: 'Afirma que solo su movimiento representa al pueblo honrado frente a todos sus rivales corruptos.', feedback: 'Afirmar que solo uno representa al pueblo y deslegitimar a todos los rivales hace populista el mensaje.' },
-    d: { label: 'Propone financiar públicamente hospitales y escuelas.', feedback: 'Los servicios públicos no determinan si un movimiento es populista.' },
+    a: { label: 'Propone subir los impuestos a las rentas muy altas para financiar programas públicos.', feedback: 'La redistribución aparece también en muchos programas no populistas.' },
+    b: { label: 'Propone mayor protección legal para los sindicatos y sus afiliados.', feedback: 'Proteger a los trabajadores no es por sí solo una idea populista.' },
+    c: { label: 'Afirma que solo su movimiento habla por el pueblo honrado frente a rivales corruptos.', feedback: 'Afirmar que solo uno representa al pueblo y deslegitimar a todos los rivales hace populista el mensaje.' },
+    d: { label: 'Propone financiar públicamente hospitales, escuelas y transporte local.', feedback: 'Los servicios públicos no determinan si un movimiento es populista.' },
   }, explanation: 'El populismo puede combinarse con programas de izquierda, derecha u otros. La clave es enfrentar al pueblo con la élite.' },
   P3: { prompt: '¿Por qué los partidos populistas pueden defender políticas muy diferentes?', hint: 'Pregúntate si el populismo fija todas las políticas o principalmente dice quién está contra quién.', options: {
     a: { label: 'Da a todos los partidos el mismo programa económico.', feedback: 'Los partidos populistas pueden defender políticas económicas muy distintas.' },
     b: { label: 'Es solo una forma de hablar sin ninguna idea política.', feedback: 'El populismo hace una afirmación política sobre la gente común y las élites.' },
     c: { label: 'Exige a todos los partidos las mismas políticas sociales.', feedback: 'Los partidos populistas también pueden diferir mucho en política social.' },
     d: { label: 'Dice quién está contra quién, pero no fija cada política.', feedback: 'La idea de pueblo contra élite puede combinarse con políticas diferentes.' },
-  }, explanation: 'El populismo dice que la gente común buena se enfrenta a una élite corrupta. No decide todas las políticas económicas o sociales.' },
+  }, explanation: 'El populismo dice que la gente común honrada se enfrenta a una élite corrupta. No decide todas las políticas económicas o sociales.' },
   P4: { prompt: '¿Qué afirmación dice más claramente que solo un movimiento representa al «pueblo real»?', hint: 'Busca una frase que diga que los rivales políticos y sus votantes no cuentan de verdad.', options: {
     a: { label: 'Nuestra propuesta tiene más apoyo que el plan del Gobierno.', feedback: 'Afirmar que se tiene más apoyo forma parte de la competencia política normal.' },
     b: { label: 'Nuestros rivales representan otros intereses y toman malas decisiones.', feedback: 'Decir que los rivales se equivocan todavía los reconoce como participantes políticos.' },
@@ -175,7 +175,7 @@ const es: Record<string, NativeQuestion> = {
     a: { label: 'El Gobierno recurre mediante el proceso legal normal.', feedback: 'Usar el recurso legal reconoce el papel legítimo del tribunal.' },
     b: { label: 'El Gobierno publica sus argumentos jurídicos contra la sentencia.', feedback: 'El desacuerdo jurídico público es compatible con tribunales independientes.' },
     c: { label: 'El líder dice que ningún tribunal puede limitar a un Gobierno elegido.', feedback: 'Rechaza una institución que hace cumplir los límites legales al poder.' },
-    d: { label: 'El Parlamento estudia cambiar la ley para casos futuros.', feedback: 'Cambiar legalmente normas futuras no niega la legitimidad de los tribunales.' },
+    d: { label: 'El Parlamento estudia cambiar la ley para casos futuros.', feedback: 'Cambiar la ley para casos futuros por vías legales no niega la legitimidad de los tribunales.' },
   }, explanation: 'Las sentencias pueden criticarse. Negar que tribunales independientes puedan aplicar límites legales ataca una garantía democrática.' },
   P11: { prompt: '¿Qué respuesta al periodismo crítico es más claramente contraria a la diversidad?', hint: 'Fíjate en si la crítica recibe una respuesta o se elimina por la fuerza.', options: {
     a: { label: 'El ministro publica pruebas contra el reportaje del periódico.', feedback: 'Responder con pruebas acepta el control público.' },
@@ -202,10 +202,10 @@ const es: Record<string, NativeQuestion> = {
     d: { label: 'El político debe apoyar la democracia directa.', feedback: 'Hablar con emoción no revela una postura sobre democracia directa.' },
   }, explanation: 'Populismo no es sinónimo de popularidad, lenguaje sencillo, carisma o campaña emocional.' },
   P15: { prompt: '¿Qué crítica a las élites puede ser plenamente compatible con una democracia diversa?', hint: 'Busca críticas basadas en pruebas que sigan aceptando tribunales, elecciones y rivales políticos.', options: {
-    a: { label: 'Investigar abusos concretos aceptando tribunales, pruebas y oposición legítima.', feedback: 'Exige responsabilidad sin reclamar representación exclusiva ni rechazar la diversidad.' },
-    b: { label: 'Llamar corrupta a toda institución que limite al Gobierno.', feedback: 'Atacar todos los límites según el resultado debilita el control democrático.' },
-    c: { label: 'Declarar que los rivales y sus votantes no son ciudadanos reales.', feedback: 'Excluye a los rivales políticos del público legítimo.' },
-    d: { label: 'Suponer que un líder expresa directamente una única voluntad popular.', feedback: 'Borra las diferencias legítimas entre ciudadanos.' },
+    a: { label: 'Investigar abusos concretos respetando a los tribunales, las pruebas y la oposición.', feedback: 'Exige responsabilidad sin reclamar representación exclusiva ni rechazar la diversidad.' },
+    b: { label: 'Llamar corrupta a toda institución que limite los planes del Gobierno.', feedback: 'Atacar todos los límites según el resultado debilita el control democrático.' },
+    c: { label: 'Declarar que los rivales políticos y sus votantes no son ciudadanos reales.', feedback: 'Excluye a los rivales políticos del público legítimo.' },
+    d: { label: 'Suponer que un líder expresa directamente una única voluntad popular compartida.', feedback: 'Borra las diferencias legítimas entre ciudadanos.' },
   }, explanation: 'La democracia necesita controlar a los poderosos. Una crítica basada en pruebas no tiene que rechazar la diversidad ni las garantías independientes.' },
   P16: { prompt: '¿Cuál es la diferencia más clara entre populismo y nacionalismo?', hint: 'Pregúntate si la frase trata de gente común contra élites o de la nación.', options: {
     a: { label: 'El populismo enfrenta pueblo y élite; el nacionalismo centra la nación.', feedback: 'Distingue el conflicto pueblo-élite de dar importancia política especial a la nación.' },
@@ -214,10 +214,10 @@ const es: Record<string, NativeQuestion> = {
     d: { label: 'El populismo trata de impuestos; el nacionalismo solo de inmigración.', feedback: 'Ninguno se define por un único ámbito político.' },
   }, explanation: 'El populismo organiza la política como pueblo contra élite. El nacionalismo da importancia especial a la nación. Pueden combinarse.' },
   P17: { prompt: '¿Por qué populismo y autoritarismo no son lo mismo?', hint: 'Pregúntate si se describe un mensaje político o un sistema que concentra el poder y limita la competencia.', options: {
-    a: { label: 'El populismo trata de propiedad; el autoritarismo de impuestos.', feedback: 'Ningún concepto se define por ese contraste económico.' },
-    b: { label: 'El populismo habla de representación; el autoritarismo limita competencia y concentra poder.', feedback: 'Distingue una afirmación sobre pueblo y élite de un sistema con competencia restringida.' },
+    a: { label: 'El populismo trata de quién posee las empresas; el autoritarismo, de los tipos impositivos.', feedback: 'Ningún concepto se define por ese contraste económico.' },
+    b: { label: 'El populismo es una afirmación sobre representación; el autoritarismo limita la competencia.', feedback: 'Distingue una afirmación sobre pueblo y élite de un sistema con competencia restringida.' },
     c: { label: 'El populismo es democrático; el autoritarismo nunca celebra elecciones.', feedback: 'El populismo puede atacar la diversidad y los sistemas autoritarios pueden celebrar elecciones controladas.' },
-    d: { label: 'No existe ninguna diferencia importante entre ambos conceptos.', feedback: 'A veces se solapan, pero describen cosas distintas.' },
+    d: { label: 'No existe ninguna diferencia importante entre populismo y autoritarismo.', feedback: 'A veces se solapan, pero describen cosas distintas.' },
   }, explanation: 'El populismo afirma quién representa al pueblo. El autoritarismo describe poder concentrado y competencia política restringida.' },
   P18: { prompt: '¿Por qué un referéndum no es automáticamente populista?', hint: 'Un referéndum es una forma de decidir. ¿Dice eso por sí solo algo sobre pueblo y élites?', options: {
     a: { label: 'Los movimientos populistas nunca usan referéndums.', feedback: 'Pueden apoyarlos, pero no son dueños de este procedimiento.' },
@@ -235,10 +235,10 @@ const fr: Record<string, NativeQuestion> = {
     d: { label: 'Les communes devraient gérer davantage de services publics.', feedback: 'Donner plus de pouvoir local n’est pas forcément populiste.' },
   }, explanation: 'Le populisme présente la politique comme un combat moral entre un peuple supposé uni et honnête et une élite entièrement corrompue.' },
   P2: { prompt: 'Un parti mène une politique économique de gauche. Qu’est-ce qui rendrait son message populiste ?', hint: 'La politique économique ne suffit pas à définir le populisme.', options: {
-    a: { label: 'Il veut augmenter les impôts sur les très hauts revenus.', feedback: 'La redistribution existe aussi dans de nombreux programmes non populistes.' },
-    b: { label: 'Il veut mieux protéger les syndicats par la loi.', feedback: 'Protéger les salariés n’est pas en soi une idée populiste.' },
-    c: { label: 'Il affirme que seul son mouvement représente le peuple honnête contre tous ses rivaux corrompus.', feedback: 'Prétendre être le seul représentant du peuple et rejeter tous les rivaux rend le message populiste.' },
-    d: { label: 'Il propose de financer publiquement les hôpitaux et les écoles.', feedback: 'Les services publics ne déterminent pas si un mouvement est populiste.' },
+    a: { label: 'Il veut augmenter les impôts sur les très hauts revenus pour financer des programmes publics.', feedback: 'La redistribution existe aussi dans de nombreux programmes non populistes.' },
+    b: { label: 'Il veut mieux protéger par la loi les syndicats et leurs membres.', feedback: 'Protéger les salariés n’est pas en soi une idée populiste.' },
+    c: { label: 'Il affirme que seul son mouvement parle au nom du peuple honnête face à des rivaux corrompus.', feedback: 'Prétendre être le seul représentant du peuple et rejeter tous les rivaux rend le message populiste.' },
+    d: { label: 'Il propose de financer publiquement les hôpitaux, les écoles et les transports locaux.', feedback: 'Les services publics ne déterminent pas si un mouvement est populiste.' },
   }, explanation: 'Le populisme peut s’associer à des programmes de gauche, de droite ou autres. L’indice décisif oppose le peuple à l’élite.' },
   P3: { prompt: 'Pourquoi des partis populistes peuvent-ils défendre des politiques très différentes ?', hint: 'Demande-toi si le populisme fixe toutes les politiques ou dit surtout qui s’oppose à qui.', options: {
     a: { label: 'Il donne le même programme économique à tous les partis.', feedback: 'Les partis populistes peuvent défendre des politiques économiques très différentes.' },
@@ -286,7 +286,7 @@ const fr: Record<string, NativeQuestion> = {
     a: { label: 'Le gouvernement fait appel selon la procédure normale.', feedback: 'Utiliser la voie d’appel reconnaît le rôle légitime du tribunal.' },
     b: { label: 'Le gouvernement publie ses arguments juridiques contre le jugement.', feedback: 'Un désaccord juridique public est compatible avec des tribunaux indépendants.' },
     c: { label: 'Le dirigeant dit qu’aucun tribunal ne peut limiter un gouvernement élu.', feedback: 'Cela rejette une institution qui fait respecter les limites légales du pouvoir.' },
-    d: { label: 'Le Parlement envisage de modifier la loi pour les futurs cas.', feedback: 'Modifier légalement les règles futures ne nie pas la légitimité des tribunaux.' },
+    d: { label: 'Le Parlement envisage de modifier la loi pour les cas futurs.', feedback: 'Modifier légalement les règles futures ne nie pas la légitimité des tribunaux.' },
   }, explanation: 'On peut critiquer un jugement. Refuser aux tribunaux indépendants tout droit d’appliquer la loi attaque une protection démocratique.' },
   P11: { prompt: 'Quelle réaction au journalisme critique s’oppose le plus clairement à la diversité ?', hint: 'Regarde si la critique reçoit une réponse ou si le pouvoir la fait disparaître.', options: {
     a: { label: 'Le ministre publie des preuves contestant l’article du journal.', feedback: 'Répondre par des preuves accepte le contrôle public.' },
@@ -306,17 +306,17 @@ const fr: Record<string, NativeQuestion> = {
     c: { label: 'Des preuves montrent que de riches donateurs ont influencé la politique et que des entreprises ont évité l’impôt.', feedback: 'Une critique prouvée de l’influence ou de l’évitement fiscal n’est pas automatiquement populiste.' },
     d: { label: 'Contredire le dirigeant revient à trahir le peuple.', feedback: 'Cela confond le dirigeant avec le peuple et exclut le désaccord légitime.' },
   }, explanation: 'L’influence concentrée, le lobbying et l’évitement fiscal peuvent être réels. Le populisme ajoute un seul peuple authentique, un ennemi entièrement corrompu ou une représentation exclusive.' },
-  P14: { prompt: 'Un responsable politique est très populaire et parle avec émotion. Que peut-on conclure ?', hint: 'La popularité ou l’émotion ne révèle pas ses idées sur le peuple, les élites ou les adversaires.', options: {
+  P14: { prompt: 'Un responsable politique est très populaire et parle avec émotion. Que peut-on conclure ?', hint: 'La popularité ou l’émotion ne révèlent pas ses idées sur le peuple, les élites ou les adversaires.', options: {
     a: { label: 'Cette personne est forcément populiste.', feedback: 'La popularité et le langage émotionnel ne suffisent pas à identifier le populisme.' },
     b: { label: 'Une personne populaire ne peut pas être populiste.', feedback: 'La popularité ne prouve ni n’exclut le populisme.' },
     c: { label: 'Il faut des affirmations sur le peuple, les élites et la représentation.', feedback: 'La classification repose sur ces affirmations, pas seulement sur la popularité ou le style.' },
     d: { label: 'Cette personne doit soutenir la démocratie directe.', feedback: 'Parler avec émotion ne révèle pas une position sur la démocratie directe.' },
   }, explanation: 'Le populisme n’est pas synonyme de popularité, de langage simple, de charisme ou de campagne émotionnelle.' },
   P15: { prompt: 'Quelle critique des élites peut rester pleinement compatible avec une démocratie diverse ?', hint: 'Cherche une critique fondée sur des preuves qui accepte encore les tribunaux, les élections et les adversaires.', options: {
-    a: { label: 'Enquêter sur des abus précis en acceptant tribunaux, preuves et opposition légitime.', feedback: 'Cela exige des comptes sans revendiquer une représentation exclusive ni rejeter la diversité.' },
-    b: { label: 'Qualifier de corrompue toute institution qui limite le gouvernement.', feedback: 'Attaquer toutes les limites selon le résultat affaiblit le contrôle démocratique.' },
-    c: { label: 'Déclarer que les adversaires et leurs électeurs ne sont pas de vrais citoyens.', feedback: 'Cela exclut les adversaires politiques du public légitime.' },
-    d: { label: 'Supposer qu’un dirigeant exprime directement une seule volonté populaire.', feedback: 'Cela efface les différences légitimes entre citoyens.' },
+    a: { label: 'Enquêter sur des abus précis en respectant les tribunaux, les preuves et l’opposition.', feedback: 'Cela exige des comptes sans revendiquer une représentation exclusive ni rejeter la diversité.' },
+    b: { label: 'Qualifier de corrompue toute institution qui limite les projets du gouvernement.', feedback: 'Attaquer toutes les limites selon le résultat affaiblit le contrôle démocratique.' },
+    c: { label: 'Déclarer que les adversaires politiques et leurs électeurs ne sont pas de vrais citoyens.', feedback: 'Cela exclut les adversaires politiques du public légitime.' },
+    d: { label: 'Supposer qu’un dirigeant exprime directement une seule volonté populaire partagée.', feedback: 'Cela efface les différences légitimes entre citoyens.' },
   }, explanation: 'La démocratie doit contrôler les puissants. Une critique fondée sur des preuves n’oblige pas à rejeter la diversité ou les protections indépendantes.' },
   P16: { prompt: 'Quelle est la différence la plus claire entre populisme et nationalisme ?', hint: 'Demande-toi si la phrase parle des gens ordinaires contre les élites ou de la nation.', options: {
     a: { label: 'Le populisme oppose peuple et élite ; le nationalisme place la nation au centre.', feedback: 'Cela distingue l’opposition peuple-élite de l’importance politique particulière donnée à la nation.' },
@@ -325,10 +325,10 @@ const fr: Record<string, NativeQuestion> = {
     d: { label: 'Le populisme concerne les impôts ; le nationalisme seulement l’immigration.', feedback: 'Aucun des deux ne se définit par un seul domaine politique.' },
   }, explanation: 'Le populisme organise la politique comme peuple contre élite. Le nationalisme donne une importance particulière à la nation. Ils peuvent se combiner.' },
   P17: { prompt: 'Pourquoi le populisme et l’autoritarisme ne sont-ils pas la même chose ?', hint: 'Demande-toi si cela décrit un message politique ou un système qui concentre le pouvoir et limite la compétition.', options: {
-    a: { label: 'Le populisme concerne la propriété ; l’autoritarisme les impôts.', feedback: 'Aucun concept ne se définit par ce contraste économique.' },
-    b: { label: 'Le populisme parle de représentation ; l’autoritarisme limite la compétition et concentre le pouvoir.', feedback: 'Cela distingue une affirmation sur le peuple et l’élite d’un système à compétition restreinte.' },
+    a: { label: 'Le populisme concerne qui possède les entreprises ; l’autoritarisme concerne les taux d’impôt.', feedback: 'Aucun concept ne se définit par ce contraste économique.' },
+    b: { label: 'Le populisme est une affirmation sur la représentation ; l’autoritarisme limite la compétition.', feedback: 'Cela distingue une affirmation sur le peuple et l’élite d’un système à compétition restreinte.' },
     c: { label: 'Le populisme est démocratique ; l’autoritarisme n’organise jamais d’élections.', feedback: 'Le populisme peut attaquer la diversité et les systèmes autoritaires peuvent organiser des élections contrôlées.' },
-    d: { label: 'Il n’existe aucune différence importante entre les deux.', feedback: 'Ils se recoupent parfois, mais décrivent des choses différentes.' },
+    d: { label: 'Il n’existe aucune différence importante entre populisme et autoritarisme.', feedback: 'Ils se recoupent parfois, mais décrivent des choses différentes.' },
   }, explanation: 'Le populisme affirme qui représente le peuple. L’autoritarisme décrit un pouvoir concentré et une compétition politique limitée.' },
   P18: { prompt: 'Pourquoi un référendum n’est-il pas automatiquement populiste ?', hint: 'Un référendum est une manière de décider. Cela dit-il à lui seul quelque chose sur le peuple et les élites ?', options: {
     a: { label: 'Les mouvements populistes n’utilisent jamais de référendums.', feedback: 'Ils peuvent les soutenir, mais ne possèdent pas cette procédure.' },
@@ -347,10 +347,10 @@ const ptBr: Record<string, NativeQuestion> = {
     d:{label:'Governos locais deveriam administrar mais serviços públicos.',feedback:'Descentralizar poder não é necessariamente populismo.'},
   }, explanation:'O populismo apresenta a política como uma luta moral entre um povo supostamente homogêneo e autêntico e uma elite inteiramente corrupta.' },
   P2: { prompt:'Um partido defende políticas econômicas de esquerda. O que tornaria sua mensagem populista?', hint:'A política econômica, sozinha, não define populismo.', options:{
-    a:{label:'Defender impostos mais altos sobre rendas muito elevadas.',feedback:'Redistribuição aparece em muitos programas não populistas.'},
-    b:{label:'Defender maior proteção legal para sindicatos.',feedback:'Proteção aos trabalhadores não é, por si só, uma ideia populista.'},
-    c:{label:'Afirmar que somente seu movimento representa o povo puro contra todos os adversários corruptos.',feedback:'A ideia de um povo puro e a negação da legitimidade dos adversários tornam esse enquadramento populista.'},
-    d:{label:'Propor financiamento público para hospitais e escolas.',feedback:'Serviços públicos não determinam se um movimento é populista.'},
+    a:{label:'Defender impostos mais altos sobre rendas muito elevadas para financiar programas públicos.',feedback:'Redistribuição aparece em muitos programas não populistas.'},
+    b:{label:'Defender maior proteção legal para sindicatos e seus filiados.',feedback:'Proteção aos trabalhadores não é, por si só, uma ideia populista.'},
+    c:{label:'Afirmar que somente seu movimento fala pelo povo verdadeiro contra adversários corruptos.',feedback:'A ideia de um povo puro e a negação da legitimidade dos adversários tornam esse enquadramento populista.'},
+    d:{label:'Propor financiamento público para hospitais, escolas e transporte local.',feedback:'Serviços públicos não determinam se um movimento é populista.'},
   }, explanation:'O populismo pode se combinar com programas de esquerda, direita ou outros. A pista decisiva é o enquadramento de povo contra elite.' },
   P3: { prompt:'Por que partidos populistas podem defender políticas muito diferentes?', hint:'Pergunte se o populismo traz uma lista completa de políticas ou principalmente define quem está contra quem.', options:{
     a:{label:'Porque impõe o mesmo programa econômico a todos os partidos.',feedback:'Partidos populistas podem defender políticas econômicas muito diferentes.'},
@@ -398,7 +398,7 @@ const ptBr: Record<string, NativeQuestion> = {
     a:{label:'O governo recorre usando o procedimento jurídico normal.',feedback:'Usar o recurso reconhece o papel legítimo do tribunal.'},
     b:{label:'O governo publica seus argumentos jurídicos contra a decisão.',feedback:'Discordância jurídica pública pode existir com respeito à independência judicial.'},
     c:{label:'O líder diz que tribunais não têm direito de limitar um governo eleito.',feedback:'Isso rejeita uma instituição que aplica limites legais ao poder eleito.'},
-    d:{label:'O Legislativo considera mudar a lei para casos futuros.',feedback:'Mudar a lei prospectivamente por procedimentos constitucionais não equivale a negar a legitimidade dos tribunais.'},
+    d:{label:'O Legislativo considera mudar a lei para casos futuros.',feedback:'Mudar a lei para casos futuros, por meios constitucionais, não equivale a negar a legitimidade dos tribunais.'},
   }, explanation:'Criticar decisões judiciais é legítimo. Negar que tribunais independentes possam aplicar limites legais ataca uma proteção democrática.' },
   P11: { prompt:'Qual reação ao jornalismo crítico é mais claramente contrária ao pluralismo?', hint:'Observe se a crítica recebe uma resposta ou se o poder tenta eliminá-la.', options:{
     a:{label:'O ministro publica evidências contestando a reportagem.',feedback:'Responder com evidências aceita o escrutínio público.'},
@@ -425,10 +425,10 @@ const ptBr: Record<string, NativeQuestion> = {
     d:{label:'O político necessariamente apoia democracia direta.',feedback:'Popularidade e emoção não revelam uma posição sobre democracia direta.'},
   }, explanation:'Populismo não é sinônimo de popularidade, linguagem simples, carisma ou campanha emocional.' },
   P15: { prompt:'Qual crítica às elites pode continuar plenamente compatível com uma democracia pluralista?', hint:'Procure uma crítica baseada em evidências que ainda reconheça tribunais, eleições e adversários políticos.', options:{
-    a:{label:'Investigar abusos específicos, aceitando tribunais, evidências e oposição legítima.',feedback:'Isso cobra responsabilidade sem reivindicar representação exclusiva nem rejeitar o pluralismo.'},
-    b:{label:'Tratar toda instituição como corrupta sempre que ela limita o governo.',feedback:'Atacar todos os limites conforme o resultado enfraquece a prestação de contas democrática.'},
-    c:{label:'Declarar que adversários e seus eleitores não são cidadãos de verdade.',feedback:'Isso exclui adversários políticos do público legítimo.'},
-    d:{label:'Supor que um líder expressa diretamente uma única vontade do povo.',feedback:'Isso apaga diferenças legítimas entre cidadãos.'},
+    a:{label:'Investigar abusos específicos, respeitando tribunais, evidências e oposição.',feedback:'Isso cobra responsabilidade sem reivindicar representação exclusiva nem rejeitar o pluralismo.'},
+    b:{label:'Tratar toda instituição como corrupta sempre que ela limita os planos do governo.',feedback:'Atacar todos os limites conforme o resultado enfraquece a prestação de contas democrática.'},
+    c:{label:'Declarar que adversários políticos e seus eleitores não são cidadãos de verdade.',feedback:'Isso exclui adversários políticos do público legítimo.'},
+    d:{label:'Supor que um líder expressa diretamente uma única vontade compartilhada do povo.',feedback:'Isso apaga diferenças legítimas entre cidadãos.'},
   }, explanation:'A democracia precisa fiscalizar grupos poderosos. Crítica baseada em evidências não exige rejeitar o pluralismo nem proteções institucionais independentes.' },
   P16: { prompt:'Qual é a diferença mais clara entre populismo e nacionalismo?', hint:'Pergunte se a afirmação trata de pessoas comuns contra elites ou da nação.', options:{
     a:{label:'O populismo contrapõe povo e elite; o nacionalismo coloca a nação no centro.',feedback:'Isso separa corretamente a oposição povo–elite da centralidade política da nação.'},
@@ -437,10 +437,10 @@ const ptBr: Record<string, NativeQuestion> = {
     d:{label:'O populismo trata de impostos; o nacionalismo trata apenas de imigração.',feedback:'Nenhum dos conceitos é definido por uma única área de política pública.'},
   }, explanation:'O populismo organiza a política como povo contra elite. O nacionalismo atribui importância política especial à nação. Os dois podem se combinar.' },
   P17: { prompt:'Por que populismo e autoritarismo não são a mesma coisa?', hint:'Pergunte se estamos descrevendo uma mensagem política ou um sistema que limita a competição e concentra poder.', options:{
-    a:{label:'Populismo trata de propriedade; autoritarismo trata de impostos.',feedback:'Nenhum dos conceitos é definido por esse contraste econômico.'},
-    b:{label:'Populismo enquadra a representação; autoritarismo restringe a competição política e concentra poder.',feedback:'Isso distingue uma afirmação sobre povo e elite de uma estrutura que limita competição e controles.'},
+    a:{label:'Populismo trata de quem é dono das empresas; autoritarismo trata das alíquotas de impostos.',feedback:'Nenhum dos conceitos é definido por esse contraste econômico.'},
+    b:{label:'Populismo é uma afirmação sobre representação; autoritarismo limita a competição.',feedback:'Isso distingue uma afirmação sobre povo e elite de uma estrutura que limita competição e controles.'},
     c:{label:'Populismo é democrático; autoritarismo nunca usa eleições.',feedback:'O populismo pode se tornar antipluralista, e sistemas autoritários podem realizar eleições controladas.'},
-    d:{label:'Não há diferença relevante entre os dois conceitos.',feedback:'Os conceitos se sobrepõem em alguns casos, mas descrevem coisas diferentes.'},
+    d:{label:'Não há diferença relevante entre populismo e autoritarismo.',feedback:'Os conceitos se sobrepõem em alguns casos, mas descrevem coisas diferentes.'},
   }, explanation:'O populismo faz uma afirmação sobre quem representa o povo. O autoritarismo descreve poder concentrado e competição política restrita.' },
   P18: { prompt:'Por que um referendo não é automaticamente populista?', hint:'Um referendo é uma forma de tomar uma decisão. Pergunte se isso, sozinho, diz algo sobre povo e elites.', options:{
     a:{label:'Referendos nunca são usados por movimentos populistas.',feedback:'Movimentos populistas podem apoiar referendos, mas não são donos desse procedimento.'},
@@ -483,7 +483,7 @@ export function populismUi(locale: Locale) {
     language: 'ESPAÑOL', learnFirst: 'Aprender primero', free: 'GRATIS · 12 PREGUNTAS · UNOS 5 MINUTOS', title: '¿Sabes reconocer el populismo?',
     lede: 'Identifica sus patrones, las señales democráticas de alarma y las acusaciones equivocadas. El test mide conocimientos políticos, no juzga tus ideas.',
     principleTitle: 'Criticar no es automáticamente populismo.', principle: 'Los donantes ricos pueden influir en la política. Empresas y personas pueden evitar impuestos. Las instituciones pueden fallar o ser capturadas. El populismo añade que un único pueblo auténtico se enfrenta a un enemigo totalmente corrupto y que solo un movimiento puede representarlo legítimamente.',
-    coverage: 'Contenido del test', start: 'Empezar el test →', candidate: 'Contenido candidato para aprender. Gratis, privado en este dispositivo y todavía fuera de la certificación.',
+    coverage: 'Contenido del test', start: 'Empezar el test →', candidate: 'Contenido de aprendizaje aún en revisión. Gratis, privado en este dispositivo y todavía fuera de la certificación.',
     resultHeader: 'TEST DE POPULISMO · RESULTADO', reviewTerm: 'Repasar el término', strong: 'Reconocimiento sólido', developing: 'Reconocimiento en desarrollo', foundations: 'Refuerza las bases', resultLede: 'Es un resultado de aprendizaje, no un juicio sobre tus ideas políticas.', retry: 'Probar otra selección', review: 'Repasar el populismo',
     quizHeader: 'TEST DE POPULISMO · ESPAÑOL', learnTerm: 'Aprender el término', correctSoFar: (n: number) => `${n} correctas hasta ahora`, exit: 'Salir del test', question: (n: number, total: number) => `PREGUNTA ${n} DE ${total}`, hint: 'Pista', clue: '¿Necesitas una pista?', correct: 'CORRECTO', notQuite: 'NO DEL TODO', best: 'Mejor respuesta:', see: 'Ver resultado', next: 'Siguiente pregunta', check: 'Comprobar respuesta',
   };
@@ -491,7 +491,7 @@ export function populismUi(locale: Locale) {
     language: 'FRANÇAIS', learnFirst: 'Apprendre d’abord', free: 'GRATUIT · 12 QUESTIONS · ENVIRON 5 MINUTES', title: 'Sais-tu reconnaître le populisme ?',
     lede: 'Repère ses mécanismes, les signaux démocratiques inquiétants et les fausses accusations. Ce test mesure tes connaissances politiques, pas tes convictions.',
     principleTitle: 'Critiquer n’est pas automatiquement populiste.', principle: 'De riches donateurs peuvent influencer la politique. Des entreprises et des personnes peuvent éviter l’impôt. Les institutions peuvent échouer ou être capturées. Le populisme ajoute qu’un seul peuple authentique affronte un ennemi entièrement corrompu et qu’un seul mouvement peut légitimement le représenter.',
-    coverage: 'Contenu du quiz', start: 'Commencer le quiz →', candidate: 'Contenu candidat pour apprendre. Gratuit, privé sur cet appareil et pas encore intégré à la certification.',
+    coverage: 'Contenu du quiz', start: 'Commencer le quiz →', candidate: 'Contenu d’apprentissage encore en cours de relecture. Gratuit, privé sur cet appareil et pas encore intégré à la certification.',
     resultHeader: 'QUIZ SUR LE POPULISME · RÉSULTAT', reviewTerm: 'Revoir le terme', strong: 'Très bonne reconnaissance', developing: 'Reconnaissance en progrès', foundations: 'Renforce les bases', resultLede: 'C’est un résultat d’apprentissage, pas un jugement sur tes convictions politiques.', retry: 'Essayer une autre sélection', review: 'Revoir le populisme',
     quizHeader: 'QUIZ SUR LE POPULISME · FRANÇAIS', learnTerm: 'Apprendre le terme', correctSoFar: (n: number) => `${n} bonnes réponses`, exit: 'Quitter le quiz', question: (n: number, total: number) => `QUESTION ${n} SUR ${total}`, hint: 'Indice', clue: 'Besoin d’un indice ?', correct: 'BONNE RÉPONSE', notQuite: 'PAS TOUT À FAIT', best: 'Meilleure réponse :', see: 'Voir le résultat', next: 'Question suivante', check: 'Vérifier la réponse',
   };
@@ -499,7 +499,7 @@ export function populismUi(locale: Locale) {
     language: 'PORTUGUÊS (BR)', learnFirst: 'Aprender primeiro', free: 'GRÁTIS · 12 PERGUNTAS · CERCA DE 5 MINUTOS', title: 'Você reconhece o populismo?',
     lede: 'Identifique o enquadramento, os sinais democráticos de alerta e as falsas acusações. Este teste mede conhecimento político — não rotula suas crenças nem desqualifica críticas ao poder.',
     principleTitle: 'Crítica não é automaticamente populismo.', principle: 'Doadores ricos podem influenciar políticas. Empresas e pessoas podem evitar impostos. Instituições podem falhar ou ser capturadas. O populismo acrescenta a ideia de que um único povo autêntico enfrenta um inimigo inteiramente corrupto, muitas vezes com apenas um movimento apresentado como representante legítimo.',
-    coverage: 'Conteúdo do quiz', start: 'Começar o quiz →', candidate: 'Conteúdo candidato para aprendizagem. Grátis, privado neste dispositivo e ainda fora da certificação.',
+    coverage: 'Conteúdo do quiz', start: 'Começar o quiz →', candidate: 'Conteúdo de aprendizagem ainda em revisão. Grátis, privado neste dispositivo e ainda fora da certificação.',
     resultHeader: 'QUIZ DE POPULISMO · RESULTADO', reviewTerm: 'Revisar o conceito', strong: 'Reconhecimento sólido', developing: 'Reconhecimento em desenvolvimento', foundations: 'Reforce os fundamentos', resultLede: 'Este é um resultado de aprendizagem, não um julgamento sobre suas crenças políticas.', retry: 'Tentar outro conjunto', review: 'Revisar populismo',
     quizHeader: 'QUIZ DE POPULISMO · PORTUGUÊS (BR)', learnTerm: 'Aprender o conceito', correctSoFar: (n: number) => `${n} acertos até agora`, exit: 'Sair do quiz', question: (n: number, total: number) => `PERGUNTA ${n} DE ${total}`, hint: 'Dica', clue: 'Precisa de uma dica?', correct: 'CORRETO', notQuite: 'NÃO EXATAMENTE', best: 'Melhor resposta:', see: 'Ver resultado', next: 'Próxima pergunta', check: 'Verificar resposta',
   };
@@ -507,7 +507,7 @@ export function populismUi(locale: Locale) {
     language: 'ENGLISH', learnFirst: 'Learn first', free: 'FREE · 12 QUESTIONS · ABOUT 5 MINUTES', title: 'Can you recognize populism?',
     lede: 'Spot the framing, the democratic warning signs and the false positives. This tests political literacy—it does not label your beliefs or discredit people for criticizing power.',
     principleTitle: 'Criticism is not automatically populism.', principle: 'Wealthy donors can influence policy. Companies and individuals can avoid tax. Institutions can fail or become captured. Populism concerns the additional claim that one authentic people faces a uniformly corrupt enemy, often with only one movement presented as legitimate.',
-    coverage: 'Quiz coverage', start: 'Start the quiz →', candidate: 'Candidate learning content. Free, private on this device and not part of certification yet.',
+    coverage: 'Quiz coverage', start: 'Start the quiz →', candidate: 'Learning content still under review. Free, private on this device and not part of certification yet.',
     resultHeader: 'POPULISM QUIZ · RESULT', reviewTerm: 'Review the term', strong: 'Strong recognition', developing: 'Developing recognition', foundations: 'Build the foundations', resultLede: 'This is a learning result, not a judgment about your political beliefs.', retry: 'Try a different set', review: 'Review populism',
     quizHeader: 'POPULISM QUIZ · ENGLISH', learnTerm: 'Learn the term', correctSoFar: (n: number) => `${n} correct so far`, exit: 'Exit quiz', question: (n: number, total: number) => `QUESTION ${n} OF ${total}`, hint: 'Hint', clue: 'Need a clue?', correct: 'CORRECT', notQuite: 'NOT QUITE', best: 'Best answer:', see: 'See result', next: 'Next question', check: 'Check answer',
   };
