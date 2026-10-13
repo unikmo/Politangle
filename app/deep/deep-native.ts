@@ -153,31 +153,31 @@ const constructs: Record<Locale, Record<string, string>> = {
   en: {
     'public-provision':'Essential services', redistribution:'Income gap', ownership:'Business ownership', 'social-change':'Social change',
     'personal-autonomy':'Personal freedom', abortion:'Abortion', 'authority-order':'Safety and freedom', pluralism:'Checks on government',
-    'world-sovereignty':'Countries working together', 'nationhood-membership':'Belonging', populism:'Political influence',
+    'world-sovereignty':'Countries working together', 'nationhood-membership':'Belonging', populism:'The people & representation',
     'ecology-growth':'Environment and growth', 'religion-public-role':'Religion and law', subsidiarity:'Local or national / regional',
   },
   de: {
     'public-provision':'Wichtige Angebote', redistribution:'Arm und Reich', ownership:'Unternehmenseigentum', 'social-change':'Gesellschaftlicher Wandel',
     'personal-autonomy':'Persönliche Freiheit', abortion:'Schwangerschaftsabbruch', 'authority-order':'Sicherheit und Freiheit', pluralism:'Kontrolle der Regierung',
-    'world-sovereignty':'Zusammenarbeit der Länder', 'nationhood-membership':'Zugehörigkeit', populism:'Politischer Einfluss',
+    'world-sovereignty':'Zusammenarbeit der Länder', 'nationhood-membership':'Zugehörigkeit', populism:'Volkswille & Vertretung',
     'ecology-growth':'Umwelt und Wachstum', 'religion-public-role':'Religion und Gesetze', subsidiarity:'Lokal oder überregional',
   },
   es: {
     'public-provision':'Servicios esenciales', redistribution:'Desigualdad económica', ownership:'Propiedad empresarial', 'social-change':'Cambio social',
     'personal-autonomy':'Libertad personal', abortion:'Aborto', 'authority-order':'Seguridad y libertad', pluralism:'Contrapesos al gobierno',
-    'world-sovereignty':'Cooperación entre países', 'nationhood-membership':'Pertenencia', populism:'Influencia política',
+    'world-sovereignty':'Cooperación entre países', 'nationhood-membership':'Pertenencia', populism:'El pueblo y su representación',
     'ecology-growth':'Medio ambiente y crecimiento', 'religion-public-role':'Religión y leyes', subsidiarity:'Decisiones locales o centrales',
   },
   'pt-br': {
     'public-provision':'Serviços essenciais', redistribution:'Desigualdade econômica', ownership:'Propriedade das empresas', 'social-change':'Mudança social',
     'personal-autonomy':'Liberdade pessoal', abortion:'Aborto', 'authority-order':'Segurança e liberdade', pluralism:'Freios ao governo',
-    'world-sovereignty':'Cooperação entre países', 'nationhood-membership':'Pertencimento', populism:'Influência política',
+    'world-sovereignty':'Cooperação entre países', 'nationhood-membership':'Pertencimento', populism:'O povo e sua representação',
     'ecology-growth':'Meio ambiente e crescimento', 'religion-public-role':'Religião e leis', subsidiarity:'Decisões locais ou centrais',
   },
   fr: {
     'public-provision':'Services essentiels', redistribution:'Inégalités économiques', ownership:'Propriété des entreprises', 'social-change':'Changement social',
     'personal-autonomy':'Liberté personnelle', abortion:'Avortement', 'authority-order':'Sécurité et liberté', pluralism:'Contre-pouvoirs',
-    'world-sovereignty':'Coopération entre pays', 'nationhood-membership':'Appartenance', populism:'Influence politique',
+    'world-sovereignty':'Coopération entre pays', 'nationhood-membership':'Appartenance', populism:'Le peuple et sa représentation',
     'ecology-growth':'Environnement et croissance', 'religion-public-role':'Religion et lois', subsidiarity:'Décisions locales ou centrales',
   },
 };
@@ -363,13 +363,47 @@ export function deepGap(locale: Locale, think: number | null, feel: number | nul
 }
 
 export function deepTendency(locale: Locale, id: string, score: number | null) {
-  const influenceTitle = locale === 'de' ? 'Politischer Einfluss & Repräsentation' : locale === 'es' ? 'Influencia política & representación' : locale === 'fr' ? 'Influence politique & représentation' : locale === 'pt-br' ? 'Influência política & representação' : 'Political influence & representation';
+  const populismTitle = locale === 'de' ? 'Populismus: drei Merkmale'
+    : locale === 'es' ? 'Populismo: tres componentes'
+    : locale === 'fr' ? 'Populisme : trois composantes'
+    : locale === 'pt-br' ? 'Populismo: três componentes'
+    : 'Populism: three components';
   const checksTitle = locale === 'de' ? 'Gewählte Macht & demokratische Kontrolle' : locale === 'es' ? 'Poder elegido & contrapesos democráticos' : locale === 'fr' ? 'Pouvoir élu & contre-pouvoirs démocratiques' : locale === 'pt-br' ? 'Poder eleito & controles democráticos' : 'Elected power & democratic checks';
   if (id === 'populism') {
-    if (score === null) return { title: influenceTitle, explanation: locale === 'de' ? 'Noch zu wenig Informationen für eine stabile Einordnung.' : locale === 'es' ? 'Aún falta información para una lectura estable.' : locale === 'fr' ? 'Pas encore assez d’informations pour une lecture stable.' : locale === 'pt-br' ? 'Ainda falta informação para uma leitura estável.' : 'Not enough information for a stable reading.' };
-    if (score >= 70) return { title: influenceTitle, explanation: locale === 'de' ? 'Du vermutest relativ häufig, dass gut vernetzte Gruppen mehr Gehör finden als normale Wähler. Das ist ein populistisches Signal zur Repräsentation – kein politisches Etikett.' : locale === 'es' ? 'Tiendes a sospechar que los grupos bien conectados son escuchados más que los votantes corrientes. Es una señal de estilo populista sobre representación, no una etiqueta política.' : locale === 'fr' ? 'Tu soupçonnes assez souvent que les groupes bien connectés sont davantage entendus que les électeurs ordinaires. C’est un signal de type populiste sur la représentation, pas une étiquette politique.' : locale === 'pt-br' ? 'Você tende a suspeitar que grupos bem conectados são ouvidos mais do que eleitores comuns. É um sinal de estilo populista sobre representação, não um rótulo político.' : 'You often suspect that well-connected groups are heard more than ordinary voters. That is a populist-style signal about representation, not a political-family label.' };
-    if (score <= 30) return { title: influenceTitle, explanation: locale === 'de' ? 'Du siehst politische Konflikte eher als Konkurrenz legitimer Interessen und Werte – weniger als einfachen Gegensatz zwischen normalen Wählern und mächtigen Gruppen.' : locale === 'es' ? 'Tiendes a ver el conflicto político como competencia entre intereses y valores legítimos, más que como un choque simple entre votantes corrientes y grupos poderosos.' : locale === 'fr' ? 'Tu vois plutôt le conflit politique comme une concurrence entre intérêts et valeurs légitimes que comme une opposition simple entre électeurs ordinaires et groupes puissants.' : locale === 'pt-br' ? 'Você tende a ver o conflito político como disputa entre interesses e valores legítimos, mais do que como um confronto simples entre eleitores comuns e grupos poderosos.' : 'You tend to see political conflict as competition among legitimate interests and values rather than mainly as ordinary voters versus powerful groups.' };
-    return { title: influenceTitle, explanation: locale === 'de' ? 'Du verbindest Misstrauen gegenüber ungleichem politischem Einfluss mit der Ansicht, dass echte Interessenkonflikte und Wertunterschiede ebenfalls eine Rolle spielen.' : locale === 'es' ? 'Combinas cierta desconfianza hacia la desigualdad de influencia política con la idea de que también existen conflictos reales entre intereses y valores.' : locale === 'fr' ? 'Tu combines une certaine méfiance envers les inégalités d’influence politique avec l’idée qu’il existe aussi de vrais conflits d’intérêts et de valeurs.' : locale === 'pt-br' ? 'Você combina alguma desconfiança sobre desigualdade de influência política com a ideia de que também existem conflitos reais entre interesses e valores.' : 'You combine some suspicion of unequal political influence with a belief that genuine conflicts among interests and values also matter.' };
+    // Interpret only the conjunctive score. This is not a validated
+    // diagnostic or an identity label.
+    if (score === null) return {
+      title: populismTitle,
+      explanation: locale === 'de' ? 'Für diese Einordnung fehlen Antworten zu mindestens einem der drei Merkmale. Es wird kein Wert geschätzt.'
+        : locale === 'es' ? 'Faltan respuestas sobre al menos uno de los tres componentes. No se calcula una puntuación.'
+        : locale === 'fr' ? 'Il manque des réponses pour au moins une des trois composantes. Aucun score n’est calculé.'
+        : locale === 'pt-br' ? 'Faltam respostas sobre pelo menos um dos três componentes. Nenhuma pontuação é calculada.'
+        : 'At least one of the three components is unanswered. No score is estimated.',
+    };
+    if (score >= 70) return {
+      title: populismTitle,
+      explanation: locale === 'de' ? 'Alle drei Antworten zeigen eine ähnliche Richtung: einen einheitlichen Volkswillen, einen moralischen Gegensatz zur politischen Klasse und den Anspruch auf alleinige Vertretung. Dies sind nur Hinweise aus drei Fragen, keine politische Zuschreibung.'
+        : locale === 'es' ? 'Las tres respuestas apuntan a una voluntad popular única, un conflicto moral con la clase política y una representación exclusiva. Son indicios basados en tres preguntas, no una etiqueta personal.'
+        : locale === 'fr' ? 'Les trois réponses vont dans le sens d’une volonté populaire unique, d’un conflit moral avec la classe politique et d’une représentation exclusive. Ce sont des indices fondés sur trois questions, pas une étiquette.'
+        : locale === 'pt-br' ? 'As três respostas apontam para uma vontade popular única, um conflito moral com a classe política e representação exclusiva. São indícios baseados em três perguntas, não um rótulo pessoal.'
+        : 'All three responses point toward a single popular will, a moral struggle with the political class, and claims of exclusive representation. These are three-item indicators, not an identity label.',
+    };
+    if (score <= 30) return {
+      title: populismTitle,
+      explanation: locale === 'de' ? 'Deine Antworten sprechen gegen die Verbindung dieser drei Merkmale. Kritik an mächtigen Interessengruppen bleibt davon unabhängig legitim.'
+        : locale === 'es' ? 'Tus respuestas no respaldan la combinación de estos tres componentes. Criticar a los grupos poderosos es una cuestión distinta.'
+        : locale === 'fr' ? 'Tes réponses ne vont pas dans le sens de cette combinaison de trois composantes. Critiquer les groupes puissants reste une question distincte.'
+        : locale === 'pt-br' ? 'Suas respostas não apontam para a combinação dos três componentes. Criticar grupos poderosos é uma questão diferente.'
+        : 'Your answers do not support this combination of three components. Criticism of powerful interests is a separate issue.',
+    };
+    return {
+      title: populismTitle,
+      explanation: locale === 'de' ? 'Die drei Antworten zeigen kein durchgehend starkes Muster. Der Wert richtet sich nach dem schwächsten Merkmal; eine hohe Zustimmung zu einem Punkt reicht nicht aus.'
+        : locale === 'es' ? 'Las respuestas no muestran un patrón fuerte en los tres componentes. La puntuación toma el más débil; uno solo no basta.'
+        : locale === 'fr' ? 'Les réponses ne montrent pas de tendance forte dans les trois composantes. Le score retient la plus faible ; une seule ne suffit pas.'
+        : locale === 'pt-br' ? 'As respostas não mostram um padrão forte nos três componentes. A pontuação considera o mais fraco; apenas um não basta.'
+        : 'Responses do not consistently support all three components. The score uses the weakest one; strong agreement with only one is insufficient.',
+    };
   }
   if (score === null) return { title: checksTitle, explanation: locale === 'de' ? 'Noch zu wenig Informationen für eine stabile Einordnung.' : locale === 'es' ? 'Aún falta información para una lectura estable.' : locale === 'fr' ? 'Pas encore assez d’informations pour une lecture stable.' : locale === 'pt-br' ? 'Ainda falta informação para uma leitura estável.' : 'Not enough information for a stable reading.' };
   if (score >= 70) return { title: checksTitle, explanation: locale === 'de' ? 'Du bist vergleichsweise bereit, gewählten Regierungen mehr Handlungsspielraum zu geben – auch wenn dadurch institutionelle Kontrollen oder Verfahrensschutz schwächer werden können.' : locale === 'es' ? 'Estás relativamente dispuesto a dar más margen de acción a los gobiernos elegidos, incluso si eso puede reducir algunos contrapesos institucionales o garantías de procedimiento.' : locale === 'fr' ? 'Tu es relativement disposé à laisser davantage de marge aux gouvernements élus, même si cela peut réduire certains contre-pouvoirs ou certaines garanties de procédure.' : locale === 'pt-br' ? 'Você mostra relativamente mais disposição para dar espaço de ação a governos eleitos, mesmo quando isso pode enfraquecer alguns controles institucionais ou garantias de procedimento.' : 'You are relatively willing to give elected authorities more room to act, even when that can reduce some institutional checks or procedural safeguards.' };

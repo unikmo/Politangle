@@ -1,3 +1,5 @@
+> **SUPERSEDED NOTICE (13 October 2026):** The T11/F11/A11 populism question text and scoring assumptions shown in this historical editorial sheet have been replaced by `docs/populism-scoring-v7-candidate.md` and branch `fix/populism-construct-scoring-20261013`. Do not use this sheet to approve or score those three questions.
+
 # Politangle BELIEVE 42 — complete editorial review sheet
 
 **Status: CANDIDATE / NOT RELEASED · 12 October 2026.** The 42 questions below are the exact source-ID/polarity statements selected by the Quick (26) and Full (+16) session model. The app randomizes order *within* Quick and Full. Stored alternate poles appear in code and are checked separately.

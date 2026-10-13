@@ -3,7 +3,7 @@ import test from 'node:test';
 import { PORTUGUESE_BR_BELIEVE_VERSION, portugueseBrBeliefPairCount, portugueseBrBeliefStatement } from './portuguese-br-believe';
 
 test('pt-BR BELIEVE bank covers all 42 source items in both polarities', () => {
-  assert.equal(PORTUGUESE_BR_BELIEVE_VERSION, 'pt-br-believe-2026.10-plain-v3');
+  assert.equal(PORTUGUESE_BR_BELIEVE_VERSION, 'pt-br-believe-2026.10-populism-v4');
   assert.equal(portugueseBrBeliefPairCount, 42);
   for (const prefix of ['T','F','A']) {
     for (let i = 1; i <= 14; i += 1) {

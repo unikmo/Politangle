@@ -29,7 +29,7 @@ export type BeliefItem = {
   evidenceIds: readonly string[];
 };
 
-export const BELIEF_V2_VERSION = 'belief-2026.10-v6-plain-quick26-full84' as const;
+export const BELIEF_V2_VERSION = 'belief-2026.10-v7-populism-quick26-full84' as const;
 export const BELIEF_V2_LOCKED_COUNT = 42 as const;
 export const BELIEF_V2_PER_MODE = 14 as const;
 
@@ -126,10 +126,9 @@ const thinkPairs: Record<BeliefConstruct, readonly [string, string]> = {
     'Historic cultural or ancestral continuity should carry additional weight in national belonging, and citizenship at birth should rely more on parent citizenship or qualifying status than birthplace alone.',
   ],
   populism: [
-    'Political conflict usually involves several legitimate interests and values, so no single side can claim to represent “the real people.”',
-    'The central political conflict is often between ordinary people and a self-serving elite that ignores the people’s common interests.',
-  ],
-  'ecology-growth': [
+    'People can disagree about politics without either side speaking for everyone.',
+    'Most ordinary people share one political will that politicians should follow.',
+  ],  'ecology-growth': [
     'In wealthy societies, ecological limits can justify deliberately accepting lower material growth or consumption.',
     'Economic growth should remain a central goal, with environmental harm addressed mainly through technology, pricing and regulation.',
   ],
@@ -185,10 +184,9 @@ const feelPairs: Record<BeliefConstruct, readonly [string, string]> = {
     'Shared historical culture or ancestry matters to my sense of who most fully belongs to the nation, even when legal citizenship is equal.',
   ],
   populism: [
-    'When politics disappoints, my first instinct is that genuine differences among many groups make compromise difficult.',
-    'When politics disappoints, my first instinct is that a self-serving elite is ignoring ordinary people.',
-  ],
-  'ecology-growth': [
+    'I feel uneasy when politics is presented as a fight between good people and bad politicians.',
+    'I often feel that honest ordinary people face a dishonest political class.',
+  ],  'ecology-growth': [
     'I worry more about ecological damage and resource limits than about somewhat slower economic growth.',
     'I worry more about lower growth and living standards than about environmental risks that technology and regulation may be able to manage.',
   ],
@@ -244,10 +242,9 @@ const actPairs: Record<BeliefConstruct, readonly [string, string]> = {
     'In citizenship law, I would make citizenship at birth depend mainly on a parent’s citizenship or qualifying legal status rather than birthplace itself.',
   ],
   populism: [
-    'If a leader I supported claimed a clear popular mandate but independent institutions resisted, I would still prefer compromise and institutional checks.',
-    'If I believed the institutions were frustrating the clear will of ordinary people, I would be willing to back the leader against those institutions.',
-  ],
-  'ecology-growth': [
+    'I would distrust a candidate who claims only they represent the real people.',
+    'I would consider voting for a candidate who says they alone speak for the real people.',
+  ],  'ecology-growth': [
     'I would accept somewhat higher prices, lower consumption or slower growth for binding environmental limits when evidence showed they were needed.',
     'I would prefer policies that preserve growth and consumption while relying more on technology, incentives and gradual regulation to reduce environmental harm.',
   ],

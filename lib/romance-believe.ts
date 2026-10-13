@@ -1,7 +1,7 @@
 import type { BeliefPolarity } from './belief-statements';
 
-export const SPANISH_BELIEVE_VERSION = 'es-believe-2026.10-plain-v3' as const;
-export const FRENCH_BELIEVE_VERSION = 'fr-believe-2026.10-plain-v3' as const;
+export const SPANISH_BELIEVE_VERSION = 'es-believe-2026.10-populism-v4' as const;
+export const FRENCH_BELIEVE_VERSION = 'fr-believe-2026.10-populism-v4' as const;
 
 type Pair = readonly [string, string];
 
@@ -16,7 +16,7 @@ const es: Record<string, Pair> = {
   T08: ["Ganar unas elecciones no debe eliminar los controles independientes sobre el poder, como los tribunales, la Constitución y los derechos de la oposición.", "Un Gobierno elegido debe poder aplicar sus propuestas aunque los tribunales independientes tengan objeciones."],
   T09: ["Los países deben cumplir reglas internacionales obligatorias cuando un problema afecta a varios países.", "Cada país debe conservar la última palabra sobre sus decisiones, aunque eso haga más difícil actuar juntos ante problemas comunes."],
   T10: ["Quien obtiene la ciudadanía más tarde puede pertenecer a la nación tan plenamente como quien es ciudadano desde el nacimiento.", "Tener la ciudadanía desde el nacimiento debe contar más en el sentimiento de pertenencia al país."],
-  T11: ["Los desacuerdos políticos suelen surgir de intereses legítimos distintos.", "Las decisiones políticas suelen dar demasiada influencia a los grupos con buenos contactos y muy poca a los votantes comunes."],
+  T11: ["En política, las personas pueden discrepar; nadie habla en nombre de todos.", "La mayoría de la gente comparte una voluntad política que sus representantes deberían cumplir."],
   T12: ["Cuando el medio ambiente y el crecimiento económico chocan claramente, proteger la naturaleza debe tener a veces prioridad, aunque la economía crezca más despacio.", "El crecimiento económico debe tener prioridad y la protección ambiental debe frenarlo lo menos posible."],
   T13: ["El Estado no debe justificar leyes para todos únicamente con creencias religiosas.", "Las creencias morales religiosas pueden ser una razón legítima para aprobar leyes, aunque algunos ciudadanos no compartan esa religión."],
   T14: ["El Gobierno nacional o regional debe encargarse de servicios importantes, como escuelas y hospitales, si así garantiza mejor igualdad de acceso y de calidad.", "Los municipios deben poder organizar sus escuelas y hospitales cuando sean capaces de hacerlo bien."],
@@ -30,7 +30,7 @@ const es: Record<string, Pair> = {
   F08: ["Me preocupa que un Gobierno presione a jueces independientes por revisar sus leyes.", "Me preocupa que tribunales independientes anulen una y otra vez leyes aprobadas por un parlamento elegido."],
   F09: ["Me incomoda que problemas comunes sigan sin resolverse porque los países rechazan acuerdos obligatorios.", "Me preocupa que los tratados internacionales impongan decisiones importantes a mi país."],
   F10: ["Siento que una persona nacionalizada pertenece al país tanto como alguien que tiene la ciudadanía desde su nacimiento.", "Que mi familia lleve mucho tiempo viviendo en el país influye en mi sentimiento de pertenencia a la nación."],
-  F11: ["Cuando la política me decepciona, suelo pensar que la razón principal es que las decisiones son difíciles y que cada grupo quiere cosas distintas.", "Cuando la política me decepciona, sospecho que se escucha más a los grupos influyentes que a los votantes comunes."],
+  F11: ["Me incomoda que la política se presente como una lucha entre gente buena y políticos malos.", "A menudo siento que la política enfrenta a ciudadanos honestos con políticos deshonestos."],
   F12: ["Me preocupa que se destruyan espacios naturales valiosos para impulsar el crecimiento económico.", "Me preocupa la pérdida de empleos y de nivel de vida cuando los límites ambientales frenan mucho el crecimiento económico."],
   F13: ["Me incomoda que se usen creencias morales religiosas para justificar leyes para personas que no comparten esa fe.", "Me incomoda que se descarten argumentos religiosos en un debate político solo por ser religiosos."],
   F14: ["Me da seguridad que el Estado garantice escuelas y hospitales de calidad similar en todas las regiones.", "Me da confianza que las autoridades locales competentes conserven el control, en lugar de pasar las decisiones al Gobierno regional o nacional."],
@@ -44,7 +44,7 @@ const es: Record<string, Pair> = {
   A08: ["Si un tribunal independiente anulara una ley que apoyo, respetaría igualmente su decisión.", "Si los tribunales anularan repetidamente leyes aprobadas por una mayoría parlamentaria, apoyaría limitar algunas de sus facultades."],
   A09: ["Cumpliría un acuerdo climático común aunque limitara algunas decisiones de mi país.", "Mantendría las decisiones en manos de mi país, aunque eso hiciera menos eficaz una respuesta internacional conjunta."],
   A10: ["Apoyaría que las personas que obtuvieron la ciudadanía más tarde puedan ocupar los mismos altos cargos electos que quienes son ciudadanos desde el nacimiento.", "Para determinados cargos políticos de máximo nivel, daría preferencia a ciudadanos que lo sean desde su nacimiento."],
-  A11: ["Prefiero candidatos que explican abiertamente los compromisos políticos, aunque su mensaje resulte menos popular.", "Prefiero candidatos que prometan reducir la influencia de los grupos con buenos contactos y dar más voz directa a los votantes comunes."],
+  A11: ["Desconfiaría de un candidato que afirma ser el único representante del pueblo auténtico.", "Podría votar a un candidato que diga que solo él representa al verdadero pueblo."],
   A12: ["Apoyaría límites ambientales obligatorios por ley, aunque frenaran un poco el crecimiento económico.", "Evitaría reglas que suben los precios y confiaría más en tecnología limpia para proteger el ambiente."],
   A13: ["Rechazaría leyes para todos que se justificaran únicamente con argumentos religiosos.", "Aceptaría que los cargos públicos den razones morales religiosas como justificación legítima de leyes que se aplican a todos."],
   A14: ["Si servicios como las escuelas tuvieran una calidad muy distinta según la zona, apoyaría normas nacionales o regionales, aunque se redujera el control local.", "Si un municipio gestionara bien sus escuelas, preferiría que el Gobierno regional o nacional interviniera poco."],
@@ -61,7 +61,7 @@ const fr: Record<string, Pair> = {
   T08: ["Gagner une élection ne doit pas supprimer les contre-pouvoirs indépendants, comme les tribunaux, la Constitution et les droits de l'opposition.", "Un gouvernement élu doit pouvoir appliquer son programme même si des tribunaux indépendants expriment des objections."],
   T09: ["Les pays doivent respecter des règles internationales obligatoires quand un problème touche plusieurs pays.", "Chaque pays doit garder le dernier mot sur ses décisions, même si cela rend l'action commune face aux problèmes partagés moins efficace."],
   T10: ["Une personne devenue citoyenne plus tard peut appartenir à la nation tout autant qu'une personne citoyenne de naissance.", "Être citoyen depuis la naissance doit davantage compter dans l'appartenance au pays."],
-  T11: ["Les désaccords politiques viennent souvent de différences légitimes entre plusieurs intérêts.", "Les décisions politiques donnent souvent trop d'influence aux groupes bien introduits et trop peu aux électeurs ordinaires."],
+  T11: ["En politique, les gens peuvent être en désaccord ; personne ne parle au nom de tous.", "La plupart des citoyens partagent une même volonté politique que les élus devraient appliquer."],
   T12: ["Quand l'environnement et la croissance économique s'opposent clairement, protéger la nature doit parfois passer avant, même si la croissance est plus lente.", "La croissance économique doit rester prioritaire et la protection de l'environnement doit la ralentir le moins possible."],
   T13: ["L'État ne doit pas justifier des lois pour tous uniquement par des convictions religieuses.", "Des principes moraux religieux peuvent être une raison légitime de faire des lois, même si certains citoyens ne partagent pas cette religion."],
   T14: ["L'État ou les régions doivent assurer les services importants, comme l'école et la santé, si cela garantit le mieux l'égalité d'accès et de normes.", "Les communes doivent pouvoir organiser leurs écoles et hôpitaux quand elles en ont les moyens."],
@@ -75,7 +75,7 @@ const fr: Record<string, Pair> = {
   F08: ["Je m'inquiète lorsqu'un gouvernement fait pression sur des juges indépendants qui examinent ses lois.", "Cela m'inquiète que des tribunaux indépendants annulent à plusieurs reprises des lois votées par un parlement élu."],
   F09: ["Cela me met mal à l'aise que des problèmes communs restent sans solution parce que des pays refusent des accords obligatoires.", "Je m'inquiète quand des traités internationaux imposent des décisions importantes à mon pays."],
   F10: ["Pour moi, une personne naturalisée appartient autant au pays qu'une personne qui en a la nationalité depuis sa naissance.", "Le fait que ma famille vive depuis longtemps dans le pays compte dans mon sentiment d'appartenir à la nation."],
-  F11: ["Quand la politique me déçoit, je pense surtout que les choix sont difficiles et que chaque groupe veut des choses différentes.", "Quand la politique me déçoit, je soupçonne que les groupes influents sont davantage écoutés que les électeurs ordinaires."],
+  F11: ["Cela me dérange quand la politique est présentée comme un combat entre bons citoyens et mauvais élus.", "J'ai souvent l'impression que la politique oppose des citoyens honnêtes à des responsables malhonnêtes."],
   F12: ["Je m'inquiète quand des espaces naturels précieux sont détruits pour soutenir la croissance économique.", "La perte d'emplois et de niveau de vie m'inquiète quand les limites environnementales ralentissent fortement la croissance économique."],
   F13: ["Je suis mal à l'aise quand des principes moraux religieux servent à justifier des lois pour des personnes qui ne partagent pas cette foi.", "Cela me dérange que les arguments religieux soient écartés d'un débat uniquement parce qu'ils sont religieux."],
   F14: ["Je suis rassuré quand l'État garantit des écoles et des hôpitaux de qualité comparable partout.", "Je me sens en confiance quand des autorités locales compétentes gardent le contrôle plutôt que la région ou l'État."],
@@ -89,7 +89,7 @@ const fr: Record<string, Pair> = {
   A08: ["Si un tribunal indépendant annulait une loi que je soutiens, je respecterais malgré tout sa décision.", "Si les tribunaux annulaient souvent des lois votées par une majorité parlementaire, je soutiendrais une limitation de certaines de leurs compétences."],
   A09: ["Je respecterais un accord commun sur le climat même s'il limitait certaines décisions de mon pays.", "Je garderais les décisions au niveau national, même si cela rendait une réponse internationale commune moins efficace."],
   A10: ["Je soutiendrais que les personnes devenues citoyennes plus tard puissent occuper les mêmes hautes fonctions électives que les citoyens de naissance.", "Je réserverais certains des plus hauts mandats électifs aux citoyens de naissance."],
-  A11: ["Je préfère les candidats qui expliquent ouvertement les compromis politiques, même si leur message séduit moins.", "Je préfère les candidats qui promettent de réduire l'influence des groupes bien introduits et de donner plus d'influence directe aux électeurs ordinaires."],
+  A11: ["Je me méfierais d'un candidat qui prétend être le seul à représenter le vrai peuple.", "Je pourrais voter pour un candidat affirmant être le seul à parler au nom du vrai peuple."],
   A12: ["Je soutiendrais des limites environnementales obligatoires par la loi, même si elles ralentissaient un peu la croissance économique.", "J'éviterais les règles qui augmentent les prix et compterais davantage sur les technologies propres."],
   A13: ["Je refuserais des lois pour tous qui seraient justifiées uniquement par des arguments religieux.", "J'accepterais que des responsables publics invoquent des principes moraux religieux comme raison légitime de lois qui s'appliquent à tous."],
   A14: ["Si la qualité des écoles variait beaucoup selon les endroits, je soutiendrais des normes nationales ou régionales, même si le contrôle local diminuait.", "Si une commune gérait bien ses écoles, je préférerais limiter l'intervention des autorités régionales et nationales."],

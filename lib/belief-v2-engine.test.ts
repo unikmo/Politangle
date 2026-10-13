@@ -65,14 +65,30 @@ test('nationhood THINK FEEL ACT items vary the context while staying on national
   }
 });
 
-test('populism wording avoids repetitive elite-versus-people slogans', () => {
+test('populism wording measures popular will, moral anti-elitism, and exclusive representation separately', () => {
   const triplet = lockedBeliefItemsV2.filter((item) => item.construct === 'populism');
-  const text = triplet.flatMap((item) => [item.negative, item.positive]).join(' ');
-  assert.doesNotMatch(text, /\belites?\b/i);
-  assert.match(text, /well-connected/i);
-  assert.match(text, /ordinary voters/i);
+  assert.equal(triplet.length, 3);
+  const think = triplet.find((item) => item.mode === 'think')!;
+  const feel = triplet.find((item) => item.mode === 'feel')!;
   const act = triplet.find((item) => item.mode === 'act')!;
-  assert.doesNotMatch(`${act.negative} ${act.positive}`.toLowerCase(), /court|institution|media|opposition|leader/);
+  assert.match(think.positive, /one political will/i);
+  assert.match(feel.positive, /honest ordinary people.*dishonest political class/i);
+  assert.match(act.positive, /alone speak for the real people/i);
+  assert.doesNotMatch(triplet.map((item) => item.positive).join(' '), /well-connected|ordinary voters|direct say/i);
+});
+
+test('populism scoring requires all three facets and never averages away a weak one', () => {
+  const positive: BeliefAnswersV2 = { T11: 2, F11: 2, A11: 2 };
+  const read = (answers: BeliefAnswersV2) => assessTendenciesV2(answers).find((item) => item.id === 'populism')!;
+  assert.deepEqual(read({ T11: 2, A11: 2 }), { id: 'populism', score: null, coverage: 67 });
+  assert.deepEqual(read({ T11: 2, F11: 2 }), { id: 'populism', score: null, coverage: 67 });
+  assert.deepEqual(read({ T11: 2, F11: 'unsure', A11: 2 }), { id: 'populism', score: null, coverage: 67 });
+  assert.deepEqual(read(positive), { id: 'populism', score: 100, coverage: 100 });
+  assert.deepEqual(read({ ...positive, F11: -2 }), { id: 'populism', score: 0, coverage: 100 });
+  assert.deepEqual(read({ ...positive, F11: 0 }), { id: 'populism', score: 50, coverage: 100 });
+  assert.deepEqual(read({ T11: 2, F11: -2, A11: -2 }), { id: 'populism', score: 0, coverage: 100 });
+  assert.deepEqual(read({ T11: 0, F11: 0, A11: 0 }), { id: 'populism', score: 50, coverage: 100 });
+  assert.deepEqual(read({}), { id: 'populism', score: null, coverage: 0 });
 });
 
 test('religion public-role triplet measures legitimacy of religious moral reasons rather than theocracy', () => {

@@ -1,6 +1,6 @@
 import type { BeliefPolarity } from './belief-statements';
 
-export const PORTUGUESE_BR_BELIEVE_VERSION = 'pt-br-believe-2026.10-plain-v3' as const;
+export const PORTUGUESE_BR_BELIEVE_VERSION = 'pt-br-believe-2026.10-populism-v4' as const;
 
 type Pair = readonly [string, string];
 
@@ -15,7 +15,7 @@ const ptBr: Record<string, Pair> = {
   T08: ["Vencer uma eleição não deve acabar com os controles independentes sobre o poder, como os tribunais, a Constituição e os direitos da oposição.", "Um governo eleito deve poder executar seus planos mesmo quando tribunais independentes apresentam objeções."],
   T09: ["Os países devem aceitar regras internacionais obrigatórias quando um problema ultrapassa fronteiras.", "Cada país deve manter a palavra final sobre suas decisões, mesmo que isso torne a ação conjunta diante de problemas comuns menos eficaz."],
   T10: ["Quem se torna cidadão mais tarde pode pertencer à nação tão plenamente quanto quem é cidadão desde o nascimento.", "Ter cidadania desde o nascimento deveria ter mais peso no sentimento de pertencimento ao país."],
-  T11: ["Conflitos políticos geralmente surgem porque grupos diferentes têm interesses legítimos distintos.", "As decisões políticas costumam dar influência demais a grupos bem relacionados e de menos a eleitores comuns."],
+  T11: ["As pessoas podem discordar sobre política; ninguém fala por todo mundo.", "A maioria das pessoas tem uma vontade política comum que os governantes deveriam seguir."],
   T12: ["Quando proteger o meio ambiente e fazer a economia crescer entram claramente em conflito, proteger a natureza deve às vezes vir primeiro, mesmo que a economia cresça mais devagar.", "O crescimento econômico deve ter prioridade e a proteção ambiental deve limitá-lo o mínimo possível."],
   T13: ["O Estado não deve justificar leis que valem para todos apenas com crenças religiosas.", "Princípios morais religiosos podem ser razões legítimas para leis, mesmo que alguns cidadãos não compartilhem essa religião."],
   T14: ["O governo federal ou estadual deve assumir a responsabilidade por serviços importantes, como escolas e hospitais, quando essa for a melhor forma de garantir acesso e padrões iguais.", "Os municípios devem poder organizar suas escolas e hospitais quando conseguem fazer isso bem."],
@@ -30,7 +30,7 @@ const ptBr: Record<string, Pair> = {
   F08: ["Me preocupa quando um governo pressiona juízes independentes por examinarem suas leis.", "Me preocupa quando tribunais independentes anulam repetidamente leis aprovadas por um parlamento eleito."],
   F09: ["Me incomoda quando problemas comuns continuam sem solução porque os países recusam acordos obrigatórios.", "Me preocupa quando tratados internacionais impõem decisões importantes ao meu país."],
   F10: ["Para mim, uma pessoa naturalizada pertence ao país tanto quanto alguém que tem a cidadania desde o nascimento.", "O fato de minha família viver há muito tempo no país pesa no meu sentimento de pertencer à nação."],
-  F11: ["Quando a política me decepciona, costumo pensar que o motivo principal é que as escolhas são difíceis e cada grupo quer coisas diferentes.", "Quando a política me decepciona, suspeito que grupos influentes sejam mais ouvidos do que eleitores comuns."],
+  F11: ["Me incomoda quando a política é apresentada como uma luta entre pessoas boas e políticos ruins.", "Muitas vezes sinto que cidadãos honestos enfrentam políticos desonestos."],
   F12: ["Me preocupa quando áreas naturais importantes são destruídas para aumentar o crescimento econômico.", "Me preocupa a perda de empregos e de padrão de vida quando limites ambientais reduzem muito o crescimento econômico."],
   F13: ["Me sinto desconfortável quando princípios morais religiosos são usados para justificar leis para pessoas que não compartilham essa fé.", "Me incomoda quando argumentos religiosos são excluídos de um debate apenas por serem religiosos."],
   F14: ["Me sinto mais seguro quando o Estado garante escolas e hospitais de qualidade semelhante em todo o país.", "Me sinto confiante quando autoridades locais competentes mantêm o controle, em vez de passar as decisões ao governo estadual ou nacional."],
@@ -45,7 +45,7 @@ const ptBr: Record<string, Pair> = {
   A08: ["Se um tribunal independente anulasse uma lei que eu apoio, eu ainda assim respeitaria a decisão.", "Se tribunais anulassem repetidamente leis aprovadas por uma maioria parlamentar, eu apoiaria limitar algumas de suas atribuições."],
   A09: ["Eu cumpriria um acordo climático comum mesmo que ele limitasse algumas decisões do meu país.", "Eu manteria as decisões nas mãos do meu país, mesmo que isso tornasse menos eficaz uma resposta internacional conjunta."],
   A10: ["Eu apoiaria que pessoas que se tornaram cidadãs mais tarde possam ocupar os mesmos altos cargos eletivos que quem é cidadão desde o nascimento.", "Para alguns dos cargos políticos mais altos, eu daria preferência a cidadãos desde o nascimento."],
-  A11: ["Prefiro candidatos que explicam abertamente os compromissos políticos, mesmo quando a mensagem agrada menos.", "Prefiro candidatos que prometam reduzir a influência de grupos bem relacionados e dar mais influência direta aos eleitores comuns."],
+  A11: ["Eu desconfiaria de um candidato que diz ser o único representante do povo de verdade.", "Eu poderia votar em um candidato que diz ser o único a falar pelo povo de verdade."],
   A12: ["Eu apoiaria limites ambientais obrigatórios por lei, mesmo que desacelerassem um pouco o crescimento econômico.", "Eu evitaria regras que elevassem preços e confiaria mais em tecnologia limpa para proteger o meio ambiente."],
   A13: ["Eu rejeitaria leis para todos que fossem justificadas apenas por argumentos religiosos.", "Eu aceitaria que autoridades públicas apresentassem princípios morais religiosos como razão legítima para leis que valem para todos."],
   A14: ["Se serviços como as escolas tivessem qualidade muito diferente de uma região para outra, eu apoiaria padrões nacionais ou estaduais, mesmo que o controle local diminuísse.", "Se um município administrasse bem suas escolas, eu preferiria pouca interferência estadual ou nacional."],
