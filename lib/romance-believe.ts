@@ -1,6 +1,6 @@
 import type { BeliefPolarity } from './belief-statements';
 
-export const SPANISH_BELIEVE_VERSION = 'es-believe-2026.10-plain-v3' as const;
+export const SPANISH_BELIEVE_VERSION = 'es-believe-2026.10-populism-v4' as const;
 export const FRENCH_BELIEVE_VERSION = 'fr-believe-2026.10-plain-v3' as const;
 
 type Pair = readonly [string, string];
