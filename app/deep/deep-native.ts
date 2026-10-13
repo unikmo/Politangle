@@ -153,31 +153,31 @@ const constructs: Record<Locale, Record<string, string>> = {
   en: {
     'public-provision':'Essential services', redistribution:'Income gap', ownership:'Business ownership', 'social-change':'Social change',
     'personal-autonomy':'Personal freedom', abortion:'Abortion', 'authority-order':'Safety and freedom', pluralism:'Checks on government',
-    'world-sovereignty':'Countries working together', 'nationhood-membership':'Belonging', populism:'Political influence',
+    'world-sovereignty':'Countries working together', 'nationhood-membership':'Belonging', populism:'The people & representation',
     'ecology-growth':'Environment and growth', 'religion-public-role':'Religion and law', subsidiarity:'Local or national / regional',
   },
   de: {
     'public-provision':'Wichtige Angebote', redistribution:'Arm und Reich', ownership:'Unternehmenseigentum', 'social-change':'Gesellschaftlicher Wandel',
     'personal-autonomy':'Persönliche Freiheit', abortion:'Schwangerschaftsabbruch', 'authority-order':'Sicherheit und Freiheit', pluralism:'Kontrolle der Regierung',
-    'world-sovereignty':'Zusammenarbeit der Länder', 'nationhood-membership':'Zugehörigkeit', populism:'Politischer Einfluss',
+    'world-sovereignty':'Zusammenarbeit der Länder', 'nationhood-membership':'Zugehörigkeit', populism:'Volkswille & Vertretung',
     'ecology-growth':'Umwelt und Wachstum', 'religion-public-role':'Religion und Gesetze', subsidiarity:'Lokal oder überregional',
   },
   es: {
     'public-provision':'Servicios esenciales', redistribution:'Desigualdad económica', ownership:'Propiedad empresarial', 'social-change':'Cambio social',
     'personal-autonomy':'Libertad personal', abortion:'Aborto', 'authority-order':'Seguridad y libertad', pluralism:'Contrapesos al gobierno',
-    'world-sovereignty':'Cooperación entre países', 'nationhood-membership':'Pertenencia', populism:'Influencia política',
+    'world-sovereignty':'Cooperación entre países', 'nationhood-membership':'Pertenencia', populism:'El pueblo y su representación',
     'ecology-growth':'Medio ambiente y crecimiento', 'religion-public-role':'Religión y leyes', subsidiarity:'Decisiones locales o centrales',
   },
   'pt-br': {
     'public-provision':'Serviços essenciais', redistribution:'Desigualdade econômica', ownership:'Propriedade das empresas', 'social-change':'Mudança social',
     'personal-autonomy':'Liberdade pessoal', abortion:'Aborto', 'authority-order':'Segurança e liberdade', pluralism:'Freios ao governo',
-    'world-sovereignty':'Cooperação entre países', 'nationhood-membership':'Pertencimento', populism:'Influência política',
+    'world-sovereignty':'Cooperação entre países', 'nationhood-membership':'Pertencimento', populism:'O povo e sua representação',
     'ecology-growth':'Meio ambiente e crescimento', 'religion-public-role':'Religião e leis', subsidiarity:'Decisões locais ou centrais',
   },
   fr: {
     'public-provision':'Services essentiels', redistribution:'Inégalités économiques', ownership:'Propriété des entreprises', 'social-change':'Changement social',
     'personal-autonomy':'Liberté personnelle', abortion:'Avortement', 'authority-order':'Sécurité et liberté', pluralism:'Contre-pouvoirs',
-    'world-sovereignty':'Coopération entre pays', 'nationhood-membership':'Appartenance', populism:'Influence politique',
+    'world-sovereignty':'Coopération entre pays', 'nationhood-membership':'Appartenance', populism:'Le peuple et sa représentation',
     'ecology-growth':'Environnement et croissance', 'religion-public-role':'Religion et lois', subsidiarity:'Décisions locales ou centrales',
   },
 };
