@@ -26,6 +26,7 @@ const copy: Record<Locale, Copy> = {
     fullText:'Nach Quick ergänzt Full 16 weitere Fragen. Zusammen sind es 42 Fragen.', fullCta:'Quick → Full starten',
     literacy:'Politisches Wissen', classifyText:'Ordne politische Beschreibungen den Traditionen zu, zu denen sie am besten passen.', classifyCta:'CLASSIFY starten',
     understandText:'Unterscheide politische Begriffe, Grenzen und typische Missverständnisse.', understandCta:'UNDERSTAND starten',
+    literacyNotice:'Die Wissensfragen sind übersetzt, aber noch nicht sprachlich geprüft. Einige Fragen (zum Beispiel im Nachtest) bleiben vorerst auf Englisch.',
   },
   es: {
     mode:'Modo privado', kicker:'Tu dispositivo · tu resultado', title:'Explora la política por tu cuenta.',
@@ -34,7 +35,7 @@ const copy: Record<Locale, Copy> = {
     fullText:'Después de Quick, Full añade 16 preguntas más. En total son 42.', fullCta:'Empezar Quick → Full',
     literacy:'Conocimientos políticos', classifyText:'Relaciona descripciones políticas con las tradiciones que mejor encajan.', classifyCta:'Empezar CLASSIFY',
     understandText:'Distingue conceptos políticos, sus límites y confusiones habituales.', understandCta:'Empezar UNDERSTAND',
-    literacyNotice:'La interfaz está en español, pero CLASSIFY y UNDERSTAND todavía usan su banco validado en inglés mientras se prepara una versión española revisada.',
+    literacyNotice:'Las preguntas de conocimientos están traducidas, pero aún no las han revisado hablantes nativos. Algunas (por ejemplo, las de la prueba final) siguen en inglés por ahora.',
   },
   'pt-br': {
     mode:'Modo privado do estudante', kicker:'Seu dispositivo · seu resultado', title:'Explore a política com privacidade.',
@@ -43,7 +44,7 @@ const copy: Record<Locale, Copy> = {
     fullText:'Depois do Quick, o Full acrescenta 16 perguntas diferentes e leva a avaliação a 42 perguntas no total.', fullCta:'Começar Quick → Full',
     literacy:'Conhecimento político', classifyText:'Relacione descrições políticas às tradições que melhor correspondem a elas.', classifyCta:'Começar CLASSIFY',
     understandText:'Diferencie conceitos políticos, seus limites e confusões comuns.', understandCta:'Começar UNDERSTAND',
-    literacyNotice:'A interface está em português do Brasil, mas CLASSIFY e UNDERSTAND ainda usam o banco validado em inglês enquanto uma versão em português revisada é preparada.',
+    literacyNotice:'As perguntas de conhecimento estão traduzidas, mas ainda não foram revisadas por falantes nativos. Algumas (por exemplo, as do teste final) continuam em inglês por enquanto.',
   },
   fr: {
     mode:'Mode privé', kicker:'Ton appareil · ton résultat', title:'Explore la politique de ton côté.',
@@ -52,7 +53,7 @@ const copy: Record<Locale, Copy> = {
     fullText:'Après Quick, Full ajoute 16 questions. Cela fait 42 questions au total.', fullCta:'Lancer Quick → Full',
     literacy:'Culture politique', classifyText:'Associe les descriptions politiques aux traditions qui leur correspondent le mieux.', classifyCta:'Lancer CLASSIFY',
     understandText:'Distingue les notions politiques, leurs limites et les confusions courantes.', understandCta:'Lancer UNDERSTAND',
-    literacyNotice:'L’interface est en français, mais CLASSIFY et UNDERSTAND utilisent encore leur banque validée en anglais, en attendant une version française revue.',
+    literacyNotice:'Les questions de culture politique sont traduites, mais pas encore relues par des francophones. Certaines (par exemple celles du test final) restent pour l’instant en anglais.',
   },
 };
 

@@ -8,17 +8,17 @@ test('repeat Quick registration gate remains disabled until client and admin Fir
     NEXT_PUBLIC_FIREBASE_API_KEY: 'public-key',
     FIREBASE_PROJECT_ID: 'project',
     FIREBASE_CLIENT_EMAIL: 'service@example.test',
-  } as NodeJS.ProcessEnv), false);
+  } as unknown as NodeJS.ProcessEnv), false);
   assert.equal(quickRegistrationConfigured({
     NEXT_PUBLIC_FIREBASE_API_KEY: 'public-key',
     FIREBASE_PROJECT_ID: 'project',
     FIREBASE_CLIENT_EMAIL: 'service@example.test',
     FIREBASE_PRIVATE_KEY: 'private-key',
-  } as NodeJS.ProcessEnv), true);
+  } as unknown as NodeJS.ProcessEnv), true);
   assert.equal(quickRegistrationConfigured({
     NEXT_PUBLIC_FIREBASE_API_KEY: 'public-key',
     FIREBASE_SERVICE_ACCOUNT_JSON: '{"project_id":"project"}',
-  } as NodeJS.ProcessEnv), true);
+  } as unknown as NodeJS.ProcessEnv), true);
 });
 
 test('first anonymous Quick is allowed when registration is configured', () => {

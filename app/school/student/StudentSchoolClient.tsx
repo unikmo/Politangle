@@ -1,10 +1,8 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
-import { germanBeliefStatement } from '../../../lib/german-believe';
-import { romanceBeliefStatement } from '../../../lib/romance-believe';
-import { portugueseBrBeliefStatement } from '../../../lib/portuguese-br-believe';
-import { germanLiteracyExplanation, germanLiteracyOption, germanLiteracyPrompt } from '../../../lib/german-literacy';
+import { schoolStatement } from '../../../lib/school-statement';
+import { localizedLiteracyExplanation, localizedLiteracyOption, localizedLiteracyPrompt } from '../../../lib/literacy-localized';
 import { useLocale, type Locale } from '../../LocaleProvider';
 import { studentUi } from './student-native';
 
@@ -72,8 +70,8 @@ function DistributionChart({ data, locale, question }: { data: Distribution; loc
       {data.distribution.map((row) => {
         const label = question?.kind === 'believe'
           ? beliefAria(locale, row.id)
-          : locale === 'de' && question
-            ? germanLiteracyOption(row.id, row.label)
+          : question
+            ? localizedLiteracyOption(locale, question.id, row.id, row.label)
             : row.label;
         return (
           <div className="school-bar-row" key={row.id}>
@@ -225,8 +223,8 @@ export default function StudentSchoolClient({ initialCode }: { initialCode: stri
         <article className="engine-card school-question-card">
           <p className="engine-kicker">{room.activity.pacing === 'teacher' ? ui.liveQuestion(room.currentIndex + 1) : ui.questionOf(studentIndex + 1, room.activity.questionIds.length)} · {localizedQuestionTitle}</p>
           {question.kind === 'believe' ? (
-            <div className="engine-statement"><p>{question.sourceItemId && question.polarity ? (locale === 'de' ? germanBeliefStatement(question.sourceItemId, question.polarity) : locale === 'es' || locale === 'fr' ? romanceBeliefStatement(locale, question.sourceItemId, question.polarity) : locale === 'pt-br' ? portugueseBrBeliefStatement(question.sourceItemId, question.polarity) : question.statement) ?? question.statement : question.statement}</p></div>
-          ) : <><h1>{locale === 'de' ? germanLiteracyPrompt(question.id) ?? question.prompt : question.prompt}</h1>{ui.literacyNotice && <p className="engine-help">{ui.literacyNotice}</p>}</>}
+            <div className="engine-statement"><p>{question.sourceItemId && question.polarity ? schoolStatement(locale, question.sourceItemId, question.polarity, question.statement) : question.statement}</p></div>
+          ) : <><h1>{localizedLiteracyPrompt(locale, question.id, question.prompt)}</h1>{ui.literacyNotice && <p className="engine-help">{ui.literacyNotice}</p>}</>}
 
           {!alreadySubmitted && (room.activity.pacing === 'student' || room.questionOpen) ? (
             <>
@@ -234,7 +232,7 @@ export default function StudentSchoolClient({ initialCode }: { initialCode: stri
                 {question.options.map((option) => {
                   const active = Array.isArray(selected) ? selected.includes(option.id) : selected === option.id;
                   const compactLabel = option.id === 'unsure' ? '?' : Number(option.id) > 0 ? `+${option.id}` : option.id.replace('-', '−');
-                  const label = question.kind === 'believe' ? beliefAria(locale, option.id) : locale === 'de' ? germanLiteracyOption(option.id, option.label) : option.label;
+                  const label = question.kind === 'believe' ? beliefAria(locale, option.id) : localizedLiteracyOption(locale, question.id, option.id, option.label);
                   return <button key={option.id} type="button" aria-label={label} className={active ? 'deep-option selected' : 'deep-option'} onClick={() => choose(option.id)}>{question.kind === 'believe' ? compactLabel : label}</button>;
                 })}
               </div>
@@ -243,7 +241,7 @@ export default function StudentSchoolClient({ initialCode }: { initialCode: stri
             </>
           ) : alreadySubmitted ? <div className="school-submitted"><strong>{ui.submitted}</strong><span>{ui.waitingClass}</span></div> : <p className="engine-callout">{ui.waitingOpen}</p>}
 
-          {revealForCurrent && room.projectorDistribution && <div className="school-reveal-panel"><p className="engine-kicker">{ui.roomAnswers} · {room.projectorDistribution.responses}</p><DistributionChart data={room.projectorDistribution} locale={locale} question={question} />{question.kind === 'literacy' && question.explanation && <div className="deep-explanation"><strong>{ui.explanation}</strong><br />{locale === 'de' ? germanLiteracyExplanation(question.id, question.explanation) : question.explanation}</div>}</div>}
+          {revealForCurrent && room.projectorDistribution && <div className="school-reveal-panel"><p className="engine-kicker">{ui.roomAnswers} · {room.projectorDistribution.responses}</p><DistributionChart data={room.projectorDistribution} locale={locale} question={question} />{question.kind === 'literacy' && question.explanation && <div className="deep-explanation"><strong>{ui.explanation}</strong><br />{localizedLiteracyExplanation(locale, question.id, question.explanation)}</div>}</div>}
 
           {room.activity.pacing === 'student' && alreadySubmitted && <div className="engine-nav"><button type="button" disabled={studentIndex === 0} onClick={() => setStudentIndex((value) => Math.max(0, value - 1))}>{ui.previous}</button><span>{ui.submittedCount(submittedIds.filter((id) => room.activity.questionIds.includes(id)).length, room.activity.questionIds.length)}</span><button type="button" disabled={studentIndex >= room.activity.questionIds.length - 1} onClick={() => setStudentIndex((value) => Math.min(room.activity.questionIds.length - 1, value + 1))}>{ui.next}</button></div>}
         </article>

@@ -123,6 +123,7 @@ export default function MiddleClassTrapClient() {
       <h1>The Middle Class Trap</h1>
       <p className="practice-lede">See how taxes, public services, wealth and political stories interact—without assuming that every wealthy person is corrupt or every public benefit is waste.</p>
       <div className="populism-principle"><strong>This quiz does not tell you how to vote.</strong><p>It helps you test who really bears a cost, what a household gains or loses overall, and when blame is being redirected instead of power being examined.</p></div>
+      <div className="populism-principle"><strong>This quiz presents one argument.</strong><p>It tests the “middle-class trap” idea from the books listed at the end. Other economists and political traditions disagree with parts of it, so the understanding questions are not neutral between views.</p></div>
       <div className="mct-block-overview" aria-label="Quiz structure">
         <article><span>01 · 10 QUESTIONS</span><strong>Understanding the trap</strong><p>Can you identify who gains, who pays and which costs or protections a political story leaves out?</p></article>
         <article><span>02 · 10 CHOICES</span><strong>Your policy priorities</strong><p>When interests conflict, which concerns receive more weight in your choices?</p></article>

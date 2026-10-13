@@ -1,9 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { germanBeliefStatement } from '../../../lib/german-believe';
-import { romanceBeliefStatement } from '../../../lib/romance-believe';
-import { portugueseBrBeliefStatement } from '../../../lib/portuguese-br-believe';
+import { schoolStatement } from '../../../lib/school-statement';
 import { useLocale } from '../../LocaleProvider';
 
 type PublicRoom = {
@@ -52,7 +50,7 @@ export default function ProjectorSchoolClient({ code }: { code: string }) {
   if (error) return <section className="engine-shell"><article className="engine-card"><h1>{error}</h1></article></section>;
   if (!room) return <section className="engine-shell"><article className="engine-card"><p>{copy.loading}</p></article></section>;
   const projectedStatement = room.currentQuestion?.kind === 'believe' && room.currentQuestion.sourceItemId && room.currentQuestion.polarity
-    ? (locale === 'de' ? germanBeliefStatement(room.currentQuestion.sourceItemId, room.currentQuestion.polarity) : locale === 'es' || locale === 'fr' ? romanceBeliefStatement(locale, room.currentQuestion.sourceItemId, room.currentQuestion.polarity) : locale === 'pt-br' ? portugueseBrBeliefStatement(room.currentQuestion.sourceItemId, room.currentQuestion.polarity) : room.currentQuestion.statement) ?? room.currentQuestion.statement
+    ? schoolStatement(locale, room.currentQuestion.sourceItemId, room.currentQuestion.polarity, room.currentQuestion.statement)
     : room.currentQuestion?.statement;
 
   return (

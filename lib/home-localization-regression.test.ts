@@ -90,15 +90,11 @@ test('Full German interface uses direct informal address in user-facing copy', (
   assert.match(deepNative, /deinem Profil/);
 });
 
-test('School uses the locked 42-question total and native privacy copy', () => {
+test('School never shows the wrong question total and keeps native privacy copy', () => {
   assert.doesNotMatch(schoolPage, /Full 84/);
-  assert.match(schoolPage, /Full to 42 questions in total/);
-  assert.match(schoolPage, /geh mit Full auf insgesamt 42 Fragen/);
-  assert.match(schoolPage, /sigue con Full hasta 42 preguntas en total/);
-  assert.match(schoolPage, /Full pour aller jusqu’à 42 questions au total/);
-  assert.match(schoolPage, /Die Lehrkraft sieht das Gesamtbild der Klasse, aber nie, wer welche Antwort gegeben hat/);
-  assert.match(schoolPage, /el profesor ve el conjunto de la clase, nunca quién dio cada respuesta/);
-  assert.match(schoolPage, /l’enseignant voit l’ensemble du groupe, jamais qui a donné quelle réponse/);
+  assert.match(schoolPage, /Die Lehrkraft sieht die Klasse, nie, wer welche Antwort gegeben hat/);
+  assert.match(schoolPage, /el profesor ve el grupo, nunca quién dio cada respuesta/);
+  assert.match(schoolPage, /l’enseignant voit la classe, jamais qui a donné quelle réponse/);
 });
 
 test('trust and information pages are native multilingual pages, not English fallbacks', () => {

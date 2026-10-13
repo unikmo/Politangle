@@ -24,17 +24,17 @@ const CONTENT_FINGERPRINTS: Readonly<Record<string, string>> = {
   C26: '4f776656', C27: '8721768c', C28: '93f4ad19', C29: 'cc767389', C30: '2226b8a1',
   C31: 'a858fe3e', C32: '9ee317bd', C33: '4693003f', C34: '1b0d3eb6', C35: '43b7f1e6',
   C36: 'a4cde3ed', C37: '10e61f2c', C38: 'cc0e4312', C39: 'd411b0e5', C40: '74a2bc16',
-  U1: 'b1bf255d', U2: '77c5f6e5', U3: '742a8d8c', U4: 'd1b39ed9', U5: 'b8ec92ce',
-  U6: '890ffff5', U7: 'fc60e5f2', U8: '9d519c21', U9: '5bd335c2', U10: 'cef526ea',
-  U11: '8a900e32', U12: '94ed9dfc', U13: '5f275fe1', U14: 'df6c428b', U15: '4c4e4c51',
-  U16: 'f1ee61ed', U17: '770ca44e', U18: '3fa60fe4', U19: '6420eaa1', U20: 'bc60424a',
-  U21: 'b1824ae8', U22: '8f632d4c', U23: '334c6707', U24: '17bb95b2', U25: '7dae0f7e',
-  U26: '1b1e5122', U27: 'bc9b2acd', U28: '4be1fd81', U29: '58024e83', U30: 'e5565654',
-  U31: 'a569cccb', U32: 'a518c80a', U33: 'a7ef5ed9', U34: '38f78c3d', U35: 'cf592d65',
-  U36: '3abef426', U37: 'e985f13c', U38: 'a6dcf63b', U39: 'b3832390', U40: 'b236e865',
+  U1: '4b310b9a', U2: '5eedafce', U3: '4c95e99c', U4: '1464966a', U5: 'b7120c92',
+  U6: '50d9646f', U7: 'afd82205', U8: 'adf38556', U9: 'a6aea955', U10: '0f7627db',
+  U11: '8a900e32', U12: 'dd2cb67d', U13: 'e0c12b33', U14: 'df6c428b', U15: 'ea22d48f',
+  U16: '4a7ed21d', U17: 'f1d1676e', U18: 'ceab782c', U19: 'f5cb09c2', U20: 'ef5de2b5',
+  U21: '6b226e62', U22: 'f064ebb6', U23: '7384c3d0', U24: '793d9d30', U25: 'e52bba39',
+  U26: '5f071256', U27: '2048eb51', U28: '21b887c2', U29: '6761f181', U30: '03b85ec1',
+  U31: '01a53d6d', U32: '42bc94cb', U33: 'a4bc92ae', U34: '903cd997', U35: 'b5dd585f',
+  U36: '11883934', U37: '244a7e74', U38: '8768511d', U39: '506ad50b', U40: '6b357394',
 };
 
-const REVISED_FOR_READER = new Set(['C5', 'C24', 'C34', 'C35', 'C36', 'C37', 'C38', 'U9', 'U14', 'U38']);
+const REVISED_FOR_READER = new Set(['C5', 'C24', 'C34', 'C35', 'C36', 'C37', 'C38', 'U9', 'U14', 'U38', 'U1', 'U2', 'U3', 'U4', 'U5', 'U6', 'U7', 'U8', 'U10', 'U12', 'U13', 'U15', 'U16', 'U17', 'U18', 'U19', 'U20', 'U21', 'U22', 'U23', 'U24', 'U25', 'U26', 'U27', 'U28', 'U29', 'U30', 'U31', 'U32', 'U33', 'U34', 'U35', 'U36', 'U37', 'U39', 'U40']);
 const CONCEPT_OVERLAP = new Set(['C1', 'C16', 'C14', 'C32', 'C17', 'C21', 'C24', 'C36', 'U3', 'U34', 'U7', 'U22']);
 
 function fingerprint(question: LiteracyQuestionRecord) {

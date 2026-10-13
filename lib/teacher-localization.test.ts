@@ -26,9 +26,8 @@ test('advanced teacher console routes operational copy through the native dictio
   assert.match(teacherClient, /deepAxis\(locale/);
   assert.match(teacherClient, /deepFamily\(locale/);
   assert.match(teacherClient, /deepConstruct\(locale/);
-  assert.match(teacherClient, /germanBeliefStatement/);
-  assert.match(teacherClient, /romanceBeliefStatement/);
-  assert.match(teacherClient, /germanLiteracyPrompt/);
+  assert.match(teacherClient, /schoolStatement/);
+  assert.match(teacherClient, /localizedLiteracyPrompt/);
   assert.doesNotMatch(teacherClient, />Choose what to teach</);
   assert.doesNotMatch(teacherClient, />Start classroom</);
   assert.doesNotMatch(teacherClient, />Classroom onboarding</);

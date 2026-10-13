@@ -14,7 +14,7 @@ export function studentUi(locale: Locale) {
     roomAnswers:'Antworten der Klasse', explanation:'Erklärung', previous:'Zurück', next:'Weiter', submittedCount:(n:number,total:number)=>`${n}/${total} abgegeben`,
     lobby:'Anonyme Lobby', inTitle:'Du bist drin.', inText:'Warte, bis die Lehrkraft die nächste Frage startet.',
     scale:['Stimme gar nicht zu','Teils teils / kommt darauf an','Stimme völlig zu','Unsicher'],
-    literacyNotice:null as string | null,
+    literacyNotice:'Die Wissensfragen sind übersetzt, aber noch nicht sprachlich geprüft. Einige Fragen (zum Beispiel im Nachtest) bleiben vorerst auf Englisch.' as string | null,
   };
   if (locale === 'es') return {
     header:'Alumnado', joinKicker:'Entrar en clase', joinTitle:'Introduce el código de la sala.', joinHelp:'No necesitas nombre, correo, usuario ni número de estudiante. El profesor ve cómo responde el grupo, no qué respuesta es la tuya.',
@@ -29,7 +29,7 @@ export function studentUi(locale: Locale) {
     roomAnswers:'Respuestas de la clase', explanation:'Explicación', previous:'Anterior', next:'Siguiente', submittedCount:(n:number,total:number)=>`${n}/${total} enviadas`,
     lobby:'Sala anónima', inTitle:'Ya estás dentro.', inText:'Espera a que el profesor lance la siguiente pregunta.',
     scale:['Totalmente en desacuerdo','Neutral / depende','Totalmente de acuerdo','No estoy seguro'],
-    literacyNotice:'Esta actividad de alfabetización política todavía usa preguntas en inglés mientras se valida la versión española.',
+    literacyNotice:'Las preguntas de conocimientos están traducidas, pero aún no las han revisado hablantes nativos. Algunas (por ejemplo, las de la prueba final) siguen en inglés por ahora.',
   };
   if (locale === 'fr') return {
     header:'Élèves', joinKicker:'Rejoindre la classe', joinTitle:'Entre le code de la salle.', joinHelp:'Aucun nom, e-mail, identifiant ou numéro d’élève n’est demandé. L’enseignant voit comment répond le groupe, pas quelle réponse est la tienne.',
@@ -44,7 +44,7 @@ export function studentUi(locale: Locale) {
     roomAnswers:'Réponses de la classe', explanation:'Explication', previous:'Précédent', next:'Suivant', submittedCount:(n:number,total:number)=>`${n}/${total} envoyées`,
     lobby:'Salle anonyme', inTitle:'Tu es dans la classe.', inText:'Attends que l’enseignant lance la prochaine question.',
     scale:['Pas du tout d’accord','Neutre / cela dépend','Tout à fait d’accord','Je ne sais pas'],
-    literacyNotice:'Cette activité de culture politique utilise encore les questions en anglais pendant la validation de la version française.',
+    literacyNotice:'Les questions de culture politique sont traduites, mais pas encore relues par des francophones. Certaines (par exemple celles du test final) restent pour l’instant en anglais.',
   };
   if (locale === 'pt-br') return {
     header:'Estudante', joinKicker:'Entrar na sala', joinTitle:'Digite o código da sala.', joinHelp:'Não é necessário informar nome, e-mail, usuário ou número de estudante. O professor vê como a turma responde, não qual resposta veio de você.',
@@ -59,7 +59,7 @@ export function studentUi(locale: Locale) {
     roomAnswers:'Respostas da turma', explanation:'Explicação', previous:'Anterior', next:'Próxima', submittedCount:(n:number,total:number)=>`${n}/${total} enviadas`,
     lobby:'Sala anônima', inTitle:'Você entrou.', inText:'Aguarde o professor iniciar a próxima pergunta.',
     scale:['Discordo totalmente','Nem concordo nem discordo / depende','Concordo totalmente','Não tenho certeza'],
-    literacyNotice:'Esta atividade de conhecimento político ainda usa perguntas em inglês enquanto a versão em português do Brasil é revisada e validada.',
+    literacyNotice:'As perguntas de conhecimento estão traduzidas, mas ainda não foram revisadas por falantes nativos. Algumas (por exemplo, as do teste final) continuam em inglês por enquanto.',
   };
   return {
     header:'Student', joinKicker:'Join classroom', joinTitle:'Enter the room code.', joinHelp:'No name, email, username or student ID is required. Your teacher sees how the room answers, not which answer came from you.',

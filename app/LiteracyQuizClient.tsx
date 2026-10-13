@@ -14,7 +14,7 @@ import {
   revealLiteracyAnswer,
   type LiteracySession,
 } from '../lib/literacy-session';
-import { germanLiteracyExplanation, germanLiteracyOption, germanLiteracyPrompt } from '../lib/german-literacy';
+import { localizedLiteracyQuestion } from '../lib/literacy-localized';
 import { useLocale, type Locale } from './LocaleProvider';
 
 const LITERACY_SESSION_KEY = 'politangle.literacy.v2.session';
@@ -43,7 +43,7 @@ function copy(locale: Locale, section: DeepSection) {
     result:'Ergebnis', retake:`${title} neu starten`, back:'Zurück zu Politangle', correctOf:(correct:number,total:number) => `${correct} von ${total} richtig.`,
     restart:'Neu starten', question:(index:number,total:number) => `Frage ${index} von ${total}`, correct:'Richtig', notQuite:'Nicht ganz', best:'Beste Antwort:',
     previous:'Zurück', next:'Weiter', check:'Antwort prüfen', see:`${title}-Ergebnis ansehen`, complete:(percent:number) => `${percent}% abgeschlossen`,
-    notice:null as string | null,
+    notice:'Die Fragen und Erklärungen sind ins Deutsche übersetzt, aber noch nicht sprachlich geprüft.' as string | null,
   };
   if (locale === 'es') return {
     title,
@@ -52,7 +52,7 @@ function copy(locale: Locale, section: DeepSection) {
     result:'Resultado', retake:`Repetir ${title}`, back:'Volver a Politangle', correctOf:(correct:number,total:number) => `${correct} de ${total} correctas.`,
     restart:'Reiniciar', question:(index:number,total:number) => `Pregunta ${index} de ${total}`, correct:'Correcto', notQuite:'No del todo', best:'Mejor respuesta:',
     previous:'Anterior', next:'Siguiente', check:'Comprobar respuesta', see:`Ver resultado de ${title}`, complete:(percent:number) => `${percent}% completado`,
-    notice:'El banco de preguntas de CLASSIFY y UNDERSTAND todavía no tiene una versión española validada. La interfaz está en español, pero las preguntas permanecen en inglés hasta completar esa validación.',
+    notice:'Las preguntas y las explicaciones están traducidas al español, pero aún no las han revisado hablantes nativos.',
   };
   if (locale === 'pt-br') return {
     title,
@@ -61,7 +61,7 @@ function copy(locale: Locale, section: DeepSection) {
     result:'Resultado', retake:`Refazer ${title}`, back:'Voltar ao Politangle', correctOf:(correct:number,total:number) => `${correct} de ${total} corretas.`,
     restart:'Recomeçar', question:(index:number,total:number) => `Pergunta ${index} de ${total}`, correct:'Correto', notQuite:'Não exatamente', best:'Melhor resposta:',
     previous:'Anterior', next:'Próxima', check:'Verificar resposta', see:`Ver resultado de ${title}`, complete:(percent:number) => `${percent}% concluído`,
-    notice:'O banco de perguntas de CLASSIFY e UNDERSTAND ainda não tem uma versão validada em português do Brasil. A interface está em português, mas as perguntas continuam em inglês até essa validação ser concluída.',
+    notice:'As perguntas e as explicações estão traduzidas para o português do Brasil, mas ainda não foram revisadas por falantes nativos.',
   };
   if (locale === 'fr') return {
     title,
@@ -70,7 +70,7 @@ function copy(locale: Locale, section: DeepSection) {
     result:'Résultat', retake:`Refaire ${title}`, back:'Retour à Politangle', correctOf:(correct:number,total:number) => `${correct} sur ${total} bonnes réponses.`,
     restart:'Recommencer', question:(index:number,total:number) => `Question ${index} sur ${total}`, correct:'Correct', notQuite:'Pas tout à fait', best:'Meilleure réponse :',
     previous:'Précédent', next:'Suivant', check:'Vérifier la réponse', see:`Voir le résultat ${title}`, complete:(percent:number) => `${percent}% terminé`,
-    notice:'Le questionnaire CLASSIFY / UNDERSTAND n’a pas encore de version française validée. L’interface est en français, mais les questions restent en anglais jusqu’à la fin de cette validation.',
+    notice:'Les questions et les explications sont traduites en français, mais pas encore relues par des francophones.',
   };
   return {
     title,
@@ -178,19 +178,16 @@ export default function LiteracyQuizClient({ section }: { section: DeepSection }
   }
 
   if (!current) return null;
-  const germanPrompt = germanLiteracyPrompt(current.id);
-  const useGerman = locale === 'de'
-    && Boolean(germanPrompt)
-    && current.options.every((option) => germanLiteracyOption(option.id, option.label) !== option.label)
-    && germanLiteracyExplanation(current.id, current.explanation) !== current.explanation;
+  const shown = localizedLiteracyQuestion(locale, current);
+  const labelFor = (optionId: string, fallback: string) => shown.options.find((candidate) => candidate.id === optionId)?.label ?? fallback;
   const correctLabels = current.acceptedAnswerSets[0]
     .map((id) => {
       const option = current.options.find((candidate) => candidate.id === id);
-      return option ? (useGerman ? germanLiteracyOption(option.id, option.label) : option.label) : undefined;
+      return option ? labelFor(option.id, option.label) : undefined;
     })
     .filter(Boolean)
     .join(', ');
-  const prompt = useGerman ? germanPrompt! : current.prompt;
+  const prompt = shown.prompt;
 
   return (
     <section className="engine-shell literacy-shell">
@@ -207,7 +204,7 @@ export default function LiteracyQuizClient({ section }: { section: DeepSection }
         <h1 className="literacy-prompt">{prompt}</h1>
         <div className="deep-options literacy-options">
           {orderedOptions.map((option) => (
-            <button type="button" disabled={checked} className={selected.includes(option.id) ? 'deep-option selected' : 'deep-option'} key={option.id} onClick={() => choose(option.id)}>{useGerman ? germanLiteracyOption(option.id, option.label) : option.label}</button>
+            <button type="button" disabled={checked} className={selected.includes(option.id) ? 'deep-option selected' : 'deep-option'} key={option.id} onClick={() => choose(option.id)}>{labelFor(option.id, option.label)}</button>
           ))}
         </div>
 
@@ -215,7 +212,7 @@ export default function LiteracyQuizClient({ section }: { section: DeepSection }
           <div className="literacy-feedback">
             <p className="engine-kicker">{itemResult.correct ? ui.correct : ui.notQuite}</p>
             {!itemResult.correct && <p><strong>{ui.best}</strong> {correctLabels}</p>}
-            <p>{useGerman ? germanLiteracyExplanation(current.id, current.explanation) : current.explanation}</p>
+            <p>{shown.explanation}</p>
           </div>
         )}
       </article>

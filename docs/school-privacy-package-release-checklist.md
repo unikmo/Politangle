@@ -42,7 +42,7 @@ The final data map must also name hosting regions, Firebase/Google and any other
 ## 4. Required school documents
 
 1. School privacy notice in EN/DE/ES/FR.
-2. Age-appropriate student notice for Junior 10–13 and Youth 14–18.
+2. Age-appropriate student notice for Junior 10–13 and Youth 14–17.
 3. Parent/guardian information where required.
 4. Controller/processor or data-sharing agreement matching the role decision.
 5. Security and architecture description.

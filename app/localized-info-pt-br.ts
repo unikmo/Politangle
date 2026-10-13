@@ -76,22 +76,21 @@ export const ptBrInfoPages: Record<InfoPageId, PageCopy> = {
   'question-banks': {
     eyebrow:'VERSÕES DOS BANCOS DE PERGUNTAS',
     title:'Públicos diferentes. Formas separadas e rastreáveis.',
-    intro:'Mudar o idioma não altera silenciosamente o contexto de país, os construtos de pontuação nem a avaliação adulta. Mudanças materiais recebem uma nova versão.',
+    intro:'Mudar o idioma não altera o contexto de país, a pontuação nem a avaliação adulta. Mudanças materiais recebem uma nova versão.',
     sections:[
-      { title:'Adulto', table:[['Quick','26 perguntas'],['Full','42 perguntas no total'],['Status','A avaliação adulta continua sendo um formulário próprio']] },
-      { title:'Youth 14–18', paragraphs:['Uma versão Youth em linguagem mais simples cobre os mesmos construtos centrais. Adequação à idade e equivalência dos construtos ainda exigem validação.'] },
-      { title:'Junior 10–13', paragraphs:['Um banco Junior separado usa frases mais curtas e simples para sala de aula. Ele precisa ser testado com usuários da faixa etária antes do uso real em escolas.'] },
-      { title:'Idiomas', paragraphs:['Inglês, alemão, espanhol, francês e português do Brasil são camadas de idioma — não perfis de país. Exemplos específicos de países, eleições, partidos ou campanhas exigem versões editoriais próprias.'] },
+      { title:'Adulto 18+', table:[['Quick','26 perguntas'],['Full','42 perguntas no total']] },
+      { title:'Jovens de 10 a 17 anos', paragraphs:['Os mesmos construtos em linguagem mais simples, com uma seleção mais curta para 10 a 13 anos. Adequação à idade e equivalência ainda exigem validação.'] },
+      { title:'Idiomas', paragraphs:['Inglês, alemão, espanhol, francês e português do Brasil são camadas de idioma, não perfis de país.'] },
     ],
   },
   'school-pilot': {
     eyebrow:'PILOTO ESCOLAR CONTROLADO',
     title:'Quer testar o Politangle com educadores?',
-    intro:'O piloto escolar é uma etapa controlada de pesquisa e validação, não uma liberação geral para uso com estudantes reais.',
+    intro:'Uma via de interesse e parceria de design. Não autoriza o uso da avaliação escolar com estudantes reais.',
     sections:[
-      { title:'O que será testado', bullets:['Clareza das instruções e perguntas','Adequação por faixa etária','Compreensão das explicações','Fluxo do professor e do projetor','Privacidade e utilidade dos resultados agregados'] },
-      { title:'Proteção do estudante', paragraphs:['O desenho evita listas de nomes e mapas entre estudante e resposta. Mesmo assim, uso real com menores exige revisão jurídica qualificada, acessibilidade e validação educacional antes da liberação.'] },
-      { title:'Situação atual', status:'PILOTO EM PREPARAÇÃO', callout:'Manifestar interesse não autoriza uso com estudantes reais. A equipe deve liberar explicitamente o piloto após o cumprimento das barreiras de privacidade, jurídico e validação.' },
+      { title:'Para quem é', paragraphs:['Educadores do ensino fundamental II e médio, especialistas em educação política e pesquisadores.'] },
+      { title:'Limite atual', callout:'Pilotos com estudantes reais exigem revisão jurídica, proteção e acessibilidade, acordo escolar e validação de conteúdo por idade.' },
+      { title:'Conheça o sistema', paragraphs:['Veja a demo e os materiais do professor, sem dados de estudantes reais.'], link:{ href:'/school', label:'Ver o modo School →' } },
     ],
   },
 };
