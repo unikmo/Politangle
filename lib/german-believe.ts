@@ -1,6 +1,6 @@
 import type { BeliefPolarity } from './belief-statements';
 
-export const GERMAN_BELIEVE_VERSION = 'de-believe-2026.10-plain-v4' as const;
+export const GERMAN_BELIEVE_VERSION = 'de-believe-2026.10-populism-v5' as const;
 
 const dePairs: Record<string, readonly [string, string]> = {
   T01: ["Der Staat soll sicherstellen, dass alle Menschen Zugang zu Schulen und medizinischer Versorgung haben.", "Bei wichtigen Leistungen wie Schulen und medizinischer Versorgung sollte der Staat privaten Anbietern und der persönlichen Wahl mehr Raum lassen."],
