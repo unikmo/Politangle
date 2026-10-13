@@ -3,7 +3,7 @@
 import { useMemo, useState } from 'react';
 import { calculateDeepLiteracyResult } from '../../../../lib/deep-engine';
 import { schoolBaselineQuestions } from '../../../../lib/school-literacy';
-import { germanLiteracyPrompt, germanLiteracyOption } from '../../../../lib/german-literacy';
+import { localizedLiteracyQuestion } from '../../../../lib/literacy-localized';
 import { useLocale, type Locale } from '../../../LocaleProvider';
 
 function ui(locale: Locale) {
@@ -38,6 +38,7 @@ export default function PrivateLiteracyClient() {
     return <section className="engine-shell school-shell"><article className="engine-card"><p className="engine-kicker">{c.result}</p><h1>{result.overall.percent}%</h1><div className="deep-literacy-line"><span>CLASSIFY</span><strong>{result.sections.classify.percent}%</strong></div><div className="deep-literacy-line"><span>UNDERSTAND</span><strong>{result.sections.understand.percent}%</strong></div><p className="engine-help">{c.private}</p><button className="engine-primary-link" type="button" onClick={() => { setAnswers({}); setIndex(0); setFinished(false); }}>{c.again}</button></article></section>;
   }
 
-  const prompt = locale === 'de' ? germanLiteracyPrompt(question.id) ?? question.prompt : question.prompt;
-  return <section className="engine-shell school-shell"><article className="engine-card"><p className="engine-kicker">{c.kicker(index + 1, schoolBaselineQuestions.length)}</p>{c.notice && <p className="engine-help">{c.notice}</p>}<h1>{prompt}</h1><div className="deep-options">{question.options.map((option) => <button key={option.id} type="button" className={selected.includes(option.id) ? 'deep-option selected' : 'deep-option'} onClick={() => choose(option.id)}>{locale === 'de' ? germanLiteracyOption(option.id, option.label) : option.label}</button>)}</div><div className="engine-nav"><button type="button" disabled={index === 0} onClick={() => setIndex((value) => Math.max(0, value - 1))}>{c.previous}</button><span>{c.answered(Object.keys(answers).length, schoolBaselineQuestions.length)}</span>{index === schoolBaselineQuestions.length - 1 ? <button type="button" disabled={Object.keys(answers).length !== schoolBaselineQuestions.length} onClick={() => setFinished(true)}>{c.see}</button> : <button type="button" disabled={!selected.length} onClick={() => setIndex((value) => value + 1)}>{c.next}</button>}</div></article></section>;
+  const shown = localizedLiteracyQuestion(locale, question);
+  const prompt = shown.prompt;
+  return <section className="engine-shell school-shell"><article className="engine-card"><p className="engine-kicker">{c.kicker(index + 1, schoolBaselineQuestions.length)}</p>{c.notice && <p className="engine-help">{c.notice}</p>}<h1>{prompt}</h1><div className="deep-options">{question.options.map((option) => <button key={option.id} type="button" className={selected.includes(option.id) ? 'deep-option selected' : 'deep-option'} onClick={() => choose(option.id)}>{shown.options.find((candidate) => candidate.id === option.id)?.label ?? option.label}</button>)}</div><div className="engine-nav"><button type="button" disabled={index === 0} onClick={() => setIndex((value) => Math.max(0, value - 1))}>{c.previous}</button><span>{c.answered(Object.keys(answers).length, schoolBaselineQuestions.length)}</span>{index === schoolBaselineQuestions.length - 1 ? <button type="button" disabled={Object.keys(answers).length !== schoolBaselineQuestions.length} onClick={() => setFinished(true)}>{c.see}</button> : <button type="button" disabled={!selected.length} onClick={() => setIndex((value) => value + 1)}>{c.next}</button>}</div></article></section>;
 }

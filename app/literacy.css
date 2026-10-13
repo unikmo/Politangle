@@ -20,3 +20,5 @@ main.engine-page.practice-start-state:not(.school-page):not(.school-projector-pa
 /* Header controls sit on the orange band: keep the language picker text and the learn link readable */
 main.engine-page.practice-page:not(.school-page):not(.school-projector-page) .engine-header .p-language-picker .lang{color:#2b150d}
 main.engine-page.practice-page:not(.school-page):not(.school-projector-page) .engine-header>a:last-child,main.engine-page.practice-page:not(.school-page):not(.school-projector-page) .engine-header-actions>a{color:#2b150d;text-decoration:underline;text-underline-offset:3px}
+/* The translation notice sits on the orange band above the question card */
+main.engine-page.practice-page:not(.school-page):not(.school-projector-page) .practice-notice{color:#2b150d}

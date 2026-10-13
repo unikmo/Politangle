@@ -7,6 +7,7 @@ import { LITERACY_MASTER_BANK_VERSION, type LiteracyQuestionRecord } from '../..
 import { selectPracticeQuestionPlan } from '../../lib/literacy-certified-selector';
 import { glossaryEntriesForTags } from '../../lib/literacy-glossary';
 import { literacyMasterBankCandidates } from '../../lib/literacy-master-bank';
+import { localizedLiteracyQuestion, localizedLiteracyTerm } from '../../lib/literacy-localized';
 import { useLocale, type Locale } from '../LocaleProvider';
 
 type PracticeRun = {
@@ -29,7 +30,7 @@ type PracticeCopy = {
   progress: (index: number, total: number) => string;
 };
 
-// Practice questions and explanations are English for now (the quizzes page and a notice say so).
+// Practice questions are shown in the reader's language (draft translations, see lib/literacy-localized.ts); a notice says they are not yet language-checked.
 // Everything around them follows the reader's language, informal address throughout.
 const practiceCopy: Record<Locale, PracticeCopy> = {
   en: {
@@ -46,59 +47,59 @@ const practiceCopy: Record<Locale, PracticeCopy> = {
     see: 'See result', next: 'Next question', check: 'Check answer', progress: (i, t) => `${i} of ${t}`,
   },
   de: {
-    headerAll: 'ÜBUNG', headerStart: 'ÜBUNG · FRAGEN AUF ENGLISCH', learn: 'Begriffe lernen', kicker: 'KOSTENLOSE ÜBUNG IN POLITISCHER BILDUNG',
+    headerAll: 'ÜBUNG', headerStart: 'ÜBUNG', learn: 'Begriffe lernen', kicker: 'KOSTENLOSE ÜBUNG IN POLITISCHER BILDUNG',
     title: 'Was möchtest du üben?',
     lede: 'Jeder Satz enthält 25 Fragen mit ausgewogener Themenabdeckung. Nach jeder Frage siehst du die Antwort und eine kurze Erklärung.',
     classifyStrong: 'Welche politische Tradition passt?', classifySmall: 'Erkenne politische Strömungen anhand kurzer Beschreibungen.',
     understandStrong: 'Was ist der wichtige Unterschied?', understandSmall: 'Unterscheide Ideen, die oft verwechselt werden.',
     statusTitle: 'Übungsfragen in Prüfung', statusText: 'Diese Fragen werden noch geprüft. Die Übung ist kostenlos und führt zu keinem Zertifikat.',
-    notice: 'Die Fragen und Erklärungen sind noch nicht ins Deutsche übersetzt und bleiben vorerst auf Englisch. Die Oberfläche ist auf Deutsch.',
+    notice: 'Die Fragen und Erklärungen sind ins Deutsche übersetzt, aber noch nicht sprachlich geprüft.',
     complete: 'ÜBUNG ABGESCHLOSSEN',
     resultLede: (p) => `${p} % richtig. Nutze die Erklärungen, um zu entscheiden, was du wiederholen willst, und starte dann einen neuen, ausgewogenen Satz.`,
     newSet: (s) => `Neuer ${s}-Satz`, another: 'Anderen Satz wählen', soFar: (n) => `Bisher ${n} richtig`, exit: 'Übung verlassen',
-    question: (i, t) => `FRAGE ${i} VON ${t}`, correct: 'RICHTIG', notQuite: 'NOCH NICHT GANZ', best: 'Beste Antwort:', review: 'Nachschlagen:',
+    question: (i, t) => `FRAGE ${i} VON ${t}`, correct: 'RICHTIG', notQuite: 'NOCH NICHT GANZ', best: 'Beste Antwort:', review: 'Nachschlagen (Seite auf Englisch):',
     see: 'Ergebnis ansehen', next: 'Nächste Frage', check: 'Antwort prüfen', progress: (i, t) => `${i} von ${t}`,
   },
   es: {
-    headerAll: 'PRÁCTICA', headerStart: 'PRÁCTICA · PREGUNTAS EN INGLÉS', learn: 'Aprende los términos', kicker: 'PRÁCTICA GRATUITA DE CULTURA POLÍTICA',
+    headerAll: 'PRÁCTICA', headerStart: 'PRÁCTICA', learn: 'Aprende los términos', kicker: 'PRÁCTICA GRATUITA DE CULTURA POLÍTICA',
     title: 'Elige qué quieres practicar.',
     lede: 'Cada serie tiene 25 preguntas con una cobertura equilibrada de temas. Después de cada pregunta ves la respuesta y una breve explicación.',
     classifyStrong: '¿Qué tradición política encaja?', classifySmall: 'Reconoce familias políticas a partir de descripciones breves.',
     understandStrong: '¿Cuál es la diferencia importante?', understandSmall: 'Distingue ideas que suelen confundirse.',
     statusTitle: 'Preguntas de práctica en revisión', statusText: 'Estas preguntas aún se están revisando. La práctica es gratuita y no da ningún certificado.',
-    notice: 'Las preguntas y las explicaciones todavía no tienen una versión española validada y siguen en inglés. La interfaz está en español.',
+    notice: 'Las preguntas y las explicaciones están traducidas al español, pero aún no las han revisado hablantes nativos.',
     complete: 'PRÁCTICA COMPLETADA',
     resultLede: (p) => `${p} % de aciertos. Usa las explicaciones para decidir qué repasar y prueba después una serie nueva y equilibrada.`,
-    newSet: (s) => `Nueva serie ${s}`, another: 'Elegir otra serie', soFar: (n) => `${n} correctas hasta ahora`, exit: 'Salir de la práctica',
-    question: (i, t) => `PREGUNTA ${i} DE ${t}`, correct: 'CORRECTO', notQuite: 'NO DEL TODO', best: 'Mejor respuesta:', review: 'Repasa:',
+    newSet: (s) => `Nueva serie ${s}`, another: 'Elegir otra serie', soFar: (n) => `${n} ${n === 1 ? 'correcta' : 'correctas'} hasta ahora`, exit: 'Salir de la práctica',
+    question: (i, t) => `PREGUNTA ${i} DE ${t}`, correct: 'CORRECTO', notQuite: 'NO DEL TODO', best: 'Mejor respuesta:', review: 'Repasa (página en inglés):',
     see: 'Ver resultado', next: 'Siguiente pregunta', check: 'Comprobar respuesta', progress: (i, t) => `${i} de ${t}`,
   },
   fr: {
-    headerAll: 'ENTRAÎNEMENT', headerStart: 'ENTRAÎNEMENT · QUESTIONS EN ANGLAIS', learn: 'Apprendre les termes', kicker: 'ENTRAÎNEMENT GRATUIT À LA CULTURE POLITIQUE',
+    headerAll: 'ENTRAÎNEMENT', headerStart: 'ENTRAÎNEMENT', learn: 'Apprendre les termes', kicker: 'ENTRAÎNEMENT GRATUIT À LA CULTURE POLITIQUE',
     title: 'Choisis ce que tu veux travailler.',
     lede: 'Chaque série comporte 25 questions avec une couverture équilibrée des thèmes. Après chaque question, tu vois la réponse et une courte explication.',
     classifyStrong: 'Quelle tradition politique correspond ?', classifySmall: 'Reconnais des familles politiques à partir de courtes descriptions.',
     understandStrong: 'Quelle est la différence importante ?', understandSmall: 'Distingue des idées souvent confondues.',
     statusTitle: 'Questions d’entraînement en cours de relecture', statusText: 'Ces questions sont encore en cours de relecture. L’entraînement est gratuit et ne donne aucun certificat.',
-    notice: 'Les questions et les explications n’ont pas encore de version française validée et restent en anglais. L’interface est en français.',
+    notice: 'Les questions et les explications sont traduites en français, mais pas encore relues par des francophones.',
     complete: 'ENTRAÎNEMENT TERMINÉ',
     resultLede: (p) => `${p} % de bonnes réponses. Utilise les explications pour décider quoi revoir, puis essaie une nouvelle série équilibrée.`,
-    newSet: (s) => `Nouvelle série ${s}`, another: 'Choisir une autre série', soFar: (n) => `${n} bonnes réponses`, exit: 'Quitter l’entraînement',
-    question: (i, t) => `QUESTION ${i} SUR ${t}`, correct: 'BONNE RÉPONSE', notQuite: 'PAS TOUT À FAIT', best: 'Meilleure réponse :', review: 'À revoir :',
+    newSet: (s) => `Nouvelle série ${s}`, another: 'Choisir une autre série', soFar: (n) => `${n} ${n > 1 ? 'bonnes réponses' : 'bonne réponse'}`, exit: 'Quitter l’entraînement',
+    question: (i, t) => `QUESTION ${i} SUR ${t}`, correct: 'BONNE RÉPONSE', notQuite: 'PAS TOUT À FAIT', best: 'Meilleure réponse :', review: 'À revoir (page en anglais) :',
     see: 'Voir le résultat', next: 'Question suivante', check: 'Vérifier la réponse', progress: (i, t) => `${i} sur ${t}`,
   },
   'pt-br': {
-    headerAll: 'PRÁTICA', headerStart: 'PRÁTICA · PERGUNTAS EM INGLÊS', learn: 'Aprenda os termos', kicker: 'PRÁTICA GRATUITA DE EDUCAÇÃO POLÍTICA',
+    headerAll: 'PRÁTICA', headerStart: 'PRÁTICA', learn: 'Aprenda os termos', kicker: 'PRÁTICA GRATUITA DE EDUCAÇÃO POLÍTICA',
     title: 'Escolha o que você quer praticar.',
     lede: 'Cada conjunto reúne 25 perguntas com cobertura equilibrada de temas. Depois de cada pergunta, você vê a resposta e uma breve explicação.',
     classifyStrong: 'Qual tradição política combina?', classifySmall: 'Reconheça famílias políticas a partir de descrições curtas.',
     understandStrong: 'Qual é a diferença importante?', understandSmall: 'Diferencie ideias que costumam ser confundidas.',
     statusTitle: 'Perguntas de prática em revisão', statusText: 'Estas perguntas ainda estão em revisão. A prática é gratuita e não emite certificado.',
-    notice: 'As perguntas e as explicações ainda não têm uma versão validada em português do Brasil e continuam em inglês. A interface está em português.',
+    notice: 'As perguntas e as explicações estão traduzidas para o português do Brasil, mas ainda não foram revisadas por falantes nativos.',
     complete: 'PRÁTICA CONCLUÍDA',
     resultLede: (p) => `${p}% de acertos. Use as explicações para decidir o que revisar e depois tente um novo conjunto equilibrado.`,
     newSet: (s) => `Novo conjunto ${s}`, another: 'Escolher outro conjunto', soFar: (n) => `${n} acertos até agora`, exit: 'Sair da prática',
-    question: (i, t) => `PERGUNTA ${i} DE ${t}`, correct: 'CORRETO', notQuite: 'NÃO EXATAMENTE', best: 'Melhor resposta:', review: 'Revise:',
+    question: (i, t) => `PERGUNTA ${i} DE ${t}`, correct: 'CORRETO', notQuite: 'NÃO EXATAMENTE', best: 'Melhor resposta:', review: 'Revise (página em inglês):',
     see: 'Ver resultado', next: 'Próxima pergunta', check: 'Verificar resposta', progress: (i, t) => `${i} de ${t}`,
   },
 };
@@ -131,7 +132,8 @@ export default function PracticeClient() {
   const c = practiceCopy[locale];
 
   const questions = useMemo(() => new Map(literacyMasterBankCandidates.map((question) => [question.id, question])), []);
-  const current = run ? questions.get(run.questionIds[run.index]) ?? null : null;
+  const source = run ? questions.get(run.questionIds[run.index]) ?? null : null;
+  const current = source ? localizedLiteracyQuestion(locale, source) : null;
   const selected = run && current ? run.answers[current.id] : undefined;
   const checked = Boolean(run && current && run.revealed.includes(current.id));
   const result = current && selected && checked ? scoreLiteracyItem(current, [selected]) : null;
@@ -246,7 +248,7 @@ export default function PracticeClient() {
               <p className="engine-kicker">{result.correct ? c.correct : c.notQuite}</p>
               {!result.correct && <p><strong>{c.best}</strong> {correctLabels}</p>}
               <p>{current.explanation}</p>
-              {glossary.length > 0 && <p className="practice-glossary"><strong>{c.review}</strong>{' '}{glossary.map((entry, index) => <span key={entry.slug}><Link href={`/learn#${entry.slug}`}>{entry.term}</Link>{index < glossary.length - 1 ? ', ' : ''}</span>)}</p>}
+              {glossary.length > 0 && <p className="practice-glossary"><strong>{c.review}</strong>{' '}{glossary.map((entry, index) => <span key={entry.slug}><Link href={`/learn#${entry.slug}`}>{localizedLiteracyTerm(locale, entry.term)}</Link>{index < glossary.length - 1 ? ', ' : ''}</span>)}</p>}
             </div>
           )}
         </article>

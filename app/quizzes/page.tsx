@@ -28,8 +28,8 @@ const copy: Record<Locale, Copy> = {
     start: 'Starten',
     cards: [
       { label: 'BELIEVE', title: 'Politangle Quick', meta: '26 Fragen · dein politisches Profil', href: '/quiz' },
-      { label: 'CLASSIFY', title: 'Politische Strömungen erkennen', meta: '25 Fragen · mit Erklärungen · Fragen auf Englisch', href: '/practice?section=classify' },
-      { label: 'UNDERSTAND', title: 'Ähnliche politische Ideen unterscheiden', meta: '25 Fragen · mit Erklärungen · Fragen auf Englisch', href: '/practice?section=understand' },
+      { label: 'CLASSIFY', title: 'Politische Strömungen erkennen', meta: '25 Fragen · mit Erklärungen', href: '/practice?section=classify' },
+      { label: 'UNDERSTAND', title: 'Ähnliche politische Ideen unterscheiden', meta: '25 Fragen · mit Erklärungen', href: '/practice?section=understand' },
       { label: 'FOKUS-QUIZ', title: 'Erkennst du Populismus?', meta: '12 Fragen · mit Erklärungen', href: '/populism-quiz' },
     ],
   },
@@ -40,8 +40,8 @@ const copy: Record<Locale, Copy> = {
     start: 'Empezar',
     cards: [
       { label: 'BELIEVE', title: 'Politangle Quick', meta: '26 preguntas · tu perfil político', href: '/quiz' },
-      { label: 'CLASSIFY', title: 'Reconoce tradiciones políticas', meta: '25 preguntas · con explicaciones · preguntas en inglés', href: '/practice?section=classify' },
-      { label: 'UNDERSTAND', title: 'Distingue ideas que suelen confundirse', meta: '25 preguntas · con explicaciones · preguntas en inglés', href: '/practice?section=understand' },
+      { label: 'CLASSIFY', title: 'Reconoce tradiciones políticas', meta: '25 preguntas · con explicaciones', href: '/practice?section=classify' },
+      { label: 'UNDERSTAND', title: 'Distingue ideas que suelen confundirse', meta: '25 preguntas · con explicaciones', href: '/practice?section=understand' },
       { label: 'QUIZ ENFOCADO', title: '¿Reconoces el populismo?', meta: '12 preguntas · con explicaciones', href: '/populism-quiz' },
     ],
   },
@@ -52,8 +52,8 @@ const copy: Record<Locale, Copy> = {
     start: 'Commencer',
     cards: [
       { label: 'BELIEVE', title: 'Politangle Quick', meta: '26 questions · ton profil politique', href: '/quiz' },
-      { label: 'CLASSIFY', title: 'Reconnaître les traditions politiques', meta: '25 questions · avec explications · questions en anglais', href: '/practice?section=classify' },
-      { label: 'UNDERSTAND', title: 'Distinguer des idées souvent confondues', meta: '25 questions · avec explications · questions en anglais', href: '/practice?section=understand' },
+      { label: 'CLASSIFY', title: 'Reconnaître les traditions politiques', meta: '25 questions · avec explications', href: '/practice?section=classify' },
+      { label: 'UNDERSTAND', title: 'Distinguer des idées souvent confondues', meta: '25 questions · avec explications', href: '/practice?section=understand' },
       { label: 'QUIZ CIBLÉ', title: 'Sais-tu reconnaître le populisme ?', meta: '12 questions · avec explications', href: '/populism-quiz' },
     ],
   },
@@ -64,8 +64,8 @@ const copy: Record<Locale, Copy> = {
     start: 'Começar',
     cards: [
       { label: 'BELIEVE', title: 'Politangle Quick', meta: '26 perguntas · seu perfil político', href: '/quiz' },
-      { label: 'CLASSIFY', title: 'Reconheça tradições políticas', meta: '25 perguntas · com explicações · perguntas em inglês', href: '/practice?section=classify' },
-      { label: 'UNDERSTAND', title: 'Diferencie ideias que costumam ser confundidas', meta: '25 perguntas · com explicações · perguntas em inglês', href: '/practice?section=understand' },
+      { label: 'CLASSIFY', title: 'Reconheça tradições políticas', meta: '25 perguntas · com explicações', href: '/practice?section=classify' },
+      { label: 'UNDERSTAND', title: 'Diferencie ideias que costumam ser confundidas', meta: '25 perguntas · com explicações', href: '/practice?section=understand' },
       { label: 'QUIZ TEMÁTICO', title: 'Você reconhece o populismo?', meta: '12 perguntas · com explicações', href: '/populism-quiz' },
     ],
   },
