@@ -164,17 +164,19 @@ const phase1ValidatedPairs: Record<BeliefConstruct, CanonicalModePairs> = {
     ],
   },
   populism: {
+    // Three distinct components: shared popular will, moral anti-elite
+    // antagonism, and exclusive representative claims.
     think: [
-      'Political disagreements usually reflect real conflicts among interests and values, not one side simply betraying ordinary voters.',
-      'Political decisions often give too much influence to well-connected groups and too little to ordinary voters.',
+      'People can disagree about politics without either side speaking for everyone.',
+      'Most ordinary people share one political will that politicians should follow.',
     ],
     feel: [
-      'When politics disappoints me, I usually think the main reason is that the choices are hard and different groups want different things.',
-      'When politics disappoints me, I often suspect that well-connected groups are being heard more than ordinary voters.',
+      'I feel uneasy when politics is presented as a fight between good people and bad politicians.',
+      'I often feel that honest ordinary people face a dishonest political class.',
     ],
     act: [
-      'I prefer candidates who explain political trade-offs openly, even when their message is less dramatic or popular.',
-      'I prefer candidates who promise to reduce the influence of well-connected groups and give ordinary voters more direct say.',
+      'I would distrust a candidate who claims only they represent the real people.',
+      'I would consider voting for a candidate who says they alone speak for the real people.',
     ],
   },
   'ecology-growth': {
@@ -489,7 +491,15 @@ function constructAverage(results: readonly ConstructModeResultV2[], constructsT
 
 export function assessTendenciesV2(answers: BeliefAnswersV2): TendencyResultV2[] {
   const results = calculateConstructModesV2(answers);
-  const populism = constructAverage(results, ['populism']);
+  const modes = results.find((item) => item.construct === 'populism');
+  const components = modes ? [modes.think, modes.feel, modes.act] : [];
+  const answered = components.filter((value): value is number => value !== null).length;
+  // Conjunctive scoring: a high score on one component cannot compensate
+  // for low support on another; incomplete triplets cannot be labelled.
+  const populism = {
+    score: answered === 3 ? Math.min(...(components as number[])) : null,
+    coverage: Math.round((answered / 3) * 100),
+  };
   const authority = constructAverage(results, ['authority-order', 'pluralism']);
   return [
     { id: 'populism', ...populism },
@@ -573,8 +583,16 @@ export function validateCanonicalBeliefV2() {
   for (const item of lockedBeliefItemsV2) {
     if (wordCount(item.negative) > 26 || wordCount(item.positive) > 26) errors.push(`${item.id} exceeds the 26-word source-language burden guardrail`);
   }
-  const allText = lockedBeliefItemsV2.flatMap((item) => [item.negative, item.positive]).join(' ');
-  if (/\belites?\b/i.test(allText)) errors.push('BELIEVE wording should not repeatedly frame politics around elites');
+  // Guard the construct itself: belief in a shared will, moral conflict,
+  // and exclusive representation, not ordinary criticism of influence.
+  const popTriplet = lockedBeliefItemsV2.filter((item) => item.construct === 'populism');
+  const popThink = popTriplet.find((item) => item.mode === 'think');
+  const popFeel = popTriplet.find((item) => item.mode === 'feel');
+  const popAct = popTriplet.find((item) => item.mode === 'act');
+  if (!/one political will/i.test(popThink?.positive ?? '')) errors.push('Populism THINK must test a single common political will');
+  if (!/honest ordinary people.*dishonest political class/i.test(popFeel?.positive ?? '')) errors.push('Populism FEEL must test moralized anti-elite conflict');
+  if (!/alone speak for the real people/i.test(popAct?.positive ?? '')) errors.push('Populism ACT must test exclusive representation');
+  if (/well-connected|direct say|ordinary voters/i.test(popTriplet.map((item) => item.positive).join(' '))) errors.push('Unequal political influence alone is not evidence of populism');
   const incompleteComparatives = lockedBeliefItemsV2.filter((item) => item.mode === 'feel' && /\bI (?:feel |am )?more\b/i.test(`${item.negative} ${item.positive}`));
   if (incompleteComparatives.length) errors.push('FEEL items should be complete standalone statements, not unfinished “more ...” comparisons');
   const provision = lockedBeliefItemsV2.filter((item) => item.construct === 'public-provision');
@@ -584,9 +602,6 @@ export function validateCanonicalBeliefV2() {
   const nationhood = lockedBeliefItemsV2.filter((item) => item.construct === 'nationhood-membership');
   if (nationhood.some((item) => !/naturalized|becomes? a citizen|became (?:a )?citizens?|become citizens/i.test(`${item.negative} ${item.positive}`) || !/citizens? from birth/i.test(`${item.negative} ${item.positive}`))) errors.push('Nationhood THINK / FEEL / ACT items must stay aligned on naturalized versus citizen-from-birth national membership');
   if (nationhood.some((item) => /parent|birthplace|citizenship-at-birth/i.test(`${item.negative} ${item.positive}`))) errors.push('Nationhood core must not use citizenship-at-birth law as a proxy for national belonging');
-  const populistAct = lockedBeliefItemsV2.find((item) => item.id === 'A11');
-  if (!populistAct || !/well-connected/i.test(`${populistAct.negative} ${populistAct.positive}`) || !/ordinary voters/i.test(`${populistAct.negative} ${populistAct.positive}`)) errors.push('Populism ACT should measure unequal political influence without relying on an elite-versus-people slogan');
-  if (populistAct && /court|institution|media|opposition|leader/.test(`${populistAct.negative} ${populistAct.positive}`.toLowerCase())) errors.push('Populism ACT item must not collapse into anti-pluralism or leader authoritarianism');
   const religion = lockedBeliefItemsV2.filter((item) => item.construct === 'religion-public-role');
   if (religion.some((item) => !/religious moral principles/i.test(`${item.negative} ${item.positive}`))) errors.push('Religion-public-role triplet must stay aligned on legitimacy of religious moral principles in public reasoning');
   const subsidiarityAct = lockedBeliefItemsV2.find((item) => item.id === 'A14');
