@@ -10,6 +10,12 @@ async function check(page,route,width){
  const r=await page.goto(base+route,{waitUntil:'domcontentloaded',timeout:30000});
  assert(r?.ok(),route+' HTTP '+(r?.status()||'?'));
  await page.locator('main').first().waitFor({state:'visible',timeout:15000});
+ const brandImages=await page.locator('.p-brand .p-mark-logo img').count();
+ if(brandImages){
+  await page.waitForFunction(() => Array.from(document.querySelectorAll('.p-brand .p-mark-logo img'))
+    .every(img => img.complete && img.naturalWidth > 0), undefined, {timeout:15000});
+  assert(await page.locator('.p-brand .p-mark-logo img').count() === brandImages, route+' logo was removed during render');
+ }
  const d=await page.evaluate(()=>{
  const box=s=>{const e=document.querySelector(s);if(!e)return null;const r=e.getBoundingClientRect();return {left:r.left,right:r.right,width:r.width,height:r.height}};
  return {viewport:innerWidth,visual:visualViewport?.width,client:document.documentElement.clientWidth,screen:screen.width,doc:Math.max(document.body.scrollWidth,document.documentElement.scrollWidth),menu:box('.p-mobile-nav-toggle'),lang:box('.p-nav select.lang'),header:box('header.p-nav')};
