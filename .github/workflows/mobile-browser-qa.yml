@@ -1,0 +1,40 @@
+name: Politangle mobile browser QA
+on:
+  pull_request:
+    branches: [main, design/approved-p-mark-20261008]
+    paths:
+      - 'app/**'
+      - 'scripts/mobile-smoke.mjs'
+      - '.github/workflows/mobile-browser-qa.yml'
+jobs:
+  mobile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+      - name: Build
+        run: npx next build
+      - name: Install Chromium
+        run: |
+          npm install --no-save --ignore-scripts --no-audit --no-fund playwright@1.56.1
+          npx playwright install --with-deps chromium webkit
+      - name: Test Chromium and WebKit mobile journeys at 320 to 900 pixels
+        run: |
+          npm start -- -H 127.0.0.1 -p 3000 > /tmp/politangle-mobile.log 2>&1 &
+          APP_PID=$!
+          trap 'kill $APP_PID || true' EXIT
+          node -e "const u='http://127.0.0.1:3000';let n=0;(async()=>{while(n++<100){try{const r=await fetch(u);if(r.ok)process.exit(0)}catch{};await new Promise(r=>setTimeout(r,500))}process.exit(1)})()"
+          MOBILE_BROWSER=chromium POLITANGLE_BASE_URL=http://127.0.0.1:3000 node scripts/mobile-smoke.mjs
+          MOBILE_BROWSER=webkit POLITANGLE_BASE_URL=http://127.0.0.1:3000 node scripts/mobile-smoke.mjs
+      - name: Preserve screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: politangle-mobile-screenshots
+          path: mobile-qa/screenshots
+          if-no-files-found: ignore
