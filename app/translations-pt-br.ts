@@ -6,7 +6,7 @@ export const ptBr: Record<string, string> = {
   'About':'Sobre',
   'Start Quick':'Começar Quick',
   'POLITICS WITHOUT THE BOXES':'POLÍTICA SEM CAIXINHAS',
-  'Are you left, right, centre—or more nuanced? Find out in 3 minutes.':'Você é de esquerda, de direita, de centro… ou suas ideias vão além desses rótulos? Descubra em 3 minutos.',
+  'Are you really left, right, centre—or more nuanced? Find out in 3 minutes.':'Você é mesmo de esquerda, de direita, de centro… ou suas ideias vão além desses rótulos? Descubra em 3 minutos.',
   '26 questions reveal how your views spread across eight political dimensions—without reducing you to one label.':'26 perguntas mostram como suas posições se distribuem por oito dimensões políticas, sem reduzir você a um único rótulo.',
   'Start the 3-minute Quick':'Faça o Quick em 3 minutos',
   'See how it works':'Veja como funciona',
