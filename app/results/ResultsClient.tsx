@@ -405,7 +405,16 @@ export default function ResultsClient() {
 
         {people.length > 0 && home.primary && (() => {
           const display = familyDisplay(locale, home.primary.id, home.primary.name);
-          return <p className="home-reference"><strong>{locale === 'de' ? `Historische Bezugspunkte für ${display.name}:` : locale === 'es' ? `Referencias históricas de ${display.name}:` : locale === 'fr' ? `Repères historiques pour ${display.name} :` : locale === 'pt-br' ? `Referências históricas de ${display.name}:` : `Historical reference points for ${display.name}:`}</strong> {people.join(' · ')}. {locale === 'de' ? 'Sie stehen für die Tradition – nicht für dein persönliches Profil.' : locale === 'es' ? 'Representan la tradición, no tu perfil personal exacto.' : locale === 'fr' ? 'Ils illustrent la tradition, pas ton profil personnel exact.' : locale === 'pt-br' ? 'Elas ilustram a tradição, não o seu perfil pessoal exato.' : 'They illustrate the tradition, not your exact personal profile.'}</p>;
+          const title = locale === 'de' ? 'Bekannte Stimmen dieser politischen Tradition' : locale === 'es' ? 'Figuras conocidas de esta tradición política' : locale === 'fr' ? 'Figures de cette tradition politique' : locale === 'pt-br' ? 'Vozes conhecidas desta tradição política' : 'Notable voices from this political tradition';
+          const caveat = locale === 'de' ? 'Historische Bezugspunkte, keine persönlichen Übereinstimmungswerte. Diese Personen haben den Test nicht absolviert.' : locale === 'es' ? 'Referencias históricas, no coincidencias personales. Estas personas no hicieron este test.' : locale === 'fr' ? 'Repères historiques, pas des scores de ressemblance. Ces personnes n’ont pas passé ce test.' : locale === 'pt-br' ? 'Referências históricas, não pontuações de semelhança. Essas pessoas não fizeram o teste.' : 'Historical reference points, not personal match scores. These figures did not take this test.';
+          return <section className="home-reference" aria-label={title}>
+            <p className="engine-kicker">{title}</p>
+            <h2>{display.name}</h2>
+            <div className="politangle-family-story">
+              {people.map((person) => <details key={person}><summary>{person} →</summary><p>{caveat}</p><p>{display.meaning}.</p></details>)}
+            </div>
+            <small>{caveat}</small>
+          </section>;
         })()}
 
         <PoliticalShape axes={result.polygon} locale={locale} />
