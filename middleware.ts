@@ -13,7 +13,7 @@ function nextWithLocale(request: NextRequest, locale: string) {
   const response = NextResponse.next({ request: { headers: requestHeaders } });
   response.cookies.set('politangle_locale', locale, {
     sameSite: 'lax',
-    secure: true,
+    secure: request.nextUrl.protocol === 'https:',
     path: '/',
     maxAge: 60 * 60 * 24 * 365,
   });
