@@ -4,7 +4,7 @@ const locales = new Set(['en', 'de', 'es', 'fr', 'pt-br']);
 const localizedPaths = new Set([
   '/', '/about', '/account', '/classify', '/contact', '/deep', '/imprint', '/learn', '/method',
   '/populism-quiz', '/practice', '/privacy', '/question-banks', '/quiz', '/quizzes', '/results',
-  '/school', '/school/pilot', '/terms', '/understand', '/validation', '/countries',
+  '/terms', '/understand', '/validation', '/countries',
 ]);
 
 function nextWithLocale(request: NextRequest, locale: string) {
@@ -22,6 +22,10 @@ function nextWithLocale(request: NextRequest, locale: string) {
 
 export function middleware(request: NextRequest) {
   const parts = request.nextUrl.pathname.split('/').filter(Boolean);
+  const routeParts = locales.has(parts[0]) ? parts.slice(1) : parts;
+  if (routeParts[0] === 'school') {
+    return new NextResponse('Not found', { status: 404, headers: { 'Cache-Control': 'no-store', 'X-Robots-Tag': 'noindex, nofollow' } });
+  }
   const pathLocale = parts[0] && locales.has(parts[0]) ? parts[0] : null;
 
   if (pathLocale) return nextWithLocale(request, pathLocale);
