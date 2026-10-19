@@ -27,10 +27,10 @@ import { SiteFooter } from './SiteChrome';
 export const metadata: Metadata = {
   metadataBase: new URL('https://politangle.org'),
   title: {
-    default: 'Politangle — Your politics are not a line',
+    default: 'Political Values Test: Beyond Left and Right | Politangle',
     template: '%s — Politangle',
   },
-  description: 'Explore 26 political questions across eight dimensions—without being reduced to one label.',
+  description: 'Are you left, right, centre—or more nuanced? Explore your political values across eight dimensions with Politangle Quick in about 3 minutes.',
   alternates: { canonical: '/' },
   icons: {
     icon: [{ url: '/favicon.ico', type: 'image/x-icon', sizes: '16x16 32x32' }],
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     siteName: 'Politangle',
-    title: 'Politangle — Your politics are not a line',
+    title: 'Political Values Test: Beyond Left and Right | Politangle',
     description: 'Explore 26 political questions across eight dimensions—without being reduced to one label.',
     url: 'https://politangle.org',
   },
