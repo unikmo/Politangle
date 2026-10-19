@@ -19,12 +19,18 @@ export function LocaleProvider({ children, initialLocale = 'en' }: { children: R
   // A URL that names its language (/en/, /de/ ...) always wins over a remembered or detected preference.
   const explicitLocale = /^\/(en|de|es|fr|pt-br)(?=\/|$)/.test(pathname || '');
   useEffect(() => {
-    if (initialLocale !== 'en' || explicitLocale) { localStorage.setItem(LOCALE_KEY, initialLocale); return; }
+    if (explicitLocale) {
+      const routeLocale = pathname.split('/')[1] as Locale;
+      setLocaleState(routeLocale);
+      localStorage.setItem(LOCALE_KEY, routeLocale);
+      return;
+    }
+    if (initialLocale !== 'en') { localStorage.setItem(LOCALE_KEY, initialLocale); return; }
     const saved = localStorage.getItem(LOCALE_KEY);
     const browserLanguage = navigator.language.toLowerCase().slice(0, 2);
     const detected: Locale = browserLanguage === 'de' || browserLanguage === 'es' || browserLanguage === 'fr' ? browserLanguage : browserLanguage === 'pt' ? 'pt-br' : 'en';
     setLocaleState(saved === 'de' || saved === 'es' || saved === 'fr' || saved === 'pt-br' || saved === 'en' ? saved : detected);
-  }, [initialLocale, explicitLocale]);
+  }, [initialLocale, explicitLocale, pathname]);
   function setLocale(next: Locale) {
     localStorage.setItem(LOCALE_KEY, next);
     document.documentElement.lang = next === 'en' ? 'en-US' : next === 'pt-br' ? 'pt-BR' : next;
