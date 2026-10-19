@@ -75,6 +75,7 @@ export function SiteHeader() {
         <Link href={href('/guides')}>{c.guides}</Link>
         <Link href={href('/quizzes')}>{c.quizzes}</Link>
         <Link href={href('/countries')}>{c.countries}</Link>
+        <Link href={href('/school')}>{c.schools}</Link>
         <Link href={href('/about')}>{c.about}</Link>
         <Link className="p-mobile-nav-link" href={href('/account')}>{c.account}</Link>
         <Link className="p-mobile-nav-link p-mobile-nav-start" href={href('/quiz')}>{c.start} →</Link>
