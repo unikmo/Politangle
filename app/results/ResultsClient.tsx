@@ -419,6 +419,14 @@ export default function ResultsClient() {
 
         <PoliticalShape axes={result.polygon} locale={locale} />
         <div className="result-action-row compact-actions">
+          <button className="engine-primary-link" type="button" onClick={async () => {
+            const axisText = result.polygon.map((axis) => `${axisDisplay(locale, axis).name}: ${axis.score ?? '—'}/100`).join(' · ');
+            const shareText = `Politangle — ${localized.headline}. ${axisText}`;
+            if (navigator.share) {
+              try { await navigator.share({ title: 'My Politangle', text: shareText, url: window.location.origin + '/quiz' }); }
+              catch (error) { if ((error as Error).name !== 'AbortError') await copyShape(); }
+            } else await copyShape();
+          }}>{locale === 'de' ? 'Profil teilen' : locale === 'es' ? 'Compartir perfil' : locale === 'fr' ? 'Partager mon profil' : locale === 'pt-br' ? 'Compartilhar perfil' : 'Share my profile'}</button>
           <button className="engine-primary-link" type="button" onClick={copyShape}>{copied ? (locale === 'de' ? 'Kopiert' : locale === 'es' ? 'Copiado' : locale === 'fr' ? 'Copié' : locale === 'pt-br' ? 'Copiado' : 'Copied') : (locale === 'de' ? 'Mein Politangle kopieren' : locale === 'es' ? 'Copiar mi Politangle' : locale === 'fr' ? 'Copier mon Politangle' : locale === 'pt-br' ? 'Copiar meu Politangle' : 'Copy my Politangle')}</button>
           <span>{locale === 'de' ? 'Diese achtseitige Form ist dein Politangle. Die Einordnung daneben zeigt, welche politischen Traditionen dem Gesamtmuster am nächsten kommen.' : locale === 'es' ? 'Esta figura de ocho lados es tu Politangle. La lectura explica qué tradiciones políticas se parecen más al conjunto del perfil.' : locale === 'fr' ? 'Cette forme à huit côtés est ton Politangle. La lecture explique quelles traditions politiques se rapprochent le plus de l’ensemble du profil.' : locale === 'pt-br' ? 'Esta forma de oito lados é o seu Politangle. A leitura ao lado mostra quais tradições políticas mais se aproximam do conjunto do perfil.' : 'This eight-sided shape is your Politangle. The reading beside it explains the political traditions that most closely resemble the whole pattern.'}</span>
         </div>
