@@ -28,6 +28,8 @@ type UiCopy = {
   incomplete: string;
   sourceLink: string;
   back: string;
+  profileContextTitle: string;
+  profileContext: (name: string) => string;
 };
 
 const ui: Record<Locale, UiCopy> = {
@@ -40,6 +42,7 @@ const ui: Record<Locale, UiCopy> = {
     systemTitle:'The system in 30 seconds', systemIntro:'Enough structure to make the rest of the page intelligible.',
     historyTitle:'Turning points worth knowing', historyIntro:'Only the events that help explain how today’s system got here.',
     current:'Current political snapshot', sources:'Sources and update status', incomplete:'Current-data work still open', sourceLink:'Source', back:'All country perspectives',
+    profileContextTitle:'YOUR POLITANGLE RESULT, IN CONTEXT', profileContext:(name)=>`Your profile reflects your answers across eight political dimensions. This guide explains how those ideas appear in ${name}; it does not predict your vote or claim that you belong to a party.`,
   },
   de: {
     eyebrow:'LÄNDERPORTRÄT',
@@ -50,6 +53,7 @@ const ui: Record<Locale, UiCopy> = {
     systemTitle:'Das politische System kurz erklärt', systemIntro:'Die wichtigsten Grundlagen, damit du den Rest der Seite einordnen kannst.',
     historyTitle:'Wendepunkte, die man kennen sollte', historyIntro:'Nur Ereignisse, die erklären, wie das heutige System entstanden ist.',
     current:'Aktueller politischer Überblick', sources:'Quellen und Stand der Angaben', incomplete:'Aktuelle Angaben noch in Arbeit', sourceLink:'Quelle', back:'Alle Länderporträts',
+    profileContextTitle:'DEIN POLITANGLE-ERGEBNIS IM KONTEXT', profileContext:(name)=>`Dein Profil beruht auf deinen Antworten zu acht politischen Dimensionen. Dieser Überblick zeigt, wie diese Ideen in ${name} geprägt sind. Er sagt weder deine Wahlentscheidung voraus noch ordnet er dich einer Partei zu.`,
   },
   es: {
     eyebrow:'PERSPECTIVA DEL PAÍS',
@@ -60,6 +64,7 @@ const ui: Record<Locale, UiCopy> = {
     systemTitle:'El sistema en 30 segundos', systemIntro:'La estructura suficiente para entender el resto de la página.',
     historyTitle:'Puntos de inflexión que conviene conocer', historyIntro:'Solo los hechos que ayudan a explicar cómo se llegó al sistema actual.',
     current:'Panorama político actual', sources:'Fuentes y estado de actualización', incomplete:'Datos actuales aún pendientes', sourceLink:'Fuente', back:'Todas las perspectivas nacionales',
+    profileContextTitle:'TU RESULTADO DE POLITANGLE EN CONTEXTO', profileContext:(name)=>`Tu perfil refleja tus respuestas en ocho dimensiones políticas. Esta guía explica cómo aparecen esas ideas en ${name}; no predice tu voto ni te asigna un partido.`,
   },
   fr: {
     eyebrow:'POLITIQUE PAR PAYS',
@@ -70,6 +75,7 @@ const ui: Record<Locale, UiCopy> = {
     systemTitle:'Le système politique en bref', systemIntro:'Les bases nécessaires pour comprendre le reste de la page.',
     historyTitle:'Les tournants à connaître', historyIntro:'Uniquement les événements qui aident à expliquer la formation du système actuel.',
     current:'Situation politique actuelle', sources:'Sources et date de mise à jour', incomplete:'Certaines données actuelles restent à compléter', sourceLink:'Source', back:'Tous les pays',
+    profileContextTitle:'TON RÉSULTAT POLITANGLE EN CONTEXTE', profileContext:(name)=>`Ton profil reflète tes réponses sur huit dimensions politiques. Ce guide explique comment ces idées prennent forme en ${name} ; il ne prédit pas ton vote et ne t’attribue aucun parti.`,
   },
   'pt-br': {
     eyebrow:'PERSPECTIVA POR PAÍS',
@@ -80,6 +86,7 @@ const ui: Record<Locale, UiCopy> = {
     systemTitle:'O sistema em 30 segundos', systemIntro:'Estrutura suficiente para entender o restante da página.',
     historyTitle:'Pontos de virada que vale conhecer', historyIntro:'Somente os acontecimentos que ajudam a explicar como o sistema atual chegou até aqui.',
     current:'Panorama político atual', sources:'Fontes e status de atualização', incomplete:'Dados atuais ainda pendentes', sourceLink:'Fonte', back:'Todas as perspectivas por país',
+    profileContextTitle:'SEU RESULTADO DO POLITANGLE EM CONTEXTO', profileContext:(name)=>`Seu perfil reflete suas respostas em oito dimensões políticas. Este guia explica como essas ideias aparecem em ${name}; ele não prevê seu voto nem atribui um partido a você.`,
   },
 };
 
@@ -101,8 +108,8 @@ export function CountryGuide({ country, locale, backHref }: { country: CountryPr
 
     <section className="info-shell country-guide">
       <aside className="country-profile-context">
-        <span>YOUR POLITANGLE RESULT, IN CONTEXT</span>
-        <p>Your profile reflects your answers across eight political dimensions. This guide explains how those ideas appear in {country.name}; it does not predict your vote or claim that you belong to a party.</p>
+        <span>{c.profileContextTitle}</span>
+        <p>{c.profileContext(country.name)}</p>
       </aside>
 
       <section className="country-quick-read">
