@@ -90,11 +90,6 @@ const ui: Record<Locale, UiCopy> = {
   },
 };
 
-function firstSentence(text: string) {
-  const match = text.match(/^(.+?[.!?])(?:\s|$)/);
-  return match?.[1] ?? text;
-}
-
 export function CountryGuide({ country, locale, backHref }: { country: CountryProfile; locale: Locale; backHref: string }) {
   const c = ui[locale];
   return <>
