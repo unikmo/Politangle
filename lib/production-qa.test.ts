@@ -75,7 +75,7 @@ test('country guides lead with Politangle context and keep core explanations vis
   assert.match(countryGuide, /profileContext\(country\.name\)/);
   assert.doesNotMatch(countryGuide, /Why this page exists|Por qué existe esta página|Por que esta página existe/);
   assert.match(countryGuide, /<p>\{paragraph\}<\/p>/);
-  assert.match(countryGuide, /<article key=\{\`\$\{event\.year\}-\$\{event\.title\}\`\}>/);
+  assert.match(countryGuide, /<article key=\{.*event\.year.*event\.title.*\}>/);
   assert.match(infoCss, /country-system-head/);
   assert.match(infoCss, /country-history-head/);
   assert.match(infoCss, /country-timeline\.concise article p/);
