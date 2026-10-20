@@ -6,12 +6,8 @@ type UiCopy = {
   eyebrow: string;
   hero: (name: string) => string;
   intro: (name: string) => string;
-  whyTitle: string;
-  why1: string;
-  why2: string;
   threeTitle: string;
   threeIntro: string;
-  whyMatters: string;
   labelsTitle: string;
   labelsIntro: string;
   globalLabelsTitle: string;
@@ -28,80 +24,67 @@ type UiCopy = {
   incomplete: string;
   sourceLink: string;
   back: string;
+  profileContextTitle: string;
+  profileContext: (name: string) => string;
 };
 
 const ui: Record<Locale, UiCopy> = {
   en: {
     eyebrow:'COUNTRY PERSPECTIVE',
     hero:(name)=>`${name}, in context.`,
-    intro:(name)=>`What changes when you read political ideas in ${name}? This page gives the minimum context you need before comparing labels across countries.`,
-    whyTitle:'Why this page exists',
-    why1:'Political words do not travel perfectly. “Liberal”, “conservative”, “left”, “right”, “national” or “federal” can point to different coalitions and institutions in different countries.',
-    why2:'This page does not change your Politangle score. It helps you understand the local context behind the vocabulary.',
-    threeTitle:'Three things to know first', threeIntro:'The shortest useful version of how power works here.', whyMatters:'Why this matters',
+    intro:(name)=>`Politangle maps political values across eight dimensions. In ${name}, those values play out through a distinct political system, party traditions and history. Use this guide to interpret your profile in local context—not to assign you a party or change your score.`,
+    threeTitle:'Three things to know first', threeIntro:'The shortest useful version of how power works here.',
     labelsTitle:'What familiar labels mean here', labelsIntro:'Some political words change meaning across countries. These are the distinctions worth knowing first.', globalLabelsTitle:'How well do global labels travel?', globalLabelsIntro:'Politangle uses shared dimensions for comparison, but it does not force local politics into a left–right box when that would mislead.', globalFit:{strong:'Strong fit',partial:'Partial fit',limited:'Limited fit'}, localDimensions:'What the global labels miss', moreContext:'More context',
     systemTitle:'The system in 30 seconds', systemIntro:'Enough structure to make the rest of the page intelligible.',
     historyTitle:'Turning points worth knowing', historyIntro:'Only the events that help explain how today’s system got here.',
     current:'Current political snapshot', sources:'Sources and update status', incomplete:'Current-data work still open', sourceLink:'Source', back:'All country perspectives',
+    profileContextTitle:'YOUR POLITANGLE RESULT, IN CONTEXT', profileContext:(name)=>`Your profile reflects your answers across eight political dimensions. This guide explains how those ideas appear in ${name}; it does not predict your vote or claim that you belong to a party.`,
   },
   de: {
     eyebrow:'LÄNDERPORTRÄT',
     hero:(name)=>`Politik in ${name} verstehen.`,
-    intro:(name)=>`Welche Bedeutung haben politische Begriffe in ${name}? Dieses Porträt erklärt die wichtigsten Institutionen, historischen Entwicklungen und Besonderheiten, die du für einen sinnvollen Vergleich kennen solltest.`,
-    whyTitle:'Warum der Länderkontext wichtig ist',
-    why1:'Politische Begriffe bedeuten nicht überall dasselbe. „Liberal“, „konservativ“, „links“, „rechts“, „national“ oder „föderal“ können je nach Land andere Bündnisse und Institutionen meinen.',
-    why2:'Dieses Länderporträt verändert dein Politangle-Ergebnis nicht. Es hilft dir, Begriffe im jeweiligen nationalen Zusammenhang zu verstehen.',
-    threeTitle:'Drei wichtige Grundlagen', threeIntro:'Ein kurzer Überblick darüber, wie politische Macht in diesem Land verteilt ist.', whyMatters:'Warum ist das wichtig?',
+    intro:(name)=>`Politangle ordnet politische Werte entlang von acht Dimensionen ein. In ${name} prägen ein eigenes politisches System, Parteien und historische Erfahrungen, wie diese Werte verstanden werden. Dieser Überblick hilft dir, dein Ergebnis im lokalen Kontext zu lesen – ohne dir eine Partei zuzuordnen oder deinen Wert zu verändern.`,
+    threeTitle:'Drei wichtige Grundlagen', threeIntro:'Ein kurzer Überblick darüber, wie politische Macht in diesem Land verteilt ist.',
     labelsTitle:'Was bekannte politische Begriffe hier bedeuten', labelsIntro:'Einige politische Begriffe verändern ihre Bedeutung von Land zu Land. Diese Unterschiede solltest du zuerst kennen.', globalLabelsTitle:'Wie gut funktionieren globale Kategorien?', globalLabelsIntro:'Politangle nutzt gemeinsame Dimensionen zum Vergleich, zwingt lokale Politik aber nicht in ein Links-rechts-Schema, wenn das irreführend wäre.', globalFit:{strong:'Gut vergleichbar',partial:'Nur teilweise vergleichbar',limited:'Kaum vergleichbar'}, localDimensions:'Was globale Kategorien nicht erfassen', moreContext:'Mehr Kontext',
     systemTitle:'Das politische System kurz erklärt', systemIntro:'Die wichtigsten Grundlagen, damit du den Rest der Seite einordnen kannst.',
     historyTitle:'Wendepunkte, die man kennen sollte', historyIntro:'Nur Ereignisse, die erklären, wie das heutige System entstanden ist.',
     current:'Aktueller politischer Überblick', sources:'Quellen und Stand der Angaben', incomplete:'Aktuelle Angaben noch in Arbeit', sourceLink:'Quelle', back:'Alle Länderporträts',
+    profileContextTitle:'DEIN POLITANGLE-ERGEBNIS IM KONTEXT', profileContext:(name)=>`Dein Profil beruht auf deinen Antworten zu acht politischen Dimensionen. Dieser Überblick zeigt, wie diese Ideen in ${name} geprägt sind. Er sagt weder deine Wahlentscheidung voraus noch ordnet er dich einer Partei zu.`,
   },
   es: {
     eyebrow:'PERSPECTIVA DEL PAÍS',
     hero:(name)=>`${name}, en contexto.`,
-    intro:(name)=>`¿Qué cambia cuando lees ideas políticas en ${name}? Esta página ofrece solo el contexto necesario antes de comparar etiquetas entre países.`,
-    whyTitle:'Por qué existe esta página',
-    why1:'Las palabras políticas no viajan perfectamente. “Liberal”, “conservador”, “izquierda”, “derecha”, “nacional” o “federal” pueden señalar coaliciones e instituciones distintas según el país.',
-    why2:'Esta página no cambia tu puntuación de Politangle. Te ayuda a entender el contexto local detrás del vocabulario.',
-    threeTitle:'Tres cosas que conviene saber primero', threeIntro:'La versión más breve y útil de cómo funciona el poder aquí.', whyMatters:'Por qué importa',
+    intro:(name)=>`Politangle organiza los valores políticos en ocho dimensiones. En ${name}, un sistema político, unas tradiciones partidistas y una historia propios dan forma a esos valores. Esta guía te ayuda a interpretar tu resultado en su contexto local, sin asignarte un partido ni cambiar tu puntuación.`,
+    threeTitle:'Tres cosas que conviene saber primero', threeIntro:'La versión más breve y útil de cómo funciona el poder aquí.',
     labelsTitle:'Qué significan aquí las etiquetas conocidas', labelsIntro:'Algunas palabras políticas cambian de significado entre países. Estas son las diferencias que conviene conocer primero.', globalLabelsTitle:'¿Qué tan bien funcionan las etiquetas globales?', globalLabelsIntro:'Politangle usa dimensiones comunes para comparar, pero no fuerza la política local dentro de un eje izquierda–derecha cuando eso sería engañoso.', globalFit:{strong:'Encaje alto',partial:'Encaje parcial',limited:'Encaje limitado'}, localDimensions:'Lo que las etiquetas globales no captan', moreContext:'Más contexto',
     systemTitle:'El sistema en 30 segundos', systemIntro:'La estructura suficiente para entender el resto de la página.',
     historyTitle:'Puntos de inflexión que conviene conocer', historyIntro:'Solo los hechos que ayudan a explicar cómo se llegó al sistema actual.',
     current:'Panorama político actual', sources:'Fuentes y estado de actualización', incomplete:'Datos actuales aún pendientes', sourceLink:'Fuente', back:'Todas las perspectivas nacionales',
+    profileContextTitle:'TU RESULTADO DE POLITANGLE EN CONTEXTO', profileContext:(name)=>`Tu perfil refleja tus respuestas en ocho dimensiones políticas. Esta guía explica cómo aparecen esas ideas en ${name}; no predice tu voto ni te asigna un partido.`,
   },
   fr: {
     eyebrow:'POLITIQUE PAR PAYS',
     hero:(name)=>`Comprendre la politique en ${name}.`,
-    intro:(name)=>`Que signifient les grands mots politiques en ${name} ? Ce guide présente les institutions, les événements historiques et les particularités à connaître avant de comparer ce pays aux autres.`,
-    whyTitle:'Pourquoi le contexte national compte',
-    why1:'Les mots politiques ne veulent pas dire exactement la même chose partout. « Libéral », « conservateur », « gauche », « droite », « national » ou « fédéral » peuvent désigner des partis, des alliances et des institutions différents selon le pays.',
-    why2:'Ce guide ne modifie pas ton résultat Politangle. Il t’aide à comprendre le sens local du vocabulaire politique.',
-    threeTitle:'Trois repères pour commencer', threeIntro:'Un aperçu rapide de la manière dont le pouvoir est organisé dans ce pays.', whyMatters:'Pourquoi est-ce important ?',
+    intro:(name)=>`Politangle situe les valeurs politiques sur huit dimensions. En ${name}, le système politique, les traditions partisanes et l’histoire donnent un sens particulier à ces valeurs. Ce guide t’aide à lire ton résultat dans son contexte national, sans t’attribuer un parti ni modifier ton score.`,
+    threeTitle:'Trois repères pour commencer', threeIntro:'Un aperçu rapide de la manière dont le pouvoir est organisé dans ce pays.',
     labelsTitle:'Ce que les mots politiques signifient ici', labelsIntro:'Certains termes changent de sens d’un pays à l’autre. Voici les principales différences à connaître.', globalLabelsTitle:'Peut-on comparer les étiquettes d’un pays à l’autre ?', globalLabelsIntro:'Politangle utilise des dimensions communes pour faciliter la comparaison, mais ne force pas la politique locale dans un simple axe gauche-droite lorsque ce serait trompeur.', globalFit:{strong:'Bonne correspondance',partial:'Correspondance partielle',limited:'Correspondance limitée'}, localDimensions:'Ce que ces catégories ne montrent pas', moreContext:'Pour aller plus loin',
     systemTitle:'Le système politique en bref', systemIntro:'Les bases nécessaires pour comprendre le reste de la page.',
     historyTitle:'Les tournants à connaître', historyIntro:'Uniquement les événements qui aident à expliquer la formation du système actuel.',
     current:'Situation politique actuelle', sources:'Sources et date de mise à jour', incomplete:'Certaines données actuelles restent à compléter', sourceLink:'Source', back:'Tous les pays',
+    profileContextTitle:'TON RÉSULTAT POLITANGLE EN CONTEXTE', profileContext:(name)=>`Ton profil reflète tes réponses sur huit dimensions politiques. Ce guide explique comment ces idées prennent forme en ${name} ; il ne prédit pas ton vote et ne t’attribue aucun parti.`,
   },
   'pt-br': {
     eyebrow:'PERSPECTIVA POR PAÍS',
     hero:(name)=>`${name}, em contexto.`,
-    intro:(name)=>`O que muda quando ideias políticas são lidas em ${name}? Esta página traz o contexto mínimo necessário antes de comparar rótulos entre países.`,
-    whyTitle:'Por que esta página existe',
-    why1:'Palavras políticas não significam exatamente a mesma coisa em todo lugar. “Liberal”, “conservador”, “esquerda”, “direita”, “nacional” ou “federal” podem apontar para coalizões e instituições diferentes em cada país.',
-    why2:'Esta página não altera sua pontuação no Politangle. Ela ajuda a entender o contexto local por trás do vocabulário.',
-    threeTitle:'Três coisas para saber primeiro', threeIntro:'A versão mais curta e útil de como o poder funciona aqui.', whyMatters:'Por que isso importa',
+    intro:(name)=>`O Politangle organiza valores políticos em oito dimensões. Em ${name}, o sistema político, as tradições partidárias e a história dão significado próprio a esses valores. Este guia ajuda você a interpretar seu resultado no contexto local, sem atribuir um partido a você nem alterar sua pontuação.`,
+    threeTitle:'Três coisas para saber primeiro', threeIntro:'A versão mais curta e útil de como o poder funciona aqui.',
     labelsTitle:'O que rótulos conhecidos significam aqui', labelsIntro:'Algumas palavras políticas mudam de sentido entre países. Estas são as diferenças que vale entender primeiro.', globalLabelsTitle:'Até que ponto os rótulos globais funcionam?', globalLabelsIntro:'O Politangle usa dimensões comuns para comparação, mas não força a política local em um eixo esquerda–direita quando isso seria enganoso.', globalFit:{strong:'Boa correspondência',partial:'Correspondência parcial',limited:'Correspondência limitada'}, localDimensions:'O que os rótulos globais não captam', moreContext:'Mais contexto',
     systemTitle:'O sistema em 30 segundos', systemIntro:'Estrutura suficiente para entender o restante da página.',
     historyTitle:'Pontos de virada que vale conhecer', historyIntro:'Somente os acontecimentos que ajudam a explicar como o sistema atual chegou até aqui.',
     current:'Panorama político atual', sources:'Fontes e status de atualização', incomplete:'Dados atuais ainda pendentes', sourceLink:'Fonte', back:'Todas as perspectivas por país',
+    profileContextTitle:'SEU RESULTADO DO POLITANGLE EM CONTEXTO', profileContext:(name)=>`Seu perfil reflete suas respostas em oito dimensões políticas. Este guia explica como essas ideias aparecem em ${name}; ele não prevê seu voto nem atribui um partido a você.`,
   },
 };
-
-function firstSentence(text: string) {
-  const match = text.match(/^(.+?[.!?])(?:\s|$)/);
-  return match?.[1] ?? text;
-}
 
 export function CountryGuide({ country, locale, backHref }: { country: CountryProfile; locale: Locale; backHref: string }) {
   const c = ui[locale];
@@ -115,9 +98,9 @@ export function CountryGuide({ country, locale, backHref }: { country: CountryPr
     </section>
 
     <section className="info-shell country-guide">
-      <aside className="country-purpose">
-        <strong>{c.whyTitle}</strong>
-        <details><summary>{c.moreContext}</summary><p>{c.why1}</p><p>{c.why2}</p></details>
+      <aside className="country-profile-context">
+        <span>{c.profileContextTitle}</span>
+        <p>{c.profileContext(country.name)}</p>
       </aside>
 
       <section className="country-quick-read">
@@ -126,8 +109,7 @@ export function CountryGuide({ country, locale, backHref }: { country: CountryPr
           {country.power.slice(0, 3).map((paragraph, index) => (
             <article key={paragraph}>
               <span>{String(index + 1).padStart(2, '0')}</span>
-              <p>{firstSentence(paragraph)}</p>
-              {firstSentence(paragraph) !== paragraph && <details><summary>{c.whyMatters}</summary><p>{paragraph}</p></details>}
+              <p>{paragraph}</p>
             </article>
           ))}
         </div>
@@ -137,8 +119,8 @@ export function CountryGuide({ country, locale, backHref }: { country: CountryPr
         <div className="method-section-head"><h2>{c.globalLabelsTitle}</h2><p>{c.globalLabelsIntro}</p></div>
         <aside className="country-purpose">
           <strong>{c.globalFit[country.globalLabels.fit]}</strong>
-          <p>{firstSentence(country.globalLabels.summary)}</p>
-          <details><summary>{c.moreContext}</summary><p>{country.globalLabels.summary}</p><p><b>{c.localDimensions}:</b> {country.globalLabels.localDimensions.join(' · ')}</p></details>
+          <p>{country.globalLabels.summary}</p>
+          <div className="country-local-dimensions"><b>{c.localDimensions}</b>{country.globalLabels.localDimensions.map((dimension) => <span key={dimension}>{dimension}</span>)}</div>
         </aside>
       </section>}
 
@@ -146,27 +128,25 @@ export function CountryGuide({ country, locale, backHref }: { country: CountryPr
         <div className="method-section-head"><h2>{c.labelsTitle}</h2><p>{c.labelsIntro}</p></div>
         <div className="country-language-grid">
           {country.vocabulary.map((paragraph) => (
-            <article key={paragraph}>
-              <p>{firstSentence(paragraph)}</p>
-              {firstSentence(paragraph) !== paragraph && <details><summary>{c.moreContext}</summary><p>{paragraph}</p></details>}
-            </article>
+            <article key={paragraph}><p>{paragraph}</p></article>
           ))}
         </div>
       </section>
 
       <section className="country-system">
-        <div className="method-section-head"><h2>{c.systemTitle}</h2><p>{c.systemIntro}</p></div>
+        <div className="method-section-head country-system-head"><h2>{c.systemTitle}</h2><p>{c.systemIntro}</p></div>
         <dl className="country-facts">{country.atAGlance.map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl>
       </section>
 
       <section className="country-history">
-        <div className="method-section-head"><h2>{c.historyTitle}</h2><p>{c.historyIntro}</p></div>
+        <div className="method-section-head country-history-head"><h2>{c.historyTitle}</h2><p>{c.historyIntro}</p></div>
         <div className="country-timeline concise">
           {country.timeline.slice(0, 4).map((event) => (
-            <details key={`${event.year}-${event.title}`}>
-              <summary><time>{event.year}</time><strong>{event.title}</strong></summary>
+            <article key={`${event.year}-${event.title}`}>
+              <time>{event.year}</time>
+              <strong>{event.title}</strong>
               <p>{event.text}</p>
-            </details>
+            </article>
           ))}
         </div>
       </section>

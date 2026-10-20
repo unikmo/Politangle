@@ -11,6 +11,7 @@ const homeReadabilityCss = readFileSync(join(root, 'app/home-readability-fix.css
 const accessibilityCss = readFileSync(join(root, 'app/accessibility.css'), 'utf8');
 const layout = readFileSync(join(root, 'app/layout.tsx'), 'utf8');
 const localizedCountry = readFileSync(join(root, 'app/[locale]/countries/[slug]/page.tsx'), 'utf8');
+const countryGuide = readFileSync(join(root, 'app/countries/CountryGuide.tsx'), 'utf8');
 const quickComplete = readFileSync(join(root, 'app/api/assessment/quick/complete/route.ts'), 'utf8');
 const authSession = readFileSync(join(root, 'app/api/auth/session/route.ts'), 'utf8');
 const smoke = readFileSync(join(root, 'scripts/release-smoke.mjs'), 'utf8');
@@ -66,4 +67,17 @@ test('built-app QA checks all country routes, admin protection and certification
   assert.match(smoke, /api\/admin\/overview/);
   assert.match(smoke, /certification must remain closed/);
   assert.match(smoke, /cross-site POST expected 403/);
+});
+
+
+test('country guides lead with Politangle context and keep core explanations visible', () => {
+  assert.match(countryGuide, /country-profile-context/);
+  assert.match(countryGuide, /profileContext\(country\.name\)/);
+  assert.doesNotMatch(countryGuide, /Why this page exists|Por qué existe esta página|Por que esta página existe/);
+  assert.match(countryGuide, /<p>\{paragraph\}<\/p>/);
+  assert.match(countryGuide, /<article key=\{.*event\.year.*event\.title.*\}>/);
+  assert.match(infoCss, /country-system-head/);
+  assert.match(infoCss, /country-history-head/);
+  assert.match(infoCss, /country-timeline\.concise article p/);
+  assert.match(infoCss, /@media\(max-width:900px\)[\s\S]*country-profile-context/);
 });

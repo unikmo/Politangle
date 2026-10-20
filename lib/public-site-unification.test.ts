@@ -93,10 +93,11 @@ test('country perspectives are visible from the public site without pretending u
   assert.match(countriesHub, /Same political words\. Different country context\./);
   assert.match(countriesHub, /CONTEXT \+ CURRENT SNAPSHOT/);
   assert.match(countriesHub, /CONTEXT GUIDE/);
-  assert.match(countryGuide, /Why this page exists/);
-  assert.match(countryGuide, /What familiar labels mean here/);
-  assert.match(countryGuide, /This page does not change your Politangle score/);
-  assert.match(countryGuide, /Sources and update status/);
+  assert.doesNotMatch(countryGuide, /Why this page exists|Por qué existe esta página|Por que esta página existe/);
+  assert.match(countryGuide, /profileContextTitle/);
+  assert.match(countryGuide, /profileContext\(country\.name\)/);
+  assert.match(countryGuide, /labelsTitle:/);
+  assert.match(countryGuide, /sources:/);
   assert.doesNotMatch(countryGuide, /<h2>How power works<\/h2>/);
   assert.doesNotMatch(countryGuide, /<h2>Latest national election<\/h2>/);
   assert.doesNotMatch(countryGuide, /<h2>Democracy and rights measure<\/h2>/);
