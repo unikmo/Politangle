@@ -10,7 +10,9 @@ test('a language named in the URL wins over a remembered or detected language', 
   // Without this, a shared /en/ link opens in German for anyone whose browser remembers German.
   assert.match(provider, /explicitLocale/);
   assert.match(provider, /\^\\\/\(en\|de\|es\|fr\|pt-br\)/);
-  assert.match(provider, /initialLocale !== 'en' \|\| explicitLocale/);
+  assert.match(provider, /if \(explicitLocale\)/);
+  assert.match(provider, /setLocaleState\(routeLocale\)/);
+  assert.match(provider, /localStorage.setItem\(LOCALE_KEY, routeLocale\)/);
 });
 
 test('practice and populism headers keep their controls readable on the orange band', () => {
