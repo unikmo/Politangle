@@ -6,12 +6,8 @@ type UiCopy = {
   eyebrow: string;
   hero: (name: string) => string;
   intro: (name: string) => string;
-  whyTitle: string;
-  why1: string;
-  why2: string;
   threeTitle: string;
   threeIntro: string;
-  whyMatters: string;
   labelsTitle: string;
   labelsIntro: string;
   globalLabelsTitle: string;
@@ -37,7 +33,7 @@ const ui: Record<Locale, UiCopy> = {
     eyebrow:'COUNTRY PERSPECTIVE',
     hero:(name)=>`${name}, in context.`,
     intro:(name)=>`Politangle maps political values across eight dimensions. In ${name}, those values play out through a distinct political system, party traditions and history. Use this guide to interpret your profile in local context—not to assign you a party or change your score.`,
-    threeTitle:'Three things to know first', threeIntro:'The shortest useful version of how power works here.', whyMatters:'Why this matters',
+    threeTitle:'Three things to know first', threeIntro:'The shortest useful version of how power works here.',
     labelsTitle:'What familiar labels mean here', labelsIntro:'Some political words change meaning across countries. These are the distinctions worth knowing first.', globalLabelsTitle:'How well do global labels travel?', globalLabelsIntro:'Politangle uses shared dimensions for comparison, but it does not force local politics into a left–right box when that would mislead.', globalFit:{strong:'Strong fit',partial:'Partial fit',limited:'Limited fit'}, localDimensions:'What the global labels miss', moreContext:'More context',
     systemTitle:'The system in 30 seconds', systemIntro:'Enough structure to make the rest of the page intelligible.',
     historyTitle:'Turning points worth knowing', historyIntro:'Only the events that help explain how today’s system got here.',
@@ -48,7 +44,7 @@ const ui: Record<Locale, UiCopy> = {
     eyebrow:'LÄNDERPORTRÄT',
     hero:(name)=>`Politik in ${name} verstehen.`,
     intro:(name)=>`Politangle ordnet politische Werte entlang von acht Dimensionen ein. In ${name} prägen ein eigenes politisches System, Parteien und historische Erfahrungen, wie diese Werte verstanden werden. Dieser Überblick hilft dir, dein Ergebnis im lokalen Kontext zu lesen – ohne dir eine Partei zuzuordnen oder deinen Wert zu verändern.`,
-    threeTitle:'Drei wichtige Grundlagen', threeIntro:'Ein kurzer Überblick darüber, wie politische Macht in diesem Land verteilt ist.', whyMatters:'Warum ist das wichtig?',
+    threeTitle:'Drei wichtige Grundlagen', threeIntro:'Ein kurzer Überblick darüber, wie politische Macht in diesem Land verteilt ist.',
     labelsTitle:'Was bekannte politische Begriffe hier bedeuten', labelsIntro:'Einige politische Begriffe verändern ihre Bedeutung von Land zu Land. Diese Unterschiede solltest du zuerst kennen.', globalLabelsTitle:'Wie gut funktionieren globale Kategorien?', globalLabelsIntro:'Politangle nutzt gemeinsame Dimensionen zum Vergleich, zwingt lokale Politik aber nicht in ein Links-rechts-Schema, wenn das irreführend wäre.', globalFit:{strong:'Gut vergleichbar',partial:'Nur teilweise vergleichbar',limited:'Kaum vergleichbar'}, localDimensions:'Was globale Kategorien nicht erfassen', moreContext:'Mehr Kontext',
     systemTitle:'Das politische System kurz erklärt', systemIntro:'Die wichtigsten Grundlagen, damit du den Rest der Seite einordnen kannst.',
     historyTitle:'Wendepunkte, die man kennen sollte', historyIntro:'Nur Ereignisse, die erklären, wie das heutige System entstanden ist.',
@@ -59,7 +55,7 @@ const ui: Record<Locale, UiCopy> = {
     eyebrow:'PERSPECTIVA DEL PAÍS',
     hero:(name)=>`${name}, en contexto.`,
     intro:(name)=>`Politangle organiza los valores políticos en ocho dimensiones. En ${name}, un sistema político, unas tradiciones partidistas y una historia propios dan forma a esos valores. Esta guía te ayuda a interpretar tu resultado en su contexto local, sin asignarte un partido ni cambiar tu puntuación.`,
-    threeTitle:'Tres cosas que conviene saber primero', threeIntro:'La versión más breve y útil de cómo funciona el poder aquí.', whyMatters:'Por qué importa',
+    threeTitle:'Tres cosas que conviene saber primero', threeIntro:'La versión más breve y útil de cómo funciona el poder aquí.',
     labelsTitle:'Qué significan aquí las etiquetas conocidas', labelsIntro:'Algunas palabras políticas cambian de significado entre países. Estas son las diferencias que conviene conocer primero.', globalLabelsTitle:'¿Qué tan bien funcionan las etiquetas globales?', globalLabelsIntro:'Politangle usa dimensiones comunes para comparar, pero no fuerza la política local dentro de un eje izquierda–derecha cuando eso sería engañoso.', globalFit:{strong:'Encaje alto',partial:'Encaje parcial',limited:'Encaje limitado'}, localDimensions:'Lo que las etiquetas globales no captan', moreContext:'Más contexto',
     systemTitle:'El sistema en 30 segundos', systemIntro:'La estructura suficiente para entender el resto de la página.',
     historyTitle:'Puntos de inflexión que conviene conocer', historyIntro:'Solo los hechos que ayudan a explicar cómo se llegó al sistema actual.',
@@ -70,7 +66,7 @@ const ui: Record<Locale, UiCopy> = {
     eyebrow:'POLITIQUE PAR PAYS',
     hero:(name)=>`Comprendre la politique en ${name}.`,
     intro:(name)=>`Politangle situe les valeurs politiques sur huit dimensions. En ${name}, le système politique, les traditions partisanes et l’histoire donnent un sens particulier à ces valeurs. Ce guide t’aide à lire ton résultat dans son contexte national, sans t’attribuer un parti ni modifier ton score.`,
-    threeTitle:'Trois repères pour commencer', threeIntro:'Un aperçu rapide de la manière dont le pouvoir est organisé dans ce pays.', whyMatters:'Pourquoi est-ce important ?',
+    threeTitle:'Trois repères pour commencer', threeIntro:'Un aperçu rapide de la manière dont le pouvoir est organisé dans ce pays.',
     labelsTitle:'Ce que les mots politiques signifient ici', labelsIntro:'Certains termes changent de sens d’un pays à l’autre. Voici les principales différences à connaître.', globalLabelsTitle:'Peut-on comparer les étiquettes d’un pays à l’autre ?', globalLabelsIntro:'Politangle utilise des dimensions communes pour faciliter la comparaison, mais ne force pas la politique locale dans un simple axe gauche-droite lorsque ce serait trompeur.', globalFit:{strong:'Bonne correspondance',partial:'Correspondance partielle',limited:'Correspondance limitée'}, localDimensions:'Ce que ces catégories ne montrent pas', moreContext:'Pour aller plus loin',
     systemTitle:'Le système politique en bref', systemIntro:'Les bases nécessaires pour comprendre le reste de la page.',
     historyTitle:'Les tournants à connaître', historyIntro:'Uniquement les événements qui aident à expliquer la formation du système actuel.',
@@ -81,7 +77,7 @@ const ui: Record<Locale, UiCopy> = {
     eyebrow:'PERSPECTIVA POR PAÍS',
     hero:(name)=>`${name}, em contexto.`,
     intro:(name)=>`O Politangle organiza valores políticos em oito dimensões. Em ${name}, o sistema político, as tradições partidárias e a história dão significado próprio a esses valores. Este guia ajuda você a interpretar seu resultado no contexto local, sem atribuir um partido a você nem alterar sua pontuação.`,
-    threeTitle:'Três coisas para saber primeiro', threeIntro:'A versão mais curta e útil de como o poder funciona aqui.', whyMatters:'Por que isso importa',
+    threeTitle:'Três coisas para saber primeiro', threeIntro:'A versão mais curta e útil de como o poder funciona aqui.',
     labelsTitle:'O que rótulos conhecidos significam aqui', labelsIntro:'Algumas palavras políticas mudam de sentido entre países. Estas são as diferenças que vale entender primeiro.', globalLabelsTitle:'Até que ponto os rótulos globais funcionam?', globalLabelsIntro:'O Politangle usa dimensões comuns para comparação, mas não força a política local em um eixo esquerda–direita quando isso seria enganoso.', globalFit:{strong:'Boa correspondência',partial:'Correspondência parcial',limited:'Correspondência limitada'}, localDimensions:'O que os rótulos globais não captam', moreContext:'Mais contexto',
     systemTitle:'O sistema em 30 segundos', systemIntro:'Estrutura suficiente para entender o restante da página.',
     historyTitle:'Pontos de virada que vale conhecer', historyIntro:'Somente os acontecimentos que ajudam a explicar como o sistema atual chegou até aqui.',
