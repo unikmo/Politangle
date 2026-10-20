@@ -109,3 +109,34 @@
   .method-axis-ends{grid-template-columns:1fr}
   .method-axis-ends i{width:100%}
 }
+
+
+/* Country-guide editorial and UX correction: context first, no internal-facing sections. */
+.country-guide{padding-top:34px}
+.country-profile-context{display:grid;grid-template-columns:minmax(180px,.32fr) minmax(0,.68fr);gap:22px;align-items:start;margin:0 0 18px;padding:22px 24px;border:1px solid #f0c9b6;border-radius:16px;background:#fff4ed}
+.country-profile-context>span{color:#b7441b;font-size:10px;font-weight:850;letter-spacing:.1em;line-height:1.5}
+.country-profile-context p{margin:0;color:#4f4640;font-size:14px;line-height:1.65}
+.country-quick-read,.country-language,.country-system,.country-history{padding:38px 0}
+.country-system-head,.country-history-head{grid-template-columns:1fr;gap:10px;align-items:start;margin-bottom:22px}
+.country-system-head>p,.country-history-head>p{max-width:680px;font-size:14px;line-height:1.65}
+.country-insight-grid{gap:14px}
+.country-insight-grid article{padding:22px 23px}
+.country-insight-grid article>p,.country-language-grid p{margin:12px 0 0;color:#354b4e;font-size:14px;line-height:1.7}
+.country-language-grid{gap:14px}
+.country-language-grid article{padding:20px 22px}
+.country-purpose{padding:22px 24px}
+.country-purpose>p{font-size:14px;line-height:1.7}
+.country-local-dimensions{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.country-local-dimensions>b{flex-basis:100%;margin-bottom:3px;color:#53696b;font-size:10px;letter-spacing:.06em;text-transform:uppercase}
+.country-local-dimensions>span{padding:7px 10px;border:1px solid #d9e3df;border-radius:999px;background:#f7f8f4;color:#40575a;font-size:11px;line-height:1.35}
+.country-timeline.concise{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.country-timeline.concise article{display:grid;grid-template-columns:1fr;align-content:start;gap:9px;min-width:0;padding:20px 22px;border:1px solid var(--line,#d9e3df);border-radius:16px;background:#fff}
+.country-timeline.concise article time{color:#c94412;font-size:11px;font-weight:850;letter-spacing:.04em}
+.country-timeline.concise article strong{font-size:16px;line-height:1.35}
+.country-timeline.concise article p{margin:0;color:#53696b;font-size:13px;line-height:1.65}
+.country-current-details,.country-sources-details{margin-top:18px}
+@media(max-width:900px){
+  .country-profile-context{grid-template-columns:1fr;gap:8px}
+  .country-timeline.concise{grid-template-columns:1fr}
+  .country-quick-read,.country-language,.country-system,.country-history{padding:30px 0}
+}
