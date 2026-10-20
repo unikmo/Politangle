@@ -27,7 +27,7 @@ test('homepage uses the locked eight-axis names instead of the former four-axis 
 });
 
 test('German homepage copy stays informal and avoids literal formal-address calques', () => {
-  assert.match(homepage, /Politik ist mehr als links, rechts oder Mitte\./);
+  assert.match(homepage, /Bist du wirklich links, rechts, in der Mitte/);
   assert.match(homepage, /26 Fragen zeigen dir, welche politischen Werte dir wichtig sind/);
   assert.match(homepage, /Deine Antworten bleiben privat/);
   assert.doesNotMatch(homepage, /Erster Quick ohne Anmeldung/);
@@ -36,7 +36,7 @@ test('German homepage copy stays informal and avoids literal formal-address calq
 });
 
 test('French marketing localization uses tu rather than vous', () => {
-  assert.match(translations, /La politique ne se résume pas à la gauche, à la droite ou au centre\./);
+  assert.match(translations, /Vraiment de gauche, de droite, du centre/);
   assert.match(translations, /quelles valeurs politiques comptent pour toi/);
   assert.match(translations, /Tes réponses restent privées/);
   assert.doesNotMatch(translations, /en anglais clair/);
@@ -44,7 +44,7 @@ test('French marketing localization uses tu rather than vous', () => {
 });
 
 test('Spanish marketing localization stays on informal tú copy and avoids usted', () => {
-  assert.match(translations, /Tus ideas políticas no caben en un eje izquierda-derecha\./);
+  assert.match(translations, /¿Eres realmente de izquierdas, de derechas, de centro/);
   assert.match(translations, /tu forma de pensar políticamente/);
   assert.doesNotMatch(translations, /\bustedes?\b/i);
 });

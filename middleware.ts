@@ -11,9 +11,13 @@ function nextWithLocale(request: NextRequest, locale: string) {
   const requestHeaders = new Headers(request.headers);
   requestHeaders.set('x-politangle-locale', locale);
   const response = NextResponse.next({ request: { headers: requestHeaders } });
+  response.headers.set('X-Content-Type-Options', 'nosniff');
+  response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
+  response.headers.set('X-Frame-Options', 'DENY');
+  response.headers.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
   response.cookies.set('politangle_locale', locale, {
     sameSite: 'lax',
-    secure: true,
+    secure: request.nextUrl.protocol === 'https:',
     path: '/',
     maxAge: 60 * 60 * 24 * 365,
   });

@@ -52,7 +52,7 @@ const ui: Record<Locale, UiCopy> = {
     why1:'Politische Begriffe bedeuten nicht überall dasselbe. „Liberal“, „konservativ“, „links“, „rechts“, „national“ oder „föderal“ können je nach Land andere Bündnisse und Institutionen meinen.',
     why2:'Dieses Länderporträt verändert dein Politangle-Ergebnis nicht. Es hilft dir, Begriffe im jeweiligen nationalen Zusammenhang zu verstehen.',
     threeTitle:'Drei wichtige Grundlagen', threeIntro:'Ein kurzer Überblick darüber, wie politische Macht in diesem Land verteilt ist.', whyMatters:'Warum ist das wichtig?',
-    labelsTitle:'Was bekannte politische Begriffe hier bedeuten', labelsIntro:'Einige politische Begriffe verändern ihre Bedeutung von Land zu Land. Diese Unterschiede solltest du zuerst kennen.', globalLabelsTitle:'Wie gut funktionieren globale Kategorien?', globalLabelsIntro:'Politangle nutzt gemeinsame Dimensionen zum Vergleich, zwingt lokale Politik aber nicht in ein Links-rechts-Schema, wenn das irreführend wäre.', globalFit:{strong:'Gute Passung',partial:'Teilweise passend',limited:'Nur begrenzt passend'}, localDimensions:'Was globale Kategorien nicht erfassen', moreContext:'Mehr Kontext',
+    labelsTitle:'Was bekannte politische Begriffe hier bedeuten', labelsIntro:'Einige politische Begriffe verändern ihre Bedeutung von Land zu Land. Diese Unterschiede solltest du zuerst kennen.', globalLabelsTitle:'Wie gut funktionieren globale Kategorien?', globalLabelsIntro:'Politangle nutzt gemeinsame Dimensionen zum Vergleich, zwingt lokale Politik aber nicht in ein Links-rechts-Schema, wenn das irreführend wäre.', globalFit:{strong:'Gut vergleichbar',partial:'Nur teilweise vergleichbar',limited:'Kaum vergleichbar'}, localDimensions:'Was globale Kategorien nicht erfassen', moreContext:'Mehr Kontext',
     systemTitle:'Das politische System kurz erklärt', systemIntro:'Die wichtigsten Grundlagen, damit du den Rest der Seite einordnen kannst.',
     historyTitle:'Wendepunkte, die man kennen sollte', historyIntro:'Nur Ereignisse, die erklären, wie das heutige System entstanden ist.',
     current:'Aktueller politischer Überblick', sources:'Quellen und Stand der Angaben', incomplete:'Aktuelle Angaben noch in Arbeit', sourceLink:'Quelle', back:'Alle Länderporträts',
@@ -117,8 +117,7 @@ export function CountryGuide({ country, locale, backHref }: { country: CountryPr
     <section className="info-shell country-guide">
       <aside className="country-purpose">
         <strong>{c.whyTitle}</strong>
-        <p>{c.why1}</p>
-        <p><b>{c.why2}</b></p>
+        <details><summary>{c.moreContext}</summary><p>{c.why1}</p><p>{c.why2}</p></details>
       </aside>
 
       <section className="country-quick-read">
@@ -138,8 +137,8 @@ export function CountryGuide({ country, locale, backHref }: { country: CountryPr
         <div className="method-section-head"><h2>{c.globalLabelsTitle}</h2><p>{c.globalLabelsIntro}</p></div>
         <aside className="country-purpose">
           <strong>{c.globalFit[country.globalLabels.fit]}</strong>
-          <p>{country.globalLabels.summary}</p>
-          <p><b>{c.localDimensions}:</b> {country.globalLabels.localDimensions.join(' · ')}</p>
+          <p>{firstSentence(country.globalLabels.summary)}</p>
+          <details><summary>{c.moreContext}</summary><p>{country.globalLabels.summary}</p><p><b>{c.localDimensions}:</b> {country.globalLabels.localDimensions.join(' · ')}</p></details>
         </aside>
       </section>}
 

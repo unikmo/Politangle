@@ -1,4 +1,5 @@
 'use client';
+import Link from 'next/link';
 import { localePath, useLocale } from './LocaleProvider';
 import { SiteHeader } from './SiteChrome';
 import { translate } from './translations';
@@ -61,7 +62,7 @@ export default function Home() {
       <p>{t('Explore how institutions, political vocabulary and historical turning points shape debate across 20 country perspectives. Current-data snapshots are shown only where they have been source-checked.','Unsere Länderporträts erklären politische Systeme, wichtige Wendepunkte und Begriffe im jeweiligen nationalen Zusammenhang. Aktuelle Angaben werden mit Quellen belegt.')}</p>
     </div>
     <div className="p-country-sample-grid">
-      {[t('United States','USA'),t('Germany','Deutschland'),t('France','Frankreich'),t('United Kingdom','Vereinigtes Königreich'),t('India','Indien'),t('Brazil','Brasilien'),t('Mexico','Mexiko'),t('Japan','Japan')].map((country) => <span key={country}>{country}</span>)}
+      {([['united-states',t('United States','USA')],['germany',t('Germany','Deutschland')],['france',t('France','Frankreich')],['united-kingdom',t('United Kingdom','Vereinigtes Königreich')],['india',t('India','Indien')],['brazil',t('Brazil','Brasilien')],['mexico',t('Mexico','Mexiko')],['japan',t('Japan','Japan')]] as const).map(([slug,country]) => <Link href={href(`/countries/${slug}`)} key={slug}>{country} →</Link>)}
     </div>
     <a className="p-text-link" href={href('/countries')}>{t('Explore country perspectives','Länder entdecken')} <Arrow/></a>
   </section>
