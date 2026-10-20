@@ -28,6 +28,12 @@ export function middleware(request: NextRequest) {
   const parts = request.nextUrl.pathname.split('/').filter(Boolean);
   const pathLocale = parts[0] && locales.has(parts[0]) ? parts[0] : null;
 
+  // English country pages are canonical at /countries; /en/countries has no route.
+  if (pathLocale === 'en' && parts[1] === 'countries') {
+    const url = request.nextUrl.clone();
+    url.pathname = '/' + parts.slice(1).join('/');
+    return NextResponse.redirect(url);
+  }
   if (pathLocale) return nextWithLocale(request, pathLocale);
 
   const saved = request.cookies.get('politangle_locale')?.value;
@@ -35,7 +41,7 @@ export function middleware(request: NextRequest) {
     localizedPaths.has(request.nextUrl.pathname) ||
     request.nextUrl.pathname.startsWith('/countries/');
 
-  if (saved && locales.has(saved) && localizablePath) {
+  if (saved && saved !== 'en' && locales.has(saved) && localizablePath) {
     const url = request.nextUrl.clone();
     url.pathname = `/${saved}${request.nextUrl.pathname === '/' ? '' : request.nextUrl.pathname}`;
     return NextResponse.redirect(url);
