@@ -26,6 +26,8 @@ import { germanBeliefStatement } from '../../lib/german-believe';
 import { romanceBeliefStatement } from '../../lib/romance-believe';
 import { portugueseBrBeliefStatement } from '../../lib/portuguese-br-believe';
 import { useLocale, type Locale } from '../LocaleProvider';
+import {CountryResultComparison} from '../countries/CountryResultComparison';
+import type {CountrySelectionOption} from '../countries/result-country-options';
 import {
   deepAxis,
   deepAxisQuestion,
@@ -194,7 +196,7 @@ function buildOutput(belief: BeliefV2Session): FullOutput {
   };
 }
 
-export default function DeepClient() {
+export default function DeepClient({countryOptions}:{countryOptions:readonly CountrySelectionOption[]}) {
   const { locale } = useLocale();
   const ui = deepUi(locale);
   const [beliefSession, setBeliefSession] = useState<BeliefV2Session | null | undefined>(undefined);
@@ -293,6 +295,9 @@ export default function DeepClient() {
               );
             })}
           </div>
+          <CountryResultComparison options={countryOptions} families={output.families} axes={output.polygon} locale={locale} stage="full" />
+
+
 
           {people.length > 0 && home.primary && (() => {
             const display = deepFamily(locale, home.primary.id, home.primary.name);

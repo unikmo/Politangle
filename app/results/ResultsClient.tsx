@@ -8,6 +8,8 @@ import { collapseStatementAnswers } from '../../lib/belief-statements';
 import { describePolitangleHome } from '../../lib/politangle-home';
 import { useLocale, localePath, type Locale } from '../LocaleProvider';
 import { translate } from '../translations';
+import {CountryResultComparison} from '../countries/CountryResultComparison';
+import type {CountrySelectionOption} from '../countries/result-country-options';
 
 const BELIEF_SESSION_KEY = 'politangle.believe.v2.session';
 
@@ -332,12 +334,11 @@ function PoliticalShape({ axes, locale }: { axes: ReturnType<typeof calculatePol
   );
 }
 
-export default function ResultsClient() {
+export default function ResultsClient({countryOptions}:{countryOptions:readonly CountrySelectionOption[]}) {
   const { locale } = useLocale();
   const t = (en: string, de: string) => translate(locale, en, de);
   const [session, setSession] = useState<BeliefV2Session | null | undefined>(undefined);
   const [copied, setCopied] = useState(false);
-  const [selectedCountry, setSelectedCountry] = useState('germany');
 
   useEffect(() => {
     setSession(parseBeliefV2Session(sessionStorage.getItem(BELIEF_SESSION_KEY)));
@@ -403,6 +404,9 @@ export default function ResultsClient() {
             return <p key={family.id}><strong>{label} · {display.name} · {family.overall}/100</strong><span>{display.meaning}.</span></p>;
           })}
         </div>
+        <CountryResultComparison options={countryOptions} families={result.families} axes={result.polygon} locale={locale} stage="quick" />
+
+
 
         {people.length > 0 && home.primary && (() => {
           const display = familyDisplay(locale, home.primary.id, home.primary.name);
@@ -430,19 +434,6 @@ export default function ResultsClient() {
           }}>{locale === 'de' ? 'Profil teilen' : locale === 'es' ? 'Compartir perfil' : locale === 'fr' ? 'Partager mon profil' : locale === 'pt-br' ? 'Compartilhar perfil' : 'Share my profile'}</button>
           <button className="engine-primary-link" type="button" onClick={copyShape}>{copied ? (locale === 'de' ? 'Kopiert' : locale === 'es' ? 'Copiado' : locale === 'fr' ? 'Copié' : locale === 'pt-br' ? 'Copiado' : 'Copied') : (locale === 'de' ? 'Mein Politangle kopieren' : locale === 'es' ? 'Copiar mi Politangle' : locale === 'fr' ? 'Copier mon Politangle' : locale === 'pt-br' ? 'Copiar meu Politangle' : 'Copy my Politangle')}</button>
           <span>{locale === 'de' ? 'Diese achtseitige Form ist dein Politangle. Die Einordnung daneben zeigt, welche politischen Traditionen dem Gesamtmuster am nächsten kommen.' : locale === 'es' ? 'Esta figura de ocho lados es tu Politangle. La lectura explica qué tradiciones políticas se parecen más al conjunto del perfil.' : locale === 'fr' ? 'Cette forme à huit côtés est ton Politangle. La lecture explique quelles traditions politiques se rapprochent le plus de l’ensemble du profil.' : locale === 'pt-br' ? 'Esta forma de oito lados é o seu Politangle. A leitura ao lado mostra quais tradições políticas mais se aproximam do conjunto do perfil.' : 'This eight-sided shape is your Politangle. The reading beside it explains the political traditions that most closely resemble the whole pattern.'}</span>
-        </div>
-      </article>
-
-      <article className="engine-card result-country-context" style={{ marginTop: 18 }}>
-        <p className="engine-kicker">{locale === 'de' ? 'DEIN PROFIL IM LÄNDERKONTEXT' : locale === 'es' ? 'TU PERFIL EN CONTEXTO' : locale === 'fr' ? 'TON PROFIL DANS TON PAYS' : locale === 'pt-br' ? 'SEU PERFIL NO CONTEXTO' : 'YOUR PROFILE IN COUNTRY CONTEXT'}</p>
-        <h2>{locale === 'de' ? 'Was bedeuten deine politischen Werte in deinem Land?' : locale === 'es' ? '¿Qué significan tus valores en tu país?' : locale === 'fr' ? 'Que signifient tes valeurs dans ton pays ?' : locale === 'pt-br' ? 'O que seus valores significam no seu país?' : 'What do your political values mean in your country?'}</h2>
-        <p>{locale === 'de' ? 'Wähle ein Land und erkunde seine Parteienlandschaft, politischen Begriffe und Institutionen. Dein Testergebnis bleibt unverändert; wir behaupten keine unbelegten Partei-Übereinstimmungen.' : 'Choose a country to explore its political institutions, vocabulary and historical context. Your scores stay unchanged; this is not an unverified party-match calculation.'}</p>
-        <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'center', marginTop: 14 }}>
-          <select aria-label={locale === 'de' ? 'Land auswählen' : 'Choose country'} value={selectedCountry} onChange={(event) => setSelectedCountry(event.target.value)} style={{ padding: 12, borderRadius: 8 }}>
-            {([['germany','Germany','Deutschland'],['united-states','United States','USA'],['united-kingdom','United Kingdom','Vereinigtes Königreich'],['france','France','Frankreich'],['india','India','Indien'],['brazil','Brazil','Brasilien'],['mexico','Mexico','Mexiko'],['japan','Japan','Japan']] as const).map(([slug,en,de]) => <option key={slug} value={slug}>{locale === 'de' ? de : en}</option>)}
-          </select>
-          <Link className="engine-primary-link" href={`/countries/${selectedCountry}`}>{locale === 'de' ? 'Länderkontext ansehen →' : 'Explore country context →'}</Link>
-          <Link href={localePath(locale, '/countries')}>{locale === 'de' ? 'Alle Länder' : 'All countries'}</Link>
         </div>
       </article>
 

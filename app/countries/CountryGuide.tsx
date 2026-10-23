@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import type { Locale } from '../LocaleProvider';
 import type { CountryProfile } from '../../lib/countries';
+import { countryPartyNames, partySlug } from '../../lib/country-parties';
 
 type UiCopy = {
   eyebrow: string;
@@ -120,7 +121,7 @@ export function CountryGuide({ country, locale, backHref }: { country: CountryPr
         <aside className="country-purpose">
           <strong>{c.globalFit[country.globalLabels.fit]}</strong>
           <p>{country.globalLabels.summary}</p>
-          <div className="country-local-dimensions"><b>{c.localDimensions}</b>{country.globalLabels.localDimensions.map((dimension) => <span key={dimension}>{dimension}</span>)}</div>
+          <div className="country-local-dimensions"><b>{c.localDimensions}</b>{country.globalLabels.localDimensions.map((dimension, index) => <Link key={dimension} href={`${locale === 'en' ? '' : `/${locale}`}/countries/${country.slug}/${index + 1}`} className="country-topic-link">{dimension} ↗</Link>)}</div>
         </aside>
       </section>}
 
@@ -131,6 +132,16 @@ export function CountryGuide({ country, locale, backHref }: { country: CountryPr
             <article key={paragraph}><p>{paragraph}</p></article>
           ))}
         </div>
+      </section>
+
+      <section className="country-language" aria-labelledby="country-parties-heading">
+        <div className="method-section-head">
+          <h2 id="country-parties-heading">{({en:'Political parties',de:'Politische Parteien',es:'Partidos políticos',fr:'Partis politiques','pt-br':'Partidos políticos'} as Record<Locale,string>)[locale]}</h2>
+          <p>{({en:'Explore the parties active in this country. Party names are not predictions of your vote.',de:'Hier findest du Parteien dieses Landes. Die Liste ist keine Wahlempfehlung.',es:'Explore los partidos de este país. No es una recomendación electoral.',fr:'Découvrez les partis de ce pays. Il ne s’agit pas d’une recommandation de vote.','pt-br':'Conheça os partidos deste país. Não é uma recomendação de voto.'} as Record<Locale,string>)[locale]}</p>
+        </div>
+        <nav className="country-party-links" aria-label={({en:'Political parties',de:'Politische Parteien',es:'Partidos políticos',fr:'Partis politiques','pt-br':'Partidos políticos'} as Record<Locale,string>)[locale]}>
+          {(countryPartyNames[country.slug] ?? []).map(name => <Link key={name} href={`${locale === 'en' ? '' : `/${locale}`}/countries/${country.slug}/parties/${partySlug(name)}`}>{name} ↗</Link>)}
+        </nav>
       </section>
 
       <section className="country-system">

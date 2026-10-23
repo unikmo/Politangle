@@ -2,3 +2,35 @@
 
 /* Progressive disclosure: concise editorial summaries with keyboard-accessible depth. */
 .country-guide details>summary{cursor:pointer;list-style-position:inside;font-weight:700;color:#8c351c;line-height:1.5;padding:12px 0}.country-guide details>summary:focus-visible{outline:3px solid #b84b25;outline-offset:4px;border-radius:4px}.country-guide details[open]>summary{margin-bottom:8px}.country-guide details>p{max-width:72ch;line-height:1.65}.country-guide .country-purpose{margin-block:20px 32px}.country-guide .country-purpose>details p{margin:8px 0 12px}.country-guide .country-insight-grid article,.country-guide .country-language-grid article{min-width:0}.country-guide .country-insight-grid article>p,.country-guide .country-language-grid article>p{line-height:1.55}.country-guide .country-quick-read{margin-top:28px}@media(max-width:650px){.country-guide details>summary{min-height:44px}.country-guide .country-purpose{margin-block:16px 24px}}
+
+/* Accessible country-context and political-party navigation. */
+.country-local-dimensions a.country-topic-link,.country-party-links a{display:inline-flex;align-items:center;min-height:44px;margin:5px 8px 5px 0;padding:10px 15px;border:1px solid #dfc4b3;border-radius:999px;background:#fff8f3;color:#78351d;text-decoration:none;font-weight:700;line-height:1.35;transition:background-color .15s ease,border-color .15s ease}
+.country-local-dimensions a.country-topic-link:hover,.country-party-links a:hover{background:#fce3d5;border-color:#a23b16}
+.country-local-dimensions a.country-topic-link:focus-visible,.country-party-links a:focus-visible{outline:3px solid #a23b16;outline-offset:3px}
+.country-party-links{display:flex;flex-wrap:wrap;gap:4px 6px;margin:20px 0 32px}
+.country-guide .country-facts{padding-inline:clamp(12px,2vw,28px)}
+@media(max-width:650px){.country-guide .country-facts{padding-inline:12px}.country-party-links a{max-width:100%}}
+
+/* Country-topic editorial pages: keep the same editorial rhythm on all locales. */
+.country-topic-detail{max-width:980px;padding-top:clamp(26px,4vw,58px);padding-bottom:70px}
+.country-topic-detail .country-detail-back{margin:0 0 27px}
+.country-topic-detail .country-detail-back a,.country-topic-detail .country-detail-sources a{color:#8b3819;font-weight:700;text-decoration-thickness:1px;text-underline-offset:4px}
+.country-topic-detail .country-detail-eyebrow{display:block;color:#955237;font-weight:800;letter-spacing:.12em;text-transform:uppercase;font-size:11px}
+.country-topic-detail h1{margin:11px 0 28px;font-family:Georgia,serif;font-size:clamp(36px,5vw,64px);line-height:1.1;overflow-wrap:anywhere}
+.country-topic-detail>section,.country-topic-detail>nav{margin-top:30px}
+.country-topic-detail h2{margin:0 0 12px;color:#35241d;font-size:clamp(21px,2.2vw,28px);letter-spacing:-.025em}
+.country-topic-detail p,.country-topic-detail li{font-size:clamp(15px,1.4vw,17px);line-height:1.7;max-width:76ch}
+.country-topic-detail ul{padding-left:24px}
+.country-topic-detail .country-detail-lead{padding:clamp(20px,3vw,36px);border:1px solid #ead8ca;background:#fff8f3;border-radius:20px}
+.country-topic-detail .country-detail-lead p{font-size:clamp(16px,1.8vw,19px);line-height:1.65}
+.country-topic-detail .country-topic-turn{padding:20px 28px;border-left:4px solid #c66537;background:#fffaf7}
+.country-topic-detail .country-detail-related{display:flex;flex-wrap:wrap}
+.country-topic-detail .country-detail-sources{display:grid;gap:10px;list-style:disc}
+.country-topic-detail .country-detail-disclaimer{font-size:12px;color:#6c605a;margin-top:16px}
+@media(max-width:650px){
+ .country-topic-detail{padding-inline:clamp(16px,5vw,24px);padding-top:28px}
+ .country-topic-detail .country-detail-lead{padding:18px}
+ .country-topic-detail .country-topic-turn{padding:18px}
+ .country-topic-detail .country-party-links{display:flex;flex-wrap:wrap;gap:8px}
+ .country-topic-detail .country-party-links a{margin:0;max-width:100%;overflow-wrap:anywhere}
+}

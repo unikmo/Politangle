@@ -89,6 +89,36 @@ for (const slug of countrySlugs) {
   }
 }
 
+// The public country-topic and party links must resolve in their own language,
+// contain relevant source-linked content, and not index thin editorial drafts.
+for(const [path, phrase] of [
+ ['/countries/germany/1','Social-market economy'],
+ ['/de/countries/germany/3','Bundesländer'],
+ ['/countries/denmark/1','Negative parliamentarism'],
+ ['/de/countries/denmark/1','Folketing'],
+ ['/fr/countries/france/1','Républicanisme'],
+ ['/countries/germany/parties/afd','AfD'],
+ ['/de/countries/germany/parties/die-linke','Die Linke'],
+ ['/es/countries/germany/parties/bundnis-90-die-grunen','Verdes'],
+ ['/pt-br/countries/germany/parties/spd','SPD'],
+]){
+ try{
+  const {response,body,ms}=await fetchPage(path);
+  if(!response.ok) failures.push(path+': HTTP '+response.status);
+  else if(!body.toLowerCase().includes(phrase.toLowerCase())) failures.push(path+': missing '+phrase);
+  else if(!body.includes('<h1')) failures.push(path+': missing headline');
+  else if(!body.includes('noindex')) failures.push(path+': editorial subpage unexpectedly indexable');
+  else if(!body.includes('country-detail-lead')) failures.push(path+': topic-specific evidence block missing');
+  else console.log('PASS country navigation '+path+' '+ms+'ms');
+ }catch(error){failures.push(path+': '+String(error))}
+}
+for(const path of ['/countries/germany/0','/de/countries/germany/99','/countries/germany/parties/not-a-party']){
+ try{const {response}=await fetchPage(path);
+ if(response.status!==404) failures.push(path+': expected 404, got '+response.status);
+ else console.log('PASS invalid country route '+path);
+ }catch(error){failures.push(path+': '+String(error))}
+}
+
 try {
   const { response, body } = await fetchPage('/countries/france');
   if (!response.ok) failures.push(`/countries/france: HTTP ${response.status}`);
