@@ -22,6 +22,12 @@ export default function TeacherAssessments(){
   const res=await fetch('/api/school/assessments?id='+encodeURIComponent(result.id),{method:'DELETE'});
   if(res.ok){setResult(null);setCreated(null);setMessage('Assessment and responses deleted.');}else setMessage('Deletion failed.');
  }
+ async function exportPdf(){
+  if(!result)return;
+  const response=await fetch('/api/school/assessments?id='+encodeURIComponent(result.id)+'&format=pdf',{cache:'no-store'});
+  if(!response.ok){setMessage('PDF export failed.');return;}
+  const url=URL.createObjectURL(await response.blob());const link=document.createElement('a');link.href=url;link.download='politangle-assessment-'+result.id+'.pdf';link.click();URL.revokeObjectURL(url);
+ }
  function exportCsv(){
   if(!result)return;
   const safe=(v:unknown)=>'"'+String(v??'').replace(/^[=+@\-\t\r]/,'\u0027$&').replace(/"/g,'""')+'"';
@@ -41,7 +47,7 @@ export default function TeacherAssessments(){
   </article>
   <article className="engine-card"><h2>Retrieve, export or delete results</h2><p>Enter the assessment ID shown in the student link.</p><input value={existing} onChange={e=>setExisting(e.target.value)} placeholder="Assessment ID" /><button type="button" onClick={load}>View results</button>
    {result&&<><p>{result.rows.length} completed assessments · expires {new Date(result.expiresAt).toLocaleDateString()}</p>
-    <div className="engine-result-actions"><button type="button" onClick={exportCsv}>Download per-question CSV</button><button type="button" onClick={()=>window.print()}>Print results</button><button type="button" onClick={remove}>Delete all results now</button></div>
+    <div className="engine-result-actions"><button type="button" onClick={exportCsv}>Download per-question CSV</button><button type="button" onClick={exportPdf}>Download per-question PDF</button><button type="button" onClick={()=>window.print()}>Print results</button><button type="button" onClick={remove}>Delete all results now</button></div>
     <div>{result.rows.map(row=><details key={row.paperNumber}><summary>Student number {row.paperNumber} — {row.correct}/{row.graded} scored questions</summary><table><thead><tr><th>Question</th><th>Answer</th><th>Correct</th></tr></thead><tbody>{row.responses.map(q=><tr key={q.questionId}><td>{q.questionId} · {q.question}</td><td>{Array.isArray(q.answer)?q.answer.join(', '):q.answer}</td><td>{q.correct===null?'Not scored':q.correct?'Yes':'No'}</td></tr>)}</tbody></table></details>)}</div></>}
   </article>{message&&<p role="status">{message}</p>}
  </section>;
