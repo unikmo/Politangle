@@ -7,6 +7,7 @@ import {compareCountryParties} from '../../lib/country-party-comparison';
 import {germanyPartySummary} from '../../lib/germany-party-locales';
 import type {Locale} from '../LocaleProvider';
 import type {CountrySelectionOption} from './result-country-options';
+import {deepAxis} from '../deep/deep-native';
 
 const STORAGE='politangle.result-countries.v1';
 const ui:Record<Locale,{kicker:string;title:string;intro:string;pick:string;add:string;limit:string;selected:string;remove:string;compare:string;why:string;context:string;parties:string;more:string;missing:string;shared:string;partial:string;unknown:string;footnote:string;source:string;partiesNote:string;strongest:string;none:string}> = {
@@ -74,7 +75,7 @@ export function CountryResultComparison({options,families,axes,locale,stage}:{
     return <section className="country-compare-panel" key={country.slug} aria-label={`${copy.compare} ${country.names[locale]}`}>
      <div className="country-compare-heading"><p className="engine-kicker">{copy.compare}</p><h3>{country.names[locale]}</h3><Link href={`${prefix}/countries/${country.slug}`}>{copy.more} ↗</Link></div>
      <h4>{copy.why}</h4>
-     <div className="country-compare-axes" aria-label={copy.strongest}>{strongest.map(axis=><span key={axis.id}>{axis.name}: {axis.score}/100</span>)}</div>
+     <div className="country-compare-axes" aria-label={copy.strongest}>{strongest.map(axis=><span key={axis.id}>{deepAxis(locale,axis).name}: {axis.score}/100</span>)}</div>
      <h4>{copy.context}</h4><p>{country.summaries[locale] || country.summaries.en}</p>
      <h4>{copy.parties}</h4>
      {!country.parties.length&&<p className="country-compare-note">{copy.missing}</p>}
