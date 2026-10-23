@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
-import { authenticatedAdmin } from '../../../../../lib/auth-session';
-import { getAdminDb } from '../../../../../lib/firebase-admin';
+import { authenticatedAdmin } from '../../../../lib/auth-session';
+import { getAdminDb } from '../../../../lib/firebase-admin';
 
 /** Protected operator inbox. A request never grants a pilot license. */
 export async function GET() {
