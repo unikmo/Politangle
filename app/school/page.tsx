@@ -219,14 +219,14 @@ export default function SchoolPage() {
             <p className="p-kicker">{c.privateKicker}</p>
             <h3>{c.privateTitle}</h3>
             <p>{c.privateText}</p>
-            <Link className="p-text-link" href="/school/private">{c.privateCta} →</Link>
+            <p className="school-pilot-eligibility">{locale === 'de' ? 'Nach der Freigabe verfügbar' : locale === 'es' ? 'Disponible tras la aprobación' : locale === 'fr' ? 'Disponible après validation' : locale === 'pt-br' ? 'Disponível após aprovação' : 'Available after pilot approval'}</p>
           </article>
           <article>
             <span>02</span>
             <p className="p-kicker">{c.classroomKicker}</p>
             <h3>{c.classroomTitle}</h3>
             <p>{c.classroomText}</p>
-            <Link className="p-text-link" href="/school/student">{c.classroomCta} →</Link>
+            <p className="school-pilot-eligibility">{locale === 'de' ? 'Nach der Freigabe verfügbar' : locale === 'es' ? 'Disponible tras la aprobación' : locale === 'fr' ? 'Disponible après validation' : locale === 'pt-br' ? 'Disponível após aprovação' : 'Available after pilot approval'}</p>
           </article>
           <article>
             <span>03</span>
