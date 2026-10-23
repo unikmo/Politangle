@@ -185,6 +185,7 @@ export default function SchoolPage() {
             <p className="p-kicker">{c.kicker}</p>
             <h1>{c.title}</h1>
             <p className="school-public-lede">{c.intro}</p>
+            <p className="school-public-pilot-cta"><Link className="p-button" href={href('/school/pilot')}>{locale==='de'?'Teilnahme am Schulpilot anfragen':locale==='es'?'Solicitar participación en el piloto':locale==='fr'?'Demander à participer au pilote':locale==='pt-br'?'Solicitar participação no piloto':'Request a school pilot'} →</Link></p>
             <p className="school-public-privacy-line"><strong>{c.privacyLabel}</strong> {c.privacyText}</p>
           </div>
           <div className="school-public-visual" aria-hidden="true">
@@ -216,21 +217,21 @@ export default function SchoolPage() {
             <p className="p-kicker">{c.privateKicker}</p>
             <h3>{c.privateTitle}</h3>
             <p>{c.privateText}</p>
-            <Link className="p-text-link" href="/school/private">{c.privateCta} →</Link>
+            <p className="school-pilot-preview-label">{c.privateCta} · {c.pilotLabel}</p>
           </article>
           <article>
             <span>02</span>
             <p className="p-kicker">{c.classroomKicker}</p>
             <h3>{c.classroomTitle}</h3>
             <p>{c.classroomText}</p>
-            <Link className="p-text-link" href="/school/student">{c.classroomCta} →</Link>
+            <p className="school-pilot-preview-label">{c.classroomCta} · {c.pilotLabel}</p>
           </article>
           <article>
             <span>03</span>
             <p className="p-kicker">{c.teacherKicker}</p>
             <h3>{c.teacherTitle}</h3>
             <p>{c.teacherText}</p>
-            <Link className="p-text-link" href={href('/school/pilot')}>{c.teacherCta} →</Link>
+            <Link className="p-text-link" href={href('/school/pilot')}>{locale==='de'?'Pilotplatz anfragen':locale==='es'?'Solicitar piloto':locale==='fr'?'Demander le pilote':locale==='pt-br'?'Solicitar piloto':'Request pilot participation'} →</Link>
           </article>
         </div>
       </section>
