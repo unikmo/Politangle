@@ -96,7 +96,7 @@ for(const [path, phrase] of [
  ['/de/countries/germany/3','Bundesländer'],
  ['/countries/denmark/1','Negative parliamentarism'],
  ['/de/countries/denmark/1','Folketing'],
- ['/fr/countries/france/1','République'],
+ ['/fr/countries/france/1','Républicanisme'],
  ['/countries/germany/parties/afd','AfD'],
  ['/de/countries/germany/parties/die-linke','Die Linke'],
  ['/es/countries/germany/parties/bundnis-90-die-grunen','Verdes'],
