@@ -2,6 +2,8 @@ import Link from 'next/link';
 import type { CountryProfile } from '../../lib/countries';
 import type { Locale } from '../LocaleProvider';
 import { germanyPartySummary } from '../../lib/germany-party-locales';
+import { focused } from '../../lib/country-topic-notes';
+
 
 const labels = {
   en: { return:'Country guide', meaning:'Why this topic matters', institutions:'How institutions shape the question', turning:'Relevant turning point', explore:'Explore another dimension', sources:'Country sources', verified:'The sources below document the country context; they do not independently verify every interpretation of this topic.', party:'Political party', comparison:'How to read this party', context:'The country context', partySource:'Evidence and source dates', note:'A country guide cannot determine your party preference. Programmes and coalition positions may change between elections.', election:'Parliamentary context', noElection:'The country dataset does not yet contain a verified party-level election result.' },
@@ -11,40 +13,6 @@ const labels = {
   'pt-br': { return:'Voltar ao país', meaning:'Por que este tema importa', institutions:'O papel das instituições', turning:'Um momento decisivo', explore:'Outros temas', sources:'Fontes do país', verified:'As fontes documentam o contexto nacional, mas não verificam cada interpretação deste tema.', party:'Partido político', comparison:'Como entender este partido', context:'Contexto nacional', partySource:'Fontes e data de verificação', note:'Este guia não prevê seu voto. Programas e alianças podem mudar entre eleições.', election:'Contexto parlamentar', noElection:'Os dados nacionais ainda não incluem resultado eleitoral verificado deste partido.' },
 } as const;
 
-const focused: Record<string, Partial<Record<Locale, readonly string[]>>> = {
-  germany: {
-    en: [
-      'Germany combines competitive private enterprise with social insurance, collective bargaining and regulation. Parties disagree about the balance between market freedom, public protection and redistribution.',
-      'Christian democracy has influenced German social-market institutions. It connects religious and community traditions with constitutional democracy, welfare provision and private enterprise.',
-      'Germany has 16 Länder. Their governments participate in federal legislation through the Bundesrat; responsibilities for education and administration are shared across levels.',
-      'Federal coalition politics requires parties to negotiate a parliamentary majority. The Bundestag elects the chancellor, so party programmes must often be translated into coalition agreements.',
-      'The Federal Constitutional Court reviews public authority under the Basic Law. This provides a legal check on government and parliament rather than a second elected legislature.'
-    ],
-    de: [
-      'Die Soziale Marktwirtschaft verbindet privaten Wettbewerb mit Sozialversicherungen, Tarifverträgen und staatlichen Regeln. Politisch umstritten ist, wie viel Wettbewerb, Schutz und Umverteilung nötig sind.',
-      'Die Christdemokratie verbindet in Deutschland gesellschaftliche und religiöse Traditionen mit Sozialer Marktwirtschaft, Sozialstaat und parlamentarischer Demokratie. Sie ist nicht einfach mit US-Konservatismus gleichzusetzen.',
-      'Deutschland hat 16 Bundesländer. Über den Bundesrat wirken ihre Regierungen an Bundesgesetzen mit. Für Schule, Verwaltung und viele weitere Aufgaben gelten geteilte Zuständigkeiten.',
-      'Im Bundestag braucht die Regierung eine tragfähige Mehrheit. Deshalb handeln Parteien häufig Koalitionsverträge aus. Der Bundestag wählt den Bundeskanzler.',
-      'Das Bundesverfassungsgericht prüft staatliches Handeln am Grundgesetz. Seine Aufgabe ist die rechtliche Kontrolle, nicht das politische Regieren.'
-    ]
-  },
-  denmark: {
-    en: [
-      'Negative parliamentarism means a Danish government may take office and remain in office unless a majority of the Folketing actively opposes it. It need not first win a positive majority vote of confidence.',
-      'Minority cabinets negotiate support bill by bill. Cooperation can change by issue without automatically forming a new government.',
-      'Denmark has a broad welfare tradition, but parties differ over taxation, public services, eligibility and the balance of state and private responsibility.',
-      'Immigration policy intersects with citizenship, access to public services and national identity; these issues do not always follow a simple economic left–right division.',
-      'Greenland and the Faroe Islands are self-governing parts of the Danish Realm. Their relationships with Denmark raise questions of self-government, responsibility and sovereignty.'
-    ],
-    de: [
-      'Beim negativen Parlamentarismus kann eine Regierung im Amt bleiben, solange sich im Folketing keine Mehrheit ausdrücklich gegen sie stellt. Sie benötigt also nicht zunächst eine zustimmende Mehrheit.',
-      'Minderheitsregierungen suchen für Gesetze wechselnde Mehrheiten. Eine Einigung bei einem Thema bedeutet nicht automatisch eine feste Koalition.',
-      'Dänemark hat einen umfangreichen Sozialstaat. Parteien streiten über Steuern, Leistungen, Anspruchsvoraussetzungen und die Aufgaben von Staat und Privatwirtschaft.',
-      'Die Einwanderungspolitik berührt Staatsbürgerschaft, Sozialleistungen und nationale Zugehörigkeit. Diese Fragen verlaufen nicht immer entlang der wirtschaftlichen Links-rechts-Achse.',
-      'Grönland und die Färöer besitzen weitreichende Selbstverwaltung innerhalb des dänischen Reichsverbands. Es geht dabei auch um Zuständigkeiten und Souveränität.'
-    ]
-  }
-};
 const significant = new Set(['and','the','with','from','that','this','what','versus','politics','political','policy','policies','state','national','government','history','party','system','und','oder','der','die','das','mit','den','des','ein','eine','auf','für','von','bei','zur','aux','des','les','dans','del','los','las','para','con','uma','das','dos','por','que','est','são']);
 function words(text: string) { return text.toLocaleLowerCase().normalize('NFKD').replace(/[\u0300-\u036f]/g,'').split(/[^a-z0-9]+/).filter(x=>x.length>3 && !significant.has(x)); }
 function relevant(texts: readonly string[], heading: string): string | undefined {
