@@ -185,6 +185,8 @@ export default function SchoolPage() {
             <p className="p-kicker">{c.kicker}</p>
             <h1>{c.title}</h1>
             <p className="school-public-lede">{c.intro}</p>
+            <p className="school-pilot-primary-cta"><Link className="p-button" href={href('/school/pilot')}>{locale === 'de' ? 'Teilnahme am Schulpilot anfragen' : locale === 'es' ? 'Solicitar el piloto escolar' : locale === 'fr' ? 'Demander le pilote scolaire' : locale === 'pt-br' ? 'Solicitar piloto escolar' : 'Request School Edition pilot'} →</Link></p>
+            <p className="school-pilot-eligibility">{locale === 'de' ? 'Nur Schulen und Lehrkräfte. Klassenzugang erst nach Freigabe.' : locale === 'es' ? 'Solo escuelas y docentes. El acceso a las aulas requiere aprobación.' : locale === 'fr' ? 'Réservé aux établissements et enseignants. Accès après validation.' : locale === 'pt-br' ? 'Apenas escolas e professores. Acesso após aprovação.' : 'Schools and teachers only. Classroom access is granted after review.'}</p>
             <p className="school-public-privacy-line"><strong>{c.privacyLabel}</strong> {c.privacyText}</p>
           </div>
           <div className="school-public-visual" aria-hidden="true">
@@ -205,6 +207,7 @@ export default function SchoolPage() {
       <section className="p-section p-shell">
         <div className="p-section-head">
           <div>
+            <p className="school-pilot-eligibility"><strong>{locale === 'de' ? 'Die folgenden Bereiche sind nur für freigegebene Pilotschulen vorgesehen.' : locale === 'es' ? 'Las siguientes funciones están reservadas a centros pilotos autorizados.' : locale === 'fr' ? 'Les fonctions suivantes sont réservées aux établissements pilotes autorisés.' : locale === 'pt-br' ? 'As funções a seguir são destinadas a escolas-piloto autorizadas.' : 'The features below are for approved pilot schools only.'}</strong></p>
             <p className="p-kicker">{locale === 'de' ? 'DREI WEGE' : locale === 'es' ? 'TRES FORMAS' : locale === 'fr' ? 'TROIS PARCOURS' : locale === 'pt-br' ? 'TRÊS FORMAS DE USAR' : 'THREE WAYS TO USE IT'}</p>
             <h2>{locale === 'de' ? 'Privat lernen oder gemeinsam diskutieren.' : locale === 'es' ? 'Aprender en privado o conversar en grupo.' : locale === 'fr' ? 'Apprendre en privé ou discuter ensemble.' : locale === 'pt-br' ? 'Aprenda em particular ou discuta em grupo.' : 'Learn privately or discuss together.'}</h2>
           </div>
