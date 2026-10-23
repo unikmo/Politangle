@@ -1,3 +1,4 @@
+import {FieldValue} from 'firebase-admin/firestore';
 import {getAdminDb} from '../lib/firebase-admin';
 import {SCHOOL_PILOT_COLLECTION, SCHOOL_PILOT_REVIEW_ITEMS, type PilotRequestRecord} from '../lib/school-pilot';
 
@@ -31,7 +32,7 @@ async function main(){
   if(application.schemaVersion!==1||!['requested','reviewing'].includes(application.status))throw Error('Application is not awaiting review.');
   if(account.exists)throw Error('School account already exists; refusing to overwrite.');
   const now=new Date().toISOString();
-  tx.update(requestRef,{status:'approved',schoolId,review:{
+  tx.update(requestRef,{status:'approved',schoolId,expiresAt:FieldValue.delete(),review:{
    privacy:true,education:true,safeguarding:true,accessibility:true,agreement:true,approvedAt:now
   }});
   // Access remains blocked until licensed teacher credentials are provisioned.
