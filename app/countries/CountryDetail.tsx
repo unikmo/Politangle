@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import type { CountryProfile } from '../../lib/countries';
 import type { Locale } from '../LocaleProvider';
+import { germanyPartySummary } from '../../lib/germany-party-locales';
 
 const labels = {
   en: { return:'Country guide', meaning:'Why this topic matters', institutions:'How institutions shape the question', turning:'Relevant turning point', explore:'Explore another dimension', sources:'Country sources', verified:'The sources below document the country context; they do not independently verify every interpretation of this topic.', party:'Political party', comparison:'How to read this party', context:'The country context', partySource:'Evidence and source dates', note:'A country guide cannot determine your party preference. Programmes and coalition positions may change between elections.', election:'Parliamentary context', noElection:'The country dataset does not yet contain a verified party-level election result.' },
@@ -81,7 +82,7 @@ export const germanPartyInfo: Record<string,PartyInfo> = {
 };
 export function PartyDetail({country,locale,name,partyKey}:{country:CountryProfile;locale:Locale;name:string;partyKey:string}) {
  const copy=labels[locale],root=urlBase(locale,country.slug),party = country.slug==='germany'?germanPartyInfo[partyKey]:undefined;
- const context = country.vocabulary.find(p=>words(name).some(token=>words(p).some(w=>w.startsWith(token.slice(0,5))))) ?? country.vocabulary[0];
+ const context = germanyPartySummary[partyKey]?.[locale] ?? country.vocabulary.find(p=>words(name).some(token=>words(p).some(w=>w.startsWith(token.slice(0,5))))) ?? country.vocabulary[0];
  const sourceLinks=country.slug==='germany'?[
   {title:'Parteien in Deutschland — Bundeszentrale für politische Bildung',url:'https://www.bpb.de/themen/parteien/parteien-in-deutschland/'},
   {title:'Bundestagswahl 2025 — Die Bundeswahlleiterin',url:'https://www.bundeswahlleiterin.de/info/presse/mitteilungen/bundestagswahl-2025/29_25_endgueltiges-ergebnis.html'}
@@ -89,7 +90,7 @@ export function PartyDetail({country,locale,name,partyKey}:{country:CountryProfi
  return <main className="home info-page countries-page"><section className="info-shell country-guide country-topic-detail">
    <p className="country-detail-back"><Link href={root}>← {copy.return}: {country.name}</Link></p>
    <span className="country-detail-eyebrow">{country.name} / {copy.party}</span><h1>{name}</h1>
-   {party && locale==='de' ? <section className="country-detail-lead"><h2>{copy.comparison}</h2><p>{party.summary}</p><p><strong>{party.election2025}</strong></p><ul>{party.questions.map(q=><li key={q}>{q}</li>)}</ul></section> : <section className="country-detail-lead"><h2>{copy.context}</h2><p>{context}</p><p>{copy.noElection}</p></section>}
+   {party ? <section className="country-detail-lead"><h2>{copy.comparison}</h2><p>{locale==='de'?party.summary:context}</p><p><strong>{locale==='de'?party.election2025:(locale==='en'?'2025 federal election: ':locale==='es'?'Elecciones federales de 2025: ':locale==='fr'?'Élections fédérales de 2025 : ':'Eleições federais de 2025: ')+(partyKey==='cdu-csu'?'CDU 164 + CSU 44':partyKey==='afd'?'AfD 152':partyKey==='spd'?'SPD 120':partyKey==='bundnis-90-die-grunen'?'Grüne 85':partyKey==='die-linke'?'Die Linke 64':partyKey==='fdp'?'FDP 0':'BSW 0')}</strong></p>{locale==='de'&&<ul>{party.questions.map(q=><li key={q}>{q}</li>)}</ul>}</section> : <section className="country-detail-lead"><h2>{copy.context}</h2><p>{context}</p><p>{copy.noElection}</p></section>}
    <section><h2>{copy.context}</h2>{country.power.slice(0,2).map(p=><p key={p}>{p}</p>)}</section>
    <section><h2>{copy.partySource}</h2><ul className="country-detail-sources">{sourceLinks.map(s=><li key={s.url}><a href={s.url} rel="noopener noreferrer" target="_blank">{s.title} ↗</a></li>)}</ul><p className="country-detail-disclaimer">{copy.note}</p></section>
  </section></main>;
