@@ -1,3 +1,5 @@
+import type { Locale } from '../app/LocaleProvider';
+
 export const focused: Record<string, Partial<Record<Locale, readonly string[]>>> = {
   germany: {
     en: [
