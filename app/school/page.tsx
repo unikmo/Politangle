@@ -37,7 +37,7 @@ const copy: Record<Locale, SchoolCopy> = {
     strap: 'Young people · classroom + private',
     kicker: 'Political literacy for young people',
     title: 'Understand politics. See the room. Keep each student private.',
-    intro: 'For secondary-school classes. Explore privately or join an anonymous class. Teachers see only class totals.',
+    intro: 'School Edition is being prepared for selected schools. Request participation in the controlled pilot first; student activities are not publicly available.',
     privacyLabel: 'Classroom privacy:',
     privacyText: 'the teacher sees the room, never which student gave which answer.',
     privateKicker: 'Students · private',
@@ -64,7 +64,7 @@ const copy: Record<Locale, SchoolCopy> = {
     strap: 'Junge Menschen · Unterricht + privat',
     kicker: 'Politische Bildung für junge Menschen',
     title: 'Politik verstehen. Die Klasse sehen. Einzelne bleiben privat.',
-    intro: 'Für den Unterricht an weiterführenden Schulen. Privat ausprobieren oder anonym einer Klasse beitreten. Lehrkräfte sehen nur die Summen der Klasse.',
+    intro: 'Politangle School wird zunächst mit ausgewählten Schulen erprobt. Frag zuerst einen Platz im kontrollierten Pilot an. Die Schülerfunktionen sind noch nicht öffentlich freigeschaltet.',
     privacyLabel: 'Privatsphäre im Unterricht:',
     privacyText: 'Die Lehrkraft sieht die Klasse, nie, wer welche Antwort gegeben hat.',
     privateKicker: 'Schüler:innen · privat',
@@ -91,7 +91,7 @@ const copy: Record<Locale, SchoolCopy> = {
     strap: 'Jóvenes · aula + privado',
     kicker: 'Alfabetización política para jóvenes',
     title: 'Entender la política. Ver el grupo. Proteger a cada persona.',
-    intro: 'Para clases de secundaria. Explora por tu cuenta o entra en una clase anónima. El profesor solo ve los totales del grupo.',
+    intro: 'Politangle School se probará primero con centros seleccionados. Solicita el piloto antes de acceder; las actividades para estudiantes aún no son públicas.',
     privacyLabel: 'Privacidad en el aula:',
     privacyText: 'el profesor ve el grupo, nunca quién dio cada respuesta.',
     privateKicker: 'Alumnado · privado',
@@ -118,7 +118,7 @@ const copy: Record<Locale, SchoolCopy> = {
     strap: 'Jovens · sala de aula + privado',
     kicker: 'Educação política para jovens',
     title: 'Entenda a política. Veja a turma. Preserve a privacidade de cada estudante.',
-    intro: 'Para turmas do ensino fundamental II e do ensino médio. Explore em particular ou entre em uma turma anônima. O professor vê apenas os totais da turma.',
+    intro: 'A School Edition será testada primeiro com escolas selecionadas. Solicite participação no piloto; as atividades para estudantes ainda não estão abertas ao público.',
     privacyLabel: 'Privacidade em sala:',
     privacyText: 'o professor vê a turma, nunca qual estudante deu qual resposta.',
     privateKicker: 'Estudantes · privado',
@@ -145,7 +145,7 @@ const copy: Record<Locale, SchoolCopy> = {
     strap: 'Jeunes · classe + privé',
     kicker: 'Culture politique pour les jeunes',
     title: 'Comprendre la politique. Voir la classe. Protéger chaque élève.',
-    intro: 'Pour les classes du secondaire. Explore seul ou rejoins une classe anonyme. L’enseignant ne voit que les totaux de la classe.',
+    intro: 'La School Edition sera d’abord testée dans des écoles sélectionnées. Demande à participer au pilote avant tout accès ; les activités élèves restent fermées au public.',
     privacyLabel: 'Vie privée en classe :',
     privacyText: 'l’enseignant voit la classe, jamais qui a donné quelle réponse.',
     privateKicker: 'Élèves · privé',
@@ -185,6 +185,7 @@ export default function SchoolPage() {
             <p className="p-kicker">{c.kicker}</p>
             <h1>{c.title}</h1>
             <p className="school-public-lede">{c.intro}</p>
+            <p className="school-public-pilot-cta"><Link className="p-button" href={href('/school/pilot')}>{locale==='de'?'Teilnahme am Schulpilot anfragen':locale==='es'?'Solicitar participación en el piloto':locale==='fr'?'Demander à participer au pilote':locale==='pt-br'?'Solicitar participação no piloto':'Request a school pilot'} →</Link></p>
             <p className="school-public-privacy-line"><strong>{c.privacyLabel}</strong> {c.privacyText}</p>
           </div>
           <div className="school-public-visual" aria-hidden="true">
@@ -216,21 +217,21 @@ export default function SchoolPage() {
             <p className="p-kicker">{c.privateKicker}</p>
             <h3>{c.privateTitle}</h3>
             <p>{c.privateText}</p>
-            <Link className="p-text-link" href="/school/private">{c.privateCta} →</Link>
+            <p className="school-pilot-preview-label">{c.privateCta} · {locale==='de'?'Nach Pilotfreigabe':locale==='es'?'Tras la aprobación del piloto':locale==='fr'?'Après approbation du pilote':locale==='pt-br'?'Após aprovação do piloto':'After pilot approval'}</p>
           </article>
           <article>
             <span>02</span>
             <p className="p-kicker">{c.classroomKicker}</p>
             <h3>{c.classroomTitle}</h3>
             <p>{c.classroomText}</p>
-            <Link className="p-text-link" href="/school/student">{c.classroomCta} →</Link>
+            <p className="school-pilot-preview-label">{c.classroomCta} · {locale==='de'?'Nach Pilotfreigabe':locale==='es'?'Tras la aprobación del piloto':locale==='fr'?'Après approbation du pilote':locale==='pt-br'?'Após aprovação do piloto':'After pilot approval'}</p>
           </article>
           <article>
             <span>03</span>
             <p className="p-kicker">{c.teacherKicker}</p>
             <h3>{c.teacherTitle}</h3>
             <p>{c.teacherText}</p>
-            <Link className="p-text-link" href={href('/school/pilot')}>{c.teacherCta} →</Link>
+            <Link className="p-text-link" href={href('/school/pilot')}>{locale==='de'?'Pilotplatz anfragen':locale==='es'?'Solicitar piloto':locale==='fr'?'Demander le pilote':locale==='pt-br'?'Solicitar piloto':'Request pilot participation'} →</Link>
           </article>
         </div>
       </section>

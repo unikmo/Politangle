@@ -20,6 +20,13 @@ const pages = [
   ['/quizzes', 'Choose a quiz'],
   ['/countries', 'Country'],
   ['/school', 'student'],
+  ['/school/pilot', 'Request a school pilot'],
+  ['/de/school/pilot', 'Schulpilot anfragen'],
+  ['/es/school/pilot', 'Solicitar un piloto escolar'],
+  ['/fr/school/pilot', 'Demander un pilote scolaire'],
+  ['/pt-br/school/pilot', 'Solicitar piloto escolar'],
+  ['/school/student', 'invitation-only'],
+  ['/school/private', 'invitation-only'],
   ['/account', 'Politangle account'],
   ['/certify', 'POLITICAL LITERACY CERTIFICATE'],
   ['/privacy', 'PRIVACY'],
@@ -180,6 +187,18 @@ try {
   else console.log(`INFO Firebase health HTTP ${response.status} ${JSON.stringify(data)}`);
 } catch (error) {
   if (requireFirebase) failures.push(`Firebase health: ${error instanceof Error ? error.message : String(error)}`);
+}
+
+for(const [path,options,status] of [
+ ['/api/school/pilot-request',{method:'POST',headers:{'content-type':'application/json'},body:'{}'},400],
+ ['/api/school/pilot-request',{method:'GET'},405],
+ ['/api/school/classes/TESTAA/join',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({participantToken:'test-anonymous-id-123'})},403]
+]){
+ try{
+  const response=await fetch(baseUrl+path,options);
+  if(response.status!==status)failures.push(path+': expected HTTP '+status+' got '+response.status);
+  else console.log('PASS school pilot gate '+path+' '+status);
+ }catch(error){failures.push(path+': '+String(error))}
 }
 
 if (failures.length) {

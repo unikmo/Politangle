@@ -1,8 +1,13 @@
+import type {Metadata} from 'next';
+export const metadata:Metadata={robots:{index:false,follow:false}};
+import SchoolPilotLocked from '../SchoolPilotLocked';
+import {schoolStudentPilotEnabled} from '../../../lib/school-release';
 import Link from 'next/link';
 import ProjectorSchoolClient from './ProjectorSchoolClient';
 import { LanguageSelector } from '../../LocaleProvider';
 
 export default async function SchoolProjectorPage({ searchParams }: { searchParams: Promise<{ code?: string }> }) {
+  if (!schoolStudentPilotEnabled()) return <SchoolPilotLocked/>;
   const params = await searchParams;
   const code = (params.code ?? '').trim().toUpperCase();
   return (

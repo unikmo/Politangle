@@ -62,15 +62,24 @@ try{
    await page.locator('.p-nav select.lang').selectOption('de');
    await page.waitForURL(/\/de\/method$/,{timeout:20000});
    if(width===390){
-    for(const route of ['/de/countries/denmark','/de/countries/denmark/1','/de/countries/germany/3','/de/countries/germany/parties/afd','/fr/countries/france/1','/es/countries/germany/parties/bundnis-90-die-grunen','/fr/method','/school','/learn','/countries','/account','/quiz']){
+    for(const route of ['/de/countries/denmark','/de/countries/denmark/1','/de/countries/germany/3','/de/countries/germany/parties/afd','/fr/countries/france/1','/es/countries/germany/parties/bundnis-90-die-grunen','/fr/method','/school','/school/pilot','/de/school/pilot','/school/private','/school/student','/learn','/countries','/account','/quiz']){
      await check(page,route,width);
+     if(route.endsWith('/school/pilot')){
+      assert.equal(await page.locator('form.school-pilot-form input[name="contactEmail"]').count(),1,'pilot request must include adult email');
+      assert.equal(await page.locator('form.school-pilot-form button[type="submit"]').count(),1,'pilot request CTA missing');
+      assert.equal(await page.locator('form.school-pilot-form input[name="adultConfirmed"]').count(),1,'adult-only confirmation missing');
+     }
+     if(route==='/school/private'||route==='/school/student'){
+      assert(await page.locator('main').innerText().then(text=>/invitation-only|nur auf einladung|solo por invitación|sur invitation|por convite/i.test(text)),'school student route unexpectedly open without approval');
+     }
+
      if(route==='/quiz'){
       await page.getByRole('radiogroup').waitFor({state:'visible',timeout:20000});
       await page.getByRole('radio').first().tap();
       await page.waitForTimeout(180);
       assert(/\b1\s*\/\s*26\b/.test(await page.locator('.engine-progress-row').innerText()),'Quick answer not recorded');
      }
-     if(['/school','/countries','/quiz','/de/countries/denmark/1','/de/countries/germany/parties/afd'].includes(route))await page.screenshot({path:out+'/'+route.slice(1).replaceAll('/','-')+'-390.png',fullPage:route!=='/countries'});
+     if(['/school','/school/pilot','/de/school/pilot','/countries','/quiz','/de/countries/denmark/1','/de/countries/germany/parties/afd'].includes(route))await page.screenshot({path:out+'/'+route.slice(1).replaceAll('/','-')+'-390.png',fullPage:route!=='/countries'});
     }
     // End-to-end journey: finish Quick, select three countries, inspect the
     // party context, enforce the cap, and preserve the country choice locally.

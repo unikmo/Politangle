@@ -14,6 +14,16 @@ import { polygonAxesV2, type AttitudeMode, type BeliefConstruct } from './belief
 import type { SchoolAgeBand } from './school-believe';
 
 export const SCHOOL_AGGREGATE_SCHEMA = 2 as const;
+// Conservative product threshold; not a guarantee against re-identification.
+export const SCHOOL_MIN_COHORT_FOR_DISTRIBUTIONS = 5 as const;
+export const SCHOOL_CLASS_MAX_AGE_DAYS = 7 as const;
+export function schoolRoomExpiryDate(createdAt:string) {
+  const created=Date.parse(createdAt);
+  return Number.isFinite(created) ? new Date(created+SCHOOL_CLASS_MAX_AGE_DAYS*86400000) : new Date(0);
+}
+export function schoolRoomExpired(record:Pick<SchoolClassRecord,'createdAt'>, now=Date.now()) {
+  return schoolRoomExpiryDate(record.createdAt).getTime()<=now;
+}
 
 export type SchoolQuestionAggregate = {
   responses: number;
@@ -310,6 +320,8 @@ export function schoolClassSummary(record: SchoolClassRecord) {
 export function publicSchoolClassSummary(record: SchoolClassRecord) {
   const currentAggregate = record.currentQuestionId ? record.questions[record.currentQuestionId] : null;
   const projectorVisible = record.activity.projectorMode === 'live' || record.revealed;
+  const enoughRespondents=record.joinedCount>=SCHOOL_MIN_COHORT_FOR_DISTRIBUTIONS
+    && (currentAggregate?.responses??0)>=SCHOOL_MIN_COHORT_FOR_DISTRIBUTIONS;
   return {
     code: record.code,
     status: record.status,
@@ -323,12 +335,21 @@ export function publicSchoolClassSummary(record: SchoolClassRecord) {
     revealed: record.revealed,
     currentQuestion: record.currentQuestionId ? publicClassroomQuestion(record.currentQuestionId, record.revealed, record.activity.ageBand) : null,
     activityQuestions: record.activity.questionIds.map((id) => publicClassroomQuestion(id, false, record.activity.ageBand)).filter(Boolean),
-    projectorDistribution: projectorVisible && record.currentQuestionId && currentAggregate ? questionSummary(record.currentQuestionId, currentAggregate, record.activity.ageBand) : null,
+    projectorDistribution: projectorVisible && enoughRespondents && record.currentQuestionId && currentAggregate ? questionSummary(record.currentQuestionId, currentAggregate, record.activity.ageBand) : null,
   };
 }
 
 export function teacherSchoolClassSummary(record: SchoolClassRecord) {
   const currentAggregate = record.currentQuestionId ? record.questions[record.currentQuestionId] : null;
+  // No distributions or inferred positions from undersized groups/questions.
+  // This is stronger than the previous "aggregate even for one pupil" model.
+  const safeQuestions=Object.fromEntries(Object.entries(record.questions).map(([id,q])=>[
+    id,record.joinedCount>=SCHOOL_MIN_COHORT_FOR_DISTRIBUTIONS && q.responses>=SCHOOL_MIN_COHORT_FOR_DISTRIBUTIONS
+      ? q : emptyQuestion(id,record.activity.ageBand)
+  ]));
+  const safeRecord={...record,questions:safeQuestions};
+  const enoughRespondents=record.joinedCount>=SCHOOL_MIN_COHORT_FOR_DISTRIBUTIONS
+    && (currentAggregate?.responses??0)>=SCHOOL_MIN_COHORT_FOR_DISTRIBUTIONS;
   return {
     code: record.code,
     status: record.status,
@@ -341,8 +362,9 @@ export function teacherSchoolClassSummary(record: SchoolClassRecord) {
     questionOpen: record.questionOpen,
     revealed: record.revealed,
     currentQuestion: record.currentQuestionId ? getClassroomQuestion(record.currentQuestionId, record.activity.ageBand) : null,
-    currentDistribution: record.currentQuestionId && currentAggregate ? questionSummary(record.currentQuestionId, currentAggregate, record.activity.ageBand) : null,
-    classSummary: schoolClassSummary(record),
+    currentDistribution: enoughRespondents && record.currentQuestionId && currentAggregate ? questionSummary(record.currentQuestionId, currentAggregate, record.activity.ageBand) : null,
+    classSummary: schoolClassSummary(safeRecord),
+    minCohortForDistributions: SCHOOL_MIN_COHORT_FOR_DISTRIBUTIONS,
     privacy: {
       individualStudentsVisible: false,
       participantAnswerMappingsStored: false,

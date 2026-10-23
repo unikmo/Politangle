@@ -1,0 +1,30 @@
+name: School pilot production acceptance
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'app/school/**'
+      - 'app/api/school/**'
+      - 'app/api/release-status/route.ts'
+      - 'lib/school-*'
+      - 'scripts/verify-school-pilot-live.mjs'
+      - '.github/workflows/school-pilot-live.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Confirm school pilot is request-only on actual public domain
+        run: node scripts/verify-school-pilot-live.mjs
+        env:
+          LIVE_BASE_URL: https://politangle.org
+          EXPECTED_COMMIT_SHA: ${{ github.sha }}
+          LIVE_VERIFY_ATTEMPTS: '36'
+          LIVE_VERIFY_INTERVAL_MS: '15000'
