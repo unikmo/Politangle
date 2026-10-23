@@ -2,3 +2,11 @@
 
 /* Progressive disclosure: concise editorial summaries with keyboard-accessible depth. */
 .country-guide details>summary{cursor:pointer;list-style-position:inside;font-weight:700;color:#8c351c;line-height:1.5;padding:12px 0}.country-guide details>summary:focus-visible{outline:3px solid #b84b25;outline-offset:4px;border-radius:4px}.country-guide details[open]>summary{margin-bottom:8px}.country-guide details>p{max-width:72ch;line-height:1.65}.country-guide .country-purpose{margin-block:20px 32px}.country-guide .country-purpose>details p{margin:8px 0 12px}.country-guide .country-insight-grid article,.country-guide .country-language-grid article{min-width:0}.country-guide .country-insight-grid article>p,.country-guide .country-language-grid article>p{line-height:1.55}.country-guide .country-quick-read{margin-top:28px}@media(max-width:650px){.country-guide details>summary{min-height:44px}.country-guide .country-purpose{margin-block:16px 24px}}
+
+/* Accessible country-context and political-party navigation. */
+.country-local-dimensions a.country-topic-link,.country-party-links a{display:inline-flex;align-items:center;min-height:44px;margin:5px 8px 5px 0;padding:10px 15px;border:1px solid #dfc4b3;border-radius:999px;background:#fff8f3;color:#78351d;text-decoration:none;font-weight:700;line-height:1.35;transition:background-color .15s ease,border-color .15s ease}
+.country-local-dimensions a.country-topic-link:hover,.country-party-links a:hover{background:#fce3d5;border-color:#a23b16}
+.country-local-dimensions a.country-topic-link:focus-visible,.country-party-links a:focus-visible{outline:3px solid #a23b16;outline-offset:3px}
+.country-party-links{display:flex;flex-wrap:wrap;gap:4px 6px;margin:20px 0 32px}
+.country-guide .country-facts{padding-inline:clamp(12px,2vw,28px)}
+@media(max-width:650px){.country-guide .country-facts{padding-inline:12px}.country-party-links a{max-width:100%}}
