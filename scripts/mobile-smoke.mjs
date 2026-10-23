@@ -72,6 +72,27 @@ try{
      }
      if(['/school','/countries','/quiz','/de/countries/denmark/1','/de/countries/germany/parties/afd'].includes(route))await page.screenshot({path:out+'/'+route.slice(1).replaceAll('/','-')+'-390.png',fullPage:route!=='/countries'});
     }
+    // End-to-end journey: finish Quick, select three countries, inspect the
+    // party context, enforce the cap, and preserve the country choice locally.
+    for(let answered=1;answered<26;answered++){
+      await page.waitForFunction((n)=>document.querySelector('.engine-progress-row > span')?.textContent?.trim().startsWith(n+' / 26'),answered);
+      await page.getByRole('radio').first().tap();
+      await page.waitForTimeout(135);
+    }
+    await page.waitForFunction(()=>document.querySelector('.engine-progress-row > span')?.textContent?.trim().startsWith('26 / 26'));
+    await page.locator('.engine-nav button').last().tap();
+    await page.waitForURL(/\\/(?:de\\/)?results$/, {timeout:20000});
+    const chooser=page.locator('.country-compare-picker select');
+    await chooser.waitFor({state:'visible',timeout:20000});
+    for(const country of ['germany','denmark','france']){
+      await chooser.selectOption(country);
+      await page.locator('.country-compare-add').tap();
+    }
+    assert.equal(await page.locator('.country-selected-chip').count(),3,'exact three countries should be selected');
+    assert.equal(await page.locator('.country-compare-add').isDisabled(),true,'fourth country must be blocked');
+    assert(await page.locator('.country-compare-panel').count()===3,'selected country panels should render');
+    assert(await page.locator('.country-party-comparison').count()>0,'party landscape should render after Quick');
+    await page.screenshot({path:out+'/country-results-390.png',fullPage:false});
    }
    console.log('PASS interactive mobile '+width);
   }catch(e){failures.push(width+'px '+String(e?.stack||e));console.error('FAIL '+width,e);}
