@@ -19,7 +19,7 @@ export async function POST(request: Request, context: { params: Promise<{ code: 
   const code = await codeFrom(context);
   const raw = await request.json().catch(() => null);
   const receiptInput = raw && typeof raw === 'object' ? raw as { participantToken?: unknown; questionId?: unknown } : null;
-  if (!receiptInput || typeof receiptInput.participantToken !== 'string' || typeof receiptInput.questionId !== 'string') {
+  if (!receiptInput || typeof receiptInput.participantToken !== 'string' || receiptInput.participantToken.length<8 || receiptInput.participantToken.length>128 || typeof receiptInput.questionId !== 'string') {
     return NextResponse.json({ error: 'Invalid classroom response.' }, { status: 400 });
   }
   const db = getAdminDb();
