@@ -16,6 +16,7 @@ function validRecord(value: unknown): value is SchoolClassRecord {
 export async function POST(request: Request, context: { params: Promise<{ code: string }> }) {
   if (!schoolStudentPilotEnabled()) return NextResponse.json({error:'School student pilot is not yet enabled.'},{status:403});
   const code = await codeFrom(context);
+  if (!/^[A-HJ-NP-Z2-9]{6}$/.test(code)) return NextResponse.json({error:'Invalid classroom code.'},{status:400});
   const body = await request.json().catch(() => null) as { participantToken?: unknown } | null;
   if (!body || typeof body.participantToken !== 'string' || (body.participantToken.length < 8 || body.participantToken.length > 128)) {
     return NextResponse.json({ error: 'Invalid anonymous participant token.' }, { status: 400 });
