@@ -29,6 +29,7 @@ function validRecord(value: unknown): value is SchoolClassRecord {
 
 export async function GET(request: Request, context: { params: Promise<{ code: string }> }) {
   const code = await codeFrom(context);
+  if(!/^[A-HJ-NP-Z2-9]{6}$/.test(code))return NextResponse.json({error:'Invalid classroom code.'},{status:400});
   const snapshot = await getAdminDb().collection('schoolClasses').doc(code).get();
   if (!snapshot.exists) return NextResponse.json({ error: 'Class not found.' }, { status: 404 });
   const data = snapshot.data();
@@ -42,6 +43,7 @@ export async function GET(request: Request, context: { params: Promise<{ code: s
 
 export async function PATCH(request: Request, context: { params: Promise<{ code: string }> }) {
   const code = await codeFrom(context);
+  if(!/^[A-HJ-NP-Z2-9]{6}$/.test(code))return NextResponse.json({error:'Invalid classroom code.'},{status:400});
   const ref = getAdminDb().collection('schoolClasses').doc(code);
   const snapshot = await ref.get();
   if (!snapshot.exists) return NextResponse.json({ error: 'Class not found.' }, { status: 404 });
