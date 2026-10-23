@@ -1,0 +1,29 @@
+name: Politangle production live verification
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'app/api/release-status/route.ts'
+      - 'scripts/check-live-release.mjs'
+      - '.github/workflows/production-live-verify.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Independently verify public production website
+        run: node scripts/check-live-release.mjs
+        env:
+          LIVE_BASE_URL: https://politangle.org
+          EXPECTED_COMMIT_SHA: ${{ github.sha }}
+          LIVE_VERIFY_ATTEMPTS: '36'
+          LIVE_VERIFY_INTERVAL_MS: '15000'
