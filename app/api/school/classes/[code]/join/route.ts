@@ -1,3 +1,4 @@
+import { approvedClassroomPilot } from '../../../../../../lib/school-pilot-server';
 import { NextResponse } from 'next/server';
 import { getAdminDb } from '../../../../../../lib/firebase-admin';
 import { applySchoolJoin, hashSchoolSecret, type SchoolClassRecord } from '../../../../../../lib/school-aggregate';
@@ -19,6 +20,9 @@ export async function POST(request: Request, context: { params: Promise<{ code: 
   }
 
   const db = getAdminDb();
+  const room=await db.collection('schoolClasses').doc(code).get();
+  if(!room.exists) return NextResponse.json({error:'Class not found.'},{status:404});
+  if (!(await approvedClassroomPilot(room.data()))) return NextResponse.json({error:'School pilot access is not approved.'},{status:403});
   const classRef = db.collection('schoolClasses').doc(code);
   const receiptId = hashSchoolSecret(body.participantToken);
   const receiptRef = classRef.collection('joinReceipts').doc(receiptId);
