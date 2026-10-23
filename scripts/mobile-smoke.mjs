@@ -81,7 +81,7 @@ try{
     }
     await page.waitForFunction(()=>document.querySelector('.engine-progress-row > span')?.textContent?.trim().startsWith('26 / 26'));
     await page.locator('.engine-nav button').last().tap();
-    await page.waitForURL(/\\/(?:de\\/)?results$/, {timeout:20000});
+    await page.waitForURL(/\/(?:de\/|es\/|fr\/|pt-br\/)?results$/, {timeout:20000});
     const chooser=page.locator('.country-compare-picker select');
     await chooser.waitFor({state:'visible',timeout:20000});
     for(const country of ['germany','denmark','france']){
