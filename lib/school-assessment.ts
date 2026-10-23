@@ -7,7 +7,7 @@ import { schoolLicenseAllowsSession } from './school-license';
 export const ASSESSMENTS = 'schoolAssessments';
 export const MAX_RETENTION_DAYS = 365;
 export const digest = (value: string) => createHash('sha256').update(value).digest('hex');
-export const validStudentCode = (value: unknown): value is string => typeof value === 'string' && /^\\d{8}$/.test(value);
+export const validStudentCode = (value: unknown): value is string => typeof value === 'string' && /^[0-9]{8}$/.test(value);
 export const expired = (value: {expiresAt?: string; deletedAt?: string}) => Boolean(value.deletedAt || !value.expiresAt || Date.parse(value.expiresAt) <= Date.now());
 export function verifySecret(value: string, hash: string) {
  const a = Buffer.from(digest(value), 'hex'), b = Buffer.from(hash || '', 'hex');
