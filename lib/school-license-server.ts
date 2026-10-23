@@ -1,3 +1,4 @@
+import {approvedSchoolAccount} from './school-pilot-server';
 import { getAdminDb } from './firebase-admin';
 import {
   SCHOOL_LICENSE_COLLECTION,
@@ -15,5 +16,6 @@ export async function resolveSchoolTeacherLicense(rawKey: unknown) {
   if (!snapshot.exists) return null;
   const record = snapshot.data();
   if (!isSchoolTeacherLicenseRecord(record)) return null;
+  if (!(await approvedSchoolAccount(record.schoolId))) return null;
   return { key, documentId, ref, record };
 }
