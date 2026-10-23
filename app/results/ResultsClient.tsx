@@ -404,6 +404,9 @@ export default function ResultsClient({countryOptions}:{countryOptions:readonly 
             return <p key={family.id}><strong>{label} · {display.name} · {family.overall}/100</strong><span>{display.meaning}.</span></p>;
           })}
         </div>
+        <CountryResultComparison options={countryOptions} families={result.families} axes={result.polygon} locale={locale} stage="quick" />
+
+
 
         {people.length > 0 && home.primary && (() => {
           const display = familyDisplay(locale, home.primary.id, home.primary.name);
@@ -433,8 +436,6 @@ export default function ResultsClient({countryOptions}:{countryOptions:readonly 
           <span>{locale === 'de' ? 'Diese achtseitige Form ist dein Politangle. Die Einordnung daneben zeigt, welche politischen Traditionen dem Gesamtmuster am nächsten kommen.' : locale === 'es' ? 'Esta figura de ocho lados es tu Politangle. La lectura explica qué tradiciones políticas se parecen más al conjunto del perfil.' : locale === 'fr' ? 'Cette forme à huit côtés est ton Politangle. La lecture explique quelles traditions politiques se rapprochent le plus de l’ensemble du profil.' : locale === 'pt-br' ? 'Esta forma de oito lados é o seu Politangle. A leitura ao lado mostra quais tradições políticas mais se aproximam do conjunto do perfil.' : 'This eight-sided shape is your Politangle. The reading beside it explains the political traditions that most closely resemble the whole pattern.'}</span>
         </div>
       </article>
-
-      <CountryResultComparison options={countryOptions} families={result.families} axes={result.polygon} locale={locale} stage="quick" />
 
       <article className="engine-card result-story-card compact-result-card" style={{ marginTop: 18 }}>
         <p className="engine-kicker">{locale === 'de' ? 'Warum dieses Ergebnis?' : locale === 'es' ? '¿Por qué este resultado?' : locale === 'fr' ? 'Pourquoi ce résultat ?' : locale === 'pt-br' ? 'Por que este é o seu resultado?' : 'Why this is your result'}</p>
