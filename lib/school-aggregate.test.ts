@@ -88,7 +88,7 @@ test('teacher suppresses single and four-person political distributions', () => 
  }
  const teacher=teacherSchoolClassSummary(current);
  assert.equal(teacher.currentDistribution,null);
- assert.equal(teacher.classSummary.questions.find(q=>q.id==='T01-P')!.responses,0);
+ assert.equal(teacher.classSummary.questions.find(q=>q.id==='T01-P')?.responses ?? 0,0);
  assert.ok(teacher.classSummary.families.every(f=>f.overall===null));
  current=applySchoolJoin(current);
  current=applySchoolResponse(current,belief('T01-P','1','joined-participant-4'));
