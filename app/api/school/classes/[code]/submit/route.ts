@@ -1,3 +1,4 @@
+import { schoolRoomIsApproved } from '../../../../../../lib/school-pilot-authorization';
 import { NextResponse } from 'next/server';
 import { getAdminDb } from '../../../../../../lib/firebase-admin';
 import { validateClassroomResponse } from '../../../../../../lib/school-classroom';
@@ -20,6 +21,9 @@ export async function POST(request: Request, context: { params: Promise<{ code: 
     return NextResponse.json({ error: 'Invalid classroom response.' }, { status: 400 });
   }
   const db = getAdminDb();
+  const pilotSnapshot=await db.collection('schoolClasses').doc(code).get();
+  if(!pilotSnapshot.exists)return NextResponse.json({error:'Class not found.'},{status:404});
+  if(!await schoolRoomIsApproved(pilotSnapshot.data()??{}))return NextResponse.json({error:'Pilot access is not approved or has expired.'},{status:403});
   const classRef = db.collection('schoolClasses').doc(code);
   const receiptId = hashSchoolSecret(`${receiptInput.participantToken}:${receiptInput.questionId}`);
   const receiptRef = classRef.collection('responseReceipts').doc(receiptId);
