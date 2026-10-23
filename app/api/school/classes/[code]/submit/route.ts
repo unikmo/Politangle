@@ -2,7 +2,7 @@ import { approvedClassroomPilot } from '../../../../../../lib/school-pilot-serve
 import { NextResponse } from 'next/server';
 import { getAdminDb } from '../../../../../../lib/firebase-admin';
 import { validateClassroomResponse } from '../../../../../../lib/school-classroom';
-import { applySchoolResponse, hashSchoolSecret, type SchoolClassRecord } from '../../../../../../lib/school-aggregate';
+import { applySchoolResponse, hashSchoolSecret, schoolRoomExpired, schoolRoomExpiryDate, type SchoolClassRecord } from '../../../../../../lib/school-aggregate';
 
 async function codeFrom(context: { params: Promise<{ code: string }> }) {
   const { code } = await context.params;
@@ -37,6 +37,7 @@ export async function POST(request: Request, context: { params: Promise<{ code: 
     const payload = validateClassroomResponse(raw, data.activity.ageBand);
     if (!payload) return { status: 400 as const, body: { error: 'Invalid classroom response.' } };
     if (data.status !== 'active') return { status: 409 as const, body: { error: 'Class is closed.' } };
+    if (schoolRoomExpired(data)) return {status:410 as const,body:{error:'School pilot classroom has expired.'}};
     if (!joinedSnapshot.exists) return {status:403 as const,body:{error:'Join this classroom before submitting answers.'}};
     if (!data.activity.questionIds.includes(payload.questionId)) return { status: 409 as const, body: { error: 'Question is not active in this classroom.' } };
     if (data.activity.pacing === 'teacher' && (!data.questionOpen || data.currentQuestionId !== payload.questionId)) return { status: 409 as const, body: { error: 'This question is not open.' } };
@@ -44,7 +45,7 @@ export async function POST(request: Request, context: { params: Promise<{ code: 
 
     const next = applySchoolResponse(data, payload);
     transaction.set(classRef, next);
-    transaction.set(receiptRef, { questionId: payload.questionId, createdAt: new Date().toISOString() });
+    transaction.set(receiptRef, { questionId: payload.questionId, createdAt: new Date().toISOString(), expiresAt: schoolRoomExpiryDate(data.createdAt) });
     return { status: 200 as const, body: { accepted: true, duplicate: false } };
   });
 
