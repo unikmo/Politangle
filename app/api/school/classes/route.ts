@@ -3,7 +3,7 @@ import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 import { getAdminDb } from '../../../../lib/firebase-admin';
 import { buildClassroomActivity, defaultClassroomActivity } from '../../../../lib/school-classroom';
-import { createSchoolClassRecord, hashSchoolSecret } from '../../../../lib/school-aggregate';
+import { createSchoolClassRecord, hashSchoolSecret, schoolRoomExpiryDate } from '../../../../lib/school-aggregate';
 import {
   SCHOOL_LICENSE_COOKIE,
   isSchoolTeacherLicenseRecord,
@@ -52,6 +52,7 @@ export async function POST(request: Request) {
       const record = createSchoolClassRecord(code, teacherKeyHash, activity, roomLabel, createdAt);
       transaction.set(classRef, {
         ...record,
+        expiresAt: schoolRoomExpiryDate(createdAt),
         schoolId: currentLicense.schoolId,
         teacherLicenseId: license.documentId,
       });
