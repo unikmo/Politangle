@@ -19,6 +19,6 @@ export async function approvedClassroomPilot(data:unknown) {
  const r=data as {schoolId?:unknown,teacherLicenseId?:unknown};
  if(typeof r.teacherLicenseId!=='string'||!r.teacherLicenseId||!(await approvedSchoolAccount(r.schoolId)))return false;
  const license=await getAdminDb().collection(SCHOOL_LICENSE_COLLECTION).doc(r.teacherLicenseId).get();
- const data=license.data();
- return license.exists&&isSchoolTeacherLicenseRecord(data)&&schoolLicenseAllowsSession(data)&&data.schoolId===r.schoolId;
+ const licenseData=license.data();
+ return license.exists&&isSchoolTeacherLicenseRecord(licenseData)&&schoolLicenseAllowsSession(licenseData)&&licenseData.schoolId===r.schoolId;
 }
