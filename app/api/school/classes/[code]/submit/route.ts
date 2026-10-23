@@ -28,12 +28,14 @@ export async function POST(request: Request, context: { params: Promise<{ code: 
   const classRef = db.collection('schoolClasses').doc(code);
   const receiptId = hashSchoolSecret(`${receiptInput.participantToken}:${receiptInput.questionId}`);
   const receiptRef = classRef.collection('responseReceipts').doc(receiptId);
+  const joinRef = classRef.collection('joinReceipts').doc(hashSchoolSecret(receiptInput.participantToken));
 
   const result = await db.runTransaction(async (transaction) => {
-    const [classSnapshot, receiptSnapshot] = await Promise.all([transaction.get(classRef), transaction.get(receiptRef)]);
+    const [classSnapshot, receiptSnapshot, joinedSnapshot] = await Promise.all([transaction.get(classRef), transaction.get(receiptRef), transaction.get(joinRef)]);
     if (!classSnapshot.exists) return { status: 404 as const, body: { error: 'Class not found.' } };
     const data = classSnapshot.data();
     if (!validRecord(data)) return { status: 409 as const, body: { error: 'Older School pilot room. Create a new classroom.' } };
+    if (!joinedSnapshot.exists) return { status: 403 as const, body: { error: 'Join the classroom before submitting responses.' } };
     const payload = validateClassroomResponse(raw, data.activity.ageBand);
     if (!payload) return { status: 400 as const, body: { error: 'Invalid classroom response.' } };
     if (data.status !== 'active') return { status: 409 as const, body: { error: 'Class is closed.' } };
