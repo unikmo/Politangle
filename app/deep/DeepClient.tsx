@@ -295,6 +295,9 @@ export default function DeepClient({countryOptions}:{countryOptions:readonly Cou
               );
             })}
           </div>
+          <CountryResultComparison options={countryOptions} families={output.families} axes={output.polygon} locale={locale} stage="full" />
+
+
 
           {people.length > 0 && home.primary && (() => {
             const display = deepFamily(locale, home.primary.id, home.primary.name);
@@ -303,8 +306,6 @@ export default function DeepClient({countryOptions}:{countryOptions:readonly Cou
 
           <PoliticalShape axes={output.polygon} locale={locale} />
         </article>
-
-        <CountryResultComparison options={countryOptions} families={output.families} axes={output.polygon} locale={locale} stage="full" />
 
         <article className="engine-card result-story-card compact-result-card" style={{ marginTop: 18 }}>
           <p className="engine-kicker">{ui.defines}</p>
