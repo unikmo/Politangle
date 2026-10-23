@@ -80,28 +80,47 @@ test('BELIEVE answers are stored only as aggregate option buckets', () => {
   assert.equal('answers' in current, false);
 });
 
-test('teacher sees developing aggregate distribution without an n threshold', () => {
-  let current = launchSchoolQuestion(record(), 'T01-P');
-  current = applySchoolResponse(current, belief('T01-P', '-1'));
-  const teacher = teacherSchoolClassSummary(current);
-  assert.equal(teacher.currentDistribution?.responses, 1);
-  assert.equal(teacher.currentDistribution?.distribution.find((item) => item.id === '-1')?.count, 1);
+test('teacher suppresses single and four-person political distributions', () => {
+ let current=launchSchoolQuestion(record(),'T01-P');
+ for(let i=0;i<4;i++){
+  current=applySchoolJoin(current);
+  current=applySchoolResponse(current,belief('T01-P','-1',`joined-participant-${i}`));
+ }
+ const teacher=teacherSchoolClassSummary(current);
+ assert.equal(teacher.currentDistribution,null);
+ assert.equal(teacher.classSummary.questions.find(q=>q.id==='T01-P')!.responses,0);
+ assert.ok(teacher.classSummary.families.every(f=>f.overall===null));
+ current=applySchoolJoin(current);
+ current=applySchoolResponse(current,belief('T01-P','1','joined-participant-4'));
+ const allowed=teacherSchoolClassSummary(current);
+ assert.equal(allowed.currentDistribution?.responses,5);
+ assert.equal(allowed.currentDistribution?.distribution.find(x=>x.id==='-1')?.count,4);
 });
 
-test('projector reveal mode hides distribution until reveal while teacher still sees it', () => {
-  let current = launchSchoolQuestion(record(), 'T01-P');
-  current = applySchoolResponse(current, belief('T01-P', '1'));
-  assert.equal(publicSchoolClassSummary(current).projectorDistribution, null);
-  assert.equal(teacherSchoolClassSummary(current).currentDistribution?.responses, 1);
-  current = revealSchoolQuestion(current, true);
-  assert.equal(publicSchoolClassSummary(current).projectorDistribution?.responses, 1);
+test('projector reveal requires a five-response cohort after teacher reveal', () => {
+ let current=launchSchoolQuestion(record(),'T01-P');
+ current=applySchoolJoin(current);
+ current=applySchoolResponse(current,belief('T01-P','1','joined-a'));
+ current=revealSchoolQuestion(current,true);
+ assert.equal(publicSchoolClassSummary(current).projectorDistribution,null);
+ for(let i=0;i<4;i++){
+  current=applySchoolJoin(current);
+  current=applySchoolResponse(current,belief('T01-P','1',`joined-${i}`));
+ }
+ assert.equal(publicSchoolClassSummary(current).projectorDistribution?.responses,5);
 });
 
-test('live projector mode can show aggregate while voting remains open', () => {
-  let current = configureSchoolClass(record(), { type: 'quick26', projectorMode: 'live' });
-  current = launchSchoolQuestion(current, 'T01-P');
-  current = applySchoolResponse(current, belief('T01-P', '0'));
-  assert.equal(publicSchoolClassSummary(current).projectorDistribution?.responses, 1);
+test('live projector also applies the same minimum cohort', () => {
+ let current=configureSchoolClass(record(),{type:'quick26',projectorMode:'live'});
+ current=launchSchoolQuestion(current,'T01-P');
+ current=applySchoolJoin(current);
+ current=applySchoolResponse(current,belief('T01-P','0','joined-0'));
+ assert.equal(publicSchoolClassSummary(current).projectorDistribution,null);
+ for(let i=1;i<5;i++){
+  current=applySchoolJoin(current);
+  current=applySchoolResponse(current,belief('T01-P','0',`joined-${i}`));
+ }
+ assert.equal(publicSchoolClassSummary(current).projectorDistribution?.responses,5);
 });
 
 test('literacy aggregates expose option distribution and correctness, not individual scores', () => {
