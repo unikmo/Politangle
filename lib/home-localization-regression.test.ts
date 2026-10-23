@@ -15,7 +15,7 @@ const schoolPage = readFileSync(join(root, 'app/school/page.tsx'), 'utf8');
 const infoShell = readFileSync(join(root, 'app/InfoShell.tsx'), 'utf8');
 const localizedInfo = readFileSync(join(root, 'app/LocalizedInfoPage.tsx'), 'utf8');
 const methodExplainer = readFileSync(join(root, 'app/MethodExplainer.tsx'), 'utf8');
-const privateStudent = readFileSync(join(root, 'app/school/private/page.tsx'), 'utf8');
+const privateStudent = readFileSync(join(root, 'app/school/private/PrivateStudentClient.tsx'), 'utf8');
 const classroomStudent = readFileSync(join(root, 'app/school/student/student-native.ts'), 'utf8');
 const privateLiteracy = readFileSync(join(root, 'app/school/private/literacy/PrivateLiteracyClient.tsx'), 'utf8');
 
