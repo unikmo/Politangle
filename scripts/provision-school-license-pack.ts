@@ -36,14 +36,15 @@ async function main() {
     status: 'active',
     pilotRequestId: requestId,
     pilotApprovedAt: application.data()?.review?.approvedAt,
-    packagePriceUsd: pack.packagePriceUsd,
+    packagePriceUsd: 0,
+    pilotAccess: true,
     teacherLicenseCount: pack.teacherLicenseCount,
     createdAt: pack.createdAt,
   });
   for (const seat of pack.seats) batch.set(db.collection(SCHOOL_LICENSE_COLLECTION).doc(seat.documentId), seat.record);
   await batch.commit();
 
-  console.log(`Provisioned ${pack.schoolName}: $${pack.packagePriceUsd} school pack with ${pack.teacherLicenseCount} teacher licenses.`);
+  console.log(`Provisioned approved pilot ${pack.schoolName} with ${pack.teacherLicenseCount} teacher seats. No pilot charge has been created.`);
   console.log('Distribute one credential per licensed teacher. Raw credentials are shown only in this provisioning output:');
   for (const seat of pack.seats) console.log(`${seat.record.seatLabel}: ${seat.key}`);
 }
