@@ -1,4 +1,5 @@
 import { cookies } from 'next/headers';
+import {schoolResultsPdf} from '../../../../lib/school-assessment-pdf';
 import { NextResponse } from 'next/server';
 import { getAdminDb } from '../../../../lib/firebase-admin';
 import { SCHOOL_LICENSE_COOKIE,schoolLicenseAllowsSession } from '../../../../lib/school-license';
@@ -36,9 +37,13 @@ export async function GET(req:Request) {
   if(data.teacherLicenseId!==access.documentId||data.schoolId!==access.record.schoolId)return error('Forbidden.',403);
   if(expired(data))return error('Assessment expired.',410);
   const answers=await snap.ref.collection('answers').get();
+  const rows=answers.docs.map(d=>d.data()).sort((a,b)=>a.paperNumber.localeCompare(b.paperNumber));
+  if(new URL(req.url).searchParams.get('format')==='pdf') {
+   const pdf=schoolResultsPdf(data.title,id,rows as Parameters<typeof schoolResultsPdf>[2]);
+   return new Response(Buffer.from(pdf),{headers:{...noStore,'Content-Type':'application/pdf','Content-Disposition':`attachment; filename="politangle-assessment-${id}.pdf"`}});
+  }
   return NextResponse.json({id,title:data.title,createdAt:data.createdAt,expiresAt:data.expiresAt,
-   questionIds:data.activity.questionIds,
-   rows:answers.docs.map(d=>d.data()).sort((a,b)=>a.paperNumber.localeCompare(b.paperNumber))},{headers:noStore});
+   questionIds:data.activity.questionIds,rows},{headers:noStore});
  }
  const snap=await getAdminDb().collection(ASSESSMENTS).where('teacherLicenseId','==',access.documentId).get();
  return NextResponse.json({assessments:snap.docs.map(d=>({id:d.id,title:d.data().title,expiresAt:d.data().expiresAt,expired:expired(d.data()),studentCount:d.data().studentCount}))},{headers:noStore});
