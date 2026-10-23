@@ -1,5 +1,6 @@
 import {getAdminDb} from './firebase-admin';
 import {pilotApproved,SCHOOL_PILOT_COLLECTION} from './school-pilot';
+import {SCHOOL_LICENSE_COLLECTION,isSchoolTeacherLicenseRecord,schoolLicenseAllowsSession} from './school-license';
 
 export async function approvedSchoolAccount(schoolId:unknown) {
  if(typeof schoolId!=='string'||!schoolId||schoolId.length>64)return null;
@@ -16,5 +17,8 @@ export async function approvedSchoolAccount(schoolId:unknown) {
 export async function approvedClassroomPilot(data:unknown) {
  if(!data||typeof data!=='object')return false;
  const r=data as {schoolId?:unknown,teacherLicenseId?:unknown};
- return typeof r.teacherLicenseId==='string'&&r.teacherLicenseId.length>0&&Boolean(await approvedSchoolAccount(r.schoolId));
+ if(typeof r.teacherLicenseId!=='string'||!r.teacherLicenseId||!(await approvedSchoolAccount(r.schoolId)))return false;
+ const license=await getAdminDb().collection(SCHOOL_LICENSE_COLLECTION).doc(r.teacherLicenseId).get();
+ const data=license.data();
+ return license.exists&&isSchoolTeacherLicenseRecord(data)&&schoolLicenseAllowsSession(data)&&data.schoolId===r.schoolId;
 }
