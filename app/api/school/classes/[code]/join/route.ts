@@ -1,7 +1,7 @@
 import { approvedClassroomPilot } from '../../../../../../lib/school-pilot-server';
 import { NextResponse } from 'next/server';
 import { getAdminDb } from '../../../../../../lib/firebase-admin';
-import { applySchoolJoin, hashSchoolSecret, type SchoolClassRecord } from '../../../../../../lib/school-aggregate';
+import { applySchoolJoin, hashSchoolSecret, schoolRoomExpired, schoolRoomExpiryDate, type SchoolClassRecord } from '../../../../../../lib/school-aggregate';
 
 async function codeFrom(context: { params: Promise<{ code: string }> }) {
   const { code } = await context.params;
@@ -33,10 +33,11 @@ export async function POST(request: Request, context: { params: Promise<{ code: 
     const data = classSnapshot.data();
     if (!validRecord(data)) return { status: 409 as const, body: { error: 'Older School pilot room. Create a new classroom.' } };
     if (data.status !== 'active') return { status: 409 as const, body: { error: 'Class is closed.' } };
+    if (schoolRoomExpired(data)) return {status:410 as const,body:{error:'School pilot classroom has expired.'}};
     if (receiptSnapshot.exists) return { status: 200 as const, body: { joined: true, duplicate: true, joinedCount: data.joinedCount } };
     const next = applySchoolJoin(data);
     transaction.set(classRef, next);
-    transaction.set(receiptRef, { createdAt: new Date().toISOString() });
+    transaction.set(receiptRef, { createdAt: new Date().toISOString(), expiresAt: schoolRoomExpiryDate(data.createdAt) });
     return { status: 200 as const, body: { joined: true, duplicate: false, joinedCount: next.joinedCount } };
   });
 
