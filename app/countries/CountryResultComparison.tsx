@@ -77,6 +77,10 @@ export function CountryResultComparison({options,families,axes,locale,stage}:{
      <h4>{copy.why}</h4>
      <div className="country-compare-axes" aria-label={copy.strongest}>{strongest.map(axis=><span key={axis.id}>{deepAxis(locale,axis).name}: {axis.score}/100</span>)}</div>
      <h4>{copy.context}</h4><p>{country.summaries[locale] || country.summaries.en}</p>
+     <h4>{locale==='de'?'Fünf Debatten, die dieses Land prägen':locale==='es'?'Cinco temas propios de este país':locale==='fr'?'Cinq débats propres à ce pays':locale==='pt-br'?'Cinco debates próprios deste país':'Five debates specific to this country'}</h4>
+     <nav className="country-party-links" aria-label={locale==='de'?'Länderspezifische Themen':locale==='fr'?'Sujets nationaux':'Country topics'}>
+      {country.topics[locale].map((topic,i)=><Link key={topic} href={`${prefix}/countries/${country.slug}/${i+1}`}>{topic} ↗</Link>)}
+     </nav>
      <h4>{copy.parties}</h4>
      {!country.parties.length&&<p className="country-compare-note">{copy.missing}</p>}
      {country.parties.length>0&&<><p className="country-compare-note">{copy.partiesNote}</p>
