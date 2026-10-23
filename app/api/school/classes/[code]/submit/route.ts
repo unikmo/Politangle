@@ -1,3 +1,4 @@
+import { schoolRoomIsApproved } from '../../../../../../lib/school-pilot-authorization';
 import { NextResponse } from 'next/server';
 import { getAdminDb } from '../../../../../../lib/firebase-admin';
 import { validateClassroomResponse } from '../../../../../../lib/school-classroom';
@@ -14,12 +15,16 @@ function validRecord(value: unknown): value is SchoolClassRecord {
 
 export async function POST(request: Request, context: { params: Promise<{ code: string }> }) {
   const code = await codeFrom(context);
+  if(!/^[A-HJ-NP-Z2-9]{6}$/.test(code))return NextResponse.json({error:'Invalid classroom code.'},{status:400});
   const raw = await request.json().catch(() => null);
   const receiptInput = raw && typeof raw === 'object' ? raw as { participantToken?: unknown; questionId?: unknown } : null;
-  if (!receiptInput || typeof receiptInput.participantToken !== 'string' || typeof receiptInput.questionId !== 'string') {
+  if (!receiptInput || typeof receiptInput.participantToken !== 'string' || typeof receiptInput.questionId !== 'string' || typeof receiptInput.participantToken!=='string' || receiptInput.participantToken.length<8 || receiptInput.participantToken.length>128 || receiptInput.questionId.length>96) {
     return NextResponse.json({ error: 'Invalid classroom response.' }, { status: 400 });
   }
   const db = getAdminDb();
+  const pilotSnapshot=await db.collection('schoolClasses').doc(code).get();
+  if(!pilotSnapshot.exists)return NextResponse.json({error:'Class not found.'},{status:404});
+  if(!await schoolRoomIsApproved(pilotSnapshot.data()??{}))return NextResponse.json({error:'Pilot access is not approved or has expired.'},{status:403});
   const classRef = db.collection('schoolClasses').doc(code);
   const receiptId = hashSchoolSecret(`${receiptInput.participantToken}:${receiptInput.questionId}`);
   const receiptRef = classRef.collection('responseReceipts').doc(receiptId);

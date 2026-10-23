@@ -1,3 +1,4 @@
+import { schoolRoomIsApproved } from '../../../../../lib/school-pilot-authorization';
 import { NextResponse } from 'next/server';
 import { getAdminDb } from '../../../../../lib/firebase-admin';
 import {
@@ -28,10 +29,12 @@ function validRecord(value: unknown): value is SchoolClassRecord {
 
 export async function GET(request: Request, context: { params: Promise<{ code: string }> }) {
   const code = await codeFrom(context);
+  if(!/^[A-HJ-NP-Z2-9]{6}$/.test(code))return NextResponse.json({error:'Invalid classroom code.'},{status:400});
   const snapshot = await getAdminDb().collection('schoolClasses').doc(code).get();
   if (!snapshot.exists) return NextResponse.json({ error: 'Class not found.' }, { status: 404 });
   const data = snapshot.data();
   if (!validRecord(data)) return NextResponse.json({ error: 'This pilot room uses an older School schema. Create a new classroom.' }, { status: 409 });
+  if (!await schoolRoomIsApproved(data as unknown as Record<string,unknown>)) return NextResponse.json({error:'Pilot access is not approved or has expired.'},{status:403});
   const teacherKey = bearer(request);
   if (!teacherKey) return NextResponse.json(publicSchoolClassSummary(data));
   if (!verifyTeacherKey(data, teacherKey)) return NextResponse.json({ error: 'Invalid teacher key.' }, { status: 403 });
@@ -40,11 +43,13 @@ export async function GET(request: Request, context: { params: Promise<{ code: s
 
 export async function PATCH(request: Request, context: { params: Promise<{ code: string }> }) {
   const code = await codeFrom(context);
+  if(!/^[A-HJ-NP-Z2-9]{6}$/.test(code))return NextResponse.json({error:'Invalid classroom code.'},{status:400});
   const ref = getAdminDb().collection('schoolClasses').doc(code);
   const snapshot = await ref.get();
   if (!snapshot.exists) return NextResponse.json({ error: 'Class not found.' }, { status: 404 });
   const data = snapshot.data();
   if (!validRecord(data)) return NextResponse.json({ error: 'This pilot room uses an older School schema. Create a new classroom.' }, { status: 409 });
+  if (!await schoolRoomIsApproved(data as unknown as Record<string,unknown>)) return NextResponse.json({error:'Pilot access is not approved or has expired.'},{status:403});
   const teacherKey = bearer(request);
   if (!teacherKey || !verifyTeacherKey(data, teacherKey)) return NextResponse.json({ error: 'Invalid teacher key.' }, { status: 403 });
   const body = await request.json().catch(() => null) as Record<string, unknown> | null;
