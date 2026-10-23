@@ -15,9 +15,10 @@ function validRecord(value: unknown): value is SchoolClassRecord {
 
 export async function POST(request: Request, context: { params: Promise<{ code: string }> }) {
   const code = await codeFrom(context);
+  if(!/^[A-HJ-NP-Z2-9]{6}$/.test(code))return NextResponse.json({error:'Invalid classroom code.'},{status:400});
   const raw = await request.json().catch(() => null);
   const receiptInput = raw && typeof raw === 'object' ? raw as { participantToken?: unknown; questionId?: unknown } : null;
-  if (!receiptInput || typeof receiptInput.participantToken !== 'string' || typeof receiptInput.questionId !== 'string') {
+  if (!receiptInput || typeof receiptInput.participantToken !== 'string' || typeof receiptInput.questionId !== 'string' || typeof receiptInput.participantToken!=='string' || receiptInput.participantToken.length<8 || receiptInput.participantToken.length>128 || receiptInput.questionId.length>96) {
     return NextResponse.json({ error: 'Invalid classroom response.' }, { status: 400 });
   }
   const db = getAdminDb();
