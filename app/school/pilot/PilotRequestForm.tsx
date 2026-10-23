@@ -1,6 +1,7 @@
 'use client';
 import { FormEvent, useState } from 'react';
-import { useLocale, type Locale } from '../../LocaleProvider';
+import Link from 'next/link';
+import { useLocale, localePath, type Locale } from '../../LocaleProvider';
 
 const c:Record<Locale,{
  title:string;intro:string;school:string;country:string;contact:string;email:string;role:string;age:string;
@@ -44,7 +45,7 @@ export default function PilotRequestForm(){
     <label>{t.role}<select name="role" defaultValue="teacher" required><option value="teacher">{t.teacher}</option><option value="school-leader">{t.leader}</option><option value="researcher">{t.researcher}</option><option value="other">{t.other}</option></select></label>
     <label>{t.age}<select name="ageBand" defaultValue="youth-14-18" required><option value="youth-14-18">{t.youth}</option><option value="junior-10-13">{t.junior}</option><option value="both">{t.both}</option></select></label>
    </div>
-   <p className="school-pilot-privacy-note">{t.privacyNote}</p>
+   <p className="school-pilot-privacy-note">{t.privacyNote}</p><p className="school-pilot-privacy-note"><Link href={localePath(locale,'/privacy')}>{locale==='de'?'Datenschutzhinweise':locale==='es'?'Aviso de privacidad':locale==='fr'?'Notice de confidentialité':locale==='pt-br'?'Aviso de privacidade':'Read privacy information'} →</Link></p>
    <label className="school-pilot-check"><input type="checkbox" name="adultConfirmed" value="yes" required /><span>{t.confirm}</span></label>
    <label className="school-pilot-check"><input type="checkbox" name="privacyAcknowledged" value="yes" required /><span>{t.privacy}</span></label>
    <button className="p-button" type="submit" disabled={status==='sending'||status==='sent'}>{status==='sending'?t.sending:t.send}</button>
