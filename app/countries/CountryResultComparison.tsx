@@ -46,7 +46,7 @@ export function CountryResultComparison({options,families,axes,locale,stage}:{
  const strongest=axes.filter(a=>a.score!==null).map(a=>({...a,clarity:Math.abs((a.score??50)-50)})).sort((a,b)=>b.clarity-a.clarity).slice(0,2);
  const add=()=>{
   const chosen=candidate||remaining[0]?.slug;
-  if(chosen&&selected.length<3&&!selected.includes(chosen))setSelected(v=>[...v,chosen]);
+  if(chosen)setSelected(v=>v.length>=3||v.includes(chosen)?v:[...v,chosen]);
   setCandidate('');
  };
  const prefix=locale==='en'?'':`/${locale}`;
@@ -60,7 +60,7 @@ export function CountryResultComparison({options,families,axes,locale,stage}:{
      {remaining.map(country=><option key={country.slug} value={country.slug}>{country.names[locale]}</option>)}
     </select>
    </label>
-   <button className="engine-primary-link country-compare-add" type="button" onClick={add} disabled={selected.length>=3||!remaining.length}>{copy.add}</button>
+   <button className="engine-primary-link country-compare-add" type="button" onClick={add} disabled={selected.length>=3||!candidate}>{copy.add}</button>
    <span className="country-compare-counter" role="status">{selected.length}/3 · {copy.limit}</span>
   </div>
   <div className="country-selected-list" aria-label={copy.selected}>
@@ -70,7 +70,7 @@ export function CountryResultComparison({options,families,axes,locale,stage}:{
   <div className="country-compare-results">
    {visible.map(country=>{
     const partyComparisons=compareCountryParties(country.slug,country.parties,families);
-    const mapped=partyComparisons.filter(p=>p.traditions.length>0);
+    
     return <section className="country-compare-panel" key={country.slug} aria-label={`${copy.compare} ${country.names[locale]}`}>
      <div className="country-compare-heading"><p className="engine-kicker">{copy.compare}</p><h3>{country.names[locale]}</h3><Link href={`${prefix}/countries/${country.slug}`}>{copy.more} ↗</Link></div>
      <h4>{copy.why}</h4>
@@ -86,8 +86,8 @@ export function CountryResultComparison({options,families,axes,locale,stage}:{
         <div className="country-party-comparison-head"><strong>{party.name}</strong>
          <Link href={`${prefix}/countries/${country.slug}/parties/${party.key}`}>{copy.more} ↗</Link></div>
         {desc&&<p>{desc}</p>}
-        {family?<p className="country-party-tradition"><b>{copy.shared}:</b> {familyNames[locale][family.id]} ({family.overall}/100 {locale==='de'?'dein Familienwert':'your family score'})</p>
-        :<p className="country-party-unmapped">{party.traditions.length?copy.partial:copy.unknown}</p>}
+        {family&&family.overall!==null&&family.overall>=60?<p className="country-party-tradition"><b>{copy.shared}:</b> {familyNames[locale][family.id]} ({family.overall}/100 {locale==='de'?'dein Traditionswert':locale==='es'?'tu puntuación de tradición':locale==='fr'?'ton score de tradition':locale==='pt-br'?'sua pontuação de tradição':'your political-family score'})</p>
+        :<p className="country-party-unmapped">{party.traditions.length?(family&&family.overall!==null?copy.partial:copy.partial):copy.unknown}</p>}
        </div>;
       })}</div>
       <p className="country-compare-disclaimer">{copy.footnote}</p>
