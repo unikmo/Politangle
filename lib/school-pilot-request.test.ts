@@ -39,3 +39,22 @@ test('school pilot form is offered in all five locales and does not request stud
  assert.doesNotMatch(page,/<input[^>]*name="student/);
  assert.match(page,/aria-live="polite"/);
 });
+
+test('revoking a teacher license disables an already created classroom',()=>{
+ const middleware=read('lib/school-pilot-authorization.ts');
+ assert.match(middleware,/SCHOOL_LICENSE_COLLECTION/);
+ assert.match(middleware,/schoolLicenseAllowsSession/);
+ assert.match(middleware,/license\.schoolId===schoolId/);
+ for(const route of [
+  'app/api/school/classes/[code]/route.ts',
+  'app/api/school/classes/[code]/join/route.ts',
+  'app/api/school/classes/[code]/submit/route.ts'
+ ]) assert.match(read(route),/schoolRoomIsApproved/,route);
+});
+test('only authenticated operators can see stored school staff contact details',()=>{
+ const inbox=read('app/api/admin/school-pilots/route.ts');
+ assert.match(inbox,/authenticatedAdmin/);
+ assert.match(inbox,/ADMIN_REQUIRED/);
+ assert.match(inbox,/schoolPilotRequests/);
+ assert.match(read('app/admin/AdminClient.tsx'),/\/admin\/school-pilots/);
+});
