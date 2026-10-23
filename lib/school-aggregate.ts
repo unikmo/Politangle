@@ -16,6 +16,14 @@ import type { SchoolAgeBand } from './school-believe';
 export const SCHOOL_AGGREGATE_SCHEMA = 2 as const;
 // Conservative product threshold; not a guarantee against re-identification.
 export const SCHOOL_MIN_COHORT_FOR_DISTRIBUTIONS = 5 as const;
+export const SCHOOL_CLASS_MAX_AGE_DAYS = 7 as const;
+export function schoolRoomExpiryDate(createdAt:string) {
+  const created=Date.parse(createdAt);
+  return Number.isFinite(created) ? new Date(created+SCHOOL_CLASS_MAX_AGE_DAYS*86400000) : new Date(0);
+}
+export function schoolRoomExpired(record:Pick<SchoolClassRecord,'createdAt'>, now=Date.now()) {
+  return schoolRoomExpiryDate(record.createdAt).getTime()<=now;
+}
 
 export type SchoolQuestionAggregate = {
   responses: number;
