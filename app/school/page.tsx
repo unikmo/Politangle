@@ -217,14 +217,14 @@ export default function SchoolPage() {
             <p className="p-kicker">{c.privateKicker}</p>
             <h3>{c.privateTitle}</h3>
             <p>{c.privateText}</p>
-            <p className="school-pilot-preview-label">{c.privateCta} · {c.pilotLabel}</p>
+            <p className="school-pilot-preview-label">{c.privateCta} · {locale==='de'?'Nach Pilotfreigabe':locale==='es'?'Tras la aprobación del piloto':locale==='fr'?'Après approbation du pilote':locale==='pt-br'?'Após aprovação do piloto':'After pilot approval'}</p>
           </article>
           <article>
             <span>02</span>
             <p className="p-kicker">{c.classroomKicker}</p>
             <h3>{c.classroomTitle}</h3>
             <p>{c.classroomText}</p>
-            <p className="school-pilot-preview-label">{c.classroomCta} · {c.pilotLabel}</p>
+            <p className="school-pilot-preview-label">{c.classroomCta} · {locale==='de'?'Nach Pilotfreigabe':locale==='es'?'Tras la aprobación del piloto':locale==='fr'?'Après approbation du pilote':locale==='pt-br'?'Após aprovação do piloto':'After pilot approval'}</p>
           </article>
           <article>
             <span>03</span>
