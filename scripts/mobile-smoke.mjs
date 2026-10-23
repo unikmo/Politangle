@@ -62,7 +62,7 @@ try{
    await page.locator('.p-nav select.lang').selectOption('de');
    await page.waitForURL(/\/de\/method$/,{timeout:20000});
    if(width===390){
-    for(const route of ['/de/countries/denmark','/fr/method','/school','/learn','/countries','/account','/quiz']){
+    for(const route of ['/de/countries/denmark','/de/countries/denmark/1','/de/countries/germany/3','/de/countries/germany/parties/afd','/fr/countries/france/1','/es/countries/germany/parties/bundnis-90-die-grunen','/fr/method','/school','/learn','/countries','/account','/quiz']){
      await check(page,route,width);
      if(route==='/quiz'){
       await page.getByRole('radiogroup').waitFor({state:'visible',timeout:20000});
@@ -70,7 +70,7 @@ try{
       await page.waitForTimeout(180);
       assert(/\b1\s*\/\s*26\b/.test(await page.locator('.engine-progress-row').innerText()),'Quick answer not recorded');
      }
-     if(['/school','/countries','/quiz'].includes(route))await page.screenshot({path:out+'/'+route.slice(1)+'-390.png',fullPage:route!=='/countries'});
+     if(['/school','/countries','/quiz','/de/countries/denmark/1','/de/countries/germany/parties/afd'].includes(route))await page.screenshot({path:out+'/'+route.slice(1).replaceAll('/','-')+'-390.png',fullPage:route!=='/countries'});
     }
    }
    console.log('PASS interactive mobile '+width);
