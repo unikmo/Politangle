@@ -1,3 +1,4 @@
+import {schoolStudentPilotEnabled} from '../../../../../../lib/school-release';
 import { approvedClassroomPilot } from '../../../../../../lib/school-pilot-server';
 import { NextResponse } from 'next/server';
 import { getAdminDb } from '../../../../../../lib/firebase-admin';
@@ -13,6 +14,7 @@ function validRecord(value: unknown): value is SchoolClassRecord {
 }
 
 export async function POST(request: Request, context: { params: Promise<{ code: string }> }) {
+  if (!schoolStudentPilotEnabled()) return NextResponse.json({error:'School student pilot is not yet enabled.'},{status:403});
   const code = await codeFrom(context);
   const body = await request.json().catch(() => null) as { participantToken?: unknown } | null;
   if (!body || typeof body.participantToken !== 'string' || body.participantToken.length < 8) {
