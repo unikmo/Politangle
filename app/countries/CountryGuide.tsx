@@ -120,7 +120,7 @@ export function CountryGuide({ country, locale, backHref }: { country: CountryPr
         <aside className="country-purpose">
           <strong>{c.globalFit[country.globalLabels.fit]}</strong>
           <p>{country.globalLabels.summary}</p>
-          <div className="country-local-dimensions"><b>{c.localDimensions}</b>{country.globalLabels.localDimensions.map((dimension) => <span key={dimension}>{dimension}</span>)}</div>
+          <div className="country-local-dimensions"><b>{c.localDimensions}</b>{country.globalLabels.localDimensions.map((dimension, index) => <Link key={dimension} href={`/countries/${country.slug}/${index + 1}`} className="country-topic-link">{dimension} ↗</Link>)}</div>
         </aside>
       </section>}
 
