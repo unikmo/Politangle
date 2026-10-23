@@ -29,24 +29,24 @@ const simpleTopics: Record<string, string> = {
   'public-provision': 'Essential services', redistribution: 'Income gap', ownership: 'Business ownership',
   'social-change': 'Social change', 'personal-autonomy': 'Personal freedom', abortion: 'Abortion',
   'authority-order': 'Safety and freedom', pluralism: 'Checks on government', 'world-sovereignty': 'Countries working together',
-  'nationhood-membership': 'Belonging', populism: 'Political influence', 'ecology-growth': 'Environment and growth',
+  'nationhood-membership': 'Belonging', populism: 'The people & representation', 'ecology-growth': 'Environment and growth',
   'religion-public-role': 'Religion and law', subsidiarity: 'Local or national / regional',
 };
 
 const germanConstructs: Record<string, string> = {
   'public-provision': 'Wichtige Angebote', redistribution: 'Arm und Reich', ownership: 'Unternehmen', 'social-change': 'Gesellschaftlicher Wandel',
   'personal-autonomy': 'Persönliche Freiheit', abortion: 'Schwangerschaftsabbruch', 'authority-order': 'Sicherheit und Freiheit', pluralism: 'Kontrolle der Regierung',
-  'world-sovereignty': 'Zusammenarbeit der Länder', 'nationhood-membership': 'Zugehörigkeit', populism: 'Politischer Einfluss',
+  'world-sovereignty': 'Zusammenarbeit der Länder', 'nationhood-membership': 'Zugehörigkeit', populism: 'Volkswille & Vertretung',
   'ecology-growth': 'Umwelt und Wachstum', 'religion-public-role': 'Religion und Gesetze', subsidiarity: 'Lokal oder national / regional',
 };
 const spanishConstructs: Record<string, string> = {
-  'public-provision':'Servicios esenciales', redistribution:'Ricos y pobres', ownership:'Empresas', 'social-change':'Cambio social', 'personal-autonomy':'Libertad personal', abortion:'Aborto', 'authority-order':'Seguridad y libertad', pluralism:'Control del gobierno', 'world-sovereignty':'Cooperación entre países', 'nationhood-membership':'Pertenencia', populism:'Influencia política', 'ecology-growth':'Ambiente y crecimiento', 'religion-public-role':'Religión y leyes', subsidiarity:'Local o nacional / regional',
+  'public-provision':'Servicios esenciales', redistribution:'Ricos y pobres', ownership:'Empresas', 'social-change':'Cambio social', 'personal-autonomy':'Libertad personal', abortion:'Aborto', 'authority-order':'Seguridad y libertad', pluralism:'Control del gobierno', 'world-sovereignty':'Cooperación entre países', 'nationhood-membership':'Pertenencia', populism:'El pueblo y su representación', 'ecology-growth':'Ambiente y crecimiento', 'religion-public-role':'Religión y leyes', subsidiarity:'Local o nacional / regional',
 };
 const portugueseConstructs: Record<string, string> = {
-  'public-provision':'Serviços essenciais', redistribution:'Ricos e pobres', ownership:'Propriedade das empresas', 'social-change':'Mudança social', 'personal-autonomy':'Liberdade pessoal', abortion:'Aborto', 'authority-order':'Segurança e liberdade', pluralism:'Freios ao governo', 'world-sovereignty':'Cooperação entre países', 'nationhood-membership':'Pertencimento', populism:'Influência política', 'ecology-growth':'Meio ambiente e crescimento', 'religion-public-role':'Religião e leis', subsidiarity:'Local ou nacional / regional',
+  'public-provision':'Serviços essenciais', redistribution:'Ricos e pobres', ownership:'Propriedade das empresas', 'social-change':'Mudança social', 'personal-autonomy':'Liberdade pessoal', abortion:'Aborto', 'authority-order':'Segurança e liberdade', pluralism:'Freios ao governo', 'world-sovereignty':'Cooperação entre países', 'nationhood-membership':'Pertencimento', populism:'O povo e sua representação', 'ecology-growth':'Meio ambiente e crescimento', 'religion-public-role':'Religião e leis', subsidiarity:'Local ou nacional / regional',
 };
 const frenchConstructs: Record<string, string> = {
-  'public-provision':'Services essentiels', redistribution:'Riches et pauvres', ownership:'Entreprises', 'social-change':'Changement social', 'personal-autonomy':'Liberté personnelle', abortion:'Avortement', 'authority-order':'Sécurité et liberté', pluralism:'Contrôle du gouvernement', 'world-sovereignty':'Coopération entre pays', 'nationhood-membership':'Appartenance', populism:'Influence politique', 'ecology-growth':'Environnement et croissance', 'religion-public-role':'Religion et lois', subsidiarity:'Local ou national / régional',
+  'public-provision':'Services essentiels', redistribution:'Riches et pauvres', ownership:'Entreprises', 'social-change':'Changement social', 'personal-autonomy':'Liberté personnelle', abortion:'Avortement', 'authority-order':'Sécurité et liberté', pluralism:'Contrôle du gouvernement', 'world-sovereignty':'Coopération entre pays', 'nationhood-membership':'Appartenance', populism:'Le peuple et sa représentation', 'ecology-growth':'Environnement et croissance', 'religion-public-role':'Religion et lois', subsidiarity:'Local ou national / régional',
 };
 
 function newSeed() {

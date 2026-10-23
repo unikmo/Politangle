@@ -250,8 +250,8 @@ test('a national social-democratic profile keeps its economic family signal with
   assert.equal(axisScore(answers, 'world'), 100);
 });
 
-test('radical-right screening requires nationhood restriction, authoritarian order and populism together', () => {
-  const fullPattern = profile({
+test('even extreme synthetic answers cannot imply radical-right identity without direct nativism evidence', () => {
+  const extreme = profile({
     'nationhood-membership': 2,
     'world-sovereignty': 2,
     populism: 2,
@@ -261,12 +261,7 @@ test('radical-right screening requires nationhood restriction, authoritarian ord
     'personal-autonomy': 2,
     ownership: 2,
   });
-  const fullNuance = assessNuancesV2(fullPattern).find((item) => item.id === 'far-right-radical-right-pattern');
-  assert.ok(fullNuance);
-  assert.equal(fullNuance.strength, 'clear');
-  assert.match(fullNuance.name, /screening pattern/i);
-  assert.match(fullNuance.caution ?? '', /must not be used as a personal extremist or far-right identity label/i);
-
+  assert.equal(nuanceIds(extreme).has('far-right-radical-right-pattern'), false);
   for (const overrides of [
     { 'nationhood-membership': -2, 'authority-order': 2, pluralism: 2, populism: 2 },
     { 'nationhood-membership': 2, 'authority-order': -2, pluralism: -2, populism: 2 },

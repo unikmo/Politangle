@@ -1,6 +1,6 @@
 import type { BeliefPolarity } from './belief-statements';
 
-export const GERMAN_BELIEVE_VERSION = 'de-believe-2026.10-plain-v4' as const;
+export const GERMAN_BELIEVE_VERSION = 'de-believe-2026.10-populism-v5' as const;
 
 const dePairs: Record<string, readonly [string, string]> = {
   T01: ["Der Staat soll sicherstellen, dass alle Menschen Zugang zu Schulen und medizinischer Versorgung haben.", "Bei wichtigen Leistungen wie Schulen und medizinischer Versorgung sollte der Staat privaten Anbietern und der persönlichen Wahl mehr Raum lassen."],
@@ -13,7 +13,7 @@ const dePairs: Record<string, readonly [string, string]> = {
   T08: ["Auch eine Regierung, die eine Wahl gewonnen hat, muss durch unabhängige Kontrollen begrenzt bleiben, zum Beispiel Gerichte, Verfassung und Oppositionsrechte.", "Eine gewählte Regierung sollte ihre Vorhaben umsetzen können, auch wenn unabhängige Gerichte Bedenken anmelden."],
   T09: ["Länder sollten gemeinsame, verbindliche Regeln einhalten, wenn ein Problem mehrere Länder betrifft.", "Jedes Land sollte das letzte Wort über seine Entscheidungen behalten, auch wenn gemeinsame Probleme dadurch schwerer zu lösen sind."],
   T10: ["Wer später Staatsbürger geworden ist, kann genauso vollständig zur Nation gehören wie jemand, der von Geburt an Staatsbürger ist.", "Wer die Staatsbürgerschaft seit Geburt besitzt, sollte als dem Land stärker zugehörig gelten."],
-  T11: ["Politische Streitfragen entstehen oft, weil Menschen unterschiedliche berechtigte Interessen haben.", "Politische Entscheidungen geben oft gut vernetzten Gruppen zu viel Einfluss und gewöhnlichen Wählerinnen und Wählern zu wenig."],
+  T11: ["In der Politik haben Menschen unterschiedliche Ansichten. Niemand spricht für alle.", "Die meisten Menschen teilen einen gemeinsamen politischen Willen, den die Regierung umsetzen sollte."],
   T12: ["Wenn Umweltschutz und Wirtschaftswachstum klar im Konflikt stehen, sollte der Schutz der Natur manchmal Vorrang haben, auch bei langsamerem Wachstum.", "Wirtschaftswachstum sollte meist Vorrang haben. Umweltschutz soll das Wachstum möglichst nicht bremsen."],
   T13: ["Der Staat sollte Gesetze für alle Bürger nicht allein mit religiösen Überzeugungen begründen.", "Religiöse moralische Überzeugungen können ein legitimer Grund für Gesetze sein, auch wenn nicht alle Bürger diese Religion teilen."],
   T14: ["Bund oder Länder sollten für wichtige Leistungen wie Schulen und Krankenhäuser sorgen, wenn das gleichen Zugang und gleiche Standards sichert.", "Gemeinden sollten Schulen und Krankenhäuser selbst gestalten dürfen, wenn sie diese Aufgaben gut erfüllen."],
@@ -27,7 +27,7 @@ const dePairs: Record<string, readonly [string, string]> = {
   F08: ["Mich beunruhigt, wenn eine Regierung unabhängige Gerichte unter Druck setzt, weil sie ihre Gesetze prüfen.", "Es beunruhigt mich, wenn unabhängige Gerichte immer wieder Gesetze aufheben, die ein gewähltes Parlament beschlossen hat."],
   F09: ["Es ist mir unangenehm, wenn gemeinsame Probleme ungelöst bleiben, weil Länder verbindliche Vereinbarungen ablehnen.", "Es beunruhigt mich, wenn internationale Verträge meinem Land wichtige Entscheidungen vorschreiben."],
   F10: ["Für mich gehören eingebürgerte Staatsbürger genauso zum Land wie Menschen, die von Geburt an Staatsbürger sind.", "Dass meine Familie seit langer Zeit in diesem Land lebt, spielt für mein Gefühl der Zugehörigkeit zur Nation eine Rolle."],
-  F11: ["Wenn mich die Politik enttäuscht, liegt es meistens daran, dass die Entscheidungen schwierig sind und verschiedene Gruppen Verschiedenes wollen.", "Wenn mich Politik enttäuscht, vermute ich oft, dass gut vernetzte Gruppen stärker gehört werden als gewöhnliche Wähler."],
+  F11: ["Es stört mich, wenn Politik als Kampf zwischen guten Bürgern und schlechten Politikern dargestellt wird.", "Ich habe oft das Gefühl, dass ehrliche Bürger gegen unehrliche Politiker kämpfen."],
   F12: ["Es macht mir Sorgen, wenn für Wirtschaftswachstum wertvolle Natur zerstört wird.", "Der Verlust von Arbeitsplätzen und Lebensstandard macht mir Sorgen, wenn Umweltgrenzen das Wirtschaftswachstum stark bremsen."],
   F13: ["Ich fühle mich unwohl, wenn religiöse moralische Überzeugungen Gesetze für Menschen rechtfertigen, die diesen Glauben nicht teilen.", "Mich stört, wenn religiöse Argumente in politischen Debatten von vornherein ausgeschlossen werden."],
   F14: ["Ich fühle mich sicherer, wenn der Staat überall vergleichbar gute Schulen und Krankenhäuser garantiert.", "Ich fühle mich sicher, wenn fähige örtliche Behörden die Entscheidungen behalten, statt sie an Land oder Bund abzugeben."],
@@ -41,7 +41,7 @@ const dePairs: Record<string, readonly [string, string]> = {
   A08: ["Wenn ein unabhängiges Gericht ein Gesetz aufhebt, das ich unterstütze, würde ich seine Entscheidung trotzdem respektieren.", "Wenn Gerichte wiederholt Gesetze einer Parlamentsmehrheit stoppen, würde ich eine Begrenzung ihrer Befugnisse unterstützen."],
   A09: ["Ich würde ein gemeinsames Klimaabkommen einhalten, auch wenn es manche Entscheidungen meines Landes begrenzt.", "Ich würde Entscheidungen im eigenen Land belassen, auch wenn dadurch eine gemeinsame internationale Antwort weniger wirksam wäre."],
   A10: ["Ich würde unterstützen, dass Menschen, die später Staatsbürger wurden, dieselben hohen gewählten Ämter bekleiden dürfen wie Staatsbürger von Geburt.", "Für besonders hohe politische Ämter würde ich Staatsbürger von Geburt an bevorzugen."],
-  A11: ["Ich unterstütze eher Kandidaten, die politische Kompromisse offen erklären, auch wenn ihre Botschaft weniger eingängig ist.", "Ich bevorzuge Kandidaten, die versprechen, den Einfluss gut vernetzter Gruppen zu verringern und gewöhnlichen Wählern mehr direkte Mitsprache zu geben."],
+  A11: ["Ich würde keinem Kandidaten vertrauen, der behauptet, nur er vertrete das wahre Volk.", "Ich könnte einen Kandidaten wählen, der behauptet, nur er spreche für das wahre Volk."],
   A12: ["Ich würde gesetzlich verbindliche Umweltgrenzen unterstützen, auch wenn sie das Wirtschaftswachstum etwas bremsen.", "Ich würde Regeln vermeiden, die Preise erhöhen, und beim Umweltschutz stärker auf saubere Technik setzen."],
   A13: ["Ich würde Gesetze ablehnen, die für alle gelten, aber ausschließlich religiös begründet werden.", "Ich würde es akzeptieren, wenn Amtsträger religiöse moralische Überzeugungen als berechtigten Grund für Gesetze nennen, die für alle gelten."],
   A14: ["Wären Schulen je nach Gegend sehr unterschiedlich gut, würde ich überregionale Standards unterstützen, auch wenn Orte weniger mitbestimmen.", "Wenn eine Gemeinde ihre Schulen gut führt, sollten Bund und Land ihr wenig vorschreiben."],

@@ -71,25 +71,16 @@ test('ordinary conservatism does not automatically produce a far-right signal', 
   );
 });
 
-test('far-right nuance requires the combined nationhood authority and populism pattern', () => {
+test('no far-right identity proxy is generated without direct validated nativism measures', () => {
   const answers: BeliefAnswersV2 = {};
   setConstruct(answers, 'nationhood-membership', 2);
   setConstruct(answers, 'authority-order', 2);
+  setConstruct(answers, 'pluralism', 2);
   setConstruct(answers, 'populism', 2);
-  setConstruct(answers, 'pluralism', 1);
+  assert.equal(assessNuancesV2(answers).some((item) => item.id === 'far-right-radical-right-pattern'), false);
 
-  const nuance = assessNuancesV2(answers).find((item) => item.id === 'far-right-radical-right-pattern');
-  assert.ok(nuance);
-  assert.equal(nuance.anchorFamily, 'conservatism');
-  assert.equal(nuance.kind, 'edge-pattern');
-  assert.match(nuance.caution ?? '', /not ordinary conservatism/i);
-  assert.match(nuance.caution ?? '', /not equivalent to fascism/i);
-
-  setConstruct(answers, 'populism', 0);
-  assert.equal(
-    assessNuancesV2(answers).some((item) => item.id === 'far-right-radical-right-pattern'),
-    false,
-  );
+  setConstruct(answers, 'populism', -2);
+  assert.equal(assessNuancesV2(answers).some((item) => item.id === 'far-right-radical-right-pattern'), false);
 });
 
 test('every returned nuance is evidence-bound', () => {

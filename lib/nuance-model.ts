@@ -135,36 +135,10 @@ export function assessNuancesV2(answers: BeliefAnswersV2): NuanceResultV2[] {
     });
   }
 
-  const nationhood = constructResult(constructModes, 'nationhood-membership');
-  const populism = constructResult(constructModes, 'populism');
-
-  // Comparative radical-right research commonly emphasizes the joint presence
-  // of nativism, authoritarianism and populism. Politangle does not yet contain
-  // a dedicated validated nativism scale. Nationhood-membership is therefore
-  // used only as a screening proxy, and the output must not be phrased as a
-  // personal far-right identity or diagnostic classification.
-  if (
-    allAtOrAbove(nationhood, 65)
-    && allAtOrAbove(authority, 65)
-    && allAtOrAbove(populism, 65)
-  ) {
-    const clear = allAtOrAbove(nationhood, 75)
-      && allAtOrAbove(authority, 75)
-      && allAtOrAbove(populism, 75)
-      && completeTriplet(pluralism)
-      && pluralism!.overall! >= 60;
-
-    nuances.push({
-      id: 'far-right-radical-right-pattern',
-      name: 'Populist radical-right screening pattern',
-      anchorFamily: 'conservatism',
-      kind: 'edge-pattern',
-      strength: clear ? 'clear' : 'emerging',
-      explanation: 'Your answers combine more birth-weighted national membership, stronger authoritarian-order preferences and a people-versus-elite populist orientation. Comparative research treats nativism, authoritarianism and populism as characteristic of the populist radical right, but Politangle does not yet directly measure nativism.',
-      evidenceIds: ['MUDDE-RADICAL-RIGHT', 'MUDDE-POPULISM', 'PIRRO-FAR-RIGHT'],
-      caution: 'This is a screening pattern only. It is positioned on the conservative side for orientation, is not ordinary conservatism, is not equivalent to fascism or the extreme right, and must not be used as a personal extremist or far-right identity label.',
-    });
-  }
-
+  // The former radical-right screening shortcut was unsound: birth-weighted
+  // citizenship is not a direct nativism measure, and perceived unequal
+  // political influence is not populism. Keep this classification disabled
+  // until a separately validated nativism instrument and construct-level
+  // validation are available. Populist attitudes alone are never far-right.
   return nuances;
 }
