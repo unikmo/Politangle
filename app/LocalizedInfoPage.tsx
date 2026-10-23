@@ -6,6 +6,7 @@ import MethodExplainer from './MethodExplainer';
 import { localePath, useLocale, type Locale } from './LocaleProvider';
 import { ptBrInfoPages } from './localized-info-pt-br';
 import ContactForm from './ContactForm';
+import SchoolPilotRequestForm from './SchoolPilotRequestForm';
 
 export type InfoPageId = 'method' | 'validation' | 'privacy' | 'terms' | 'about' | 'contact' | 'imprint' | 'question-banks' | 'school-pilot';
 
@@ -640,6 +641,7 @@ export default function LocalizedInfoPage({ page }: { page: InfoPageId }) {
           {section.link && <p><Link href={localePath(locale, section.link.href)}>{section.link.label}</Link></p>}
         </InfoSection>
       ))}
+      {page === 'school-pilot' && <SchoolPilotRequestForm />}
       {page === 'contact' && <InfoSection title={locale === 'de' ? 'Anfrage senden' : locale === 'es' ? 'Enviar una consulta' : locale === 'fr' ? 'Envoyer une demande' : locale === 'pt-br' ? 'Enviar uma solicitação' : 'Send an enquiry'}><ContactForm /></InfoSection>}
     </InfoShell>
   );
