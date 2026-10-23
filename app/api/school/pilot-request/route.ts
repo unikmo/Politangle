@@ -25,7 +25,11 @@ export async function POST(request:Request){
   if (!application) return NextResponse.json({error:'Invalid application. Use adult contact details only.'},{status:400});
   try{
     const ref=getAdminDb().collection(SCHOOL_PILOT_COLLECTION).doc(schoolPilotRequestId(application));
-    await ref.create(newPilotRequestRecord(application,new Date().toISOString()));
+    await ref.create({
+      ...newPilotRequestRecord(application,new Date().toISOString()),
+      // Pending applications expire after 90 days when Firestore TTL is enabled.
+      expiresAt:new Date(Date.now()+90*86400000)
+    });
     // A request is not an invitation, approval or active classroom licence.
     return NextResponse.json({received:true},{status:201,headers:{'Cache-Control':'no-store'}});
   }catch(error){
