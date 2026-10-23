@@ -70,7 +70,7 @@ try{
       assert.equal(await page.locator('form.school-pilot-form input[name="adultConfirmed"]').count(),1,'adult-only confirmation missing');
      }
      if(route==='/school/private'||route==='/school/student'){
-      assert(await page.locator('main').innerText().then(text=>text.toLowerCase().includes('invitation-only')),'school student route unexpectedly open without approval');
+      assert(await page.locator('main').innerText().then(text=>/invitation-only|nur auf einladung|solo por invitación|sur invitation|por convite/i.test(text)),'school student route unexpectedly open without approval');
      }
 
      if(route==='/quiz'){
