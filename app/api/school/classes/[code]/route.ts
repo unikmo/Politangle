@@ -1,3 +1,4 @@
+import { approvedClassroomPilot } from '../../../../../lib/school-pilot-server';
 import { NextResponse } from 'next/server';
 import { getAdminDb } from '../../../../../lib/firebase-admin';
 import {
@@ -32,6 +33,7 @@ export async function GET(request: Request, context: { params: Promise<{ code: s
   if (!snapshot.exists) return NextResponse.json({ error: 'Class not found.' }, { status: 404 });
   const data = snapshot.data();
   if (!validRecord(data)) return NextResponse.json({ error: 'This pilot room uses an older School schema. Create a new classroom.' }, { status: 409 });
+  if (!(await approvedClassroomPilot(data))) return NextResponse.json({error:'School pilot access is not approved.'},{status:403});
   const teacherKey = bearer(request);
   if (!teacherKey) return NextResponse.json(publicSchoolClassSummary(data));
   if (!verifyTeacherKey(data, teacherKey)) return NextResponse.json({ error: 'Invalid teacher key.' }, { status: 403 });
@@ -45,6 +47,7 @@ export async function PATCH(request: Request, context: { params: Promise<{ code:
   if (!snapshot.exists) return NextResponse.json({ error: 'Class not found.' }, { status: 404 });
   const data = snapshot.data();
   if (!validRecord(data)) return NextResponse.json({ error: 'This pilot room uses an older School schema. Create a new classroom.' }, { status: 409 });
+  if (!(await approvedClassroomPilot(data))) return NextResponse.json({error:'School pilot access is not approved.'},{status:403});
   const teacherKey = bearer(request);
   if (!teacherKey || !verifyTeacherKey(data, teacherKey)) return NextResponse.json({ error: 'Invalid teacher key.' }, { status: 403 });
   const body = await request.json().catch(() => null) as Record<string, unknown> | null;
