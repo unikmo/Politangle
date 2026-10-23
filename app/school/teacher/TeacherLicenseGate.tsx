@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import TeacherSchoolClient from './TeacherSchoolClient';
+import TeacherAssessments from './TeacherAssessments';
 import { useLocale, type Locale } from '../../LocaleProvider';
 
 type LicenseInfo = {
@@ -113,6 +114,7 @@ export default function TeacherLicenseGate() {
         {message && <p className="school-status-message">{message}</p>}
       </section>
       <TeacherSchoolClient />
+      <TeacherAssessments />
     </>
   );
 }
