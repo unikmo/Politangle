@@ -19,6 +19,11 @@ for (const engine of [chromium, webkit]) {
       assert(state.width<=state.viewport+3,route+' desktop overflow');
       assert(state.title?.trim(),route+' missing title');
       assert(!state.brokenImages.length,route+' broken images: '+state.brokenImages.slice(0,2));
+      const a11y=await page.evaluate(()=>({missingNames:[...document.querySelectorAll('button')].filter(e=>!e.disabled&&!((e.innerText||e.getAttribute('aria-label')||e.getAttribute('title')||'').trim())).length,unnamedLinks:[...document.querySelectorAll('a[href]')].filter(e=>!((e.innerText||e.getAttribute('aria-label')||e.getAttribute('title')||e.querySelector('img[alt]')?.getAttribute('alt')||'').trim())).length,missingLang:!document.documentElement.lang,missingMain:!document.querySelector('main')}));
+      assert(!a11y.missingLang,route+' missing document language');
+      assert(!a11y.missingMain,route+' missing main landmark');
+      assert(!a11y.missingNames,route+' unnamed buttons: '+a11y.missingNames);
+      assert(!a11y.unnamedLinks,route+' unnamed links: '+a11y.unnamedLinks);
       checks++;
     }
     for(const locale of locales){
