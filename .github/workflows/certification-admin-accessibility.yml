@@ -1,0 +1,38 @@
+name: Certification, administration and accessibility QA
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  certification-admin-accessibility:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --no-audit --no-fund
+      - name: Certification and authorization unit tests
+        run: |
+          node --test lib/literacy-certification.test.ts lib/literacy-session-v2.test.ts lib/admin-access.test.ts
+      - run: npx next build
+      - name: Install browsers and accessibility engine
+        run: |
+          npm install --no-save --ignore-scripts --no-audit --no-fund playwright@1.56.1 @axe-core/playwright@4.11.0
+          npx playwright install --with-deps chromium webkit
+      - name: Browser security and accessibility checks
+        run: |
+          npm start -- -H 127.0.0.1 -p 3000 > /tmp/politangle-qa.log 2>&1 &
+          APP_PID=$!
+          trap 'kill $APP_PID || true' EXIT
+          node -e "let n=0;(async()=>{while(n++<100){try{const r=await fetch('http://127.0.0.1:3000');if(r.ok)process.exit(0)}catch{}await new Promise(r=>setTimeout(r,500))}process.exit(1)})()"
+          node scripts/security-accessibility-e2e.mjs
+      - name: Upload server logs on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: security-accessibility-server-log
+          path: /tmp/politangle-qa.log
