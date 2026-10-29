@@ -39,11 +39,18 @@ for (const engine of [chromium, webkit]) {
         await visit(partyHref);
       }
     }
-    for(const route of ['/','/method','/learn','/school','/quiz','/account','/login','/literacy','/countries/germany']){
+    for(const route of ['/','/method','/learn','/school','/quiz','/account','/admin','/admin/review','/admin/school-pilots','/certificate/issue','/certificate/issue/success','/countries/germany']){
       const response=await page.goto(base+route,{waitUntil:'domcontentloaded',timeout:45000});
       assert(response && response.status()<500,route+' server error '+response?.status());
       checks++;
     }
+    await visit('/admin');
+    await page.waitForTimeout(1000);
+    assert(!await page.getByText('protected overview', {exact:false}).count() || await page.getByText('Admin access is required', {exact:false}).count() || await page.getByText('unavailable', {exact:false}).count(), 'admin authorization response unclear');
+    await visit('/account');
+    assert(await page.locator('main').count(), 'account page missing');
+    await visit('/certificate/issue');
+    assert(await page.locator('main').count(), 'certificate issue route missing');
     await visit('/quiz');
     const firstRadio=page.getByRole('radio').first();
     assert(await firstRadio.count(),'/quiz missing interactive answers');
