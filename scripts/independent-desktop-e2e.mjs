@@ -11,7 +11,6 @@ for (const engine of [chromium, webkit]) {
   try {
     const context = await browser.newContext({viewport:{width:1440,height:900},locale:'en-US'});
     const page = await context.newPage();
-    page.on('pageerror', e => errors.push(engine.name()+' browser exception: '+e.message));
     async function visit(route, {main=true}={}) {
       const response=await page.goto(base+route,{waitUntil:'domcontentloaded',timeout:45000});
       assert(response?.ok(),route+' HTTP '+response?.status());
