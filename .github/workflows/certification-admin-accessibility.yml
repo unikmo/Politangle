@@ -17,7 +17,7 @@ jobs:
       - run: npm install --no-audit --no-fund
       - name: Certification and authorization unit tests
         run: |
-          node --test lib/literacy-certification.test.ts lib/literacy-session-v2.test.ts lib/admin-access.test.ts
+          npx tsx --test lib/literacy-certification.test.ts lib/literacy-session-v2.test.ts lib/admin-access.test.ts
       - run: npx next build
       - name: Install browsers and accessibility engine
         run: |
