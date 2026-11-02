@@ -18,16 +18,16 @@ export default function ContactForm() {
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault(); setStatus('sending');
     const form = event.currentTarget;
-    const body = new URLSearchParams();
-    new FormData(form).forEach((value, key) => { if (typeof value === 'string') body.append(key, value); });
+    const body = Object.fromEntries(new FormData(form).entries());
     try {
-      const response = await fetch('/__forms.html', { method:'POST', headers:{ 'Content-Type':'application/x-www-form-urlencoded' }, body:body.toString() });
-      if (!response.ok) throw new Error('FORM_SUBMISSION_FAILED');
+      const response = await fetch('/api/contact', { method:'POST', headers:{ 'Content-Type':'application/json' }, body:JSON.stringify(body) });
+      const result = await response.json();
+      if (!response.ok || result.accepted !== true) throw new Error('FORM_SUBMISSION_FAILED');
       form.reset(); setStatus('sent');
     } catch { setStatus('error'); }
   }
-  return <form className="contact-form" name="politangle-contact" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" onSubmit={submit}>
-    <input type="hidden" name="form-name" value="politangle-contact" /><input type="hidden" name="locale" value={locale} />
+  return <form className="contact-form" name="politangle-contact" method="POST" action="/api/contact" onSubmit={submit}>
+    <input type="hidden" name="locale" value={locale} />
     <p className="contact-honeypot" aria-hidden="true"><label>Do not fill this out<input name="bot-field" tabIndex={-1} autoComplete="off" /></label></p>
     <div className="contact-form-grid"><label><span>{c.name}</span><input name="name" type="text" autoComplete="name" maxLength={120} required /></label><label><span>{c.email}</span><input name="email" type="email" autoComplete="email" maxLength={254} required /></label></div>
     <label><span>{c.subject}</span><select name="subject" required defaultValue=""><option value="" disabled>—</option>{c.subjects.map((subject) => <option key={subject}>{subject}</option>)}</select></label>
