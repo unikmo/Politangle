@@ -53,7 +53,13 @@ async function readInput(request:Request) {
 export function createContactHandler(deps:Dependencies) {
   return async (request:Request):Promise<Response> => {
     const origin=request.headers.get('origin');
-    if (!origin || origin!==new URL(request.url).origin) return reply(403);
+    // Next.js may use an internal hostname in request.url behind its proxy.
+    // Compare the browser Origin with the actual request Host, never a supplied forwarding header.
+    try {
+      const source=new URL(origin || '');
+      const host=request.headers.get('host') || new URL(request.url).host;
+      if (!['http:','https:'].includes(source.protocol) || source.origin!==origin || source.host!==host) return reply(403);
+    } catch { return reply(403); }
     if (request.headers.get('content-type')?.split(';')[0].trim()!=='application/json') return reply(415);
     let input:unknown;
     try { input=await readInput(request); }
