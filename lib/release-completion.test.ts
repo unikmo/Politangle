@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { readFileSync } from 'node:fs';
+import { readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { countryProfiles } from './countries';
 import { nativeCountrySlugs } from './country-localization';
@@ -19,7 +19,6 @@ const countryGuide = readFileSync(join(root, 'app/countries/CountryGuide.tsx'), 
 const countryPattern = readFileSync(join(root, 'docs/country-perspective-pattern-v2.md'), 'utf8');
 const legacyGlobalLabels = readFileSync(join(root, 'lib/country-global-labels-legacy.ts'), 'utf8');
 const contactForm = readFileSync(join(root, 'app/ContactForm.tsx'), 'utf8');
-const contactSkeleton = readFileSync(join(root, 'public/__forms.html'), 'utf8');
 const adminOverview = readFileSync(join(root, 'app/admin/AdminClient.tsx'), 'utf8');
 const launchReadiness = readFileSync(join(root, 'lib/launch-readiness.ts'), 'utf8');
 
@@ -55,15 +54,13 @@ test('validation workflow follows the 18+ certification policy', () => {
   assert.doesNotMatch(validationWorkflow, /aged 16\+/);
 });
 
-test('localized contact form is detectable by Netlify and includes consent and spam controls', () => {
+test('localized contact form uses the same-site API with consent and spam controls', () => {
   assert.match(contactForm, /politangle-contact/);
-  assert.match(contactForm, /\/__forms\.html/);
+  assert.match(contactForm, /\/api\/contact/);
   assert.match(contactForm, /privacy-acknowledged/);
   assert.match(contactForm, /bot-field/);
-  assert.match(contactSkeleton, /data-netlify="true"/);
-  for (const field of ['locale', 'name', 'email', 'subject', 'message', 'privacy-acknowledged', 'bot-field']) {
-    assert.match(contactSkeleton, new RegExp(`name="${field}"`));
-  }
+  assert.doesNotMatch(contactForm, /data-netlify|__forms\.html|CONTACT_TO_EMAIL|CONTACT_GMAIL/);
+  assert.equal(existsSync(join(root, 'public/__forms.html')), false);
 });
 
 test('admin dashboard reports every non-payment release gate without weakening it', () => {

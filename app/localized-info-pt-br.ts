@@ -55,14 +55,33 @@ export const ptBrInfoPages: Record<InfoPageId, PageCopy> = {
     ],
   },
   contact: {
-    eyebrow:'CONTATO',
-    title:'Fale com o Politangle.',
-    intro: verifiedContactEmail ? `Para suporte de conta, privacidade, escolas e comunicações legais: ${verifiedContactEmail}.` : 'Use o formulário abaixo para suporte de conta, privacidade, escolas e assuntos jurídicos. Um e-mail direto monitorado ainda precisa ser publicado.',
-    sections:[
-      { title:'Status', status: verifiedContactEmail ? 'CONTATO CONFIGURADO' : 'REQUIRES VERIFIED CONTACT', callout: verifiedContactEmail ? `Contato público monitorado: ${verifiedContactEmail}. A revisão jurídica qualificada dos avisos finais continua necessária.` : 'O formulário está disponível e seus envios precisam ser monitorados no Netlify. Um e-mail público direto ainda deve ser verificado e publicado.' },
-      { title:'Operador e endereço postal', paragraphs:['Politangle é um projeto da TSquare Ventures LLC, 30 N Gould St Ste R, Sheridan, WY 82801, USA.', verifiedContactEmail ? `E-mail: ${verifiedContactEmail}. Nunca envie senhas ou tokens de autenticação.` : 'Um e-mail monitorado próprio do Politangle ainda precisa ser configurado. Nunca envie senhas ou tokens de autenticação.'] },
-      { title:'Privacidade, jurídico e escolas', paragraphs:['O contato final precisa conseguir receber solicitações de direitos e notificações formais. Para assuntos escolares, use a rota do piloto e evite enviar nomes de estudantes, respostas políticas ou outros dados sensíveis desnecessários.'], link:{ href:'/school/pilot', label:'Informações sobre o piloto escolar →' } },
-    ],
+    "eyebrow": "CONTATO",
+    "title": "Fale com o Politangle.",
+    "intro": "Use o formulário para dúvidas, sugestões, suporte à conta, privacidade ou assuntos escolares.",
+    "sections": [
+      {
+        "title": "Sua mensagem",
+        "paragraphs": [
+          "Inclua um e-mail para receber nossa resposta. Não envie senhas, tokens de autenticação ou informações sensíveis desnecessárias."
+        ]
+      },
+      {
+        "title": "Operador e endereço postal",
+        "paragraphs": [
+          "Politangle é um projeto da TSquare Ventures LLC, 30 N Gould St Ste R, Sheridan, WY 82801, USA."
+        ]
+      },
+      {
+        "title": "Escolas e pilotos",
+        "paragraphs": [
+          "Para assuntos do piloto escolar, use a página específica. Não inclua nomes de estudantes ou respostas políticas individuais."
+        ],
+        "link": {
+          "href": "/school/pilot",
+          "label": "Informações sobre o piloto escolar →"
+        }
+      }
+    ]
   },
   imprint: {
     eyebrow:'INFORMAÇÕES LEGAIS',
