@@ -1,6 +1,6 @@
 import { createHmac } from 'node:crypto';
 import nodemailer from 'nodemailer';
-import { getAdminDb } from './firebase-admin';
+import { getAdminDb } from './firebase-db';
 import type { ContactEnquiry } from './contact';
 
 // These variables are server-only. Never use NEXT_PUBLIC_ for delivery settings.
