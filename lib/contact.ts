@@ -68,13 +68,17 @@ export function createContactHandler(deps:Dependencies) {
     if (enquiry==='bot') return reply(200,true);
     if (!enquiry) return reply(400);
     if (!deps.configured()) return reply(503);
+    let phase='rate-limit';
     try {
       if (!await deps.allow(request)) return reply(429);
+      phase='delivery';
       await deps.deliver(enquiry);
       return reply(200,true);
-    } catch {
+    } catch(error) {
       // Never log message bodies, credentials or addresses, or return provider errors.
-      console.error('Contact enquiry delivery unavailable');
+      const rawCode=String((error as {code?:unknown})?.code || 'unknown');
+      const code=/^[A-Z0-9_-]{1,32}$/.test(rawCode) ? rawCode : 'unknown';
+      console.error('Contact enquiry delivery unavailable',{phase,code});
       return reply(503);
     }
   };
