@@ -31,6 +31,16 @@ test('rejects cross-site/missing origins and unsupported content before delivery
   assert.equal((await handler(request({...enquiry,message:''}))).status,400);
 });
 
+test('uses the actual request Host behind a Next.js internal hostname',async()=>{
+  let deliveries=0;
+  const handler=createContactHandler({configured:()=>true,allow:async()=>true,deliver:async()=>{deliveries++;}});
+  const proxied=new Request('http://localhost:3015/api/contact',{method:'POST',headers:{origin:'http://127.0.0.1:3015',host:'127.0.0.1:3015','content-type':'application/json'},body:JSON.stringify(enquiry)});
+  assert.equal((await handler(proxied)).status,200);
+  assert.equal(deliveries,1);
+  const spoofed=request(); spoofed.headers.set('host','politangle.org'); spoofed.headers.set('origin','https://evil.example'); spoofed.headers.set('x-forwarded-host','evil.example');
+  assert.equal((await handler(spoofed)).status,403);
+});
+
 test('checks actual body size even without a content-length header',async()=>{
   const handler=createContactHandler({configured:()=>true,allow:async()=>true,deliver:async()=>{assert.fail();}});
   assert.equal((await handler(request({...enquiry,message:'x'.repeat(CONTACT_BODY_LIMIT)}))).status,413);
