@@ -98,6 +98,8 @@ export default function TeacherSchoolClient() {
   const [projectorMode, setProjectorMode] = useState<'live' | 'reveal'>('reveal');
   const [customIds, setCustomIds] = useState<string[]>(['T01-P']);
   const [origin, setOrigin] = useState('');
+  const [certificateNames, setCertificateNames] = useState('');
+  const [certificatesBusy, setCertificatesBusy] = useState(false);
 
   useEffect(() => {
     setOrigin(window.location.origin);
@@ -158,6 +160,23 @@ export default function TeacherSchoolClient() {
   async function copyJoinLink() { if (!summary || !origin) return; await navigator.clipboard.writeText(`${origin}/school/student?code=${summary.code}`); setMessage(ui.joinCopied); }
   function toggleCustom(id: string) { setCustomIds((current) => current.includes(id) ? current.filter((value) => value !== id) : [...current, id]); }
   function clearLocal() { sessionStorage.removeItem(CODE_KEY); sessionStorage.removeItem(SECRET_KEY); setCode(''); setTeacherKey(''); setSummary(null); setMessage(ui.accessRemoved); }
+  async function printCertificates() {
+    if (!summary) return;
+    const recipients = certificateNames.split(/\r?\n/).map((holderName) => holderName.trim()).filter(Boolean).map((holderName) => ({ holderName }));
+    if (!recipients.length) { setMessage('Enter one student name per line before creating certificates.'); return; }
+    const printWindow = window.open('', '_blank');
+    if (!printWindow) { setMessage('Allow pop-ups to open the printable certificate pack.'); return; }
+    setCertificatesBusy(true);
+    const response = await fetch(`/api/school/classes/${encodeURIComponent(summary.code)}/certificates`, {
+      method: 'POST', headers: { authorization: `Bearer ${teacherKey}`, 'content-type': 'application/json' }, body: JSON.stringify({ recipients }),
+    });
+    if (!response.ok) {
+      const error = await response.json().catch(() => null) as { error?: string } | null;
+      printWindow.close(); setMessage(error?.error || 'Student certificates could not be created.'); setCertificatesBusy(false); return;
+    }
+    printWindow.document.open(); printWindow.document.write(await response.text()); printWindow.document.close(); printWindow.focus(); window.setTimeout(() => printWindow.print(), 300);
+    setCertificatesBusy(false);
+  }
 
   const currentQuestionIds = summary?.activity.questionIds ?? [];
   const currentQuestion = summary?.currentQuestion;
@@ -202,6 +221,7 @@ export default function TeacherSchoolClient() {
       <div className="school-room-strip"><strong>{summary.roomLabel || `${ui.classWord} ${summary.code}`}</strong><span>{activityTitle(summary.activity.type, summary.activity.title)}</span><span>{ui.ages(summary.activity.ageBand === 'junior-10-13' ? '10–13' : '14–17')}</span><span>{ui.joined(summary.joinedCount)}</span><span>{summary.status === 'active' ? ui.active : ui.closed}</span></div>
       {message && <p className="school-status-message no-print">{message}</p>}
       <article className="engine-card school-room-card"><p className="engine-kicker">{ui.onboarding}</p><div className="school-code-display"><span>{ui.roomCodeCaps}</span><strong>{summary.code}</strong></div><p><strong>{ui.studentJoin}</strong> <code>{joinUrl || `/school/student?code=${summary.code}`}</code></p><p><strong>{ui.projector}</strong> <code>{projectorUrl || `/school/projector?code=${summary.code}`}</code></p><div className="engine-result-actions no-print"><button className="engine-primary-link" type="button" onClick={copyJoinLink}>{ui.copyStudent}</button><a className="engine-primary-link" href={`/school/projector?code=${summary.code}`} target="_blank" rel="noreferrer">{ui.openProjector}</a><button className="engine-link-button" type="button" onClick={() => teacherAction({ action: 'status', status: summary.status === 'active' ? 'closed' : 'active' })}>{summary.status === 'active' ? ui.endClass : ui.reopenClass}</button><button className="engine-link-button" type="button" onClick={clearLocal}>{ui.forgetKey}</button></div><p className="engine-help">{ui.privacyIntro}</p></article>
+      {summary.joinedCount > 0 && <article className="engine-card no-print" style={{ marginTop: 18 }}><p className="engine-kicker">Student certificates</p><h2>Issue classroom certificates</h2><p>There are {summary.joinedCount} registered participant{summary.joinedCount === 1 ? '' : 's'} in this room. Enter one completed student name per line, up to that number. Politangle opens one print-ready certificate per name.</p><p>Names are used only to create this teacher document. They are not saved by Politangle or connected to any classroom answer, score or political profile.</p><label><span>Student names — one per line</span><textarea rows={Math.min(12, Math.max(5, summary.joinedCount))} value={certificateNames} onChange={(event) => setCertificateNames(event.target.value)} placeholder={'Amina Noor\nJonas Weber'} /></label><button className="engine-primary-link" type="button" disabled={certificatesBusy} onClick={printCertificates}>{certificatesBusy ? 'Creating certificates…' : 'Open certificates to print or save as PDF'}</button></article>}
       <div className="no-print" style={{ marginTop: 18 }}>{configuration}</div>
       {lesson && <article className="engine-card school-lesson-card" style={{ marginTop: 18 }}><p className="engine-kicker">{ui.lessonGuide(lesson.duration, lesson.ageBand)}</p><h2>{lesson.title}</h2>{ui.lessonNotice && <p className="engine-help">{ui.lessonNotice}</p>}<div className="school-goals">{lesson.goals.map((goal) => <span key={goal}>{goal}</span>)}</div><details className="engine-details"><summary>{ui.timeline}</summary>{lesson.timeline.map((step) => <div className="school-timeline" key={step.minutes}><strong>{step.minutes}</strong><p><b>{ui.teacher}:</b> {step.teacher}<br /><b>{ui.students}:</b> {step.students}</p></div>)}<h3>{ui.prompts}</h3><ul>{lesson.discussionPrompts.map((prompt) => <li key={prompt}>{prompt}</li>)}</ul></details></article>}
       <article className="engine-card school-live-card" style={{ marginTop: 18 }}><p className="engine-kicker">{ui.liveClass} · {summary.activity.pacing === 'teacher' ? ui.teacherPaced : ui.studentPaced}</p><div className="school-live-head"><div><h2>{currentQuestion ? currentQuestionTitle : ui.chooseQuestion}</h2>{currentQuestion?.kind === 'believe' ? <p>{currentQuestionStatement}</p> : currentQuestionPrompt ? <p>{currentQuestionPrompt}</p> : null}{currentQuestion?.kind === 'literacy' && ui.literacyNotice && <p className="engine-help">{ui.literacyNotice}</p>}</div><div className="school-response-stat"><strong>{summary.currentDistribution?.responses ?? 0}</strong><span>{ui.responses}</span><small>{ui.ofJoined(summary.joinedCount)}</small></div></div>{summary.currentDistribution && <><BarChart rows={summary.currentDistribution.distribution} locale={locale} kind={summary.currentDistribution.kind as 'believe' | 'literacy'} questionId={currentQuestion?.id} />{summary.currentDistribution.kind === 'literacy' && summary.revealed && <p className="engine-callout"><strong>{summary.currentDistribution.correctPercent}% {ui.correct}</strong>{currentQuestion?.explanation ? ` · ${localizedLiteracyExplanation(locale, currentQuestion.id, currentQuestion.explanation)}` : ''}</p>}</>}<div className="engine-result-actions no-print"><button className="engine-primary-link" type="button" disabled={!summary.currentQuestionId || !summary.questionOpen || busy} onClick={() => teacherAction({ action: 'closeQuestion' })}>{ui.closeResponses}</button><button className="engine-primary-link" type="button" disabled={!summary.currentQuestionId || busy} onClick={() => teacherAction({ action: 'reveal', revealed: !summary.revealed })}>{summary.revealed ? ui.hideProjector : ui.revealProjector}</button><button className="engine-primary-link" type="button" disabled={!currentQuestionIds.length || busy} onClick={() => teacherAction({ action: 'next' })}>{ui.nextQuestion}</button></div></article>
