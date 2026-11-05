@@ -71,10 +71,12 @@ const en: Record<InfoPageId, PageCopy> = {
     ],
   },
   about: {
+    // Founder's first-person account.
     eyebrow: 'ABOUT POLITANGLE',
     title: 'Political understanding without a single box.',
     intro: 'Politangle helps people explore political trade-offs, separate beliefs from knowledge and discuss disagreement without exposing individual classroom profiles.',
     sections: [
+      { title: "Why I started Politangle", paragraphs: ["I started Politangle after hearing political claims repeated as facts in everyday conversations. Discussions about Russia’s war against Ukraine particularly struck me: even seemingly straightforward facts could become fiercely contested.","I kept returning to two questions: What makes an argument convincing? And does the policy behind it actually serve what we care about?","Labels like left, right and centre tell us surprisingly little about how people think. Our views often cross those boundaries, and persuasive slogans can hide the trade-offs between political promises and our own priorities.","Politangle was created to make those tensions easier to explore. It helps people understand their views, examine political arguments and consider how policies might affect what matters to them.","The goal is not to tell people what to think. It is to help them think more critically, make informed decisions and recognise when a convincing message deserves closer scrutiny."] },
       { title: 'The problem', paragraphs: ['Political language often compresses complicated combinations of views into one label. That hides meaningful differences and can make disagreement more tribal than informative.'] },
       { title: 'The approach', paragraphs: ['Politangle keeps several dimensions visible, separates BELIEVE from CLASSIFY and UNDERSTAND, and treats uncertainty as a legitimate response rather than a scoring failure.'] },
       { title: 'Our standard', paragraphs: ['Neutrality is not established merely by displaying several viewpoints. Wording, scoring, language versions and classroom use must remain open to criticism, testing and revision.'] },
@@ -154,9 +156,11 @@ const de: Record<InfoPageId, PageCopy> = {
     ],
   },
   about: {
+    // Founder's first-person account.
     eyebrow: 'ÜBER POLITANGLE', title: 'Politik ist komplexer als ein Etikett.',
     intro: 'Politangle zeigt, welche Werte und politischen Abwägungen hinter deinen Ansichten stehen. Wissenstests werden klar von persönlichen Überzeugungen getrennt. Im Unterricht bleiben individuelle politische Profile privat.',
     sections: [
+      { title: "Warum ich Politangle gegründet habe", paragraphs: ["Ich habe Politangle gegründet, weil ich im Alltag immer wieder hörte, wie politische Behauptungen als Tatsachen wiederholt wurden. Besonders Gespräche über Russlands Krieg gegen die Ukraine zeigten mir, wie heftig selbst scheinbar einfache Fakten umstritten sein können.","Zwei Fragen ließen mich nicht los: Was macht ein Argument überzeugend? Und dient die Politik dahinter wirklich dem, was uns wichtig ist?","Etiketten wie links, rechts und Mitte sagen wenig darüber aus, wie Menschen denken. Unsere Ansichten überschreiten diese Grenzen, und eingängige Parolen können Zielkonflikte verdecken.","Politangle soll helfen, die eigenen Ansichten zu verstehen, politische Argumente zu prüfen und die möglichen Folgen von Entscheidungen für persönliche Prioritäten abzuwägen.","Es geht nicht darum, Menschen vorzuschreiben, was sie denken sollen, sondern darum, fundierter zu entscheiden und überzeugende Botschaften kritisch zu hinterfragen."] },
       { title: 'Das Problem', paragraphs: ['Begriffe wie „links“, „rechts“, „liberal“ oder „konservativ“ verdecken oft wichtige Unterschiede. Zwei Menschen können dasselbe Etikett verwenden und in zentralen Fragen völlig anders denken.'] },
       { title: 'Unser Ansatz', paragraphs: ['Politangle betrachtet mehrere politische Bereiche getrennt. Der Persönlichkeitstest und die Wissenstests bleiben voneinander unabhängig. „Unsicher“ ist eine ehrliche Antwort und kein Fehler.'] },
       { title: 'Unser Anspruch', paragraphs: ['Mehrere Sichtweisen zu zeigen reicht nicht aus, um neutral zu sein. Fragen, Auswertung, Sprachfassungen und Unterrichtsmaterialien müssen offen geprüft, kritisiert und verbessert werden können.'] },
@@ -232,9 +236,11 @@ const es: Record<InfoPageId, PageCopy> = {
     ],
   },
   about: {
+    // Founder's first-person account.
     eyebrow: 'SOBRE POLITANGLE', title: 'Entender la política sin meter a nadie en una caja.',
     intro: 'Politangle ayuda a explorar dilemas políticos, separar creencias de conocimientos y hablar del desacuerdo sin exponer perfiles individuales en el aula.',
     sections: [
+      { title: "Por qué creé Politangle", paragraphs: ["Creé Politangle después de escuchar afirmaciones políticas repetidas como hechos en conversaciones cotidianas. Los debates sobre la guerra de Rusia contra Ucrania me mostraron cómo incluso hechos aparentemente sencillos podían convertirse en motivo de fuertes disputas.","Volvía una y otra vez a dos preguntas: ¿Qué hace convincente un argumento? ¿Y sirve la política que propone a lo que realmente nos importa?","Las etiquetas izquierda, derecha y centro dicen poco sobre cómo pensamos. Nuestras ideas cruzan esas fronteras y los eslóganes pueden ocultar los compromisos y costes de cada propuesta.","Politangle ayuda a explorar esas tensiones: comprender nuestras ideas, examinar argumentos y considerar cómo las políticas pueden afectar a nuestras prioridades.","El objetivo no es decir a nadie qué pensar, sino ayudar a tomar decisiones informadas y cuestionar incluso los mensajes que parecen acertados de inmediato."] },
       { title: 'El problema', paragraphs: ['El lenguaje político suele reducir combinaciones complejas de ideas a una sola etiqueta. Así desaparecen diferencias importantes y el debate se vuelve más tribal que útil.'] },
       { title: 'El enfoque', paragraphs: ['Politangle mantiene varias dimensiones visibles, separa BELIEVE de CLASSIFY y UNDERSTAND y trata la incertidumbre como una respuesta válida, no como un fallo.'] },
       { title: 'Nuestro criterio', paragraphs: ['No basta con mostrar varios puntos de vista para afirmar neutralidad. Preguntas, puntuación, versiones lingüísticas y uso escolar deben seguir abiertos a crítica, pruebas y revisión.'] },
@@ -310,9 +316,11 @@ const fr: Record<InfoPageId, PageCopy> = {
     ],
   },
   about: {
+    // Founder's first-person account.
     eyebrow: 'À PROPOS DE POLITANGLE', title: 'La politique est plus complexe qu’une étiquette.',
     intro: 'Politangle aide à explorer les arbitrages politiques, à distinguer convictions et connaissances et à discuter des désaccords sans exposer les profils individuels en classe.',
     sections: [
+      { title: "Pourquoi j’ai créé Politangle", paragraphs: ["J’ai créé Politangle après avoir entendu des affirmations politiques répétées comme des faits dans des conversations quotidiennes. Les discussions sur la guerre menée par la Russie contre l’Ukraine m’ont particulièrement marqué : même des faits apparemment simples pouvaient devenir âprement contestés.","Je revenais sans cesse à deux questions : qu’est-ce qui rend un argument convaincant ? Et la politique qu’il défend sert-elle réellement ce qui compte pour nous ?","Les étiquettes gauche, droite et centre disent peu de notre manière de penser. Nos convictions traversent ces frontières, et les slogans peuvent masquer les compromis derrière les promesses politiques.","Politangle aide à comprendre ses opinions, examiner les arguments et réfléchir aux effets possibles des politiques sur ses priorités.","L’objectif n’est pas de dire aux gens quoi penser, mais de les aider à décider en connaissance de cause et à examiner avec recul les messages immédiatement séduisants."] },
       { title: 'Le problème', paragraphs: ['Le vocabulaire politique réduit souvent des combinaisons complexes d’idées à une seule étiquette. Des différences importantes disparaissent alors, et le débat devient plus tribal qu’instructif.'] },
       { title: 'Notre approche', paragraphs: ['Politangle examine plusieurs dimensions séparément. Le test d’opinion et les quiz de connaissances restent indépendants. Répondre « Je ne sais pas » est une réponse valable, pas une erreur.'] },
       { title: 'Notre exigence', paragraphs: ['Afficher plusieurs points de vue ne suffit pas à prouver la neutralité. Les questions, le calcul, les versions linguistiques et l’usage en classe doivent rester critiquables, testables et révisables.'] },
