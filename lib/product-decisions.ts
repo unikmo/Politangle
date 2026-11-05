@@ -24,10 +24,12 @@ export const POLITANGLE_PRODUCT_DECISIONS = {
       contentChangeAfterFreezeRequiresNewVersion: true,
       finalFreezeRequiresPilotEvidence: true,
     },
+    // A certificate is optional; taking Politangle and attempting the test remain free.
+    // Renewal requires the same reassessment and produces the same digital product, so it
+    // intentionally costs the same as first issuance.
     pricesEur: {
-      launchIssuance: 9.9,
-      standardIssuance: 16.99,
-      renewal: 13.9,
+      certificate: 9.9,
+      renewal: 9.9,
     },
   },
   countries: {

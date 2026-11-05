@@ -9,6 +9,7 @@ This amendment supersedes any earlier School specification that requires a QR co
 - One school pack costs **$300**.
 - One school pack provides **10 teacher licenses**.
 - Each licensed teacher is given a distinct teacher license credential.
+- Classroom learning certificates are included in the institutional licence. A licensed teacher may create one printable certificate for each participant slot configured for an approved classroom activity; no student pays a certificate fee.
 - The billing/renewal period has **not been specified**. Do not infer monthly, annual or perpetual entitlement until a separate pricing decision is made.
 
 ## License vs session code

@@ -43,7 +43,7 @@ export async function GET(req:Request) {
    return new Response(Buffer.from(pdf),{headers:{...noStore,'Content-Type':'application/pdf','Content-Disposition':`attachment; filename="politangle-assessment-${id}.pdf"`}});
   }
   return NextResponse.json({id,title:data.title,createdAt:data.createdAt,expiresAt:data.expiresAt,
-   questionIds:data.activity.questionIds,rows},{headers:noStore});
+   studentCount:data.studentCount,questionIds:data.activity.questionIds,rows},{headers:noStore});
  }
  const snap=await getAdminDb().collection(ASSESSMENTS).where('teacherLicenseId','==',access.documentId).get();
  return NextResponse.json({assessments:snap.docs.map(d=>({id:d.id,title:d.data().title,expiresAt:d.data().expiresAt,expired:expired(d.data()),studentCount:d.data().studentCount}))},{headers:noStore});

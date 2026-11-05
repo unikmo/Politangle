@@ -6,7 +6,8 @@ const banks=classroomActivityOptions();
 export default function TeacherAssessments(){
  const [title,setTitle]=useState('Class assessment'),[ageBand,setAgeBand]=useState<'junior-10-13'|'youth-14-18'>('youth-14-18');
  const [ids,setIds]=useState<string[]>([]),[count,setCount]=useState(25),[created,setCreated]=useState<{id:string;password:string;paperNumbers:string[];expiresAt:string}|null>(null);
- const [existing,setExisting]=useState(''),[result,setResult]=useState<{id:string;title:string;rows:Row[];expiresAt:string}|null>(null),[message,setMessage]=useState('');
+ const [existing,setExisting]=useState(''),[result,setResult]=useState<{id:string;title:string;rows:Row[];expiresAt:string;studentCount:number}|null>(null),[message,setMessage]=useState('');
+ const [certificateNames,setCertificateNames]=useState(''),[certificatesBusy,setCertificatesBusy]=useState(false);
  const available=[...(ageBand==='junior-10-13'?banks.junior:banks.full42),...banks.literacy];
  function download(filename:string,content:string,type:string){const url=URL.createObjectURL(new Blob([content],{type}));const a=document.createElement('a');a.href=url;a.download=filename;a.click();URL.revokeObjectURL(url);}
  async function create(){
@@ -28,6 +29,17 @@ export default function TeacherAssessments(){
   if(!response.ok){setMessage('PDF export failed.');return;}
   const url=URL.createObjectURL(await response.blob());const link=document.createElement('a');link.href=url;link.download='politangle-assessment-'+result.id+'.pdf';link.click();URL.revokeObjectURL(url);
  }
+ async function printCertificates(){
+  if(!result)return;
+  const recipients=certificateNames.split(/\r?\n/).map(holderName=>holderName.trim()).filter(Boolean).map(holderName=>({holderName}));
+  if(!recipients.length){setMessage('Enter one student name per line before creating certificates.');return;}
+  const printWindow=window.open('','_blank');
+  if(!printWindow){setMessage('Allow pop-ups to open the printable certificate pack.');return;}
+  setCertificatesBusy(true);
+  const response=await fetch(`/api/school/assessments/${encodeURIComponent(result.id)}/certificates`,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({recipients})});
+  if(!response.ok){const data=await response.json().catch(()=>null);printWindow.close();setMessage(data?.error||'Student certificates could not be created.');setCertificatesBusy(false);return;}
+  printWindow.document.open();printWindow.document.write(await response.text());printWindow.document.close();printWindow.focus();window.setTimeout(()=>printWindow.print(),300);setCertificatesBusy(false);
+ }
  function exportCsv(){
   if(!result)return;
   const safe=(v:unknown)=>'"'+String(v??'').replace(/^[=+@\-\t\r]/,'\u0027$&').replace(/"/g,'""')+'"';
@@ -48,7 +60,8 @@ export default function TeacherAssessments(){
   <article className="engine-card"><h2>Retrieve, export or delete results</h2><p>Enter the assessment ID shown in the student link.</p><input value={existing} onChange={e=>setExisting(e.target.value)} placeholder="Assessment ID" /><button type="button" onClick={load}>View results</button>
    {result&&<><p>{result.rows.length} completed assessments · expires {new Date(result.expiresAt).toLocaleDateString()}</p>
     <div className="engine-result-actions"><button type="button" onClick={exportCsv}>Download per-question CSV</button><button type="button" onClick={exportPdf}>Download per-question PDF</button><button type="button" onClick={()=>window.print()}>Print results</button><button type="button" onClick={remove}>Delete all results now</button></div>
-    <div>{result.rows.map(row=><details key={row.paperNumber}><summary>Student number {row.paperNumber} — {row.correct}/{row.graded} scored questions</summary><table><thead><tr><th>Question</th><th>Answer</th><th>Correct</th></tr></thead><tbody>{row.responses.map(q=><tr key={q.questionId}><td>{q.questionId} · {q.question}</td><td>{Array.isArray(q.answer)?q.answer.join(', '):q.answer}</td><td>{q.correct===null?'Not scored':q.correct?'Yes':'No'}</td></tr>)}</tbody></table></details>)}</div></>}
+    <div>{result.rows.map(row=><details key={row.paperNumber}><summary>Student number {row.paperNumber} — {row.correct}/{row.graded} scored questions</summary><table><thead><tr><th>Question</th><th>Answer</th><th>Correct</th></tr></thead><tbody>{row.responses.map(q=><tr key={q.questionId}><td>{q.questionId} · {q.question}</td><td>{Array.isArray(q.answer)?q.answer.join(', '):q.answer}</td><td>{q.correct===null?'Not scored':q.correct?'Yes':'No'}</td></tr>)}</tbody></table></details>)}</div>
+    <article className="engine-card"><p className="engine-kicker">Student certificates</p><h2>Create classroom certificates</h2><p>Enter one name per line, up to the {result.studentCount} participant places configured for this activity. Politangle opens one print-ready certificate per name. Names are used only to create that teacher document; Politangle does not store them with classroom responses.</p><p>Each certificate confirms completion of the Political Literacy Classroom Programme. It includes no score, political profile or individual answer.</p><label><span>Student names — one per line</span><textarea rows={Math.min(12,Math.max(5,result.studentCount))} value={certificateNames} onChange={event=>setCertificateNames(event.target.value)} placeholder={'Amina Noor\nJonas Weber'} /></label><button className="engine-primary-link" type="button" disabled={certificatesBusy} onClick={printCertificates}>{certificatesBusy?'Creating certificates…':'Open certificates to print or save as PDF'}</button></article></>}
   </article>{message&&<p role="status">{message}</p>}
  </section>;
 }

@@ -12,9 +12,10 @@ export function getStripeClient() {
 }
 
 export function certificatePrice(kind: 'issuance' | 'renewal') {
-  if (kind === 'renewal') return Math.round(POLITANGLE_PRODUCT_DECISIONS.literacy.pricesEur.renewal * 100);
-  const stage = process.env.CERTIFICATE_PRICE_STAGE === 'standard' ? 'standard' : 'launch';
-  return Math.round((stage === 'standard' ? POLITANGLE_PRODUCT_DECISIONS.literacy.pricesEur.standardIssuance : POLITANGLE_PRODUCT_DECISIONS.literacy.pricesEur.launchIssuance) * 100);
+  const price = kind === 'renewal'
+    ? POLITANGLE_PRODUCT_DECISIONS.literacy.pricesEur.renewal
+    : POLITANGLE_PRODUCT_DECISIONS.literacy.pricesEur.certificate;
+  return Math.round(price * 100);
 }
 
 export function stripeIntegrationIdentifier() {
