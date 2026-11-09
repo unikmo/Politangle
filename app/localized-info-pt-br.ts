@@ -1,7 +1,6 @@
 import type { InfoPageId, PageCopy } from './LocalizedInfoPage';
 
-const verifiedContactEmail = process.env.NEXT_PUBLIC_CONTACT_EMAIL?.trim() ?? '';
-const contactValue = verifiedContactEmail || 'Ainda não publicado';
+const legalContactEmail = 'hello@planethike.org';
 
 export const ptBrInfoPages: Record<InfoPageId, PageCopy> = {
   method: {
@@ -15,7 +14,6 @@ export const ptBrInfoPages: Record<InfoPageId, PageCopy> = {
     title:'Clareza sobre o que já foi demonstrado — e o que ainda não foi.',
     intro:'A lógica de pontuação é testada quanto à consistência técnica. Validade psicométrica, equivalência entre idiomas e adequação para sala de aula exigem evidências separadas.',
     sections:[
-      { title:'Por que criei o Politangle', paragraphs:['Criei o Politangle depois de ouvir afirmações políticas repetidas como fatos em conversas do dia a dia. Os debates sobre a guerra da Rússia contra a Ucrânia mostraram como até fatos aparentemente simples podem ser intensamente contestados.','Duas perguntas não saíam da minha cabeça: o que torna um argumento convincente? E a política por trás dele atende ao que realmente valorizamos?','Rótulos como esquerda, direita e centro dizem pouco sobre como pensamos. Nossas opiniões atravessam essas fronteiras, e slogans podem esconder os custos e as escolhas por trás de promessas políticas.','O Politangle ajuda a compreender nossas opiniões, examinar argumentos e pensar em como as políticas podem afetar nossas prioridades.','O objetivo não é dizer às pessoas o que pensar, mas ajudá-las a tomar decisões informadas e examinar com atenção até as mensagens que parecem imediatamente certas.'] },
       { title:'Situação atual', status:'VERSÃO EM VALIDAÇÃO', paragraphs:['O sistema atual verifica consistência da pontuação, quantidade de perguntas, geração de resultados e regras de privacidade em sala de aula. Isso demonstra consistência de implementação, não validade psicométrica.'] },
       { title:'Ainda não estabelecido', bullets:['Normas representativas de população','Confiabilidade teste–reteste','Equivalência dos construtos entre idiomas e faixas etárias','Compreensão cognitiva com os públicos Junior e Youth','Validade preditiva para voto ou comportamento político'] },
       { title:'Não leia demais no resultado', paragraphs:['As pontuações são indicadores gerados pelo modelo atual. Um valor como 61/100 não significa uma probabilidade científica de alguém “ser” uma ideologia. Referências históricas ajudam a ilustrar tradições; não representam endosso nem equivalência.'] },
@@ -27,7 +25,7 @@ export const ptBrInfoPages: Record<InfoPageId, PageCopy> = {
     title:'Coletar menos. Explicar com clareza. Proteger opiniões políticas.',
     intro:'Esta página descreve a arquitetura atual de privacidade. Alguns dados operacionais e uma revisão jurídica qualificada ainda precisam ser concluídos antes de um lançamento comercial ou uso real em escolas.',
     sections:[
-      { title:'Status jurídico', status:'REQUIRES QUALIFIED LEGAL REVIEW', callout:'Politangle é um projeto da TSquare Ventures LLC, 30 N Gould St Ste R, Sheridan, WY 82801, USA. O contato público monitorado e os detalhes finais sobre hospedagem, transferências, retenção e direitos devem ser confirmados antes do lançamento.' },
+      { title:'Status jurídico', status:'REQUIRES QUALIFIED LEGAL REVIEW', callout:'Politangle é atualmente hospedado como projeto da PlanetHike OÜ, Järvevana tee 9, 11314 Tallinn, Estônia (registro comercial n.º 17233027). Sua estrutura jurídica e fiscal de longo prazo está em análise. Esta condição provisória não determina a jurisdição operacional final. Os detalhes finais sobre hospedagem, transferências, retenção e direitos devem ser confirmados antes do lançamento.' },
       { title:'BELIEVE / Quick e Full', paragraphs:['As respostas políticas são usadas no navegador para calcular o resultado. A arquitetura pública atual não vincula deliberadamente as respostas BELIEVE nem o perfil político à conta.','Depois do primeiro Quick concluído, um cookie estritamente funcional pode lembrar apenas que já houve uma primeira tentativa, para exigir login em uma nova tentativa. Esse cookie não contém suas respostas nem seu resultado.'] },
       { title:'Conta', paragraphs:['Ao criar uma conta gratuita, o sistema processa e-mail, identificador de conta, status de verificação e dados de segurança e sessão. O cookie de sessão HTTP-only dura atualmente até cinco dias.'] },
       { title:'Certificação, escola e fornecedores', paragraphs:['A certificação processa os dados necessários da tentativa e do certificado, está disponível somente para pessoas que confirmem ter pelo menos 18 anos e permanece sujeita às barreiras de validação publicadas. O modo escolar usa identificadores temporários e resultados agregados. Os fornecedores previstos incluem Netlify para hospedagem, Google Firebase para autenticação e dados de conta/certificação e Stripe apenas quando o pagamento de certificados for ativado.'] },
@@ -39,7 +37,7 @@ export const ptBrInfoPages: Record<InfoPageId, PageCopy> = {
     title:'Termos de uso do Politangle.',
     intro:'O modelo previsto combina conta gratuita, avaliações e aprendizado gratuitos e um certificado pago separado após a aprovação na certificação.',
     sections:[
-      { title:'Status jurídico', status:'REQUIRES QUALIFIED LEGAL REVIEW', callout:'O operador é a TSquare Ventures LLC. Lei aplicável, resolução de conflitos, contato eletrônico direto e condições comerciais finais ainda precisam ser concluídos e passar por revisão jurídica qualificada antes de qualquer serviço pago.' },
+      { title:'Status jurídico', status:'REQUIRES QUALIFIED LEGAL REVIEW', callout:'A PlanetHike OÜ é a atual anfitriã do projeto. A estrutura jurídica e fiscal de longo prazo do Politangle está em análise. Lei aplicável, resolução de conflitos e condições comerciais finais ainda precisam ser concluídos e passar por revisão jurídica qualificada antes de qualquer serviço pago.' },
       { title:'Acesso e conta', paragraphs:['O primeiro Quick pode ser feito sem conta. Para iniciar um novo Quick independente depois do primeiro concluído, é necessária uma conta gratuita. A arquitetura atual não vincula deliberadamente as respostas BELIEVE à conta.'] },
       { title:'Prática, certificação e certificado', paragraphs:['Glossário, prática e tentativas certificadas são gratuitos dentro dos limites publicados. A certificação exige pelo menos 18 anos e segue as regras de validação publicadas. O certificado personalizado é um produto pago separado após aprovação; preço e condições precisam ser exibidos antes da compra.'] },
       { title:'Uso, mudanças e direitos', paragraphs:['Não é permitido falsificar identidade, contornar limites ou abusar do serviço ou dos certificados. O Politangle pode versionar e melhorar perguntas, explicações e métodos. Direitos obrigatórios do consumidor e responsabilidades que não possam ser excluídas continuam aplicáveis.'] },
@@ -69,7 +67,7 @@ export const ptBrInfoPages: Record<InfoPageId, PageCopy> = {
       {
         "title": "Operador e endereço postal",
         "paragraphs": [
-          "Politangle é um projeto da TSquare Ventures LLC, 30 N Gould St Ste R, Sheridan, WY 82801, USA."
+          "Politangle é atualmente hospedado como projeto da PlanetHike OÜ, Järvevana tee 9, 11314 Tallinn, Estônia."
         ]
       },
       {
@@ -87,10 +85,10 @@ export const ptBrInfoPages: Record<InfoPageId, PageCopy> = {
   imprint: {
     eyebrow:'INFORMAÇÕES LEGAIS',
     title:'Informações do prestador.',
-    intro:'Politangle é um projeto da TSquare Ventures LLC.',
+    intro:'Politangle é atualmente hospedado como projeto da PlanetHike OÜ. Os dados abaixo identificam a anfitriã atual e o endereço de correspondência; a estrutura jurídica e fiscal de longo prazo do Politangle está em análise.',
     sections:[
       { title:'Status', status:'REQUIRES QUALIFIED LEGAL REVIEW', callout:'O operador e o endereço já estão identificados. Contato eletrônico direto e eventuais informações registrais, fiscais, de representação ou de solução de conflitos devem ser acrescentados somente a partir de documentos verificados e com revisão jurídica qualificada.' },
-      { title:'Informações', table:[['Operador / prestador','TSquare Ventures LLC'],['Forma jurídica','Limited Liability Company (LLC)'],['Endereço físico','30 N Gould St Ste R, Sheridan, WY 82801, USA'],['Contato eletrônico direto',contactValue],['Representante autorizado','[SE APLICÁVEL]'],['Registro e número','[SE APLICÁVEL]'],['Identificação fiscal / VAT','[SE APLICÁVEL]'],['Autoridade / regras profissionais','[SE APLICÁVEL]'],['Resolução de conflitos de consumo','[A CONFIRMAR]']] },
+      { title:'Informações atuais da anfitriã do projeto', table:[['Anfitriã atual do projeto','PlanetHike OÜ'],['Forma jurídica','Osaühing (sociedade limitada privada)'],['Endereço físico','Järvevana tee 9, 11314 Tallinn, Estônia'],['Registro e número','Registro Comercial da Estônia n.º 17233027'],['Contato eletrônico direto',legalContactEmail],['Representante autorizado','[SE APLICÁVEL]'],['Identificação fiscal / VAT','[SE APLICÁVEL]'],['Autoridade / regras profissionais','[SE APLICÁVEL]'],['Resolução de conflitos de consumo','[A CONFIRMAR]']] },
     ],
   },
   'question-banks': {
@@ -114,3 +112,4 @@ export const ptBrInfoPages: Record<InfoPageId, PageCopy> = {
     ],
   },
 };
+
