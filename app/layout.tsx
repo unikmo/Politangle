@@ -21,6 +21,7 @@ import './middle-class-trap.css';
 import './countries.css';
 import './admin.css';
 import './brand-logo.css';
+import './pilot/pilot.css';
 import { LocaleProvider } from './LocaleProvider';
 import { SiteFooter } from './SiteChrome';
 
