@@ -25,7 +25,7 @@ export const ptBrInfoPages: Record<InfoPageId, PageCopy> = {
     title:'Coletar menos. Explicar com clareza. Proteger opiniões políticas.',
     intro:'Esta página descreve a arquitetura atual de privacidade. Alguns dados operacionais e uma revisão jurídica qualificada ainda precisam ser concluídos antes de um lançamento comercial ou uso real em escolas.',
     sections:[
-      { title:'Status jurídico', status:'REQUIRES QUALIFIED LEGAL REVIEW', callout:'Politangle é atualmente hospedado como projeto da PlanetHike OÜ, Järvevana tee 9, 11314 Tallinn, Estônia (registro comercial n.º 17233027). Sua estrutura jurídica e fiscal de longo prazo está em análise. Esta condição provisória não determina a jurisdição operacional final. Os detalhes finais sobre hospedagem, transferências, retenção e direitos devem ser confirmados antes do lançamento.' },
+      { title:'Status jurídico', status:'REQUIRES QUALIFIED LEGAL REVIEW', callout:'Politangle é um projeto da PlanetHike OÜ, Järvevana tee 9, 11314 Tallinn, Estônia (registro comercial n.º 17233027). Os detalhes finais sobre hospedagem, transferências, retenção e direitos devem ser confirmados antes do lançamento.' },
       { title:'BELIEVE / Quick e Full', paragraphs:['As respostas políticas são usadas no navegador para calcular o resultado. A arquitetura pública atual não vincula deliberadamente as respostas BELIEVE nem o perfil político à conta.','Depois do primeiro Quick concluído, um cookie estritamente funcional pode lembrar apenas que já houve uma primeira tentativa, para exigir login em uma nova tentativa. Esse cookie não contém suas respostas nem seu resultado.'] },
       { title:'Conta', paragraphs:['Ao criar uma conta gratuita, o sistema processa e-mail, identificador de conta, status de verificação e dados de segurança e sessão. O cookie de sessão HTTP-only dura atualmente até cinco dias.'] },
       { title:'Certificação, escola e fornecedores', paragraphs:['A certificação processa os dados necessários da tentativa e do certificado, está disponível somente para pessoas que confirmem ter pelo menos 18 anos e permanece sujeita às barreiras de validação publicadas. O modo escolar usa identificadores temporários e resultados agregados. Os fornecedores previstos incluem Netlify para hospedagem, Google Firebase para autenticação e dados de conta/certificação e Stripe apenas quando o pagamento de certificados for ativado.'] },
@@ -37,7 +37,7 @@ export const ptBrInfoPages: Record<InfoPageId, PageCopy> = {
     title:'Termos de uso do Politangle.',
     intro:'O modelo previsto combina conta gratuita, avaliações e aprendizado gratuitos e um certificado pago separado após a aprovação na certificação.',
     sections:[
-      { title:'Status jurídico', status:'REQUIRES QUALIFIED LEGAL REVIEW', callout:'A PlanetHike OÜ é a atual anfitriã do projeto. A estrutura jurídica e fiscal de longo prazo do Politangle está em análise. Lei aplicável, resolução de conflitos e condições comerciais finais ainda precisam ser concluídos e passar por revisão jurídica qualificada antes de qualquer serviço pago.' },
+      { title:'Status jurídico', status:'REQUIRES QUALIFIED LEGAL REVIEW', callout:'O operador é a PlanetHike OÜ. Lei aplicável, resolução de conflitos e condições comerciais finais ainda precisam ser concluídos e passar por revisão jurídica qualificada antes de qualquer serviço pago.' },
       { title:'Acesso e conta', paragraphs:['O primeiro Quick pode ser feito sem conta. Para iniciar um novo Quick independente depois do primeiro concluído, é necessária uma conta gratuita. A arquitetura atual não vincula deliberadamente as respostas BELIEVE à conta.'] },
       { title:'Prática, certificação e certificado', paragraphs:['Glossário, prática e tentativas certificadas são gratuitos dentro dos limites publicados. A certificação exige pelo menos 18 anos e segue as regras de validação publicadas. O certificado personalizado é um produto pago separado após aprovação; preço e condições precisam ser exibidos antes da compra.'] },
       { title:'Uso, mudanças e direitos', paragraphs:['Não é permitido falsificar identidade, contornar limites ou abusar do serviço ou dos certificados. O Politangle pode versionar e melhorar perguntas, explicações e métodos. Direitos obrigatórios do consumidor e responsabilidades que não possam ser excluídas continuam aplicáveis.'] },
@@ -67,7 +67,7 @@ export const ptBrInfoPages: Record<InfoPageId, PageCopy> = {
       {
         "title": "Operador e endereço postal",
         "paragraphs": [
-          "Politangle é atualmente hospedado como projeto da PlanetHike OÜ, Järvevana tee 9, 11314 Tallinn, Estônia."
+          "Politangle é um projeto da PlanetHike OÜ, Järvevana tee 9, 11314 Tallinn, Estônia."
         ]
       },
       {
@@ -85,10 +85,10 @@ export const ptBrInfoPages: Record<InfoPageId, PageCopy> = {
   imprint: {
     eyebrow:'INFORMAÇÕES LEGAIS',
     title:'Informações do prestador.',
-    intro:'Politangle é atualmente hospedado como projeto da PlanetHike OÜ. Os dados abaixo identificam a anfitriã atual e o endereço de correspondência; a estrutura jurídica e fiscal de longo prazo do Politangle está em análise.',
+    intro:'Politangle é um projeto da PlanetHike OÜ.',
     sections:[
       { title:'Status', status:'REQUIRES QUALIFIED LEGAL REVIEW', callout:'O operador e o endereço já estão identificados. Contato eletrônico direto e eventuais informações registrais, fiscais, de representação ou de solução de conflitos devem ser acrescentados somente a partir de documentos verificados e com revisão jurídica qualificada.' },
-      { title:'Informações atuais da anfitriã do projeto', table:[['Anfitriã atual do projeto','PlanetHike OÜ'],['Forma jurídica','Osaühing (sociedade limitada privada)'],['Endereço físico','Järvevana tee 9, 11314 Tallinn, Estônia'],['Registro e número','Registro Comercial da Estônia n.º 17233027'],['Contato eletrônico direto',legalContactEmail],['Representante autorizado','[SE APLICÁVEL]'],['Identificação fiscal / VAT','[SE APLICÁVEL]'],['Autoridade / regras profissionais','[SE APLICÁVEL]'],['Resolução de conflitos de consumo','[A CONFIRMAR]']] },
+      { title:'Informações', table:[['Operador / prestador','PlanetHike OÜ'],['Forma jurídica','Osaühing (sociedade limitada privada)'],['Endereço físico','Järvevana tee 9, 11314 Tallinn, Estônia'],['Registro e número','Registro Comercial da Estônia n.º 17233027'],['Contato eletrônico direto',legalContactEmail],['Representante autorizado','[SE APLICÁVEL]'],['Identificação fiscal / VAT','[SE APLICÁVEL]'],['Autoridade / regras profissionais','[SE APLICÁVEL]'],['Resolução de conflitos de consumo','[A CONFIRMAR]']] },
     ],
   },
   'question-banks': {
