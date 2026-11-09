@@ -71,14 +71,13 @@ test('a completed first Quick requires sign-in before a new run when registratio
   assert.match(quick, /\/api\/assessment\/quick\/complete/);
 });
 
-test('legal pages identify the current project host but remain blocked on final legal details', () => {
+test('legal pages identify PlanetHike as operator but remain blocked on final legal details', () => {
   for (const page of ['en.privacy', 'en.terms', 'en.imprint', 'en.contact', 'de.privacy', 'de.terms', 'de.imprint', 'de.contact']) {
     assert.match(infoPages, new RegExp(page.replace('.', '\\.')));
   }
   assert.match(infoPages, /REQUIRES QUALIFIED LEGAL REVIEW/);
   assert.match(infoPages, /PlanetHike OÜ/);
   assert.match(infoPages, /Järvevana tee 9, 11314 Tallinn, Estonia/);
-  assert.match(infoPages, /long-term legal and tax structure is under review/);
   assert.match(infoPages, /REQUIRES VERIFIED CONTACT/);
   assert.match(infoPages, /Netlify/);
   assert.match(infoPages, /Google Firebase/);
