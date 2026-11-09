@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import { hreflangForPath, seoCopy, type SeoLocale } from '../../../lib/seo-locales';
 import { getSeoTopic, seoTopicSlugs, type SeoTopicSlug } from '../../../lib/seo-topics';
 const locales = ['en', 'de', 'es', 'fr', 'pt-br'] as const;
-const pageKeys = ['', 'about', 'account', 'classify', 'contact', 'deep', 'guides', 'imprint', 'learn', 'method', 'political-spectrum', 'left-vs-right-politics', 'political-ideologies', 'political-test', 'political-literacy', 'populism-quiz', 'practice', 'privacy', 'question-banks', 'quiz', 'quizzes', 'results', 'school', 'school/pilot', 'terms', 'understand', 'validation'] as const;
+const pageKeys = ['', 'about', 'account', 'classify', 'contact', 'deep', 'guides', 'imprint', 'learn', 'method', 'pilot', 'political-spectrum', 'left-vs-right-politics', 'political-ideologies', 'political-test', 'political-literacy', 'populism-quiz', 'practice', 'privacy', 'question-banks', 'quiz', 'quizzes', 'results', 'school', 'school/pilot', 'terms', 'understand', 'validation'] as const;
 const englishOnlyPageKeys = ['middle-class-trap'] as const;
 function routeKey(slug?: string[]) { return slug?.join('/') ?? ''; }
 
@@ -32,10 +32,13 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
         'pt-br': { title:'Guias políticos', description:'Guias neutros sobre espectro político, esquerda e direita, ideologias, testes políticos e educação política.' },
       }[activeLocale]
     : null;
+  const pilotSeo = key === 'pilot'
+    ? { title:'Help shape Politangle', description:'A free, non-partisan design-partner pilot for groups that want to make political learning clearer, fairer and more useful.' }
+    : null;
   const seo = topicSeo
     ? { title: topicSeo.metaTitle, description: topicSeo.metaDescription }
-    : guideSeo ?? seoCopy[activeLocale]?.[key] ?? seoCopy.en[key];
-  const noIndex = new Set(['account', 'results', 'contact', 'imprint']);
+    : pilotSeo ?? guideSeo ?? seoCopy[activeLocale]?.[key] ?? seoCopy.en[key];
+  const noIndex = new Set(['account', 'results', 'contact', 'imprint', 'pilot']);
   const canonical = `/${locale}${suffix}`;
   const ogLocale: Record<SeoLocale, string> = { en: 'en_US', de: 'de_DE', es: 'es_ES', fr: 'fr_FR', 'pt-br': 'pt_BR' };
 
@@ -88,6 +91,7 @@ async function loadPage(key: string): Promise<React.ComponentType> {
     case 'imprint': return (await import('../../imprint/page')).default;
     case 'learn': return (await import('../../learn/page')).default;
     case 'method': return (await import('../../method/page')).default;
+    case 'pilot': return (await import('../../pilot/page')).default;
     case 'middle-class-trap': return (await import('../../middle-class-trap/page')).default;
     case 'populism-quiz': return (await import('../../populism-quiz/page')).default;
     case 'practice': return (await import('../../practice/page')).default;
