@@ -64,12 +64,7 @@ export const ptBrInfoPages: Record<InfoPageId, PageCopy> = {
           "Inclua um e-mail para receber nossa resposta. Não envie senhas, tokens de autenticação ou informações sensíveis desnecessárias."
         ]
       },
-      {
-        "title": "Operador e endereço postal",
-        "paragraphs": [
-          "Politangle é um projeto da PlanetHike OÜ, Järvevana tee 9, 11314 Tallinn, Estônia."
-        ]
-      },
+
       {
         "title": "Escolas e pilotos",
         "paragraphs": [
