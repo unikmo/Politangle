@@ -140,3 +140,19 @@
   .country-timeline.concise{grid-template-columns:1fr}
   .country-quick-read,.country-language,.country-system,.country-history{padding:30px 0}
 }
+
+
+/* Editorial simplification: smaller, calmer titles and less repeated on-screen copy. */
+.info-hero{padding:clamp(42px,5vw,66px) 0}
+.info-hero h1{max-width:740px;font-size:clamp(29px,3.4vw,43px);line-height:1.16;letter-spacing:-.025em}
+.info-hero .info-shell>div{max-width:650px;margin-top:14px;font-size:15px;line-height:1.6}
+.info-content{padding:clamp(36px,5vw,58px) 0}
+.info-section{gap:32px;padding:28px 0}
+.info-section h2{font-size:clamp(18px,1.8vw,23px);line-height:1.26}
+.info-section>div{font-size:14px;line-height:1.68}
+.countries-hero h1,.country-hero h1{font-size:clamp(30px,3.5vw,46px);line-height:1.16;letter-spacing:-.025em}
+.country-card{min-height:170px;padding:20px}
+.country-card h2{margin:16px 0 8px;font-size:20px}
+.country-card a{padding-top:18px}
+.method-why h2,.method-axes h2,.method-flow h2,.method-read h2,.method-section-head h2{font-size:clamp(23px,2.6vw,34px);line-height:1.2}
+@media(max-width:600px){.info-hero{padding:40px 0}.info-hero h1{font-size:30px}.info-section{padding:22px 0}.country-card{min-height:150px}}
