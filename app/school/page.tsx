@@ -238,6 +238,12 @@ export default function SchoolPage() {
         </div>
       </section>
 
+      <section className="p-shell" aria-label="Junior questionnaire preview">
+        <h2>Junior BELIEVE — 10–13</h2>
+        <p>Explore the 16-question Quick or 24-question Deep pilot questionnaire. This English-language preview is not yet student-validated.</p>
+        <Link className="p-text-link" href={href('/school/junior-believe')}>Open Junior questionnaire →</Link>
+      </section>
+
       <section className="p-dark-section school-public-privacy">
         <div className="p-shell">
           <div className="school-public-privacy-head">
