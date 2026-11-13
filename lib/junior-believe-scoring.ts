@@ -5,23 +5,22 @@
  */
 export const JUNIOR_QUICK_IDS = Array.from({length:16},(_,i)=>`B${i+1}`) as readonly string[];
 export const JUNIOR_DEEP_IDS = Array.from({length:8},(_,i)=>`D${i+1}`) as readonly string[];
-export const JUNIOR_AXES = ['economic-role','ownership','social-values','authority','pluralism','world-sovereignty','nationhood','ecology'] as const;
+export const JUNIOR_AXES = ['economic-role','ownership','social-values','authority','pluralism','world-sovereignty','nationhood','ecology','trade'] as const;
 export type JuniorAxis = typeof JUNIOR_AXES[number];
 export type JuniorResponse = 'A'|'B'|'neutral'|'unsure';
 export type JuniorAnswers = Partial<Record<string,JuniorResponse>>;
 export type JuniorAxisResult = {axis:JuniorAxis; score:number|null; answered:number; total:number; coverage:number};
 export type JuniorScore = {mode:'quick'|'deep'; axes:JuniorAxisResult[]; answered:number; total:number; coverage:number; complete:boolean};
 const axisFor:Readonly<Record<string,JuniorAxis>> = Object.fromEntries([
-  ...JUNIOR_QUICK_IDS.map((id,i)=>[id,JUNIOR_AXES[Math.floor(i/2)]]),
+  ...JUNIOR_QUICK_IDS.map((id,i)=>[id,id==='B12'?'trade':JUNIOR_AXES[Math.floor(i/2)]]),
   ...JUNIOR_DEEP_IDS.map((id,i)=>[id,JUNIOR_AXES[i]])
 ]) as Record<string,JuniorAxis>;
 /**
  * Normalized axis score in [-100,100]. A = -100, B = +100,
  * neutral = 0; unsure is excluded from the denominator.
- * Each axis has two Quick items, plus one Deep item in deep mode.
- * All eight axes have equal influence; missing answers are never
- * treated as neutral. The B12 trade item shares the broad world axis
- * but must not be interpreted as equivalent to international cooperation.
+ * B12 measures trade policy separately, not international cooperation.
+ * Coverage is reported per axis; do not infer identical reliability from
+ * axes with different numbers of items. Missing answers are not neutral.
  */
 export function scoreJuniorBelieve(answers:JuniorAnswers, mode:'quick'|'deep'='quick'):JuniorScore {
   const ids=mode==='deep'?[...JUNIOR_QUICK_IDS,...JUNIOR_DEEP_IDS]:[...JUNIOR_QUICK_IDS];
@@ -32,7 +31,7 @@ export function scoreJuniorBelieve(answers:JuniorAnswers, mode:'quick'|'deep'='q
       return answer==='A'?[-100]:answer==='B'?[100]:answer==='neutral'?[0]:[];
     });
     const answered=values.length;
-    return {axis,score:answered?values.reduce((a,b)=>a+b,0)/answered:null,answered,total:matching.length,coverage:answered/matching.length};
+    return {axis,score:answered?values.reduce((a,b)=>a+b,0)/answered:null,answered,total:matching.length,coverage:matching.length?answered/matching.length:0};
   });
   const answered=axes.reduce((n,axis)=>n+axis.answered,0);
   return {mode,axes,answered,total:ids.length,coverage:answered/ids.length,complete:answered===ids.length};
