@@ -425,12 +425,7 @@ en.contact = {
         "Please include an email address where we can reply. Do not send passwords, authentication tokens or other unnecessary sensitive information."
       ]
     },
-    {
-      "title": "Operator and postal contact",
-      "paragraphs": [
-        "Politangle is a project of PlanetHike OÜ, Järvevana tee 9, 11314 Tallinn, Estonia."
-      ]
-    },
+
     {
       "title": "Schools and pilots",
       "paragraphs": [
@@ -512,12 +507,7 @@ de.contact = {
         "Gib eine E-Mail-Adresse an, unter der wir dir antworten können. Sende keine Passwörter, Authentifizierungs-Tokens oder unnötigen sensiblen Angaben."
       ]
     },
-    {
-      "title": "Betreiber und Postanschrift",
-      "paragraphs": [
-        "Politangle ist ein Projekt der PlanetHike OÜ, Järvevana tee 9, 11314 Tallinn, Estland."
-      ]
-    },
+
     {
       "title": "Schulen und Pilotprojekte",
       "paragraphs": [
@@ -571,12 +561,7 @@ es.contact = {
         "Incluye una dirección de correo donde podamos responderte. No envíes contraseñas, tokens de autenticación ni información sensible innecesaria."
       ]
     },
-    {
-      "title": "Operador y dirección postal",
-      "paragraphs": [
-        "Politangle es un proyecto de PlanetHike OÜ, Järvevana tee 9, 11314 Tallin, Estonia."
-      ]
-    },
+
     {
       "title": "Escuelas y pilotos",
       "paragraphs": [
@@ -630,12 +615,7 @@ fr.contact = {
         "Indique une adresse e-mail où nous pouvons te répondre. N’envoie pas de mots de passe, de jetons d’authentification ni de données sensibles inutiles."
       ]
     },
-    {
-      "title": "Opérateur et adresse postale",
-      "paragraphs": [
-        "Politangle est un projet de PlanetHike OÜ, Järvevana tee 9, 11314 Tallinn, Estonie."
-      ]
-    },
+
     {
       "title": "Écoles et pilotes",
       "paragraphs": [
