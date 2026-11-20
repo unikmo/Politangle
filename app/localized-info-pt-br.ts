@@ -45,7 +45,7 @@ export const ptBrInfoPages: Record<InfoPageId, PageCopy> = {
   },
   about: {
     eyebrow:'SOBRE O POLITANGLE',
-    title:'Compreensão política sem uma única caixinha.',
+    title:'O que se perde quando a política vira um único rótulo?',
     intro:'O Politangle ajuda pessoas a explorar dilemas políticos, separar opinião de conhecimento e discutir divergências sem expor perfis políticos individuais em sala de aula.',
     sections:[
       { title:'O problema', paragraphs:['A linguagem política costuma comprimir combinações complexas de opiniões em um único rótulo. Isso esconde diferenças importantes e pode tornar a discordância mais tribal do que informativa.'] },
