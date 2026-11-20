@@ -704,7 +704,6 @@ export default function LocalizedInfoPage({ page }: { page: InfoPageId }) {
       ))}
       {page === 'school-pilot' && <SchoolPilotRequestForm />}
       {(page === 'about' || page === 'validation' || page === 'question-banks' || page === 'school-pilot') && <p className="info-callout"><Link href={localePath(locale, '/faq')}>{locale === 'de' ? 'Fragen und Antworten →' : locale === 'es' ? 'Preguntas frecuentes →' : locale === 'fr' ? 'Questions fréquentes →' : locale === 'pt-br' ? 'Perguntas frequentes →' : 'Questions and straight answers →'}</Link></p>}
-      {page === 'contact' && <InfoSection title={locale === 'de' ? 'Anfrage senden' : locale === 'es' ? 'Enviar una consulta' : locale === 'fr' ? 'Envoyer une demande' : locale === 'pt-br' ? 'Enviar uma solicitação' : 'Send an enquiry'}><ContactForm /></InfoSection>}
     </InfoShell>
   );
 }
