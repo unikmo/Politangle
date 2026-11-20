@@ -16,8 +16,8 @@ export default function PilotPage() {
       <div className="p-shell pilot-hero-grid">
         <div>
           <p className="p-kicker">HELP SHAPE POLITANGLE</p>
-          <h1>Try it. Tell us what you think.</h1>
-          <p className="pilot-lede">Help us make political learning clearer, fairer and easier to use.</p>
+          <h1>Something surprised you? Help us make it clearer.</h1>
+          <p className="pilot-lede">Try the 26-question Quick. Tell us which wording made you pause—and what would make the experience easier to understand.</p>
           <div className="pilot-hero-actions">
             <Link className="p-button" href="/quiz">Try Politangle →</Link>
             <Link className="p-text-link" href="/contact">Give feedback →</Link>
@@ -29,7 +29,7 @@ export default function PilotPage() {
 
     <section className="pilot-section p-shell">
       <p className="p-kicker">HOW TO TAKE PART</p>
-      <h2>Choose what works for you.</h2>
+      <h2>One honest observation is already useful.</h2>
       <div className="pilot-fit-grid">
         <article>
           <span className="pilot-number">01</span>
@@ -50,7 +50,7 @@ export default function PilotPage() {
       <div className="p-shell pilot-feedback-inner">
         <div>
           <p className="p-kicker">YOUR FEEDBACK</p>
-          <h2>What could be better?</h2>
+          <h2>What made you think twice?</h2>
         </div>
         <p>Are the questions easy to understand? Does the experience feel fair? Did it help you understand politics? Even a few comments help.</p>
       </div>
