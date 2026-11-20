@@ -37,6 +37,7 @@ export default function CountriesPage() {
 
         <p className="countries-method-note">Current-data sections appear only where they have been source-checked. Background context remains available without presenting unfinished current information as up to date.</p>
       </section>
+      <p className="info-shell" style={{ marginBottom: 48 }}><Link href="/en/quiz">Discover your own eight dimensions →</Link> · <Link href="/en/faq">How to interpret the result →</Link></p>
     </main>
   );
 }
