@@ -70,7 +70,7 @@ const en: Record<InfoPageId, PageCopy> = {
   },
   about: {
     eyebrow: 'ABOUT POLITANGLE',
-    title: 'Political understanding without a single box.',
+    title: 'What gets lost when politics becomes one label?',
     intro: 'Politangle helps people explore political trade-offs, separate beliefs from knowledge and discuss disagreement without exposing individual classroom profiles.',
     sections: [
       { title: 'The problem', paragraphs: ['Political language often compresses complicated combinations of views into one label. That hides meaningful differences and can make disagreement more tribal than informative.'] },
@@ -152,7 +152,7 @@ const de: Record<InfoPageId, PageCopy> = {
     ],
   },
   about: {
-    eyebrow: 'ÜBER POLITANGLE', title: 'Politik ist komplexer als ein Etikett.',
+    eyebrow: 'ÜBER POLITANGLE', title: 'Was geht verloren, wenn Politik nur noch eine Schublade ist?',
     intro: 'Politangle zeigt, welche Werte und politischen Abwägungen hinter deinen Ansichten stehen. Wissenstests werden klar von persönlichen Überzeugungen getrennt. Im Unterricht bleiben individuelle politische Profile privat.',
     sections: [
       { title: 'Das Problem', paragraphs: ['Begriffe wie „links“, „rechts“, „liberal“ oder „konservativ“ verdecken oft wichtige Unterschiede. Zwei Menschen können dasselbe Etikett verwenden und in zentralen Fragen völlig anders denken.'] },
@@ -230,7 +230,7 @@ const es: Record<InfoPageId, PageCopy> = {
     ],
   },
   about: {
-    eyebrow: 'SOBRE POLITANGLE', title: 'Entender la política sin meter a nadie en una caja.',
+    eyebrow: 'SOBRE POLITANGLE', title: '¿Qué dejamos fuera cuando reducimos la política a una etiqueta?',
     intro: 'Politangle ayuda a explorar dilemas políticos, separar creencias de conocimientos y hablar del desacuerdo sin exponer perfiles individuales en el aula.',
     sections: [
       { title: 'El problema', paragraphs: ['El lenguaje político suele reducir combinaciones complejas de ideas a una sola etiqueta. Así desaparecen diferencias importantes y el debate se vuelve más tribal que útil.'] },
@@ -308,7 +308,7 @@ const fr: Record<InfoPageId, PageCopy> = {
     ],
   },
   about: {
-    eyebrow: 'À PROPOS DE POLITANGLE', title: 'La politique est plus complexe qu’une étiquette.',
+    eyebrow: 'À PROPOS DE POLITANGLE', title: 'Que perd-on quand la politique devient une simple étiquette ?',
     intro: 'Politangle aide à explorer les arbitrages politiques, à distinguer convictions et connaissances et à discuter des désaccords sans exposer les profils individuels en classe.',
     sections: [
       { title: 'Le problème', paragraphs: ['Le vocabulaire politique réduit souvent des combinaisons complexes d’idées à une seule étiquette. Des différences importantes disparaissent alors, et le débat devient plus tribal qu’instructif.'] },
@@ -685,6 +685,7 @@ export default function LocalizedInfoPage({ page }: { page: InfoPageId }) {
     return (
       <InfoShell eyebrow={c.eyebrow} title={c.title} intro={c.intro}>
         <MethodExplainer locale={locale} />
+        <p className="info-callout"><Link href={localePath(locale, '/faq')}>{locale === 'de' ? 'Weitere Fragen zu Ergebnissen und Grenzen? Zum FAQ →' : locale === 'es' ? '¿Más preguntas sobre resultados y límites? Ver FAQ →' : locale === 'fr' ? 'D’autres questions sur les résultats et leurs limites ? Voir la FAQ →' : locale === 'pt-br' ? 'Mais dúvidas sobre resultados e limitações? Veja o FAQ →' : 'Curious about the result and its limits? Read the FAQ →'}</Link></p>
       </InfoShell>
     );
   }
@@ -702,6 +703,7 @@ export default function LocalizedInfoPage({ page }: { page: InfoPageId }) {
         </InfoSection>
       ))}
       {page === 'school-pilot' && <SchoolPilotRequestForm />}
+      {(page === 'about' || page === 'validation' || page === 'question-banks' || page === 'school-pilot') && <p className="info-callout"><Link href={localePath(locale, '/faq')}>{locale === 'de' ? 'Fragen und Antworten →' : locale === 'es' ? 'Preguntas frecuentes →' : locale === 'fr' ? 'Questions fréquentes →' : locale === 'pt-br' ? 'Perguntas frequentes →' : 'Questions and straight answers →'}</Link></p>
       {page === 'contact' && <InfoSection title={locale === 'de' ? 'Anfrage senden' : locale === 'es' ? 'Enviar una consulta' : locale === 'fr' ? 'Envoyer une demande' : locale === 'pt-br' ? 'Enviar uma solicitação' : 'Send an enquiry'}><ContactForm /></InfoSection>}
     </InfoShell>
   );
