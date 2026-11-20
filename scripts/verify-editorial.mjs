@@ -28,7 +28,7 @@ const required = {
     '¿Qué significan las etiquetas políticas',
     'Que signifient les étiquettes',
     'O que os rótulos políticos',
-    'does not change your eight-dimension profile',
+    'neither changes your eight-dimension profile',
     '/faq'
   ],
   'app/school/page.tsx': [
