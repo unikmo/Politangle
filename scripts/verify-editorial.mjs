@@ -49,7 +49,7 @@ const required = {
     'en: {', 'de: {', 'es: {', 'fr: {', "'pt-br': {",
     'Independent psychometric validity',
     'Not with real students yet',
-    'no party recommendation',
+    'not a party recommendation',
     'does not tell you what to believe or how to vote'
   ],
   'app/[locale]/[[...slug]]/page.tsx': [
