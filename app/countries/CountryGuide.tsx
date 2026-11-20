@@ -179,7 +179,7 @@ export function CountryGuide({ country, locale, backHref }: { country: CountryPr
         </div>
       </details>
 
-      <div className="country-back"><Link href={backHref}>← {c.back}</Link></div>
+      <div className="country-back"><Link href={backHref}>← {c.back}</Link> · <Link href={`/${locale}/quiz`}>{locale === 'de' ? 'Meine acht Dimensionen entdecken →' : locale === 'es' ? 'Explorar mis ocho dimensiones →' : locale === 'fr' ? 'Découvrir mes huit dimensions →' : locale === 'pt-br' ? 'Explorar minhas oito dimensões →' : 'Explore my eight dimensions →'}</Link> · <Link href={`/${locale}/faq`}>{locale === 'de' ? 'Fragen zum Ergebnis →' : locale === 'es' ? 'Dudas sobre los resultados →' : locale === 'fr' ? 'Questions sur les résultats →' : locale === 'pt-br' ? 'Dúvidas sobre resultados →' : 'Questions about results →'}</Link></div>
     </section>
   </>;
 }
