@@ -35,8 +35,8 @@ type PracticeCopy = {
 const practiceCopy: Record<Locale, PracticeCopy> = {
   en: {
     headerAll: 'PRACTICE', headerStart: 'PRACTICE · ENGLISH', learn: 'Learn the terms', kicker: 'FREE POLITICAL LITERACY PRACTICE',
-    title: 'Choose what you want to practise.',
-    lede: 'Each set draws 25 questions with balanced topic coverage. You see the answer and a short explanation after every question.',
+    title: 'Two political ideas sound alike. Can you tell them apart?',
+    lede: 'See which distinctions you spot and which ones make you think twice. Each free set includes 25 questions and immediate explanations.',
     classifyStrong: 'Which political tradition fits?', classifySmall: 'Recognize political families from short descriptions.',
     understandStrong: 'What is the important difference?', understandSmall: 'Separate ideas that are often mixed up.',
     statusTitle: 'Practice bank under review', statusText: 'These questions are still being reviewed. Practice is free and does not issue a certificate.',
@@ -48,8 +48,8 @@ const practiceCopy: Record<Locale, PracticeCopy> = {
   },
   de: {
     headerAll: 'ÜBUNG', headerStart: 'ÜBUNG', learn: 'Begriffe lernen', kicker: 'KOSTENLOSE ÜBUNG IN POLITISCHER BILDUNG',
-    title: 'Was möchtest du üben?',
-    lede: 'Jeder Satz enthält 25 Fragen mit ausgewogener Themenabdeckung. Nach jeder Frage siehst du die Antwort und eine kurze Erklärung.',
+    title: 'Zwei politische Begriffe klingen ähnlich. Erkennst du den Unterschied?',
+    lede: 'Entdecke, welche Unterschiede du erkennst und welche dich überraschen. Jede kostenlose Runde enthält 25 Fragen mit direkten Erklärungen.',
     classifyStrong: 'Welche politische Tradition passt?', classifySmall: 'Erkenne politische Strömungen anhand kurzer Beschreibungen.',
     understandStrong: 'Was ist der wichtige Unterschied?', understandSmall: 'Unterscheide Ideen, die oft verwechselt werden.',
     statusTitle: 'Übungsfragen in Prüfung', statusText: 'Diese Fragen werden noch geprüft. Die Übung ist kostenlos und führt zu keinem Zertifikat.',
@@ -62,8 +62,8 @@ const practiceCopy: Record<Locale, PracticeCopy> = {
   },
   es: {
     headerAll: 'PRÁCTICA', headerStart: 'PRÁCTICA', learn: 'Aprende los términos', kicker: 'PRÁCTICA GRATUITA DE CULTURA POLÍTICA',
-    title: 'Elige qué quieres practicar.',
-    lede: 'Cada serie tiene 25 preguntas con una cobertura equilibrada de temas. Después de cada pregunta ves la respuesta y una breve explicación.',
+    title: 'Dos ideas políticas parecen iguales. ¿Sabes distinguirlas?',
+    lede: 'Descubre qué matices reconoces y cuáles te hacen dudar. Cada serie gratuita incluye 25 preguntas con explicaciones inmediatas.',
     classifyStrong: '¿Qué tradición política encaja?', classifySmall: 'Reconoce familias políticas a partir de descripciones breves.',
     understandStrong: '¿Cuál es la diferencia importante?', understandSmall: 'Distingue ideas que suelen confundirse.',
     statusTitle: 'Preguntas de práctica en revisión', statusText: 'Estas preguntas aún se están revisando. La práctica es gratuita y no da ningún certificado.',
@@ -76,8 +76,8 @@ const practiceCopy: Record<Locale, PracticeCopy> = {
   },
   fr: {
     headerAll: 'ENTRAÎNEMENT', headerStart: 'ENTRAÎNEMENT', learn: 'Apprendre les termes', kicker: 'ENTRAÎNEMENT GRATUIT À LA CULTURE POLITIQUE',
-    title: 'Choisis ce que tu veux travailler.',
-    lede: 'Chaque série comporte 25 questions avec une couverture équilibrée des thèmes. Après chaque question, tu vois la réponse et une courte explication.',
+    title: 'Deux idées politiques se ressemblent. Saurais-tu les distinguer ?',
+    lede: 'Découvre les différences que tu repères et celles qui te font hésiter. Chaque série gratuite propose 25 questions et des explications immédiates.',
     classifyStrong: 'Quelle tradition politique correspond ?', classifySmall: 'Reconnais des familles politiques à partir de courtes descriptions.',
     understandStrong: 'Quelle est la différence importante ?', understandSmall: 'Distingue des idées souvent confondues.',
     statusTitle: 'Questions d’entraînement en cours de relecture', statusText: 'Ces questions sont encore en cours de relecture. L’entraînement est gratuit et ne donne aucun certificat.',
@@ -90,8 +90,8 @@ const practiceCopy: Record<Locale, PracticeCopy> = {
   },
   'pt-br': {
     headerAll: 'PRÁTICA', headerStart: 'PRÁTICA', learn: 'Aprenda os termos', kicker: 'PRÁTICA GRATUITA DE EDUCAÇÃO POLÍTICA',
-    title: 'Escolha o que você quer praticar.',
-    lede: 'Cada conjunto reúne 25 perguntas com cobertura equilibrada de temas. Depois de cada pergunta, você vê a resposta e uma breve explicação.',
+    title: 'Duas ideias políticas parecem iguais. Você percebe a diferença?',
+    lede: 'Veja quais nuances você reconhece e quais fazem pensar. Cada rodada gratuita tem 25 questões e explicações imediatas.',
     classifyStrong: 'Qual tradição política combina?', classifySmall: 'Reconheça famílias políticas a partir de descrições curtas.',
     understandStrong: 'Qual é a diferença importante?', understandSmall: 'Diferencie ideias que costumam ser confundidas.',
     statusTitle: 'Perguntas de prática em revisão', statusText: 'Estas perguntas ainda estão em revisão. A prática é gratuita e não emite certificado.',
