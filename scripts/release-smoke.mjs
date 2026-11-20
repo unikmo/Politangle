@@ -17,7 +17,7 @@ const pages = [
   ['/', 'Politangle'],
   ['/method', 'Eight questions'],
   ['/learn', 'Learn'],
-  ['/quizzes', 'Choose a quiz'],
+  ['/quizzes', 'Which question would you like to explore?'],
   ['/countries', 'Country'],
   ['/school', 'student'],
   ['/account', 'Politangle account'],
