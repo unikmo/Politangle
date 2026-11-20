@@ -31,7 +31,7 @@ test('German homepage copy stays informal and avoids literal formal-address calq
   assert.match(homepage, /Was, wenn deine politischen Ansichten mehr sind als links oder rechts/);
   assert.match(homepage, /Deine Antworten bleiben privat/);
   assert.doesNotMatch(homepage, /Erster Quick ohne Anmeldung/);
-  assert.match(homepage, /Politische Begriffe verstehen/);
+  assert.match(homepage, /Ein politischer Begriff klingt vertraut/);
   assert.doesNotMatch(homepage, /\b(?:Sie|Ihnen|Ihre|Ihrem|Ihren|Ihrer)\b/);
 });
 
