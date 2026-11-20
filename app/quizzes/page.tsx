@@ -96,6 +96,7 @@ export default function QuizzesPage() {
           </Link>
         ))}
       </section>
+      <p className="p-shell" style={{ margin:'16px auto 48px' }}><Link className="p-text-link" href={href('/faq')}>{locale === 'de' ? 'Was zeigen die Ergebnisse? Zum FAQ →' : locale === 'es' ? '¿Qué indican los resultados? Ver preguntas frecuentes →' : locale === 'fr' ? 'Que montrent les résultats ? Voir la FAQ →' : locale === 'pt-br' ? 'O que os resultados mostram? Veja as perguntas frequentes →' : 'What do the results mean? Get the straight answers →'}</Link></p>
     </main>
   );
 }
