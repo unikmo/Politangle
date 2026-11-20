@@ -41,6 +41,7 @@ export default function GuidesPage() {
           })}
         </div>
       </section>
+      <p className="info-shell" style={{ marginBottom: 48 }}><Link className="p-text-link" href={localePath(locale,'/faq')}>{locale === 'de' ? 'Mehr über die Methode und ihre Grenzen →' : locale === 'es' ? 'Más sobre el método y sus límites →' : locale === 'fr' ? 'En savoir plus sur la méthode et ses limites →' : locale === 'pt-br' ? 'Saiba mais sobre o método e seus limites →' : 'Curious about the method and its limits? →'}</Link></p>
     </main>
   );
 }
