@@ -21,6 +21,8 @@ jobs:
         run: npm ci
       - name: Verify editorial integrity, privacy and neutral positioning
         run: node scripts/verify-editorial.mjs
+      - name: Verify expanded five-language About editorial
+        run: node scripts/verify-about-editorial.mjs
       - name: Verify question and scoring engine
         run: npm run verify:engine
       - name: Verify TypeScript

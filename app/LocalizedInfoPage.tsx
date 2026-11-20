@@ -71,12 +71,29 @@ const en: Record<InfoPageId, PageCopy> = {
   about: {
     eyebrow: 'ABOUT POLITANGLE',
     title: 'What gets lost when politics becomes one label?',
-    intro: 'Politangle helps people explore political trade-offs, separate beliefs from knowledge and discuss disagreement without exposing individual classroom profiles.',
+    intro: 'Politangle begins with a simple possibility: you can understand your political views better without being told which side you belong to. Explore the questions, the trade-offs and the ideas behind familiar labels.',
     sections: [
-      { title: 'The problem', paragraphs: ['Political language often compresses complicated combinations of views into one label. That hides meaningful differences and can make disagreement more tribal than informative.'] },
-      { title: 'The approach', paragraphs: ['Politangle keeps several dimensions visible, separates BELIEVE from CLASSIFY and UNDERSTAND, and treats uncertainty as a legitimate response rather than a scoring failure.'] },
-      { title: 'Our standard', paragraphs: ['Neutrality is not established merely by displaying several viewpoints. Wording, scoring, language versions and classroom use must remain open to criticism, testing and revision.'] },
-    ],
+      { title: 'Why Politangle exists', paragraphs: [
+        'Debates about events such as the war in Ukraine reveal how quickly political discussion can collapse into teams and labels. A position on one issue is often treated as proof of everything someone believes. That leaves little room to ask what a person values, which facts are disputed and what trade-offs a proposed policy involves.',
+        'Politangle was created to make room for those questions. Instead of starting with a camp, it starts with individual statements and explores how a person weighs competing priorities.'
+      ] },
+      { title: 'What might your answers reveal?', paragraphs: [
+        'Two people can use the same label—liberal, conservative, left or right—and disagree about economic responsibility, personal freedom, democratic institutions or international cooperation. Equally, people who disagree on one issue may share priorities on another.',
+        'Politangle maps answers across eight political dimensions. The resulting shape is an aid to reflection, not a permanent identity, a personality diagnosis or a recommendation about parties and votes.'
+      ] },
+      { title: 'Beliefs are not the same as knowledge', paragraphs: [
+        'A belief assessment asks what you think should happen when important values compete. Political-literacy exercises ask whether you recognize concepts and distinctions, and explain the answers. These are different activities and should never be confused.',
+        'You do not need to pass an ideology test to have a legitimate political view. Uncertainty and disagreement are welcome; political convictions are not marked as morally correct or incorrect.'
+      ] },
+      { title: 'Persuasion, priorities and trade-offs', paragraphs: [
+        'A persuasive slogan may express a genuine concern without showing how the proposed policy works—or who bears its costs. An opposing argument can have strengths without settling every question. The useful next step is to examine evidence, consequences and competing priorities.',
+        'Our aim is not to steer you toward a conclusion. It is to make the assumptions and trade-offs behind political language easier to see, so that you can reach your own.'
+      ] },
+      { title: 'An educational project, open to scrutiny', paragraphs: [
+        'Politangle is built for curious individuals and, subject to separate review, potential educational use. School classroom functions remain a controlled pilot and are not authorized for real-student use until legal, accessibility and educational checks are complete.',
+        'The scoring model has technical consistency checks, but independent psychometric validity, representative norms and equivalence across languages and age groups have not been established. Question wording, interpretation and the method must remain open to challenge and improvement. You can inspect the Method, Validation and FAQ pages for the details.'
+      ] }
+    ]
   },
   contact: {
     eyebrow: 'CONTACT',
@@ -152,13 +169,31 @@ const de: Record<InfoPageId, PageCopy> = {
     ],
   },
   about: {
-    eyebrow: 'ÜBER POLITANGLE', title: 'Was geht verloren, wenn Politik nur noch eine Schublade ist?',
-    intro: 'Politangle zeigt, welche Werte und politischen Abwägungen hinter deinen Ansichten stehen. Wissenstests werden klar von persönlichen Überzeugungen getrennt. Im Unterricht bleiben individuelle politische Profile privat.',
+    eyebrow: 'ÜBER POLITANGLE',
+    title: 'Was geht verloren, wenn Politik nur noch eine Schublade ist?',
+    intro: 'Politangle setzt bei einer einfachen Idee an: Du kannst die Muster in deinen Ansichten besser verstehen, ohne dich einer Seite zuordnen zu müssen. Entdecke Fragen, Zielkonflikte und die Ideen hinter vertrauten Begriffen.',
     sections: [
-      { title: 'Das Problem', paragraphs: ['Begriffe wie „links“, „rechts“, „liberal“ oder „konservativ“ verdecken oft wichtige Unterschiede. Zwei Menschen können dasselbe Etikett verwenden und in zentralen Fragen völlig anders denken.'] },
-      { title: 'Unser Ansatz', paragraphs: ['Politangle betrachtet mehrere politische Bereiche getrennt. Der Persönlichkeitstest und die Wissenstests bleiben voneinander unabhängig. „Unsicher“ ist eine ehrliche Antwort und kein Fehler.'] },
-      { title: 'Unser Anspruch', paragraphs: ['Mehrere Sichtweisen zu zeigen reicht nicht aus, um neutral zu sein. Fragen, Auswertung, Sprachfassungen und Unterrichtsmaterialien müssen offen geprüft, kritisiert und verbessert werden können.'] },
-    ],
+      { title: 'Warum es Politangle gibt', paragraphs: [
+        'Debatten etwa über den Krieg in der Ukraine zeigen, wie schnell politische Diskussionen zu einem Streit zwischen Lagern werden. Eine Position zu einem Thema gilt dann plötzlich als Beweis für die gesamte Weltanschauung. Dabei bleiben wichtige Fragen offen: Welche Werte sind betroffen, welche Fakten sind umstritten und welche Folgen hätte eine Entscheidung?',
+        'Politangle möchte Raum für genau diese Fragen schaffen. Statt mit einem Lager beginnt es mit einzelnen Aussagen und betrachtet, wie Menschen unterschiedliche Prioritäten gegeneinander abwägen.'
+      ] },
+      { title: 'Was deine Antworten zeigen können', paragraphs: [
+        'Zwei Menschen können sich beide liberal, konservativ, links oder rechts nennen und dennoch über Wirtschaft, persönliche Freiheit, demokratische Institutionen oder internationale Zusammenarbeit sehr unterschiedlich denken. Umgekehrt können Menschen trotz großer Meinungsverschiedenheiten einzelne Ziele teilen.',
+        'Politangle bildet deine Antworten entlang acht politischer Dimensionen ab. Das entstehende Profil ist eine Denkhilfe – keine feste Identität, keine psychologische Diagnose und keine Wahlempfehlung.'
+      ] },
+      { title: 'Überzeugungen sind kein Wissenstest', paragraphs: [
+        'Bei der Einschätzung deiner Ansichten geht es um die Frage, was dir bei politischen Zielkonflikten wichtig ist. Wissensübungen prüfen dagegen, ob du Begriffe und Unterschiede erkennst, und erklären die fachlichen Antworten. Beides muss getrennt bleiben.',
+        'Niemand muss eine politische Haltung als richtig nachweisen, um sie vertreten zu dürfen. Unsicherheit und Widerspruch sind erlaubt; persönliche Überzeugungen werden nicht moralisch benotet.'
+      ] },
+      { title: 'Überzeugende Worte sind nicht dasselbe wie gute Entscheidungen', paragraphs: [
+        'Ein überzeugender Slogan kann ein echtes Problem benennen, ohne zu zeigen, ob die vorgeschlagene Lösung funktioniert oder wer die Kosten trägt. Auch ein Gegenargument kann berechtigt sein, ohne alle Fragen zu klären. Deshalb lohnt der Blick auf Belege, Folgen und konkurrierende Ziele.',
+        'Unser Ziel ist nicht, dich zu einer bestimmten Schlussfolgerung zu bewegen. Wir möchten politische Annahmen und Zielkonflikte verständlicher machen, damit du selbst urteilen kannst.'
+      ] },
+      { title: 'Ein Bildungsprojekt, das überprüfbar bleiben muss', paragraphs: [
+        'Politangle richtet sich an neugierige Menschen und könnte nach gesonderter Prüfung auch im Unterricht eingesetzt werden. Der Klassenmodus bleibt ein kontrollierter Pilot. Der Einsatz mit echten Schülerinnen und Schülern ist erst nach rechtlicher, pädagogischer und Barrierefreiheitsprüfung zulässig.',
+        'Die technische Konsistenz der Auswertung wird geprüft. Unabhängige psychometrische Validität, repräsentative Vergleichswerte und Gleichwertigkeit zwischen Sprachen und Altersgruppen sind jedoch noch nicht belegt. Fragen, Auswertung und Interpretation müssen kritisierbar und verbesserbar bleiben. Details findest du unter Methode, Qualität und Grenzen sowie FAQ.'
+      ] }
+    ]
   },
   contact: {
     eyebrow: 'KONTAKT', title: 'So erreichst du Politangle.',
@@ -230,13 +265,31 @@ const es: Record<InfoPageId, PageCopy> = {
     ],
   },
   about: {
-    eyebrow: 'SOBRE POLITANGLE', title: '¿Qué dejamos fuera cuando reducimos la política a una etiqueta?',
-    intro: 'Politangle ayuda a explorar dilemas políticos, separar creencias de conocimientos y hablar del desacuerdo sin exponer perfiles individuales en el aula.',
+    eyebrow: 'SOBRE POLITANGLE',
+    title: '¿Qué dejamos fuera cuando reducimos la política a una etiqueta?',
+    intro: 'Politangle parte de una posibilidad sencilla: puedes comprender mejor tus ideas políticas sin tener que encajar en un bando. Explora las preguntas, los dilemas y las ideas que hay detrás de las etiquetas conocidas.',
     sections: [
-      { title: 'El problema', paragraphs: ['El lenguaje político suele reducir combinaciones complejas de ideas a una sola etiqueta. Así desaparecen diferencias importantes y el debate se vuelve más tribal que útil.'] },
-      { title: 'El enfoque', paragraphs: ['Politangle mantiene varias dimensiones visibles, separa BELIEVE de CLASSIFY y UNDERSTAND y trata la incertidumbre como una respuesta válida, no como un fallo.'] },
-      { title: 'Nuestro criterio', paragraphs: ['No basta con mostrar varios puntos de vista para afirmar neutralidad. Preguntas, puntuación, versiones lingüísticas y uso escolar deben seguir abiertos a crítica, pruebas y revisión.'] },
-    ],
+      { title: 'Por qué existe Politangle', paragraphs: [
+        'Los debates sobre acontecimientos como la guerra en Ucrania muestran lo rápido que una discusión puede convertirse en una disputa entre bandos. Una postura sobre un asunto se toma como prueba de todo lo que alguien piensa. Así dejamos de preguntar qué valores están en juego, qué hechos se discuten y qué costes tiene cada alternativa.',
+        'Politangle nació para abrir espacio a esas preguntas. En lugar de empezar por una etiqueta, parte de afirmaciones concretas y explora cómo se equilibran distintas prioridades.'
+      ] },
+      { title: 'Qué pueden mostrar tus respuestas', paragraphs: [
+        'Dos personas pueden llamarse liberales, conservadoras, de izquierdas o de derechas y discrepar sobre economía, libertad personal, instituciones democráticas o cooperación internacional. También pueden compartir prioridades aunque piensen distinto sobre otros temas.',
+        'Politangle representa las respuestas en ocho dimensiones. El perfil sirve para reflexionar: no es una identidad fija, un diagnóstico psicológico ni una recomendación electoral.'
+      ] },
+      { title: 'Las creencias no son un examen de conocimientos', paragraphs: [
+        'La evaluación de opiniones explora tus prioridades ante dilemas políticos. Los ejercicios de cultura política comprueban si reconoces conceptos y diferencias, y explican las respuestas. Son tareas distintas.',
+        'No tienes que superar una prueba ideológica para que tus ideas sean legítimas. La incertidumbre y el desacuerdo tienen cabida; las convicciones personales no se califican como moralmente buenas o malas.'
+      ] },
+      { title: 'Persuasión, prioridades y consecuencias', paragraphs: [
+        'Un eslogan convincente puede señalar un problema real sin explicar si la solución funciona o quién asume los costes. La postura contraria también puede aportar algo válido sin resolverlo todo. Conviene examinar pruebas, consecuencias y prioridades en conflicto.',
+        'No buscamos llevarte a una conclusión concreta. Queremos que las suposiciones y los dilemas detrás del lenguaje político sean más fáciles de reconocer para que puedas decidir por ti mismo.'
+      ] },
+      { title: 'Un proyecto educativo abierto a revisión', paragraphs: [
+        'Politangle se dirige a personas curiosas y contempla posibles usos educativos sujetos a revisión. El modo aula sigue siendo un piloto controlado: no está autorizado con alumnado real hasta completar las revisiones jurídicas, educativas y de accesibilidad.',
+        'El cálculo cuenta con pruebas de consistencia técnica, pero aún no se han establecido validez psicométrica independiente, normas representativas ni equivalencia entre idiomas y edades. Las preguntas, el método y la interpretación deben poder criticarse y mejorarse. Puedes consultar Método, Validación y Preguntas frecuentes.'
+      ] }
+    ]
   },
   contact: {
     eyebrow: 'CONTACTO', title: 'Todavía falta un canal de contacto verificado para el lanzamiento.',
@@ -308,13 +361,31 @@ const fr: Record<InfoPageId, PageCopy> = {
     ],
   },
   about: {
-    eyebrow: 'À PROPOS DE POLITANGLE', title: 'Que perd-on quand la politique devient une simple étiquette ?',
-    intro: 'Politangle aide à explorer les arbitrages politiques, à distinguer convictions et connaissances et à discuter des désaccords sans exposer les profils individuels en classe.',
+    eyebrow: 'À PROPOS DE POLITANGLE',
+    title: 'Que perd-on quand la politique devient une simple étiquette ?',
+    intro: 'Politangle part d’une idée simple : mieux comprendre tes opinions politiques sans devoir choisir un camp. Explore les questions, les arbitrages et les idées qui se cachent derrière les étiquettes familières.',
     sections: [
-      { title: 'Le problème', paragraphs: ['Le vocabulaire politique réduit souvent des combinaisons complexes d’idées à une seule étiquette. Des différences importantes disparaissent alors, et le débat devient plus tribal qu’instructif.'] },
-      { title: 'Notre approche', paragraphs: ['Politangle examine plusieurs dimensions séparément. Le test d’opinion et les quiz de connaissances restent indépendants. Répondre « Je ne sais pas » est une réponse valable, pas une erreur.'] },
-      { title: 'Notre exigence', paragraphs: ['Afficher plusieurs points de vue ne suffit pas à prouver la neutralité. Les questions, le calcul, les versions linguistiques et l’usage en classe doivent rester critiquables, testables et révisables.'] },
-    ],
+      { title: 'Pourquoi Politangle existe', paragraphs: [
+        'Les débats sur des événements comme la guerre en Ukraine montrent à quelle vitesse une discussion peut se réduire à une opposition entre camps. Une prise de position devient alors la preuve supposée de toutes les convictions d’une personne. On oublie de demander quelles valeurs sont en jeu, quels faits sont contestés et quels compromis une mesure impose.',
+        'Politangle est né pour redonner une place à ces questions. Il part de propositions concrètes plutôt que d’une appartenance politique et explore la manière dont chacun arbitre entre plusieurs priorités.'
+      ] },
+      { title: 'Ce que tes réponses peuvent révéler', paragraphs: [
+        'Deux personnes peuvent se dire libérales, conservatrices, de gauche ou de droite tout en divergeant sur l’économie, les libertés individuelles, les institutions démocratiques ou la coopération internationale. À l’inverse, des personnes en désaccord peuvent partager certaines priorités.',
+        'Politangle présente tes réponses sur huit dimensions. Ce profil invite à réfléchir : ce n’est ni une identité définitive, ni un diagnostic psychologique, ni une recommandation de vote.'
+      ] },
+      { title: 'Les convictions ne sont pas des connaissances', paragraphs: [
+        'Le questionnaire d’opinions explore tes priorités face à des arbitrages politiques. Les exercices de culture politique évaluent la reconnaissance de concepts et de distinctions, avec des explications. Ce sont deux démarches différentes.',
+        'Nul besoin de réussir un examen idéologique pour avoir des convictions légitimes. Le doute et le désaccord ont leur place ; tes opinions ne sont pas notées comme moralement bonnes ou mauvaises.'
+      ] },
+      { title: 'Persuasion, priorités et conséquences', paragraphs: [
+        'Un slogan convaincant peut mettre en lumière un vrai problème sans montrer si la solution proposée fonctionne ni qui en supporte les coûts. Un contre-argument peut aussi avoir du mérite sans trancher toutes les questions. Il faut examiner les preuves, les conséquences et les priorités concurrentes.',
+        'Notre objectif n’est pas de t’amener vers une conclusion précise. Il est de rendre plus visibles les hypothèses et les arbitrages derrière les mots politiques, pour que tu puisses te faire ton propre avis.'
+      ] },
+      { title: 'Un projet éducatif ouvert à la critique', paragraphs: [
+        'Politangle s’adresse aux personnes curieuses et envisage des usages pédagogiques sous réserve de vérifications distinctes. Le mode classe reste un projet pilote encadré ; son utilisation avec de vrais élèves nécessite des examens juridiques, pédagogiques et d’accessibilité.',
+        'La cohérence technique du calcul est testée, mais sa validité psychométrique indépendante, ses normes représentatives et son équivalence entre langues et âges ne sont pas établies. Les questions, le calcul et l’interprétation doivent rester critiquables et améliorables. Consulte la Méthode, la Validation et la FAQ pour en savoir plus.'
+      ] }
+    ]
   },
   contact: {
     eyebrow: 'CONTACT', title: 'Contacter Politangle.',

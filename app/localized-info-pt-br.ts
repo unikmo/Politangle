@@ -46,12 +46,29 @@ export const ptBrInfoPages: Record<InfoPageId, PageCopy> = {
   about: {
     eyebrow:'SOBRE O POLITANGLE',
     title:'O que se perde quando a política vira um único rótulo?',
-    intro:'O Politangle ajuda pessoas a explorar dilemas políticos, separar opinião de conhecimento e discutir divergências sem expor perfis políticos individuais em sala de aula.',
+    intro:'O Politangle parte de uma ideia simples: você pode entender melhor suas opiniões políticas sem precisar escolher um lado. Explore as perguntas, os dilemas e os conceitos por trás de rótulos conhecidos.',
     sections:[
-      { title:'O problema', paragraphs:['A linguagem política costuma comprimir combinações complexas de opiniões em um único rótulo. Isso esconde diferenças importantes e pode tornar a discordância mais tribal do que informativa.'] },
-      { title:'A abordagem', paragraphs:['O Politangle mantém várias dimensões visíveis, separa BELIEVE de CLASSIFY e UNDERSTAND e trata incerteza como uma resposta legítima — não como falha de pontuação.'] },
-      { title:'Nosso padrão', paragraphs:['Neutralidade não fica comprovada apenas porque vários pontos de vista aparecem na tela. Redação, pontuação, versões em diferentes idiomas e uso em sala de aula precisam continuar abertos a crítica, teste e revisão.'] },
-    ],
+      { title:'Por que o Politangle existe', paragraphs:[
+        'Debates sobre acontecimentos como a guerra na Ucrânia mostram como uma conversa pode rapidamente virar uma disputa entre campos opostos. Uma posição sobre um tema passa a ser interpretada como prova de tudo em que alguém acredita. Com isso, ficam de fora perguntas importantes: quais valores estão em jogo, quais fatos são contestados e quais são as consequências de cada alternativa?',
+        'O Politangle foi criado para abrir espaço para essas perguntas. Em vez de começar por um grupo político, ele apresenta afirmações concretas e explora como diferentes prioridades podem entrar em conflito.'
+      ] },
+      { title:'O que suas respostas podem revelar', paragraphs:[
+        'Duas pessoas podem se considerar liberais, conservadoras, de esquerda ou de direita e discordar sobre economia, liberdade individual, instituições democráticas ou cooperação internacional. Da mesma forma, pessoas que discordam em um tema podem compartilhar prioridades em outro.',
+        'O Politangle organiza suas respostas em oito dimensões. O perfil é um convite à reflexão, não uma identidade fixa, um diagnóstico psicológico nem uma recomendação de voto.'
+      ] },
+      { title:'Opinião política não é prova de conhecimento', paragraphs:[
+        'A avaliação de opiniões explora o que você prioriza diante de dilemas políticos. Os exercícios de conhecimento verificam se você reconhece conceitos e diferenças e explicam as respostas. São atividades distintas.',
+        'Você não precisa passar em um teste ideológico para ter uma opinião legítima. Dúvidas e divergências são bem-vindas; convicções políticas não recebem notas morais de certo ou errado.'
+      ] },
+      { title:'Persuasão, prioridades e consequências', paragraphs:[
+        'Um slogan convincente pode apontar um problema real sem mostrar se a solução funciona ou quem arca com os custos. O argumento contrário também pode trazer pontos válidos sem resolver tudo. Por isso, vale examinar evidências, consequências e prioridades em disputa.',
+        'Nosso objetivo não é conduzir você a uma conclusão. Queremos tornar mais claros os pressupostos e dilemas por trás da linguagem política para que você forme sua própria opinião.'
+      ] },
+      { title:'Um projeto educacional aberto a críticas', paragraphs:[
+        'O Politangle foi pensado para pessoas curiosas e considera possíveis usos educacionais sujeitos a revisão. O modo sala de aula permanece em piloto controlado: o uso com estudantes reais ainda depende de análises jurídicas, pedagógicas e de acessibilidade.',
+        'A consistência técnica da pontuação é testada, mas não foram estabelecidas validação psicométrica independente, normas representativas nem equivalência entre idiomas e faixas etárias. Perguntas, método e interpretação precisam continuar abertos a críticas e melhorias. Consulte as páginas Método, Validação e Perguntas frequentes para saber mais.'
+      ] }
+    ]
   },
   contact: {
     "eyebrow": "CONTATO",
