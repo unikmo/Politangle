@@ -61,7 +61,15 @@ for (const engine of [chromium, webkit]) {
     assert(await page.locator('main').count(), 'certificate issue route missing');
     await visit('/quiz');
     const firstRadio=page.getByRole('radio').first();
-    assert(await firstRadio.count(),'/quiz missing interactive answers');
+    try {
+      await firstRadio.waitFor({state:'visible',timeout:20000});
+    } catch (error) {
+      console.error('QUIZ RENDER DIAGNOSTIC',engine.name(),JSON.stringify({
+        url:page.url(),title:await page.title(),body:(await page.locator('body').innerText()).slice(0,1500),
+        radioCount:await page.getByRole('radio').count()
+      }));
+      throw error;
+    }
     await firstRadio.click();
     await page.waitForTimeout(200);
     assert(/1\s*\/\s*26/.test(await page.locator('.engine-progress-row').innerText()),'Quick answer did not update progress');
