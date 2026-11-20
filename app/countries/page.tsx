@@ -18,8 +18,8 @@ export default function CountriesPage() {
       <section className="info-hero countries-hero">
         <div className="info-shell">
           <p>COUNTRY PERSPECTIVES</p>
-          <h1>Same political words. Different country context.</h1>
-          <div>Choose a country to see only the context you need before comparing political labels and institutions. Country pages explain context; they do not change your Politangle score.</div>
+          <h1>Same label. Different country. Same meaning?</h1>
+          <div>Choose a country to discover what its political vocabulary and institutions mean in context. The guide does not assign you a party or change your Politangle result.</div>
         </div>
       </section>
 
@@ -29,7 +29,7 @@ export default function CountriesPage() {
             <article className="country-card" key={country.slug}>
               <span>{country.current ? `CONTEXT + CURRENT SNAPSHOT · ${country.current.asOf}` : 'CONTEXT GUIDE'}</span>
               <h2>{country.name}</h2>
-              <p>See what is different here before comparing political labels across countries.</p>
+              <p>See which local distinctions matter before comparing familiar labels.</p>
               <Link href={`/countries/${country.slug}`}>Open {country.name} →</Link>
             </article>
           ))}
@@ -37,6 +37,7 @@ export default function CountriesPage() {
 
         <p className="countries-method-note">Current-data sections appear only where they have been source-checked. Background context remains available without presenting unfinished current information as up to date.</p>
       </section>
+      <p className="info-shell" style={{ marginBottom: 48 }}><Link href="/en/quiz">Discover your own eight dimensions →</Link> · <Link href="/en/faq">How to interpret the result →</Link></p>
     </main>
   );
 }

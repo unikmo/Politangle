@@ -5,6 +5,44 @@ import { localePath, useLocale } from './LocaleProvider';
 import { SiteHeader } from './SiteChrome';
 import { getSeoTopic, seoSourceLibrary, type SeoTopicSlug } from '../lib/seo-topics';
 
+const seoHooks: Record<'en'|'de'|'es'|'fr'|'pt-br', Record<SeoTopicSlug, string>> = {
+  en: {
+    'political-spectrum':'One line can be a useful start. What does it leave out?',
+    'left-vs-right-politics':'Two familiar labels. Which disagreements do they actually explain?',
+    'political-ideologies':'Which political ideas travel together—and which can pull apart?',
+    'political-test':'What if your answers do not fit neatly on one line?',
+    'political-literacy':'You know the word. Can you spot the distinction?'
+  },
+  de: {
+    'political-spectrum':'Eine Linie hilft beim Einstieg. Doch was lässt sie weg?',
+    'left-vs-right-politics':'Zwei vertraute Etiketten. Welche Unterschiede erklären sie wirklich?',
+    'political-ideologies':'Welche politischen Ideen gehören zusammen – und welche nicht?',
+    'political-test':'Was, wenn deine Antworten nicht auf eine Linie passen?',
+    'political-literacy':'Du kennst den Begriff. Erkennst du den Unterschied?'
+  },
+  es: {
+    'political-spectrum':'Una línea ayuda a orientarse. ¿Qué deja fuera?',
+    'left-vs-right-politics':'Dos etiquetas conocidas. ¿Qué diferencias explican realmente?',
+    'political-ideologies':'¿Qué ideas políticas se relacionan y cuáles se separan?',
+    'political-test':'¿Y si tus respuestas no caben en una sola línea?',
+    'political-literacy':'Conoces la palabra. ¿Sabes distinguir el concepto?'
+  },
+  fr: {
+    'political-spectrum':'Une ligne donne un repère. Mais que laisse-t-elle de côté ?',
+    'left-vs-right-politics':'Deux étiquettes familières. Quelles différences expliquent-elles vraiment ?',
+    'political-ideologies':'Quelles idées politiques vont ensemble, et lesquelles divergent ?',
+    'political-test':'Et si tes réponses ne tenaient pas sur une seule ligne ?',
+    'political-literacy':'Tu connais le mot. Sais-tu distinguer les idées ?'
+  },
+  'pt-br': {
+    'political-spectrum':'Uma linha ajuda a começar. Mas o que ela deixa de fora?',
+    'left-vs-right-politics':'Dois rótulos conhecidos. Que diferenças eles explicam de verdade?',
+    'political-ideologies':'Quais ideias políticas caminham juntas e quais divergem?',
+    'political-test':'E se suas respostas não couberem em uma única linha?',
+    'political-literacy':'Você conhece o termo. Sabe reconhecer a diferença?'
+  }
+};
+
 export default function SeoTopicPage({ slug }: { slug: SeoTopicSlug }) {
   const { locale } = useLocale();
   const topic = getSeoTopic(locale, slug);
@@ -43,7 +81,9 @@ export default function SeoTopicPage({ slug }: { slug: SeoTopicSlug }) {
         <div className="info-shell">
           <p>{topic.eyebrow}</p>
           <h1>{topic.title}</h1>
+          <p className="p-kicker" style={{ marginTop:18 }}>{seoHooks[locale][slug]}</p>
           <div>{topic.answer}</div>
+          <p style={{ marginTop:18 }}><Link className="p-text-link" href={href('/quiz')}>{locale === 'de' ? 'Mein Profil entdecken →' : locale === 'es' ? 'Descubrir mi perfil →' : locale === 'fr' ? 'Découvrir mon profil →' : locale === 'pt-br' ? 'Descobrir meu perfil →' : 'Discover my angle →'}</Link></p>
         </div>
       </section>
 
@@ -78,7 +118,7 @@ export default function SeoTopicPage({ slug }: { slug: SeoTopicSlug }) {
               return <li key={key}><a href={source.url} rel="noreferrer">{source.title}</a></li>;
             })}
           </ul>
-          <p><Link href={href('/method')}>{locale === 'de' ? 'Politangle-Methode ansehen' : locale === 'es' ? 'Ver el método de Politangle' : locale === 'fr' ? 'Voir la méthode Politangle' : locale === 'pt-br' ? 'Ver o método do Politangle' : 'Read the Politangle method'} →</Link></p>
+          <p><Link href={href('/method')}>{locale === 'de' ? 'Politangle-Methode ansehen' : locale === 'es' ? 'Ver el método de Politangle' : locale === 'fr' ? 'Voir la méthode Politangle' : locale === 'pt-br' ? 'Ver o método do Politangle' : 'Read the Politangle method'} →</Link> · <Link href={href('/faq')}>{locale === 'de' ? 'Fragen und Grenzen →' : locale === 'es' ? 'Dudas y límites →' : locale === 'fr' ? 'Questions et limites →' : locale === 'pt-br' ? 'Dúvidas e limites →' : 'Questions and limitations →'}</Link></p>
         </section>
 
         <section className="info-section">

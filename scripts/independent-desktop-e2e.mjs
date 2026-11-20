@@ -16,6 +16,10 @@ for (const engine of [chromium, webkit]) {
       assert(response?.ok(),route+' HTTP '+response?.status());
       if(main) assert(await page.locator('main').count(),route+' missing main');
       const state=await page.evaluate(()=>({width:document.documentElement.scrollWidth,viewport:innerWidth,title:document.title,lang:document.documentElement.lang,brokenImages:[...document.images].filter(i=>i.complete&&!i.naturalWidth).map(i=>i.src)}));
+      if(state.width>state.viewport+3) {
+        const offenders=await page.evaluate(()=>[...document.querySelectorAll('body *')].map(e=>({tag:e.tagName,cls:String(e.className?.baseVal||e.className||'').slice(0,85),left:Math.round(e.getBoundingClientRect().left),right:Math.round(e.getBoundingClientRect().right),width:Math.round(e.getBoundingClientRect().width)})).filter(e=>e.right>innerWidth+3&&e.width>30).slice(0,15));
+        console.error('DESKTOP OVERFLOW DIAGNOSTIC',route,JSON.stringify({state,offenders}));
+      }
       assert(state.width<=state.viewport+3,route+' desktop overflow');
       assert(state.title?.trim(),route+' missing title');
       assert(!state.brokenImages.length,route+' broken images: '+state.brokenImages.slice(0,2));
@@ -57,7 +61,15 @@ for (const engine of [chromium, webkit]) {
     assert(await page.locator('main').count(), 'certificate issue route missing');
     await visit('/quiz');
     const firstRadio=page.getByRole('radio').first();
-    assert(await firstRadio.count(),'/quiz missing interactive answers');
+    try {
+      await firstRadio.waitFor({state:'visible',timeout:20000});
+    } catch (error) {
+      console.error('QUIZ RENDER DIAGNOSTIC',engine.name(),JSON.stringify({
+        url:page.url(),title:await page.title(),body:(await page.locator('body').innerText()).slice(0,1500),
+        radioCount:await page.getByRole('radio').count()
+      }));
+      throw error;
+    }
     await firstRadio.click();
     await page.waitForTimeout(200);
     assert(/1\s*\/\s*26/.test(await page.locator('.engine-progress-row').innerText()),'Quick answer did not update progress');

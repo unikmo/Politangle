@@ -2,7 +2,7 @@ import { NextResponse, type NextRequest } from 'next/server';
 
 const locales = new Set(['en', 'de', 'es', 'fr', 'pt-br']);
 const localizedPaths = new Set([
-  '/', '/about', '/account', '/classify', '/contact', '/deep', '/imprint', '/learn', '/method',
+  '/', '/about', '/account', '/classify', '/contact', '/deep', '/faq', '/imprint', '/learn', '/method',
   '/populism-quiz', '/practice', '/privacy', '/question-banks', '/quiz', '/quizzes', '/results',
   '/school', '/school/pilot', '/terms', '/understand', '/validation', '/countries',
 ]);

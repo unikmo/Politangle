@@ -90,7 +90,7 @@ test('country perspectives are visible from the public site without pretending u
   assert.match(chrome, /countries: 'Countries'/);
   assert.match(home, /COUNTRY PERSPECTIVES/);
   assert.match(home, /href=\{href\('\/countries'\)\}/);
-  assert.match(countriesHub, /Same political words\. Different country context\./);
+  assert.match(countriesHub, /Same label\. Different country\. Same meaning\?/);
   assert.match(countriesHub, /CONTEXT \+ CURRENT SNAPSHOT/);
   assert.match(countriesHub, /CONTEXT GUIDE/);
   assert.doesNotMatch(countryGuide, /Why this page exists|Por qué existe esta página|Por que esta página existe/);

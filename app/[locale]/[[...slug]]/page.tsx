@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation';
 import { hreflangForPath, seoCopy, type SeoLocale } from '../../../lib/seo-locales';
 import { getSeoTopic, seoTopicSlugs, type SeoTopicSlug } from '../../../lib/seo-topics';
 const locales = ['en', 'de', 'es', 'fr', 'pt-br'] as const;
-const pageKeys = ['', 'about', 'account', 'classify', 'contact', 'deep', 'guides', 'imprint', 'learn', 'method', 'pilot', 'political-spectrum', 'left-vs-right-politics', 'political-ideologies', 'political-test', 'political-literacy', 'populism-quiz', 'practice', 'privacy', 'question-banks', 'quiz', 'quizzes', 'results', 'school', 'school/pilot', 'terms', 'understand', 'validation'] as const;
+const pageKeys = ['', 'about', 'account', 'classify', 'contact', 'deep', 'faq', 'guides', 'imprint', 'learn', 'method', 'pilot', 'political-spectrum', 'left-vs-right-politics', 'political-ideologies', 'political-test', 'political-literacy', 'populism-quiz', 'practice', 'privacy', 'question-banks', 'quiz', 'quizzes', 'results', 'school', 'school/pilot', 'terms', 'understand', 'validation'] as const;
 const englishOnlyPageKeys = ['middle-class-trap'] as const;
 function routeKey(slug?: string[]) { return slug?.join('/') ?? ''; }
 
@@ -35,9 +35,16 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   const pilotSeo = key === 'pilot'
     ? { title:'Help shape Politangle', description:'A free, non-partisan design-partner pilot for groups that want to make political learning clearer, fairer and more useful.' }
     : null;
+  const faqSeo = key === 'faq' ? {
+    en: { title: 'Politangle FAQ', description: 'Questions about the eight-dimension Quick assessment, scores, privacy, political neutrality, languages and school pilots.' },
+    de: { title: 'Politangle FAQ', description: 'Fragen zu Quick, acht Dimensionen, Datenschutz, politischer Neutralität, Sprachen und Schulpiloten.' },
+    es: { title: 'Preguntas frecuentes de Politangle', description: 'Respuestas sobre la evaluación, las puntuaciones, la privacidad, la neutralidad y los programas escolares.' },
+    fr: { title: 'Questions fréquentes Politangle', description: 'Réponses sur le test, les résultats, la confidentialité, la neutralité et les projets scolaires.' },
+    'pt-br': { title: 'Perguntas frequentes Politangle', description: 'Respostas sobre o teste, os resultados, a privacidade, a neutralidade e os projetos escolares.' },
+  }[activeLocale] : null;
   const seo = topicSeo
     ? { title: topicSeo.metaTitle, description: topicSeo.metaDescription }
-    : pilotSeo ?? guideSeo ?? seoCopy[activeLocale]?.[key] ?? seoCopy.en[key];
+    : faqSeo ?? pilotSeo ?? guideSeo ?? seoCopy[activeLocale]?.[key] ?? seoCopy.en[key];
   const noIndex = new Set(['account', 'results', 'contact', 'imprint', 'pilot']);
   const canonical = `/${locale}${suffix}`;
   const ogLocale: Record<SeoLocale, string> = { en: 'en_US', de: 'de_DE', es: 'es_ES', fr: 'fr_FR', 'pt-br': 'pt_BR' };
@@ -82,6 +89,7 @@ async function loadPage(key: string): Promise<React.ComponentType> {
     case 'classify': return (await import('../../classify/page')).default;
     case 'contact': return (await import('../../contact/page')).default;
     case 'deep': return (await import('../../deep/page')).default;
+    case 'faq': return (await import('../../faq/page')).default;
     case 'guides': return (await import('../../guides/page')).default;
     case 'political-spectrum': return (await import('../../political-spectrum/page')).default;
     case 'left-vs-right-politics': return (await import('../../left-vs-right-politics/page')).default;

@@ -472,7 +472,7 @@ export const nativeAngleLabels: Record<Locale, Record<PopulismQuizAngle, string>
 
 export function populismUi(locale: Locale) {
   if (locale === 'de') return {
-    language: 'DEUTSCH', learnFirst: 'Erst lernen', free: 'KOSTENLOS · 12 FRAGEN · ETWA 5 MINUTEN', title: 'Erkennst du Populismus?',
+    language: 'DEUTSCH', learnFirst: 'Erst lernen', free: 'KOSTENLOS · 12 FRAGEN · ETWA 5 MINUTEN', title: 'Kritik oder Populismus? Erkennst du den Unterschied?',
     lede: 'Erkenne typische Muster, demokratische Warnzeichen und falsche Zuschreibungen. Der Test prüft politisches Wissen – nicht deine Überzeugungen.',
     principleTitle: 'Kritik ist nicht automatisch Populismus.', principle: 'Reiche Spender können Politik beeinflussen. Firmen und Einzelpersonen können Steuern vermeiden. Institutionen können versagen oder vereinnahmt werden. Populismus fügt die Behauptung hinzu, ein einziges wahres Volk stehe einem durchgehend korrupten Gegner gegenüber und nur eine Bewegung sei berechtigt, es zu vertreten.',
     coverage: 'Das prüft dieses Quiz', start: 'Quiz starten →', candidate: 'Die Fragen werden noch geprüft. Das Quiz ist kostenlos, bleibt auf diesem Gerät und gehört noch nicht zur Zertifizierung.',
@@ -480,7 +480,7 @@ export function populismUi(locale: Locale) {
     quizHeader: 'POPULISMUS-QUIZ · DEUTSCH', learnTerm: 'Begriff lernen', correctSoFar: (n: number) => `Bisher ${n} richtig`, exit: 'Quiz verlassen', question: (n: number, total: number) => `FRAGE ${n} VON ${total}`, hint: 'Hinweis', clue: 'Brauchst du einen Hinweis?', correct: 'RICHTIG', notQuite: 'NOCH NICHT GANZ', best: 'Beste Antwort:', see: 'Ergebnis ansehen', next: 'Nächste Frage', check: 'Antwort prüfen',
   };
   if (locale === 'es') return {
-    language: 'ESPAÑOL', learnFirst: 'Aprender primero', free: 'GRATIS · 12 PREGUNTAS · UNOS 5 MINUTOS', title: '¿Sabes reconocer el populismo?',
+    language: 'ESPAÑOL', learnFirst: 'Aprender primero', free: 'GRATIS · 12 PREGUNTAS · UNOS 5 MINUTOS', title: '¿Crítica o populismo? ¿Sabes distinguirlos?',
     lede: 'Identifica sus patrones, las señales democráticas de alarma y las acusaciones equivocadas. El test mide conocimientos políticos, no juzga tus ideas.',
     principleTitle: 'Criticar no es automáticamente populismo.', principle: 'Los donantes ricos pueden influir en la política. Empresas y personas pueden evitar impuestos. Las instituciones pueden fallar o ser capturadas. El populismo añade que un único pueblo auténtico se enfrenta a un enemigo totalmente corrupto y que solo un movimiento puede representarlo legítimamente.',
     coverage: 'Contenido del test', start: 'Empezar el test →', candidate: 'Contenido de aprendizaje aún en revisión. Gratis, privado en este dispositivo y todavía fuera de la certificación.',
@@ -488,7 +488,7 @@ export function populismUi(locale: Locale) {
     quizHeader: 'TEST DE POPULISMO · ESPAÑOL', learnTerm: 'Aprender el término', correctSoFar: (n: number) => `${n} correctas hasta ahora`, exit: 'Salir del test', question: (n: number, total: number) => `PREGUNTA ${n} DE ${total}`, hint: 'Pista', clue: '¿Necesitas una pista?', correct: 'CORRECTO', notQuite: 'NO DEL TODO', best: 'Mejor respuesta:', see: 'Ver resultado', next: 'Siguiente pregunta', check: 'Comprobar respuesta',
   };
   if (locale === 'fr') return {
-    language: 'FRANÇAIS', learnFirst: 'Apprendre d’abord', free: 'GRATUIT · 12 QUESTIONS · ENVIRON 5 MINUTES', title: 'Sais-tu reconnaître le populisme ?',
+    language: 'FRANÇAIS', learnFirst: 'Apprendre d’abord', free: 'GRATUIT · 12 QUESTIONS · ENVIRON 5 MINUTES', title: 'Critique ou populisme ? Saurais-tu les distinguer ?',
     lede: 'Repère ses mécanismes, les signaux démocratiques inquiétants et les fausses accusations. Ce test mesure tes connaissances politiques, pas tes convictions.',
     principleTitle: 'Critiquer n’est pas automatiquement populiste.', principle: 'De riches donateurs peuvent influencer la politique. Des entreprises et des personnes peuvent éviter l’impôt. Les institutions peuvent échouer ou être capturées. Le populisme ajoute qu’un seul peuple authentique affronte un ennemi entièrement corrompu et qu’un seul mouvement peut légitimement le représenter.',
     coverage: 'Contenu du quiz', start: 'Commencer le quiz →', candidate: 'Contenu d’apprentissage encore en cours de relecture. Gratuit, privé sur cet appareil et pas encore intégré à la certification.',
@@ -496,7 +496,7 @@ export function populismUi(locale: Locale) {
     quizHeader: 'QUIZ SUR LE POPULISME · FRANÇAIS', learnTerm: 'Apprendre le terme', correctSoFar: (n: number) => `${n} bonnes réponses`, exit: 'Quitter le quiz', question: (n: number, total: number) => `QUESTION ${n} SUR ${total}`, hint: 'Indice', clue: 'Besoin d’un indice ?', correct: 'BONNE RÉPONSE', notQuite: 'PAS TOUT À FAIT', best: 'Meilleure réponse :', see: 'Voir le résultat', next: 'Question suivante', check: 'Vérifier la réponse',
   };
   if (locale === 'pt-br') return {
-    language: 'PORTUGUÊS (BR)', learnFirst: 'Aprender primeiro', free: 'GRÁTIS · 12 PERGUNTAS · CERCA DE 5 MINUTOS', title: 'Você reconhece o populismo?',
+    language: 'PORTUGUÊS (BR)', learnFirst: 'Aprender primeiro', free: 'GRÁTIS · 12 PERGUNTAS · CERCA DE 5 MINUTOS', title: 'Crítica ou populismo? Você percebe a diferença?',
     lede: 'Identifique o enquadramento, os sinais democráticos de alerta e as falsas acusações. Este teste mede conhecimento político — não rotula suas crenças nem desqualifica críticas ao poder.',
     principleTitle: 'Crítica não é automaticamente populismo.', principle: 'Doadores ricos podem influenciar políticas. Empresas e pessoas podem evitar impostos. Instituições podem falhar ou ser capturadas. O populismo acrescenta a ideia de que um único povo autêntico enfrenta um inimigo inteiramente corrupto, muitas vezes com apenas um movimento apresentado como representante legítimo.',
     coverage: 'Conteúdo do quiz', start: 'Começar o quiz →', candidate: 'Conteúdo de aprendizagem ainda em revisão. Grátis, privado neste dispositivo e ainda fora da certificação.',
@@ -504,7 +504,7 @@ export function populismUi(locale: Locale) {
     quizHeader: 'QUIZ DE POPULISMO · PORTUGUÊS (BR)', learnTerm: 'Aprender o conceito', correctSoFar: (n: number) => `${n} acertos até agora`, exit: 'Sair do quiz', question: (n: number, total: number) => `PERGUNTA ${n} DE ${total}`, hint: 'Dica', clue: 'Precisa de uma dica?', correct: 'CORRETO', notQuite: 'NÃO EXATAMENTE', best: 'Melhor resposta:', see: 'Ver resultado', next: 'Próxima pergunta', check: 'Verificar resposta',
   };
   return {
-    language: 'ENGLISH', learnFirst: 'Learn first', free: 'FREE · 12 QUESTIONS · ABOUT 5 MINUTES', title: 'Can you recognize populism?',
+    language: 'ENGLISH', learnFirst: 'Learn first', free: 'FREE · 12 QUESTIONS · ABOUT 5 MINUTES', title: 'Criticism or populism? Can you tell the difference?',
     lede: 'Spot the framing, the democratic warning signs and the false positives. This tests political literacy—it does not label your beliefs or discredit people for criticizing power.',
     principleTitle: 'Criticism is not automatically populism.', principle: 'Wealthy donors can influence policy. Companies and individuals can avoid tax. Institutions can fail or become captured. Populism concerns the additional claim that one authentic people faces a uniformly corrupt enemy, often with only one movement presented as legitimate.',
     coverage: 'Quiz coverage', start: 'Start the quiz →', candidate: 'Learning content still under review. Free, private on this device and not part of certification yet.',

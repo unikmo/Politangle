@@ -10,11 +10,11 @@ type Copy = { kicker: string; title: string; intro: string; cards: readonly Quiz
 const copy: Record<Locale, Copy> = {
   en: {
     kicker: 'AVAILABLE NOW',
-    title: 'Choose a quiz.',
-    intro: 'Only quizzes you can take now are shown here.',
-    start: 'Start',
+    title: 'Which question would you like to explore?',
+    intro: 'Some quizzes reveal patterns in your views. Others test how you distinguish political ideas. Pick one that makes you curious.',
+    start: 'Try it',
     cards: [
-      { label: 'BELIEVE', title: 'Politangle Quick', meta: '26 questions · your political shape', href: '/quiz' },
+      { label: 'BELIEVE', title: 'Politangle Quick', meta: '26 questions · see your views beyond one label', href: '/quiz' },
       { label: 'CLASSIFY', title: 'Recognize political traditions', meta: '25-question practice set · explanations included', href: '/practice?section=classify' },
       { label: 'UNDERSTAND', title: 'Separate ideas that are often confused', meta: '25-question practice set · explanations included', href: '/practice?section=understand' },
       { label: 'FOCUSED QUIZ', title: 'Can you recognize populism?', meta: '12 questions · explanations included', href: '/populism-quiz' },
@@ -23,11 +23,11 @@ const copy: Record<Locale, Copy> = {
   },
   de: {
     kicker: 'JETZT VERFÜGBAR',
-    title: 'Wähle ein Quiz.',
-    intro: 'Hier findest du alle Tests, die du sofort und kostenlos machen kannst.',
-    start: 'Starten',
+    title: 'Welche Frage möchtest du genauer erkunden?',
+    intro: 'Manche Tests zeigen Muster in deinen Ansichten. Andere prüfen, wie du politische Begriffe unterscheidest. Wähle, was dich neugierig macht.',
+    start: 'Ausprobieren',
     cards: [
-      { label: 'BELIEVE', title: 'Politangle Quick', meta: '26 Fragen · dein politisches Profil', href: '/quiz' },
+      { label: 'BELIEVE', title: 'Politangle Quick', meta: '26 Fragen · mehr als links oder rechts', href: '/quiz' },
       { label: 'CLASSIFY', title: 'Politische Strömungen erkennen', meta: '25 Fragen · mit Erklärungen', href: '/practice?section=classify' },
       { label: 'UNDERSTAND', title: 'Ähnliche politische Ideen unterscheiden', meta: '25 Fragen · mit Erklärungen', href: '/practice?section=understand' },
       { label: 'FOKUS-QUIZ', title: 'Erkennst du Populismus?', meta: '12 Fragen · mit Erklärungen', href: '/populism-quiz' },
@@ -35,11 +35,11 @@ const copy: Record<Locale, Copy> = {
   },
   es: {
     kicker: 'DISPONIBLES AHORA',
-    title: 'Elige un quiz.',
-    intro: 'Aquí solo aparecen los quizzes que puedes hacer ahora.',
-    start: 'Empezar',
+    title: '¿Qué pregunta te gustaría explorar?',
+    intro: 'Unos cuestionarios exploran tus ideas; otros te invitan a distinguir conceptos políticos. Elige el que despierte tu curiosidad.',
+    start: 'Probar',
     cards: [
-      { label: 'BELIEVE', title: 'Politangle Quick', meta: '26 preguntas · tu perfil político', href: '/quiz' },
+      { label: 'BELIEVE', title: 'Politangle Quick', meta: '26 preguntas · más allá de una etiqueta', href: '/quiz' },
       { label: 'CLASSIFY', title: 'Reconoce tradiciones políticas', meta: '25 preguntas · con explicaciones', href: '/practice?section=classify' },
       { label: 'UNDERSTAND', title: 'Distingue ideas que suelen confundirse', meta: '25 preguntas · con explicaciones', href: '/practice?section=understand' },
       { label: 'QUIZ ENFOCADO', title: '¿Reconoces el populismo?', meta: '12 preguntas · con explicaciones', href: '/populism-quiz' },
@@ -47,11 +47,11 @@ const copy: Record<Locale, Copy> = {
   },
   fr: {
     kicker: 'DISPONIBLES MAINTENANT',
-    title: 'Choisis un quiz.',
-    intro: 'Seuls les quiz que tu peux faire maintenant sont affichés ici.',
-    start: 'Commencer',
+    title: 'Quelle question aimerais-tu explorer ?',
+    intro: 'Certains quiz explorent tes idées, d’autres mettent à l’épreuve ta compréhension des notions politiques. Choisis ce qui t’intrigue.',
+    start: 'Essayer',
     cards: [
-      { label: 'BELIEVE', title: 'Politangle Quick', meta: '26 questions · ton profil politique', href: '/quiz' },
+      { label: 'BELIEVE', title: 'Politangle Quick', meta: '26 questions · au-delà des étiquettes', href: '/quiz' },
       { label: 'CLASSIFY', title: 'Reconnaître les traditions politiques', meta: '25 questions · avec explications', href: '/practice?section=classify' },
       { label: 'UNDERSTAND', title: 'Distinguer des idées souvent confondues', meta: '25 questions · avec explications', href: '/practice?section=understand' },
       { label: 'QUIZ CIBLÉ', title: 'Sais-tu reconnaître le populisme ?', meta: '12 questions · avec explications', href: '/populism-quiz' },
@@ -59,11 +59,11 @@ const copy: Record<Locale, Copy> = {
   },
   'pt-br': {
     kicker: 'DISPONÍVEIS AGORA',
-    title: 'Escolha um quiz.',
-    intro: 'Aqui aparecem apenas os quizzes que você pode fazer agora.',
-    start: 'Começar',
+    title: 'Qual ideia você quer explorar?',
+    intro: 'Alguns testes mostram padrões nas suas opiniões; outros convidam você a distinguir conceitos políticos. Escolha o que desperta sua curiosidade.',
+    start: 'Experimentar',
     cards: [
-      { label: 'BELIEVE', title: 'Politangle Quick', meta: '26 perguntas · seu perfil político', href: '/quiz' },
+      { label: 'BELIEVE', title: 'Politangle Quick', meta: '26 perguntas · além de um único rótulo', href: '/quiz' },
       { label: 'CLASSIFY', title: 'Reconheça tradições políticas', meta: '25 perguntas · com explicações', href: '/practice?section=classify' },
       { label: 'UNDERSTAND', title: 'Diferencie ideias que costumam ser confundidas', meta: '25 perguntas · com explicações', href: '/practice?section=understand' },
       { label: 'QUIZ TEMÁTICO', title: 'Você reconhece o populismo?', meta: '12 perguntas · com explicações', href: '/populism-quiz' },
@@ -96,6 +96,7 @@ export default function QuizzesPage() {
           </Link>
         ))}
       </section>
+      <p className="p-shell" style={{ margin:'16px auto 48px' }}><Link className="p-text-link" href={href('/faq')}>{locale === 'de' ? 'Was zeigen die Ergebnisse? Zum FAQ →' : locale === 'es' ? '¿Qué indican los resultados? Ver preguntas frecuentes →' : locale === 'fr' ? 'Que montrent les résultats ? Voir la FAQ →' : locale === 'pt-br' ? 'O que os resultados mostram? Veja as perguntas frequentes →' : 'What do the results mean? Get the straight answers →'}</Link></p>
     </main>
   );
 }

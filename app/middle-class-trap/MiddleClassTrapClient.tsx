@@ -120,8 +120,8 @@ export default function MiddleClassTrapClient() {
     <header className="engine-header"><Link href="/en" className="engine-brand">Politangle</Link><span>MIDDLE CLASS TRAP · ENGLISH</span><div className="engine-header-actions"><Link href="/en/quizzes">All quizzes</Link></div></header>
     <section className="engine-shell populism-start middle-class-start">
       <p className="engine-kicker">FREE · 20 QUESTIONS · ABOUT 8 MINUTES</p>
-      <h1>The Middle Class Trap</h1>
-      <p className="practice-lede">See how taxes, public services, wealth and political stories interact—without assuming that every wealthy person is corrupt or every public benefit is waste.</p>
+      <h1>When a policy promises relief, what should you check?</h1>
+      <p className="practice-lede">Who pays, who benefits—and what might the headline leave out? Explore these questions in 20 free decisions about taxes, public services, wealth and influence.</p>
       <div className="populism-principle"><strong>This quiz does not tell you how to vote.</strong><p>It helps you test who really bears a cost, what a household gains or loses overall, and when blame is being redirected instead of power being examined.</p></div>
       <div className="populism-principle"><strong>This quiz presents one argument.</strong><p>It tests the “middle-class trap” idea from the books listed at the end. Other economists and political traditions disagree with parts of it, so the understanding questions are not neutral between views.</p></div>
       <div className="mct-block-overview" aria-label="Quiz structure">

@@ -25,33 +25,34 @@ type ChromeCopy = {
   imprint: string;
   terms: string;
   contact: string;
+  faq: string;
 };
 
 const copy: Record<Locale, ChromeCopy> = {
   en: {
     method: 'Method', learn: 'Learn', guides: 'Guides', quizzes: 'Quizzes', countries: 'Countries', schools: 'For schools', about: 'About',
     account: 'Sign in', start: 'Start Quick', practice: 'Practice', validation: 'Validation',
-    privacy: 'Privacy', imprint: 'Imprint', terms: 'Terms', contact: 'Contact',
+    privacy: 'Privacy', imprint: 'Imprint', terms: 'Terms', contact: 'Contact', faq: 'FAQ',
   },
   de: {
     method: 'So funktioniert’s', learn: 'Wissen', guides: 'Themen', quizzes: 'Quizze', countries: 'Länder', schools: 'Für Schulen', about: 'Über Politangle',
     account: 'Anmelden', start: 'Test starten', practice: 'Wissen testen', validation: 'Qualität und Grenzen',
-    privacy: 'Datenschutz', imprint: 'Impressum', terms: 'Nutzungsbedingungen', contact: 'Kontakt',
+    privacy: 'Datenschutz', imprint: 'Impressum', terms: 'Nutzungsbedingungen', contact: 'Kontakt', faq: 'FAQ',
   },
   es: {
     method: 'Método', learn: 'Aprender', guides: 'Guías', quizzes: 'Quizzes', countries: 'Países', schools: 'Para centros', about: 'Acerca de',
     account: 'Iniciar sesión', start: 'Empezar Quick', practice: 'Práctica', validation: 'Validación',
-    privacy: 'Privacidad', imprint: 'Aviso legal', terms: 'Condiciones', contact: 'Contacto',
+    privacy: 'Privacidad', imprint: 'Aviso legal', terms: 'Condiciones', contact: 'Contacto', faq: 'Preguntas frecuentes',
   },
   fr: {
     method: 'Comment ça marche', learn: 'Comprendre', guides: 'Guides', quizzes: 'Quiz', countries: 'Pays', schools: 'Écoles', about: 'À propos',
     account: 'Se connecter', start: 'Commencer le test', practice: 'S’entraîner', validation: 'Qualité et limites',
-    privacy: 'Vie privée', imprint: 'Mentions légales', terms: 'Conditions', contact: 'Contact',
+    privacy: 'Vie privée', imprint: 'Mentions légales', terms: 'Conditions', contact: 'Contact', faq: 'FAQ',
   },
   'pt-br': {
     method: 'Método', learn: 'Aprender', guides: 'Guias', quizzes: 'Quizzes', countries: 'Países', schools: 'Para escolas', about: 'Sobre',
     account: 'Entrar', start: 'Começar Quick', practice: 'Praticar', validation: 'Validação',
-    privacy: 'Privacidade', imprint: 'Informações legais', terms: 'Termos', contact: 'Contato',
+    privacy: 'Privacidade', imprint: 'Informações legais', terms: 'Termos', contact: 'Contato', faq: 'Perguntas frequentes',
   },
 };
 
@@ -74,6 +75,7 @@ export function SiteHeader() {
         <Link href={href('/learn')}>{c.learn}</Link>
         <Link href={href('/guides')}>{c.guides}</Link>
         <Link href={href('/quizzes')}>{c.quizzes}</Link>
+        <Link href={href('/countries')}>{c.countries}</Link>
         <Link href={href('/school')}>{c.schools}</Link>
         <Link href={href('/about')}>{c.about}</Link>
         <Link className="p-mobile-nav-link" href={href('/account')}>{c.account}</Link>
@@ -107,6 +109,7 @@ export function SiteFooter() {
         <Link href={href('/countries')}>{c.countries}</Link>
         <Link href={href('/practice')}>{c.practice}</Link>
         <Link href={href('/method')}>{c.method}</Link>
+        <Link href={href('/faq')}>{c.faq}</Link>
         <Link href={href('/validation')}>{c.validation}</Link>
         <Link href={href('/privacy')}>{c.privacy}</Link>
         <Link href={href('/imprint')}>{c.imprint}</Link>
