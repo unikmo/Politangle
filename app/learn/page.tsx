@@ -20,11 +20,11 @@ export default function LearnPage() {
   return (
     <InfoShell
       eyebrow="LEARN · ENGLISH"
-      title="Political words, explained plainly."
-      intro="Start here before you practise. Each entry gives the short meaning first, then the distinction that usually causes confusion."
+      title="You know the word. Do you know the distinction?"
+      intro="Familiar words can hide important differences. Open a term for the short explanation first, then explore the distinction and sources behind it."
     >
       <div className="learn-intro-actions">
-        <div className="engine-result-actions"><Link className="engine-primary-link" href="/practice">Try a free practice set →</Link><Link className="engine-primary-link secondary" href="/populism-quiz">Take the populism quiz →</Link></div>
+        <div className="engine-result-actions"><Link className="engine-primary-link" href="/practice">See what you can tell apart →</Link><Link className="engine-primary-link secondary" href="/populism-quiz">Take the populism quiz →</Link></div>
         <p>No score is recorded here. Open any term whenever you need it.</p>
       </div>
       {categories.map((category) => (
