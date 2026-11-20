@@ -171,7 +171,7 @@ const de: Record<InfoPageId, PageCopy> = {
   about: {
     eyebrow: 'ÜBER POLITANGLE',
     title: 'Was geht verloren, wenn Politik nur noch eine Schublade ist?',
-    intro: 'Politangle setzt bei einer einfachen Idee an: Du kannst deine politischen Ansichten besser verstehen, ohne dich einer Seite zuordnen zu müssen. Entdecke Fragen, Zielkonflikte und die Ideen hinter vertrauten Begriffen.',
+    intro: 'Politangle setzt bei einer einfachen Idee an: Du kannst die Muster in deinen Ansichten besser verstehen, ohne dich einer Seite zuordnen zu müssen. Entdecke Fragen, Zielkonflikte und die Ideen hinter vertrauten Begriffen.',
     sections: [
       { title: 'Warum es Politangle gibt', paragraphs: [
         'Debatten etwa über den Krieg in der Ukraine zeigen, wie schnell politische Diskussionen zu einem Streit zwischen Lagern werden. Eine Position zu einem Thema gilt dann plötzlich als Beweis für die gesamte Weltanschauung. Dabei bleiben wichtige Fragen offen: Welche Werte sind betroffen, welche Fakten sind umstritten und welche Folgen hätte eine Entscheidung?',
