@@ -1,5 +1,6 @@
 import type { Locale } from './LocaleProvider';
 import { ptBr } from './translations-pt-br';
+import { editorialTranslations } from './editorial-translations';
 
 /*
  * Marketing/UI localization is intentionally written as native copy, not as a
@@ -295,8 +296,8 @@ const fr: Record<string, string> = {
 
 export function translate(locale: Locale, english: string, german: string) {
   if (locale === 'de') return german;
-  if (locale === 'es') return es[english] ?? english;
-  if (locale === 'fr') return fr[english] ?? english;
-  if (locale === 'pt-br') return ptBr[english] ?? english;
+  if (locale === 'es') return editorialTranslations.es[english] ?? es[english] ?? english;
+  if (locale === 'fr') return editorialTranslations.fr[english] ?? fr[english] ?? english;
+  if (locale === 'pt-br') return editorialTranslations['pt-br'][english] ?? ptBr[english] ?? english;
   return english;
 }
