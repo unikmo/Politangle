@@ -138,3 +138,28 @@
  }
  .p-nav-actions{gap:8px;flex-shrink:0}
 }
+
+/* Axis labels must live INSIDE the white card, not bleed onto the hero.
+   SVG uses a 520×400 viewBox with reserved label margins and split long labels. */
+.home .p-hero-stage .p-hero-shape-hook{
+ width:min(100%,540px);
+ padding:18px 16px;
+ overflow:hidden;
+}
+.home .p-hero-stage .p-shape-preview{
+ display:block;
+ width:100%;
+ max-height:none;
+ height:auto;
+ overflow:hidden;
+}
+.home .p-hero-stage .p-shape-label{
+ font-size:12.5px;
+ letter-spacing:0;
+ font-weight:700;
+}
+@media(max-width:700px){
+ .home .p-hero-stage .p-hero-shape-hook{width:min(100%,400px);padding:12px 10px}
+ .home .p-hero-stage .p-shape-preview{max-height:none}
+ .home .p-hero-stage .p-shape-label{font-size:12px}
+}
