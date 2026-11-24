@@ -32,6 +32,14 @@ try{
     const headings=[...document.querySelectorAll('.home .p-section h2, .home .p-dark-section h2, .home .p-final h2')].filter(e=>e.getBoundingClientRect().width).map(e=>({text:(e.textContent||'').trim().slice(0,75),px:parseFloat(getComputedStyle(e).fontSize)}));
     const heroShape=document.querySelector('.home .p-hero-stage .p-shape-preview');
     const shapeBox=heroShape?.getBoundingClientRect();
+    const shapeCard=document.querySelector('.home .p-hero-shape-hook')?.getBoundingClientRect();
+    const labelsOutsideCard=[...document.querySelectorAll('.home .p-hero-stage .p-shape-label')]
+      .filter(node=>{
+        if(!shapeCard)return true;
+        const box=node.getBoundingClientRect();
+        return box.width<1||box.height<1||box.left<shapeCard.left+2||box.right>shapeCard.right-2||
+          box.top<shapeCard.top+2||box.bottom>shapeCard.bottom-2;
+      }).map(node=>node.textContent?.trim());
     const heroText=document.querySelector('.home .p-hero-copy')?.getBoundingClientRect();
     const schoolHeading=document.querySelector('.school-public-hero h1')?.getBoundingClientRect();
     const schoolCopy=document.querySelector('.school-public-hero-grid > div:first-child')?.getBoundingClientRect();
@@ -54,6 +62,8 @@ try{
      learningGridBorderTop:css('.home #learn .p-steps','border-top-width'),
      sectionHeadFont:css('.info-page .info-section h2','font-size'),
      shape:shapeBox?{visible:shapeBox.width>0&&shapeBox.height>0,width:Math.round(shapeBox.width),height:Math.round(shapeBox.height)}:null,
+     shapeLabelCount:document.querySelectorAll('.home .p-hero-stage .p-shape-label').length,
+     labelsOutsideCard,
      heroOverlap:Boolean(intersects(heroText,shapeBox)),
      schoolTextClipped:Boolean(schoolHeading&&schoolCopy&&(schoolHeading.right>Math.min(schoolCopy.right,innerWidth)+3||schoolHeading.left<0)),
      contactHeroVisible:Boolean(contactHeader&&contactHeader.getBoundingClientRect().height>0),
@@ -75,6 +85,8 @@ try{
    }
    if(name==='home'||name==='home-de'){
      assert(data.shape?.visible,`${size} ${route}: eight-axis chart missing`);
+     assert(data.shapeLabelCount===8,`${size} ${route}: eight-axis labels incomplete (${data.shapeLabelCount})`);
+     assert(data.labelsOutsideCard.length===0,`${size} ${route}: axis labels escape the chart card: ${data.labelsOutsideCard.join(', ')}`);
      assert(data.headings.length>=5,`${size} ${route}: insufficient section headings`);
      const sizes=data.headings.map(x=>x.px);
      const range=Math.max(...sizes)-Math.min(...sizes);
