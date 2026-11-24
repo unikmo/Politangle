@@ -181,3 +181,15 @@ test('public visual system has one H2 scale and single grid divider, with browse
   assert.match(workflow,/name: Upload visual QA evidence/);
   assert.match(workflow,/node scripts\/design-system-qa\.mjs/);
 });
+
+test('minimal contact entry contains no redundant hero or explanatory heading', () => {
+  const shell=readFileSync(join(root,'app/InfoShell.tsx'),'utf8');
+  const content=readFileSync(join(root,'app/LocalizedInfoPage.tsx'),'utf8');
+  const design=readFileSync(join(root,'app/design-qa-system.css'),'utf8');
+  assert.match(shell, /!contact && <section className="info-hero"/);
+  assert.match(content, /<h1 className="contact-page-sr-title">/);
+  assert.match(content, /<ContactForm \/>/);
+  assert.doesNotMatch(content, /<InfoSection title=\{locale === 'de' \? 'Nachricht senden'/);
+  assert.match(design, /\.info-page-contact \.contact-form\{/);
+  assert.match(design, /\.school-public-hero-grid\{display:grid;grid-template-columns:minmax\(0,1fr\)/);
+});
