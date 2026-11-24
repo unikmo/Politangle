@@ -748,7 +748,8 @@ export default function LocalizedInfoPage({ page }: { page: InfoPageId }) {
 
   if (page === 'contact') {
     return <InfoShell eyebrow={c.eyebrow} title={c.title} intro={c.intro} contact>
-      <InfoSection title={locale === 'de' ? 'Nachricht senden' : locale === 'es' ? 'Enviar mensaje' : locale === 'fr' ? 'Envoyer un message' : locale === 'pt-br' ? 'Enviar mensagem' : 'Send a message'}><ContactForm /></InfoSection>
+      <h1 className="contact-page-sr-title">{c.eyebrow}</h1>
+      <ContactForm />
     </InfoShell>;
   }
 
