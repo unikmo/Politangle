@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 const read = (file) => readFileSync(file, 'utf8');
 const required = {
   'app/page.tsx': [
-    'Are you really left, right, centre, or more nuanced? Find out in 3 minutes.',
+    'Politics is more than left or right.',
     'What might your answers reveal?', '26', '8',
     'What if your views make more sense as a shape than a side?',
     "Same political label. Different country. Same meaning?",
