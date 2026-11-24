@@ -11,8 +11,21 @@ for (const engine of [chromium, webkit]) {
   try {
     const context = await browser.newContext({viewport:{width:1440,height:900},locale:'en-US'});
     const page = await context.newPage();
+    async function navigate(route) {
+      for(let attempt=0;attempt<2;attempt++){
+        try{
+          return await page.goto(base+route,{waitUntil:'domcontentloaded',timeout:45000});
+        }catch(error){
+          const transient=engine===webkit && /WebKit encountered an internal error/i.test(String(error));
+          if(!transient || attempt!==0)throw error;
+          console.warn('WEBKIT_TRANSIENT_NAVIGATION_RETRY',route);
+          await page.waitForTimeout(350);
+        }
+      }
+      throw new Error('Navigation exhausted retry');
+    }
     async function visit(route, {main=true}={}) {
-      const response=await page.goto(base+route,{waitUntil:'domcontentloaded',timeout:45000});
+      const response=await navigate(route);
       assert(response?.ok(),route+' HTTP '+response?.status());
       if(main) assert(await page.locator('main').count(),route+' missing main');
       const state=await page.evaluate(()=>({width:document.documentElement.scrollWidth,viewport:innerWidth,title:document.title,lang:document.documentElement.lang,brokenImages:[...document.images].filter(i=>i.complete&&!i.naturalWidth).map(i=>i.src)}));
@@ -48,7 +61,7 @@ for (const engine of [chromium, webkit]) {
       }
     }
     for(const route of ['/','/method','/learn','/school','/quiz','/account','/admin','/admin/review','/admin/school-pilots','/certificate/issue','/certificate/issue/success','/countries/germany']){
-      const response=await page.goto(base+route,{waitUntil:'domcontentloaded',timeout:45000});
+      const response=await navigate(route);
       assert(response && response.status()<500,route+' server error '+response?.status());
       checks++;
     }
