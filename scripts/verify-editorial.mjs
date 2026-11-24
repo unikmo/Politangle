@@ -5,7 +5,7 @@ const required = {
   'app/page.tsx': [
     'Politics is more than left or right.',
     'What might your answers reveal?', '26', '8',
-    'What if your views make more sense as a shape than a side?',
+    'Discover your political profile in 26 questions.',
     "Same political label. Different country. Same meaning?",
     'Controlled pilot only. Real-student use is not authorized',
     "href('/faq')"
