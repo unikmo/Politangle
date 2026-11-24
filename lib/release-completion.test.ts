@@ -155,3 +155,12 @@ test('public pages use consistent compact section rhythm without compressing ass
   assert.match(styles, /--section-air:clamp\(25px,3vw,38px\)/);
   assert.doesNotMatch(styles, /\.engine-page|\.school-projector-page|\.literacy-card/);
 });
+
+test('split homepage section intros align supporting prose to heading midpoint on desktop', () => {
+  const stylesheet=readFileSync(join(root,'app/site-spacing-rhythm.css'),'utf8');
+  const homepage=readFileSync(join(root,'app/page.tsx'),'utf8');
+  assert.match(homepage, /<div className="p-section-head"><div>/);
+  assert.match(stylesheet, /\.home \.p-section-head:has\(> p\)\s*\{\s*align-items:center/);
+  assert.match(stylesheet, /\.home \.p-section-head > p\s*\{\s*align-self:center/);
+  assert.match(stylesheet, /@media\(max-width:1000px\)/);
+});
