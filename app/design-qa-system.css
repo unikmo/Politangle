@@ -126,3 +126,15 @@
  .school-public-visual{min-height:250px;max-width:100%;min-width:0}
  .school-public-room{max-width:100%;min-width:0}
 }
+
+/* Desktop navigation: translated labels must not break across two lines. */
+@media(min-width:901px){
+ .p-nav,.home .p-nav{gap:clamp(10px,1.2vw,20px)}
+ .p-nav nav.p-nav-main,.home .p-nav nav.p-nav-main{gap:clamp(10px,1.05vw,16px);min-width:0}
+ .p-nav nav.p-nav-main a,.home .p-nav nav.p-nav-main a{
+   white-space:nowrap;
+   font-size:12px;
+   letter-spacing:0;
+ }
+ .p-nav-actions{gap:8px;flex-shrink:0}
+}
