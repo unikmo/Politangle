@@ -48,3 +48,24 @@
  .school-public-hero-grid{padding-top:28px;padding-bottom:28px}
  .school-public-privacy{padding-top:28px;padding-bottom:28px}
 }
+
+/* Align supporting explanations with the visual middle of their adjacent
+   multi-line section headings, instead of the top kicker line. */
+@media(min-width:1001px){
+  .home .p-section-head:has(> p){
+    align-items:center;
+  }
+  .home .p-section-head > p{
+    align-self:center;
+    margin:0;
+  }
+  .home .p-title-row{
+    align-items:center;
+  }
+}
+@media(max-width:1000px){
+  .home .p-section-head > p{
+    align-self:start;
+    margin:0;
+  }
+}
