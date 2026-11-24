@@ -60,6 +60,9 @@ test('localized contact form uses the same-site API with consent and spam contro
   assert.match(contactForm, /privacy-acknowledged/);
   assert.doesNotMatch(contactForm, /name=["']bot-field["']/);
   assert.match(contactForm, /response\.status !== 200/);
+  assert.match(contactForm, /if \(status === 'sent'\)/);
+  assert.match(contactForm, /contact-confirmation/);
+  assert.match(contactForm, /rows=\{4\}/);
   assert.doesNotMatch(contactForm, /data-netlify|__forms\.html|CONTACT_TO_EMAIL|CONTACT_GMAIL/);
   assert.equal(existsSync(join(root, 'public/__forms.html')), false);
 });
@@ -111,4 +114,16 @@ test('country release pattern is aligned across the full eighty-country registry
   assert.match(countryPattern, /strong[\s\S]*partial[\s\S]*limited/i);
   assert.match(legacyGlobalLabels, /united-states/);
   assert.match(legacyGlobalLabels, /serbia/);
+});
+
+test('homepage headline and contact page fit compact editorial treatment', () => {
+  const home=readFileSync(join(root,'app/page.tsx'),'utf8');
+  const css=readFileSync(join(root,'app/conversion-layout-fix.css'),'utf8');
+  const info=readFileSync(join(root,'app/LocalizedInfoPage.tsx'),'utf8');
+  assert.match(home, /Politik ist mehr als links oder rechts\./);
+  assert.match(home, /p-hero-brief/);
+  assert.doesNotMatch(home, /<div className="p-hero-shape-hook">/);
+  assert.match(info, /intro=\{c\.intro\} contact>/);
+  assert.match(css, /\.info-page-contact \.info-hero/);
+  assert.match(css, /\.home \.p-hero-grid/);
 });
