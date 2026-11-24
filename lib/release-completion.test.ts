@@ -120,7 +120,7 @@ test('homepage headline and contact page fit compact editorial treatment', () =>
   const home=readFileSync(join(root,'app/page.tsx'),'utf8');
   const css=readFileSync(join(root,'app/conversion-layout-fix.css'),'utf8');
   const info=readFileSync(join(root,'app/LocalizedInfoPage.tsx'),'utf8');
-  assert.match(home, /Politik ist mehr als links oder rechts\./);
+  assert.match(home, /Politik ist mehr als links, rechts oder die Mitte\./);
   assert.match(home, /heroShapeAxes/);
   assert.match(home, /<div className="p-hero-shape-hook">/);
   assert.match(home, /<ShapePreview axes=\{heroShapeAxes\}/);
