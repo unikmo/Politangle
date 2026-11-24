@@ -39,6 +39,6 @@ export default function ContactForm() {
     <label><span>{c.message}</span><textarea name="message" rows={4} minLength={10} maxLength={5000} required /></label>
     <label className="contact-consent"><input name="privacy-acknowledged" type="checkbox" value="yes" required /><span>{c.privacy}</span></label>
     <button className="p-button" type="submit" disabled={status === 'sending'}>{status === 'sending' ? c.sending : c.send}</button>
-    <p className={status === 'error' ? 'contact-form-status error' : 'contact-form-status'} role="status" aria-live="polite">{status === 'sent' ? c.sent : status === 'error' ? c.error : ''}</p>
+    <p className={status === 'error' ? 'contact-form-status error' : 'contact-form-status'} role="status" aria-live="polite">{status === 'error' ? c.error : ''}</p>
   </form>;
 }
