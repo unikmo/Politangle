@@ -40,6 +40,10 @@ try{
     const intersects=(a,b)=>a&&b&&a.left<b.right-2&&a.right>b.left+2&&a.top<b.bottom-2&&a.bottom>b.top+2;
     const mainNav=[...document.querySelectorAll('.p-nav-main a[href]')].map(a=>new URL(a.href).pathname);
     const footerNav=[...document.querySelectorAll('.p-footer-groups a[href]')].map(a=>new URL(a.href).pathname);
+    const navWraps=[...document.querySelectorAll('.p-nav nav.p-nav-main a')].filter(a=>{
+      const style=getComputedStyle(a);const line=parseFloat(style.lineHeight)||parseFloat(style.fontSize)*1.3;
+      return a.getBoundingClientRect().height>line*1.65;
+    }).map(a=>a.textContent?.trim());
     return {
      title:document.title, lang:document.documentElement.lang,
      pageWidth:document.documentElement.scrollWidth, viewportWidth:innerWidth,
@@ -55,6 +59,7 @@ try{
      contactHeroVisible:Boolean(contactHeader&&contactHeader.getBoundingClientRect().height>0),
      contactFormTop:contactForm?Math.round(contactForm.getBoundingClientRect().top):null,
      navDupes:mainNav.filter(v=>footerNav.includes(v) && !v.endsWith('/')),
+     navWraps,
      brokenImages:[...document.images].filter(i=>i.complete&&!i.naturalWidth).map(i=>i.src),
     };
    });
@@ -63,6 +68,7 @@ try{
    assert(!data.brokenImages.length,`${size} ${route}: broken images: ${data.brokenImages.join(',')}`);
    assert(!data.heroOverlap,`${size} ${route}: homepage chart overlaps headline`);
    assert(!data.schoolTextClipped,`${size} ${route}: school heading extends beyond its text column`);
+   if(width>900)assert(!data.navWraps.length,`${size} ${route}: desktop nav links wrap: ${data.navWraps.join(', ')}`);
    if(name==='contact-de'){
      assert(!data.contactHeroVisible,`${size} ${route}: redundant contact hero is visible`);
      assert(data.contactFormTop!==null&&data.contactFormTop<height*.4,`${size} ${route}: contact form starts too far down`);
