@@ -32,6 +32,12 @@ try{
     const headings=[...document.querySelectorAll('.home .p-section h2, .home .p-dark-section h2, .home .p-final h2')].filter(e=>e.getBoundingClientRect().width).map(e=>({text:(e.textContent||'').trim().slice(0,75),px:parseFloat(getComputedStyle(e).fontSize)}));
     const heroShape=document.querySelector('.home .p-hero-stage .p-shape-preview');
     const shapeBox=heroShape?.getBoundingClientRect();
+    const heroText=document.querySelector('.home .p-hero-copy')?.getBoundingClientRect();
+    const schoolHeading=document.querySelector('.school-public-hero h1')?.getBoundingClientRect();
+    const schoolCopy=document.querySelector('.school-public-hero-grid > div:first-child')?.getBoundingClientRect();
+    const contactHeader=document.querySelector('.info-page-contact .info-hero');
+    const contactForm=document.querySelector('.info-page-contact .contact-form');
+    const intersects=(a,b)=>a&&b&&a.left<b.right-2&&a.right>b.left+2&&a.top<b.bottom-2&&a.bottom>b.top+2;
     const mainNav=[...document.querySelectorAll('.p-nav-main a[href]')].map(a=>new URL(a.href).pathname);
     const footerNav=[...document.querySelectorAll('.p-footer-groups a[href]')].map(a=>new URL(a.href).pathname);
     return {
@@ -44,6 +50,10 @@ try{
      learningGridBorderTop:css('.home #learn .p-steps','border-top-width'),
      sectionHeadFont:css('.info-page .info-section h2','font-size'),
      shape:shapeBox?{visible:shapeBox.width>0&&shapeBox.height>0,width:Math.round(shapeBox.width),height:Math.round(shapeBox.height)}:null,
+     heroOverlap:Boolean(intersects(heroText,shapeBox)),
+     schoolTextClipped:Boolean(schoolHeading&&schoolCopy&&(schoolHeading.right>Math.min(schoolCopy.right,innerWidth)+3||schoolHeading.left<0)),
+     contactHeroVisible:Boolean(contactHeader&&contactHeader.getBoundingClientRect().height>0),
+     contactFormTop:contactForm?Math.round(contactForm.getBoundingClientRect().top):null,
      navDupes:mainNav.filter(v=>footerNav.includes(v) && !v.endsWith('/')),
      brokenImages:[...document.images].filter(i=>i.complete&&!i.naturalWidth).map(i=>i.src),
     };
@@ -51,6 +61,12 @@ try{
    const result={viewport:size,route,...data};
    assert(data.pageWidth<=data.viewportWidth+3,`${size} ${route}: horizontal overflow ${data.pageWidth}/${data.viewportWidth}`);
    assert(!data.brokenImages.length,`${size} ${route}: broken images: ${data.brokenImages.join(',')}`);
+   assert(!data.heroOverlap,`${size} ${route}: homepage chart overlaps headline`);
+   assert(!data.schoolTextClipped,`${size} ${route}: school heading extends beyond its text column`);
+   if(name==='contact-de'){
+     assert(!data.contactHeroVisible,`${size} ${route}: redundant contact hero is visible`);
+     assert(data.contactFormTop!==null&&data.contactFormTop<height*.4,`${size} ${route}: contact form starts too far down`);
+   }
    if(name==='home'||name==='home-de'){
      assert(data.shape?.visible,`${size} ${route}: eight-axis chart missing`);
      assert(data.headings.length>=5,`${size} ${route}: insufficient section headings`);
