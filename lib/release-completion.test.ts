@@ -143,3 +143,15 @@ test('footer navigation is for contact, trust and legal information instead of r
   assert.match(css,/\.p-footer\.site-footer nav\.p-footer-groups/);
   assert.match(css,/\.home \.p-transparency\{padding-top:clamp/);
 });
+
+test('public pages use consistent compact section rhythm without compressing assessment flows', () => {
+  const styles=readFileSync(join(root,'app/site-spacing-rhythm.css'),'utf8');
+  const layout=readFileSync(join(root,'app/layout.tsx'),'utf8');
+  const imported=layout.indexOf("import './site-spacing-rhythm.css'");
+  assert.ok(imported > layout.indexOf("import './pilot/pilot.css'"));
+  for (const selector of ['.home .p-section', '.home .p-how', '.home .p-transparency', '.home .p-schools', '.home .p-languages', '.info-page:not(.info-page-contact) .info-content', '.quizzes-page .quizzes-hero', '.country-topic-detail', '.school-public-hero-grid']) {
+    assert.ok(styles.includes(selector), `Public page rhythm missing: ${selector}`);
+  }
+  assert.match(styles, /--section-air:clamp\(25px,3vw,38px\)/);
+  assert.doesNotMatch(styles, /\.engine-page|\.school-projector-page|\.literacy-card/);
+});
