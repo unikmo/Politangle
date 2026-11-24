@@ -164,3 +164,32 @@ test('split homepage section intros align supporting prose to heading midpoint o
   assert.match(stylesheet, /\.home \.p-section-head > p\s*\{\s*align-self:center/);
   assert.match(stylesheet, /@media\(max-width:1000px\)/);
 });
+
+test('public visual system has one H2 scale and single grid divider, with browser evidence configured', () => {
+  const css=readFileSync(join(root,'app/design-qa-system.css'),'utf8');
+  const layout=readFileSync(join(root,'app/layout.tsx'),'utf8');
+  const e2e=readFileSync(join(root,'scripts/design-system-qa.mjs'),'utf8');
+  const workflow=readFileSync(join(root,'.github/workflows/independent-desktop-e2e.yml'),'utf8');
+  assert.match(layout,/import '\.\/design-qa-system\.css'/);
+  assert.match(css,/--editorial-heading-2:clamp\(34px,3\.45vw,44px\)/);
+  assert.match(css,/\.home \.p-section h2,[\s\S]*\.home \.p-languages h2\s*\{/);
+  assert.match(css,/\.home \.p-steps\{border-top:1px solid var\(--editorial-line\);border-bottom:0\}/);
+  assert.match(css,/\.home \.p-steps article \+ article/);
+  assert.match(css,/@media\(max-width:700px\)/);
+  assert.match(e2e,/headings\.length>=5/);
+  assert.match(e2e,/double separator below learning cards/);
+  assert.match(workflow,/name: Upload visual QA evidence/);
+  assert.match(workflow,/node scripts\/design-system-qa\.mjs/);
+});
+
+test('minimal contact entry contains no redundant hero or explanatory heading', () => {
+  const shell=readFileSync(join(root,'app/InfoShell.tsx'),'utf8');
+  const content=readFileSync(join(root,'app/LocalizedInfoPage.tsx'),'utf8');
+  const design=readFileSync(join(root,'app/design-qa-system.css'),'utf8');
+  assert.match(shell, /!contact && <section className="info-hero"/);
+  assert.match(content, /<h1 className="contact-page-sr-title">/);
+  assert.match(content, /<ContactForm \/>/);
+  assert.doesNotMatch(content, /<InfoSection title=\{locale === 'de' \? 'Nachricht senden'/);
+  assert.match(design, /\.info-page-contact \.contact-form\{/);
+  assert.match(design, /\.school-public-hero-grid\{display:grid;grid-template-columns:minmax\(0,1fr\)/);
+});

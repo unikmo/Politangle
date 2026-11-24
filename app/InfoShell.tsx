@@ -10,19 +10,19 @@ export function InfoShell({ eyebrow, title, intro, children, contact = false }: 
 
   return <main className={`home info-page${contact ? " info-page-contact" : ""}`}>
     <SiteHeader />
-    <section className="info-hero">
+    {!contact && <section className="info-hero">
       <div className="info-shell">
         <p>{eyebrow}</p>
         <h1>{title}</h1>
         <div>{intro}</div>
       </div>
-    </section>
+    </section>}
     <section className="info-shell info-content">{children}</section>
-    <div className="info-bottom-nav info-shell">
+    {!contact && <div className="info-bottom-nav info-shell">
       <Link href={href('/learn')}>{locale === 'de' ? 'Glossar' : locale === 'es' ? 'Glosario' : locale === 'fr' ? 'Glossaire' : locale === 'pt-br' ? 'Glossário' : 'Glossary'}</Link>
       <Link href={href('/quizzes')}>{locale === 'fr' ? 'Quiz' : locale === 'pt-br' ? 'Quizzes' : 'Quizzes'}</Link>
       <Link href={href('/method')}>{locale === 'de' ? 'Methode' : locale === 'es' ? 'Método' : locale === 'fr' ? 'Méthode' : locale === 'pt-br' ? 'Método' : 'Method'}</Link>
-    </div>
+    </div>}
   </main>;
 }
 

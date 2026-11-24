@@ -25,7 +25,7 @@ const pages = [
   ['/privacy', 'PRIVACY'],
   ['/imprint', 'PlanetHike OÜ'],
   ['/terms', 'TERMS'],
-  ['/contact', 'Contact Politangle.'],
+  ['/contact', 'Send enquiry'],
   ['/de/method', 'Ein politisches Profil aus acht Bereichen'],
   ['/es/method', 'Ocho preguntas'],
   ['/fr/method', 'Un profil politique en huit dimensions'],

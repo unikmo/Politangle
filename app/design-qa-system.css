@@ -1,0 +1,140 @@
+/* Politangle public design QA — final authority for the visual hierarchy.
+   Keep assessment, certification, teacher, projector and other functional UIs intact.
+   Do not style all HTML headings: the header/footer and functional cards have different jobs. */
+.home{
+  --editorial-heading-2:clamp(34px,3.45vw,44px);
+  --editorial-heading-3:clamp(17px,1.42vw,20px);
+  --editorial-body:clamp(14px,1.12vw,16px);
+  --editorial-line:#e7dbd2;
+}
+
+/* All homepage section H2s share one size and rhythm, regardless of column type. */
+.home .p-section h2,
+.home .p-dark-section h2,
+.home .p-final h2,
+.home .p-title-row h2,
+.home .p-transparency h2,
+.home .p-schools h2,
+.home .p-languages h2{
+  font-size:var(--editorial-heading-2);
+  line-height:1.13;
+  letter-spacing:-.035em;
+  font-weight:700;
+  overflow-wrap:break-word;
+}
+.home .p-section-head>div,
+.home .p-section-head>p{min-width:0}
+.home .p-section-head{gap:clamp(24px,3.2vw,48px)}
+.home .p-section-head>p,
+.home .p-languages>div>p,
+.home .p-school-intro>p,
+.home .p-transparency>div:first-child>p{
+  font-size:var(--editorial-body);
+  line-height:1.65;
+}
+.home .p-section .p-steps h3,
+.home .p-how .p-steps h3{
+  font-size:var(--editorial-heading-3);
+  line-height:1.3;
+  font-weight:700;
+  letter-spacing:-.02em;
+}
+.home .p-section .p-steps article p,
+.home .p-how .p-steps article p{
+  font-size:14px;
+  line-height:1.6;
+}
+.home .p-steps .p-text-link,
+.home .p-resource-links a{font-size:14px;line-height:1.45}
+.home .p-steps article{min-width:0}
+.home .p-steps article>span{flex-shrink:0}
+
+/* ONE horizontal separator per boundary. Eliminate the overlapping bottom
+   grid rule + adjacent section top rule visible under LEARN / PRACTICE / SPOT. */
+.home .p-steps{border-top:1px solid var(--editorial-line);border-bottom:0}
+.home .p-section + .p-section{border-top:1px solid var(--editorial-line)}
+.home .p-how + .p-transparency{border-top:0}
+.home .p-steps article{border-bottom:0}
+.home .p-steps article + article{border-left:1px solid var(--editorial-line)}
+.home .p-how .p-steps article + article{border-left:1px solid var(--editorial-line)}
+.home .p-steps article:last-child{border-right:0}
+
+/* Article/card secondary text must not become microscopic on a desktop. */
+.home .p-paper-scene article span,
+.home .p-paper-scene article p{font-size:12px;line-height:1.55}
+.home .p-paper-scene article small{font-size:11px}
+.home .p-proof small{font-size:11px}
+.home .p-proof span{font-size:13px}
+.home .p-proof strong{font-size:clamp(27px,2.3vw,34px)}
+
+/* Public support sections: consistent hierarchy while retaining dedicated
+   page context and protecting smaller functional components. */
+.info-page:not(.info-page-contact) .info-section h2,
+.country-topic-detail h2{font-size:clamp(21px,2vw,27px);line-height:1.25}
+.info-page .info-section>div{font-size:15px;line-height:1.65}
+.countries-page .country-card h2{font-size:clamp(18px,1.7vw,22px)}
+.school-public-page .school-public-privacy h2{line-height:1.15}
+
+/* Consistent touch-safe responsive treatment. */
+@media(max-width:1000px){
+  .home .p-section-head{gap:20px}
+}
+@media(max-width:700px){
+  .home{--editorial-heading-2:clamp(30px,7.6vw,38px);--editorial-heading-3:18px}
+  .home .p-section-head>p{font-size:15px}
+  .home .p-steps article,
+  .home .p-how .p-steps article{border-left:0;border-right:0}
+  .home .p-steps article + article,
+  .home .p-how .p-steps article + article{
+    border-left:0;
+    border-top:1px solid var(--editorial-line);
+  }
+  .home .p-steps article:last-child{border-bottom:0}
+  .home .p-section h2{max-width:100%}
+}
+
+/* Contact is an action, not another editorial landing page. Keep one
+   screen reader H1, and show the form directly after global navigation. */
+.info-page-contact .info-content{padding-top:clamp(22px,3vw,36px);padding-bottom:32px}
+.info-page-contact .contact-page-sr-title{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.info-page-contact .contact-form{max-width:800px;margin:0 auto}
+.info-page-contact .contact-form-status:empty{display:none}
+.info-page-contact .contact-form-grid{min-width:0}
+.info-page-contact .contact-form label{min-width:0}
+
+/* Critical responsive repairs observed in screenshot evidence:
+   former desktop grid declaration occurred after the old mobile override,
+   squeezing the title into a narrow column and overlapping the visual. */
+@media(max-width:700px){
+ .home .p-hero-grid{
+   display:grid;
+   grid-template-columns:minmax(0,1fr);
+   align-items:start;
+   gap:20px;
+   min-height:0;
+   padding:30px 0 36px;
+ }
+ .home .p-hero-copy,.home .p-hero-stage{min-width:0;max-width:100%}
+ .home .p-hero h1{font-size:clamp(34px,9vw,44px);line-height:1.07;overflow-wrap:normal}
+ .home .p-hero-stage{display:grid;position:relative;min-height:0}
+ .home .p-hero-stage .p-hero-shape-hook{width:min(100%,390px);margin:auto}
+ .home .p-hero-stage .p-shape-preview{max-height:310px}
+ .school-public-hero-grid{display:grid;grid-template-columns:minmax(0,1fr);min-width:0}
+ .school-public-hero-grid>div{min-width:0;max-width:100%}
+ .school-public-hero h1{font-size:clamp(32px,8.5vw,45px);line-height:1.1;overflow-wrap:break-word}
+ .school-public-lede,.school-public-privacy-line,.school-pilot-eligibility{overflow-wrap:break-word}
+ .school-public-visual{min-height:250px;max-width:100%;min-width:0}
+ .school-public-room{max-width:100%;min-width:0}
+}
+
+/* Desktop navigation: translated labels must not break across two lines. */
+@media(min-width:901px){
+ .p-nav,.home .p-nav{gap:clamp(10px,1.2vw,20px)}
+ .p-nav nav.p-nav-main,.home .p-nav nav.p-nav-main{gap:clamp(10px,1.05vw,16px);min-width:0}
+ .p-nav nav.p-nav-main a,.home .p-nav nav.p-nav-main a{
+   white-space:nowrap;
+   font-size:12px;
+   letter-spacing:0;
+ }
+ .p-nav-actions{gap:8px;flex-shrink:0}
+}
