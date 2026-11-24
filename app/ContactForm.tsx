@@ -22,13 +22,12 @@ export default function ContactForm() {
     try {
       const response = await fetch('/api/contact', { method:'POST', headers:{ 'Content-Type':'application/json' }, body:JSON.stringify(body) });
       const result = await response.json();
-      if (!response.ok || result.accepted !== true) throw new Error('FORM_SUBMISSION_FAILED');
+      if (response.status !== 200 || result.accepted !== true) throw new Error('FORM_SUBMISSION_FAILED');
       form.reset(); setStatus('sent');
     } catch { setStatus('error'); }
   }
   return <form className="contact-form" name="politangle-contact" method="POST" action="/api/contact" onSubmit={submit}>
     <input type="hidden" name="locale" value={locale} />
-    <p className="contact-honeypot" aria-hidden="true"><label>Do not fill this out<input name="bot-field" tabIndex={-1} autoComplete="off" /></label></p>
     <div className="contact-form-grid"><label><span>{c.name}</span><input name="name" type="text" autoComplete="name" maxLength={120} required /></label><label><span>{c.email}</span><input name="email" type="email" autoComplete="email" maxLength={254} required /></label></div>
     <label><span>{c.subject}</span><select name="subject" required defaultValue=""><option value="" disabled>—</option>{c.subjects.map((subject) => <option key={subject}>{subject}</option>)}</select></label>
     <label><span>{c.message}</span><textarea name="message" rows={7} minLength={10} maxLength={5000} required /></label>
