@@ -121,9 +121,25 @@ test('homepage headline and contact page fit compact editorial treatment', () =>
   const css=readFileSync(join(root,'app/conversion-layout-fix.css'),'utf8');
   const info=readFileSync(join(root,'app/LocalizedInfoPage.tsx'),'utf8');
   assert.match(home, /Politik ist mehr als links oder rechts\./);
-  assert.match(home, /p-hero-brief/);
-  assert.doesNotMatch(home, /<div className="p-hero-shape-hook">/);
+  assert.match(home, /heroShapeAxes/);
+  assert.match(home, /<div className="p-hero-shape-hook">/);
+  assert.match(home, /<ShapePreview axes=\{heroShapeAxes\}/);
   assert.match(info, /intro=\{c\.intro\} contact>/);
   assert.match(css, /\.info-page-contact \.info-hero/);
   assert.match(css, /\.home \.p-hero-grid/);
+});
+
+test('footer navigation is for contact, trust and legal information instead of repeating primary routes', () => {
+  const chrome=readFileSync(join(root,'app/SiteChrome.tsx'),'utf8');
+  const css=readFileSync(join(root,'app/conversion-layout-fix.css'),'utf8');
+  const footer=chrome.split('export function SiteFooter()')[1];
+  assert.ok(footer);
+  for(const route of ['/faq','/contact','/validation','/privacy','/imprint','/terms']) {
+    assert.ok(footer.includes(`href('${route}')`),`Missing footer route: ${route}`);
+  }
+  for(const route of ['/learn','/guides','/quizzes','/countries','/method','/practice']) {
+    assert.ok(!footer.includes(`href('${route}')`),`Primary menu route duplicated in footer: ${route}`);
+  }
+  assert.match(css,/\.p-footer\.site-footer nav\.p-footer-groups/);
+  assert.match(css,/\.home \.p-transparency\{padding-top:clamp/);
 });

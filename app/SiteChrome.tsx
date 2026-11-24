@@ -102,20 +102,23 @@ export function SiteFooter() {
   return (
     <footer className="p-footer p-shell site-footer">
       <Link className="p-brand" href={href('/')}><Mark/><span><b>Politangle</b><small>politangle.org</small></span></Link>
-      <div>
-        <Link href={href('/learn')}>{c.learn}</Link>
-        <Link href={href('/guides')}>{c.guides}</Link>
-        <Link href={href('/quizzes')}>{c.quizzes}</Link>
-        <Link href={href('/countries')}>{c.countries}</Link>
-        <Link href={href('/practice')}>{c.practice}</Link>
-        <Link href={href('/method')}>{c.method}</Link>
-        <Link href={href('/faq')}>{c.faq}</Link>
-        <Link href={href('/validation')}>{c.validation}</Link>
-        <Link href={href('/privacy')}>{c.privacy}</Link>
-        <Link href={href('/imprint')}>{c.imprint}</Link>
-        <Link href={href('/terms')}>{c.terms}</Link>
-        <Link href={href('/contact')}>{c.contact}</Link>
-      </div>
+      <nav className="p-footer-groups" aria-label={locale === 'de' ? 'Informationen und Rechtliches' : locale === 'fr' ? 'Informations et mentions légales' : locale === 'es' ? 'Información y aspectos legales' : locale === 'pt-br' ? 'Informações e assuntos legais' : 'Information and legal'}>
+        <div className="p-footer-group">
+          <h2>{locale === 'de' ? 'Hilfe & Kontakt' : locale === 'fr' ? 'Aide et contact' : locale === 'es' ? 'Ayuda y contacto' : locale === 'pt-br' ? 'Ajuda e contato' : 'Help & contact'}</h2>
+          <Link href={href('/faq')}>{c.faq}</Link>
+          <Link href={href('/contact')}>{c.contact}</Link>
+        </div>
+        <div className="p-footer-group">
+          <h2>{locale === 'de' ? 'Vertrauen & Transparenz' : locale === 'fr' ? 'Confiance et transparence' : locale === 'es' ? 'Confianza y transparencia' : locale === 'pt-br' ? 'Confiança e transparência' : 'Trust & transparency'}</h2>
+          <Link href={href('/validation')}>{c.validation}</Link>
+          <Link href={href('/privacy')}>{c.privacy}</Link>
+        </div>
+        <div className="p-footer-group">
+          <h2>{locale === 'de' ? 'Rechtliches' : locale === 'fr' ? 'Informations légales' : locale === 'es' ? 'Información legal' : locale === 'pt-br' ? 'Informações legais' : 'Legal'}</h2>
+          <Link href={href('/imprint')}>{c.imprint}</Link>
+          <Link href={href('/terms')}>{c.terms}</Link>
+        </div>
+      </nav>
       <small>© 2026 Politangle</small>
     </footer>
   );
