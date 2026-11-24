@@ -58,7 +58,8 @@ test('localized contact form uses the same-site API with consent and spam contro
   assert.match(contactForm, /politangle-contact/);
   assert.match(contactForm, /\/api\/contact/);
   assert.match(contactForm, /privacy-acknowledged/);
-  assert.match(contactForm, /bot-field/);
+  assert.doesNotMatch(contactForm, /name=["']bot-field["']/);
+  assert.match(contactForm, /response\.status !== 200/);
   assert.doesNotMatch(contactForm, /data-netlify|__forms\.html|CONTACT_TO_EMAIL|CONTACT_GMAIL/);
   assert.equal(existsSync(join(root, 'public/__forms.html')), false);
 });
