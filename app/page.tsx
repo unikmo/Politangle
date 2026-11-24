@@ -7,21 +7,56 @@ import { translate } from './translations';
 const Arrow = () => <span aria-hidden="true">→</span>;
 
 function ShapePreview({ axes, ariaLabel }: { axes: readonly (readonly [string, number])[]; ariaLabel: string }) {
- const cx = 180;
- const cy = 160;
- const maxRadius = 108;
- const polar = (radius:number,index:number) => {
+ // Reserve real space INSIDE the SVG for every translated label. The prior
+ // 360px viewBox placed side labels outside the artwork/card on desktop.
+ const cx = 260;
+ const cy = 200;
+ const maxRadius = 118;
+ const polar = (radius: number, index: number) => {
   const angle = (-90 + index * 45) * Math.PI / 180;
   return { x: cx + Math.cos(angle) * radius, y: cy + Math.sin(angle) * radius };
  };
- const points = (level:number) => axes.map((_,index) => { const p = polar(maxRadius * (level / 100),index); return `${p.x},${p.y}`; }).join(' ');
- const profile = axes.map(([,score],index) => { const p = polar(maxRadius * (score / 100),index); return `${p.x},${p.y}`; }).join(' ');
- return <svg className="p-shape-preview" viewBox="0 0 360 320" role="img" aria-label={ariaLabel}>
-  {[25,50,75,100].map((level) => <polygon className="p-shape-ring" key={level} points={points(level)}/>)}
-  {axes.map((_,index) => { const p = polar(maxRadius,index); return <line className="p-shape-spoke" key={`spoke-${index}`} x1={cx} y1={cy} x2={p.x} y2={p.y}/>; })}
+ const points = (level: number) => axes.map((_, index) => {
+  const p = polar(maxRadius * (level / 100), index);
+  return `${p.x},${p.y}`;
+ }).join(' ');
+ const profile = axes.map(([, score], index) => {
+  const p = polar(maxRadius * (score / 100), index);
+  return `${p.x},${p.y}`;
+ }).join(' ');
+ const labelSlots = [
+  { x: 260, y: 29, anchor: 'middle' },
+  { x: 365, y: 67, anchor: 'start' },
+  { x: 385, y: 200, anchor: 'start' },
+  { x: 365, y: 333, anchor: 'start' },
+  { x: 260, y: 371, anchor: 'middle' },
+  { x: 155, y: 333, anchor: 'end' },
+  { x: 135, y: 200, anchor: 'end' },
+  { x: 155, y: 67, anchor: 'end' },
+ ] as const;
+ const splitLabel = (value: string) => {
+  if (value.length <= 19) return [value];
+  const words = value.split(/\s+/);
+  let best = 1;
+  let distance = Infinity;
+  for (let i = 1; i < words.length; i++) {
+   const difference = Math.abs(words.slice(0, i).join(' ').length - words.slice(i).join(' ').length);
+   if (difference < distance) { best = i; distance = difference; }
+  }
+  return [words.slice(0, best).join(' '), words.slice(best).join(' ')];
+ };
+ return <svg className="p-shape-preview" viewBox="0 0 520 400" role="img" aria-label={ariaLabel}>
+  {[25, 50, 75, 100].map((level) => <polygon className="p-shape-ring" key={level} points={points(level)}/>)}
+  {axes.map((_, index) => { const p = polar(maxRadius, index); return <line className="p-shape-spoke" key={`spoke-${index}`} x1={cx} y1={cy} x2={p.x} y2={p.y}/>; })}
   <polygon className="p-shape-area" points={profile}/>
-  {axes.map(([,score],index) => { const p = polar(maxRadius * (score / 100),index); return <circle className="p-shape-dot" key={`dot-${index}`} cx={p.x} cy={p.y} r="4"/>; })}
-  {axes.map(([label],index) => { const p = polar(132,index); const anchor = p.x > cx + 14 ? 'start' : p.x < cx - 14 ? 'end' : 'middle'; return <text className="p-shape-label" key={label} x={p.x} y={p.y} textAnchor={anchor} dominantBaseline="middle">{label}</text>; })}
+  {axes.map(([, score], index) => { const p = polar(maxRadius * (score / 100), index); return <circle className="p-shape-dot" key={`dot-${index}`} cx={p.x} cy={p.y} r="4"/>; })}
+  {axes.map(([label], index) => {
+   const slot = labelSlots[index];
+   const lines = splitLabel(label);
+   return <text className="p-shape-label" key={label} x={slot.x} y={slot.y} textAnchor={slot.anchor} dominantBaseline="middle">
+    {lines.map((line, lineIndex) => <tspan key={lineIndex} x={slot.x} dy={lineIndex === 0 ? (lines.length === 2 ? -7 : 0) : 14}>{line}</tspan>)}
+   </text>;
+  })}
  </svg>;
 }
 
