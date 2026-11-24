@@ -6,25 +6,6 @@ import { translate } from './translations';
 
 const Arrow = () => <span aria-hidden="true">→</span>;
 
-function ShapePreview({ axes, ariaLabel }: { axes: readonly (readonly [string, number])[]; ariaLabel: string }) {
- const cx = 180;
- const cy = 160;
- const maxRadius = 108;
- const polar = (radius:number,index:number) => {
-  const angle = (-90 + index * 45) * Math.PI / 180;
-  return { x: cx + Math.cos(angle) * radius, y: cy + Math.sin(angle) * radius };
- };
- const points = (level:number) => axes.map((_,index) => { const p = polar(maxRadius * (level / 100),index); return `${p.x},${p.y}`; }).join(' ');
- const profile = axes.map(([,score],index) => { const p = polar(maxRadius * (score / 100),index); return `${p.x},${p.y}`; }).join(' ');
- return <svg className="p-shape-preview" viewBox="0 0 360 320" role="img" aria-label={ariaLabel}>
-  {[25,50,75,100].map((level) => <polygon className="p-shape-ring" key={level} points={points(level)}/>)}
-  {axes.map((_,index) => { const p = polar(maxRadius,index); return <line className="p-shape-spoke" key={`spoke-${index}`} x1={cx} y1={cy} x2={p.x} y2={p.y}/>; })}
-  <polygon className="p-shape-area" points={profile}/>
-  {axes.map(([,score],index) => { const p = polar(maxRadius * (score / 100),index); return <circle className="p-shape-dot" key={`dot-${index}`} cx={p.x} cy={p.y} r="4"/>; })}
-  {axes.map(([label],index) => { const p = polar(132,index); const anchor = p.x > cx + 14 ? 'start' : p.x < cx - 14 ? 'end' : 'middle'; return <text className="p-shape-label" key={label} x={p.x} y={p.y} textAnchor={anchor} dominantBaseline="middle">{label}</text>; })}
- </svg>;
-}
-
 export default function Home() {
  const { locale } = useLocale();
  const t = (en:string,de:string) => translate(locale, en, de);
@@ -39,7 +20,6 @@ export default function Home() {
   [t('Nationhood','Nation und Zugehörigkeit'),t('Civic / inclusive membership ↔ Inherited / status-based continuity','Offene Zugehörigkeit ↔ Herkunft und Tradition'),'39'],
   [t('Ecology','Klima und Wirtschaft'),t('Ecological limits / structural change ↔ Growth / incremental adaptation','Ökologische Grenzen ↔ Wachstum und schrittweise Anpassung'),'82'],
  ];
- const heroShapeAxes = dimensions.map(([name,,score]) => [name, Number(score)] as const);
  return <main className="home">
   <SiteHeader />
 
