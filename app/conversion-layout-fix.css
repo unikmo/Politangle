@@ -56,3 +56,20 @@
  .home .p-hero .p-lead{margin-top:12px}
  .home .p-hero .p-actions{margin-top:15px}
 }
+
+/* Restore the eight-axis visual identity; scale chart instead of removing it. */
+.home .p-hero-grid{grid-template-columns:minmax(0,1.08fr) minmax(340px,.92fr);gap:clamp(20px,3vw,48px)}
+.home .p-hero-stage{display:grid;min-height:0;place-items:center;min-width:0}
+.home .p-hero-stage .p-hero-shape-hook{width:min(100%,450px);padding:16px 12px 12px;border-radius:22px;transform:none}
+.home .p-hero-stage .p-hero-shape-hook:before{inset:10px -8px -10px 8px;border-radius:22px}
+.home .p-hero-stage .p-shape-preview{display:block;width:100%;height:auto;max-height:min(45vw,380px);overflow:visible}
+.home .p-hero-stage .p-shape-label{font-size:9px}
+@media(max-width:950px) and (min-width:701px){
+ .home .p-hero-grid{grid-template-columns:minmax(0,1fr) minmax(290px,.8fr);gap:18px}
+ .home .p-hero-stage .p-hero-shape-hook{padding:8px}
+}
+@media(max-width:700px){
+ .home .p-hero-stage{display:grid;min-height:0}
+ .home .p-hero-stage .p-hero-shape-hook{width:min(100%,400px);padding:10px}
+ .home .p-hero-stage .p-shape-preview{max-height:330px}
+}
