@@ -15,7 +15,8 @@ export function InfoShell({ eyebrow, title, intro, children, contact = false }: 
         <p>{eyebrow}</p>
         <h1>{title}</h1>
         <div>{intro}</div>
-      </section>}
+      </div>
+    </section>}
     <section className="info-shell info-content">{children}</section>
     {!contact && <div className="info-bottom-nav info-shell">
       <Link href={href('/learn')}>{locale === 'de' ? 'Glossar' : locale === 'es' ? 'Glosario' : locale === 'fr' ? 'Glossaire' : locale === 'pt-br' ? 'Glossário' : 'Glossary'}</Link>
