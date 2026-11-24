@@ -50,7 +50,9 @@ test('checks actual body size even without a content-length header',async()=>{
 
 test('honeypot does not trigger mail or consume the budget',async()=>{
   const handler=createContactHandler({configured:()=>{assert.fail();},allow:async()=>{assert.fail();},deliver:async()=>{assert.fail();}});
-  assert.equal((await handler(request({...enquiry,'bot-field':'spam'}))).status,200);
+  const response=await handler(request({...enquiry,'bot-field':'spam'}));
+  assert.equal(response.status,202);
+  assert.deepEqual(await response.json(),{error:'Unable to send this enquiry. Please try again.'});
 });
 
 test('fails closed when unconfigured or rate limited, with no delivery',async()=>{

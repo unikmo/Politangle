@@ -6,25 +6,6 @@ import { translate } from './translations';
 
 const Arrow = () => <span aria-hidden="true">→</span>;
 
-function ShapePreview({ axes, ariaLabel }: { axes: readonly (readonly [string, number])[]; ariaLabel: string }) {
- const cx = 180;
- const cy = 160;
- const maxRadius = 108;
- const polar = (radius:number,index:number) => {
-  const angle = (-90 + index * 45) * Math.PI / 180;
-  return { x: cx + Math.cos(angle) * radius, y: cy + Math.sin(angle) * radius };
- };
- const points = (level:number) => axes.map((_,index) => { const p = polar(maxRadius * (level / 100),index); return `${p.x},${p.y}`; }).join(' ');
- const profile = axes.map(([,score],index) => { const p = polar(maxRadius * (score / 100),index); return `${p.x},${p.y}`; }).join(' ');
- return <svg className="p-shape-preview" viewBox="0 0 360 320" role="img" aria-label={ariaLabel}>
-  {[25,50,75,100].map((level) => <polygon className="p-shape-ring" key={level} points={points(level)}/>)}
-  {axes.map((_,index) => { const p = polar(maxRadius,index); return <line className="p-shape-spoke" key={`spoke-${index}`} x1={cx} y1={cy} x2={p.x} y2={p.y}/>; })}
-  <polygon className="p-shape-area" points={profile}/>
-  {axes.map(([,score],index) => { const p = polar(maxRadius * (score / 100),index); return <circle className="p-shape-dot" key={`dot-${index}`} cx={p.x} cy={p.y} r="4"/>; })}
-  {axes.map(([label],index) => { const p = polar(132,index); const anchor = p.x > cx + 14 ? 'start' : p.x < cx - 14 ? 'end' : 'middle'; return <text className="p-shape-label" key={label} x={p.x} y={p.y} textAnchor={anchor} dominantBaseline="middle">{label}</text>; })}
- </svg>;
-}
-
 export default function Home() {
  const { locale } = useLocale();
  const t = (en:string,de:string) => translate(locale, en, de);
@@ -39,13 +20,17 @@ export default function Home() {
   [t('Nationhood','Nation und Zugehörigkeit'),t('Civic / inclusive membership ↔ Inherited / status-based continuity','Offene Zugehörigkeit ↔ Herkunft und Tradition'),'39'],
   [t('Ecology','Klima und Wirtschaft'),t('Ecological limits / structural change ↔ Growth / incremental adaptation','Ökologische Grenzen ↔ Wachstum und schrittweise Anpassung'),'82'],
  ];
- const heroShapeAxes = dimensions.map(([name,,score]) => [name, Number(score)] as const);
  return <main className="home">
   <SiteHeader />
 
   <section className="p-hero"><div className="p-orbit one"/><div className="p-orbit two"/><div className="p-shell p-hero-grid">
-   <div className="p-hero-copy"><p className="p-kicker">{t('POLITICS WITHOUT THE BOXES','DEIN POLITISCHES PROFIL')}</p><h1>{t('Are you really left, right, centre, or more nuanced? Find out in 3 minutes.','Bist du wirklich links, rechts, in der Mitte – oder passt du in keine Schublade? Finde es in 3 Minuten heraus.')}</h1><p className="p-lead">{t('What if your views make more sense as a shape than a side? See how your answers come together across eight dimensions.','Was, wenn deine politischen Ansichten mehr sind als links oder rechts? Entdecke ihr Zusammenspiel auf acht Achsen.')}</p><div className="p-actions"><a className="p-button light" href={href('/quiz')}>{t('Start the 3-minute Quick','Quick-Test starten')} <Arrow/></a><a className="p-text-link light" href={href('/method')}>{t('See how it works','So entsteht dein Ergebnis')}</a></div><div className="p-trust"><span>✓ {t('Free','Kostenlos')}</span><span>✓ {t('First Quick without sign-up','Ohne Anmeldung starten')}</span><span>✓ {t('Private by default','Deine Antworten bleiben privat')}</span></div></div>
-   <div className="p-hero-stage"><div className="p-hero-shape-hook"><ShapePreview axes={heroShapeAxes} ariaLabel={t('Example eight-axis Politangle shape','Beispiel für ein Politangle-Profil mit acht Achsen')}/></div></div>
+   <div className="p-hero-copy"><p className="p-kicker">{t('POLITICS WITHOUT THE BOXES','DEIN POLITISCHES PROFIL')}</p><h1>{t('Politics is more than left or right.','Politik ist mehr als links oder rechts.')}</h1><p className="p-lead">{t('Discover your political profile in 26 questions. Eight dimensions. About three minutes.','Entdecke dein politisches Profil in 26 Fragen. Acht Perspektiven. Rund drei Minuten.')}</p><div className="p-actions"><a className="p-button light" href={href('/quiz')}>{t('Start the 3-minute Quick','Quick-Test starten')} <Arrow/></a><a className="p-text-link light" href={href('/method')}>{t('See how it works','So entsteht dein Ergebnis')}</a></div><div className="p-trust"><span>✓ {t('Free','Kostenlos')}</span><span>✓ {t('First Quick without sign-up','Ohne Anmeldung starten')}</span><span>✓ {t('Private by default','Deine Antworten bleiben privat')}</span></div></div>
+   <div className="p-hero-stage"><div className="p-hero-brief" aria-label={t('Test at a glance','Der Test auf einen Blick')}>
+      <span className="p-hero-brief-kicker">{t('YOUR PERSPECTIVES','DEINE PERSPEKTIVEN')}</span>
+      <div className="p-hero-brief-number">8</div>
+      <p>{t('Dimensions. One personal picture.','Blickwinkel. Ein persönliches Gesamtbild.')}</p>
+      <div className="p-hero-brief-line"><span>26 {t('questions','Fragen')}</span><span>≈ 3 {t('minutes','Minuten')}</span></div>
+    </div></div>
   </div></section>
 
   <section className="p-proof p-shell"><div><small>{t('QUICK','KURZTEST')}</small><strong>26</strong><span>{t('questions to start','Fragen zum Einstieg')}</span></div><div><small>{t('YOUR MAP','DEIN ERGEBNIS')}</small><strong>8</strong><span>{t('political dimensions','politische Blickwinkel')}</span></div><div><small>{t('FULL','VERTIEFUNG')}</small><strong>+16</strong><span>{t('questions for more depth','weitere Fragen')}</span></div><div><small>{t('FIRST QUICK','BEIM ERSTEN MAL')}</small><strong>{t('No account','Ohne Konto')}</strong><span>{t('for your first run','direkt loslegen')}</span></div></section>

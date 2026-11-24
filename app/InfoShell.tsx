@@ -4,11 +4,11 @@ import Link from 'next/link';
 import { localePath, useLocale } from './LocaleProvider';
 import { SiteHeader } from './SiteChrome';
 
-export function InfoShell({ eyebrow, title, intro, children }: { eyebrow: string; title: string; intro: string; children: React.ReactNode }) {
+export function InfoShell({ eyebrow, title, intro, children, contact = false }: { eyebrow: string; title: string; intro: string; children: React.ReactNode; contact?: boolean }) {
   const { locale } = useLocale();
   const href = (path: string) => localePath(locale, path);
 
-  return <main className="home info-page">
+  return <main className={`home info-page${contact ? " info-page-contact" : ""}`}>
     <SiteHeader />
     <section className="info-hero">
       <div className="info-shell">

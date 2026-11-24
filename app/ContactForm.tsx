@@ -22,18 +22,23 @@ export default function ContactForm() {
     try {
       const response = await fetch('/api/contact', { method:'POST', headers:{ 'Content-Type':'application/json' }, body:JSON.stringify(body) });
       const result = await response.json();
-      if (!response.ok || result.accepted !== true) throw new Error('FORM_SUBMISSION_FAILED');
+      if (response.status !== 200 || result.accepted !== true) throw new Error('FORM_SUBMISSION_FAILED');
       form.reset(); setStatus('sent');
     } catch { setStatus('error'); }
   }
+  if (status === 'sent') {
+    return <div className="contact-confirmation" role="status" aria-live="polite">
+      <span className="contact-confirmation-mark" aria-hidden="true">✓</span>
+      <h2>{c.sent}</h2>
+    </div>;
+  }
   return <form className="contact-form" name="politangle-contact" method="POST" action="/api/contact" onSubmit={submit}>
     <input type="hidden" name="locale" value={locale} />
-    <p className="contact-honeypot" aria-hidden="true"><label>Do not fill this out<input name="bot-field" tabIndex={-1} autoComplete="off" /></label></p>
     <div className="contact-form-grid"><label><span>{c.name}</span><input name="name" type="text" autoComplete="name" maxLength={120} required /></label><label><span>{c.email}</span><input name="email" type="email" autoComplete="email" maxLength={254} required /></label></div>
     <label><span>{c.subject}</span><select name="subject" required defaultValue=""><option value="" disabled>—</option>{c.subjects.map((subject) => <option key={subject}>{subject}</option>)}</select></label>
-    <label><span>{c.message}</span><textarea name="message" rows={7} minLength={10} maxLength={5000} required /></label>
+    <label><span>{c.message}</span><textarea name="message" rows={4} minLength={10} maxLength={5000} required /></label>
     <label className="contact-consent"><input name="privacy-acknowledged" type="checkbox" value="yes" required /><span>{c.privacy}</span></label>
     <button className="p-button" type="submit" disabled={status === 'sending'}>{status === 'sending' ? c.sending : c.send}</button>
-    <p className={status === 'error' ? 'contact-form-status error' : 'contact-form-status'} role="status" aria-live="polite">{status === 'sent' ? c.sent : status === 'error' ? c.error : ''}</p>
+    <p className={status === 'error' ? 'contact-form-status error' : 'contact-form-status'} role="status" aria-live="polite">{status === 'error' ? c.error : ''}</p>
   </form>;
 }

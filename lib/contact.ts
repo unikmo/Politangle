@@ -65,7 +65,7 @@ export function createContactHandler(deps:Dependencies) {
     try { input=await readInput(request); }
     catch(error) { return reply(error instanceof RangeError ? 413 : 400); }
     const enquiry=parseContact(input);
-    if (enquiry==='bot') return reply(200,true);
+    if (enquiry==='bot') return reply(202);
     if (!enquiry) return reply(400);
     if (!deps.configured()) return reply(503);
     let phase='rate-limit';
