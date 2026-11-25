@@ -1,5 +1,6 @@
 'use client';
 
+import QuizFeedback from '../QuizFeedback';
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
 import {
@@ -216,6 +217,7 @@ export default function MiddleClassTrapClient() {
           <h2 id="mct-reading-title">Further reading</h2>
           <div className="mct-reading-list">{MIDDLE_CLASS_TRAP_READING.map((book) => <article key={book.title}><h3>{book.title}</h3><small>{book.author}</small><div>{book.introduction.map((sentence) => <p key={sentence}>{sentence}</p>)}</div><a href={book.href} target="_blank" rel="noreferrer">{book.linkLabel} ↗</a></article>)}</div>
         </section>
+        <QuizFeedback key={run.seed} quiz="middle-class-trap" />
         <div className="engine-result-actions"><button className="engine-primary-link" type="button" onClick={start}>Try again</button><Link className="engine-primary-link secondary" href="/en/quizzes">Choose another quiz</Link></div>
       </article></section>
     </main>;
