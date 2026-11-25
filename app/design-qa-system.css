@@ -163,3 +163,55 @@
  .home .p-hero-stage .p-shape-preview{max-height:none}
  .home .p-hero-stage .p-shape-label{font-size:12px}
 }
+
+
+/* BELIEVE response controls: retain the current layout and palette, but
+   constrain the numeric buttons and make the unscored text option readable. */
+main.engine-page:not(.school-page):not(.school-projector-page) .quick-scale{
+  grid-template-columns:repeat(5,minmax(0,1fr)) minmax(112px,1.65fr);
+  width:min(100%,760px);
+  margin-inline:auto;
+  gap:10px;
+}
+main.engine-page:not(.school-page):not(.school-projector-page) .quick-scale .quick-scale-answer{
+  min-height:44px;
+  height:auto;
+  padding:9px 6px;
+  font-size:15px;
+  line-height:1.25;
+}
+main.engine-page:not(.school-page):not(.school-projector-page) .quick-scale .quick-scale-answer:last-child{
+  font-size:13px;
+  overflow-wrap:normal;
+}
+main.engine-page:not(.school-page):not(.school-projector-page) .quick-scale .quick-scale-answer:not(:disabled):is(:hover,:focus-visible){
+  background:#a9320e;
+  border-color:#a9320e;
+  color:#fff;
+}
+main.engine-page:not(.school-page):not(.school-projector-page) .quick-scale .quick-scale-answer.selected{
+  background:#a9320e;
+  border-color:#a9320e;
+  color:#fff;
+}
+main.engine-page:not(.school-page):not(.school-projector-page) .quick-scale .quick-scale-answer:focus-visible{
+  outline:3px solid #54200e;
+  outline-offset:3px;
+}
+main.engine-page:not(.school-page):not(.school-projector-page) .quick-scale-key{
+  width:min(100%,760px);
+  margin-inline:auto;
+}
+@media(max-width:480px){
+  main.engine-page:not(.school-page):not(.school-projector-page) .quick-scale{
+    grid-template-columns:repeat(5,minmax(0,1fr)) minmax(78px,1.6fr);
+    gap:4px;
+  }
+  main.engine-page:not(.school-page):not(.school-projector-page) .quick-scale .quick-scale-answer{
+    padding:7px 2px;
+    font-size:13px;
+  }
+  main.engine-page:not(.school-page):not(.school-projector-page) .quick-scale .quick-scale-answer:last-child{
+    font-size:11px;
+  }
+}
