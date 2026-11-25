@@ -1,5 +1,6 @@
 'use client';
 
+import QuizFeedback from '../QuizFeedback';
 import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
 import { assessFamiliesV2Canonical, assessResponseConsistencyV2, calculatePolygonV2Canonical } from '../../lib/belief-v2-engine';
@@ -469,6 +470,7 @@ export default function ResultsClient({countryOptions}:{countryOptions:readonly 
       </details>
 
       <p className="result-lede" style={{ marginTop: 20 }}><Link href={localePath(locale, '/faq')}>{locale === 'de' ? 'Was sagt das Ergebnis aus – und was nicht? Zum FAQ →' : locale === 'es' ? '¿Qué indica este resultado, y qué no? Ver preguntas frecuentes →' : locale === 'fr' ? 'Que montre ce résultat, et quelles sont ses limites ? Voir la FAQ →' : locale === 'pt-br' ? 'O que o resultado mostra — e o que não mostra? Veja as perguntas frequentes →' : 'What can this result tell you—and what can it not? Read the FAQ →'}</Link></p>
+      <QuizFeedback quiz="believe-quick" age="adult" />
       <div className="engine-result-actions">
         <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
           <Link className="engine-primary-link" href="/deep">{t('Continue to Full: 16 more','Weiter zu Full: 16 mehr')}</Link>
