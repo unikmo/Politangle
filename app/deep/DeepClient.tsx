@@ -71,7 +71,7 @@ function referencePeople(familyId: string) {
 }
 
 function answerAria(locale: Locale, value: AnswerValue) {
-  if (value === 'unsure') return locale === 'de' ? 'Unsicher' : locale === 'es' ? 'No estoy seguro' : locale === 'fr' ? 'Je ne sais pas' : locale === 'pt-br' ? 'Não tenho certeza' : 'Not sure';
+  if (value === 'unsure') return locale === 'de' ? 'Frage unklar' : locale === 'es' ? 'Pregunta poco clara' : locale === 'fr' ? 'Question peu claire' : locale === 'pt-br' ? 'Pergunta pouco clara' : 'Question unclear';
   const map: Record<Locale, Record<string, string>> = {
     en: { '-2':'Strongly disagree', '-1':'Disagree', '0':'Neither / depends', '1':'Agree', '2':'Strongly agree' },
     de: { '-2':'Stimme gar nicht zu', '-1':'Stimme eher nicht zu', '0':'Teils teils / kommt darauf an', '1':'Stimme eher zu', '2':'Stimme völlig zu' },
@@ -497,14 +497,14 @@ export default function DeepClient({countryOptions}:{countryOptions:readonly Cou
         <p className="engine-help">{ui.noCorrect}</p>
         <div className="quick-scale" role="radiogroup" aria-label={beliefAria}>
           {agreementAnswerOptions.map((option) => (
-            <button type="button" role="radio" aria-checked={selected === option.value} aria-label={answerAria(locale, option.value)} className={selected === option.value ? 'quick-scale-answer selected' : 'quick-scale-answer'} key={String(option.value)} onClick={() => chooseBelief(option.value)}>{option.value === 'unsure' ? '?' : option.value > 0 ? `+${option.value}` : String(option.value).replace('-', '−')}</button>
+            <button type="button" role="radio" aria-checked={selected === option.value} aria-label={answerAria(locale, option.value)} className={selected === option.value ? 'quick-scale-answer selected' : 'quick-scale-answer'} key={String(option.value)} onClick={() => chooseBelief(option.value)}>{option.value === 'unsure' ? answerAria(locale, 'unsure') : option.value > 0 ? `+${option.value}` : String(option.value).replace('-', '−')}</button>
           ))}
         </div>
         <div className="quick-scale-key">
           <span><b>−2</b> {answerAria(locale, -2)}</span>
           <span><b>0</b> {answerAria(locale, 0)}</span>
           <span><b>+2</b> {answerAria(locale, 2)}</span>
-          <span><b>?</b> {answerAria(locale, 'unsure')}</span>
+          <span>{answerAria(locale, 'unsure')}</span>
         </div>
       </article>
 
