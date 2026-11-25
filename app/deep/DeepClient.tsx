@@ -1,5 +1,6 @@
 'use client';
 
+import QuizFeedback from '../QuizFeedback';
 import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
 import {
@@ -447,6 +448,7 @@ export default function DeepClient({countryOptions}:{countryOptions:readonly Cou
           </article>
         )}
 
+        <QuizFeedback quiz="believe-full" age="adult" />
         <div className="engine-result-actions">
           <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
             <button className="engine-primary-link" type="button" onClick={restartFull}>{ui.retake}</button>
