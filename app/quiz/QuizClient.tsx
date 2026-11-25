@@ -102,6 +102,7 @@ export default function QuizClient() {
     return <section className="engine-card"><p>Loading assessment…</p></section>;
   }
 
+  const unclearLabel = ({en:'Question unclear',de:'Frage unklar',es:'Pregunta poco clara',fr:'Question peu claire','pt-br':'Pergunta pouco clara'}[locale]);
   const progress = beliefV2StageProgress(session, 'quick');
   const selected = session.answers[current.id];
   const ui = locale === 'de' ? {
@@ -117,7 +118,7 @@ export default function QuizClient() {
     topicPrefix: 'NA PRÁTICA · ', restart: 'Recomeçar', previous: 'Anterior', next: 'Próxima', result: 'Ver resultado do Quick', missing: 'Responder pergunta pendente', none: 'Nenhuma resposta incerta até agora', marked: 'marcadas como incertas',
     labels: ['Discordo totalmente','Discordo','Nem concordo nem discordo / depende','Concordo','Concordo totalmente','Não tenho certeza ou não entendi'], key: ['Discordo totalmente','Neutro / depende','Concordo totalmente','Não tenho certeza'],
   } : {
-    topicPrefix: 'IN PRACTICE · ', restart: 'Restart', previous: 'Previous', next: 'Next', result: 'See Quick result', missing: 'Answer missing question', none: 'No unsure responses so far', marked: 'marked not sure',
+    topicPrefix: 'IN PRACTICE · ', restart: 'Restart', previous: 'Previous', next: 'Next', result: 'See Quick result', missing: 'Answer missing question', none: 'No unclear questions so far', marked: 'marked unclear',
     labels: agreementAnswerOptions.map((option) => option.label), key: ['Strongly disagree','Neither / depends','Strongly agree','Not sure'],
   };
   const localizedStatement = locale === 'de'
@@ -177,18 +178,18 @@ export default function QuizClient() {
               type="button"
               role="radio"
               aria-checked={selected === option.value}
-              aria-label={ui.labels[agreementAnswerOptions.indexOf(option)]}
+              aria-label={option.value === 'unsure' ? unclearLabel : ui.labels[agreementAnswerOptions.indexOf(option)]}
               className={selected === option.value ? 'quick-scale-answer selected' : 'quick-scale-answer'}
               key={String(option.value)}
               disabled={progress.complete}
               onClick={() => choose(option.value)}
             >
-              {option.value === 'unsure' ? '?' : option.value > 0 ? `+${option.value}` : String(option.value).replace('-', '−')}
+              {option.value === 'unsure' ? unclearLabel : option.value > 0 ? `+${option.value}` : String(option.value).replace('-', '−')}
             </button>
           ))}
         </div>
         <div className="quick-scale-key">
-          <span><b>−2</b> {ui.key[0]}</span><span><b>0</b> {ui.key[1]}</span><span><b>+2</b> {ui.key[2]}</span><span><b>?</b> {ui.key[3]}</span>
+          <span><b>−2</b> {ui.key[0]}</span><span><b>0</b> {ui.key[1]}</span><span><b>+2</b> {ui.key[2]}</span><span>{unclearLabel}</span>
         </div>
       </article>
 
