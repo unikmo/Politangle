@@ -74,6 +74,8 @@ const copy: Record<Locale, Copy> = {
 export default function QuizzesPage() {
   const { locale } = useLocale();
   const c = copy[locale];
+  const ageTitle = {en:'Choose your age group',de:'Wähle deine Altersgruppe',es:'Elige tu grupo de edad',fr:'Choisis ta tranche d’âge','pt-br':'Escolha sua faixa etária'}[locale];
+  const otherTitle = {en:'Four other quizzes',de:'Vier weitere Quizze',es:'Otros cuatro cuestionarios',fr:'Quatre autres quiz','pt-br':'Outros quatro questionários'}[locale];
   const href = (path: string) => localePath(locale, path);
 
   return (
@@ -86,8 +88,10 @@ export default function QuizzesPage() {
           <p>{c.intro}</p>
         </div>
       </section>
-      <section className="quiz-choice-grid p-shell" aria-label={c.title}>
-        {c.cards.map((card) => (
+      <section className="p-shell" aria-labelledby="age-title" style={{paddingTop:32,paddingBottom:24}}><h2 id="age-title">{ageTitle}</h2><div className="quiz-choice-grid" style={{padding:0,margin:0}}>{(['junior','youth','adult'] as const).map((age,index)=><Link key={age} className="quiz-choice-card" href={href('/quiz?age='+age)}><span>{age.toUpperCase()}</span><strong>{['10–13','14–17','18+'][index]}</strong><small>{['Junior','Youth','Adult'][index]}</small><b>{c.start} →</b></Link>)}</div></section>
+      <section className="p-shell"><h2>{otherTitle}</h2></section>
+      <section className="quiz-choice-grid p-shell" aria-label={otherTitle}>
+        {c.cards.filter(card => card.label !== 'BELIEVE').map((card) => (
           <Link className="quiz-choice-card" href={href(card.href)} key={card.href}>
             <span>{card.label}</span>
             <strong>{card.title}</strong>
