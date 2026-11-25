@@ -1,5 +1,6 @@
 'use client';
 
+import QuizFeedback from './QuizFeedback';
 import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
 import { literacyQuestions as deepLiteracyQuestions } from '../lib/literacy-questions';
@@ -168,6 +169,7 @@ export default function LiteracyQuizClient({ section }: { section: DeepSection }
           <h1>{sectionResult.percent}%</h1>
           <p className="result-lede">{ui.correctOf(sectionResult.correct, sectionResult.total)} {ui.description}</p>
           {ui.notice && <p className="engine-help">{ui.notice}</p>}
+          <QuizFeedback quiz={section} />
           <div className="engine-result-actions">
             <button className="engine-primary-link" type="button" onClick={restart}>{ui.retake}</button>
             <Link className="engine-primary-link" href="/">{ui.back}</Link>
