@@ -1,5 +1,6 @@
 'use client';
 
+import QuizFeedback from '../QuizFeedback';
 import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
 import { scoreLiteracyItem, type DeepSection } from '../../lib/deep-engine';
@@ -208,6 +209,7 @@ export default function PracticeClient() {
             <p className="engine-kicker">{c.complete}</p>
             <h1>{correct} / {run.questionIds.length}</h1>
             <p className="result-lede">{c.resultLede(percent)}</p>
+            <QuizFeedback key={run.seed} quiz={run.section} />
             <div className="engine-result-actions">
               <button className="engine-primary-link" type="button" onClick={() => start(run.section)}>{c.newSet(run.section.toUpperCase())}</button>
               <button className="engine-primary-link secondary" type="button" onClick={() => setRun(null)}>{c.another}</button>
