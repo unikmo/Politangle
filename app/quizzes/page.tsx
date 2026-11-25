@@ -31,6 +31,7 @@ const copy: Record<Locale, Copy> = {
       { label: 'CLASSIFY', title: 'Politische Strömungen erkennen', meta: '25 Fragen · mit Erklärungen', href: '/practice?section=classify' },
       { label: 'UNDERSTAND', title: 'Ähnliche politische Ideen unterscheiden', meta: '25 Fragen · mit Erklärungen', href: '/practice?section=understand' },
       { label: 'FOKUS-QUIZ', title: 'Erkennst du Populismus?', meta: '12 Fragen · mit Erklärungen', href: '/populism-quiz' },
+      { label: 'FOKUS-QUIZ', title: 'Die Mittelschicht-Falle', meta: '20 Fragen · Steuern, Leistungen und Einfluss', href: '/middle-class-trap' },
     ],
   },
   es: {
@@ -43,6 +44,7 @@ const copy: Record<Locale, Copy> = {
       { label: 'CLASSIFY', title: 'Reconoce tradiciones políticas', meta: '25 preguntas · con explicaciones', href: '/practice?section=classify' },
       { label: 'UNDERSTAND', title: 'Distingue ideas que suelen confundirse', meta: '25 preguntas · con explicaciones', href: '/practice?section=understand' },
       { label: 'QUIZ ENFOCADO', title: '¿Reconoces el populismo?', meta: '12 preguntas · con explicaciones', href: '/populism-quiz' },
+      { label: 'QUIZ ENFOCADO', title: 'La trampa de la clase media', meta: '20 preguntas · impuestos, servicios e influencia', href: '/middle-class-trap' },
     ],
   },
   fr: {
@@ -55,6 +57,7 @@ const copy: Record<Locale, Copy> = {
       { label: 'CLASSIFY', title: 'Reconnaître les traditions politiques', meta: '25 questions · avec explications', href: '/practice?section=classify' },
       { label: 'UNDERSTAND', title: 'Distinguer des idées souvent confondues', meta: '25 questions · avec explications', href: '/practice?section=understand' },
       { label: 'QUIZ CIBLÉ', title: 'Sais-tu reconnaître le populisme ?', meta: '12 questions · avec explications', href: '/populism-quiz' },
+      { label: 'QUIZ CIBLÉ', title: 'Le piège de la classe moyenne', meta: '20 questions · impôts, services et influence', href: '/middle-class-trap' },
     ],
   },
   'pt-br': {
@@ -67,6 +70,7 @@ const copy: Record<Locale, Copy> = {
       { label: 'CLASSIFY', title: 'Reconheça tradições políticas', meta: '25 perguntas · com explicações', href: '/practice?section=classify' },
       { label: 'UNDERSTAND', title: 'Diferencie ideias que costumam ser confundidas', meta: '25 perguntas · com explicações', href: '/practice?section=understand' },
       { label: 'QUIZ TEMÁTICO', title: 'Você reconhece o populismo?', meta: '12 perguntas · com explicações', href: '/populism-quiz' },
+      { label: 'QUIZ TEMÁTICO', title: 'A armadilha da classe média', meta: '20 perguntas · impostos, serviços e influência', href: '/middle-class-trap' },
     ],
   },
 };
