@@ -10,8 +10,9 @@ const copy = {
  'pt-br': ['Ajude a melhorar o Politangle','As perguntas eram fáceis de entender?','As perguntas pareceram politicamente justas e equilibradas?','O quiz foi útil para você?','Como podemos melhorar o Politangle?','Nem um pouco','Muito','Enviar avaliação','Obrigado pela sua avaliação.','Não foi possível enviar. Tente novamente.','Opcional. Não inclua nomes nem dados pessoais.']
 } as const;
 
-export default function QuizFeedback({quiz,age='unspecified'}:{quiz:string;age?:'junior'|'youth'|'adult'|'unspecified'}) {
- const {locale}=useLocale();
+export default function QuizFeedback({quiz,age='unspecified',language}:{quiz:string;age?:'junior'|'youth'|'adult'|'unspecified';language?:'en'|'es'}) {
+ const {locale:siteLocale}=useLocale();
+ const locale=language??siteLocale;
  const c=copy[locale] ?? copy.en;
  const [ratings,setRatings]=useState<(number|null)[]>([null,null,null]);
  const [comment,setComment]=useState('');
