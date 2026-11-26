@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
+import LatinoClient from './LatinoClient';
 import { useRouter } from 'next/navigation';
 import {
   answerBeliefV2,
@@ -61,6 +62,12 @@ function newSeed() {
 }
 
 export default function QuizClient() {
+ const [edition,setEdition]=useState<'en'|'es'|'standard'|null>(null);
+ useEffect(()=>{const lang=new URLSearchParams(window.location.search).get('latino');setEdition(lang==='en'||lang==='es'?lang:'standard');},[]);
+ if(edition===null)return null;
+ return edition==='standard'?<StandardQuizClient/>:<LatinoClient language={edition}/>;
+}
+function StandardQuizClient() {
   const { locale } = useLocale();
   const router = useRouter();
   const [session, setSession] = useState<BeliefV2Session | null>(null);
@@ -150,7 +157,7 @@ export default function QuizClient() {
   async function restart() {
     const access = await fetch('/api/assessment/quick/access', { cache: 'no-store' }).then((response) => response.json()).catch(() => null);
     if (access?.repeatRegistrationRequired) {
-      const returnPath = localePath(locale, '/quiz');
+      const returnPath = localePath(locale, '/quiz?age='+age);
       router.push(localePath(locale, `/account?return=${encodeURIComponent(returnPath)}&reason=repeat`));
       return;
     }
