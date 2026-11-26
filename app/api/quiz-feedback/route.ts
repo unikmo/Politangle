@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { getAdminDb } from '../../../lib/firebase-db';
 import { FieldValue } from 'firebase-admin/firestore';
 
-const quizzes=new Set(['believe-quick','believe-full','classify','understand','populism','middle-class-trap']);
+const quizzes=new Set(['believe-quick','believe-full','classify','understand','populism','middle-class-trap','latino-quick','latino-full']);
 const ages=new Set(['junior','youth','adult','unspecified']);
 const locales=new Set(['en','de','es','fr','pt-br']);
 export async function POST(request:Request){
