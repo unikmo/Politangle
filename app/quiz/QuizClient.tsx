@@ -63,7 +63,7 @@ function newSeed() {
 
 export default function QuizClient() {
  const [edition,setEdition]=useState<'en'|'es'|'standard'|null>(null);
- useEffect(()=>{const lang=new URLSearchParams(window.location.search).get('latino');setEdition(lang==='en'||lang==='es'?lang:'standard');},[]);
+ useEffect(()=>{const lang=new URLSearchParams(window.location.search).get('latino');setEdition(lang==='en'||lang==='es'?'es':'standard');},[]);
  if(edition===null)return null;
  return edition==='standard'?<StandardQuizClient/>:<LatinoClient language={edition}/>;
 }
