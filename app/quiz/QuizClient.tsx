@@ -10,8 +10,10 @@ import {
   getBeliefV2Item,
   parseBeliefV2Session,
   type BeliefV2Session,
+  type PublicBeliefAge,
 } from '../../lib/belief-v2-session';
 import { agreementAnswerOptions, type AnswerValue } from '../../lib/questions';
+import { schoolStatement } from '../../lib/school-statement';
 import { germanBeliefStatement } from '../../lib/german-believe';
 import { romanceBeliefStatement } from '../../lib/romance-believe';
 import { portugueseBrBeliefStatement } from '../../lib/portuguese-br-believe';
@@ -63,12 +65,16 @@ export default function QuizClient() {
   const router = useRouter();
   const [session, setSession] = useState<BeliefV2Session | null>(null);
   const [index, setIndex] = useState(0);
+  const [age,setAge]=useState<PublicBeliefAge>('adult');
 
   useEffect(() => {
     let active = true;
     async function initialize() {
+      const requested=new URLSearchParams(window.location.search).get('age');
       const restored = parseBeliefV2Session(sessionStorage.getItem(BELIEF_SESSION_KEY));
-      if (restored) {
+      const selectedAge:PublicBeliefAge=requested==='junior'||requested==='youth'||requested==='adult'?requested:restored?.age??'adult';
+      setAge(selectedAge);
+      if (restored && (restored.age??'adult')===selectedAge) {
         if (!active) return;
         setSession(restored);
         const firstUnanswered = firstUnansweredIndex(restored, 'quick');
@@ -78,12 +84,12 @@ export default function QuizClient() {
 
       const access = await fetch('/api/assessment/quick/access', { cache: 'no-store' }).then((response) => response.json()).catch(() => null);
       if (access?.repeatRegistrationRequired) {
-        const returnPath = localePath(locale, '/quiz');
+        const returnPath = localePath(locale, '/quiz?age='+selectedAge);
         router.replace(localePath(locale, `/account?return=${encodeURIComponent(returnPath)}&reason=repeat`));
         return;
       }
 
-      const initial = createBeliefV2Session(newSeed());
+      const initial = createBeliefV2Session(newSeed(),undefined,selectedAge);
       sessionStorage.setItem(BELIEF_SESSION_KEY, JSON.stringify(initial));
       if (!active) return;
       setSession(initial);
@@ -95,7 +101,7 @@ export default function QuizClient() {
 
   const current = useMemo(() => {
     if (!session) return null;
-    return getBeliefV2Item(session.quickOrder[index]);
+    return getBeliefV2Item(session.quickOrder[index],session.age);
   }, [session, index]);
 
   if (!session || !current) {
@@ -121,7 +127,7 @@ export default function QuizClient() {
     topicPrefix: 'IN PRACTICE · ', restart: 'Restart', previous: 'Previous', next: 'Next', result: 'See Quick result', missing: 'Answer missing question', none: 'No unclear questions so far', marked: 'marked unclear',
     labels: agreementAnswerOptions.map((option) => option.label), key: ['Strongly disagree','Neither / depends','Strongly agree','Not sure'],
   };
-  const localizedStatement = locale === 'de'
+  const localizedStatement = session.age && session.age!=='adult' ? schoolStatement(locale,current.sourceItemId,current.polarity,current.statement) : locale === 'de'
     ? germanBeliefStatement(current.sourceItemId, current.polarity)
     : locale === 'es' || locale === 'fr'
       ? romanceBeliefStatement(locale, current.sourceItemId, current.polarity)
@@ -148,7 +154,7 @@ export default function QuizClient() {
       router.push(localePath(locale, `/account?return=${encodeURIComponent(returnPath)}&reason=repeat`));
       return;
     }
-    const next = createBeliefV2Session(newSeed());
+    const next = createBeliefV2Session(newSeed(),undefined,age);
     sessionStorage.setItem(BELIEF_SESSION_KEY, JSON.stringify(next));
     sessionStorage.removeItem(LITERACY_SESSION_KEY);
     setSession(next);
