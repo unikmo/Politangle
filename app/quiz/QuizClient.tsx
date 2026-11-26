@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
+import LatinoClient from './LatinoClient';
 import { useRouter } from 'next/navigation';
 import {
   answerBeliefV2,
@@ -10,8 +11,10 @@ import {
   getBeliefV2Item,
   parseBeliefV2Session,
   type BeliefV2Session,
+  type PublicBeliefAge,
 } from '../../lib/belief-v2-session';
 import { agreementAnswerOptions, type AnswerValue } from '../../lib/questions';
+import { schoolStatement } from '../../lib/school-statement';
 import { germanBeliefStatement } from '../../lib/german-believe';
 import { romanceBeliefStatement } from '../../lib/romance-believe';
 import { portugueseBrBeliefStatement } from '../../lib/portuguese-br-believe';
@@ -59,16 +62,26 @@ function newSeed() {
 }
 
 export default function QuizClient() {
+ const [edition,setEdition]=useState<'en'|'es'|'standard'|null>(null);
+ useEffect(()=>{const lang=new URLSearchParams(window.location.search).get('latino');setEdition(lang==='en'||lang==='es'?'es':'standard');},[]);
+ if(edition===null)return null;
+ return edition==='standard'?<StandardQuizClient/>:<LatinoClient language={edition}/>;
+}
+function StandardQuizClient() {
   const { locale } = useLocale();
   const router = useRouter();
   const [session, setSession] = useState<BeliefV2Session | null>(null);
   const [index, setIndex] = useState(0);
+  const [age,setAge]=useState<PublicBeliefAge>('adult');
 
   useEffect(() => {
     let active = true;
     async function initialize() {
+      const requested=new URLSearchParams(window.location.search).get('age');
       const restored = parseBeliefV2Session(sessionStorage.getItem(BELIEF_SESSION_KEY));
-      if (restored) {
+      const selectedAge:PublicBeliefAge=requested==='junior'||requested==='youth'||requested==='adult'?requested:restored?.age??'adult';
+      setAge(selectedAge);
+      if (restored && (restored.age??'adult')===selectedAge) {
         if (!active) return;
         setSession(restored);
         const firstUnanswered = firstUnansweredIndex(restored, 'quick');
@@ -78,12 +91,12 @@ export default function QuizClient() {
 
       const access = await fetch('/api/assessment/quick/access', { cache: 'no-store' }).then((response) => response.json()).catch(() => null);
       if (access?.repeatRegistrationRequired) {
-        const returnPath = localePath(locale, '/quiz');
+        const returnPath = localePath(locale, '/quiz?age='+selectedAge);
         router.replace(localePath(locale, `/account?return=${encodeURIComponent(returnPath)}&reason=repeat`));
         return;
       }
 
-      const initial = createBeliefV2Session(newSeed());
+      const initial = createBeliefV2Session(newSeed(),undefined,selectedAge);
       sessionStorage.setItem(BELIEF_SESSION_KEY, JSON.stringify(initial));
       if (!active) return;
       setSession(initial);
@@ -95,13 +108,14 @@ export default function QuizClient() {
 
   const current = useMemo(() => {
     if (!session) return null;
-    return getBeliefV2Item(session.quickOrder[index]);
+    return getBeliefV2Item(session.quickOrder[index],session.age);
   }, [session, index]);
 
   if (!session || !current) {
     return <section className="engine-card"><p>Loading assessment…</p></section>;
   }
 
+  const unclearLabel = ({en:'Question unclear',de:'Frage unklar',es:'Pregunta poco clara',fr:'Question peu claire','pt-br':'Pergunta pouco clara'}[locale]);
   const progress = beliefV2StageProgress(session, 'quick');
   const selected = session.answers[current.id];
   const ui = locale === 'de' ? {
@@ -117,10 +131,10 @@ export default function QuizClient() {
     topicPrefix: 'NA PRÁTICA · ', restart: 'Recomeçar', previous: 'Anterior', next: 'Próxima', result: 'Ver resultado do Quick', missing: 'Responder pergunta pendente', none: 'Nenhuma resposta incerta até agora', marked: 'marcadas como incertas',
     labels: ['Discordo totalmente','Discordo','Nem concordo nem discordo / depende','Concordo','Concordo totalmente','Não tenho certeza ou não entendi'], key: ['Discordo totalmente','Neutro / depende','Concordo totalmente','Não tenho certeza'],
   } : {
-    topicPrefix: 'IN PRACTICE · ', restart: 'Restart', previous: 'Previous', next: 'Next', result: 'See Quick result', missing: 'Answer missing question', none: 'No unsure responses so far', marked: 'marked not sure',
+    topicPrefix: 'IN PRACTICE · ', restart: 'Restart', previous: 'Previous', next: 'Next', result: 'See Quick result', missing: 'Answer missing question', none: 'No unclear questions so far', marked: 'marked unclear',
     labels: agreementAnswerOptions.map((option) => option.label), key: ['Strongly disagree','Neither / depends','Strongly agree','Not sure'],
   };
-  const localizedStatement = locale === 'de'
+  const localizedStatement = session.age && session.age!=='adult' ? schoolStatement(locale,current.sourceItemId,current.polarity,current.statement) : locale === 'de'
     ? germanBeliefStatement(current.sourceItemId, current.polarity)
     : locale === 'es' || locale === 'fr'
       ? romanceBeliefStatement(locale, current.sourceItemId, current.polarity)
@@ -143,11 +157,11 @@ export default function QuizClient() {
   async function restart() {
     const access = await fetch('/api/assessment/quick/access', { cache: 'no-store' }).then((response) => response.json()).catch(() => null);
     if (access?.repeatRegistrationRequired) {
-      const returnPath = localePath(locale, '/quiz');
+      const returnPath = localePath(locale, '/quiz?age='+age);
       router.push(localePath(locale, `/account?return=${encodeURIComponent(returnPath)}&reason=repeat`));
       return;
     }
-    const next = createBeliefV2Session(newSeed());
+    const next = createBeliefV2Session(newSeed(),undefined,age);
     sessionStorage.setItem(BELIEF_SESSION_KEY, JSON.stringify(next));
     sessionStorage.removeItem(LITERACY_SESSION_KEY);
     setSession(next);
@@ -177,18 +191,18 @@ export default function QuizClient() {
               type="button"
               role="radio"
               aria-checked={selected === option.value}
-              aria-label={ui.labels[agreementAnswerOptions.indexOf(option)]}
+              aria-label={option.value === 'unsure' ? unclearLabel : ui.labels[agreementAnswerOptions.indexOf(option)]}
               className={selected === option.value ? 'quick-scale-answer selected' : 'quick-scale-answer'}
               key={String(option.value)}
               disabled={progress.complete}
               onClick={() => choose(option.value)}
             >
-              {option.value === 'unsure' ? '?' : option.value > 0 ? `+${option.value}` : String(option.value).replace('-', '−')}
+              {option.value === 'unsure' ? unclearLabel : option.value > 0 ? `+${option.value}` : String(option.value).replace('-', '−')}
             </button>
           ))}
         </div>
         <div className="quick-scale-key">
-          <span><b>−2</b> {ui.key[0]}</span><span><b>0</b> {ui.key[1]}</span><span><b>+2</b> {ui.key[2]}</span><span><b>?</b> {ui.key[3]}</span>
+          <span><b>−2</b> {ui.key[0]}</span><span><b>0</b> {ui.key[1]}</span><span><b>+2</b> {ui.key[2]}</span><span>{unclearLabel}</span>
         </div>
       </article>
 

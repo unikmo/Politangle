@@ -1,9 +1,10 @@
 'use client';
 
+import QuizFeedback from '../QuizFeedback';
 import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
 import { assessFamiliesV2Canonical, assessResponseConsistencyV2, calculatePolygonV2Canonical } from '../../lib/belief-v2-engine';
-import { beliefV2StageProgress, lockedBeliefStatementsV3, parseBeliefV2Session, type BeliefV2Session } from '../../lib/belief-v2-session';
+import { beliefV2StageProgress, canonicalStatementsForAge, parseBeliefV2Session, type BeliefV2Session } from '../../lib/belief-v2-session';
 import { collapseStatementAnswers } from '../../lib/belief-statements';
 import { describePolitangleHome } from '../../lib/politangle-home';
 import { useLocale, localePath, type Locale } from '../LocaleProvider';
@@ -346,7 +347,7 @@ export default function ResultsClient({countryOptions}:{countryOptions:readonly 
 
   const result = useMemo(() => {
     if (!session || !beliefV2StageProgress(session, 'quick').complete) return null;
-    const canonicalAnswers = collapseStatementAnswers(session.answers, lockedBeliefStatementsV3);
+    const canonicalAnswers = collapseStatementAnswers(session.answers, canonicalStatementsForAge(session.age));
     return {
       polygon: calculatePolygonV2Canonical(canonicalAnswers),
       thinkPolygon: calculatePolygonV2Canonical(canonicalAnswers, 'think'),
@@ -469,9 +470,10 @@ export default function ResultsClient({countryOptions}:{countryOptions:readonly 
       </details>
 
       <p className="result-lede" style={{ marginTop: 20 }}><Link href={localePath(locale, '/faq')}>{locale === 'de' ? 'Was sagt das Ergebnis aus – und was nicht? Zum FAQ →' : locale === 'es' ? '¿Qué indica este resultado, y qué no? Ver preguntas frecuentes →' : locale === 'fr' ? 'Que montre ce résultat, et quelles sont ses limites ? Voir la FAQ →' : locale === 'pt-br' ? 'O que o resultado mostra — e o que não mostra? Veja as perguntas frequentes →' : 'What can this result tell you—and what can it not? Read the FAQ →'}</Link></p>
+      <QuizFeedback quiz="believe-quick" age={session.age??"adult"} />
       <div className="engine-result-actions">
         <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-          <Link className="engine-primary-link" href="/deep">{t('Continue to Full: 16 more','Weiter zu Full: 16 mehr')}</Link>
+          {session.age!=='junior'&&<Link className="engine-primary-link" href="/deep">{t('Continue to Full: 16 more','Weiter zu Full: 16 mehr')}</Link>}
           <Link className="engine-primary-link" href="/quiz">{t('Review Quick','Quick ansehen')}</Link>
         </div>
         <span>{t('Add 16 more questions for the fuller picture.','Mit 16 weiteren Fragen wird das Bild noch genauer.')}</span>

@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import {useEffect,useState} from 'react';
 import { LanguageSelector, useLocale } from './LocaleProvider';
 
 export type AssessmentHeaderKind = 'quick' | 'quick-result' | 'full' | 'classify' | 'understand';
@@ -36,10 +37,12 @@ function label(kind: AssessmentHeaderKind, locale: 'en' | 'de' | 'es' | 'fr' | '
 
 export default function AssessmentHeader({ kind }: { kind: AssessmentHeaderKind }) {
   const { locale } = useLocale();
+  const [junior,setJunior]=useState(false);
+  useEffect(()=>{setJunior(new URLSearchParams(window.location.search).get('age')==='junior');},[]);
   return (
     <header className="engine-header">
       <Link href="/" className="engine-brand">Politangle</Link>
-      <span>{label(kind, locale)}</span>
+      <span>{junior&&kind==='quick'?label(kind,locale).replace('26','16'):label(kind, locale)}</span>
       <LanguageSelector />
     </header>
   );

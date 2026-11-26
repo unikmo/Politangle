@@ -1,5 +1,6 @@
 'use client';
 
+import QuizFeedback from '../QuizFeedback';
 import Link from 'next/link';
 import { useMemo, useState } from 'react';
 import {
@@ -120,6 +121,7 @@ export default function PopulismQuizClient() {
           <div className="populism-score-grid">
             {angleScores.map(({ angle, score }) => <div key={angle}><span>{angleLabels[angle]}</span><strong>{score}/2</strong></div>)}
           </div>
+          <QuizFeedback key={run.seed} quiz="populism" />
           <div className="engine-result-actions">
             <button className="engine-primary-link" type="button" onClick={start}>{c.retry}</button>
             <Link className="engine-primary-link secondary" href="/learn#populism">{c.review}</Link>

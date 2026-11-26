@@ -1,5 +1,6 @@
 import { BELIEF_V2_VERSION, type AttitudeMode, type BeliefAnswersV2 } from './belief-v2';
 import { lockedBeliefItemsV2 } from './belief-v2-engine';
+import { schoolYouthBeliefItems, schoolJuniorBeliefItems } from './school-believe';
 import { expandBeliefItems } from './belief-statements';
 import type { AnswerValue } from './questions';
 
@@ -53,12 +54,24 @@ export const lockedQuickStatementIds = quickSourceIds.map((id, index) => `${id}-
 export const lockedFullFollowUpStatementIds = fullSourceIds.map((id, index) => `${id}-${index % 2 === 0 ? 'N' : 'P'}`);
 const selectedStatementIds = [...lockedQuickStatementIds, ...lockedFullFollowUpStatementIds];
 
+export type PublicBeliefAge = 'adult' | 'youth' | 'junior';
+const juniorStatements = expandBeliefItems(schoolJuniorBeliefItems);
+const youthStatements = expandBeliefItems(schoolYouthBeliefItems);
+const juniorIds = schoolJuniorBeliefItems.map((item,index)=>`${item.id}-${index%2===0?'P':'N'}`);
+export function statementsForAge(age: PublicBeliefAge = 'adult') {
+ return age==='junior'?juniorStatements:age==='youth'?youthStatements:lockedBeliefStatementsV3;
+}
+export function canonicalStatementsForAge(age: PublicBeliefAge = 'adult') {
+ if(age!=='junior')return statementsForAge(age);
+ return juniorStatements.map(item=>({...item,sourceItemId:lockedBeliefItemsV2.find(source=>source.construct===item.construct&&source.mode===item.mode)!.id}));
+}
 export type BeliefV2Stage = 'quick' | 'deep';
 
 export type BeliefV2Session = {
   schemaVersion: typeof BELIEF_V2_SESSION_SCHEMA;
   questionnaireVersion: typeof BELIEF_V2_VERSION;
   seed: number;
+  age?: PublicBeliefAge;
   quickOrder: string[];
   deepOrder: string[];
   answers: BeliefAnswersV2;
@@ -100,21 +113,22 @@ function validAnswer(value: unknown): value is AnswerValue {
   return value === 'unsure' || value === -2 || value === -1 || value === 0 || value === 1 || value === 2;
 }
 
-export function createBeliefV2Session(seed: number | string, startedAt = new Date().toISOString()): BeliefV2Session {
+export function createBeliefV2Session(seed: number | string, startedAt = new Date().toISOString(), age: PublicBeliefAge = 'adult'): BeliefV2Session {
   const numericSeed = typeof seed === 'number' ? seed >>> 0 : hashSeed(seed);
   return {
     schemaVersion: BELIEF_V2_SESSION_SCHEMA,
     questionnaireVersion: BELIEF_V2_VERSION,
     seed: numericSeed,
-    quickOrder: shuffled(lockedQuickStatementIds, numericSeed, 'quick'),
-    deepOrder: shuffled(lockedFullFollowUpStatementIds, numericSeed, 'deep'),
+    ...(age==='adult'?{}:{age}),
+    quickOrder: shuffled(age==='junior'?juniorIds:lockedQuickStatementIds, numericSeed, 'quick'),
+    deepOrder: shuffled(age==='junior'?[]:lockedFullFollowUpStatementIds, numericSeed, 'deep'),
     answers: {},
     startedAt,
   };
 }
 
-export function getBeliefV2Item(id: string) {
-  return lockedBeliefStatementsV3.find((item) => item.id === id) ?? null;
+export function getBeliefV2Item(id: string, age: PublicBeliefAge = 'adult') {
+  return statementsForAge(age).find((item) => item.id === id) ?? null;
 }
 
 export function isBeliefV2PoleFlipped(seed: number, itemId: string) {
@@ -132,7 +146,7 @@ export function storedToDisplayedBeliefV2Answer(value: AnswerValue | undefined, 
 }
 
 export function answerBeliefV2(session: BeliefV2Session, itemId: string, value: AnswerValue): BeliefV2Session {
-  if (!getBeliefV2Item(itemId)) throw new Error(`Unknown BELIEVE v2 item: ${itemId}`);
+  if (!getBeliefV2Item(itemId,session.age) || ![...session.quickOrder,...session.deepOrder].includes(itemId)) throw new Error(`Unknown BELIEVE v2 item: ${itemId}`);
   if (!validAnswer(value)) throw new Error(`Invalid BELIEVE v2 answer: ${String(value)}`);
   return { ...session, answers: { ...session.answers, [itemId]: value } };
 }
@@ -171,7 +185,7 @@ export function beliefV2OverallProgress(session: BeliefV2Session) {
 }
 
 export function modeProgress(session: BeliefV2Session, mode: AttitudeMode) {
-  const ids = selectedStatementIds.filter((id) => getBeliefV2Item(id)?.mode === mode);
+  const ids = (session.age==='junior' ? juniorIds : selectedStatementIds).filter((id) => getBeliefV2Item(id,session.age)?.mode === mode);
   const answered = ids.filter((id) => validAnswer(session.answers[id])).length;
   const scored = ids.filter((id) => typeof session.answers[id] === 'number').length;
   return { answered, scored, total: ids.length, complete: answered === ids.length };
@@ -190,13 +204,14 @@ export function parseBeliefV2Session(raw: string | null): BeliefV2Session | null
     if (candidate.questionnaireVersion !== BELIEF_V2_VERSION) return null;
     if (typeof candidate.seed !== 'number' || typeof candidate.startedAt !== 'string') return null;
     if (!Array.isArray(candidate.quickOrder) || !Array.isArray(candidate.deepOrder)) return null;
-    const expectedQuick = new Set(lockedQuickStatementIds);
-    const expectedDeep = new Set(lockedFullFollowUpStatementIds);
+    if(candidate.age!==undefined && !['adult','youth','junior'].includes(candidate.age))return null;
+    const expectedQuick = new Set(candidate.age==='junior'?juniorIds:lockedQuickStatementIds);
+    const expectedDeep = new Set(candidate.age==='junior'?[]:lockedFullFollowUpStatementIds);
     const sameIds = (actual: string[], expected: Set<string>) => actual.length === expected.size && new Set(actual).size === expected.size && actual.every((id) => expected.has(id));
     if (!sameIds(candidate.quickOrder, expectedQuick) || !sameIds(candidate.deepOrder, expectedDeep)) return null;
     if (!candidate.answers || typeof candidate.answers !== 'object') return null;
     for (const [id, value] of Object.entries(candidate.answers)) {
-      if (!getBeliefV2Item(id) || !validAnswer(value)) return null;
+      if ((!expectedQuick.has(id)&&!expectedDeep.has(id)) || !getBeliefV2Item(id,candidate.age) || !validAnswer(value)) return null;
     }
     return candidate as BeliefV2Session;
   } catch {

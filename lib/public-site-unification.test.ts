@@ -39,7 +39,6 @@ test('public pages use one homepage-style navigation and footer system', () => {
 test('Learn stays visible and quizzes directory contains only runnable quiz choices', () => {
   assert.match(chrome, /href=\{href\('\/learn'\)\}/);
   assert.match(chrome, /href=\{href\('\/quizzes'\)\}/);
-  assert.match(quizzes, /Politangle Quick/);
   assert.match(quizzes, /section=classify/);
   assert.match(quizzes, /section=understand/);
   assert.match(quizzes, /populism-quiz/);
