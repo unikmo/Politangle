@@ -16,13 +16,14 @@ import {
   completeBeliefV2Session,
   getBeliefV2Item,
   parseBeliefV2Session,
-  lockedBeliefStatementsV3,
+  canonicalStatementsForAge,
   type BeliefV2Session,
 } from '../../lib/belief-v2-session';
 import { canonicalizeStatementAnswer, collapseStatementAnswers, type BeliefStatement } from '../../lib/belief-statements';
 import { assessNuancesV2 } from '../../lib/nuance-model';
 import { describePolitangleHome } from '../../lib/politangle-home';
 import { agreementAnswerOptions, type AnswerValue } from '../../lib/questions';
+import { schoolStatement } from '../../lib/school-statement';
 import { germanBeliefStatement } from '../../lib/german-believe';
 import { romanceBeliefStatement } from '../../lib/romance-believe';
 import { portugueseBrBeliefStatement } from '../../lib/portuguese-br-believe';
@@ -91,7 +92,8 @@ type AnswerEvidence = {
   canonicalScore: number | null;
 };
 
-function localizedBeliefCopy(locale: Locale, item: BeliefStatement) {
+function localizedBeliefCopy(locale: Locale, item: BeliefStatement, age?:BeliefV2Session['age']) {
+  if(age&&age!=='adult')return schoolStatement(locale,item.sourceItemId,item.polarity,item.statement);
   if (locale === 'de') return germanBeliefStatement(item.sourceItemId, item.polarity) ?? item.statement;
   if (locale === 'es' || locale === 'fr') return romanceBeliefStatement(locale, item.sourceItemId, item.polarity) ?? item.statement;
   if (locale === 'pt-br') return portugueseBrBeliefStatement(item.sourceItemId, item.polarity) ?? item.statement;
@@ -108,14 +110,14 @@ function evidenceForAxis(
 ): AnswerEvidence[] {
   const ids = [...session.quickOrder, ...session.deepOrder];
   const evidence = ids.flatMap((id) => {
-    const item = lockedBeliefStatementsV3.find((candidate) => candidate.id === id);
+    const item = getBeliefV2Item(id,session.age);
     if (!item || !axis.constructs.includes(item.construct) || (mode && item.mode !== mode)) return [];
     const answer = session.answers[id];
     if (typeof answer !== 'number') return [];
     const canonical = canonicalizeStatementAnswer(answer, item.polarity);
     const canonicalScore = typeof canonical === 'number' ? Math.round(((canonical + 2) / 4) * 100) : null;
     return [{
-      statement: localizedBeliefCopy(locale, item),
+      statement: localizedBeliefCopy(locale, item,session.age),
       response: answerAria(locale, answer),
       canonicalScore,
     }];
@@ -184,7 +186,7 @@ function firstUnansweredFull(session: BeliefV2Session) {
 }
 
 function buildOutput(belief: BeliefV2Session): FullOutput {
-  const canonicalAnswers = collapseStatementAnswers(belief.answers, lockedBeliefStatementsV3);
+  const canonicalAnswers = collapseStatementAnswers(belief.answers, canonicalStatementsForAge(belief.age));
   return {
     polygon: calculatePolygonV2Canonical(canonicalAnswers),
     thinkPolygon: calculatePolygonV2Canonical(canonicalAnswers, 'think'),
@@ -207,7 +209,7 @@ export default function DeepClient({countryOptions}:{countryOptions:readonly Cou
   useEffect(() => {
     const belief = parseBeliefV2Session(sessionStorage.getItem(BELIEF_SESSION_KEY));
     setBeliefSession(belief);
-    if (!belief || !beliefV2StageProgress(belief, 'quick').complete) return;
+    if (!belief || belief.age==='junior' || !beliefV2StageProgress(belief, 'quick').complete) return;
 
     const fullProgress = beliefV2StageProgress(belief, 'deep');
     if (fullProgress.complete) {
@@ -219,14 +221,14 @@ export default function DeepClient({countryOptions}:{countryOptions:readonly Cou
 
   const currentBelief = useMemo(() => {
     if (!beliefSession || output) return null;
-    return getBeliefV2Item(beliefSession.deepOrder[index]);
+    return getBeliefV2Item(beliefSession.deepOrder[index],beliefSession.age);
   }, [beliefSession, output, index]);
 
   if (beliefSession === undefined) {
     return <section className="engine-shell"><article className="engine-card"><p>{ui.loading}</p></article></section>;
   }
 
-  if (!beliefSession || !beliefV2StageProgress(beliefSession, 'quick').complete) {
+  if (!beliefSession || beliefSession.age==='junior' || !beliefV2StageProgress(beliefSession, 'quick').complete) {
     return (
       <section className="engine-shell">
         <article className="engine-card">
@@ -448,7 +450,7 @@ export default function DeepClient({countryOptions}:{countryOptions:readonly Cou
           </article>
         )}
 
-        <QuizFeedback quiz="believe-full" age="adult" />
+        <QuizFeedback quiz="believe-full" age={beliefSession.age??"adult"} />
         <div className="engine-result-actions">
           <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
             <button className="engine-primary-link" type="button" onClick={restartFull}>{ui.retake}</button>
@@ -462,7 +464,7 @@ export default function DeepClient({countryOptions}:{countryOptions:readonly Cou
 
   const fullProgress = beliefV2StageProgress(beliefSession, 'deep');
   const selected = currentBelief ? beliefSession.answers[currentBelief.id] : undefined;
-  const localizedStatement = currentBelief ? localizedBeliefCopy(locale, currentBelief) : null;
+  const localizedStatement = currentBelief ? localizedBeliefCopy(locale, currentBelief,beliefSession.age) : null;
 
   function chooseBelief(value: AnswerValue) {
     if (!currentBelief) return;
