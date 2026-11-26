@@ -27,6 +27,6 @@ export default function QuizzesPage(){
  <div className="quiz-directory-grid">
  {view==='all'&&cards.map(([name,path],i)=>{const inner=<><strong>{name}</strong><span>{c[i+2]}</span><b>{c[11]} →</b></>;return path?<Link className="quiz-directory-card" key={name} href={name==='MIDDLE CLASS TRAP'?'/middle-class-trap':href(path)}>{inner}</Link>:<button className="quiz-directory-card" key={name} type="button" onClick={()=>open(i===0?'believe':'latino')}>{inner}</button>;})}
  {view==='believe'&&(['junior','youth','adult'] as const).map((age,i)=><Link className="quiz-directory-card" key={age} href={href('/quiz?age='+age)}><strong>{['Junior','Youth','Adult'][i]}</strong><span>{['10–13','14–17','18+'][i]} · {i===0?'16':'26 / 42'} {c[9]}</span><b>{c[12]} →</b></Link>)}
- {view==='latino'&&[c[13],c[14]].map(language=><div key={language} className="quiz-directory-card"><strong>{language}</strong><span>{c[15]}</span></div>)}
+ {view==='latino'&&[c[13],c[14]].map((language,i)=><Link key={language} className="quiz-directory-card" href={localePath(i===0?'en':'es','/quiz?latino='+(i===0?'en':'es'))}><strong>{language}</strong><span>26 / 42 {c[9]}</span><b>{c[12]} →</b></Link>)}
  </div></div></section></main>;
 }
